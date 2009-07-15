@@ -1,0 +1,56 @@
+
+body, div#wrapper {
+    margin: 0;
+}
+
+div#header {
+    background-color: #AA2222;
+    text-align: center;
+}
+
+div#header > h1 {
+    margin: 0;
+    font-family: "Times", serif;
+    font-size: 38pt;
+}
+
+div#header > h1 > a {
+    text-decoration: none;
+    color: white;
+}
+
+ul.errorlist {
+    list-style: none;
+    color: red;
+    padding: 0;
+}
+
+form#contact {
+    width: 66%;
+    margin-left: 36%;
+}
+
+form#contact > ul  {
+    list-style: none;
+}
+
+form#contact > ul > li > label {
+    font-weight: bold;
+}
+
+form#contact > ul > li > input.submit {
+    width: 6em;
+    text-align: center;
+}
+
+
+form#contact > ul > li > input, form#contact > ul > li > textarea {
+    width: 34%;
+    text-align: left;
+    margin-right: 65%;
+}
+
+.lonely {
+    text-align: center;
+    padding-top: 10%;
+}

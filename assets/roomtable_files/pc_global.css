@@ -1,0 +1,267 @@
+/*****************************************************************************
+* PC_GLOBAL.CSS
+******************************************************************************
+******************************************************************************
+* Style redefinitions for standard tags
+******************************************************************************/
+A, BODY, CAPTION, CENTER, DIV, DL, DT, FORM, H1, H2, H3, H4, H5, H6, INPUT, LI, MENU, OL, OPTION, P, SELECT, TD, TH, UL {font-family : arial, helvetica, verdana, geneva, tahoma, sans-serif;}
+
+body
+{ 	background-color: #FFFFFF;
+	color: black;
+	font-family : arial, helvetica, verdana, geneva, tahoma, sans-serif;
+	font-size : 12px;
+	margin:0px;}
+
+h1 {font-size: 20px; margin-top: 0px;}
+h2 {font-size: 16px; margin-top: 0px;}
+h3 {font-size: 120%; font-weight : normal;}
+h4 {font-size: 100%;}
+
+a:link {color: #6F0808; font-weight: normal; background-color:transparent;text-decoration: underline;}
+a:visited {color:#666; font-weight: normal; text-decoration: underline;}
+a:hover {color: Red; background-color: #bbbbbb; text-decoration: none;}
+a:active {color: White;  background : #CCCCCC;}
+
+
+
+form {margin:0;  padding:0;}
+input {font-size: 11px;  margin:0;  padding:0;}
+td, th {font-size:12px;}
+select, option {font-size:11px;  margin:0;  padding:0;}
+
+/******************************************************************************
+* Classes
+******************************************************************************/
+.address {font-size: 10px; margin-top:10px; margin-bottom:10px; text-align:center;}
+
+.adspace {color:#ffffff; font-size:14px; font-weight:bold; background-color:#450000; margin-bottom:15px; text-align:center; padding:70px;}
+
+.biglabel { color: #C00; padding: 0px; font-weight: bold; font-size: 14px; }
+
+.newslabel { color: #C00; padding-bottom: 10px; font-weight: bold; font-size: 14px; }
+
+.camplifebutn {background-color:#cc0000; color:#ffffff; border-color:#ffffff; text-decoration: none}
+.camplifebutn a:link {}
+
+.caption{font-size:10px;font-style:italic;}
+.redcaption{font-size:10px; color:#660000;}
+
+.childitem {color: #000000; font-size: 12px; margin-left:35px; margin-top:10px;}
+.childitem a {font-size: 12px;}
+.childitem a:link {color: #660000; font-weight: normal; text-decoration: underline;}
+.childitem a:visited {color: #666666; font-weight: normal; text-decoration: underline;}
+.childitem a:hover {color: #cc0000; background: #cad29f; text-decoration: none;}
+.childitem a:active {color: White;  background: #cad29f; text-decoration: none;}
+
+.comment {padding-bottom:15px;}
+
+.disclaimer {font-size: 9px; padding-left:15px;}
+
+.eventinfo {font-size: 11px;}
+
+.flashbutton 		{padding-bottom:15px;}
+
+.headline {color: #000000; margin-left:10px; margin-top:5px; font-weight:bold;}
+.headline a:link {color: #660000; font-weight: bold; text-decoration: none;}
+.headline a:visited {color: #666666; font-weight: bold; text-decoration: none; }
+.headline a:hover {color: #cc0000; background-color : #CCCCCC; text-decoration: none;}
+.headline a:active {color: White;  background-color : #CCCCCC;}
+
+.heritageq {color:blue; font-style:italic;}
+
+.homebutton {background-image:URL('/images/flash/widget.gif');background-repeat: no-repeat;width:121px;height:20px;color:#fff;font-weight:bold;font-style:italic;padding:2px 0 0 3px;margin:5px 0 0 0;display:block; text-decoration: none; background-color: transparent;}
+a.homebutton:link {background-image:URL('/images/flash/widget.gif');background-repeat: no-repeat;width:121px;height:20px;color:#fff;font-weight:bold;font-style:italic;padding:2px 0 0 3px;margin:5px 0 0 0;display:block; text-decoration: none; background-color: transparent;}
+a.homebutton:hover {color:#000;border-width: 0px; background-color: transparent; text-decoration: none;}
+a.homebutton:visited {font-weight:bold;color:#fff; background-color: transparent; text-decoration: none;}
+a.homebutton:visited:hover {font-weight:bold;color:#000; background-color: transparent; text-decoration: none;}
+
+.largetext {font-size:18px; font-weight:bold;}
+.medtext {font-size:16px;}
+.smalltext {font-size:11px; }
+
+.leftnav {background:#eeeecb;}
+.leftnav a {font-size:13px; text-decoration:none;}
+.leftnav a:link {color:#660000; background: #eeeecb; font-weight: normal; text-decoration:none;}
+.leftnav a:visited {color:#666666; font-weight:normal; text-decoration:none;}
+.leftnav a:hover {color:#cc0000; background-color:#cad29f; text-decoration:none;}
+.leftnav a:active {color:#ffffff;  background-color:#CCCCCC;}
+.leftnav a.homebutton:link {background-image:URL('/images/flash/widget.gif');background-repeat: no-repeat;width:121px;height:20px;color:#fff;font-weight:bold;font-style:italic;padding:2px 0 0 3px;margin:5px 0 0 0;display:block;background-color: transparent;}
+.leftnav a.homebutton:hover {color:#000;border-width: 0px; background-color: transparent;}
+.leftnav a.homebutton:visited {font-weight:bold;color:#fff;background-color:transparent;}
+.leftnav a.homebutton:visited:hover {font-weight:bold;color:#000;background-color:transparent;}
+
+/*
+ .leftnav a.homebutton:link {background-image:URL('/images/flash/widget.gif');width:118px;height:19px;color:#fff;font-weight:bold;font-style:italic;padding:2px 0 0 3px;margin:5px 0 0 0;display:block;}
+ .leftnav a.homebutton:hover {font-weight:bold;color:#000;background-image:URL('/images/flash/widget.gif');}
+ .leftnav a.homebutton:visited {font-weight:bold;color:#fff;}
+ .leftnav a.homebutton:visited:hover {font-weight:bold;color:#000;}
+*/
+
+.leftnavpadding{padding: 3px; margin:2px;}
+
+.majorheading {padding: 10px 10px 10px 15px; font-size: 17px; font-weight: bold; color:#CC0000}
+.minorheading {padding: 10px 10px 10px 15px; font-size: 17px; font-weight: bold; color:#CC0000}
+.majorheading2 {font-size: 17px; font-weight: bold; color:#CC0000}
+
+.menu {margin:0px 0px 50px 0px;}
+
+.menusubheading {font-size: 11px; font-weight: bold;}
+
+.more { display: none; }
+textarea .more { display: block; }
+
+
+/*
+To be used with fieldset and divs
+Not necessarily one form - groups of inputs, etc
+For reference see the alumni directory edit personal information
+*/
+.formcontainer {padding: 0px; border: 1px solid black; margin-bottom: 15px;}
+.formheader {padding: 2px; padding-left: 7px; border-bottom: 1px solid black; margin: 0px; background-color: #cad29f; color: #cc0000; font-size: 16px; font-weight: bold;}
+.formcontent { padding: 0px 5px 5px 10px; }
+
+.navheading {background-color:#cad29f; color:#c00;}
+
+.newstext {color: #000000; font-size: 12px; margin-left:10px; margin-bottom:10px;}
+.newstext a {font-size: 12px;}
+.newstext a:link {color: #660000; background: #fff; font-weight: normal; text-decoration:underline; }
+.newstext a:visited {color: #666666; font-weight: normal; text-decoration:underline;}
+.newstext a:hover {color: Red; background: #bbbbbb; text-decoration: none;}
+.newstext a:active {color: White;  background: #dddddd; text-decoration: none;}
+
+.pagecontent {padding-left: 15px;}
+
+.pagehead{color:#FFFFFF; font-size: 25px; padding-right : 10px;  font-weight : bold; }
+a.pagehead  {color:#FFFFFF; background:transparent; font-size: 25px; padding-right : 10px;  font-weight : bold; text-decoration:none;}
+a:link.pagehead {color:#FFFFFF; font-size: 25px; padding-right : 10px;  font-weight : bold; text-decoration:none;}
+a:visited.pagehead {color:#FFFFFF; font-size: 25px; padding-right : 10px;  font-weight : bold; text-decoration:none;}
+a:hover.pagehead {color:#eeeecb; font-size: 25px; padding-right : 10px;  font-weight : bold; text-decoration:none;}
+a:active.pagehead {color:#FFFFFF; font-size: 25px; padding-right : 10px;  font-weight : bold; text-decoration:none;}
+
+.pagelabelbox {font-size:18px; font-weight:bold; color:#CC0000; background-image:url(/images/news2.gif); padding-left:15px;}
+
+div.centerblockcontent h1.sitetitle {margin-left:-20px;margin-bottom:20px;width:570px;}
+div.centerblockcontent div.pagecontent {margin-left:-20px;}
+
+.quicklink {font-size: 10px; margin: 0; padding: 0; border: 0;}
+
+.rightblocktitle {font-size:16px; font-weight:bold; color:#CC0000; padding-top:5px;}
+
+.redbuttonbox {border: 1px solid #999967;}
+ a.redbutton {color: #ffffff; background:#cc0000; padding:2px; width:105px; font-weight:bold; font-style:italic;}
+ a.redbutton:link {color: #ffffff; text-decoration: none;}
+ a.redbutton:visited {color: #ffffff; text-decoration: none;}
+ a.redbutton:hover {color: #000000; background: #cad29f; text-decoration: none;}
+ a.redbutton:active {color: #ffffff; text-decoration: none;}
+
+#searchbar { height: 36px; }
+.searchform {position: absolute; left: 12px; top: 83px; background-image:URL('/images/flash/widget.gif'); background-repeat: no-repeat; padding: 0px; padding-left: 5px; padding-top: 2px; padding-right: 1px; width: 121px; height: 20px;}
+/*
+ .searchform {background-image:URL('/images/flash/widget.gif');background-repeat: no-repeat;position:absolute;left:12px;top:81px;width:121px;height:20px;margin:0px 13px 0 4px;display:block;}
+ .searchform .searchgo { padding: 0px; height: 16px; margin-left: 4px; vertical-align: middle; width: 23px;}
+ .searchform .searchgo {padding:0;margin-top: 3px;margin-left:10px;height:16px;width:23px;}
+ .searchform .searchtext {padding:0;margin-left:4px;font-size:11px;border-width:0px;vertical-align:middle;}
+*/
+.searchform .searchtext { margin-top: 0px; float: left; border-width: 0px; width: 80px; vertical-align: middle;}
+.searchform .searchgo { margin-left: 5px;}
+
+.sitetitle {border-bottom: 3px solid #CC0000; padding-left: 15px; padding-top:15px;}
+.sitetitle_R {padding-right: 15px;}
+
+.subitem {color: #000000; font-size: 12px; margin-left:10px; margin-top:10px;}
+.subitem a {font-size: 12px;}
+.subitem a:link {color: #660000; font-weight: normal; text-decoration: underline;}
+.subitem a:visited {color: #666666; font-weight: normal; text-decoration: underline;}
+.subitem a:hover {color: #cc0000; background: #cad29f; text-decoration: none;}
+.subitem a:active {color: White;  background: #cad29f; text-decoration: none;}
+
+.topnav a {font-size: 11px;}
+.topnav a:link {color: #660000; font-weight: normal; text-decoration: none;}
+.topnav a:visited {color: Black; font-weight: normal; text-decoration: none;}
+.topnav a:hover {color: #cc0000; background: #eeeecb; text-decoration: none;}
+.topnav a:active {color: White;  background: #CCCCCC;}
+
+
+.webmailform {color: #000000; background:#eeeecb;  padding:2px; width:105px; font-weight:bold; font-style:italic;}
+.webmaillogin {font-size: 10px;  margin: 0;  padding: 0; background:#cad29f;  color: #CC0000;  border: 0;}
+.webmailinput    {font-size: 10px;  margin: 0;  padding: 0; background:#ffffff;  color: #000000;  border: 0;}
+
+.welcomehead {color: #000000; font-size: 13px; font-weight:bold; padding:10px 0 10px 0;}
+
+.welcometext {color: #000000; font-size: 10px;}
+.welcometext a {font-size: 10px;}
+.welcometext a:link {color: #660000; font-weight: normal; text-decoration: underline;}
+.welcometext a:visited {color: Black; font-weight: normal; text-decoration: none;}
+.welcometext a:hover {color: Red; background: #CCCCCC; text-decoration: none;}
+.welcometext a:active {color: White;  background: #CCCCCC;}
+
+ input.makeALink {	border: 0px inset;
+					cursor: pointer;
+					color: #6F0808;
+					background-color:transparent;
+					text-decoration: underline;}
+
+.tablebg0	{background-color: #FFFFFF;margin:0;padding:3px 0;}
+.tablebg1	{background-color: #DDDDFF;margin:0;padding:3px 0;}
+
+.bluebghead     {background-color:#DDDDFF;}
+.bluebg0        {background-color:#EFEFFF;}
+.bluebg1        {background-color:#DFDFEF;}
+
+.redbghead     {background-color:#FFDDDD;}
+.redbg0        {background-color:#FFEFEF;}
+.redbg1        {background-color:#EFDFDF;}
+
+.greenbghead     {background-color:#DDFFDD;}
+.greenbg0        {background-color:#EFFFEF;}
+.greenbg1        {background-color:#DFEFDF;}
+
+.yellowbghead{background-color:#FFFF99}
+.yellowbg0{background-color:#FFFFDF;}
+.yellowbg1{background-color:#FFFFBF;}
+
+/* Sortable tables */
+table.sortable a.sortheader {
+    background-color:#eee;
+    color:#666666;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+    white-space: nowrap;
+}
+table.sortable span.sortarrow {
+    color: black;
+    text-decoration: none;
+}
+
+/******************************************************************************
+* IDs
+******************************************************************************/
+#searchbutton {font-size: 10px;  margin: 0;  padding: 0; background:#cad29f;  color: #CC0000;  border: 0;  width: 55px; }
+#searchbuttonwide {font-size: 10px;  margin: 0;  padding: 0; background:#cad29f;  color: #CC0000;  border: 0;  width: 140px; }
+#words    {font-size: 10px;  margin: 0;  padding: 0; background:#ffffff;  color: #000000;  border: 0;}
+
+@media print
+{
+	#banner {display:none;}
+	.banner {display:none;}
+	#leftnav {display:none;}
+	.leftnav {display:none;}
+	.udm {display:none;}
+
+	A, BODY, CAPTION, CENTER, DIV, DL, DT, FORM, H1, H2, H3, H4, H5, H6, INPUT, LI, MENU, OL, OPTION, P, SELECT, TD, TH, UL {font-family: times new roman, georgia, serif;}
+
+	body
+	{ 	background-color: #FFFFFF;
+		color: black;
+		font-family :  times new roman, georgia, serif;
+		font-size : 13pt;
+		margin:0px;}
+
+	h1 {font-size: 30px; margin-top: 0px;}
+	h2 {font-size: 25px; margin-top: 0px;}
+	h3 {font-size: 120%; font-weight : normal;}
+	h4 {font-size: 100%;}
+	p, td, th, li {font-size:13pt;}
+}
