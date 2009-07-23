@@ -18,7 +18,13 @@ def add_object(request, slug):
     if request.method == 'POST':
         form = eval(gform.form_class)(request.POST)
         if form.is_valid():
-            form.save()
+            data = form.save()
+            t = loader.get_template('eduform/email.txt')
+            c = Context({'data':data,})
+            recipient_list = []
+            for recipient in gform.recipients.all():
+                recipient_list.append(recipient.email)
+            send_mail(gform.name, t.render(c), form.cleaned_data.get('email'), recipient_list, fail_silently=False)
             return HttpResponseRedirect ('/eduform/data-entered')
     else:
         form = eval(gform.form_class)()

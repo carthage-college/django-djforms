@@ -8,6 +8,7 @@ from tagging.models import Tag
 
 import datetime
 
+#For making choices for choice fields for forms
 class GenericChoice(models.Model):
     name = models.CharField(unique=True, max_length=255)
     value = models.CharField(max_length=255)
@@ -20,7 +21,8 @@ class GenericChoice(models.Model):
 
     class Meta:
         ordering = ['ranking']
-        
+
+#For making contacts for forms
 class GenericContact(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=128)
@@ -34,7 +36,7 @@ class GenericContact(models.Model):
     def __unicode__(self):
         return u'%s %s' % (self.last_name, self.first_name)
         
-
+#For making a generic Contact form
 class GenericContactForm(models.Model):
     name = models.CharField(max_length=128)
     slug = models.CharField(max_length=255, verbose_name="Slug", unique=True)
