@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.template import RequestContext
 from django.template import loader, Context
 from django.http import Http404

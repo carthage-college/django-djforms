@@ -2,4 +2,4 @@ Data from Adult education form form submission at:
 
 http://www.carthage.edu/adult/inforequest/
 
-{{data.render_email}}
+{{data.render_email|safe}}
