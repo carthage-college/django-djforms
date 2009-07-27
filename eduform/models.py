@@ -11,9 +11,9 @@ from tagging.models import Tag
 class EduProfile(GenericContact):
     phone = models.CharField(max_length=30, verbose_name='Phone Number')
     address = models.TextField(verbose_name='mailing Address')
-    #The many to many fields of Generic choice types, linked to core
+    #The fields of Generic choice types, linked to core
     contact_time = models.ForeignKey(GenericChoice, related_name="edu_profile_contact_time")
-    programs_of_interest = models.ManyToManyField(GenericChoice, related_name="edu_profile_programs_of_interest") 
+    academic_programs = models.ManyToManyField(GenericChoice, related_name="edu_profile_academic_programs") 
     how_did_you_hear_about_us = models.ForeignKey(GenericChoice, related_name="edu_profile_how_did_you_hear_about_us")
     hear_about_us_other = models.TextField(blank=True, verbose_name='If other, Please Specify.')
     
@@ -26,8 +26,8 @@ class EduProfile(GenericContact):
         
         obj_text += 'Best time to contact is in the %s \n' % self.contact_time
         
-        obj_text += '\n\nPrograms of Interest:\n\n'
-        for poi in self.programs_of_interest.all():
+        obj_text += '\n\nAcademic Programs of Interest:\n\n'
+        for poi in self.academic_programs.all():
             obj_text += "    " + poi.name + "\n"
             
         obj_text += '\nHeard about us through %s\n' % self.how_did_you_hear_about_us
