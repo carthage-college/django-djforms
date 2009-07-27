@@ -6,8 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 
 from djforms.core.models import GenericContactForm, GenericChoice
-from djforms.core.forms import *
-
+from djforms.forms import *
 from types import *
 
 def data_entered(request):

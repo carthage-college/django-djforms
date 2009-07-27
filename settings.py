@@ -4,17 +4,17 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+    # ('ngromiuk', 'ngromiuk@carthage.edu'),
 )
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = '/data2/django_projects/djforms/formsdb.db'             # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
+DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_USER = 'brahman'             # Not used with sqlite3.
+DATABASE_PASSWORD = 'atm@n!'         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+DATABASE_NAME = 'djforms'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -45,7 +45,7 @@ MEDIA_URL = '/calendar/'
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/djmedia/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'zp(!1yvo=g1j58@)29m$bxpl5$o3-g5i!$z*##jbfz=j_(g&-)'
@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'tagging',
+    'djforms.forms',
     'djforms.eduform',
     'djforms.core',
     'djforms',

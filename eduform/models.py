@@ -18,7 +18,7 @@ class EduProfile(GenericContact):
     hear_about_us_other = models.TextField(blank=True, verbose_name='If other, Please Specify.')
     
     def render_email(self):
-        obj_text = 'First Name:    %s\n' % self.first_name
+        obj_text = 'First Name:   %s\n' % self.first_name
         obj_text += 'Last Name:    %s\n' % self.last_name
         obj_text += 'Email:     %s\n' % self.email
         obj_text += 'Phone:    %s\n' % self.phone
