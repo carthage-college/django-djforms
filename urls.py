@@ -16,16 +16,20 @@ urlpatterns = patterns('',
     #For Alpha's contact form environment
     #(r'^contact/', include('djforms.contact_form.urls')),
     
+    # Uncomment the next line to enable the admin:
+    (r'^admin/', include(admin.site.urls)),
+    # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
+    # to INSTALLED_APPS to enable admin documentation:
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    
     #for membrete environment
     (r'^contact/', include('djforms.membrete.urls')),
     
     #For edu form environment
     (r'^eduform/data-entered/$', data_entered),
-    # Uncomment the next line to enable the admin:
-    (r'^eduform/admin/', include(admin.site.urls)),
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
-    # to INSTALLED_APPS to enable admin documentation:
-    (r'^eduform/admin/doc/', include('django.contrib.admindocs.urls')),
     #catches the slugs
     (r'^eduform/(?P<slug>[-\w]+)/$', add_object),
+    
+    #for the job post environment
+    (r'^job/', include('djforms.jobpost.urls')),
 )

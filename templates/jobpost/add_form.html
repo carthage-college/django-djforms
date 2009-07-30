@@ -1,0 +1,29 @@
+<!-- calendar -->
+<link rel="stylesheet" type="text/css" href="http://dev.clausencenter.net/assets/no-bullets.css" />
+<link rel="stylesheet" type="text/css" href="http://dev.clausencenter.net/assets/calendar/calendar-win2k-cold-2.css" />
+<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/calendar.js"></script>
+<!-- this is translation file - choose your language here -->
+<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/lang/calendar-en.js"></script>
+<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/calendar-setup.js"></script>
+<!-- /calendar -->
+
+<form method="POST" action="" class="nobullets">
+    <h3 style="color: green;"> 
+        Fill in the info to add an item to the database.
+    </h3>
+    {% if form.errors %}
+        <h2 style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </h2>
+        {{ form.errors }}
+    {% endif %}
+    
+    {% for field in form %}
+        {{ field.label_tag }}:   {{ field }} <br /><br />
+    {% endfor %}
+
+    
+    <input type="submit" value="Submit">
+</form>
+
+

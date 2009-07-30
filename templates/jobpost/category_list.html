@@ -1,0 +1,28 @@
+{% extends "jobpost/base_post.html" %}
+
+
+{% block title %}Post categories{% endblock %}
+{% block body_id %}category_list{% endblock %}
+
+
+{% block content %}
+  <h2 class="page_title">Post categories</h2>
+  
+  <ul class="link_list">
+    {% for category in object_list %}
+    <li><a href="{{ category.get_absolute_url }}">{{ category }}</a></li>
+    {% endfor %}
+  </ul>
+  
+  {% if is_paginated %}
+  <p class="pagination">
+    {% if has_next %}
+    <a class="older" href="?page={{ next }}">Older Job posts</a>
+    {% endif %}
+    {% if has_next and has_previous %} | {% endif %}
+    {% if has_previous %}
+    <a class="newer" href="?page={{ previous }}">Newer Job posts</a>
+    {% endif %}
+  </p>
+  {% endif %}
+{% endblock %}

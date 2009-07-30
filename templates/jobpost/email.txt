@@ -1,0 +1,5 @@
+Data from job submission at:
+
+http://www.carthage.edu/job/
+
+{{data.render_email|safe}}

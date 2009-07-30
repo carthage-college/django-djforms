@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'tagging',
+    'djforms.jobpost',
     'djforms.forms',
     'djforms.eduform',
     'djforms.core',
