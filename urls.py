@@ -13,11 +13,8 @@ urlpatterns = patterns('',
     (r'^room-reserve/$', room_reserve),
     (r'^reserve-complete/$', reserve_complete),
     
-    #For Alpha's contact form environment
-    #(r'^contact/', include('djforms.contact_form.urls')),
-    
-    # Uncomment the next line to enable the admin:
-    (r'^admin/', include(admin.site.urls)),
+    #(r'^admin/', include(admin.site.urls)),
+    (r'^admin/(.*)', admin.site.root),
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
