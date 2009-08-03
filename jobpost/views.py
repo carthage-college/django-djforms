@@ -1,13 +1,11 @@
 from django.core.mail import send_mail
 from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.template import RequestContext, loader, Context
 from django.http import Http404, HttpResponseRedirect
 from django.views.generic import date_based, list_detail
 
 from djforms.jobpost.forms import JobApplyForm, PostForm
-from djforms.jobpost.models import Post
-
-
+from djforms.jobpost.models import Post, Category
 
 import datetime
 import re
@@ -73,7 +71,11 @@ def post_detail(request, slug):
             job = form.save(commit=False)
             job.job = post
             job.save()
-            return HttpResponseRedirect('/job/data_entered')
+            data = form.save()
+            t = loader.get_template('jobpost/email.txt')
+            c = Context({'data':data,})
+            send_mail(post.title, t.render(c), form.cleaned_data.get('email'), [post.post_manager.email,], fail_silently=False)
+            return HttpResponseRedirect('/forms/job/data_entered')
     else:
         form = JobApplyForm()
     return render_to_response("jobpost/post_detail.html", {'form':form,'post':post}, context_instance=RequestContext(request))
@@ -89,7 +91,7 @@ def post_create(request):
         form = PostForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/job/data_entered')
+            return HttpResponseRedirect('/forms/job/data_entered')
     else:
         form = PostForm()
     return render_to_response("jobpost/add_form.html", {'form':form}, context_instance=RequestContext(request))

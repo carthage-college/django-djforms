@@ -50,7 +50,8 @@ def admin_list_export(request, app_label, model_name, queryset=None, fields=None
         queryset = model.objects.all()
         filters = dict()
         for key, value in request.GET.items():
-            if key not in ('ot', 'o'):
+            #if key not in ('ot', 'o'):
+            if key not in ('ot', 'o', 'p'):
                 filters[str(key)] = str(value)
         if len(filters):
             queryset = queryset.filter(**filters)
