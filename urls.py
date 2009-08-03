@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     
     #(r'^admin/', include(admin.site.urls)),
     (r'^admin/(.*)', admin.site.root),
+    (r'^admin/(?P<app_label>[\d\w]+)/(?P<model_name>[\d\w]+)/csv/', 'djforms.core.util.admin_list_export'),
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),

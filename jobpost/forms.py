@@ -10,7 +10,7 @@ class JobApplyForm(forms.ModelForm):
     class Meta:
         model = JobApplyForm
         
-class Post(forms.ModelForm):
+class PostForm(forms.ModelForm):
     publish     = forms.DateTimeField(help_text="A date for the post to go live on", widget=DateTimeWidget)
     expire_date = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
     

@@ -4,8 +4,10 @@ from django.template import RequestContext
 from django.http import Http404, HttpResponseRedirect
 from django.views.generic import date_based, list_detail
 
-from djforms.jobpost.forms import JobApplyForm, Post
+from djforms.jobpost.forms import JobApplyForm, PostForm
 from djforms.jobpost.models import Post
+
+
 
 import datetime
 import re
@@ -84,12 +86,12 @@ def post_create(request):
     Context:
     """
     if request.method == 'POST':
-        form = Post(request.POST)
+        form = PostForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/job/data_entered')
     else:
-        form = Post()
+        form = PostForm()
     return render_to_response("jobpost/add_form.html", {'form':form}, context_instance=RequestContext(request))
 
 def category_list(request, page=0):
@@ -228,10 +230,14 @@ def search(request, page=0):
         cleaned_search_term = stop_word_list.sub('', search_term)
         cleaned_search_term = cleaned_search_term.strip()
         if len(cleaned_search_term) != 0:
-            post_list = Post.objects.filter(description__icontains=cleaned_search_term, publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now())
-            context = { 'object_list': post_list, 
-                        'search_term':search_term,}
-            return render_to_response('jobpost/post_search.html', context, context_instance=RequestContext(request))
+            return list_detail.object_list(
+                request,
+                queryset = Post.objects.filter(description__icontains=cleaned_search_term, publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now()),
+                #extra_context = {'search_term':search_term},
+                template_name="jobpost/post_search.html", 
+                paginate_by=5,
+                page = page,
+            )
         else:
             message = 'Search term was too vague. Please try again.'
             context = { 'message':message }
