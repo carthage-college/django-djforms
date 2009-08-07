@@ -33,8 +33,8 @@ class JobApplyForm(forms.ModelForm):
         model = JobApplyForm
         
 class PostForm(forms.ModelForm):
-    period              = forms.ModelChoiceField(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect()
-    pay_grade           = forms.ModelChoiceField(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect()
+    period              = forms.ModelChoiceField(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect())
+    pay_grade           = forms.ModelChoiceField(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect())
     work_days           = forms.ModelMultipleChoiceField(queryset=WORK_DAYS, widget=forms.CheckboxSelectMultiple())
     hiring_department   = forms.ModelChoiceField(Department)
     publish             = forms.DateTimeField(help_text="A date for the post to go live on", widget=DateTimeWidget)
