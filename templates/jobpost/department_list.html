@@ -1,8 +1,8 @@
 {% extends "jobpost/base.html" %}
 
 
-{% block title %}Post Categories{% endblock %}
-{% block body_id %}category_list{% endblock %}
+{% block title %}Post Departments{% endblock %}
+{% block body_id %}department_list{% endblock %}
 
 
 {% block content %}
@@ -99,7 +99,7 @@
 </div>  
 <div id="second">
     <div class="buffer">
-    <h2 class="page_title">Post Categories</h2>
+    <h2 class="page_title">Post Departments</h2>
     {% if object_list %}  
     <div class="link_list">
         {% for post in object_list %}
@@ -124,11 +124,11 @@
     </div>
 </div>
 <!--
-<h2 class="page_title">Post categories</h2>
+<h2 class="page_title">Post Departments</h2>
   
   <ul class="link_list">
-    {% for category in object_list %}
-    <li><a href="{{ category.get_absolute_url }}">{{ category }}</a></li>
+    {% for department in object_list %}
+    <li><a href="{{ department.get_absolute_url }}">{{ department }}</a></li>
     {% endfor %}
   </ul>
   

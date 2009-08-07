@@ -5,7 +5,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.views.generic import date_based, list_detail
 
 from djforms.jobpost.forms import JobApplyForm, PostForm
-from djforms.jobpost.models import Post, Category
+from djforms.jobpost.models import Post, Department
 
 import datetime
 import re
@@ -96,14 +96,14 @@ def post_create(request):
         form = PostForm()
     return render_to_response("jobpost/add_form.html", {'form':form}, context_instance=RequestContext(request))
 
-def category_list(request, page=0):
+def department_list(request, page=0):
     """
-    Category list
+    Department list
 
-    Template: ``blog/category_list.html``
+    Template: ``blog/department_list.html``
     Context:
         object_list
-            List of categories.
+            List of departments.
         is_paginated
             are the results paginated?
         results_per_page
@@ -133,22 +133,22 @@ def category_list(request, page=0):
         """
     return list_detail.object_list(
         request,
-        queryset = Category.objects.all(),
-        template_name = 'jobpost/category_list.html',
+        queryset = Department.objects.all(),
+        template_name = 'jobpost/department_list.html',
         paginate_by = 20,
         page = page,
     )
 
-def category_detail(request, slug, page=0):
+def department_detail(request, slug, page=0):
     """
-    Category detail
+    Department detail
     
-    Template: ``jobpost/category_detail.html``
+    Template: ``jobpost/department_detail.html``
     Context:
         object_list
-            List of posts specific to the given category.
-        category
-            Given category.
+            List of posts specific to the given department.
+        department
+            Given department.
         is_paginated
             are the results paginated?
         results_per_page
@@ -177,15 +177,15 @@ def category_detail(request, slug, page=0):
             A list of the page numbers (1-indexed).
     """
     try:
-        category = Category.objects.get(slug__iexact=slug)
-    except Category.DoesNotExist:
+        department = Department.objects.get(slug__iexact=slug)
+    except Department.DoesNotExist:
         raise Http404
   
     return list_detail.object_list(
         request,
-        queryset = category.post_set.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now()),
-        extra_context = { 'category': category },
-        template_name = 'jobpost/category_detail.html',
+        queryset = department.post_set.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now()),
+        extra_context = { 'department': department },
+        template_name = 'jobpost/department_detail.html',
         paginate_by = 5,
         page = page,
     )

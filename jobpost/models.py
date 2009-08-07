@@ -2,7 +2,7 @@ from django import forms
 from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-
+from djforms.core.models import GenericChoice
 from django.db.models import permalink
 from tagging.fields import TagField
 from tagging.models import Tag
@@ -10,21 +10,24 @@ import tagging
 
 import datetime
 
-class Category(models.Model):
-    """ Category """
-    title       = models.CharField(max_length=100)
-    slug        = models.SlugField(unique=True)
-  
+class Department(models.Model):
+    """ Department """
+    name          = models.CharField(max_length=100, verbose_name = 'Department Name')
+    slug          = models.SlugField(unique=True)
+    number        = models.CharField(max_length=3, verbose_name = 'Department Number')
+    contact_name  = models.CharField(max_length=100, verbose_name = 'Department Contact')
+    contact_phone = models.CharField(max_length=100, verbose_name = 'Department Phone')
+    
     class Meta:
-        verbose_name_plural = 'categories'
-        db_table = 'job_categories'
-        ordering = ('title',)
+        verbose_name_plural = 'departments'
+        db_table = 'job_departments'
+        ordering = ('name',)
   
     class Admin:
         prepopulated_fields = {'slug': ('name',)}
   
     def __unicode__(self):
-        return '%s' % self.title
+        return '%s' % self.name
   
     @permalink
     def get_absolute_url(self):
@@ -32,15 +35,25 @@ class Category(models.Model):
 
 class Post(models.Model):
     """ Post model """
+    period      = models.ForeignKey(GenericChoice, related_name="post_period")
     title       = models.CharField(max_length=255, help_text="The title of the job post")
     slug        = models.SlugField(verbose_name="Slug", unique=True)
-    post_manager= models.ForeignKey(User)
+    num_positions = models.IntegerField(max_length=5, verbose_name = 'Number of Positions Available')
+    hours = models.IntegerField(max_length=5, verbose_name = 'Average Number of Hours Per Week')
+    pay_grade   = models.ForeignKey(GenericChoice, related_name="post_pay_grade")
+    work_days   = models.ManyToManyField(GenericChoice, verbose_name = 'Student May Have to work', related_name="post_work_days")
+    hiring_department  = models.ForeignKey(Department)
+    supervisor_name = models.CharField(max_length=100)
+    supervisor_phone = models.CharField(max_length=100)
+    supervisor_email = models.EmailField()
+    displace_employee = models.BooleanField(verbose_name = 'Does this position displace a full-time employee? (Check if yes)')
+    student_supervision = models.BooleanField(verbose_name = 'Do the students you employ have direct supervision by a full-time Carthage employee? (Check if yes)')
+    hour_integrity = models.BooleanField(verbose_name = 'Do you have a system for ensuring that students work the hours that they indicate on their time slip? (Check if yes)')
     description = models.TextField('Job Description')
     publish     = models.DateTimeField(help_text="A date for the post to go live on")
     expire_date = models.DateTimeField(help_text="A date for the post to expire on")
     created_at  = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
-    categories  = models.ManyToManyField(Category, blank=True)
     tags        = TagField()
     
     class Meta:

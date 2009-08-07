@@ -61,7 +61,7 @@ def admin_list_export(request, app_label, model_name, queryset=None, fields=None
     Create your own change_list.html for your admin view and put something like this in it:
     {% block object-tools %}
     <ul class="object-tools">
-        <li><a href="csv/{%if request.GET%}?{{request.GET.urlencode}}{%endif%}" class="addlink">Export to CSV</a></li>
+        <li><a href="csv/{% for key, value in cl.params.items %}{% if forloop.first %}?{% else %}&{% endif %}{{ key }}={{ value }}{% endfor %}" class="addlink">Export to CSV</a></li>
     {% if has_add_permission %}
         <li><a href="add/{% if is_popup %}?_popup=1{% endif %}" class="addlink">{% blocktrans with cl.opts.verbose_name|escape as name %}Add {{ name }}{% endblocktrans %}</a></li>
     {% endif %}

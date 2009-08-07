@@ -1,8 +1,8 @@
 {% extends "jobpost/base.html" %}
 
 
-{% block title %}Posts for {{ category.title }}{% endblock %}
-{% block body_id %}category_post_list{% endblock %}
+{% block title %}Posts for {{ department.title }}{% endblock %}
+{% block body_id %}department_post_list{% endblock %}
 
 
 {% block content %}
@@ -99,7 +99,7 @@
 </div>
 <div id="second">
     <div class="buffer">
-    <h2 class="page_title">Posts for {{ category.title }}</h2>
+    <h2 class="page_title">Posts for {{ department.title }}</h2>
     {% if object_list %}  
     <div class="link_list">
         {% for post in object_list %}
@@ -113,18 +113,18 @@
     {% if is_paginated %}
     <p class="pagination">
     {% if has_next %}
-    <a class="older" href="?page={{ next }}">Older Job posts in {{ category.title }} category</a>
+    <a class="older" href="?page={{ next }}">Older Job posts in the {{ department.title }} department</a>
     {% endif %}
     {% if has_next and has_previous %} | {% endif %}
     {% if has_previous %}
-    <a class="newer" href="?page={{ previous }}">Newer Job posts in {{ category.title }} category</a>
+    <a class="newer" href="?page={{ previous }}">Newer Job posts in the {{ department.title }} department</a>
     {% endif %}
     </p>
     {% endif %}
     </div>
 </div>
 <!--
-  <h2 class="page_title">Posts for {{ category.title }}</h2>
+  <h2 class="page_title">Posts for {{ department.title }}</h2>
   
   <div class="post_list">
     {% for post in object_list %}
@@ -139,11 +139,11 @@
   {% if is_paginated %}
   <p class="pagination">
     {% if has_next %}
-    <a class="older" href="?page={{ next }}">Older Job posts in {{ category.title }} category</a>
+    <a class="older" href="?page={{ next }}">Older Job posts in the {{ department.title }} department</a>
     {% endif %}
     {% if has_next and has_previous %} | {% endif %}
     {% if has_previous %}
-    <a class="newer" href="?page={{ previous }}">Newer Job posts in {{ category.title }} category</a>
+    <a class="newer" href="?page={{ previous }}">Newer Job posts in the {{ department.title }} department</a>
     {% endif %}
   </p>
   {% endif %}
