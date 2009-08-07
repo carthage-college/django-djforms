@@ -1,8 +1,113 @@
-<html>
-<head>
-    <title>Data submitted!</title>
-</head>
-<body>
-    <h3 style="color: green">Your data has been submited successfully</he>
-</body>
-</html>
+{% extends "jobpost/base.html" %}
+{% block title %}Data{% endblock %}
+{% block content %}
+<div id="first">
+    <ul id="about">
+                <li><a href="/articles/quickfacts.cfm">Quick Facts</a></li>
+                <li><a href="/articles/mission.cfm">Mission</a></li>
+                <li><a href="/articles/history.cfm">History</a></li>
+                <li><a href="/articles/location.cfm">Location</a></li>
+
+            </ul>
+            <ul id="nav" class="sf-vertical">
+                <li><a href="/about/about.html">About Carthage</a>
+                    <ul>
+                        <li><a href="https://www.carthage.edu/directory/campusmap.cfm">Campus Maps</a></li>
+                        <li><a href="https://www.carthage.edu/directory/directions.cfm">Directions</a></li>
+                        <li><a href="/President/index/">Office of the President</a></li>
+
+                        <li><a href="/President/trustees/">Trustees</a></li>
+                    </ul>
+                </li>
+                <li><a href="/academics/">Academics</a>
+                    <ul>
+                        <li><a href="/academics/">Majors and Programs of Study</a></li>
+                        <li><a href="/academics/catalog/">College Catalog</a></li>
+
+                        <li><a href="/academics/calendar/">Academic Calendar</a></li>
+                        <li><a href="/academics/schedule/">Course Schedules</a></li>
+                        <li><a href="/academics/registrar">Registrar's Office</a></li>
+                        <li><a href="/academics/registrar/transcriptrequest">Transcripts</a></li>
+                        <li><a href="/academics/writing/">Writing Center</a></li>
+                        <li><a href="/academics/finalscalendar.cfm">Final Exam Schedules</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="/admissions">Admissions</a>
+                    <ul>
+                        <li><a href="/admissions">Undergraduate</a></li>
+                        <li><a href="/adult/">Adult Learners</a></li>
+                        <li><a href="/adult/graduate/education/main/">Graduate Programs</a></li>
+
+                        <li><a href="/tours/">Virtual Tours of Campus</a></li>
+                    </ul>
+                </li>
+                <li><a href="/alumni">Alumni</a></li>
+                <li><a href="/athletics/">Athletics</a></li>
+                <li><a href="http://carthage.bncollege.com">Bookstore</a></li>
+                <li><a href="/business/">Business Services</a></li>
+
+                <li><a href="/conferences">Conference Services</a></li>
+                <li><a href="/insider/calendar/">Calendar of Events</a></li>
+                <li><a href="#">Centers, Institutes and Special Programs</a>
+                    <ul>
+                        <li><a href="/ai">Augustine Institute</a></li>
+                        <li><a href="/childliterature/index.html">Children's Literature Center</a></li>
+
+                        <li><a href="/clausen/index.html">Clausen Center for World Business</a></li>
+                    </ul>
+                </li>
+                <li><a href="/finaid/index.html">Financial Aid</a></li>
+                <li><a href="/academics/finearts/">Fine Arts At Carthage</a></li>
+                <li><a href="/giving">Giving to Carthage</a>
+                    <ul>
+
+                        <li><a href="/giving">Annual Fund</a></li>
+                        <li><a href="/giving/keller.html">Art Keller Field</a></li>
+                        <li><a href="/giving/booster.html">Booster Club</a></li>
+                        <li><a href="https://www.carthage.edu/giving/donarch.cfm">DON Archway</a></li>
+                        <li><a href="/giving/stockform.cfm">Investing in Carthage</a></li>
+                        <li><a href="/giving/brick.html">Personal/Recognition Brick</a></li>
+
+                        <li><a href="http://www.wpg.cc/stl/CDA/homepage/1,1006,508,00.html">Planned Giving</a></li>
+                    </ul>
+                </li>
+                <li><a href="/ais">Library and Technology</a>
+                    <ul>
+                        <li><a href="/ais/hedberg/fridayfamilyfun.htm">Family Fun Night</a></li>
+                        <li><a href="/vrtour/library/librarytour.html">Hedberg Library Tour</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="/chapel2/index.html">Religious Life</a></li>
+                <li><a href="/campuslife/">Student Life</a>
+                    <ul>
+                        <li><a href="/campuslife/">Dean of Students</a></li>
+                        <li><a href="/careerservices/">Career Services</a></li>
+
+                        <li><a href="/dining/">Dining</a></li>
+                        <li><a href="/campuslife/hcc/">Health and Counseling Center</a></li>
+                        <li><a href="/security/index.html">Security</a></li>
+                    </ul>
+                </li>
+            </ul>
+</div>
+<div id="second">
+    <div class="buffer">
+    <h2 class="page_title">Data submitted!</h2>
+    <p class="description" style="color: green">Your data has been submited successfully</p>
+    
+    {% if is_paginated %}
+    <p class="pagination">
+    {% if has_next %}
+    <a class="older" href="?page={{ next }}">Older Job posts</a>
+    {% endif %}
+    {% if has_next and has_previous %} | {% endif %}
+    {% if has_previous %}
+    <a class="newer" href="?page={{ previous }}">Newer Job posts</a>
+    {% endif %}
+    </p>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}

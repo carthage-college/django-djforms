@@ -1,13 +1,67 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
-
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>{% block title %}{% endblock %}</title>
-	<meta name="author" content="">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{% block title %}{% endblock %}</title>
+    {% block metatags %}
+    <meta http-equiv="Content-Language" content="en-us" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="Home Page" />
+    <meta name="MSSmartTagsPreventParsing" content="true" />
+    {% endblock %}
+    {% block javascript %}
+    <script type="text/javascript" src="http://www.carthage.edu/media/js/douglasfir/jquery126min.js"></script>
+    <script type="text/javascript" src="http://www.carthage.edu/media/js/douglasfir/globalnav.js"></script>
+    <script type="text/javascript" src="http://www.carthage.edu/media/js/douglasfir/superfish/superfish.js"></script>
+    {% endblock %}
+    {% block css %}
+    <link href="http://www.carthage.edu/media/css/douglasfir/global.css" rel="stylesheet" type="text/css" />
+    <link href="http://www.carthage.edu/media/css/douglasfir/admissions.css" rel="stylesheet" type="text/css">
+    <!--[if IE]>
+        <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
+    <![endif]-->
+    <!--[if IE 6]>
+        <style type="text/css">div#first {width:150px;margin-left:7px;}     div#fourth {margin-right:-1px;}</style>
+    <![endif]-->
+    <style type="text/css">body {font-size:13px;} ul#nav li a {padding:4px 4px 4px 15px;}</style>
+    {% endblock %}
+    {% block extra_javascript %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('ul.sf-vertical').superfish({autoArrows:false,});
+        });
+    </script>
+    {% endblock %}
+    {% block extrastyle %}
+    <link rel="stylesheet" href="http://www.carthage.edu/media/css/douglasfir/2_column.css" type="text/css" />
+    {% endblock %}
 </head>
-<body id="{% block body_id %}{% endblock %}">
-  {% block content %}{% endblock %}
+{% block body %}
+<body id="Home" class="home">
+    <div id="wrapper" class="container">
+        <div id="Header">
+            <div id="topnav">
+                <h1><a href="http://www.carthage.edu/?ext"><img src="http://clausencenter.net/assets/current/img/ui/3flame_top_sm.gif" alt="Carthage" /></a></h1>
+                {% include "includes/globalnav.html" %}
+            </div>
+        </div>
+        {% block content %}{% endblock %}
+            <div id="footer">
+            <p>Carthage College<br />
+
+            2001 Alford Park Drive<br />
+            Kenosha, WI 53140</p>
+            <p class="last">262-551-8500<br />
+            <a href="mailto:webmaster@carthage.edu">webmaster@carthage.edu</a><br />
+            <a href="https://www.carthage.edu/directory/directions.cfm">Maps and directions</a></p>
+            <div style="clear:both;"></div>
+
+            <div id="tagline"><img alt="Carry the Fire" src="http://clausencenter.net/assets/current/img/ui/tagline.gif" border="0" /></div>
+        </div><!-- end Footer -->
+        <div style="clear:both;"></div>
+
+    </div>
 </body>
+{% endblock %}
 </html>
+
