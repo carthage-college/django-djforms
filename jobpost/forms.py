@@ -33,10 +33,10 @@ class JobApplyForm(forms.ModelForm):
         model = JobApplyForm
         
 class PostForm(forms.ModelForm):
-    period              = models.ForeignKey(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect()
-    pay_grade           = models.ForeignKey(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect()
+    period              = forms.ModelChoiceField(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect()
+    pay_grade           = forms.ModelChoiceField(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect()
     work_days           = forms.ModelMultipleChoiceField(queryset=WORK_DAYS, widget=forms.CheckboxSelectMultiple())
-    hiring_department   = models.ForeignKey(Department)
+    hiring_department   = forms.ModelChoiceField(Department)
     publish             = forms.DateTimeField(help_text="A date for the post to go live on", widget=DateTimeWidget)
     expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
     
