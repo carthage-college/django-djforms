@@ -1,29 +1,29 @@
 from django import forms
 from django.db import models
 from django.forms import ModelForm
-from djforms.jobpost.models import JobApplyForm, Post
+from djforms.jobpost.models import *
 from tagging.models import Tag, TaggedItem
 from djforms.widgets import DateTimeWidget
 
 #Sets up and populates the many to many fields on the EduProfileForm based on entries in Generic Choice and their tags
 PERIOD = []
 try:
-    program_tag = Tag.objects.get(name__iexact='Period')
-    ACADEMIC_PROGRAMS = TaggedItem.objects.get_by_model(GenericChoice, program_tag).filter(active = True)
+    period_tag = Tag.objects.get(name__iexact='Period')
+    ACADEMIC_PROGRAMS = TaggedItem.objects.get_by_model(GenericChoice, period_tag).filter(active = True)
 except:
     pass
 
 PAY_GRADE = []
 try:
-    program_tag = Tag.objects.get(name__iexact='Pay Grade')
-    ACADEMIC_PROGRAMS = TaggedItem.objects.get_by_model(GenericChoice, program_tag).filter(active = True)
+    pay_grade_tag = Tag.objects.get(name__iexact='Pay Grade')
+    ACADEMIC_PROGRAMS = TaggedItem.objects.get_by_model(GenericChoice, pay_grade_tag).filter(active = True)
 except:
     pass
 
 WORK_DAYS = []
 try:
-    program_tag = Tag.objects.get(name__iexact='Work Days')
-    ACADEMIC_PROGRAMS = TaggedItem.objects.get_by_model(GenericChoice, program_tag).filter(active = True)
+    work_day_tag = Tag.objects.get(name__iexact='Work Days')
+    ACADEMIC_PROGRAMS = TaggedItem.objects.get_by_model(GenericChoice, work_day_tag).filter(active = True)
 except:
     pass
 
@@ -34,11 +34,12 @@ class JobApplyForm(forms.ModelForm):
         
 class PostForm(forms.ModelForm):
     period              = forms.ModelChoiceField(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect())
-    pay_grade           = forms.ModelChoiceField(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect())
-    work_days           = forms.ModelMultipleChoiceField(queryset=WORK_DAYS, widget=forms.CheckboxSelectMultiple())
-    hiring_department   = forms.ModelChoiceField(Department)
-    publish             = forms.DateTimeField(help_text="A date for the post to go live on", widget=DateTimeWidget)
-    expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
+    #pay_grade           = forms.ModelChoiceField(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect())
+    #work_days           = forms.ModelMultipleChoiceField(queryset=WORK_DAYS, widget=forms.CheckboxSelectMultiple())
+    #hiring_department   = forms.ModelChoiceField(Department)
+    #hiring_department   = forms.ModelChoiceField(queryset=Department.objects.all())
+    #publish             = forms.DateTimeField(help_text="A date for the post to go live on", widget=DateTimeWidget)
+    #expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
     
     class Meta:
         model = Post
