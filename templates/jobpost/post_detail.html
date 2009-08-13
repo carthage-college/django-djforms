@@ -102,35 +102,46 @@
     <h2 class="page_title">{{ post.title }}</h2>
     <p class="date">Job posted on {{ post.publish|date:"F j, Y" }}</p>
     <p class="description">{{ post.description }}</p>
-    
-    <form method="POST" action="">
-        <h3 style="color: green;"> 
-            Fill in the info to add an item to the database.
-        </h3>
-        {% if form.errors %}
-            <h2 style="color: red;">
-                Please correct the error{{ form.errors|pluralize }} below.
-            </h2>
-            {{ form.errors }}
-        {% endif %}
-        
-        {% for field in form %}
-            {% if not field.is_hidden %}
-                {{ field.label_tag }}:{{ field }} <br /><br />
-            {% endif %}
+    {% if user.is_staff %}
+        {% for jobapplyform in object_list %}
+            <div>
+            <h3 class="title">{{ Student Application }}</h3>
+            <p class="date">Student applied on: {{ jobapplyform.apply_date|date:"F j, Y" }}</p>
+            <p class="name">Student Name: {{ jobapplyform.first_name }} &nbsp; {{ jobapplyform.last_name }}</p>
+            <p class="email">Student Email: {{ jobapplyform.email }}</p>
+            <p class="qualifications">Student qualifications: {{ jobapplyform.app_details }}</p>
+            </div>
         {% endfor %}
-        
-        <input type="submit" value="Submit">
-    </form>
-    
+    {% else %}
+        <form method="POST" action="">
+            <h3 style="color: green;"> 
+                Fill in the info to add an item to the database.
+            </h3>
+            {% if form.errors %}
+                <h2 style="color: red;">
+                    Please correct the error{{ form.errors|pluralize }} below.
+                </h2>
+                {{ form.errors }}
+            {% endif %}
+            
+            {% for field in form %}
+                {% if not field.is_hidden %}
+                    {{ field.label_tag }}:{{ field }} <br /><br />
+                {% endif %}
+            {% endfor %}
+            
+            <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+
     {% if is_paginated %}
     <p class="pagination">
     {% if has_next %}
-    <a class="older" href="?page={{ next }}">Older Job posts</a>
+    <a class="older" href="?page={{ next }}">Older Job applications</a>
     {% endif %}
     {% if has_next and has_previous %} | {% endif %}
     {% if has_previous %}
-    <a class="newer" href="?page={{ previous }}">Newer Job posts</a>
+    <a class="newer" href="?page={{ previous }}">Newer Job applications</a>
     {% endif %}
     </p>
     {% endif %}

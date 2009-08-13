@@ -5,7 +5,8 @@ from django.http import Http404, HttpResponseRedirect
 from django.views.generic import date_based, list_detail
 
 from djforms.jobpost.forms import JobApplyForm, PostForm
-from djforms.jobpost.models import Post, Department
+from djforms.jobpost.models import Post, Department, JobApplyForm
+from django.contrib.auth.models import User
 
 import datetime
 import re
@@ -55,7 +56,7 @@ def post_list(request, page=0):
         page = page,
     )
 
-def post_detail(request, slug):
+def post_detail(request, slug, page=0):
     """
     Post detail
 
@@ -65,20 +66,29 @@ def post_detail(request, slug):
             the object to be detailed
         """
     post = Post.objects.get(slug=slug)
-    if request.method == 'POST':
-        form = JobApplyForm(request.POST)
-        if form.is_valid():
-            job = form.save(commit=False)
-            job.job = post
-            job.save()
-            data = form.save()
-            t = loader.get_template('jobpost/email.txt')
-            c = Context({'data':data,})
-            send_mail(post.title, t.render(c), form.cleaned_data.get('email'), [post.post_manager.email,], fail_silently=False)
-            return HttpResponseRedirect('/forms/job/data_entered')
+    if User.is_staff:
+        return list_detail.object_list(
+            request,
+            queryset = JobApplyForm.objects.filter(job=post),
+            template_name = 'jobpost/post_detail.html',
+            paginate_by = 20,
+            page = page,
+        ) 
     else:
-        form = JobApplyForm()
-    return render_to_response("jobpost/post_detail.html", {'form':form,'post':post}, context_instance=RequestContext(request))
+        if request.method == 'POST':
+            form = JobApplyForm(request.POST)
+            if form.is_valid():
+                job = form.save(commit=False)
+                job.job = post
+                job.save()
+                data = form.save()
+                t = loader.get_template('jobpost/email.txt')
+                c = Context({'data':data,})
+                send_mail(post.title, t.render(c), form.cleaned_data.get('email'), [post.post_manager.email,], fail_silently=False)
+                return HttpResponseRedirect('/forms/job/data_entered')
+        else:
+            form = JobApplyForm()
+        return render_to_response("jobpost/post_detail.html", {'form':form,'post':post}, context_instance=RequestContext(request))
 
 def post_create(request):
     """
