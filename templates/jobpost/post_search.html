@@ -117,6 +117,7 @@
         <h3 class="title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
         <p class="date">Job posted on {{ post.publish|date:"F j, Y" }}</p>
         <p class="description">{{ post.description }}</p>
+        <hr />
         </div>
         {% endfor %}
     </div>

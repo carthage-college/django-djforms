@@ -31,7 +31,7 @@ class Department(models.Model):
   
     @permalink
     def get_absolute_url(self):
-        return ('category_detail', None, { 'slug':self.slug })
+        return ('department_detail', None, { 'slug':self.slug })
 
 class Post(models.Model):
     """ Post model """
@@ -54,6 +54,7 @@ class Post(models.Model):
     expire_date = models.DateTimeField(help_text="A date for the post to expire on")
     created_at  = models.DateTimeField(auto_now_add=True)
     updated_at  = models.DateTimeField(auto_now=True)
+    active      = models.BooleanField(help_text='', verbose_name='Is active?', default=True)
     tags        = TagField()
     
     class Meta:
@@ -64,8 +65,8 @@ class Post(models.Model):
     class Admin:
         prepopulated_fields = {'slug': ('title',)}
         list_display  = ('title', 'publish')
-        list_filter   = ('publish', 'categories')
-        search_fields = ('title', 'body')
+        list_filter   = ('publish', 'departments')
+        search_fields = ('title', 'description')
     
     def __unicode__(self):
         return self.title
@@ -81,6 +82,15 @@ class JobApplyForm(models.Model):
     email       = models.EmailField()
     app_details = models.TextField(verbose_name = 'What qualifications do you have for this job?')
     job         = models.ForeignKey(Post, null=True, blank=True)
-
+    
+    def render_email(self):
+        obj_text =  'First Name:   %s\n' % self.first_name
+        obj_text += 'Last Name:    %s\n' % self.last_name
+        obj_text += 'Email:     %s\n' % self.email
+        obj_text += 'Application submitted on:    %s\n' % self.apply_date
+        obj_text += '\nApplication Details:\n\n%s\n\n' % self.app_details
+        return obj_text
+        
     def __unicode__(self):
         return u'%s %s' % (self.last_name, self.first_name)
+    

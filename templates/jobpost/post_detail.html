@@ -102,14 +102,17 @@
     <h2 class="page_title">{{ post.title }}</h2>
     <p class="date">Job posted on {{ post.publish|date:"F j, Y" }}</p>
     <p class="description">{{ post.description }}</p>
+    <hr />
     {% if user.is_staff %}
         {% for jobapplyform in object_list %}
             <div>
-            <h3 class="title">{{ Student Application }}</h3>
+            <h3 class="title">Student Application</h3>
             <p class="date">Student applied on: {{ jobapplyform.apply_date|date:"F j, Y" }}</p>
-            <p class="name">Student Name: {{ jobapplyform.first_name }} &nbsp; {{ jobapplyform.last_name }}</p>
+            <p class="name">Student Name: {{ jobapplyform.first_name }} {{ jobapplyform.last_name }}</p>
             <p class="email">Student Email: {{ jobapplyform.email }}</p>
-            <p class="qualifications">Student qualifications: {{ jobapplyform.app_details }}</p>
+            <p>&nbsp;</p>
+            <p class="name">Student qualifications: {{ jobapplyform.app_details }}</p>
+            <hr />
             </div>
         {% endfor %}
     {% else %}

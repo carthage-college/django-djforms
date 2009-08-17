@@ -1,5 +1,5 @@
 {% extends "jobpost/base.html" %}
-{% block title %}Data{% endblock %}
+{% block title %}Success{% endblock %}
 {% block content %}
 <div id="first">
     <ul id="about">
@@ -95,19 +95,7 @@
 <div id="second">
     <div class="buffer">
     <h2 class="page_title">Data submitted!</h2>
-    <p class="description" style="color: green">Your data has been submited successfully</p>
-    
-    {% if is_paginated %}
-    <p class="pagination">
-    {% if has_next %}
-    <a class="older" href="?page={{ next }}">Older Job posts</a>
-    {% endif %}
-    {% if has_next and has_previous %} | {% endif %}
-    {% if has_previous %}
-    <a class="newer" href="?page={{ previous }}">Newer Job posts</a>
-    {% endif %}
-    </p>
-    {% endif %}
+    <p class="description" style="color: green">Your entry has been submited successfully!</p>
     </div>
 </div>
 {% endblock %}

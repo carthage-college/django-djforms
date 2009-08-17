@@ -100,8 +100,7 @@
 </div>
 <div id="second">
     <div class="buffer">
-    <h2 class="page_title">{{ post.title }}</h2>
-    <p class="description">{{ post.description }}</p>
+    <h2 class="page_title">Add Post</h2>
     
     <form method="POST" action="" class="nobullets">
     <h3 style="color: green;"> 
@@ -121,18 +120,6 @@
     
     <input type="submit" value="Submit">
     </form>
-    
-    {% if is_paginated %}
-    <p class="pagination">
-    {% if has_next %}
-    <a class="older" href="?page={{ next }}">Older Job posts</a>
-    {% endif %}
-    {% if has_next and has_previous %} | {% endif %}
-    {% if has_previous %}
-    <a class="newer" href="?page={{ previous }}">Newer Job posts</a>
-    {% endif %}
-    </p>
-    {% endif %}
     </div>
 </div>
 {% endblock %}

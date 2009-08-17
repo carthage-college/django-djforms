@@ -99,19 +99,16 @@
 </div>  
 <div id="second">
     <div class="buffer">
-    <h2 class="page_title">Post Departments</h2>
-    {% if object_list %}  
-    <div class="link_list">
-        {% for post in object_list %}
-        <div>
-        <h3 class="title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-        <p class="description">{{ post.description }}</p>
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-    {% if is_paginated %}
-    <p class="pagination">
+<h2 class="page_title">Posting Departments</h2>
+  
+  <ul class="link_list">
+    {% for department in object_list %}
+    <li><a href="{{ department.get_absolute_url }}">{{ department }}</a></li>
+    {% endfor %}
+  </ul>
+  
+  {% if is_paginated %}
+  <p class="pagination">
     {% if has_next %}
     <a class="older" href="?page={{ next }}">Older Job posts</a>
     {% endif %}
@@ -119,8 +116,8 @@
     {% if has_previous %}
     <a class="newer" href="?page={{ previous }}">Newer Job posts</a>
     {% endif %}
-    </p>
-    {% endif %}
+  </p>
+  {% endif %}
     </div>
 </div>
 <!--
