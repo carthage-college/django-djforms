@@ -52,7 +52,7 @@ def post_list(request, page=0):
     """
     return list_detail.object_list(
         request,
-        queryset = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now()),
+        queryset = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1),
         paginate_by = 5,
         page = page,
     )
@@ -103,6 +103,50 @@ def post_manage(request, slug):
     else:
         form = PostForm(instance=post)
     return render_to_response("jobpost/post_manage.html", {"form": form,'original': post}, context_instance=RequestContext(request))
+
+@staff_member_required
+def post_manage_list(request, page=0):
+    """
+    Post list
+
+    Template: ``jobpost/post_manage_list.html``
+    Context:
+        object_list
+            list of objects
+        is_paginated
+            are the results paginated?
+        results_per_page
+            number of objects per page (if paginated)
+        has_next
+            is there a next page?
+        has_previous
+            is there a prev page?
+        page
+            the current page
+        next
+            the next page
+        previous
+            the previous page
+        pages
+            number of pages, total
+        hits
+            number of objects, total
+        last_on_page
+            the result number of the last of object in the
+            object_list (1-indexed)
+        first_on_page
+            the result number of the first object in the
+            object_list (1-indexed)
+        page_range:
+            A list of the page numbers (1-indexed).
+    """
+    return list_detail.object_list(
+        request,
+        queryset = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now()),
+        paginate_by = 5,
+        template_name = 'jobpost/post_manage_list.html',
+        page = page,
+    )
 
 @login_required
 def post_create(request):
@@ -262,7 +306,7 @@ def search(request, page=0):
         if len(cleaned_search_term) != 0:
             return list_detail.object_list(
                 request,
-                queryset = Post.objects.filter(description__icontains=cleaned_search_term, publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now()),
+                queryset = Post.objects.filter(description__icontains=cleaned_search_term, publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1),
                 #extra_context = {'search_term':search_term},
                 template_name="jobpost/post_search.html", 
                 paginate_by=5,

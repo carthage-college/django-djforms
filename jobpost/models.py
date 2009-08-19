@@ -75,6 +75,10 @@ class Post(models.Model):
     def get_absolute_url(self):
         return ('post_detail', None, {'slug'  : self.slug})
 
+    @permalink
+    def get_edit_url(self):
+        return ('post_manage', None, {'slug'  : self.slug})
+        
 class JobApplyForm(models.Model):
     apply_date  = models.DateTimeField(auto_now_add=True)
     first_name  = models.CharField(max_length=255)
