@@ -73,7 +73,7 @@ def post_detail(request, slug, page=0):
             request,
             queryset = JobApplyForm.objects.filter(job=post),
             template_name = 'jobpost/post_detail.html',
-            paginate_by = 20,
+            paginate_by = 5,
             page = page,
             extra_context = {'post':post},
         ) 
