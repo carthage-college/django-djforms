@@ -1,0 +1,19 @@
+{% extends "subpage.html" %}
+{% load i18n %}
+{% block content %}
+<h2>{% trans "Your account" %}</h2>
+<div id="AccountOptions">
+    {% if msg %}
+        <p class="error-message">{{ msg }}</p>
+    {% endif %}
+    <ul>
+        <li><a href='/profile/'>{% trans "Your profile" %}</a></li>
+        <li><a href='/profile/update/'>{% trans "Edit your profile" %}</a></li>
+        <li><a href='/accounts/password/change/'>{% trans "Change your password" %}</a></li>
+        {% if is_openid %}
+        <li><a href="/openid/{{user.username}}/change/" %}">{% trans "Change openid url" %}</a></li>
+        {% endif %}
+        <li><a href='/accounts/logout/'>{% trans "Logout" %}</a></li>
+    </ul>
+</div>
+{% endblock %}

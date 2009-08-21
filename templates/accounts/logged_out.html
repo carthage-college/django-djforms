@@ -1,0 +1,14 @@
+{% extends "subpage.html" %}
+{% load i18n %}
+
+{% block title %}You have logged out.{% endblock %}
+
+{% block content %}
+
+<h2>Log out successful</h2>
+
+<p>{% trans "You are now logged out" %}</p>
+
+<p><a href="/accounts/login/">{% trans 'Log in again' %}</a></p>
+
+{% endblock %}

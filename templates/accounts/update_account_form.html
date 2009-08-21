@@ -1,0 +1,12 @@
+{% extends "subpage.html" %}
+{% load i18n %}
+{% block title %}{% trans 'Update your user account' %}{% endblock %}
+{% block content %}
+    <h2>{% trans 'Update your user account' %}</h2>
+    <p>You may update your user profile <a href="/profile/update/">here</a> or <a href="/profile/{{user.username}}/">view it</a>.<p/>
+    {% ifnotequal object.id user.id %}
+        <h2>Sorry, you cannot edit someone else's account.</h2>
+    {% else %}
+        {% include "accounts/user_form.html" %}
+    {% endifnotequal %}
+{% endblock %}

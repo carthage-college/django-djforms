@@ -1,0 +1,29 @@
+{% extends "subpage.html" %}
+{% block title %}Registration :: Phone Number{% endblock %}
+{% block content %}
+  <div id="LeftColumn" style="float: left; width: 554px;">
+    <div id="Note" style="margin-top: 10px; margin-left: 20px; margin-right: 20px; font-size: 17px; font-weight: bold; color: #494949; text-align: left; height: 20px; padding-bottom: 20px; border-bottom: 2px solid #EBE3D3; ">
+      <div style="float: left">Enter your phone number</div>
+      <div id="RegJTVStep" style="font-size: 14px; float: right; display: none">Step 3 of 4</div>
+    </div>
+    <div style="margin:20px;">
+        <form method="post" action="">
+            <div style="float: left; font-size: 12px; color: #393939; text-align: left;">
+            Phone Number:
+            <input id="Phone1Input" maxlength="3" style="width: 35px; margin-right: 10px; padding: 3px; margin-left: 6px; border: 1px solid #393939; color: #E85B00"/>
+            <input id="Phone2Input" maxlength="3" style="width: 35px; margin-right: 10px; padding: 3px; margin-left: 6px; border: 1px solid #393939; color: #E85B00"/> -
+            <input id="Phone3Input" maxlength="4" style="width: 50px; margin-right: 10px; padding: 3px; margin-left: 6px; border: 1px solid #393939; color: #E85B00"/>
+            </div>
+            <div style="float: left; padding-top: 3px; margin-left: 20px;">
+                <input id="id_submit" type="submit" class="submit" value="{% trans 'Continue' %}" />
+            </div>
+            <div style="clear:both;"></div>
+        </form>
+    </div>
+    <div style="margin: 20px; font-size: 11px; color: #494949; text-align: left; height: 20px; border-top: 2px solid #EBE3D3; padding-top:20px;">
+      The Flingmo is currently only available to US and Canadian subscribers.<br/>
+
+      Your phone number will never be sold or shared for marketing purposes without your permission.<br/>
+    </div>
+  </div>
+{% endblock %}

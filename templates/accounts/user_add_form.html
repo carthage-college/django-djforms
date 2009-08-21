@@ -1,0 +1,63 @@
+{% extends "editor/base.html" %}
+{% load i18n %}
+{% block content_tab_panel %}
+activeTab: 0,items:[{contentEl:'content_form',title:'User Manager',autoScroll:true}]
+{% endblock %}
+{# required to block tree view loading #}
+{% block jquery_ready %}{% endblock %}
+{% block css %}
+{% include "includes/css/bodhi-core.html" %}
+{% endblock %}
+{% block content %}
+<div id="content_form">
+    <div class="tab_content_container">
+        {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+        <form class="form" action="." method="post">
+        <fieldset class="blockLabels">
+        <legend>{{title}}</legend>
+        <ol>
+            <li class="ctrlHolder">
+                <h3><label for="id_email">{% trans 'Email:' %}</label></h3>
+                {% if form.email.errors %}
+                <div class="warning">
+                <span class="error-message">*** {{ form.email.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {{form.email}}
+                </div>
+            </li>
+            <li class="ctrlHolder">
+                <h3><label for="id_password1">{% trans 'Password:' %}</label></h3>
+                {% if form.email.errors %}
+                <div class="warning">
+                <span class="error-message">*** {{ form.password1.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {{form.password1}}
+                </div>
+            </li>
+            <li class="ctrlHolder">
+                <h3><label for="id_password2">{% trans 'Enter Password Again' %}</label></h3>
+                {% if form.email.errors %}
+                <ol class="warning">
+                <span class="error-message">*** {{ form.password2.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {{form.password2}}
+                </div>
+            </li>
+            <li class="btnHolder">
+                <label for="id_submit">&nbsp;&nbsp;</label>
+                <input type="submit" value="Save user" class="button" name="_save" />
+            </li>
+        </ol>
+        </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}

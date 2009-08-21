@@ -1,0 +1,68 @@
+{% extends "subpage.html" %}
+{% load i18n %}
+{% block title %}Sign up for {{site_name}}{% endblock %}
+{% block content %}
+<h1>Join now</h1>
+<p>There are two ways to join: with an email which acts as your login, or with OpenID.</p>
+
+<p>For the former, fill out the first form below (all fields are required), and your account will be created.
+We will then send you an email with instructions on how to complete your registration.</p>
+<p>For OpenID registration, simply provide your OpenID URL and follow the subsequent instructions.</p>
+<p>
+    {% trans 'Your personal information will never be sold or shared for marketing purposes without your permission.' %}
+</p>
+<h2 class="signup">Standard Registration</h2>
+{% if form.errors %}
+<p class="error-message">Please correct the errors below:</p>
+{% endif %}
+<form method="post" action="" class="form">
+    <fieldset>
+        <p>
+            <label for="id_email">Email address:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            <span class="error-message">{{ form.email.errors|join:", " }}</span>
+            {% endif %}
+        </p>
+        <p>
+            <label for="id_password1">Password:</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+            <span class="error-message">{{ form.password2.errors|join:", " }}</span>
+            {% endif %}
+        </p>
+        <p>
+            <label for="id_password2">Password (type again to catch any typos):</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+            <span class="error-message">{{ form.password2.errors|join:", " }}</span>
+            {% endif %}
+        </p>
+        <p>
+            <label for="id_tos">I have read and agree to the <a href="/about/tos/">Terms of Service</a>:</label>
+            {% if form.tos.errors %}&nbsp;<span class="error-message">{{ form.tos.errors|join:", " }}</span>{% endif %}
+            &nbsp;&nbsp;
+            {{ form.tos }}
+        </p>
+    </fieldset> 
+    <fieldset>
+            <input id="id_submit" type="submit" class="submit" value="{% trans 'Register' %}" />
+    </fieldset>
+</form>
+
+<h2 class="signup">OpenID Registration</h2>
+
+<form name="fopenid" action="/openid/signin/" method="post">
+    <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}/profile/{% endif %}" />
+    <fieldset>
+        <div class="form-row"><label for="id_openid_ul">{% trans "OpenID URL :" %}</label>
+            <br />
+            <input id="id_openid_url" type="text" name="openid_url" maxlength="255" />
+            <p class="openid">OpenID lets you safely sign in to different websites with a single password. <a href="https://www.myopenid.com/affiliate_signup?affiliate_id=xxxx" target="_blank">Get an OpenID</a>.</p>
+        </div>
+        <div class="submit-row ">
+            <input name="bsignin" type="submit" value="{% trans "Register with OpenID" %}">
+        </div>
+    </fieldset>
+</form>	
+{% endblock %}

@@ -87,3 +87,8 @@ INSTALLED_APPS = (
     'djforms.core',
     'djforms',
 )
+
+# login stuff
+LOGIN_URL = '/forms/accounts/login/'
+LOGIN_REDIRECT_URL = '/forms/job/'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False

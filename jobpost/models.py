@@ -62,12 +62,6 @@ class Post(models.Model):
         ordering  = ('-publish',)
         get_latest_by = 'publish'
     
-    class Admin:
-        prepopulated_fields = {'slug': ('title',)}
-        list_display  = ('title', 'publish')
-        list_filter   = ('publish', 'departments')
-        search_fields = ('title', 'description')
-    
     def __unicode__(self):
         return self.title
     

@@ -1,0 +1,42 @@
+{% extends "jobpost/base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div id="first">
+</div>
+<div id="second">
+{% if user.is_anonymous %}
+<h2>Login</h2>
+{% if form.errors %}
+    <p class="warning">
+    Please enter a correct username and password. Note that both fields are case-sensitive.
+    </p>
+{% endif %}
+        <form name="djauth" method="post" action="." class="form">
+            <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}/{% endif %}" />
+                <ol>
+                    <li class="ctrlHolder">
+                        <label for="id_username">Username</label>
+                        {% if form.username.errors %}
+                            <span class="error-message">{{ form.username.errors|join:", " }}</span>
+                        {% endif %}
+                        <input type="text" id="id_username" name="username" class="textInput required" size="15" value="{{form.data.username}}" maxlength="30" />
+                    </li>
+                    <li class="ctrlHolder">
+                        <label for="id_password">Password</label>
+                        {% if form.password.errors %}
+                            <span class="error-message">{{ form.password.errors|join:", " }}</span>
+                        {% endif %}
+                        <input type="password" id="id_password" class="vPasswordField required" name="password" size="15" value="{{form.data.password}}" maxlength="30" />
+                    </li>
+                    <li class="btnHolder">
+                        <label>&nbsp;</label>
+                        <input id="id_submit" type="submit" class="button" value="Log in" />
+                    </li>
+                </ol>
+        </form>
+{% else %}
+<h2>You are already logged in</h2>
+<p><a href="/forms/accounts/logout/">Do you want to log out?</a></p>
+{% endif %}
+</div>
+{% endblock %}
