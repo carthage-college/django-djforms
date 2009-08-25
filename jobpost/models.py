@@ -59,9 +59,11 @@ class Post(models.Model):
     tags                = TagField(help_text="Used for search.")
     
     class Meta:
+        permissions = ( ("can_manage", "can manage"), )
         db_table  = 'job_posts'
         ordering  = ('-publish',)
         get_latest_by = 'publish'
+
         
     def __unicode__(self):
         return self.title

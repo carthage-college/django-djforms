@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.http import Http404, HttpResponseRedirect
 from django.views.generic import date_based, list_detail
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.admin.views.decorators import staff_member_required
 from djforms.jobpost.forms import JobApplyForms, PostForm
 from djforms.jobpost.models import Post, Department, JobApplyForm
@@ -12,9 +12,11 @@ from django.contrib.auth.models import User
 import datetime
 import re
 
+@login_required
 def data_entered(request):
     return render_to_response('jobpost/data_entered.html')
 
+@login_required
 def post_list(request, page=0):
     """
     Post list
@@ -57,6 +59,7 @@ def post_list(request, page=0):
         page = page,
     )
 
+@login_required
 def post_detail(request, slug, page=0):
     """
     Post detail
@@ -92,7 +95,7 @@ def post_detail(request, slug, page=0):
             form = JobApplyForms()
         return render_to_response("jobpost/post_detail.html", {'form':form,'post':post}, context_instance=RequestContext(request))
 
-@staff_member_required
+@permission_required('jobpost.can_manage, login_url= '/accounts/login/')
 def post_manage(request, slug):
     post = get_object_or_404(Post, slug=slug)
     if request.method == 'POST':
@@ -103,8 +106,7 @@ def post_manage(request, slug):
     else:
         form = PostForm(instance=post)
     return render_to_response("jobpost/post_manage.html", {"form": form,'original': post}, context_instance=RequestContext(request))
-
-@staff_member_required
+@permission_required('jobpost.can_manage, login_url= '/accounts/login/')
 def post_manage_list(request, page=0):
     """
     Post list
@@ -148,7 +150,7 @@ def post_manage_list(request, page=0):
         page = page,
     )
 
-@login_required
+@staff_member_required
 def post_create(request):
     """
     Post list
@@ -168,6 +170,7 @@ def post_create(request):
         form = PostForm()
     return render_to_response("jobpost/add_form.html", {'form':form}, context_instance=RequestContext(request))
 
+@login_required
 def department_list(request, page=0):
     """
     Department list
@@ -211,6 +214,7 @@ def department_list(request, page=0):
         page = page,
     )
 
+@login_required
 def department_detail(request, slug, page=0):
     """
     Department detail
@@ -282,7 +286,7 @@ we|well|were|what|whatever|when|whence|whenever|where|whereafter|whereas|whereby
 which|while|whither|who|whoever|whole|whom|whose|why|will|with|within|without|would|yet|you|your|yours|yourself|
 yourselves)\b"""
 
-
+@login_required
 def search(request, page=0):
     """
     Search for jobpost posts.
