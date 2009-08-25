@@ -1,0 +1,76 @@
+{% extends "jobpost/base.html" %}
+{% block title %}Manage Job Posts{% endblock %}
+{% block extra_javascript %}
+<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/calendar.js"></script>
+<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/lang/calendar-en.js"></script>
+<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/calendar-setup.js"></script>
+<script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/init.js"></script>
+<script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/XinhaCore.js"></script>
+<script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/job-apps.js"></script>
+<script type="text/javascript" src="http://clausencenter.net/djmedia/js/urlify.js"></script>
+<script type="text/javascript" src="http://clausencenter.net/djmedia/js/getElementsBySelector.js"></script>
+{% endblock %}
+{% block extra_style %}
+<link rel="stylesheet" type="text/css" href="http://dev.clausencenter.net/assets/calendar/calendar-win2k-cold-2.css" />
+<link rel="stylesheet" href="/assets/forms.css" type="text/css" />
+<link rel="stylesheet" href="http://clausencenter.net/assets/current/css/core/grid-960.css" type="text/css" />
+<link rel="stylesheet" href="http://clausencenter.net/assets/current/css/plugins/forms.css" type="text/css" />
+<link rel="stylesheet" href="http://clausencenter.net/assets/current/css/overrides/forms.css" type="text/css" />
+<link rel="stylesheet" href="http://clausencenter.net/assets/current/css/overrides/forms.bridge.css" type="text/css" />
+{% endblock %}
+{% block content %}
+<div id="second">
+    <div class="buffer">
+        <h2 class="page_title">Manage Post</h2>
+        <form method="POST" action="" class="form">
+        <h3 style="color: green;"> 
+            Fill in the info to add an item to the database.
+        </h3>
+        <p><u>Department Information</u></p>
+        <p>Department Name: {{original.hiring_department.name}}<br />
+        Department Number: {{original.hiring_department.number}}<br />
+        Contact Name: {{original.hiring_department.contact_name}}<br />
+        Contact phone: {{original.hiring_department.contact_phone}}</p>
+        <form method="POST" action="." class="form">
+            <h3 style="color: green;"> 
+                Complete the form below to apply for this job.
+            </h3>
+            {% if form.errors %}
+                <h2 style="color: red;">
+                    Please correct the error{{ form.errors|pluralize }} below.
+                </h2>
+            {% endif %}
+            <fieldset class="blockLabels">
+                <ol>
+                    {% for field in form %}
+                        {% if not field.is_hidden %}
+                            <li class="ctrlHolder">
+                            <h3>{{ field.label_tag }}</h3>
+                            {% if field.errors %}
+                            <div class="warning">
+                            <span class="error-message">*** {{ field.errors|join:", "}}</span>
+                            {% else %}
+                            <div>
+                            {% endif %}
+                            {{field}}
+                            {% if field.help_text %}
+                            <p class="help">{{field.help_text}}</p>
+                            {% endif %}
+                            </div>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Save application" class="button" />
+                    </li>
+                </ol>
+            </fieldset>
+            <script type="text/javascript">document.getElementById("id_title").focus();</script>
+            <script type="text/javascript">
+                document.getElementById("id_slug").onchange = function() { this._changed = true; };document.getElementById("id_title").onkeyup = function() { var e = document.getElementById("id_slug"); if(!e._changed) { e.value = URLify(document.getElementById("id_title").value, 50);} };
+            </script>
+        </form>
+    </div>
+</div>
+{% endblock %}
