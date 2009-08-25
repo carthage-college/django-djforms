@@ -1,35 +1,64 @@
 {% extends "jobpost/base.html" %}
-{% block title %}REQUEST FOR FEDERAL WORK-STUDY POSITION{% endblock %}
+{% block title %}Create a Job Post{% endblock %}
 {% block extra_javascript %}
+<script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/init.js"></script>
+<script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/XinhaCore.js"></script>
+<script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/job-apps.js"></script>
+<script type="text/javascript" src="http://clausencenter.net/djmedia/js/urlify.js"></script>
+<script type="text/javascript" src="http://clausencenter.net/djmedia/js/getElementsBySelector.js"></script>
 <script type="text/javascript" src="/assets/calendar/calendar.js"></script>
 <script type="text/javascript" src="/assets/calendar/lang/calendar-en.js"></script>
 <script type="text/javascript" src="/assets/calendar/calendar-setup.js"></script>
 {% endblock %}
 {% block extra_style%}
-<link rel="stylesheet" type="text/css" href="/assets/no-bullets.css" />
-<link rel="stylesheet" type="text/css" href="/assets/calendar/calendar-win2k-cold-2.css" />
+<link rel="stylesheet" href="/assets/calendar/calendar-win2k-cold-2.css" type="text/css" />
+<link rel="stylesheet" href="/assets/forms.css" type="text/css" />
+<link rel="stylesheet" href="http://clausencenter.net/assets/current/css/plugins/forms.css" type="text/css" />
+<link rel="stylesheet" href="http://clausencenter.net/assets/current/css/overrides/forms.css" type="text/css" />
+<link rel="stylesheet" href="http://clausencenter.net/assets/current/css/overrides/forms.bridge.css" type="text/css" />
 {% endblock %}
 {% block content %}
 <div id="second">
     <div class="buffer">
-    <h2 class="page_title">REQUEST FOR FEDERAL WORK-STUDY POSITION</h2>
-
-    <form method="POST" action="" class="nobullets">
-    <h3 style="color: green;"> 
-        PLEASE FILL IN ALL APPROPRIATE FIELDS
-    </h3>
-    {% if form.errors %}
-        <h2 style="color: red;">
-            Please correct the error{{ form.errors|pluralize }} below.
-        </h2>
-        {{ form.errors }}
-    {% endif %}
-
-    {% for field in form %}
-        {{ field.label_tag }}{{ field }} <br /><br /><br /><br />
-    {% endfor %}
-    <input type="submit" value="Submit">
-    </form>
+        <h2 class="page_title">Create a Job Post</h2>
+        <form method="POST" action="" class="form">
+            <h3 style="color: green;"> 
+                Please fill in all appropriate fields
+            </h3>
+            {% if form.errors %}
+                <h2 style="color: red;">
+                    Please correct the error{{ form.errors|pluralize }} below.
+                </h2>
+            {% endif %}
+            <fieldset class="blockLabels">
+                <ol>
+                    {% for field in form %}
+                    <li class="ctrlHolder">
+                    <h3>{{ field.label_tag }}</h3>
+                    {% if field.errors %}
+                    <div class="warning">
+                    <span class="error-message">*** {{ field.errors|join:", "}}</span>
+                    {% else %}
+                    <div>
+                    {% endif %}
+                    {{field}}
+                    {% if field.help_text %}
+                    <p class="help">{{field.help_text}}</p>
+                    {% endif %}
+                    </div>
+                    </li>
+                    {% endfor %}
+                    <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Save event" class="button" />
+                    </li>
+                </ol>
+            </fieldset>
+            <script type="text/javascript">document.getElementById("id_title").focus();</script>
+            <script type="text/javascript">
+                document.getElementById("id_slug").onchange = function() { this._changed = true; };document.getElementById("id_title").onkeyup = function() { var e = document.getElementById("id_slug"); if(!e._changed) { e.value = URLify(document.getElementById("id_title").value, 50);} };
+            </script>
+        </form>
     </div>
 </div>
 {% endblock %}

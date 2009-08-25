@@ -72,6 +72,10 @@ TEMPLATE_DIRS = (
     "/data2/django_projects/sputnik/production/sputnik/templates/"
 )
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'djforms.auth.ldapBackend.LDAPBackend',
+)
 
 INSTALLED_APPS = (
     'django.contrib.admin',

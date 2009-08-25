@@ -32,36 +32,37 @@ class Department(models.Model):
     @permalink
     def get_absolute_url(self):
         return ('department_detail', None, { 'slug':self.slug })
-
+        
+#uses the generic choice field from the core app
 class Post(models.Model):
     """ Post model """
-    period      = models.ForeignKey(GenericChoice, related_name="post_period")
-    title       = models.CharField(max_length=255, help_text="The title of the job post")
-    slug        = models.SlugField(verbose_name="Slug", unique=True)
-    num_positions = models.IntegerField(max_length=5, verbose_name = 'Number of Positions Available')
-    hours = models.IntegerField(max_length=5, verbose_name = 'Average Number of Hours Per Week')
-    pay_grade   = models.ForeignKey(GenericChoice, related_name="post_pay_grade")
-    work_days   = models.ManyToManyField(GenericChoice, verbose_name = 'Student May Have to work', related_name="post_work_days")
-    hiring_department  = models.ForeignKey(Department)
-    supervisor_name = models.CharField(max_length=100)
-    supervisor_phone = models.CharField(max_length=100)
-    supervisor_email = models.EmailField()
-    displace_employee = models.BooleanField(verbose_name = 'Does this position displace a full-time employee? (Check if yes)')
+    period              = models.ForeignKey(GenericChoice, related_name="post_period")
+    title               = models.CharField(max_length=255, help_text="The title of the job post")
+    slug                = models.SlugField(verbose_name="Slug", unique=True, help_text="The slug is automatically generated from the title of the job post as you type, and will form a part of the URL for the job posting (e.g. http://www.carthage.edu/forms/job/math-tutors-needed/). If an error appears for this field, you will have to modify the slug field so that it is unique, as an error indicates that the value of the slug already exists in the system. The easiest way to ensure that the slug is unique is to have a descriptive title or simply add -2 to the end of the slug that is generated from the value of the title field.")
+    num_positions       = models.IntegerField(max_length=5, verbose_name = 'Number of Positions Available')
+    hours               = models.IntegerField(max_length=5, verbose_name = 'Average Number of Hours Per Week')
+    pay_grade           = models.ForeignKey(GenericChoice, related_name="post_pay_grade")
+    work_days           = models.ManyToManyField(GenericChoice, verbose_name = 'Student May Have to work', related_name="post_work_days")
+    hiring_department   = models.ForeignKey(Department)
+    supervisor_name     = models.CharField(max_length=100)
+    supervisor_phone    = models.CharField(max_length=100)
+    supervisor_email    = models.EmailField()
+    displace_employee   = models.BooleanField(verbose_name = 'Does this position displace a full-time employee? (Check if yes)')
     student_supervision = models.BooleanField(verbose_name = 'Do the students you employ have direct supervision by a full-time Carthage employee? (Check if yes)')
-    hour_integrity = models.BooleanField(verbose_name = 'Do you have a system for ensuring that students work the hours that they indicate on their time slip? (Check if yes)')
-    description = models.TextField('Job Description')
-    publish     = models.DateTimeField(help_text="A date for the post to go live on")
-    expire_date = models.DateTimeField(help_text="A date for the post to expire on")
-    created_at  = models.DateTimeField(auto_now_add=True)
-    updated_at  = models.DateTimeField(auto_now=True)
-    active      = models.BooleanField(help_text='', verbose_name='Is active?', default=True)
-    tags        = TagField()
+    hour_integrity      = models.BooleanField(verbose_name = 'Do you have a system for ensuring that students work the hours that they indicate on their time slip? (Check if yes)')
+    description         = models.TextField('Job Description')
+    publish             = models.DateTimeField(help_text="A date for the post to go live on")
+    expire_date         = models.DateTimeField(help_text="A date for the post to expire on")
+    created_at          = models.DateTimeField(auto_now_add=True)
+    updated_at          = models.DateTimeField(auto_now=True)
+    active              = models.BooleanField(help_text='', verbose_name='Is active?', default=True)
+    tags                = TagField(help_text="Used for search.")
     
     class Meta:
         db_table  = 'job_posts'
         ordering  = ('-publish',)
         get_latest_by = 'publish'
-    
+        
     def __unicode__(self):
         return self.title
     
@@ -74,6 +75,7 @@ class Post(models.Model):
         return ('post_manage', None, {'slug'  : self.slug})
         
 class JobApplyForm(models.Model):
+    """ Job Apply Form """
     apply_date  = models.DateTimeField(auto_now_add=True)
     first_name  = models.CharField(max_length=255)
     last_name   = models.CharField(max_length=255)

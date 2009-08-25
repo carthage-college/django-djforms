@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+{% autoescape off %}
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -20,9 +21,8 @@
     </script>
     {% endblock %}
     {% block css %}
-    <link rel="stylesheet" href="http://www.carthage.edu/media/css/douglasfir/2_column.css" type="text/css" />
     <link href="http://www.carthage.edu/media/css/douglasfir/global.css" rel="stylesheet" type="text/css" />
-    <link href="http://www.carthage.edu/media/css/douglasfir/admissions.css" rel="stylesheet" type="text/css">
+    <link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />
     <!--[if IE]>
         <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
     <![endif]-->
@@ -31,7 +31,7 @@
     <![endif]-->
     {% endblock %}
     {% block extra_javascript %}{% endblock %}
-    {% block extrastyle %}{% endblock %}
+    {% block extra_style %}{% endblock %}
 </head>
 {% block body %}
 <body id="Home" class="home">
@@ -46,7 +46,7 @@
                 {% if not user.is_anonymous %}
                     <li><a href="/forms/accounts/logout/">Logout</a></li>
                 {% else %}
-                    <li><a href="/forms/accounts/login/?next=/forms/job/">Login</a></li>
+                    <li><a href="/forms/accounts/login/?next=/forms/job/">Faculty/Staff Login</a></li>
                 {% endif %}
                 {% if user.is_superuser %}
                     <li><a href="/forms/admin/">Administration</a></li>
@@ -65,28 +65,28 @@
             </ul>
         </div>
         {% block content %}{% endblock %}
-            <div id="footer">
-                <p>Carthage College<br />
-                2001 Alford Park Drive<br />
-                Kenosha, WI 53140</p>
-                <p>262-551-8500<br />
-                <a href="mailto:webmaster@carthage.edu">webmaster@carthage.edu</a><br />
-                <a href="https://www.carthage.edu/df_directory/directions.cfm">Maps and directions</a>
-                </p>
-                <p class="last">
-                    <br />
-                    Users:<br />
-                    {% if not user.is_anonymous %}
-                        <a href="/forms/accounts/logout/">Logout</a>
-                    {% else %}
-                        <a href="/forms/accounts/login/?next=/forms/job/createpost/">Login</a>
-                    {% endif %}
-                </p>
-                <div style="clear:both;"></div>
-                <div id="tagline"><img alt="Truth, Strength, Service. Together." src="{{media_url}}{{skeleton_version}}/img/ui/tagline.gif" border="0" /></div>
-            </div><!-- end footer -->
+        <div id="footer">
+            <p>Carthage College<br />
+            2001 Alford Park Drive<br />
+            Kenosha, WI 53140</p>
+            <p>262-551-8500<br />
+            <a href="mailto:webmaster@carthage.edu">webmaster@carthage.edu</a><br />
+            <a href="https://www.carthage.edu/df_directory/directions.cfm">Maps and directions</a>
+            </p>
+            <p class="last">
+                <br />
+                Faculty/Staff:<br />
+                {% if not user.is_anonymous %}
+                    <a href="/forms/accounts/logout/">Logout</a>
+                {% else %}
+                    <a href="/forms/accounts/login/?next=/forms/job/createpost/">Login</a>
+                {% endif %}
+            </p>
+            <div style="clear:both;"></div>
+            <div id="tagline"><img alt="Truth, Strength, Service. Together." src="http://clausencenter.net/assets/current/img/ui/tagline.gif" border="0" /></div>
+        </div><!-- end footer -->
     </div>
 </body>
 {% endblock %}
 </html>
-
+{% endautoescape %}

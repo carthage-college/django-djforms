@@ -39,7 +39,7 @@ class PostForm(forms.ModelForm):
     
     class Meta:
         model = Post
-        exclude = ("slug")
+
     #Makes sure the user picks an expire date later than the post date
     def clean_date(self):
         postdate = self.cleaned_data['publish']
