@@ -33,6 +33,11 @@
     <p>{{ post.description }}</p>
     <hr />
     {% if user.is_staff %}
+        {% ifequal user post.creator %}
+            <form method="POST" action="." class="form">
+            <input type="submit" value="Expire Job Post" class="button" />
+            </form>
+        {% endif %}
         {% for jobapplyform in object_list %}
             <div>
                 <h2 class="title">Student Application</h2>

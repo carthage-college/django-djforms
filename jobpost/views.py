@@ -69,17 +69,34 @@ def post_detail(request, slug, page=0):
         object:
             the object to be detailed
         """
-    
+    #if the user is staff they see the applicants, and if they are the creator they can expire the post
     post = Post.objects.get(slug=slug)
     if request.user.is_staff:
-        return list_detail.object_list(
-            request,
-            queryset = JobApplyForm.objects.filter(job=post),
-            template_name = 'jobpost/post_detail.html',
-            paginate_by = 5,
-            page = page,
-            extra_context = {'post':post},
-        ) 
+        if post.creator == request.user:
+            if request.method == 'POST':
+                form = PostForm(request.POST, instance=post)
+                if form.is_valid():
+                    form.expire_date = datetime.datetime.now()
+                    form.save()
+                return HttpResponseRedirect('/forms/job/data_entered')
+            else:
+                return list_detail.object_list(
+                    request,
+                    queryset = JobApplyForm.objects.filter(job=post),
+                    template_name = 'jobpost/post_detail.html',
+                    paginate_by = 5,
+                    page = page,
+                    extra_context = {'post':post},
+                )
+        else:
+            return list_detail.object_list(
+                request,
+                queryset = JobApplyForm.objects.filter(job=post),
+                template_name = 'jobpost/post_detail.html',
+                paginate_by = 5,
+                page = page,
+                extra_context = {'post':post},
+            ) 
     else:
         if request.method == 'POST':
             form = JobApplyForms(request.POST)
@@ -110,7 +127,7 @@ def post_manage(request, slug):
 def post_manage_list(request, page=0):
     """
     Post list
-
+    
     Template: ``jobpost/post_manage_list.html``
     Context:
         object_list
@@ -158,9 +175,12 @@ def post_create(request):
     Template: ``jobpost/add_form.html``
     Context:
     """
+    
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
+            form = form.save(commit=False)
+            form.creator = request.user
             data = form.save()
             t = loader.get_template('jobpost/post_created_email.txt')
             c = Context({'data':data,})

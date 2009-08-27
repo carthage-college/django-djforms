@@ -57,6 +57,7 @@ class Post(models.Model):
     updated_at          = models.DateTimeField(auto_now=True)
     active              = models.BooleanField(help_text='', verbose_name='Is active?', default=True)
     tags                = TagField(help_text="Used for search.")
+    creator             = models.ForeignKey(User, null=True, blank=True)
     
     class Meta:
         permissions = ( ("can_manage", "can manage"), )
