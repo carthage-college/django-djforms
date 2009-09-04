@@ -2,6 +2,7 @@ from django.contrib import admin
 from djforms.jobpost.models import *
 from djforms.jobpost.forms import *
 
+"""
 class PostFormModelAdmin(admin.ModelAdmin):
     model = Post
     prepopulated_fields = {'slug': ('title',)}
@@ -12,4 +13,4 @@ class PostFormModelAdmin(admin.ModelAdmin):
 admin.site.register(Department)
 admin.site.register(Post)
 admin.site.register(JobApplyForm)
-
+"""

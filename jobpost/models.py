@@ -50,12 +50,13 @@ class Post(models.Model):
     displace_employee   = models.BooleanField(verbose_name = 'Does this position displace a full-time employee? (Check if yes)')
     student_supervision = models.BooleanField(verbose_name = 'Do the students you employ have direct supervision by a full-time Carthage employee? (Check if yes)')
     hour_integrity      = models.BooleanField(verbose_name = 'Do you have a system for ensuring that students work the hours that they indicate on their time slip? (Check if yes)')
+    is_fin_aid_job      = models.BooleanField(verbose_name = 'Is this a financial aid job? (Check if yes)')
     description         = models.TextField('Job Description')
     publish             = models.DateTimeField(help_text="A date for the post to go live on")
     expire_date         = models.DateTimeField(help_text="A date for the post to expire on")
     created_at          = models.DateTimeField(auto_now_add=True)
     updated_at          = models.DateTimeField(auto_now=True)
-    active              = models.BooleanField(help_text='', verbose_name='Is active?', default=True)
+    active              = models.BooleanField(help_text='Is active?', default=False)
     tags                = TagField(help_text="Used for search.")
     creator             = models.ForeignKey(User, null=True, blank=True)
     
@@ -64,7 +65,6 @@ class Post(models.Model):
         db_table  = 'job_posts'
         ordering  = ('-publish',)
         get_latest_by = 'publish'
-
         
     def __unicode__(self):
         return self.title

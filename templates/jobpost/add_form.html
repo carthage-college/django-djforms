@@ -33,6 +33,7 @@
             <fieldset class="blockLabels">
                 <ol>
                     {% for field in form %}
+                    {% if not field.is_hidden %}
                     <li class="ctrlHolder">
                     <h3>{{ field.label_tag }}</h3>
                     {% if field.errors %}
@@ -47,6 +48,7 @@
                     {% endif %}
                     </div>
                     </li>
+                    {% endif %}
                     {% endfor %}
                     <li class="btnHolder">
                     <label for="id_submit">&nbsp;&nbsp;</label>

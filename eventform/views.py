@@ -5,17 +5,16 @@ from django.http import Http404, HttpResponseRedirect
 from django.views.generic import date_based, list_detail
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.admin.views.decorators import staff_member_required
-from djforms.jobpost.forms import JobApplyForms, PostFormWithHidden, PostFormWithoutHidden, PostFormMostHidden
+from djforms.jobpost.forms import JobApplyForms, PostFormWithHidden, PostFormWithoutHidden
 from djforms.jobpost.models import Post, Department, JobApplyForm
 from django.contrib.auth.models import User
 
-from dateutil import parser
 import datetime
 import re
 
 @login_required
 def data_entered(request):
-    return render_to_response('jobpost/data_entered.html', context_instance=RequestContext(request))
+    return render_to_response('jobpost/data_entered.html')
 
 @login_required
 def post_list(request, page=0):
@@ -60,51 +59,6 @@ def post_list(request, page=0):
         page = page,
     )
 
-@staff_member_required
-def user_post_list(request, page=0):
-    """
-    Post list
-
-    Template: ``jobpost/post_list.html``
-    Context:
-        object_list
-            list of objects
-        is_paginated
-            are the results paginated?
-        results_per_page
-            number of objects per page (if paginated)
-        has_next
-            is there a next page?
-        has_previous
-            is there a prev page?
-        page
-            the current page
-        next
-            the next page
-        previous
-            the previous page
-        pages
-            number of pages, total
-        hits
-            number of objects, total
-        last_on_page
-            the result number of the last of object in the
-            object_list (1-indexed)
-        first_on_page
-            the result number of the first object in the
-            object_list (1-indexed)
-        page_range:
-            A list of the page numbers (1-indexed).
-    """
-    current_user = request.user
-    return list_detail.object_list(
-        request,
-        queryset = Post.objects.filter(creator = current_user),
-        template_name = 'jobpost/user_post_list.html',
-        paginate_by = 5,
-        page = page,
-    )
-
 @login_required
 def post_detail(request, slug, page=0):
     """
@@ -118,16 +72,14 @@ def post_detail(request, slug, page=0):
     #if the user is staff they see the applicants, and if they are the creator they can expire the post
     post = get_object_or_404(Post, slug=slug)
     if request.user.is_staff:
-        if post.creator==request.user:
+        if "ngromiuk" == request.user.username:
             if request.method == 'POST':
-                form = PostFormMostHidden(request.POST, instance=post)
+                form = PostFormWithoutHidden(request.POST, instance=post)
                 if form.is_valid():
-                    post.num_positions = request.POST['num_positions']
-                    post.expire_date = parser.parse(request.POST['expire_date'])
-                    post.save()
-                    return HttpResponseRedirect('/forms/job/data_entered')
+                    form.save()
+                return HttpResponseRedirect('/forms/job/data_entered')
             else:
-                form = PostFormMostHidden(instance=post)
+                form = PostFormWithoutHidden(instance=post)
             return list_detail.object_list(
                 request,
                 queryset = JobApplyForm.objects.filter(job=post),
@@ -144,7 +96,7 @@ def post_detail(request, slug, page=0):
                 paginate_by = 5,
                 page = page,
                 extra_context = {'post':post},
-            )
+            ) 
     else:
         if request.method == 'POST':
             form = JobApplyForms(request.POST)
@@ -152,10 +104,9 @@ def post_detail(request, slug, page=0):
                 job = form.save(commit=False)
                 job.job = post
                 data = job.save()
-                form.save_m2m()
                 t = loader.get_template('jobpost/email.txt')
-                c = Context({'data':job,'post':post})
-                send_mail((post.title + " application"), t.render(c), form.cleaned_data.get('email'), [post.creator.email,], fail_silently=False)
+                c = Context({'data':job,})
+                send_mail((post.title + " application"), t.render(c), form.cleaned_data.get('email'), [post.supervisor_email,], fail_silently=False)
                 return HttpResponseRedirect('/forms/job/data_entered')
         else:
             form = JobApplyForms()
@@ -228,12 +179,11 @@ def post_create(request):
     if request.method == 'POST':
         form = PostFormWithHidden(request.POST)
         if form.is_valid():
-            new_post = form.save(commit=False)
-            new_post.creator = request.user
-            data = new_post.save()
-            form.save_m2m()
+            form = form.save(commit=False)
+            form.creator = request.user
+            data = form.save()
             t = loader.get_template('jobpost/post_created_email.txt')
-            c = Context({'data':new_post,})
+            c = Context({'data':data,})
             send_mail("New Job Post Created", t.render(c),"webmaster", ["ngromiuk@carthage.edu",], fail_silently=False)
             return HttpResponseRedirect('/forms/job/data_entered')
     else:
@@ -329,7 +279,7 @@ def department_detail(request, slug, page=0):
   
     return list_detail.object_list(
         request,
-        queryset = department.post_set.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1),
+        queryset = department.post_set.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now()),
         extra_context = { 'department': department },
         template_name = 'jobpost/department_detail.html',
         paginate_by = 5,

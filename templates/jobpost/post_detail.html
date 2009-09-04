@@ -1,11 +1,17 @@
 {% extends "jobpost/base.html" %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block extra_javascript %}
+<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/calendar.js"></script>
+<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/lang/calendar-en.js"></script>
+<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/calendar-setup.js"></script>
 <script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/init.js"></script>
 <script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/XinhaCore.js"></script>
 <script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/job-apps.js"></script>
+<script type="text/javascript" src="http://clausencenter.net/djmedia/js/urlify.js"></script>
+<script type="text/javascript" src="http://clausencenter.net/djmedia/js/getElementsBySelector.js"></script>
 {% endblock %}
 {% block extra_style%}
+<link rel="stylesheet" type="text/css" href="http://dev.clausencenter.net/assets/calendar/calendar-win2k-cold-2.css" />
 <link rel="stylesheet" href="/assets/forms.css" type="text/css" />
 <link rel="stylesheet" href="http://clausencenter.net/assets/current/css/core/grid-960.css" type="text/css" />
 <link rel="stylesheet" href="http://clausencenter.net/assets/current/css/plugins/forms.css" type="text/css" />
@@ -16,29 +22,63 @@
 {% block content %}
 <div id="second">
     <div class="span-18 prepend-1">
-    <h1 class="page_title">{{ post.title }}</h1>
-    <dl class="job-detail">
-        <dt class="job-header">Job posted on:</dt><dd class="job-data">{{ post.publish|date:"F j, Y" }}</dd><dd class="clear"></dd>
-        <dt class="job-header">Job is for:</dt><dd class="job-data">{{ post.period }}</dd><dd class="clear"></dd>
-        <dt class="job-header">Number of positions to be filled:</dt><dd class="job-data">{{ post.num_positions }}</dd><dd class="clear"></dd>
-        <dt class="job-header">Average amount of hours per week:</dt><dd class="job-data">{{ post.hours }}</dd><dd class="clear"></dd>
-        <dt class="job-header">Expected pay range:</dt><dd class="job-data">${{ post.pay_grade }}</dd><dd class="clear"></dd>
-        <dt class="job-header">Applicant should be available to work:</dt><dd class="job-data">{% for k in post.work_days.all %}{{k.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</dd><dd class="clear"></dd>
-        <dt class="job-header">Department in charge of position:</dt><dd class="job-data">{{ post.hiring_department }}</dd><dd class="clear"></dd>
-        <dt class="job-header">Supervisor name:</dt><dd class="job-data">{{ post.supervisor_name }}</dd><dd class="clear"></dd>
-        <dt class="job-header">Supervisor phone:</dt><dd class="job-data">{{ post.supervisor_phone }}</dd><dd class="clear"></dd>
-        <dt class="job-header">Supervisor email:</dt><dd class="job-data"><a href="mailto:{{ post.supervisor_email }}">{{ post.supervisor_email }}</a></dd><dd class="clear"></dd>
-        <dt class="job-header">Description of the job:</dt><dd class="clear"></dd>
-    </dl>
-    <p>{{ post.description }}</p>
-    <hr />
     {% if user.is_staff %}
-        {% ifequal user post.creator %}
+        <h1 class="page_title">{{ post.title }}</h1>
+        <dl class="job-detail">
+            <dt class="job-header">Job posted on:</dt><dd class="job-data">{{ post.publish|date:"F j, Y" }}</dd><dd class="clear"></dd>
+            <dt class="job-header">Job is for:</dt><dd class="job-data">{{ post.period }}</dd><dd class="clear"></dd>
+            <dt class="job-header">Number of positions to be filled:</dt><dd class="job-data">{{ post.num_positions }}</dd><dd class="clear"></dd>
+            <dt class="job-header">Average amount of hours per week:</dt><dd class="job-data">{{ post.hours }}</dd><dd class="clear"></dd>
+            <dt class="job-header">Expected pay range:</dt><dd class="job-data">${{ post.pay_grade }}</dd><dd class="clear"></dd>
+            <dt class="job-header">Applicant should be available to work:</dt><dd class="job-data">{% for k in post.work_days.all %}{{k.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</dd><dd class="clear"></dd>
+            <dt class="job-header">Department in charge of position:</dt><dd class="job-data">{{ post.hiring_department }}</dd><dd class="clear"></dd>
+            <dt class="job-header">Supervisor name:</dt><dd class="job-data">{{ post.supervisor_name }}</dd><dd class="clear"></dd>
+            <dt class="job-header">Supervisor phone:</dt><dd class="job-data">{{ post.supervisor_phone }}</dd><dd class="clear"></dd>
+            <dt class="job-header">Supervisor email:</dt><dd class="job-data"><a href="mailto:{{ post.supervisor_email }}">{{ post.supervisor_email }}</a></dd><dd class="clear"></dd>
+            <dt class="job-header">Description of the job:</dt><dd class="clear"></dd>
+        </dl>
+        <p>{{ post.description }}</p>
+        <hr />
+        {% ifequal user.username post.creator.username %}
             <form method="POST" action="." class="form">
-            <input type="submit" value="Expire Job Post" class="button" />
+                {% if form.errors %}
+                    <h2 style="color: red;">
+                        Please correct the error{{ form.errors|pluralize }} below.
+                    </h2>
+                {% endif %}
+                <fieldset class="blockLabels">
+                    <ol>
+                        {% for field in form %}
+                        <span class="error-message">*** {{ field.errors|join:", "}}</span>
+                            {% if not field.is_hidden %}
+                                <li class="ctrlHolder">
+                                <h3>{{ field.label_tag }}</h3>
+                                {% if field.errors %}
+                                <div class="warning">
+                                <span class="error-message">*** {{ field.errors|join:", "}}</span>
+                                {% else %}
+                                <div>
+                                {% endif %}
+                                {{field}}
+                                {% if field.help_text %}
+                                <p class="help">{{field.help_text}}</p>
+                                {% endif %}
+                                </div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        <li class="btnHolder">
+                        <label for="id_submit">&nbsp;&nbsp;</label>
+                        <input type="submit" value="Save Changes" class="button" />
+                        </li>
+                    </ol>
+                </fieldset>
             </form>
-        {% endif %}
-        {% for jobapplyform in object_list %}
+            <br />
+            <hr />
+            <h1>  Here is this jobs list of applications </h1>
+            
+            {% for jobapplyform in object_list %}
             <div>
                 <h2 class="title">Student Application</h2>
                 <dl class="job-detail">
@@ -50,44 +90,65 @@
                 <p>{{ jobapplyform.app_details }}</p>
                 <hr />
             </div>
-        {% endfor %}
+            {% endfor %}
+        {% endifequal %}
     {% else %}
-        <form method="POST" action="." class="form">
-            <h3 style="color: green;"> 
-                Complete the form below to apply for this job.
-            </h3>
-            {% if form.errors %}
-                <h2 style="color: red;">
-                    Please correct the error{{ form.errors|pluralize }} below.
-                </h2>
-            {% endif %}
-            <fieldset class="blockLabels">
-                <ol>
-                    {% for field in form %}
-                        {% if not field.is_hidden %}
-                            <li class="ctrlHolder">
-                            <h3>{{ field.label_tag }}</h3>
-                            {% if field.errors %}
-                            <div class="warning">
-                            <span class="error-message">*** {{ field.errors|join:", "}}</span>
-                            {% else %}
-                            <div>
+        {% if post.active %}
+            <h1 class="page_title">{{ post.title }}</h1>
+            <dl class="job-detail">
+                <dt class="job-header">Job posted on:</dt><dd class="job-data">{{ post.publish|date:"F j, Y" }}</dd><dd class="clear"></dd>
+                <dt class="job-header">Job is for:</dt><dd class="job-data">{{ post.period }}</dd><dd class="clear"></dd>
+                <dt class="job-header">Number of positions to be filled:</dt><dd class="job-data">{{ post.num_positions }}</dd><dd class="clear"></dd>
+                <dt class="job-header">Average amount of hours per week:</dt><dd class="job-data">{{ post.hours }}</dd><dd class="clear"></dd>
+                <dt class="job-header">Expected pay range:</dt><dd class="job-data">${{ post.pay_grade }}</dd><dd class="clear"></dd>
+                <dt class="job-header">Applicant should be available to work:</dt><dd class="job-data">{% for k in post.work_days.all %}{{k.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</dd><dd class="clear"></dd>
+                <dt class="job-header">Department in charge of position:</dt><dd class="job-data">{{ post.hiring_department }}</dd><dd class="clear"></dd>
+                <dt class="job-header">Supervisor name:</dt><dd class="job-data">{{ post.supervisor_name }}</dd><dd class="clear"></dd>
+                <dt class="job-header">Supervisor phone:</dt><dd class="job-data">{{ post.supervisor_phone }}</dd><dd class="clear"></dd>
+                <dt class="job-header">Supervisor email:</dt><dd class="job-data"><a href="mailto:{{ post.supervisor_email }}">{{ post.supervisor_email }}</a></dd><dd class="clear"></dd>
+                <dt class="job-header">Description of the job:</dt><dd class="clear"></dd>
+            </dl>
+            <p>{{ post.description }}</p>
+            <hr />
+            <form method="POST" action="." class="form">
+                <h3 style="color: green;"> 
+                    Complete the form below to apply for this job.
+                </h3>
+                {% if form.errors %}
+                    <h2 style="color: red;">
+                        Please correct the error{{ form.errors|pluralize }} below.
+                    </h2>
+                {% endif %}
+                <fieldset class="blockLabels">
+                    <ol>
+                        {% for field in form %}
+                            {% if not field.is_hidden %}
+                                <li class="ctrlHolder">
+                                <h3>{{ field.label_tag }}</h3>
+                                {% if field.errors %}
+                                <div class="warning">
+                                <span class="error-message">*** {{ field.errors|join:", "}}</span>
+                                {% else %}
+                                <div>
+                                {% endif %}
+                                {{field}}
+                                {% if field.help_text %}
+                                <p class="help">{{field.help_text}}</p>
+                                {% endif %}
+                                </div>
+                                </li>
                             {% endif %}
-                            {{field}}
-                            {% if field.help_text %}
-                            <p class="help">{{field.help_text}}</p>
-                            {% endif %}
-                            </div>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                    <li class="btnHolder">
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Send application" class="button" />
-                    </li>
-                </ol>
-            </fieldset>
-        </form>
+                        {% endfor %}
+                        <li class="btnHolder">
+                        <label for="id_submit">&nbsp;&nbsp;</label>
+                        <input type="submit" value="Send application" class="button" />
+                        </li>
+                    </ol>
+                </fieldset>
+            </form>
+        {% else %}
+            <h1>THIS POST IS NOT CURRENTLY AVAILABLE</h1>
+        {% endif %}
     {% endif %}
     {% if is_paginated %}
     <p class="pagination">
@@ -103,3 +164,4 @@
     </div>
 </div>
 {% endblock %}
+            

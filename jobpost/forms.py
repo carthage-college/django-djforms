@@ -29,14 +29,15 @@ class JobApplyForms(forms.ModelForm):
     class Meta:
         model = JobApplyForm
         
-class PostForm(forms.ModelForm):
+class PostFormWithHidden(forms.ModelForm):
     period              = forms.ModelChoiceField(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect())
     pay_grade           = forms.ModelChoiceField(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect())
     work_days           = forms.ModelMultipleChoiceField(queryset=WORK_DAYS, widget=forms.CheckboxSelectMultiple())
     hiring_department   = forms.ModelChoiceField(queryset=Department.objects.all())
     publish             = forms.DateTimeField(help_text="A date for the post to go live on", widget=DateTimeWidget)
     expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
-    
+    creator             = forms.ModelChoiceField(queryset=User.objects.all(), required=False, widget=forms.HiddenInput())
+    active              = forms.BooleanField(help_text='Is active?', required=False, widget=forms.HiddenInput())
     class Meta:
         model = Post
 
@@ -47,3 +48,29 @@ class PostForm(forms.ModelForm):
         if postdate >= expiredate:
             raise forms.ValidationError("You must pick an expire date later than the post date!")
         return expiredate
+
+class PostFormWithoutHidden(forms.ModelForm):
+    period              = forms.ModelChoiceField(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect())
+    pay_grade           = forms.ModelChoiceField(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect())
+    work_days           = forms.ModelMultipleChoiceField(queryset=WORK_DAYS, widget=forms.CheckboxSelectMultiple())
+    hiring_department   = forms.ModelChoiceField(queryset=Department.objects.all())
+    publish             = forms.DateTimeField(help_text="A date for the post to go live on", widget=DateTimeWidget)
+    expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
+    creator             = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
+    class Meta:
+        model = Post
+
+    #Makes sure the user picks an expire date later than the post date
+    def clean_date(self):
+        postdate = self.cleaned_data['publish']
+        expiredate = self.cleaned_data['expire_date']
+        if postdate >= expiredate:
+            raise forms.ValidationError("You must pick an expire date later than the post date!")
+        return expiredate
+
+class PostFormMostHidden(forms.ModelForm):
+    expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
+    
+    class Meta:
+        model = Post
+        fields = ('num_positions', 'expire_date')

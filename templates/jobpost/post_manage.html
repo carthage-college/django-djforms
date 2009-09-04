@@ -23,9 +23,6 @@
     <div class="buffer">
         <h2 class="page_title">Manage Post</h2>
         <form method="POST" action="" class="form">
-        <h3 style="color: green;"> 
-            Fill in the info to add an item to the database.
-        </h3>
         <p><u>Department Information</u></p>
         <p>Department Name: {{original.hiring_department.name}}<br />
         Department Number: {{original.hiring_department.number}}<br />
@@ -33,7 +30,7 @@
         Contact phone: {{original.hiring_department.contact_phone}}</p>
         <form method="POST" action="." class="form">
             <h3 style="color: green;"> 
-                Complete the form below to apply for this job.
+                Complete the form below to change the data for this job.
             </h3>
             {% if form.errors %}
                 <h2 style="color: red;">

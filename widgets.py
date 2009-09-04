@@ -70,4 +70,3 @@ class DateTimeWidget(forms.widgets.TextInput):
             except ValueError:
                 continue
         return None
-

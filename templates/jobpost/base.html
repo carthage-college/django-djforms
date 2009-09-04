@@ -55,11 +55,12 @@
             <ul id="nav">
                 <li><a href="/forms/job/">Available Jobs</a></li>
                 <li><a href="/forms/job/search/">Search for Jobs</a></li>
-                <li><a href="/forms/job/departments/">Jobs by Departments</a></li>
-                {% if not user.is_anonymous %}
-                <li><a href="/forms/job/createpost/">Create New Job Post</a></li>
-                {% endif %}
+                <li><a href="/forms/job/departments/">Jobs by Department</a></li>
                 {% if user.is_staff %}
+                <li><a href="/forms/job/createpost/">Create a Job Post</a></li>
+                <li><a href="/forms/job/user-post-list/">Your Posts</a></li>
+                {% endif %}
+                {% if perms.jobpost.can_manage %}
                 <li><a href="/forms/job/post-manage-list/">Manage Job Posts</a></li>
                 {% endif %}
             </ul>
