@@ -24,6 +24,12 @@ try:
 except:
     WORK_DAYS = GenericChoice.objects.none()
 
+try:
+    type_of_job_tag = Tag.objects.get(name__iexact='Type of Job')
+    TYPE_OF_JOB = TaggedItem.objects.get_by_model(GenericChoice, type_of_job_tag).filter(active = True)
+except:
+    TYPE_OF_JOB = GenericChoice.objects.none()
+
 class JobApplyForms(forms.ModelForm):
     job         = forms.ModelChoiceField(queryset=Post.objects.all(), required=False, widget=forms.HiddenInput())
     class Meta:
@@ -33,6 +39,7 @@ class PostFormWithHidden(forms.ModelForm):
     period              = forms.ModelChoiceField(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect())
     pay_grade           = forms.ModelChoiceField(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect())
     work_days           = forms.ModelMultipleChoiceField(queryset=WORK_DAYS, widget=forms.CheckboxSelectMultiple())
+    type_of_job         = forms.ModelChoiceField(queryset=TYPE_OF_JOB, empty_label=None, widget=forms.RadioSelect())
     hiring_department   = forms.ModelChoiceField(queryset=Department.objects.all())
     publish             = forms.DateTimeField(help_text="A date for the post to go live on", widget=DateTimeWidget)
     expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
@@ -53,6 +60,7 @@ class PostFormWithoutHidden(forms.ModelForm):
     period              = forms.ModelChoiceField(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect())
     pay_grade           = forms.ModelChoiceField(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect())
     work_days           = forms.ModelMultipleChoiceField(queryset=WORK_DAYS, widget=forms.CheckboxSelectMultiple())
+    type_of_job         = forms.ModelChoiceField(queryset=TYPE_OF_JOB, empty_label=None, widget=forms.RadioSelect())
     hiring_department   = forms.ModelChoiceField(queryset=Department.objects.all())
     publish             = forms.DateTimeField(help_text="A date for the post to go live on", widget=DateTimeWidget)
     expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)

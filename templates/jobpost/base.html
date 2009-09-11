@@ -43,10 +43,13 @@
         </div>
         <div id="first">
             <ul id="about">
+                <li><a href="http://www.carthage.edu/finaid/">Financial Aid Home</a></li>
                 {% if not user.is_anonymous %}
                     <li><a href="/forms/accounts/logout/">Logout</a></li>
                 {% else %}
-                    <li><a href="/forms/accounts/login/?next=/forms/job/">Faculty/Staff Login</a></li>
+                    <li>
+                        <a href="/forms/accounts/login/?next=/forms/job/">Login</a>
+                    </li>
                 {% endif %}
                 {% if user.is_superuser %}
                     <li><a href="/forms/admin/">Administration</a></li>
@@ -76,7 +79,8 @@
             </p>
             <p class="last">
                 <br />
-                Faculty/Staff:<br />
+                Users:
+                <br />
                 {% if not user.is_anonymous %}
                     <a href="/forms/accounts/logout/">Logout</a>
                 {% else %}

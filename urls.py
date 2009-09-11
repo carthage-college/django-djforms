@@ -25,6 +25,9 @@ urlpatterns = patterns('',
     #for membrete environment
     (r'^contact/', include('djforms.membrete.urls')),
 
+    #for the maintenance/evs form environment
+    (r'^maint-evs-form/data-entered/$', data_entered),
+
     #For edu form environment
     (r'^eduform/data-entered/$', data_entered),
     #catches the slugs

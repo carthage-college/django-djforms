@@ -234,7 +234,8 @@ def post_create(request):
             form.save_m2m()
             t = loader.get_template('jobpost/post_created_email.txt')
             c = Context({'data':new_post,})
-            send_mail("New Job Post Created", t.render(c),"webmaster", ["ngromiuk@carthage.edu",], fail_silently=False)
+            #send_mail("New Job Post Created", t.render(c),"webmaster", ["ngromiuk@carthage.edu",], fail_silently=False)
+            send_mail("New Job Post Created", t.render(c),"Jennifer Rhyner", ["jrhyner@carthage.edu",], fail_silently=False)
             return HttpResponseRedirect('/forms/job/data_entered')
     else:
         form = PostFormWithHidden()

@@ -21,23 +21,29 @@
 {% endblock %}
 {% block content %}
 <div id="second">
-    <div class="span-18 prepend-1">
+    <div class="span-18 prepend-1 buffer-top">
     {% if user.is_staff %}
         <h1 class="page_title">{{ post.title }}</h1>
         <dl class="job-detail">
-            <dt class="job-header">Job posted on:</dt><dd class="job-data">{{ post.publish|date:"F j, Y" }}</dd><dd class="clear"></dd>
-            <dt class="job-header">Job is for:</dt><dd class="job-data">{{ post.period }}</dd><dd class="clear"></dd>
-            <dt class="job-header">Number of positions to be filled:</dt><dd class="job-data">{{ post.num_positions }}</dd><dd class="clear"></dd>
-            <dt class="job-header">Average amount of hours per week:</dt><dd class="job-data">{{ post.hours }}</dd><dd class="clear"></dd>
-            <dt class="job-header">Expected pay range:</dt><dd class="job-data">${{ post.pay_grade }}</dd><dd class="clear"></dd>
-            <dt class="job-header">Applicant should be available to work:</dt><dd class="job-data">{% for k in post.work_days.all %}{{k.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</dd><dd class="clear"></dd>
-            <dt class="job-header">Department in charge of position:</dt><dd class="job-data">{{ post.hiring_department }}</dd><dd class="clear"></dd>
-            <dt class="job-header">Supervisor name:</dt><dd class="job-data">{{ post.supervisor_name }}</dd><dd class="clear"></dd>
-            <dt class="job-header">Supervisor phone:</dt><dd class="job-data">{{ post.supervisor_phone }}</dd><dd class="clear"></dd>
-            <dt class="job-header">Supervisor email:</dt><dd class="job-data"><a href="mailto:{{ post.supervisor_email }}">{{ post.supervisor_email }}</a></dd><dd class="clear"></dd>
+            <dt class="job-header">Job posted on:</dt><dd class="job-data">{{ post.publish|date:"F j, Y" }}</dd>
+            <dt class="job-header">Job is for:</dt><dd class="job-data">{{ post.period }}</dd>
+            <dt class="job-header">Number of positions to be filled:</dt><dd class="job-data">{{ post.num_positions }}</dd>
+            <dt class="job-header">Average amount of hours per week:</dt><dd class="job-data">{{ post.hours }}</dd>
+            <dt class="job-header">Expected pay range:</dt><dd class="job-data">{{ post.pay_grade }}</dd>
+            <dt class="job-header">Applicant should be available to work:</dt><dd class="job-data">{% for k in post.work_days.all %}{{k.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</dd>
+            <dt class="job-header">Department in charge of position:</dt><dd class="job-data">{{ post.hiring_department }}</dd>
+            <dt class="job-header">Supervisor name:</dt><dd class="job-data">{{ post.supervisor_name }}</dd>
+            <dt class="job-header">Supervisor phone:</dt><dd class="job-data">{{ post.supervisor_phone }}</dd>
+            <dt class="job-header">Supervisor email:</dt><dd class="job-data"><a href="mailto:{{ post.supervisor_email }}">{{ post.supervisor_email }}</a></dd>
             <dt class="job-header">Description of the job:</dt><dd class="clear"></dd>
+            <dd class="description">{{ post.description }}</dd>
+            <dt class="job-header">Purpose of the job:</dt><dd class="clear"></dd>
+            <dd class="description">{{ post.purpose_of_job }}</dd>
+            <dt class="job-header">Duties and Responsibilities:</dt><dd class="clear"></dd>
+            <dd class="description">{{ post.duties_resp }}</dd>
+            <dt class="job-header">Qualifications:</dt><dd class="clear"></dd>
+            <dd class="description">{{ post.qualifications }}</dd>
         </dl>
-        <p>{{ post.description }}</p>
         <hr />
         {% ifequal user.username post.creator.username %}
             <form method="POST" action="." class="form">
