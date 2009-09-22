@@ -1,26 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Copyright © 2009 Gonzalo
-#
-# This file is part of membrete.
-#
-# membrete is free software; you can redistribute it and/or
-# modify it under the terms of the GNU Affero General Public License
-# as published by the Free Software Foundation; either version 3 of
-# the License, or (at your option) any later version.
-#
-# membrete is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public
-# License along with membrete. If not, see
-# <http://www.gnu.org/licenses/>.
-
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from djforms.membrete.models import Message
+from djforms.contact.models import Message
 
 
 class ContactForm(forms.Form):
@@ -32,7 +14,7 @@ class ContactForm(forms.Form):
     message = forms.CharField(label=_('message'), widget=forms.Textarea)
 
     class Media:
-        js = ('js/membrete.js',)
+        js = ('js/contact.js',)
 
     def get_context(self):
         pass
