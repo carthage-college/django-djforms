@@ -22,8 +22,8 @@ urlpatterns = patterns('',
     # to INSTALLED_APPS to enable admin documentation:
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    #for membrete environment
-    (r'^contact/', include('djforms.membrete.urls')),
+    #for contact forms environment
+    (r'^contact/', include('djforms.contact.urls')),
 
     #for the maintenance/evs form environment
     (r'^maint-evs-form/data-entered/$', data_entered),

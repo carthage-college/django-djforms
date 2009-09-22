@@ -21,6 +21,7 @@
 {% endblock %}
 {% block content %}
 <div id="second">
+    <div id="sitetitle">Available On-Campus Employment</div>
     <div class="span-18 prepend-1 buffer-top">
     {% if user.is_staff %}
         <h1 class="page_title">{{ post.title }}</h1>
@@ -83,7 +84,7 @@
             <br />
             <hr />
             <h1>  Here is this jobs list of applications </h1>
-            
+
             {% for jobapplyform in object_list %}
             <div>
                 <h2 class="title">Student Application</h2>
@@ -117,7 +118,7 @@
             <p>{{ post.description }}</p>
             <hr />
             <form method="POST" action="." class="form">
-                <h3 style="color: green;"> 
+                <h3 style="color: green;">
                     Complete the form below to apply for this job.
                 </h3>
                 {% if form.errors %}
@@ -170,4 +171,3 @@
     </div>
 </div>
 {% endblock %}
-            

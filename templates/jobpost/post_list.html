@@ -1,10 +1,10 @@
 {% extends "jobpost/base.html" %}
-{% block title %}Post Archive{% endblock %}
+{% block title %}Available On-Campus Employment{% endblock %}
 {% block content %}
 <div id="second">
+    <div id="sitetitle">Available On-Campus Employment</div>
     <div class="buffer">
-    <h2 class="page_title">Post Archive</h2>
-    {% if object_list %}  
+    {% if object_list %}
     <div class="post_list">
         {% for post in object_list %}
             <div>
