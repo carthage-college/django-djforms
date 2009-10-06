@@ -26,7 +26,7 @@ urlpatterns = patterns('',
     (r'^contact/', include('djforms.contact.urls')),
 
     #for the maintenance/evs form environment
-    (r'^maint-evs-form/data-entered/$', data_entered),
+    #(r'^maint-evs-form/', include('djforms.maintenanceform.urls')),
 
     #For edu form environment
     (r'^eduform/data-entered/$', data_entered),

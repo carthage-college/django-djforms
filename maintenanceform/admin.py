@@ -1,4 +1,4 @@
 from django.contrib import admin
-from djforms.eduform.models import *
+from djforms.maintenanceform.models import *
 
 admin.site.register(MaintenanceRequest)
