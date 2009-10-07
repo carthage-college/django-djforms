@@ -85,7 +85,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'tagging',
-    'grappelli',
     'djforms.core',
     'djforms.forms',
     'djforms.jobpost',
@@ -104,10 +103,4 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.core.context_processors.debug",
     "django.core.context_processors.media",
-    "grappelli.context_processors.admin_url",
 )
-
-# Admin Site Title
-GRAPPELLI_ADMIN_TITLE = "DJForms Admin"
-# Admin Prefix
-GRAPPELLI_ADMIN_URL = "forms/admin"
