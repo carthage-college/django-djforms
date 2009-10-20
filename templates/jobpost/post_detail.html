@@ -83,11 +83,9 @@
             </form>
             <br />
             <hr />
-            <h1>  Here is this jobs list of applications </h1>
-
+            <h1>List of applications </h1>
             {% for jobapplyform in object_list %}
             <div>
-                <h2 class="title">Student Application</h2>
                 <dl class="job-detail">
                     <dt class="job-header">Application submitted:</dt><dd class="job-data">{{ jobapplyform.apply_date|date:"F j, Y" }}</dd><dd class="clear"></dd>
                     <dt class="job-header">Student Name:</dt><dd class="job-data">{{ jobapplyform.first_name }} {{ jobapplyform.last_name }}</dd><dd class="clear"></dd>
@@ -99,6 +97,21 @@
             </div>
             {% endfor %}
         {% endifequal %}
+        {% if perms.jobpost.can_manage %}
+            <h1>List of applications </h1>
+            {% for jobapplyform in object_list %}
+            <div>
+                <dl class="job-detail">
+                    <dt class="job-header">Application submitted:</dt><dd class="job-data">{{ jobapplyform.apply_date|date:"F j, Y" }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Student Name:</dt><dd class="job-data">{{ jobapplyform.first_name }} {{ jobapplyform.last_name }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Student Email:</dt><dd class="job-data"><a href="mailto:{{ jobapplyform.email }}">{{ jobapplyform.email }}</a></dd><dd class="clear"></dd>
+                    <dt class="job-header">Student qualifications:</dt><dd class="clear"></dd>
+                </dl>
+                <p>{{ jobapplyform.app_details }}</p>
+                <hr />
+            </div>
+            {% endfor %}
+        {% endif %}
     {% else %}
         {% if post.active %}
             <h1 class="page_title">{{ post.title }}</h1>

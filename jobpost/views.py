@@ -210,7 +210,8 @@ def post_manage_list(request, page=0):
     """
     return list_detail.object_list(
         request,
-        queryset = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now()),
+        #queryset = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now()),
+        queryset = Post.objects.all(),
         paginate_by = 5,
         template_name = 'jobpost/post_manage_list.html',
         page = page,
