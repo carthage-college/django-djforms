@@ -2,8 +2,8 @@ import os, sys
 
 #Add the path to 3rd party django application and to django itself.
 
-sys.path.append('/usr/lib/python2.5/site-packages/')
-sys.path.append('/usr/lib/python2.5/')
+sys.path.append('/usr/lib/python2.6/site-packages/')
+sys.path.append('/usr/lib/python2.6/')
 sys.path.append('/data2/django_src/')
 sys.path.append('/data2/django_projects/')
 

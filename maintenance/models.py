@@ -18,7 +18,7 @@ class MaintenanceRequest(GenericContact):
     floor_other         = models.TextField(blank=True, verbose_name='If other, Please Specify.')
     wing                = models.ForeignKey(GenericChoice, related_name="maintenance_request_wing")
     problem_description = models.TextField(blank=True, verbose_name='Please explain the nature of the problem.')
-    
+
     def render_email(self):
         obj_text += 'Date request made:  %s\n' % self.creation_date
         obj_text =  'First Name:         %s\n' % self.first_name
