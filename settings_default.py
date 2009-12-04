@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+import os.path
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -22,7 +25,7 @@ ROOT_URLCONF = 'djforms.urls'
 MEDIA_ROOT = '/data2/django_projects/djforms/assets'
 MEDIA_URL = '/calendar/'
 ADMIN_MEDIA_PREFIX = '/djmedia/'
-AUTH_PROFILE_MODULE = 'djforms.core.UserProfile'
+AUTH_PROFILE_MODULE = 'core.UserProfile'
 SECRET_KEY = 'zp(!1yvo=g1j58@)29m$bxpl5$o3-g5i!$z*##jbfz=j_(g&-)'
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -68,5 +71,8 @@ AUTHENTICATION_BACKENDS = (
     #'djforms.auth.ldapBackend.LDAPBackend',
 )
 LOGIN_URL = '/forms/accounts/login/'
-LOGIN_REDIRECT_URL = '/forms/job/'
+LOGIN_REDIRECT_URL = '/forms/'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+# logggin stuff
+LOG_FILEPATH = os.path.join(os.path.dirname(__file__), "logs/")
+LOG_FILENAME = LOG_FILEPATH + "debug.log"
