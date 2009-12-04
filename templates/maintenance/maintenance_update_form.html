@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Maintenance Request Update Form{% endblock %}
+{% block extra_style %}
+<link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/plugins/forms.css" type="text/css" />
+<link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/overrides/forms.css" type="text/css" />
+<link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" type="text/css" />
+{% endblock %}
+{% block left_nav %}
+    {% include "maintenance/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>Maintenance Request Update Form</h1>
+    <p>
+        Complete the form below to update this maintenance request.
+    </p>
+    <form method="POST" action="." class="form">
+        <fieldset class="blockLabels">
+            <ol>
+                {% for field in form %}
+                <li class="ctrlHolder">
+                <h3>{{ field.label_tag }}</h3>
+                {% if field.errors %}
+                <div class="warning">
+                <span class="error-message">{{ field.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {{field}}
+                {% if field.help_text %}
+                <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                </div>
+                </li>
+                {% endfor %}
+                <li class="btnHolder">
+                <label for="id_submit">&nbsp;&nbsp;</label>
+                <input type="submit" value="Submit Request" class="button" />
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

@@ -21,7 +21,13 @@
     </script>
     {% endblock %}
     {% block css %}
-    <link href="http://www.carthage.edu/media/css/douglasfir/global.css" rel="stylesheet" type="text/css" />
+    <style type="text/css" media="screen, projection">
+    /* <![CDATA[ */
+        @import url("http://www.carthage.edu/media/css/douglasfir/global.css");
+        @import url("http://www.carthage.edu/assets/current/css/core/grid-960.css");
+        @import url("/assets/forms.css");
+    /* ]]> */
+    </style>
     <link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />
     <!--[if IE]>
         <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
@@ -41,6 +47,7 @@
                 <h1><a href="http://www.carthage.edu/?ext"><img src="http://clausencenter.net/assets/current/img/ui/3flame_top_sm.gif" alt="Carthage" /></a></h1>
             </div>
         </div>
+        {% block left_nav %}
         <div id="first">
             <ul id="about">
                 <li><a href="http://www.carthage.edu/finaid/">Financial Aid Home</a></li>
@@ -48,7 +55,7 @@
                     <li><a href="/forms/accounts/logout/">Logout</a></li>
                 {% else %}
                     <li>
-                        <a href="/forms/accounts/login/?next=/forms/job/">Login</a>
+                        <a href="/forms/accounts/login/">Login</a>
                     </li>
                 {% endif %}
                 {% if user.is_superuser %}
@@ -68,7 +75,10 @@
                 {% endif %}
             </ul>
         </div>
+        {% endblock %}
+        <div id="second">
         {% block content %}{% endblock %}
+        </div>
         <div id="footer">
             <p>Carthage College<br />
             2001 Alford Park Drive<br />

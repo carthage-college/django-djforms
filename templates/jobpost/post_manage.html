@@ -1,25 +1,24 @@
-{% extends "jobpost/base.html" %}
+{% extends "base.html" %}
 {% block title %}Manage Job Posts{% endblock %}
 {% block extra_javascript %}
-<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/calendar.js"></script>
-<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/lang/calendar-en.js"></script>
-<script type="text/javascript" src="http://dev.clausencenter.net/assets/calendar/calendar-setup.js"></script>
-<script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/init.js"></script>
-<script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/XinhaCore.js"></script>
-<script type="text/javascript" src="http://clausencenter.net/assets/js/xinha/job-apps.js"></script>
-<script type="text/javascript" src="http://clausencenter.net/djmedia/js/urlify.js"></script>
-<script type="text/javascript" src="http://clausencenter.net/djmedia/js/getElementsBySelector.js"></script>
+<script type="text/javascript" src="/assets/calendar/calendar.js"></script>
+<script type="text/javascript" src="/assets/calendar/lang/calendar-en.js"></script>
+<script type="text/javascript" src="/assets/calendar/calendar-setup.js"></script>
+<script type="text/javascript" src="http://www.carthage.edu/assets/js/xinha/init.js"></script>
+<script type="text/javascript" src="http://www.carthage.edu/assets/js/xinha/XinhaCore.js"></script>
+<script type="text/javascript" src="http://www.carthage.edu/assets/js/xinha/job-apps.js"></script>
+<script type="text/javascript" src="http://www.carthage.edu/djmedia/js/urlify.js"></script>
+<script type="text/javascript" src="http://www.carthage.edu/djmedia/js/getElementsBySelector.js"></script>
 {% endblock %}
 {% block extra_style %}
-<link rel="stylesheet" type="text/css" href="http://dev.clausencenter.net/assets/calendar/calendar-win2k-cold-2.css" />
+<link rel="stylesheet" type="text/css" href="/assets/calendar/calendar-win2k-cold-2.css" />
 <link rel="stylesheet" href="/assets/forms.css" type="text/css" />
-<link rel="stylesheet" href="http://clausencenter.net/assets/current/css/core/grid-960.css" type="text/css" />
-<link rel="stylesheet" href="http://clausencenter.net/assets/current/css/plugins/forms.css" type="text/css" />
-<link rel="stylesheet" href="http://clausencenter.net/assets/current/css/overrides/forms.css" type="text/css" />
-<link rel="stylesheet" href="http://clausencenter.net/assets/current/css/overrides/forms.bridge.css" type="text/css" />
+<link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/core/grid-960.css" type="text/css" />
+<link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/plugins/forms.css" type="text/css" />
+<link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/overrides/forms.css" type="text/css" />
+<link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" type="text/css" />
 {% endblock %}
 {% block content %}
-<div id="second">
     <div class="buffer">
         <h2 class="page_title">Manage Post</h2>
         <form method="POST" action="" class="form">
@@ -69,5 +68,4 @@
             </script>
         </form>
     </div>
-</div>
 {% endblock %}

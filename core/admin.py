@@ -5,4 +5,5 @@ class GenericChoiceAdmin(admin.ModelAdmin):
     list_display = ('name', 'value', 'ranking', 'active', 'tags')
 
 admin.site.register(GenericContactForm)
+admin.site.register(UserProfile)
 admin.site.register(GenericChoice, GenericChoiceAdmin)

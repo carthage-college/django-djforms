@@ -1,7 +1,6 @@
-{% extends "jobpost/base.html" %}
+{% extends "base.html" %}
 {% block title %}Your Posts{% endblock %}
 {% block content %}
-<div id="second">
     <div class="buffer">
     <h2 class="page_title">Your Posts</h2>
     {% if object_list %}  
@@ -28,5 +27,4 @@
     </p>
     {% endif %}
     </div>
-</div>
 {% endblock %}

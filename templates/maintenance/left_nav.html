@@ -1,0 +1,19 @@
+<div id="first">
+    <ul id="about">
+        {% if not user.is_anonymous %}
+            <li><a href="/forms/maintenance/">Submit Maintenance Request</a></li>
+            <li><a href="/forms/maintenance/requests/">My Maintenance Requests</a></li>
+            <li><a href="/forms/accounts/logout/">Logout</a></li>
+        {% else %}
+            <li>
+                <a href="/forms/accounts/login/?next=/forms/maintenance/evs/">Login</a>
+            </li>
+        {% endif %}
+        {% if perms.maintenance.can_manage %}
+        <li><a href="/forms/admin/maintenance/maintenancerequest/">Manage Maintenance Requests</a></li>
+        {% endif %}
+        {% if user.is_superuser %}
+            <li><a href="/forms/admin/">Administration</a></li>
+        {% endif %}
+    </ul>
+</div>

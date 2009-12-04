@@ -1,10 +1,23 @@
-{% extends "jobpost/base.html" %}
+{% extends "base.html" %}
 {% block title %}Login{% endblock %}
 {% block extra_style%}
 <link rel="stylesheet" href="/assets/forms.css" type="text/css" />
 <link rel="stylesheet" href="http://clausencenter.net/assets/current/css/plugins/forms.css" type="text/css" />
 <link rel="stylesheet" href="http://clausencenter.net/assets/current/css/overrides/forms.css" type="text/css" />
 <link rel="stylesheet" href="http://clausencenter.net/assets/current/css/overrides/forms.bridge.css" type="text/css" />
+{% endblock %}
+{% block left_nav %}
+<div id="first">
+    <ul id="about">
+        {% if not user.is_anonymous %}
+            <li><a href="/forms/accounts/logout/">Logout</a></li>
+        {% else %}
+            <li>
+                <a href="/forms/accounts/login/">Login</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
 {% endblock %}
 {% block content %}
 <div id="second">

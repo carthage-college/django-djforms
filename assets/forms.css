@@ -58,3 +58,14 @@ d1.job-detail .student-header {
 .description p {
     font-weight:normal;font-size:1em;
 }
+
+table.display { font-size:1.2em; line-height: 20px; }
+
+table.display td { margin:1px; border: 2px #E5DCC1 solid; padding: 5px; }
+table.display thead th { padding: 3px 18px 3px 10px; font-weight: bold; background-color: #C09D6A; }
+
+tr.odd {background-color: #CFC4B5;}
+tr.even {background-color: #fff;}
+tr.new-request {background-color: goldenrod;}
+tr.new-request td {font-weight: bold;}
+

@@ -1,7 +1,6 @@
-{% extends "jobpost/base.html" %}
+{% extends "base.html" %}
 {% block title %}Posts for the {{ department.name }} department{% endblock %}
 {% block content %}
-<div id="second">
     <div class="buffer">
     {% if object_list %}
     <h2 class="page_title">Posts for the {{ department.name }} department</h2>  
@@ -29,5 +28,4 @@
     </p>
     {% endif %}
     </div>
-</div>
 {% endblock %}

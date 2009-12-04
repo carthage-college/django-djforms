@@ -1,9 +1,11 @@
 from django.db import models
 from django.forms import ModelForm
-
 from django.contrib.auth.models import User
+
 from tagging.fields import TagField
 from tagging.models import Tag
+
+from userprofile.models import BaseProfile
 
 import datetime
 
@@ -49,3 +51,13 @@ class GenericContactForm(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class UserProfile(BaseProfile):
+    """
+    User profile model
+    """
+    phone = models.CharField(max_length=12, verbose_name='Phone Number', help_text="Format: XXX-XXX-XXXX")
+    permission = models.ManyToManyField(GenericChoice, verbose_name='Permissions', null=True, blank=True,)
+
+    def __unicode__(self):
+        return "%s %s's profile with username: %s" % (self.user.first_name, self.user.last_name, self.user.username)
