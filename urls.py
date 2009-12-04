@@ -8,10 +8,10 @@ from djforms.views import *
 from djforms.core.views import *
 from djforms.auth.views import loggedout
 
-import authority
+#import authority
 
 admin.autodiscover()
-authority.autodiscover()
+#authority.autodiscover()
 
 urlpatterns = patterns('',
     # home
@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     (r'^room-reserve/$', room_reserve),
     (r'^reserve-complete/$', reserve_complete),
     # django authoriity
-    (r'^authority/', include('authority.urls')),
+    #(r'^authority/', include('authority.urls')),
     # CSV
     (r'^admin/(?P<app_label>[\d\w]+)/(?P<model_name>[\d\w]+)/csv/', 'djforms.core.util.admin_list_export'),
     #(r'^admin/', include(admin.site.urls)),
