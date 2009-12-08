@@ -42,7 +42,7 @@ def maintenance_request_form(request):
             profile_form.save()
             recipient_list = ["skirk@carthage.edu"]
 
-            managers = User.objects.filter(groups__id__in=[1,2])
+            managers = User.objects.filter(groups__id__in=[2,3])
             for m in managers:
                 recipient_list.append(m.email)
 
@@ -55,7 +55,7 @@ def maintenance_request_form(request):
 
             t = loader.get_template('maintenance/email.txt')
             c = Context({'data':maintenance_request,})
-            #send_mail(("%s Floor %s Room %s: %s" % (maintenance_request.building.name, maintenance_request.floor, maintenance_request.room_number, maintenance_request.type_of_request.name)), t.render(c), request.user.email, recipient_list, fail_silently=False)
+            send_mail(("%s Floor %s Room %s: %s" % (maintenance_request.building.name, maintenance_request.floor, maintenance_request.room_number, maintenance_request.type_of_request.name)), t.render(c), request.user.email, recipient_list, fail_silently=False)
 
             return HttpResponseRedirect('/forms/maintenance/data-entered')
     else:
@@ -84,19 +84,19 @@ def maintenance_requests(request):
         tpids.append(p.id)
 
     # superuser or manager
-    if request.user.is_superuser or request.user.groups.filter(id=1):
+    if request.user.is_superuser or request.user.groups.filter(id=2):
         my_reqs = MaintenanceRequest.objects.all().order_by("-date_created")
     # editors
-    elif request.user.groups.filter(id=2):
+    elif request.user.groups.filter(id=3):
         type_reqs = MaintenanceRequest.objects.filter(type_of_request__in=tpids)
         # check to see if our editor is also a reviewer, and if so, add reqs
-        if request.user.groups.filter(id=3):
+        if request.user.groups.filter(id=4):
             building_reqs = MaintenanceRequest.objects.filter(building__in=bpids).exclude(type_of_request__in=tpids)
         my_reqs = sorted(
             chain(type_reqs, building_reqs),
             key=attrgetter('date_created'), reverse=True)
     # reviewers
-    elif request.user.groups.filter(id=3):
+    elif request.user.groups.filter(id=4):
         my_reqs = MaintenanceRequest.objects.filter(type_of_request__in=bpids)
     # student
     else:

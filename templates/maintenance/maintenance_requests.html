@@ -20,9 +20,9 @@
         <tbody>
         {% for req in my_reqs %}
             <tr class="{% cycle odd,even %}{% if user.is_staff %}{% ifequal req.status "New" %} new-request{% endifequal %}{% endif %}">
-                <td width="75"><a href="{{req.get_absolute_url}}">{{req.date_created|date:"m"}}/{{req.date_created|date:"d"}}/{{req.date_created|date:"Y"}}</a></td>
-                <td width="130"><a href="{{req.get_absolute_url}}">{{req.building}}</a><br />Room {{req.room_number}}</td>
-                <td width="150"><a href="{{req.get_absolute_url}}">{{req.type_of_request}}</a></td>
+                <td width="75"><a href="{{req.get_update_url}}">{{req.date_created|date:"m"}}/{{req.date_created|date:"d"}}/{{req.date_created|date:"Y"}}</a></td>
+                <td width="130"><a href="{{req.get_update_url}}">{{req.building}}</a><br />Room {{req.room_number}}</td>
+                <td width="150"><a href="{{req.get_update_url}}">{{req.type_of_request}}</a></td>
                 <td width="350">{{req.description|truncatewords:25}} <a href="{{req.get_absolute_url}}">more</a>&nbsp;&raquo;</td>
                 <td width="75">{{req.status}}</td>
             </tr>
