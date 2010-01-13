@@ -24,17 +24,6 @@ class EVSForm(forms.ModelForm):
         model = MaintenanceRequest
         exclude = ('user','date_completed','status','damage_charge','notes', 'updated_by')
 
-    def clean_room_number(self):
-        """
-        insure that the room number is an integer
-        """
-        try:
-            room_number = int(self.cleaned_data['room_number'].strip().split()[0])
-        except (ValueError, IndexError):
-            raise forms.ValidationError("Room number should be an integer")
-
-        return room_number
-
     def clean_floor(self):
         """
         insure that the floor is an integer
@@ -53,17 +42,6 @@ class EVSFormUpdate(forms.ModelForm):
     class Meta:
         model = MaintenanceRequest
         exclude = ('user', 'updated_by')
-
-    def clean_room_number(self):
-        """
-        insure that the room number is an integer
-        """
-        try:
-            room_number = int(self.cleaned_data['room_number'].strip().split()[0])
-        except (ValueError, IndexError):
-            raise forms.ValidationError("Room number should be an integer")
-
-        return room_number
 
     def clean_floor(self):
         """

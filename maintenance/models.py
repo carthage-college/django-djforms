@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 STATUS_CHOICES = (
     ('New', 'New'),
     ('In Progress', 'In Progress'),
+    ('Replaced', 'Replaced'),
+    ('Fixed', 'Fixed'),
+    ('Cleaned', 'Cleaned'),
     ('Complete', 'Complete'),
 )
 """
@@ -44,7 +47,7 @@ class MaintenanceRequest(models.Model):
     type_of_request     = models.ForeignKey(GenericChoice, help_text="Need type of request definitions here.", related_name="maintenance_request_type_of_request")
     status              = models.CharField("Status of request", max_length=100, choices=STATUS_CHOICES)
     building            = models.ForeignKey(GenericChoice, verbose_name="Building Name", help_text="Name of the building on campus", related_name="maintenance_request_building")
-    room_number         = models.CharField("Room Number", max_length=3)
+    room_number         = models.CharField("Room Number or Location", max_length=50, help_text="If location, use: Lounge, restrooms, common area, lobby, hallway, foyer, etc. ")
     floor               = models.CharField("Floor Number", max_length=2, help_text='Use "0" for "basement"' )
     description         = models.TextField("Description", help_text="Please explain the nature of the problem.")
     notes               = models.TextField("Notes", help_text="Staff can provide further information here.", null=True, blank=True)
