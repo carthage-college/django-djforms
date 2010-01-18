@@ -41,8 +41,8 @@ class PostFormWithHidden(forms.ModelForm):
     work_days           = forms.ModelMultipleChoiceField(queryset=WORK_DAYS, widget=forms.CheckboxSelectMultiple())
     type_of_job         = forms.ModelChoiceField(queryset=TYPE_OF_JOB, empty_label=None, widget=forms.RadioSelect())
     hiring_department   = forms.ModelChoiceField(queryset=Department.objects.all())
-    publish             = forms.DateTimeField(help_text="A date for the post to go live on", widget=DateTimeWidget)
-    expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
+    publish             = forms.DateTimeField(help_text="A date for the post to go live on")
+    expire_date         = forms.DateTimeField(help_text="A date for the post to expire on")
     creator             = forms.ModelChoiceField(queryset=User.objects.all(), required=False, widget=forms.HiddenInput())
     active              = forms.BooleanField(help_text='Is active?', required=False, widget=forms.HiddenInput())
     class Meta:
@@ -62,8 +62,8 @@ class PostFormWithoutHidden(forms.ModelForm):
     work_days           = forms.ModelMultipleChoiceField(queryset=WORK_DAYS, widget=forms.CheckboxSelectMultiple())
     type_of_job         = forms.ModelChoiceField(queryset=TYPE_OF_JOB, empty_label=None, widget=forms.RadioSelect())
     hiring_department   = forms.ModelChoiceField(queryset=Department.objects.all())
-    publish             = forms.DateTimeField(help_text="A date for the post to go live on", widget=DateTimeWidget)
-    expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
+    publish             = forms.DateTimeField(help_text="A date for the post to go live on")
+    expire_date         = forms.DateTimeField(help_text="A date for the post to expire on")
     creator             = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
     class Meta:
         model = Post

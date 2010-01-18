@@ -5,14 +5,18 @@
 <script type="text/javascript" src="http://www.carthage.edu/assets/js/xinha/XinhaCore.js"></script>
 <script type="text/javascript" src="http://www.carthage.edu/assets/js/xinha/job-apps.js"></script>
 <script type="text/javascript" src="http://www.carthage.edu/djmedia/js/urlify.js"></script>
+<script src="{{jquery_version}}" type="text/javascript"></script>
+<script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_publish, #id_expire_date").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",changeFirstDay:false,dateFormat:"mm/dd/yy",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+    });
+</script>
 <script type="text/javascript" src="http://www.carthage.edu/djmedia/js/getElementsBySelector.js"></script>
-<script type="text/javascript" src="/assets/calendar/calendar.js"></script>
-<script type="text/javascript" src="/assets/calendar/lang/calendar-en.js"></script>
-<script type="text/javascript" src="/assets/calendar/calendar-setup.js"></script>
 {% endblock %}
-{% block extra_style%}
-<link rel="stylesheet" href="/assets/calendar/calendar-win2k-cold-2.css" type="text/css" />
-<link rel="stylesheet" href="/assets/forms.css" type="text/css" />
+{% block extra_style %}
+<link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="http://eua.carthage.edu/assets/forms.css" type="text/css" />
 <link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/plugins/forms.css" type="text/css" />
 <link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/overrides/forms.css" type="text/css" />
 <link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" type="text/css" />

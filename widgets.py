@@ -19,7 +19,7 @@ from django.utils.safestring import mark_safe
 
 # DATETIMEWIDGET
 
-calbtn = u"""<img src="http://dev.clausencenter.net/assets/images/calbutton.gif" alt="calendar" id="%s_btn" style="cursor: pointer; border: 1px solid #8888aa;" title="Select date and time"
+calbtn = u"""<img src="http://eua.carthage.edu/assets/images/calbutton.gif" alt="calendar" id="%s_btn" style="cursor: pointer; border: 1px solid #8888aa;" title="Select date and time"
             onmouseover="this.style.background='#444444';" onmouseout="this.style.background=''" />
 <script type="text/javascript">
     Calendar.setup({
@@ -28,7 +28,7 @@ calbtn = u"""<img src="http://dev.clausencenter.net/assets/images/calbutton.gif"
         button         :    "%s_btn",
         singleClick    :    true,
         showsTime      :    false,
-        align          :    "Tl",
+        align          :    "Tl"
     });
 </script>"""
 
