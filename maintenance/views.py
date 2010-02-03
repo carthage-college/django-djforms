@@ -94,9 +94,11 @@ def maintenance_requests(request):
         # check to see if our editor is also a reviewer, and if so, add reqs
         if request.user.groups.filter(id=4):
             building_reqs = MaintenanceRequest.objects.filter(building__in=bpids).exclude(type_of_request__in=tpids)
-        my_reqs = sorted(
-            chain(type_reqs, building_reqs),
-            key=attrgetter('date_created'), reverse=True)
+            my_reqs = sorted(
+                chain(type_reqs, building_reqs),
+                key=attrgetter('date_created'), reverse=True)
+        else:
+            my_reqs = type_reqs
     # reviewers
     elif request.user.groups.filter(id=4):
         my_reqs = MaintenanceRequest.objects.filter(type_of_request__in=bpids)

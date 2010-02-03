@@ -43,7 +43,7 @@ class MaintenanceRequest(models.Model):
     user                = models.ForeignKey(User, verbose_name="Created by", related_name="maintenance_request_user")
     updated_by          = models.ForeignKey(User, verbose_name="Updated by", related_name="maintenance_request_updated_by", null=True, blank=True)
     date_created        = models.DateTimeField("Date Created", auto_now_add=True)
-    date_completed      = models.DateTimeField("Date Completed", null=True, blank=True, help_text="Format: mm/dd/yyyy")
+    date_completed      = models.DateTimeField("Date Completed", null=True, blank=True, help_text="Format: yyyy-mm-dd")
     type_of_request     = models.ForeignKey(GenericChoice, help_text="Need type of request definitions here.", related_name="maintenance_request_type_of_request")
     status              = models.CharField("Status of request", max_length=100, choices=STATUS_CHOICES)
     building            = models.ForeignKey(GenericChoice, verbose_name="Building Name", help_text="Name of the building on campus", related_name="maintenance_request_building")
