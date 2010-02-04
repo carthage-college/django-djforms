@@ -11,34 +11,7 @@ STATUS_CHOICES = (
     ('Cleaned', 'Cleaned'),
     ('Complete', 'Complete'),
 )
-"""
-Now a generic choice m2m field
-BUILDING_CHOICES = (
-    ('Henry Denhart Residence Hall', 'Henry Denhart Residence Hall'),
-    ('Joseph Johnson Residence Hall', 'Joseph Johnson Residence Hall'),
-    ('Pat Tarble Residence Hall', 'Pat Tarble Residence Hall'),
-    ('South Residence Hall', 'South Residence Hall'),
-    ('Swenson Residence Hall', 'Swenson Residence Hall'),
-    ('The Oaks Residence Hall A', 'The Oaks Residence Hall A'),
-    ('The Oaks Residence Hall B', 'The Oaks Residence Hall B'),
-    ('The Oaks Residence Hall C', 'The Oaks Residence Hall C'),
-    ('The Oaks Residence Hall D', 'The Oaks Residence Hall D'),
-    ('','---------'),
-    ('A.W. Clausen Center for World Business', 'A.W. Clausen Center for World Business'),
-    ('David A. Stratz, Jr. Center for the Natural Sciences', 'David A. Stratz, Jr. Center for the Natural Sciences'),
-    ('H.F. Johnson Center for the Fine Arts', 'H.F. Johnson Center for the Fine Arts'),
-    ('Hedgeberg Library', 'Hedgeberg Library'),
-    ('Joan C. Potente Chapel', 'Joan C. Potente Chapel'),
-    ('Lentz Hall', 'Lentz Hall'),
-    ('A.F. Siebert Chapel', 'A.F. Siebert Chapel'),
-    ('W.A. Seidemann Natatorium', 'W.A. Seidemann Natatorium'),
-    ('N.E. Tarble Athletic and Recreation Center', 'N.E. Tarble Athletic and Recreation Center'),
-    ('Smeds Tennis Center', 'Smeds Tennis Center'),
-    ('Todd Wehr Center', 'Todd Wehr Center'),
-    ('Walter Fritsch Meditation Chapel', 'Walter Fritsch Meditation Chapel'),
 
-)
-"""
 class MaintenanceRequest(models.Model):
     user                = models.ForeignKey(User, verbose_name="Created by", related_name="maintenance_request_user")
     updated_by          = models.ForeignKey(User, verbose_name="Updated by", related_name="maintenance_request_updated_by", null=True, blank=True)
