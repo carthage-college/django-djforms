@@ -6,7 +6,6 @@ from django.template import RequestContext, loader, Context
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.template import RequestContext
 
 from djforms.maintenance.forms import EVSForm, EVSFormUpdate
 from djforms.maintenance.models import MaintenanceRequest
@@ -17,9 +16,6 @@ from djforms.core.models import GenericChoice
 from operator import attrgetter
 from itertools import chain
 from tagging.models import Tag, TaggedItem
-
-import logging
-logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG,)
 
 @login_required
 def maintenance_request_form(request):
@@ -40,7 +36,7 @@ def maintenance_request_form(request):
             maintenance_request.save()
             form.save_m2m()
             profile_form.save()
-            recipient_list = ["skirk@carthage.edu"]
+            recipient_list = ["skirk@carthage.edu","jramirez@carthage.edu"]
 
             managers = User.objects.filter(groups__id__in=[2,3])
             for m in managers:
@@ -53,7 +49,6 @@ def maintenance_request_form(request):
                 perms = r.get_profile().permission.filter(name=maintenance_request.building.name)
                 if perms:
                     recipient_list.append(r.email)
-            logging.debug("recipient list = %s" % recipient_list)
 
             t = loader.get_template('maintenance/email.txt')
             c = Context({'data':maintenance_request,})
