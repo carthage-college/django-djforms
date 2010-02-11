@@ -26,4 +26,9 @@ class MaintenanceRequestAdmin(admin.ModelAdmin):
     actions       = [export_evs_requests]
     raw_id_fields = ("user","updated_by",)
 
+    def save_model(self, request, obj, form, change):
+        if change:
+            obj.updated_by = request.user
+        obj.save()
+
 admin.site.register(MaintenanceRequest, MaintenanceRequestAdmin)
