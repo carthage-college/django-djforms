@@ -1,3 +1,3 @@
 A new job post has been created and is awaiting your editing at:
 
-http://dev.clausencenter.net/forms/job/managepost/{{data.slug}}
+http://eua.carthage.edu/forms/job/managepost/{{data.slug}}

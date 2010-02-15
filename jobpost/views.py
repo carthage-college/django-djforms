@@ -1,4 +1,4 @@
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.http import Http404, HttpResponseRedirect
@@ -155,7 +155,8 @@ def post_detail(request, slug, page=0):
                 form.save_m2m()
                 t = loader.get_template('jobpost/email.txt')
                 c = Context({'data':job,'post':post})
-                send_mail((post.title + " application"), t.render(c), form.cleaned_data.get('email'), [post.creator.email,], fail_silently=False)
+                email = EmailMessage((post.title + " application"), t.render(c), request.user.email, [post.creator.email], headers = {'Reply-To': request.user.email,'From': request.user.email})
+                email.send(fail_silently=False)
                 return HttpResponseRedirect('/forms/job/data_entered')
         else:
             form = JobApplyForms()

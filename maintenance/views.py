@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.contrib.auth.models import User
@@ -52,7 +52,8 @@ def maintenance_request_form(request):
 
             t = loader.get_template('maintenance/email.txt')
             c = Context({'data':maintenance_request,})
-            send_mail(("%s Floor %s Room %s: %s" % (maintenance_request.building.name, maintenance_request.floor, maintenance_request.room_number, maintenance_request.type_of_request.name)), t.render(c), request.user.email, recipient_list, fail_silently=False)
+            email = EmailMessage(("%s Floor %s Room %s: %s" % (maintenance_request.building.name, maintenance_request.floor, maintenance_request.room_number, maintenance_request.type_of_request.name)), t.render(c), request.user.email, recipient_list, headers = {'Reply-To': request.user.email,'From': request.user.email})
+            email.send(fail_silently=False)
 
             return HttpResponseRedirect('/forms/maintenance/data-entered')
     else:

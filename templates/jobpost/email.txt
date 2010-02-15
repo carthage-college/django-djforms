@@ -1,7 +1,7 @@
-{% autoescape off %
+{% autoescape off %}
 Data from job submission at:
 
-http://dev.clausencenter.net/forms/job/{{post.slug}}
+http://eua.carthage.edu/forms/job/{{post.slug}}
 
 {{data.render_email|safe}}
-{% endautoescape %
+{% endautoescape %}
