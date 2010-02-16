@@ -4,7 +4,7 @@ import os, sys
 
 sys.path.append('/usr/lib/python2.6/site-packages/')
 sys.path.append('/usr/lib/python2.6/')
-sys.path.append('/data2/django_src/')
+sys.path.append('/data2/django_trunk_current/')
 sys.path.append('/data2/django_projects/')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'djforms.settings'

@@ -29,7 +29,7 @@
                 <p class="error">
                 Please enter a correct username and password. Both fields are case-sensitive.<br /><br />  NOTE: Your password expires every 6 months, so if you have not used your Novel account in over 6 months, you will have to <a href="http://www.carthage.edu/password" target="_blank">change your password</a>.</p>
             {% endif %}
-            <form name="djauth" method="post" action="." class="form">
+            <form name="djauth" method="post" action="." class="form">{% csrf_token %}
                 <input type="hidden" name="next" value="{% if next %}{{ next }}{% endif %}" />
                     <ol>
                         <li class="ctrlHolder">

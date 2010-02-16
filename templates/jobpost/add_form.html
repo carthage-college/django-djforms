@@ -24,8 +24,8 @@
 {% block content %}
     <div class="buffer">
         <h1 class="page_title">Create a Job Post</h1>
-        <form method="POST" action="" class="form">
-            <h3 style="color: green;"> 
+        <form method="POST" action="" class="form">{% csrf_token %}
+            <h3 style="color: green;">
                 Please fill in all appropriate fields
             </h3>
             {% if form.errors %}
@@ -55,7 +55,7 @@
                     {% endfor %}
                     <li class="btnHolder">
                     <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Save event" class="button" />
+                    <input type="submit" value="Save job" class="button" />
                     </li>
                 </ol>
             </fieldset>

@@ -14,7 +14,7 @@
     <p>
         Complete the form below to update this maintenance request.
     </p>
-    <form method="POST" action="." class="form">
+    <form method="POST" action="." class="form">{% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}

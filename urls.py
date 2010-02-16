@@ -13,6 +13,9 @@ from djforms.auth.views import loggedout
 admin.autodiscover()
 #authority.autodiscover()
 
+handler404 = 'djforms.core.views.four_oh_four_error'
+handler500 = 'djforms.core.views.server_error'
+
 urlpatterns = patterns('',
     # home
     (r'^$', direct_to_template, {'template': 'forms_home.html'}),

@@ -23,7 +23,7 @@ USE_I18N = True
 
 ROOT_URLCONF = 'djforms.urls'
 MEDIA_ROOT = '/data2/django_projects/djforms/assets'
-MEDIA_URL = '/calendar/'
+MEDIA_URL = '/assets/'
 ADMIN_MEDIA_PREFIX = '/djmedia/'
 AUTH_PROFILE_MODULE = 'core.UserProfile'
 SECRET_KEY = 'zp(!1yvo=g1j58@)29m$bxpl5$o3-g5i!$z*##jbfz=j_(g&-)'

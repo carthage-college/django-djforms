@@ -46,7 +46,7 @@
         </dl>
         <hr />
         {% ifequal user.username post.creator.username %}
-            <form method="POST" action="." class="form">
+            <form method="POST" action="." class="form">{% csrf_token %}
                 {% if form.errors %}
                     <h2 style="color: red;">
                         Please correct the error{{ form.errors|pluralize }} below.
@@ -129,7 +129,7 @@
             </dl>
             <p>{{ post.description }}</p>
             <hr />
-            <form method="POST" action="." class="form">
+            <form method="POST" action="." class="form">{% csrf_token %}
                 <h3 style="color: green;">
                     Complete the form below to apply for this job.
                 </h3>

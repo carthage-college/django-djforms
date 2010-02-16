@@ -29,13 +29,6 @@ def questionnaire_form(request):
             memory.save()
 
             recipient_list = ["skirk@carthage.edu", "mfisher@carthage.edu"]
-            """
-            managers = User.objects.filter(groups__id__in=[2,3])
-            for m in managers:
-                perms = m.get_profile().permission.filter(name=maintenance_request.type_of_request.name)
-                if perms:
-                    recipient_list.append(m.email)
-            """
             t = loader.get_template('alumni/memory/questionnaire_email.txt')
             c = RequestContext(request, {'data':memory,})
             send_mail(("Alumni Memory Questionnaire Detail: %s, %s" % (memory.last_name, memory.first_name)), t.render(c), memory.email, recipient_list, fail_silently=False)
