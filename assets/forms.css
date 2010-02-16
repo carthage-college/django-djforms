@@ -47,12 +47,24 @@ dl.job-detail .job-data{
     float:left;
 }
 
-d1.job-detail .student-header {
+dl.job-detail .student-header {
     float:left;
     width: 200px;
     font-weight: bold;
     color: #224F28;
     margin-bottom:5px;
+}
+
+dl.job-detail .photo-header {
+    float:left;
+    width: 100px;
+    margin-bottom:10px;
+}
+
+dl.job-detail .photo-data {
+    width: 600px;
+    margin-bottom:10px;
+    float:left;
 }
 
 .description p {
@@ -68,4 +80,3 @@ tr.odd {background-color: #CFC4B5;}
 tr.even {background-color: #fff;}
 tr.new-request {background-color: goldenrod;}
 tr.new-request td {font-weight: bold;}
-

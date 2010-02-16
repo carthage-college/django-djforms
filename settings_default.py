@@ -42,6 +42,7 @@ TEMPLATE_DIRS = (
     "/data2/django_projects/sputnik/production/sputnik/templates/"
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
+    "djforms.context_processors.sitevars",
     "django.core.context_processors.auth",
     "django.core.context_processors.request",
     "django.core.context_processors.debug",
@@ -56,8 +57,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     # third party projects
+    'authority',
+    'imagekit',
     'tagging',
     # djforms stuff
+    'djforms.alumni',
+    'djforms.alumni.memory',
     'djforms.core',
     #'djforms.eduform',
     #'djforms.forms',

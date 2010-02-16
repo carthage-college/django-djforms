@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from tagging.fields import TagField
 from tagging.models import Tag
-
+from imagekit.models import ImageModel
 from userprofile.models import BaseProfile
 
 import datetime
@@ -16,7 +16,7 @@ class GenericChoice(models.Model):
     ranking = models.IntegerField(null=True, blank=True, default=0, max_length=3, verbose_name="Ranking", help_text='A number from 0 to 999 to determine this object\'s position in a list.')
     active = models.BooleanField(help_text='Do you want the field to be visable on your form?', verbose_name='Is active?', default=True)
     tags = TagField()
-    
+
     def __unicode__(self):
         return self.name
 
@@ -29,14 +29,14 @@ class GenericContact(models.Model):
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=126)
     email = models.EmailField()
-    
+
     class Meta:
         abstract = True
         ordering = ['last_name']
-        
+
     def __unicode__(self):
         return u'%s %s' % (self.last_name, self.first_name)
-        
+
 #For making a generic Contact form
 class GenericContactForm(models.Model):
     name = models.CharField(max_length=128)
@@ -61,3 +61,27 @@ class UserProfile(BaseProfile):
 
     def __unicode__(self):
         return "%s %s's profile with username: %s" % (self.user.first_name, self.user.last_name, self.user.username)
+
+class Photo(ImageModel):
+    title = models.CharField(max_length=256)
+    original_image = models.ImageField(upload_to='photos/alumemory', max_length="256")
+    caption = models.TextField('Caption')
+    num_views = models.PositiveIntegerField(editable=False, default=0)
+
+    class IKOptions:
+        # This inner class is where we define the ImageKit options for the model
+        spec_module = 'djforms.core.photo_specs'
+        cache_dir = 'photos/cache'
+        image_field = 'original_image'
+        save_count_as = 'num_views'
+
+    def _save_FIELD_file(self, field, filename, raw_contents, save=True):
+        filename = "%s_%s" % (self.id, filename)
+        super(Patch, self)._save_FIELD_file(field, filename, raw_contents, save)
+
+    def __unicode__(self):
+        return self.title
+
+    #def get_absolute_url(self):
+    #    return reverse("photo_details", args=[self.pk])
+

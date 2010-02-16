@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Alumni Memory Questionnaire Form{% endblock %}
+{% block extra_javascript %}
+<script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" language="javascript"></script>
+<script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.metadata.min.js" type="text/javascript" language="javascript"></script>
+<script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.MultiFile.min.js" type="text/javascript" language="javascript"></script>
+<script>
+$(function(){
+    $('#PhotoFileUpload').MultiFile({
+        accept:'gif|jpg|png', max:5, STRING: {
+            file: '<em title="Click to remove" onclick="$(this).parent().prev().click()">$file</em>', 
+            remove:'<img src="http://www.carthage.edu/assets/img/ico/delete.gif" width="16" height="16" alt="x" title="remove" />',
+            denied:'You cannot select a $ext file.\nTry again...',
+            selected:'File selected: $file',
+            duplicate:'This file has already been selected:\n$file'
+        },
+        afterFileAppend: function(element, value, master_element){
+            domid = value.replace(/\./g, "");
+            domid = domid.replace(/ /g, "");
+            $('#photo-captions').append('<textarea name="captions[]" id="'+domid+'"></textarea>') 
+        },
+        afterFileRemove: function(element, value, master_element){
+            domid = value.replace(/\./g, "");
+            domid = domid.replace(/ /g, "");
+            $("#" + domid).remove();
+        },
+    });
+});
+</script>
+{% endblock %}
+{% block extra_style %}
+<link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
+<style>
+#alumemory textarea {
+    width:600px;
+    height:150px;
+}
+#photo-captions textarea {
+    height:60px;
+    width: 300px;
+}
+.MultiFile-label {
+    padding-bottom:60px;
+}
+</style>
+{% endblock %}
+{% block left_nav %}
+    {% include "alumni/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>Alumni Memory Questionnaire Form</h1>
+    <p>
+        Complete the form below to submit your Alumni Memory.
+    </p>
+    <p>
+        You may include up to 10 photos. Please identify anyone who appears in the photos in the caption area provided.
+    </p>
+    <form action="." class="form" id="alumemory" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
+        <fieldset class="blockLabels">
+            <ol>
+                {% for field in form %}
+                <li class="ctrlHolder">
+                <h3>{{ field.label_tag }}</h3>
+                {% if field.errors %}
+                <div class="warning">
+                <span class="error-message">{{ field.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {{field}}
+                {% if field.help_text %}
+                <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                </div>
+                </li>
+                {% endfor %}
+                <li class="ctrlHolder">
+                <h3>Photos</h3>
+                <div class="fileinputs">
+                <p>Maximum of 5 photos (allowed file formats: jpg, png, gif).</p>
+                <table width="100%">
+                    <tr>
+                        <td width="300" valign="top">
+                            <input type="file" class="medium" name="photos[]" id="PhotoFileUpload" maxlength="5" style="margin-bottom: 10px;" />
+                        </td>
+                        <td width="400" valign="top">
+                            <strong>Captions</strong>
+                            <div id="photo-captions">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                </div>
+                </li>
+                <li class="btnHolder">
+                <label for="id_submit">&nbsp;&nbsp;</label>
+                <input type="submit" value="Submit Request" class="button" />
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

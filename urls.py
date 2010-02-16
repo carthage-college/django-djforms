@@ -29,23 +29,20 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
     #for contact forms environment
     (r'^contact/', include('djforms.contact.urls')),
-
     #for the maintenance/evs form environment
     (r'^maintenance/', include('djforms.maintenance.urls')),
-
+    #for the alumni forms
+    (r'^alumni/', include('djforms.alumni.urls')),
     #For edu form environment
     (r'^eduform/data-entered/$', data_entered),
     #catches the slugs
     (r'^eduform/(?P<slug>[-\w]+)/$', add_object),
-
     #for the job post environment
     (r'^job/', include('djforms.jobpost.urls')),
     # auth
     url(r'^accounts/login/$',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),
-    #url(r'^accounts/logout/$',auth_views.logout,{'next_page': '/forms/job/'}),
     url(r'^accounts/logout/$',auth_views.logout,{'next_page': '/forms/accounts/loggedout/'}),
     url(r'^accounts/loggedout',loggedout,{'template_name': 'accounts/logged_out.html'}),
 )

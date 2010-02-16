@@ -1,0 +1,13 @@
+Data from Alumni Memory Questionnaire form:
+
+First Name:         {{data.first_name}}
+Last Name:          {{data.last_name}}
+Email:              {{data.email}}
+Phone:              {{data.phone}}
+
+URL:
+
+<http://{{site_domain}}{{data.get_absolute_url}}>
+
+The above page will display all the information that was submitted by
+{{data.first_name}} {{data.last_name}}, including any photos and captions.

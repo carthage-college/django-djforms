@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Alumni Memory Questionnaire Detail{% endblock %}
+{% block left_nav %}
+    {% include "alumni/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>Alumni Memory Questionnaire Detail</h1>
+    <dl class="job-detail">
+        <dt class="job-header">First Name:</dt><dd class="job-data">{{ mq.first_name }}</dd>
+        <dt class="job-header">Last Name:</dt><dd class="job-data">{{ mq.last_name }}</dd>
+        <dt class="job-header">Email:</dt><dd class="job-data"><a href="mailto:{{ mq.email }}">{{ mq.email }}</a></dd>
+        <dt class="job-header">Address:</dt><dd class="job-data">{{ mq.address }}</dd>
+        <dt class="job-header">City:</dt><dd class="job-data">{{ mq.city }}</dd>
+        <dt class="job-header">State:</dt><dd class="job-data">{{ mq.state }}</dd>
+        <dt class="job-header">Zip:</dt><dd class="job-data">{{ mq.zip }}</dd>
+        <dt class="job-header">Phone:</dt><dd class="job-data">{{ mq.phone }}</dd>
+        <dt class="job-header">Occupation 1:</dt><dd class="job-data">{{ mq.occupation1 }}</dd>
+        <dt class="job-header">Occupation 2:</dt><dd class="job-data">{{ mq.occupation2 }}</dd>
+        <dt class="job-header">Favorite Website:</dt><dd class="job-data">{{ mq.website }}</dd>
+        <dt class="job-header">Why?</dt><dd class="clear"></dt>
+        <dd class="description">{{ mq.website_why }}</dd>
+        <dt class="job-header">Real world challenge:</dt><dd class="clear"></dd>
+        <dd class="description">{{ mq.challenge }}</dd>
+        <dt class="job-header">Favorite professor:</dt><dd class="job-data">{{ mq.professor }}</dd>
+        <dt class="job-header">Why?</dt><dd class="clear"></dd>
+        <dd class="description">{{ mq.professor_why }}</dd>
+        <dt class="job-header">Relive Carthage moment:</dt><dd class="clear"></dd>
+        <dd class="description">{{ mq.relive }}</dd>
+        <dt class="job-header">Personal message:</dt><dd class="clear"></dd>
+        <dd class="description">{{ mq.message }}</dd>
+        <dt class="job-header">Photos:</dt><dd class="clear"></dd>
+        {% for photo in mq.photos.all %}
+        <dt class="photo-header"><a href="{{photo.original_image.url}}"><img src="{{ photo.thumbnail_image.url }}" alt="{{ photo.name }}" /></a></dt>
+        <dd class="photo-data">{{ photo.caption }}</dd>
+        <dd class="clear"></dd>
+        {% endfor %}
+    </dl>
+</div>
+{% endblock %}

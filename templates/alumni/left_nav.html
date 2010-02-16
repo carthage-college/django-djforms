@@ -1,0 +1,23 @@
+<div id="first">
+    <ul id='nav' class='sf-vertical'>
+        <li><a href="http://www.carthage.edu/alumni/110/index/">1-10 Club</a></li>
+        <li><a href="http://www.carthage.edu/alumni/ambassadors/index/">Alumni Ambassadors</a></li>
+        <li><a href="http://www.carthage.edu/alumni/mission/">Alumni Association</a></li>
+        <li><a href="http://www.carthage.edu/alumni/apps/">Alumni Directory</a></li>
+        <li><a href="http://www.carthage.edu/alumni/apps/classnotes">Class Notes</a></li>
+        <li><a href="http://www.carthage.edu/alumni/distinguishedalumni">Distinguished Alumni Awards</a></li>
+        <li><a href="http://www.carthage.edu/giving/">Gifts to Carthage</a></li>
+        <li><a href="http://www.carthage.edu/alumni/recentevents/">Pictures from Recent Events</a></li>
+        <li><a href="http://www.carthage.edu/academics/registrar/transcripts/">Transcripts</a></li>
+        <li><a href="http://www.carthage.edu/alumni/travel/">Travel</a></li>
+        <li class="last-featured"><a href="http://www.carthage.edu/alumni/calendar/complete/">Upcoming Events</a></li>
+        {% if not user.is_anonymous %}
+        <li><a href="/forms/accounts/logout/">Logout</a></li>
+        {% if user.is_superuser %}
+        <li><a href="/forms/admin/">Administration</a></li>
+        {% endif %}
+        {% else %}
+        <li><a href="/forms/accounts/login/?next=/forms/maintenance/evs/">Login</a></li>
+        {% endif %}
+    </ul>
+</div>
