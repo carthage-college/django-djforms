@@ -19,7 +19,7 @@ handler500 = 'djforms.core.views.server_error'
 urlpatterns = patterns('',
     # home
     (r'^$', direct_to_template, {'template': 'forms_home.html'}),
-    #For room and equipment reserve environment
+    # For room and equipment reserve environment
     (r'^equipment_reserve/$', equipment_reserve),
     (r'^room-reserve/$', room_reserve),
     (r'^reserve-complete/$', reserve_complete),
@@ -32,17 +32,19 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    #for contact forms environment
+    # for contact forms environment
     (r'^contact/', include('djforms.contact.urls')),
-    #for the maintenance/evs form environment
+    # for the maintenance/evs form environment
     (r'^maintenance/', include('djforms.maintenance.urls')),
-    #for the alumni forms
+    # for the alumni forms
     (r'^alumni/', include('djforms.alumni.urls')),
-    #For edu form environment
+    # CharacterQuest
+    (r'^character-quest/', include('djforms.characterquest.urls')),
+    # For edu form environment
     (r'^eduform/data-entered/$', data_entered),
-    #catches the slugs
+    # catches the slugs
     (r'^eduform/(?P<slug>[-\w]+)/$', add_object),
-    #for the job post environment
+    # for the job post environment
     (r'^job/', include('djforms.jobpost.urls')),
     # auth
     url(r'^accounts/login/$',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),

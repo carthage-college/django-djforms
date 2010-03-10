@@ -1,6 +1,7 @@
 from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.models import User
+from django.contrib.localflavor.us.models import USStateField
 
 from tagging.fields import TagField
 from tagging.models import Tag
@@ -9,6 +10,17 @@ from userprofile.models import BaseProfile
 
 import datetime
 
+SEX_CHOICES = (
+    ('Male', 'Male'),
+    ('Female', 'Female'),
+)
+YEAR_CHOICES = (
+    ('','---------'),
+    ('1','Freshman'),
+    ('2','Sophmore'),
+    ('3','Junior'),
+    ('4','Senior')
+)
 #For making choices for choice fields for forms
 class GenericChoice(models.Model):
     name = models.CharField(unique=True, max_length=255)
@@ -56,7 +68,18 @@ class UserProfile(BaseProfile):
     """
     User profile model
     """
-    phone = models.CharField(max_length=12, verbose_name='Phone Number', help_text="Format: XXX-XXX-XXXX")
+    phone   = models.CharField(max_length=12, verbose_name='Phone Number', help_text="Format: XXX-XXX-XXXX")
+    address = models.CharField(max_length=255, verbose_name = 'Address', null=True, blank=True)
+    city    = models.CharField(max_length=128, verbose_name = 'City', null=True, blank=True)
+    state   = USStateField()
+    zip     = models.CharField(max_length=10, verbose_name = 'Zip code', null=True, blank=True)
+    dob     = models.DateField("Birthday", null=True, blank=True)
+    sex     = models.CharField(max_length="16", choices=SEX_CHOICES, null=True, blank=True)
+    campus_address  = models.CharField("Campus Address",max_length="64")
+    campus_box = models.CharField("Campus Box #",max_length="4")
+    college_access_code = models.CharField("Carthage Access Code",max_length="7")
+    college_id = models.CharField("Carthage ID", max_length="7")
+    college_year = models.CharField("Current Year at Carthage",max_length="1",choices=YEAR_CHOICES)
     permission = models.ManyToManyField(GenericChoice, verbose_name='Permissions', null=True, blank=True,)
 
     def __unicode__(self):
@@ -85,3 +108,62 @@ class Photo(ImageModel):
     #def get_absolute_url(self):
     #    return reverse("photo_details", args=[self.pk])
 
+STATE_CHOICES = (
+    ('','------------'),
+    ('AL', 'Alabama'),
+    ('AK', 'Alaska'),
+    ('AS', 'American Samoa'),
+    ('AZ', 'Arizona'),
+    ('AR', 'Arkansas'),
+    ('CA', 'California'),
+    ('CO', 'Colorado'),
+    ('CT', 'Connecticut'),
+    ('DE', 'Delaware'),
+    ('DC', 'District of Columbia'),
+    ('FL', 'Florida'),
+    ('GA', 'Georgia'),
+    ('GU', 'Guam'),
+    ('HI', 'Hawaii'),
+    ('ID', 'Idaho'),
+    ('IL', 'Illinois'),
+    ('IN', 'Indiana'),
+    ('IA', 'Iowa'),
+    ('KS', 'Kansas'),
+    ('KY', 'Kentucky'),
+    ('LA', 'Louisiana'),
+    ('ME', 'Maine'),
+    ('MD', 'Maryland'),
+    ('MA', 'Massachusetts'),
+    ('MI', 'Michigan'),
+    ('MN', 'Minnesota'),
+    ('MS', 'Mississippi'),
+    ('MO', 'Missouri'),
+    ('MT', 'Montana'),
+    ('NE', 'Nebraska'),
+    ('NV', 'Nevada'),
+    ('NH', 'New Hampshire'),
+    ('NJ', 'New Jersey'),
+    ('NM', 'New Mexico'),
+    ('NY', 'New York'),
+    ('NC', 'North Carolina'),
+    ('ND', 'North Dakota'),
+    ('MP', 'Northern Mariana Islands'),
+    ('OH', 'Ohio'),
+    ('OK', 'Oklahoma'),
+    ('OR', 'Oregon'),
+    ('PA', 'Pennsylvania'),
+    ('PR', 'Puerto Rico'),
+    ('RI', 'Rhode Island'),
+    ('SC', 'South Carolina'),
+    ('SD', 'South Dakota'),
+    ('TN', 'Tennessee'),
+    ('TX', 'Texas'),
+    ('UT', 'Utah'),
+    ('VT', 'Vermont'),
+    ('VI', 'Virgin Islands'),
+    ('VA', 'Virginia'),
+    ('WA', 'Washington'),
+    ('WV', 'West Virginia'),
+    ('WI', 'Wisconsin'),
+    ('WY', 'Wyoming'),
+)

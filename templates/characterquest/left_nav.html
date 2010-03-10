@@ -1,0 +1,18 @@
+<div id="first">
+    <ul id='nav' class='sf-vertical'>
+        <li><a href="/character-quest/">Character Quest</a></li>
+        <li><a href="/character-quest/about/">About</a></li>
+        <li><a href="/character-quest/purpose/">Purpose</a></li>
+        <li><a href="/character-quest/enrollment/">Enrollment Form</a></li>
+        <li><a href="/character-quest/alumni-login/">Alumni Login</a></li>
+        <li class="last-featured"><a href="/character-quest/contacts/">Contacts</a></li>
+        {% if not user.is_anonymous %}
+        <li><a href="/forms/accounts/logout/">Logout</a></li>
+        {% if user.is_superuser %}
+        <li><a href="/forms/admin/">Administration</a></li>
+        {% endif %}
+        {% else %}
+        <li><a href="/forms/accounts/login/?next=/forms/maintenance/evs/">Login</a></li>
+        {% endif %}
+    </ul>
+</div>

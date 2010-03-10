@@ -1,0 +1,37 @@
+<h1>Data from Characterquest</h1>
+
+<pre style="font-size:12px;">
+First Name:         {{data.first_name}}
+Last Name:          {{data.last_name}}
+Birthday            {{data.profile.dob}}
+Sex                 {{data.sex}}
+
+Email:              {{data.email}}
+Phone:              {{data.phone}}
+Address             {{data.address}}
+City                {{data.city}}
+State               {{data.state}}
+Zip                 {{data.zip}}
+
+Campus Address      {{data.profile.campus_address}}
+Campus Box          {{data.profile.campus_box}}
+Access Code         {{data.profile.college_access_code}}
+Carthage ID         {{data.profile.college_id}}
+Year                {{data.profile.college_year}}
+Shirt Size          {{data.shirt_size}}
+</pre>
+
+<h3>Have you been an Orientation Leader before?</h3>
+<p>{{data.orientation_leader}}</p>
+<h3>If 'yes', which years?</h3>
+<p>{{data.orientation_leader_years}}</p>
+<h3>Did you transfer to Carthage College from another school?</h3>
+<p>{{data.transfer}}</p>
+<h3>Oganizations and Activities</h3>
+<pre style="font-size:12px;">{{data.organizations}}</pre>
+<h3>What skills/experience should a successful orientation leader have?</h3>
+<p>{{data.skills_experience}}</p>
+<h3>Why do you want to be an orientation leader?</h3>
+<p>{{data.why_orientation_leader}}</p>
+<h3>Describe an experience that, for you, demonstrates what Carthage is all about.</h3>
+<p>{{data.describe_experience}}</p>

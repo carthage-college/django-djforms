@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}CharacterQuest Application Form{% endblock %}
+{% block extra_javascript %}
+<script src="{{jquery_version}}" type="text/javascript"></script>
+<script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_profile-dob").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",changeFirstDay:false,dateFormat:"mm/dd/yy",yearRange: "-25:+0",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+    });
+</script>
+<script type="text/javascript" src="http://www.carthage.edu/djmedia/js/getElementsBySelector.js"></script>
+{% endblock %}
+{% block extra_style %}
+<link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block left_nav %}
+    {% include "characterquest/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>CharacterQuest Application Form</h1>
+    <p>
+        Complete the form below to submit your application for CharacterQuest.
+    </p>
+    <form action="." class="form" id="characterquest_application" method="post">{% csrf_token %}
+        <fieldset class="blockLabels">
+            <ol>
+                {% for field in profile_form %}
+                <li class="ctrlHolder">
+                <h3>{{ field.label_tag }}</h3>
+                {% if field.errors %}
+                <div class="warning">
+                <span class="error-message">{{ field.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {% if field.help_text %}
+                <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                {{field}}
+                </div>
+                </li>
+                {% endfor %}
+                {% for field in form %}
+                <li class="ctrlHolder">
+                <h3>{{ field.label_tag }}</h3>
+                {% if field.errors %}
+                <div class="warning">
+                <span class="error-message">{{ field.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {% if field.help_text %}
+                <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                {{field}}
+                </div>
+                </li>
+                {% endfor %}
+                <li class="btnHolder">
+                <label for="id_submit">&nbsp;&nbsp;</label>
+                <input type="submit" value="Submit" class="button" />
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
