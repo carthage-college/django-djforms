@@ -64,6 +64,7 @@ INSTALLED_APPS = (
     # djforms stuff
     'djforms.alumni',
     'djforms.alumni.memory',
+    'djforms.characterquest',
     'djforms.core',
     #'djforms.eduform',
     #'djforms.forms',

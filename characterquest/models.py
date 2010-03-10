@@ -6,7 +6,7 @@ BINARY_CHOICES = (
     ('No', 'No'),
 )
 
-class EnrollmentProfile(models.Model):
+class ApplicationProfile(models.Model):
     profile                     = models.ForeignKey(UserProfile)
 
     organizations               = models.TextField("Oganizations and Activities",

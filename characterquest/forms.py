@@ -1,10 +1,10 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
-from djforms.characterquest.models import EnrollmentProfile, SHIRT_SIZE_CHOICES,BINARY_CHOICES
+from djforms.characterquest.models import ApplicationProfile, BINARY_CHOICES
 from djforms.core.models import UserProfile, SEX_CHOICES, STATE_CHOICES, YEAR_CHOICES
 
-class EnrollmentProfileForm(forms.ModelForm):
+class ApplicationProfileForm(forms.ModelForm):
     address = forms.CharField(label="Permanent Address")
     city    = forms.CharField()
     state   = forms.CharField(widget=forms.Select(choices=STATE_CHOICES), required=True)
@@ -26,9 +26,9 @@ class EnrollmentProfileForm(forms.ModelForm):
                   'campus_address', 'campus_box','college_access_code',
                   'college_id','college_year']
 
-class EnrollmentForm(forms.ModelForm):
+class ApplicationForm(forms.ModelForm):
 
     class Meta:
-        model = EnrollmentProfile
+        model = ApplicationProfile
         exclude = ('profile',)
         fields = ['organizations','skills_experience','why_orientation_leader','describe_experience']
