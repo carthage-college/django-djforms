@@ -31,4 +31,4 @@ class ApplicationForm(forms.ModelForm):
     class Meta:
         model = ApplicationProfile
         exclude = ('profile',)
-        fields = ['organizations','skills_experience','why_orientation_leader','describe_experience']
+        fields = ['organizations','skills_experience','why_orientation_leader','describe_experience','references']

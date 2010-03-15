@@ -35,3 +35,5 @@ Shirt Size          {{data.shirt_size}}
 <p>{{data.why_orientation_leader}}</p>
 <h3>Describe an experience that, for you, demonstrates what Carthage is all about.</h3>
 <p>{{data.describe_experience}}</p>
+<h3>References.</h3>
+<p>{{data.references}}</p>
