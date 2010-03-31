@@ -14,7 +14,7 @@ STATUS_CHOICES = (
 
 class MaintenanceRequest(models.Model):
 
-    user                = models.ForeignKey(User, verbose_name="Created by", related_name="maintenance_request_user", editable=False)
+    user                = models.ForeignKey(User, verbose_name="Created by", related_name="maintenance_request_user")
     updated_by          = models.ForeignKey(User, verbose_name="Updated by", related_name="maintenance_request_updated_by", null=True, blank=True, editable=False)
     date_created        = models.DateTimeField("Date Created", auto_now_add=True)
     date_completed      = models.DateTimeField("Date Completed", null=True, blank=True, help_text="Format: yyyy-mm-dd")

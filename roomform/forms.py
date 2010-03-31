@@ -1,6 +1,8 @@
 from django import forms
+from sputnik.apps.utilities.forms.fields import KungfuTimeField
 from djforms.widgets import *
-STATUS_CHOICES=[('', '---------- pick one ----------'),
+
+STATUS_CHOICES=[('', '---------- select ----------'),
                 ('Trustee', 'Trustee'),
                 ('Administration', 'Administration'),
                 ('Faculty', 'Faculty'),
@@ -105,21 +107,16 @@ ROOM_CHOICES=[  ('', '---------- pick one ----------'),
                 ('Straz 233','Straz 233'),
                 ('Straz B 4','Straz B 4'),
                 ('Straz B12','Straz B12'),]
+
 class RoomReserveForm(forms.Form):
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
     email = forms.EmailField(label='Your e-mail')
     local_phone = forms.CharField(max_length=20)
     status = forms.ChoiceField(choices=STATUS_CHOICES)
-    date = forms.DateField(widget=DateTimeWidget)
-    start_time_hours = forms.ChoiceField(choices=HOUR_CHOICES)
-    start_time_minutes = forms.ChoiceField(choices=MINUTE_CHOICES)
-    start_time_meridiem = forms.ChoiceField(choices=MERIDIEM_CHOICES)
-    start_time = forms.TimeField(required=False)
-    end_time_hours = forms.ChoiceField(choices=HOUR_CHOICES)
-    end_time_minutes = forms.ChoiceField(choices=MINUTE_CHOICES)
-    end_time_meridiem = forms.ChoiceField(choices=MERIDIEM_CHOICES)
-    end_time = forms.TimeField(required=False)
+    date = forms.DateField()
+    start_time = KungfuTimeField()
+    end_time = KungfuTimeField()
     room = forms.ChoiceField(ROOM_CHOICES)
     title_of_event = forms.CharField(required=False, max_length=50)
     department = forms.CharField(required=False, max_length=50)
@@ -133,58 +130,24 @@ class RoomReserveForm(forms.Form):
         if first_name == 'Enter first name':
             raise forms.ValidationError("Enter a First Name!")
         return first_name
-    
+
     #Makes sure the user enters a last name
     def clean_last_name(self):
         last_name = self.cleaned_data['last_name']
         if last_name == 'Enter last name':
             raise forms.ValidationError("Enter a Last Name!")
         return last_name
-    
+
     #Makes sure the user enters a phone number
     def clean_local_phone(self):
         local_phone = self.cleaned_data['local_phone']
         if local_phone == 'Enter phone number':
             raise forms.ValidationError("Enter a Phone Number!")
         return local_phone
-    
+
     #Makes sure the user picks a date later than today
     def clean_date(self):
         date = self.cleaned_data['date']
         if date <= datetime.date.today():
             raise forms.ValidationError("You must pick a date after today!")
         return date
-    
-    def clean_start_time(self):
-        #assign proper data
-        start_time = self.cleaned_data['start_time']
-        start_time_meridiem = self.cleaned_data['start_time_meridiem']
-        start_time_hours = int(self.cleaned_data['start_time_hours'])
-        start_time_minutes = int(self.cleaned_data['start_time_minutes'])
-        #convert the time to seconds
-        start_time = ( start_time_hours * 3600 ) + ( start_time_minutes * 60 )
-        return start_time
-        
-    def clean_end_time(self):
-        #assign proper data, we need start time stuff for validation comparison
-        start_time = self.cleaned_data['start_time']
-        start_time_meridiem = self.cleaned_data['start_time_meridiem']
-        start_time_hours = int(self.cleaned_data['start_time_hours'])
-        end_time = self.cleaned_data['end_time']
-        end_time_meridiem = self.cleaned_data['end_time_meridiem']
-        end_time_hours = int(self.cleaned_data['end_time_hours'])
-        end_time_minutes = int(self.cleaned_data['end_time_minutes'])
-        #set the time to the proper amount of seconds
-        end_time = (end_time_hours * 3600) + ( end_time_minutes * 60 )
-        end_time2 = end_time
-        #compare the two based on seconds and meridiem
-        if start_time_meridiem == 'p.m.' and end_time_meridiem == 'a.m.':
-            raise forms.ValidationError("Your end time must remain in the same day as your start time!")
-        if start_time_meridiem == end_time_meridiem:
-            if start_time_hours == 12:
-                start_time = start_time - 43200
-            if end_time_hours == 12:
-                end_time2 = end_time2 - 43200
-            if end_time2 <= start_time:
-                raise forms.ValidationError("Your end time must come after your start time!")
-        return end_time

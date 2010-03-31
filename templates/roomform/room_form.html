@@ -1,377 +1,76 @@
-<html>
-<head>
-    <!-- calendar -->
-    <link rel="stylesheet" type="text/css" href="/assets/calendar/calendar-win2k-cold-2.css" />
-    <script type="text/javascript" src="/assets/calendar/calendar.js"></script>
-    <!-- this is translation file - choose your language here -->
-    <script type="text/javascript" src="/assets/calendar/lang/calendar-en.js"></script>
-    <script type="text/javascript" src="/assets/calendar/calendar-setup.js"></script>
-    <!-- /calendar -->
-    <title>Room Reservations</title>
-</head>
-<body>
-    <table bordercolor="#000000" border="1" width="590">
-        <tbody>
-            <tr>
-                <td class"fifthtable">Room Reservations</td>
-            </tr>
-            <tr>
-                <td>
-                    <p>This Form is to be used to request <b>occasional or single</b> use of a room.  For semester-long use, please contact the Registrar.</p>
-                    <p>You may view room availabilities by looking at <a href="http://scheduler.carthage.edu/resourcescheduler">Resource Scheduler</a>. The username is guest@carthage.edu, and the password is guest. On the lefthand side of the screen you will then find a +sign next to Carthage. Click on that sign and continue to the building and the room that you are interested in reserving. </p>
-                    <p><a href="http://www.carthage.edu/ais/media/roominstructions.htm">Instructions</a> are available for equipment in these rooms.</p>
-                    <p>To view a table of media<br/>assets in classrooms:<br/> <input type="button" value="view room table" onClick="window.open('/assets/roomtable.html');"><br/><br/></p>
-                    
-                    {% if form.errors %}
-                        <h2 style="color: red;">
-                            Please correct the error{{ form.errors|pluralize }} below.
-                        </h2>
-                    {% endif %}
-                    
-                    <form action="" method="post">
-                        <table cellspacing="0" cellpadding="4" border="0">
-                            <tbody>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td width="100">
-                                        </td>
-                                        <td>
-                                            {% if form.first_name.errors %}
-                                                <ul>
-                                                {% for error in form.first_name.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                            {% if form.last_name.errors %}
-                                                <ul>
-                                                {% for error in form.last_name.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_first_name"><strong>Name:</strong></label>
-                                            <label for="id_last_name"><strong> </label>
-                                        </td>
-                                        <td>
-                                            {{ form.first_name }}
-                                            {{ form.last_name }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <td colspan="4">
-                                        <p>
-                                            <font color="red">***If your e-mail address is not correct, your request WILL NOT be submitted.*** </font>
-                                        </p>
-                                    </td>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}"> 
-                                        <td />
-                                        <td>
-                                            {% if form.email.errors %}
-                                                <ul>
-                                                {% for error in form.email.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_email"><strong>Your e-mail address:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.email }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td />
-                                        <td>
-                                            {% if form.local_phone.errors %}
-                                                <ul>
-                                                {% for error in form.local_phone.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_local_phone"><strong>Local phone number:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.local_phone }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td />
-                                        <td>
-                                            {% if form.status.errors %}
-                                                <ul>
-                                                {% for error in form.status.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_status"><strong>Status:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.status }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td />
-                                        <td>
-                                            {% if form.date.errors %}
-                                                <ul>
-                                                {% for error in form.date.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_date"><strong>Date room is needed:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.date }}
-                                            (click to select date)
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td />
-                                        <td>
-                                            {% if form.start_time.errors %}
-                                                <ul>
-                                                {% for error in form.start_time.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_start_time"><strong>Start Time:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.start_time_hours }}
-                                            {{ form.start_time_minutes }}
-                                            {{ form.start_time_meridiem }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td />
-                                        <td>
-                                            {% if form.end_time.errors %}
-                                                <ul>
-                                                {% for error in form.end_time.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_start_time"><strong>End Time:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.end_time_hours }}
-                                            {{ form.end_time_minutes }}
-                                            {{ form.end_time_meridiem }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td />
-                                        <td>
-                                            {% if form.room.errors %}
-                                                <ul>
-                                                {% for error in form.room.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_room"><strong>Room:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.room }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td />
-                                        <td>
-                                            {% if form.title_of_event.errors %}
-                                                <ul>
-                                                {% for error in form.title_of_event.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_title_of_event"><strong>Title of event:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.title_of_event }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td />
-                                        <td>
-                                            {% if form.department.errors %}
-                                                <ul>
-                                                {% for error in form.department.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_department"><strong>Department:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.department }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td />
-                                        <td>
-                                            {% if form.course_number.errors %}
-                                                <ul>
-                                                {% for error in form.course_number.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_course_number"><strong>Course Number:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.course_number }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td />
-                                        <td>
-                                            {% if form.additional_requests.errors %}
-                                                <ul>
-                                                {% for error in form.additional_requests.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_additional_requests"><strong>Additional dates for this room at this time:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.additional_requests }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <div class="field{% if form.message.errors %} errors{% endif %}">
-                                        <td />
-                                        <td>
-                                            {% if form.comments.errors %}
-                                                <ul>
-                                                {% for error in form.comments.errors %}
-                                                    <li><strong>{{ error }}</strong></li>
-                                                {% endfor %}
-                                                </ul>
-                                            {% endif %}
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>
-                                            <label for="id_comments"><strong>Special needs and Comments:</strong></label>
-                                        </td>
-                                        <td>
-                                            {{ form.comments }}
-                                        </td>
-                                    </div>
-                                </tr>
-                                
-                                <tr>
-                                    <td>
-                                        <p></p>
-                                    </td>
-                                    <td>
-                                        <input type="submit" value="Request Room">
-                                    </td>
-                                <tr>
-                            </tbody>
-                        </table>
-                    </form>
-                    
-                    <p>Submission of a request does NOT GUARANTEE your reservation.  You will receive a confirmation by email when your reservation has been entered.  Requests submitted with less than one full working day's advance notice may not be honored.</p>
-                    {{form.errors}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}LIS Room Reservations{% endblock %}
+{% block extra_javascript %}
+<script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js"></script>
+<script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.ptTimeSelect.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_date").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",changeFirstDay:false,dateFormat:"mm/dd/yy",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+        $('#id_start_time').ptTimeSelect();
+        $('#id_end_time').ptTimeSelect();
+    });
+</script>
+{% endblock %}
+{% block extra_style %}
+<link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/css/jquery/ui/ui.core.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/css/jquery/ui/ui.theme.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/css/jquery/plugins/jquery.ptTimeSelect.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+#ptTimeSelectCntr {color: #303030;background: #ebebeb;font: .74em Arial, Verdana, sans-serif;text-align: center;line-height: 1.6em;margin: 2.5em 0;}
+.tab_content_container {
+    width: 705px;
+}
+</style>
+{% endblock %}
+{% block left_nav %}
+<div id="first">
+<ul class="sf-vertical" id="nav"><li><a href="http://www.carthage.edu/ais/">Library and Information Services</a></li><li><a href="http://www.carthage.edu/ais/library.cfm">Hedberg Library</a></li><li><a href="http://www.carthage.edu/ais/computer.cfm">Computer Center</a></li><li><a href="http://www.carthage.edu/ais/media.cfm">Media Services</a></li><li><a href="http://www.carthage.edu/ais/tutoring.cfm">Tutoring</a></li><li><a href="http://www.carthage.edu/ais/writing.cfm">Writing Center</a></li></ul>
+</div>
+{% endblock %}
+{% block content %}
+<div class="buffer">
+<h1>LIS Room Reservations</h1>
 
+<p>This Form is to be used to request <b>occasional or single</b> use of a room.  For semester-long use, please contact the Registrar.</p>
+<p>You may view room availabilities by looking at <a href="http://scheduler.carthage.edu/resourcescheduler">Resource Scheduler</a>. The username is guest@carthage.edu, and the password is guest. On the lefthand side of the screen you will then find a +sign next to Carthage. Click on that sign and continue to the building and the room that you are interested in reserving. </p>
+<p><a href="http://www.carthage.edu/ais/media/roominstructions.htm">Instructions</a> are available for equipment in these rooms.</p>
+<p>To view a table of media<br/>assets in classrooms:<br/> <input type="button" value="view room table" onClick="window.open('http://www.carthage.edu/ais/media/roomtable.cfm');"><br/><br/></p>
+{% if form.errors %}
+   <h2 style="color: red;">
+       Please correct the error{{ form.errors|pluralize }} below.
+   </h2>
+{% endif %}
+<form method="POST" action="." class="form">{% csrf_token %}
+    <input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
+    <fieldset class="blockLabels">
+        <ol>
+            {% for field in form %}
+            <li class="ctrlHolder">
+            <h3>{{ field.label_tag }}</h3>
+            {% if field.errors %}
+            <div class="warning">
+            <span class="error-message">{{ field.errors|join:", "}}</span>
+            {% else %}
+            <div>
+            {% endif %}
+            {{field}}
+            {% if field.help_text %}
+            <p class="help">{{field.help_text}}</p>
+            {% endif %}
+            </div>
+            </li>
+            {% endfor %}
+            <li class="btnHolder">
+            <label for="id_submit">&nbsp;&nbsp;</label>
+            <p>Submission of a request does NOT GUARANTEE your reservation.  You will receive a confirmation by email when your reservation has been entered.  Requests submitted with less than one full working day's advance notice may not be honored.</p>
+            <input type="submit" value="Submit Request" class="button" />
+            </li>
+        </ol>
+    </fieldset>
+</form>
+</div>
+{% endblock %}

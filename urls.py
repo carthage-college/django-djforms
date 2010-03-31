@@ -2,9 +2,9 @@ from django.contrib import admin
 from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
 from django.views.generic.simple import direct_to_template
-from djforms.roomform.reserve.views import *
+from djforms.roomform.views import room_reserve
 from djforms.equipmentform.reserve.views import *
-from djforms.views import *
+from djforms.views import request_complete
 from djforms.core.views import *
 from djforms.auth.views import loggedout
 
@@ -20,9 +20,9 @@ urlpatterns = patterns('',
     # home
     (r'^$', direct_to_template, {'template': 'forms_home.html'}),
     # For room and equipment reserve environment
-    (r'^equipment_reserve/$', equipment_reserve),
-    (r'^room-reserve/$', room_reserve),
-    (r'^reserve-complete/$', reserve_complete),
+    (r'^lis/equipment_reserve/$', equipment_reserve),
+    (r'^lis/room-reserve/$', room_reserve),
+    (r'^lis/request-complete/$', request_complete),
     # django authoriity
     #(r'^authority/', include('authority.urls')),
     # CSV

@@ -75,12 +75,12 @@ class UserProfile(BaseProfile):
     zip     = models.CharField(max_length=10, verbose_name = 'Zip code', null=True, blank=True)
     dob     = models.DateField("Birthday", null=True, blank=True)
     sex     = models.CharField(max_length="16", choices=SEX_CHOICES, null=True, blank=True)
-    campus_address  = models.CharField("Campus Address",max_length="64")
-    campus_box = models.CharField("Campus Box #",max_length="4")
-    college_access_code = models.CharField("Carthage Access Code",max_length="7")
-    college_id = models.CharField("Carthage ID", max_length="7")
-    college_year = models.CharField("Current Year at Carthage",max_length="1",choices=YEAR_CHOICES)
-    permission = models.ManyToManyField(GenericChoice, verbose_name='Permissions', null=True, blank=True,)
+    campus_address  = models.CharField("Campus Address",max_length="64",null=True, blank=True)
+    campus_box = models.CharField("Campus Box #",max_length="4",null=True, blank=True)
+    college_access_code = models.CharField("Carthage Access Code",max_length="7",null=True, blank=True)
+    college_id = models.CharField("Carthage ID", max_length="7",null=True, blank=True)
+    college_year = models.CharField("Current Year at Carthage",max_length="1",choices=YEAR_CHOICES,null=True, blank=True)
+    permission = models.ManyToManyField(GenericChoice, verbose_name='Permissions', null=True, blank=True)
 
     def __unicode__(self):
         return "%s %s's profile with username: %s" % (self.user.first_name, self.user.last_name, self.user.username)

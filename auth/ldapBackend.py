@@ -13,6 +13,7 @@ class LDAPBackend:
         if not password:
             #raise PermissionDenied
             return None
+        username = username.lower()
         base = "o=CARTHAGE"
         scope = ldap.SCOPE_SUBTREE
         filter = "(&(objectclass=person) (cn=%s))" % username
