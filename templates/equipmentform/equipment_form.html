@@ -1,15 +1,9 @@
-<html>
-<head>
-    <!-- calendar -->
-    <link rel="stylesheet" type="text/css" href="/assets/no-bullets.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/calendar/calendar-win2k-cold-2.css" />
-    <script type="text/javascript" src="/assets/calendar/calendar.js"></script>
-    <!-- this is translation file - choose your language here -->
-    <script type="text/javascript" src="/assets/calendar/lang/calendar-en.js"></script>
-    <script type="text/javascript" src="/assets/calendar/calendar-setup.js"></script>
-    <!-- /calendar -->
-    <title>Equipment Reservations</title>
-</head>
+{% extends "base.html" %}
+{% block title %}LIS Room Reservations{% endblock %}
+{% block extra_javascript %}
+	<script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js"></script>
+	<script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.ptTimeSelect.js" type="text/javascript"></script>
+{% endblock %}
 <body>
     <table bordercolor="#000000" border="1" width="590">
         <tbody>

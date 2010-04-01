@@ -70,10 +70,5 @@ def equipment_reserve(request):
             )
             return HttpResponseRedirect('/reserve_complete')
     else:
-        form = EquipmentReserveForm(
-            initial={'first_name': 'Enter first name',
-                    'last_name': 'Enter last name',
-                    'email': 'Enter e-mail address',
-                    'local_phone': 'Enter phone number'},
-        )
+        form = EquipmentReserveForm()
     return render_to_response('equipmentform/equipment_form.html', {'form': form})
