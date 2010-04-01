@@ -3,7 +3,7 @@ from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
 from django.views.generic.simple import direct_to_template
 from djforms.roomform.views import room_reserve
-from djforms.equipmentform.reserve.views import *
+from djforms.equipmentform.views import *
 from djforms.views import request_complete
 from djforms.core.views import *
 from djforms.auth.views import loggedout
