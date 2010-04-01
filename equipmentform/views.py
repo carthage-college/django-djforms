@@ -1,7 +1,7 @@
 from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response 
-from djforms.equipmentform.reserve.forms import EquipmentReserveForm
+from djforms.equipmentform.forms import EquipmentReserveForm
 from datetime import date
     
 def equipment_reserve(request):
