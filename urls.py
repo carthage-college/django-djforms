@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     # home
     (r'^$', direct_to_template, {'template': 'forms_home.html'}),
     # For room and equipment reserve environment
-    (r'^lis/equipment_reserve/$', equipment_reserve),
+    (r'^lis/equipment-reserve/$', equipment_reserve),
     (r'^lis/room-reserve/$', room_reserve),
     (r'^lis/request-complete/$', request_complete),
     # django authoriity
