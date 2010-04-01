@@ -46,6 +46,8 @@ urlpatterns = patterns('',
     (r'^eduform/(?P<slug>[-\w]+)/$', add_object),
     # for the job post environment
     (r'^job/', include('djforms.jobpost.urls')),
+    # for the security appeal form environment
+    (r'^securityappeal/', include('djforms.securityappeal.urls')),
     # auth
     url(r'^accounts/login/$',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),
     url(r'^accounts/logout/$',auth_views.logout,{'next_page': '/forms/accounts/loggedout/'}),
