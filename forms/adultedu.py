@@ -27,7 +27,7 @@ except:
 class EduProfileForm(forms.ModelForm):
     academic_programs = forms.ModelMultipleChoiceField(queryset=ACADEMIC_PROGRAMS, widget=forms.CheckboxSelectMultiple())
     contact_time = forms.ModelChoiceField(queryset=CONTACT_TIME, empty_label=None, widget=forms.RadioSelect())
-    how_did_you_hear_about_us = forms.ModelChoiceField(queryset=HOW_DID_YOU_HEAR_ABOUT_US, empty_label=None, widget=forms.RadioSelect())
+    how_did_you_hear_about_us = forms.ModelChoiceField(queryset=HOW_DID_YOU_HEAR_ABOUT_US, empty_label=None, widget=forms.Select())
     
     class Meta:
         model = EduProfile

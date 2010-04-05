@@ -1,5 +1,7 @@
 from django import forms
+from sputnik.apps.utilities.forms.fields import KungfuTimeField
 from djforms.widgets import *
+
 STATUS_CHOICES=[('', '---------- pick one ----------'),
                 ('Trustee', 'Trustee'),
                 ('Administration', 'Administration'),
@@ -55,13 +57,9 @@ class EquipmentReserveForm(forms.Form):
     department = forms.CharField(required=False, max_length=50)
     course_number = forms.CharField(required=False, max_length=25)
     equipment = forms.MultipleChoiceField(choices=EQUIPMENT_CHOICES, widget=forms.CheckboxSelectMultiple)
-    date = forms.DateField(widget=DateTimeWidget)
-    start_time_hours = forms.ChoiceField(choices=HOUR_CHOICES)
-    start_time_minutes = forms.ChoiceField(choices=MINUTE_CHOICES)
-    start_time_meridiem = forms.ChoiceField(choices=MERIDIEM_CHOICES)
-    start_time = forms.TimeField(required=False)
-    end_time_meridiem = forms.ChoiceField(choices=MERIDIEM_CHOICES, required=False)
-    end_time = forms.TimeField(required=False)
+    date = forms.DateField()
+    start_time = KungfuTimeField()
+    end_time = KungfuTimeField()
     #Makes sure the user enters a first name
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name']
@@ -89,16 +87,11 @@ class EquipmentReserveForm(forms.Form):
         if date <= datetime.date.today():
             raise forms.ValidationError("You must pick a date after today!")
         return date
-    
-    #Time is set to its hours and minutes values, the meridiem is what determines the time later on
-    def clean_start_time(self):
-        #assign proper data
-        start_time = self.cleaned_data['start_time']
-        start_time_meridiem = self.cleaned_data['start_time_meridiem']
-        start_time_hours = int(self.cleaned_data['start_time_hours'])
-        start_time_minutes = int(self.cleaned_data['start_time_minutes'])
-        #convert the time to seconds
-        start_time = ( start_time_hours * 3600 ) + ( start_time_minutes * 60 )
-        return start_time
-    
-    
+        
+    #Makes sure the user picks an end time after the start time    
+    def clean_end_time(self):
+				end_time = self.cleaned_data['end_time']
+				start_time = self.cleaned_data['start_time']
+				if end_time <= start_time:
+						raise forms.ValidationError("End time must be after start time!")
+				return end_time

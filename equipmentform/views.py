@@ -1,9 +1,12 @@
 from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response 
+from django.template import RequestContext
+
 from djforms.equipmentform.forms import EquipmentReserveForm
+
 from datetime import date
-    
+
 def equipment_reserve(request):
     if request.method == 'POST':
         form = EquipmentReserveForm(request.POST)
@@ -16,59 +19,27 @@ def equipment_reserve(request):
             #3. else (< 12) add 4, then if >= 12 subtract twelve and swap sign
             #4. convert the time to seconds
             end_time = cd['end_time']
-            end_time_hours = int(cd['start_time_hours'])
-            end_time_minutes = int(cd['start_time_minutes'])
-            end_time_meridiem = cd['start_time_meridiem']
-            if end_time_hours == 12:
-                end_time_hours = 4
-            else:
-                end_time_hours = end_time_hours + 4
-                if end_time_hours >= 12:
-                    if end_time_hours > 12:
-                        end_time_hours = end_time_hours - 12
-                    if end_time_meridiem == 'a.m.':
-                        end_time_meridiem = 'p.m.'
-                    else:
-                        end_time_meridiem = 'a.m.'
-            #set the time to the proper amount of seconds
-            end_time = (end_time_hours * 3600) + ( end_time_minutes * 60 )
-            #set up the hours an minutes values accordingly
-            start_hours = (cd['start_time'] / 3600).__str__()
-            start_minutes = (cd['start_time'] / 60 % 60).__str__()
-            end_hours = (end_time / 3600).__str__()
-            end_minutes = (end_time / 60 % 60).__str__()
-            #we gotta add the zero to the front if they equal 5 or 0
-            if start_minutes == '0':
-                start_minutes = '00'
-                end_minutes = '00'
-            if start_minutes == '5':
-                start_minutes = '05'
-                end_minutes = '05'
+            start_time = cd['start_time']
             #set up the equipment list
             equip_list = '\n'+'\n'
             for i in cd['equipment']:
                 equip_list = equip_list + i.__str__() + '\n'
-                
-            send_mail(
-                "Equipment Reservation Request",
-                
-                'Name: ' + cd['first_name'] + ' ' + cd['last_name'] + '\n' +
-                'E-mail: ' + cd['email'] + '\n' +
-                'Local Phone: ' + cd['local_phone'] + '\n' +
-                'Status: ' + cd['status'] + '\n' +
-                'Date Equipment is needed: ' + cd['date'].__str__() + '\n' +
-                'Requested Equipment: ' + equip_list + '\n' +
-                'Starting Time: ' + start_hours +':'+ start_minutes + ' ' + cd['start_time_meridiem'] + '\n' +
-                'Ending Time: ' +  end_hours +':'+ end_minutes + ' ' + end_time_meridiem + '\n' +
-                'Title of event: ' + cd['title_of_event'] + '\n'+
-                'Department: ' + cd['department'] + '\n' +
-                'Course Number: ' + cd['course_number'] + '\n',
-                
-                cd['email'],
-                #mmazanet@carthage.edu
-                ['ngromiuk@carthage.edu', cd['email'],],
-            )
+            to = ['awyma@carthage.edu', cd['email']]
+            body =  'Name: ' + cd['first_name'] + ' ' + cd['last_name'] + '\n' + \
+                    'E-mail: ' + cd['email'] + '\n' + \
+                    'Local Phone: ' + cd['local_phone'] + '\n' + \
+                    'Status: ' + cd['status'] + '\n' + \
+                    'Date Equipment is needed: ' + str(cd['date']) + '\n' + \
+                    'Requested Equipment: ' + equip_list + '\n' + \
+                    'Starting Time: ' +  + str(cd['start_time']) + '\n' + \
+                    'Ending Time: ' +  str(cd['end_time']) + '\n' + \
+                    'Title of event: ' + cd['title_of_event'] + '\n'+ \
+                    'Department: ' + cd['department'] + '\n' + \
+                    'Course Number: ' + cd['course_number'] + '\n'
+
+            email = EmailMessage("Equipment Reservation Request", body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
+            email.send(fail_silently=True)
             return HttpResponseRedirect('/reserve_complete')
     else:
         form = EquipmentReserveForm()
-    return render_to_response('equipmentform/equipment_form.html', {'form': form})
+    return render_to_response('equipmentform/equipment_form.html', {'form': form}, context_instance=RequestContext(request))

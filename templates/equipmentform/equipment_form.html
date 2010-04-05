@@ -1,25 +1,76 @@
 {% extends "base.html" %}
-{% block title %}LIS Room Reservations{% endblock %}
+{% block title %}LIS Equipment Reservations{% endblock %}
 {% block extra_javascript %}
 	<script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js"></script>
 	<script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.ptTimeSelect.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	    $(document).ready(function() {
+		$("#id_date").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",changeFirstDay:false,dateFormat:"mm/dd/yy",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+		$('#id_start_time').ptTimeSelect();
+		$('#id_end_time').ptTimeSelect();
+	    });
+    </script>
 {% endblock %}
-<body>
-    <table bordercolor="#000000" border="1" width="590">
-        <tbody>
-            <tr>
-                <td class"fifthtable">Equipment Reservations</td>
-            </tr>
-            <tr>
-                <td>
-                    <p>Click on the link below to reserve audio/visual equipment. </p>
-                    
-                    {% if form.errors %}
-                        <h2 style="color: red;">
-                            Please correct the error{{ form.errors|pluralize }} below.
-                        </h2>
-                    {% endif %}
-                    
+{% block extra_style %}
+	<link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+	<link href="http://www.carthage.edu/assets/css/jquery/ui/ui.core.css" rel="stylesheet" type="text/css" />
+	<link href="http://www.carthage.edu/assets/css/jquery/ui/ui.theme.css" rel="stylesheet" type="text/css" />
+	<link href="http://www.carthage.edu/assets/css/jquery/plugins/jquery.ptTimeSelect.css" rel="stylesheet" type="text/css" />
+	<link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
+	<link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
+	<link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+		#ptTimeSelectCntr {color: #303030;background: #ebebeb;font: .74em Arial, Verdana, sans-serif;text-align: center;line-height: 1.6em;margin: 2.5em 0;}
+		.tab_content_container {
+		width: 705px;
+	</style>
+{% endblock %}
+{% block left_nav %}
+	<div id="first">
+	<ul class="sf-vertical" id="nav"><li><a href="http://www.carthage.edu/ais/">Library and Information Services</a></li><li><a href="http://www.carthage.edu/ais/library.cfm">Hedberg Library</a></li><li><a href="http://www.carthage.edu/ais/computer.cfm">Computer Center</a></li><li><a href="http://www.carthage.edu/ais/media.cfm">Media Services</a></li><li><a href="http://www.carthage.edu/ais/tutoring.cfm">Tutoring</a></li><li><a href="http://www.carthage.edu/ais/writing.cfm">Writing Center</a></li></ul>
+	</div>
+{% endblock %}
+{% block content %}
+	<h1>Equipment Reservations</h1>
+	    <p>Click on the link below to reserve audio/visual equipment. </p>
+	    
+	    {% if form.errors %}
+		<h2 style="color: red;">
+		    Please correct the error{{ form.errors|pluralize }} below.
+		</h2>
+	    {% endif %}
+	<form method="POST" action="." class="form">{% csrf_token %}
+		<input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
+		<fieldset class="blockLabels">
+			<ol>
+			    {% for field in form %}
+			    	<li class="ctrlHolder">
+					<h3>{{ field.label_tag }}</h3>
+					{% if field.errors %}
+						<div class="warning">
+						<span class="error-message">{{ field.errors|join:", "}}</span>
+					{% else %}
+						<div>
+					{% endif %}
+					{{field}}
+					{% if field.help_text %}
+						<p class="help">{{field.help_text}}</p>
+					{% endif %}
+					</div>
+				</li>
+			    {% endfor %}
+			    <li class="btnHolder">
+			    	<label for="id_submit">&nbsp;&nbsp;</label>
+			    	<p>Submission of a request does NOT GUARANTEE your reservation.  You will receive a confirmation by email when your reservation has been entered.  Requests submitted with less than one full working day's advance notice may not be honored.</p>
+			    	<center>If this form is inadequate to meet your reservation needs, please contact Media Services directly at av@carthage.edu or (262)551-5950.</center></p>
+					<p><font size="-1">* Still digital cameras save to 3.5" floppy discs. Camcorders use miniDV tapes. Media Services does NOT provide discs or tapes for patron use.</font></p><br />
+					<p><font size="-1">** For use only by authorized CDM faculty and students.</font></p><br />
+			    	<input type="submit" value="Submit Request" class="button" />
+			    </li>
+			</ol>
+		    </fieldset>
+	    </form>
+{% endblock %}           
                     <form action="" method="post" class="nobullets">
                         <table cellspacing="0" cellpadding="4" border="0">
                             <tbody>
@@ -294,14 +345,8 @@
                     </form>
                     
                     <p>Submission of a request does NOT GUARANTEE your reservation.  You will receive a confirmation by email when your reservation has been entered.  Requests submitted with less than one full working day's advance notice may not be honored.<br />
-					<center>If this form is inadequate to meet your reservation needs, please contact Media Services directly at av@carthage.edu or (262)551-5950.</center></p>
-					<p><font size="-1">* Still digital cameras save to 3.5" floppy discs. Camcorders use miniDV tapes. Media Services does NOT provide discs or tapes for patron use.</font></p><br />
-					<p><font size="-1">** For use only by authorized CDM faculty and students.</font></p><br />
-                    {{form.errors}}
+					
                 </td>
             </tr>
         </tbody>
     </table>
-</body>
-</html>
-

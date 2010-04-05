@@ -46,6 +46,8 @@ urlpatterns = patterns('',
     (r'^eduform/(?P<slug>[-\w]+)/$', add_object),
     # for the job post environment
     (r'^job/', include('djforms.jobpost.urls')),
+    # poetry festival sign up form
+    (r'^poetry-festival/', include('djforms.poetryfestival.urls')),
     # for the security appeal form environment
     (r'^securityappeal/', include('djforms.securityappeal.urls')),
     # auth

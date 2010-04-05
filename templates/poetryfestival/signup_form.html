@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}International Poetry Festival Sign Up{% endblock %}
+{% block extra_style %}
+<link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
+<style>
+#signup textarea {
+    width:600px;
+    height:150px;
+}
+</style>
+{% endblock %}
+{% block left_nav %}
+    {% include "poetryfestival/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>International Poetry Festival Sign Up</h1>
+    <p>
+        The information you provide below will be used when printing the program.
+        Please take the time to ensure that all the required fields are filled
+        out completely and accurately
+    </p>
+    <form action="." class="form" id="signup" method="post">{% csrf_token %}
+        <fieldset class="blockLabels">
+            <ol>
+                {% for field in form %}
+                <li class="ctrlHolder">
+                <h3>{{ field.label_tag }}</h3>
+                {% if field.errors %}
+                <div class="warning">
+                <span class="error-message">{{ field.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {% if field.help_text %}
+                <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                {{field}}
+                </div>
+                </li>
+                {% endfor %}
+                <li class="btnHolder">
+                <label for="id_submit">&nbsp;&nbsp;</label>
+                <input type="submit" value="Submit" class="button" />
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
