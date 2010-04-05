@@ -20,14 +20,14 @@
     <p>
         The information you provide below will be used when printing the program.
         Please take the time to ensure that all the required fields are filled
-        out completely and accurately
+        out completely and accurately.
     </p>
     <form action="." class="form" id="signup" method="post">{% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}
                 <li class="ctrlHolder">
-                <h3>{{ field.label_tag }}</h3>
+                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
                 {% if field.errors %}
                 <div class="warning">
                 <span class="error-message">{{ field.errors|join:", "}}</span>

@@ -10,8 +10,7 @@ def signup_form(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            #to = ['scyganiak@carthage.edu',cd['email']]
-            to = ['skirk@carthage.edu']
+            to = ['scyganiak@carthage.edu',cd['email']]
             bcc = settings.MANAGERS
             body =  'Name: ' + cd['first_name'] + ' ' + cd['last_name'] + '\n' +\
                     'Email: ' + cd['email'] + '\n' +\
