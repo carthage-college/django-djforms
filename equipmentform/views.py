@@ -13,12 +13,6 @@ def equipment_reserve(request):
         form = EquipmentReserveForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            #set up end time and end time meridiem
-            #end time is four hours after the start time so just add 4 hours, but its a little tricky
-            #1. check if the hour is == 12 if not its going to be < 12 (The time will never be greater than 12 because of the dropdown menu)
-            #2. if = 12 just the hour will be 4 and the meridiem stays the same
-            #3. else (< 12) add 4, then if >= 12 subtract twelve and swap sign
-            #4. convert the time to seconds
             end_time = cd['end_time']
             start_time = cd['start_time']
             #set up the equipment list
