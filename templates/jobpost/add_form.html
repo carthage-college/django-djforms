@@ -38,7 +38,7 @@
                     {% for field in form %}
                     {% if not field.is_hidden %}
                     <li class="ctrlHolder">
-                    <h3>{{ field.label_tag }}</h3>
+                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
                     {% if field.errors %}
                     <div class="warning">
                     <span class="error-message">*** {{ field.errors|join:", "}}</span>

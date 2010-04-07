@@ -51,7 +51,7 @@ urlpatterns = patterns('',
     # for the security appeal form environment
     (r'^security/', include('djforms.security.urls')),
     # for the lacrosse golf invite form environment
-    (r'^lacrossegolfinvite/', include('djforms.lacrossegolfinvite.urls')),
+    #(r'^lacrossegolfinvite/', include('djforms.lacrossegolfinvite.urls')),
     # auth
     url(r'^accounts/login/$',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),
     url(r'^accounts/logout/$',auth_views.logout,{'next_page': '/forms/accounts/loggedout/'}),
