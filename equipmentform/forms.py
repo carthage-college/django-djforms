@@ -21,32 +21,7 @@ EQUIPMENT_CHOICES=[ ('MacBook', 'MacBook'),
                     ('Tripod', 'Tripod'),
                     ('Microphone', 'Microphone'),
                     ('Slide projector', 'Slide projector'),]
-HOUR_CHOICES=[  (12, '12'),
-                (1, '1'),
-                (2, '2'),
-                (3, '3'),
-                (4, '4'),
-                (5, '5'),
-                (6, '6'),
-                (7, '7'),
-                (8, '8'),
-                (9, '9'),
-                (10, '10'),
-                (11, '11'),]
-MINUTE_CHOICES=[(0, '00'),
-                (5, '05'),
-                (10, '10'),
-                (15, '15'),
-                (20, '20'),
-                (25, '25'),
-                (30, '30'),
-                (35, '35'),
-                (40, '40'),
-                (45, '45'),
-                (50, '50'),
-                (55, '55'),]
-MERIDIEM_CHOICES=[  ('p.m.','p.m.'),
-                    ('a.m.','a.m.'),]
+
 class EquipmentReserveForm(forms.Form):
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
@@ -60,38 +35,39 @@ class EquipmentReserveForm(forms.Form):
     date = forms.DateField()
     start_time = KungfuTimeField()
     end_time = KungfuTimeField()
+
     #Makes sure the user enters a first name
     def clean_first_name(self):
         first_name = self.cleaned_data['first_name']
         if first_name == 'Enter first name':
             raise forms.ValidationError("Enter a First Name!")
         return first_name
-    
+
     #Makes sure the user enters a last name
     def clean_last_name(self):
         last_name = self.cleaned_data['last_name']
         if last_name == 'Enter last name':
             raise forms.ValidationError("Enter a Last Name!")
         return last_name
-    
+
     #Makes sure the user enters a phone number
     def clean_local_phone(self):
         local_phone = self.cleaned_data['local_phone']
         if local_phone == 'Enter phone number':
             raise forms.ValidationError("Enter a Phone Number!")
         return local_phone
-    
+
     #Makes sure the user picks a date later than today
     def clean_date(self):
         date = self.cleaned_data['date']
         if date <= datetime.date.today():
             raise forms.ValidationError("You must pick a date after today!")
         return date
-        
+
     #Makes sure the user picks an end time after the start time    
     def clean_end_time(self):
-				end_time = self.cleaned_data['end_time']
-				start_time = self.cleaned_data['start_time']
-				if end_time <= start_time:
-						raise forms.ValidationError("End time must be after start time!")
-				return end_time
+        end_time = self.cleaned_data['end_time']
+        start_time = self.cleaned_data['start_time']
+        if end_time <= start_time:
+            raise forms.ValidationError("End time must be after start time!")
+        return end_time

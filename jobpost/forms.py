@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from djforms.jobpost.models import *
 from tagging.models import Tag, TaggedItem
 from djforms.widgets import DateTimeWidget
+from djforms.core.models import GenericChoice
 
 #Sets up and populates the many to many fields on the EduProfileForm based on entries in Generic Choice and their tags
 try:

@@ -69,8 +69,8 @@ INSTALLED_APPS = (
     #'djforms.eduform',
     #'djforms.forms',
     'djforms.jobpost',
-    #'djforms.eventform',
     'djforms.maintenance',
+    'djforms.security',
 )
 # auth stuff
 AUTHENTICATION_BACKENDS = (
