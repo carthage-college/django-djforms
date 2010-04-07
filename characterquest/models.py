@@ -9,7 +9,7 @@ BINARY_CHOICES = (
 class ApplicationProfile(models.Model):
     profile                     = models.ForeignKey(UserProfile)
 
-    organizations               = models.TextField("Oganizations and Activities",
+    organizations               = models.TextField("Organizations and Activities",
                                         help_text="Please list below\
                                   all campus activities and organization with\
                                   which you are involved.  Also list any\
