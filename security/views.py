@@ -5,11 +5,11 @@ from django.template import RequestContext
 from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 
-from djforms.securityappeal.forms import SecurityAppealForm
+from djforms.security.forms import ParkingTicketAppealForm
 
-def security_appeal_form(request):
+def parking_ticket_appeal_form(request):
     if request.method == 'POST':
-        form = SecurityAppealForm(request.POST)
+        form = ParkingTicketAppealForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             to = ['ekuhart@carthage.edu', cd['email']]
@@ -28,7 +28,7 @@ def security_appeal_form(request):
                     'Appeal Comments: ' +  '\n' + cd['appeal_box'] + '\n'
             email = EmailMessage("Parking Violation Appeal Request", body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/securityappeal/request-sent')
+            return HttpResponseRedirect('/forms/security/request-sent')
     else:
-        form = SecurityAppealForm()
-    return render_to_response('securityappeal/security_appeal_form.html', {'form': form}, context_instance=RequestContext(request))
+        form = ParkingTicketAppealForm()
+    return render_to_response('security/parking_ticket_appeal_form.html', {'form': form}, context_instance=RequestContext(request))

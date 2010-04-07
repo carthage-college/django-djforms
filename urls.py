@@ -49,7 +49,9 @@ urlpatterns = patterns('',
     # poetry festival sign up form
     (r'^poetry-festival/', include('djforms.poetryfestival.urls')),
     # for the security appeal form environment
-    (r'^securityappeal/', include('djforms.securityappeal.urls')),
+    (r'^security/', include('djforms.security.urls')),
+    # for the lacrosse golf invite form environment
+    (r'^lacrossegolfinvite/', include('djforms.lacrossegolfinvite.urls')),
     # auth
     url(r'^accounts/login/$',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),
     url(r'^accounts/logout/$',auth_views.logout,{'next_page': '/forms/accounts/loggedout/'}),

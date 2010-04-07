@@ -6,8 +6,7 @@ from tagging.fields import TagField
 from tagging.models import Tag
 
 #Security Appeal Generic Model
-class SecurityAppeal(GenericContact):
-    
+class ParkingTicketAppeal(GenericContact):
     carthage_id        = models.CharField("Carthage ID#", max_length=10)
     residency_status   = models.ForeignKey(GenericChoice, related_name="security_appeal_residency_status")
     vehicle_make       = models.CharField("Vehicle Make", max_length=40)
