@@ -30,7 +30,7 @@ def application_profile_form(request):
             recipient_list = ["jramirez@carthage.edu",request.user.email]
             t = loader.get_template('characterquest/application_email.txt')
             c = RequestContext(request, {'data':applicant,})
-            email = EmailMessage(("CharacterQuest Application: %s %s" % (applicant.profile.user.first_name,applicant.profile.user.last_name)), t.render(c), request.user.email, recipient_list, bcc_list, headers = {'Reply-To': request.user.email,'From': request.user.email})
+            email = EmailMessage(("CharacterQuest Application: %s %s" % (applicant.profile.user.first_name,applicant.profile.user.last_name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
             email.content_subtype = "html"
             email.send(fail_silently=True)
             return HttpResponseRedirect('/forms/character-quest/data-entered')
