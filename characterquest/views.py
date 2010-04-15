@@ -26,7 +26,7 @@ def application_profile_form(request):
             applicant.profile = profile
             applicant.save()
 
-            bcc_list = ["skirk@carthage.edu"]
+            bcc = settings.MANAGERS
             recipient_list = ["jramirez@carthage.edu",request.user.email]
             t = loader.get_template('characterquest/application_email.txt')
             c = RequestContext(request, {'data':applicant,})

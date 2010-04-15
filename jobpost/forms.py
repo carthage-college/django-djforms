@@ -33,9 +33,10 @@ except:
 
 class JobApplyForms(forms.ModelForm):
     job         = forms.ModelChoiceField(queryset=Post.objects.all(), required=False, widget=forms.HiddenInput())
+
     class Meta:
         model = JobApplyForm
-        
+
 class PostFormWithHidden(forms.ModelForm):
     period              = forms.ModelChoiceField(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect())
     pay_grade           = forms.ModelChoiceField(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect())
@@ -46,8 +47,10 @@ class PostFormWithHidden(forms.ModelForm):
     expire_date         = forms.DateTimeField(help_text="A date for the post to expire on")
     creator             = forms.ModelChoiceField(queryset=User.objects.all(), required=False, widget=forms.HiddenInput())
     active              = forms.BooleanField(help_text='Is active?', required=False, widget=forms.HiddenInput())
+
     class Meta:
         model = Post
+        exclude = ('slug')
 
     #Makes sure the user picks an expire date later than the post date
     def clean_date(self):
@@ -66,6 +69,7 @@ class PostFormWithoutHidden(forms.ModelForm):
     publish             = forms.DateTimeField(help_text="A date for the post to go live on")
     expire_date         = forms.DateTimeField(help_text="A date for the post to expire on")
     creator             = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
+
     class Meta:
         model = Post
 
@@ -79,7 +83,7 @@ class PostFormWithoutHidden(forms.ModelForm):
 
 class PostFormMostHidden(forms.ModelForm):
     expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
-    
+
     class Meta:
         model = Post
         fields = ('num_positions', 'expire_date')

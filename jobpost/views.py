@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
@@ -106,7 +107,7 @@ def user_post_list(request, page=0):
     )
 
 @login_required
-def post_detail(request, slug, page=0):
+def post_detail(request, pid, page=0):
     """
     Post detail
 
@@ -116,7 +117,7 @@ def post_detail(request, slug, page=0):
             the object to be detailed
         """
     #if the user is staff they see the applicants, and if they are the creator they can expire the post
-    post = get_object_or_404(Post, slug=slug)
+    post = get_object_or_404(Post, id=pid)
     if request.user.is_staff:
         if post.creator==request.user:
             if request.method == 'POST':
@@ -153,18 +154,19 @@ def post_detail(request, slug, page=0):
                 job.job = post
                 data = job.save()
                 form.save_m2m()
+                bcc = settings.MANAGERS
                 t = loader.get_template('jobpost/email.txt')
                 c = Context({'data':job,'post':post})
-                email = EmailMessage((post.title + " application"), t.render(c), request.user.email, [post.creator.email], headers = {'Reply-To': request.user.email,'From': request.user.email})
-                email.send(fail_silently=False)
+                email = EmailMessage((post.title + " application"), t.render(c), request.user.email, [post.creator.email], bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
+                email.send(fail_silently=True)
                 return HttpResponseRedirect('/forms/job/data_entered')
         else:
             form = JobApplyForms()
         return render_to_response("jobpost/post_detail.html", {'form':form,'post':post}, context_instance=RequestContext(request))
 
 @permission_required('jobpost.can_manage', login_url= '/forms/job/data_entered/')
-def post_manage(request, slug):
-    post = get_object_or_404(Post, slug=slug)
+def post_manage(request, pid):
+    post = get_object_or_404(Post, id=pid)
     if request.method == 'POST':
         form = PostFormWithoutHidden(request.POST, instance=post)
         if form.is_valid():
@@ -226,7 +228,7 @@ def post_create(request):
     Template: ``jobpost/add_form.html``
     Context:
     """
-    
+
     if request.method == 'POST':
         form = PostFormWithHidden(request.POST)
         if form.is_valid():
@@ -234,10 +236,13 @@ def post_create(request):
             new_post.creator = request.user
             data = new_post.save()
             form.save_m2m()
+            bcc = settings.MANAGERS
             t = loader.get_template('jobpost/post_created_email.txt')
             c = Context({'data':new_post,})
-            #send_mail("New Job Post Created", t.render(c),"webmaster", ["skirk@carthage.edu",], fail_silently=False)
-            send_mail("New Job Post Created", t.render(c),"Jennifer Rhyner", ["jrhyner@carthage.edu",], fail_silently=False)
+            #email = EmailMessage("New Job Post Created: %s" % new_post.title, t.render(c), ["jrhyner@carthage.edu",], [new_post.creator.email], bcc, headers = {'Reply-To': new_post.creator.email,'From': new_post.creator.email})
+            email = EmailMessage("New Job Post Created: %s" % new_post.title, t.render(c), ["skirk@carthage.edu",], [new_post.creator.email], bcc, headers = {'Reply-To': new_post.creator.email,'From': new_post.creator.email})
+            email.send(fail_silently=True)
+
             return HttpResponseRedirect('/forms/job/data_entered')
     else:
         form = PostFormWithHidden()

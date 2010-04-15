@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.core.files.base import ContentFile
@@ -27,11 +27,12 @@ def questionnaire_form(request):
                 memory.photos.add(p)
                 counter = counter + 1
             memory.save()
-
-            recipient_list = ["skirk@carthage.edu", "mfisher@carthage.edu"]
+            bcc = settings.MANAGERS
+            recipient_list = ["mfisher@carthage.edu"]
             t = loader.get_template('alumni/memory/questionnaire_email.txt')
             c = RequestContext(request, {'data':memory,})
-            send_mail(("Alumni Memory Questionnaire Detail: %s, %s" % (memory.last_name, memory.first_name)), t.render(c), memory.email, recipient_list, fail_silently=False)
+            email = EmailMessage(("Alumni Memory Questionnaire Detail: %s, %s" % (memory.last_name, memory.first_name)), t.render(c),  memory.email, recipient_list, bcc, headers = {'Reply-To': memory.email,'From': memory.email})
+            email.send(fail_silently=True)
 
             return HttpResponseRedirect('/forms/alumni/data-entered')
     else:

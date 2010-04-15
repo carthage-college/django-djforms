@@ -36,7 +36,8 @@ def maintenance_request_form(request):
             maintenance_request.save()
             form.save_m2m()
             profile_form.save()
-            recipient_list = ["skirk@carthage.edu","jramirez@carthage.edu"]
+            bcc = settings.MANAGERS
+            recipient_list = ["jramirez@carthage.edu"]
 
             managers = User.objects.filter(groups__id__in=[2,3])
             for m in managers:
@@ -52,7 +53,7 @@ def maintenance_request_form(request):
 
             t = loader.get_template('maintenance/email.txt')
             c = Context({'data':maintenance_request,})
-            email = EmailMessage(("[Maintenance] %s Floor %s Room %s: %s" % (maintenance_request.building.name, maintenance_request.floor, maintenance_request.room_number, maintenance_request.type_of_request.name)), t.render(c), request.user.email, recipient_list, headers = {'Reply-To': request.user.email,'From': request.user.email})
+            email = EmailMessage(("[Maintenance] %s Floor %s Room %s: %s" % (maintenance_request.building.name, maintenance_request.floor, maintenance_request.room_number, maintenance_request.type_of_request.name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
             email.send(fail_silently=False)
 
             return HttpResponseRedirect('/forms/maintenance/data-entered')
