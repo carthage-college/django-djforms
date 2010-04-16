@@ -1,0 +1,7 @@
+Lacrosse Golf Invite form submission at:
+
+http://icv.carthage.edu/forms/lacrossegolfinvite/
+
+{{data.render_email|safe}} 
+
+
