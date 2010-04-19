@@ -122,6 +122,6 @@ class RoomReserveForm(forms.Form):
     #Makes sure the user picks a date later than today
     def clean_date(self):
         date = self.cleaned_data['date']
-        if date <= datetime.date.today():
+        if date < datetime.date.today():
             raise forms.ValidationError("You must pick a date after today!")
         return date
