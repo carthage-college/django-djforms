@@ -157,7 +157,7 @@ def post_detail(request, pid, page=0):
                 bcc = settings.MANAGERS
                 t = loader.get_template('jobpost/email.txt')
                 c = Context({'data':job,'post':post})
-                email = EmailMessage((post.title + " application"), t.render(c), request.user.email, [post.creator.email], bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
+                email = EmailMessage("[Job application] %s" % post.title, t.render(c), request.user.email, [post.creator.email], bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
                 email.send(fail_silently=True)
                 return HttpResponseRedirect('/forms/job/data_entered')
         else:
@@ -239,7 +239,7 @@ def post_create(request):
             bcc = settings.MANAGERS
             t = loader.get_template('jobpost/post_created_email.txt')
             c = Context({'data':new_post,})
-            email = EmailMessage("New Job Post Created: %s" % new_post.title, t.render(c), [new_post.creator.email], ["jrhyner@carthage.edu",], bcc, headers = {'Reply-To': new_post.creator.email,'From': new_post.creator.email})
+            email = EmailMessage("[Job Post Created] %s" % new_post.title, t.render(c), [new_post.creator.email], ["jrhyner@carthage.edu",], bcc, headers = {'Reply-To': new_post.creator.email,'From': new_post.creator.email})
             email.send(fail_silently=True)
 
             return HttpResponseRedirect('/forms/job/data_entered')
