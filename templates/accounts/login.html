@@ -24,7 +24,7 @@
     <div class="buffer">
         {% if user.is_anonymous %}
             <h1>Login</h1>
-            <p>Please use your Novel login.</p><p>If your password does not work, you can reset your it at <a href="http://www.carthage.edu/password" target="_blank">carthage.edu/password</a>.</p>
+            <p>Please use your Novel login.</p><p>If your password does not work, you can reset it at <a href="http://www.carthage.edu/password" target="_blank">carthage.edu/password</a>.</p>
             {% if form.errors %}
                 <p class="error">
                 Please enter a correct username and password. Both fields are case-sensitive.<br /><br />  NOTE: Your password expires every 6 months, so if you have not used your Novel account in over 6 months, you will have to <a href="http://www.carthage.edu/password" target="_blank">change your password</a>.</p>
@@ -54,7 +54,7 @@
             </form>
         {% else %}
             <h2>You are already logged in</h2>
-            <p><a href="/forms/accounts/logout/">Do you want to log out?</a></p>
+            <p><a href="/forms/accounts/logout/">Do you want to log out and log in as a new user?</a></p>
         {% endif %}
     </div>
 </div>

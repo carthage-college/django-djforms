@@ -1,11 +1,6 @@
 from django.db import models
 from djforms.core.models import UserProfile
 
-BINARY_CHOICES = (
-    ('Yes', 'Yes'),
-    ('No', 'No'),
-)
-
 class ApplicationProfile(models.Model):
     profile                     = models.ForeignKey(UserProfile)
 

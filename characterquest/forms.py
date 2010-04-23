@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
-from djforms.characterquest.models import ApplicationProfile, BINARY_CHOICES
-from djforms.core.models import UserProfile, SEX_CHOICES, STATE_CHOICES, YEAR_CHOICES
+from djforms.characterquest.models import ApplicationProfile
+from djforms.core.models import UserProfile, SEX_CHOICES, STATE_CHOICES, YEAR_CHOICES, BINARY_CHOICES
 
 class ApplicationProfileForm(forms.ModelForm):
     address = forms.CharField(label="Permanent Address")

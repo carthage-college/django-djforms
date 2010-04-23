@@ -1,0 +1,30 @@
+<h1>Interlibrary Loan Request: Book</h1>
+<h2>{{date|date:"F"}} {{date|date:"jS"}}, {{date|date:"Y"}}</h2>
+<h3>Request Information</h3>
+
+<pre style="font-size:12px;">
+First Name:         {{user.first_name}}
+Last Name:          {{user.last_name}}
+Email:              {{user.email}}
+Phone:              {{data.phone}}
+Box number:         {{data.box_number}}
+Thesis?             {{data.thesis}}
+Status:             {{data.status}}
+Department:         {{data.department}}
+Expiration date:    {{data.exp_date}}
+</pre>
+
+<h3>Book Information</h3>
+
+<pre style="font-size:12px;">
+Author(s):          {{data.author}}
+Title:              {{data.title}}
+Publisher:          {{data.publisher}}
+Publication Date:   {{data.pub_date}}
+ISBN:               {{data.isbn}}
+Source:             {{data.source}}
+Other Source:       {{data.source2}}
+</pre>
+
+<h4>Comments</h4>
+<p>{{data.comments}}</p>

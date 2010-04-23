@@ -34,7 +34,7 @@ def questionnaire_form(request):
             email = EmailMessage(("Alumni Memory Questionnaire Detail: %s, %s" % (memory.last_name, memory.first_name)), t.render(c),  memory.email, recipient_list, bcc, headers = {'Reply-To': memory.email,'From': memory.email})
             email.send(fail_silently=True)
 
-            return HttpResponseRedirect('/forms/alumni/data-entered')
+            return HttpResponseRedirect('/forms/alumni/success')
     else:
         form = QuestionnaireForm()
 

@@ -26,9 +26,7 @@
     </style>
 {% endblock %}
 {% block left_nav %}
-    <div id="first">
-    <ul class="sf-vertical" id="nav"><li><a href="http://www.carthage.edu/ais/">Library and Information Services</a></li><li><a href="http://www.carthage.edu/ais/library.cfm">Hedberg Library</a></li><li><a href="http://www.carthage.edu/ais/computer.cfm">Computer Center</a></li><li><a href="http://www.carthage.edu/ais/media.cfm">Media Services</a></li><li><a href="http://www.carthage.edu/ais/tutoring.cfm">Tutoring</a></li><li><a href="http://www.carthage.edu/ais/writing.cfm">Writing Center</a></li></ul>
-    </div>
+    {% include "lis/left_nav.html" %}
 {% endblock %}
 {% block content %}
 <div class="buffer">

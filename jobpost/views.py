@@ -126,7 +126,7 @@ def post_detail(request, pid, page=0):
                     post.num_positions = request.POST['num_positions']
                     post.expire_date = parser.parse(request.POST['expire_date'])
                     post.save()
-                    return HttpResponseRedirect('/forms/job/data_entered')
+                    return HttpResponseRedirect('/forms/job/success')
             else:
                 form = PostFormMostHidden(instance=post)
             return list_detail.object_list(
@@ -159,23 +159,23 @@ def post_detail(request, pid, page=0):
                 c = Context({'data':job,'post':post})
                 email = EmailMessage("[Job application] %s" % post.title, t.render(c), request.user.email, [post.creator.email], bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
                 email.send(fail_silently=True)
-                return HttpResponseRedirect('/forms/job/data_entered')
+                return HttpResponseRedirect('/forms/job/success')
         else:
             form = JobApplyForms()
         return render_to_response("jobpost/post_detail.html", {'form':form,'post':post}, context_instance=RequestContext(request))
 
-@permission_required('jobpost.can_manage', login_url= '/forms/job/data_entered/')
+@permission_required('jobpost.can_manage', login_url= '/forms/accounts/login')
 def post_manage(request, pid):
     post = get_object_or_404(Post, id=pid)
     if request.method == 'POST':
         form = PostFormWithoutHidden(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/forms/job/data_entered')
+            return HttpResponseRedirect('/forms/job/success')
     else:
         form = PostFormWithoutHidden(instance=post)
     return render_to_response("jobpost/post_manage.html", {"form": form,'original': post}, context_instance=RequestContext(request))
-@permission_required('jobpost.can_manage', login_url= '/forms/job/data_entered/')
+@permission_required('jobpost.can_manage', login_url= '/forms/accounts/login')
 def post_manage_list(request, page=0):
     """
     Post list
@@ -242,7 +242,7 @@ def post_create(request):
             email = EmailMessage("[Job Post Created] %s" % new_post.title, t.render(c), [new_post.creator.email], ["jrhyner@carthage.edu",], bcc, headers = {'Reply-To': new_post.creator.email,'From': new_post.creator.email})
             email.send(fail_silently=True)
 
-            return HttpResponseRedirect('/forms/job/data_entered')
+            return HttpResponseRedirect('/forms/job/success')
     else:
         form = PostFormWithHidden()
     return render_to_response("jobpost/add_form.html", {'form':form}, context_instance=RequestContext(request))

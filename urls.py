@@ -2,10 +2,7 @@ from django.contrib import admin
 from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
 from django.views.generic.simple import direct_to_template
-from djforms.roomform.views import room_reserve
-from djforms.equipmentform.views import *
-from djforms.views import request_complete
-from djforms.core.views import *
+from djforms.core.views import data_entered
 from djforms.auth.views import loggedout
 
 #import authority
@@ -19,10 +16,8 @@ handler500 = 'djforms.core.views.server_error'
 urlpatterns = patterns('',
     # home
     (r'^$', direct_to_template, {'template': 'forms_home.html'}),
-    # For room and equipment reserve environment
-    (r'^lis/equipment-reserve/$', equipment_reserve),
-    (r'^lis/room-reserve/$', room_reserve),
-    (r'^lis/request-complete/$', request_complete),
+    # LIS
+    (r'^lis/', include('djforms.lis.urls')),
     # django authoriity
     #(r'^authority/', include('authority.urls')),
     # CSV
@@ -40,10 +35,8 @@ urlpatterns = patterns('',
     (r'^alumni/', include('djforms.alumni.urls')),
     # CharacterQuest
     (r'^character-quest/', include('djforms.characterquest.urls')),
-    # For edu form environment
-    (r'^eduform/data-entered/$', data_entered),
-    # catches the slugs
-    (r'^eduform/(?P<slug>[-\w]+)/$', add_object),
+    # generic request complete
+    (r'^success/$', 'djforms.core.views.data_entered'),
     # for the job post environment
     (r'^job/', include('djforms.jobpost.urls')),
     # poetry festival sign up form

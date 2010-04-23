@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from djforms.equipmentform.forms import EquipmentReserveForm
+from djforms.lis.equipmentform.forms import EquipmentReserveForm
 
 from datetime import date
 
@@ -34,7 +34,7 @@ def equipment_reserve(request):
                     'Course Number: ' + cd['course_number'] + '\n'
             email = EmailMessage("Equipment Reservation Request", body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/lis/request-complete')
+            return HttpResponseRedirect('/forms/lis/success')
     else:
         form = EquipmentReserveForm()
-    return render_to_response('equipmentform/equipment_form.html', {'form': form}, context_instance=RequestContext(request))
+    return render_to_response('lis/equipmentform/equipment_form.html', {'form': form}, context_instance=RequestContext(request))

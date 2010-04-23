@@ -3,7 +3,7 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from djforms.roomform.forms import RoomReserveForm
+from djforms.lis.roomform.forms import RoomReserveForm
 from datetime import date
 
 AV_ROOMS=[  'Hedberg Library 105',
@@ -39,10 +39,8 @@ def room_reserve(request):
                     'Special needs and Comments: ' + cd['comments'] + '\n'
 
             email = EmailMessage("Room Reservation Request: %s" % cd['room'], body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
-            #email.content_subtype = "html"
             email.send(fail_silently=True)
-
-            return HttpResponseRedirect('/forms/lis/request-complete')
+            return HttpResponseRedirect('/forms/lis/success')
     else:
         form = RoomReserveForm()
-    return render_to_response('roomform/room_form.html', {'form': form}, context_instance=RequestContext(request))
+    return render_to_response('lis/roomform/room_form.html', {'form': form}, context_instance=RequestContext(request))

@@ -10,6 +10,11 @@ from userprofile.models import BaseProfile
 
 import datetime
 
+BINARY_CHOICES = (
+    ('Yes', 'Yes'),
+    ('No', 'No'),
+)
+
 SEX_CHOICES = (
     ('Male', 'Male'),
     ('Female', 'Female'),

@@ -22,7 +22,7 @@ def signup_form(request):
 
             email = EmailMessage("Poetry Festival Signup Form: %s %s" % (cd['first_name'],cd['last_name']), body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/poetry-festival/data-entered')
+            return HttpResponseRedirect('/forms/poetry-festival/success')
     else:
         form = SignupForm()
     return render_to_response('poetryfestival/signup_form.html', {'form': form}, context_instance=RequestContext(request))

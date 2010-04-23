@@ -12,7 +12,8 @@ def parking_ticket_appeal_form(request):
         form = ParkingTicketAppealForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            to = ['ekuhart@carthage.edu', cd['email']]
+            #to = ['ekuhart@carthage.edu', cd['email']]
+            to = ['larry@carthage.edu', cd['email']]
             bcc = settings.MANAGERS
             body =  'Name: ' + cd['first_name'] + ' ' + cd['last_name'] + '\n' + \
                     'E-mail: ' + cd['email'] + '\n' + \
@@ -28,7 +29,7 @@ def parking_ticket_appeal_form(request):
                     'Appeal Comments: ' +  '\n' + cd['appeal_box'] + '\n'
             email = EmailMessage("Parking Violation Appeal Request", body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/security/request-sent')
+            return HttpResponseRedirect('/forms/security/success')
     else:
         form = ParkingTicketAppealForm()
     return render_to_response('security/parking_ticket_appeal_form.html', {'form': form}, context_instance=RequestContext(request))

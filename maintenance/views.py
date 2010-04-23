@@ -56,7 +56,7 @@ def maintenance_request_form(request):
             email = EmailMessage(("[Maintenance ID: %s] %s Floor %s Room %s: %s" % (str(maintenance_request.id), maintenance_request.building.name, maintenance_request.floor, maintenance_request.room_number, maintenance_request.type_of_request.name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
             email.send(fail_silently=False)
 
-            return HttpResponseRedirect('/forms/maintenance/data-entered')
+            return HttpResponseRedirect('/forms/maintenance/success')
     else:
         form = EVSForm(prefix="evs")
         profile_form = UserProfileForm(prefix="profile")
@@ -139,7 +139,7 @@ def maintenance_request_update(request, req_id):
             maintenance_request.updated_by = request.user
             maintenance_request.save()
             form.save_m2m()
-            return HttpResponseRedirect('/forms/maintenance/data-entered')
+            return HttpResponseRedirect('/forms/maintenance/success')
     else:
         form = EVSFormUpdate(instance=mr)
 
