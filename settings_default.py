@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     'authority',
     'imagekit',
     'tagging',
+    'userprofile',
     # djforms stuff
     'djforms.alumni',
     'djforms.alumni.memory',
