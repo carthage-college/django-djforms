@@ -22,8 +22,7 @@ def request_form(request, type):
         if form.is_valid():
             cd = form.cleaned_data
             bcc = settings.MANAGERS
-            #to = ["ill@carthage.edu",request.user.email]
-            to = ["larry@carthage.edu",]
+            to = ["ill@carthage.edu",request.user.email]
             t = loader.get_template('lis/ill/request_email.txt')
             c = RequestContext(request, {'data':cd,'user':request.user,'date':datetime.date.today(),'type':type})
             email = EmailMessage(("[LIS ILL Request] %s: %s by %s" % (type.capitalize(),cd['title'],cd['author'])), t.render(c), request.user.email, to, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
