@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 from djforms.characterquest.models import ApplicationProfile
-from djforms.core.models import UserProfile, SEX_CHOICES, STATE_CHOICES, YEAR_CHOICES, BINARY_CHOICES
+from djforms.core.models import UserProfile, GENDER_CHOICES, STATE_CHOICES, YEAR_CHOICES, BINARY_CHOICES
 
 class ApplicationProfileForm(forms.ModelForm):
     address = forms.CharField(label="Permanent Address")
@@ -10,7 +10,7 @@ class ApplicationProfileForm(forms.ModelForm):
     state   = forms.CharField(widget=forms.Select(choices=STATE_CHOICES), required=True)
     zip     = USZipCodeField()
     phone   = USPhoneNumberField(label="Cell Phone")
-    sex     = forms.CharField(widget=forms.RadioSelect(choices=SEX_CHOICES))
+    gender  = forms.CharField(widget=forms.RadioSelect(choices=GENDER_CHOICES))
     dob     = forms.DateField(label="Birthday")
     campus_address = forms.CharField()
     campus_box = forms.CharField(max_length="4")
@@ -22,7 +22,7 @@ class ApplicationProfileForm(forms.ModelForm):
         model = UserProfile
         exclude = ('permission','latitude','longitude','location','user',
                    'creation_date','country')
-        fields = ['address','city','state','zip','phone','sex','dob',
+        fields = ['address','city','state','zip','phone','gender','dob',
                   'campus_address', 'campus_box','college_access_code',
                   'college_id','college_year']
 

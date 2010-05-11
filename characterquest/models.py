@@ -45,5 +45,5 @@ class ApplicationProfile(models.Model):
         return self.profile.state
     def zip(self):
         return self.profile.zip
-    def sex(self):
-        return self.profile.sex
+    def gender(self):
+        return self.profile.gender.
