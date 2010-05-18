@@ -14,11 +14,22 @@ BINARY_CHOICES = (
     ('Yes', 'Yes'),
     ('No', 'No'),
 )
-
 GENDER_CHOICES = (
     ('Male', 'Male'),
     ('Female', 'Female'),
     ('Transgender', 'Transgender'),
+)
+MARITAL_CHOICES = (
+    ('Single','Single'),
+    ('Married','Married'),
+    ('Separated','Separated'),
+    ('Divorced','Divorced'),
+    ('Widowed','Widowed')
+)
+SEMESTER_CHOICES = (
+    ('Fall', 'Fall'),
+    ('Spring', 'Spring'),
+    ('Summer', 'Summer'),
 )
 YEAR_CHOICES = (
     ('','---------'),
@@ -80,7 +91,7 @@ class UserProfile(BaseProfile):
     state   = USStateField()
     zip     = models.CharField(max_length=10, verbose_name = 'Zip code', null=True, blank=True)
     dob     = models.DateField("Birthday", null=True, blank=True)
-    sex     = models.CharField(max_length="16", choices=GENDER_CHOICES, null=True, blank=True)
+    gender  = models.CharField(max_length="16", choices=GENDER_CHOICES, null=True, blank=True)
     campus_address  = models.CharField("Campus Address",max_length="64",null=True, blank=True)
     campus_box = models.CharField("Campus Box #",max_length="4",null=True, blank=True)
     college_access_code = models.CharField("Carthage Access Code",max_length="7",null=True, blank=True)

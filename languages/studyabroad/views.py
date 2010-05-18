@@ -13,7 +13,7 @@ def study_abroad(request):
         form = StudyAbroadForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            to = ['awyma@carthage.edu', cd['email']]
+            to = ['larry@carthage.edu', cd['email']]
             bcc = settings.MANAGERS
             body =  'Name: ' + cd['name'] + '\n' + \
                     'E-mail: ' + cd['email'] + '\n' + \
@@ -39,7 +39,7 @@ def study_abroad(request):
                     'Housing Preferred: ' + cd['housing'] + '\n'
             email = EmailMessage("Student Information for Study Abroad", body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/success')
+            return HttpResponseRedirect('/forms/languages/study-abroad/success')
     else:
         form = StudyAbroadForm()
     return render_to_response('languages/studyabroad/studyabroad_form.html', {'form': form}, context_instance=RequestContext(request))
