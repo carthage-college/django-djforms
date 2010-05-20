@@ -13,7 +13,7 @@ def study_abroad(request):
         form = StudyAbroadForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            to = ['larry@carthage.edu', cd['email']]
+            to = ["ekulke@carthage.edu", "mkishline@gmail.com", cd['email']]
             bcc = settings.MANAGERS
             body =  'Name: ' + cd['name'] + '\n' + \
                     'E-mail: ' + cd['email'] + '\n' + \
