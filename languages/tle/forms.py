@@ -25,7 +25,7 @@ class BaseForm(forms.Form):
 
     address             = forms.CharField(max_length=255)
     city                = forms.CharField(max_length=128)
-    state               = forms.CharField(max_length=128)
+    state               = forms.CharField(max_length=128, label='State/Provence')
     country             = forms.CharField(max_length=128)
     postal_code         = forms.CharField(max_length=10, label = 'Postal code')
     phone               = forms.CharField(max_length=12, label ='Telephone number')
@@ -49,7 +49,7 @@ class ApplicationForm(BaseForm):
 
 class MastersForm(BaseForm):
 
-    marital_status      = forms.TypedChoiceField(choices=MARITAL_CHOICES, widget=forms.RadioSelect(), help_text="The following is for statistical purposes only and is not used in admissions decisions.")
+    marital_status      = forms.TypedChoiceField(required=False, choices=MARITAL_CHOICES, widget=forms.RadioSelect(), help_text="The following is for statistical purposes only and is not used in admissions decisions.")
     entry_semester      = forms.TypedChoiceField(choices=SEMESTER_CHOICES, widget=forms.RadioSelect())
     entry_year          = forms.TypedChoiceField(choices=ENTRY_YEAR_CHOICES, widget=forms.RadioSelect())
     degree              = forms.TypedChoiceField(choices=DEGREE_CHOICES, widget=forms.RadioSelect(), label="Are you")

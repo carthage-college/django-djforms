@@ -1,40 +1,88 @@
-<style>
+<style type="text/css">
 dl {margin-bottom:50px;}
-dl dt {
-	background:#5f9be3;
-	color:#fff;
-	float:left;
-	font-weight:bold;
-	margin-right:10px;
-	padding:5px;
-	width:100px;
-}
-dl dd {
-	margin:2px 0;
-	padding:5px 0;
-}
+dl dt { background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:150px; }
+dl dd { margin:2px 0; padding:5px 0; }
 </style>
-<h1>Interlibrary Loan Request: {{type|capfirst}}</h1>
-<h2>{{date|date:"F"}} {{date|date:"jS"}}, {{date|date:"Y"}}</h2>
-<h3>Request Information</h3>
-{{length_degree}}
+<h1>TLE Form: {{type|capfirst}}</h1>
+<h2>Personal Information</h2>
 <dl>
     <dt>First Name:</dt>
-    <dd>{{user.first_name}}</dd>
+    <dd>{{data.first_name}}</dd>
+    <dt>Middle Name:</dt>
+    <dd>{{data.middle_name|default:"&nbsp;"}}</dd>
     <dt>Last Name:</dt>
-    <dd>{{user.last_name}}</dd>
+    <dd>{{data.last_name}}</dd>
+    <dt>Second Last Name:</dt>
+    <dd>{{data.second_last_name|default:"&nbsp;"}}</dd>
+    <dt>Gender:</dt>
+    <dd>{{data.gender}}</dd>
+    <dt>Address:</dt>
+    <dd>{{data.address}}</dd>
+    <dt>City:</dt>
+    <dd>{{data.city}}</dd>
+    <dt>State/Provence</dt>
+    <dd>{{data.state}}</dd>
+    <dt>Country</dt>
+    <dd>{{data.country}}</dd>
+    <dt>Postal Code</dt>
+    <dd>{{data.postal_code}}</dd>
+    <dt>Telephone</dt>
+    <dd>{{data.phone}}</dd>
     <dt>Email:</dt>
-    <dd>{{user.email}}</dd>
+    <dd>{{data.email}}</dd>
 </dl>
+<h2>Place of Birth</h2>
 <dl>
-    {% for name,value in data.items %}
-        {% ifnotequal name "csrfmiddlewaretoken" %}
-        {% ifnotequal name "comments" %}
-        <dt>{{name}}:</dt>
-        <dd>{{value}}:</dd>
-        {% endifnotequal %}
-        {% endifnotequal %}
-    {% endfor %}
+    <dt>City:</dt>
+    <dd>{{data.birth_city}}</dd>
+    <dt>State/Provence</dt>
+    <dd>{{data.birth_state}}</dd>
+    <dt>Country</dt>
+    <dd>{{data.birth_country}}</dd>
+    <dt>Birth Date</dt>
+    <dd>{{data.dob}}</dd>
+    <dt>Country of Citizenship</dt>
+    <dd>{{data.citizen}}</dd>
 </dl>
-<h4>Comments</h4>
-<p>{{data.comments}}</p>
+
+{% if data.marital_status %}
+<h2>Optional</h2>
+<dl>
+    <dt>Marital Status</dt>
+    <dd>{{data.marital_status}}</dd>
+</dl>
+{% endif %}
+
+{% if type == "application" %}
+<h2>Experience &amp; Aptitude</h2>
+<h3>Education</h3>
+<p>{{data.education}}</p>
+<h3>English</h3>
+<p>{{data.english}}</p>
+<h3>Past Experience</h3>
+<p>{{data.experience}}</p>
+<h3>Personal Interests</h3>
+<p>{{data.personal_interests}}</p>
+<h3>Professional Goals and Ambitions</h3>
+<p>{{data.goals_ambitions}}</p>
+<h3>Why Carthage?</h3>
+<p>{{data.justification}}</p>
+</dl>
+{% endif %}
+
+{% if type == "masters" %}
+<h2>Enrollment</h2>
+<dl>
+    <dt>Entry Semester</dt>
+    <dd>{{data.entry_semester}}</dd>
+    <dt>Entry Year</dt>
+    <dd>{{data.entry_year}}</dd>
+    <dt>Degree?</dt>
+    <dd>{{data.degree}}</dd>
+    <dt>Military Service</dt>
+    <dd>{{data.military}}</dd>
+</dl>
+
+<h3>List all colleges or universities attended</h3>
+{{education|safe}}
+{% endif %}
