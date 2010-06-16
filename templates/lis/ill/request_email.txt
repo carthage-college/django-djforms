@@ -29,7 +29,7 @@ dl dd {
     {% for name,value in data.items %}
     {% ifnotequal name "comments" %}
         <dt>{{name}}:</dt>
-        <dd>{{value}}:</dd>
+        <dd>{{value}}</dd>
     {% endifnotequal %}
     {% endfor %}
 </dl>

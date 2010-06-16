@@ -1,23 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block extra_javascript %}
-<script type="text/javascript" src="/assets/calendar/calendar.js"></script>
-<script type="text/javascript" src="/assets/calendar/lang/calendar-en.js"></script>
-<script type="text/javascript" src="/assets/calendar/calendar-setup.js"></script>
-<script type="text/javascript" src="/assets/js/xinha/init.js"></script>
-<script type="text/javascript" src="/assets/js/xinha/XinhaCore.js"></script>
-<script type="text/javascript" src="/assets/js/xinha/job-apps.js"></script>
-<script type="text/javascript" src="/djmedia/js/urlify.js"></script>
-<script type="text/javascript" src="/djmedia/js/getElementsBySelector.js"></script>
 {% endblock %}
 {% block extra_style%}
-<link rel="stylesheet" type="text/css" href="/assets/calendar/calendar-win2k-cold-2.css" />
-<link rel="stylesheet" href="/assets/forms.css" type="text/css" />
 <link rel="stylesheet" href="/assets/current/css/core/grid-960.css" type="text/css" />
-<link rel="stylesheet" href="/assets/current/css/plugins/forms.css" type="text/css" />
 <link rel="stylesheet" href="/assets/current/css/plugins/icons.css" type="text/css" />
-<link rel="stylesheet" href="/assets/current/css/overrides/forms.css" type="text/css" />
-<link rel="stylesheet" href="/assets/current/css/overrides/forms.bridge.css" type="text/css" />
 {% endblock %}
 {% block content %}
     <div id="sitetitle">Available On-Campus Employment</div>
@@ -84,7 +71,7 @@
             <hr />
             <h1>List of applications </h1>
             {% for jobapplyform in object_list %}
-            <div>
+                <div>
                 <dl class="job-detail">
                     <dt class="job-header">Application submitted:</dt><dd class="job-data">{{ jobapplyform.apply_date|date:"F j, Y" }}</dd><dd class="clear"></dd>
                     <dt class="job-header">Student Name:</dt><dd class="job-data">{{ jobapplyform.first_name }} {{ jobapplyform.last_name }}</dd><dd class="clear"></dd>
@@ -93,13 +80,14 @@
                 </dl>
                 <p>{{ jobapplyform.app_details }}</p>
                 <hr />
-            </div>
+                </div>
             {% endfor %}
         {% endifequal %}
         {% if perms.jobpost.can_manage %}
+            <div id="list_of_applications">
             <h1>List of applications </h1>
             {% for jobapplyform in object_list %}
-            <div>
+                <div>
                 <dl class="job-detail">
                     <dt class="job-header">Application submitted:</dt><dd class="job-data">{{ jobapplyform.apply_date|date:"F j, Y" }}</dd><dd class="clear"></dd>
                     <dt class="job-header">Student Name:</dt><dd class="job-data">{{ jobapplyform.first_name }} {{ jobapplyform.last_name }}</dd><dd class="clear"></dd>
@@ -108,8 +96,9 @@
                 </dl>
                 <p>{{ jobapplyform.app_details }}</p>
                 <hr />
-            </div>
+                </div>
             {% endfor %}
+            </div>
         {% endif %}
     {% else %}
         {% if post.active %}

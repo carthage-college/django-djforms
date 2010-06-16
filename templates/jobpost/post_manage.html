@@ -15,7 +15,6 @@
 {% endblock %}
 {% block extra_style %}
 <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="/assets/forms.css" type="text/css" />
 <link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/core/grid-960.css" type="text/css" />
 <link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/plugins/forms.css" type="text/css" />
 <link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/overrides/forms.css" type="text/css" />
@@ -23,7 +22,7 @@
 {% endblock %}
 {% block content %}
     <div class="buffer">
-        <h2 class="page_title">Manage Post</h2>
+        <h2 class="page_title">Manage Post &nbsp;&nbsp;&nbsp;<a href="http://eua.carthage.edu/forms/job/{{original.id}}/"><img src="http://www.carthage.edu/assets/img/ico/silk/icons/printer.png" /></a></h2>
         <p><u>Department Information</u></p>
         <p>Department Name: {{original.hiring_department.name}}<br />
         Department Number: {{original.hiring_department.number}}<br />

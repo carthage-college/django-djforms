@@ -45,8 +45,8 @@ def application_form(request, type):
             cd = form.cleaned_data
             #return render_to_response("languages/tle/application_email.txt", {"data": cd,'education':education,'type':type}, context_instance=RequestContext(request))
             bcc = settings.MANAGERS
-            #to = ["mrothstein@carthage.edu",request.user.email]
-            to = ["skirk@carthage.edu"]
+            to = ["sgrover@carthage.edu",request.user.email]
+            #to = ["skirk@carthage.edu"]
             t = loader.get_template('languages/tle/application_email.txt')
             c = RequestContext(request, {'data':cd,'education':education,'type':type})
             email = EmailMessage(("[Modern Languages] %s Application: %s %s" % (type.capitalize(),cd['first_name'],cd['last_name'])), t.render(c), request.user.email, to, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})

@@ -29,6 +29,7 @@
 {% block content %}
 <div class="buffer">
     <h1>Character Quest Application Form</h1>
+    {% if not expired %}
     <p>
         Complete the form below to submit your application for Character Quest. <strong>All fields are required</strong>.
     </p>
@@ -74,5 +75,8 @@
             </ol>
         </fieldset>
     </form>
+    {% else %}
+        <p>We are no longer accepting applications.</p>
+    {% endif %}
 </div>
 {% endblock %}

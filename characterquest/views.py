@@ -9,8 +9,16 @@ from django.contrib.auth.decorators import login_required
 from djforms.characterquest.forms import ApplicationForm, ApplicationProfileForm
 from djforms.core.models import UserProfile
 
+from datetime import date
+
 @login_required
 def application_profile_form(request):
+    today = date.today()
+    x_date = date(today.year, 5, 1)
+    expired = False
+    if x_date < today:
+        expired = True
+
     try:
         profile = request.user.get_profile()
     except:
@@ -37,4 +45,4 @@ def application_profile_form(request):
     else:
         form = ApplicationForm(prefix="applicant")
         profile_form = ApplicationProfileForm(prefix="profile", instance=profile)
-    return render_to_response("characterquest/application_form.html", {"form": form, "profile_form":profile_form}, context_instance=RequestContext(request))
+    return render_to_response("characterquest/application_form.html", {"form": form, "profile_form":profile_form, "expired":expired}, context_instance=RequestContext(request))
