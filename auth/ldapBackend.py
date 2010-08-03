@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 
 # Constants
-AUTH_LDAP_SERVER = 'abraham.carthage.edu'
+AUTH_LDAP_SERVER = 'isaac.carthage.edu'
 AUTH_LDAP_BASE_USER = "cn=webldap, o=CARTHAGE"
 AUTH_LDAP_BASE_PASS = "w3Bs1t3"
 
@@ -21,7 +21,7 @@ class LDAPBackend:
 
         # Authenticate the base user so we can search
         try:
-            l = ldap.initialize('ldaps://abraham.carthage.edu:636')
+            l = ldap.initialize('ldaps://isaac.carthage.edu:636')
             l.protocol_version = ldap.VERSION3
             l.simple_bind_s(AUTH_LDAP_BASE_USER,AUTH_LDAP_BASE_PASS)
         except ldap.LDAPError:

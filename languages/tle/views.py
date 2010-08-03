@@ -45,11 +45,11 @@ def application_form(request, type):
             cd = form.cleaned_data
             #return render_to_response("languages/tle/application_email.txt", {"data": cd,'education':education,'type':type}, context_instance=RequestContext(request))
             bcc = settings.MANAGERS
-            to = ["sgrover@carthage.edu",request.user.email]
+            to = ["sgrover@carthage.edu","emontanaro@carthage.edu",cd['email']]
             #to = ["skirk@carthage.edu"]
             t = loader.get_template('languages/tle/application_email.txt')
             c = RequestContext(request, {'data':cd,'education':education,'type':type})
-            email = EmailMessage(("[Modern Languages] %s Application: %s %s" % (type.capitalize(),cd['first_name'],cd['last_name'])), t.render(c), request.user.email, to, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
+            email = EmailMessage(("[Modern Languages] %s Application: %s %s" % (type.capitalize(),cd['first_name'],cd['last_name'])), t.render(c), cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
             email.content_subtype = "html"
             email.send(fail_silently=True)
             return HttpResponseRedirect('/forms/languages/tle/success')
