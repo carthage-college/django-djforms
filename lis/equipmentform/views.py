@@ -16,22 +16,23 @@ def equipment_reserve(request):
             end_time = cd['end_time']
             start_time = cd['start_time']
             #set up the equipment list
-            equip_list = '\n'+'\n'
+            equip_list = '"'
             for i in cd['equipment']:
-                equip_list = equip_list + i.__str__() + '\n'
+                equip_list += i.__str__() + ', '
+            equip_list = equip_list[:-2] + '"'
             to = ['av@carthage.edu', cd['email']]
             bcc = settings.MANAGERS
-            body =  'Name: ' + cd['first_name'] + ' ' + cd['last_name'] + '\n' + \
-                    'E-mail: ' + cd['email'] + '\n' + \
-                    'Local Phone: ' + cd['local_phone'] + '\n' + \
-                    'Status: ' + cd['status'] + '\n' + \
-                    'Date Equipment is needed: ' + str(cd['date']) + '\n' + \
-                    'Requested Equipment: ' + equip_list + '\n' + \
-                    'Starting Time: ' +  str(start_time) + '\n' + \
-                    'Ending Time: ' +  str(end_time) + '\n' + \
-                    'Title of event: ' + cd['title_of_event'] + '\n' + \
-                    'Department: ' + cd['department'] + '\n' + \
-                    'Course Number: ' + cd['course_number'] + '\n'
+            body =  cd['first_name'] + '\t' + cd['last_name'] + '\t' + \
+                    cd['email'] + '\t' + \
+                    cd['local_phone'] + '\t' + \
+                    cd['status'] + '\t' + \
+                    str(cd['date']) + '\t' + \
+                    equip_list + '\t' + \
+                    str(start_time) + '\t' + \
+                    str(end_time) + '\t' + \
+                    cd['title_of_event'] + '\t' + \
+                    cd['department'] + '\t' + \
+                    cd['course_number']
             email = EmailMessage("Equipment Reservation Request", body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
             email.send(fail_silently=True)
             return HttpResponseRedirect('/forms/lis/success')
