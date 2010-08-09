@@ -21,16 +21,20 @@ def equipment_reserve(request):
                 equip_list += i.__str__() + ', '
             equip_list = equip_list[:-2] + '"'
             to = ['av@carthage.edu', cd['email']]
+            #to = ['larry@carthage.edu']
             bcc = settings.MANAGERS
-            body =  cd['first_name'] + '\t' + cd['last_name'] + '\t' + \
-                    cd['email'] + '\t' + \
-                    cd['local_phone'] + '\t' + \
-                    cd['status'] + '\t' + \
+            body =  "email: " + cd['email'] + '\n' + \
+                    "phone: " + cd['local_phone'] + '\n' + \
+                    "status: " + cd['status'] + '\n' + \
+                    "title: " + cd['title_of_event'] + '\n\n' + \
+                    '\t' + '\t' + \
                     str(cd['date']) + '\t' + \
-                    equip_list + '\t' + \
+                    '\t' + '\t' + \
                     str(start_time) + '\t' + \
                     str(end_time) + '\t' + \
-                    cd['title_of_event'] + '\t' + \
+                    equip_list + '\t' + \
+                    cd['first_name'] + ' ' + cd['last_name'] + '\t' + \
+                    '\t' + \
                     cd['department'] + '\t' + \
                     cd['course_number']
             email = EmailMessage("Equipment Reservation Request", body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
