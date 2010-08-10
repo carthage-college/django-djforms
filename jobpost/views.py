@@ -155,13 +155,11 @@ def post_detail(request, pid, page=0):
                 job.job = post
                 data = job.save()
                 form.save_m2m()
-                """
                 bcc = settings.MANAGERS
                 t = loader.get_template('jobpost/email.txt')
                 c = Context({'data':job,'post':post})
                 email = EmailMessage("[Job application] %s" % post.title, t.render(c), request.user.email, [post.creator.email], bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
                 email.send(fail_silently=True)
-                """
                 return HttpResponseRedirect('/forms/job/success')
         else:
             form = JobApplyForms()

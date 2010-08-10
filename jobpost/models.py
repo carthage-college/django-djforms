@@ -100,12 +100,19 @@ class JobApplyForm(models.Model):
     job          = models.ForeignKey(Post, null=True, blank=True)
 
     def render_email(self):
-        obj_text =  'First Name:   %s\n' % self.first_name
+        obj_text =  'Submit Date:  %s\n' % self.apply_date
+        obj_text += 'First Name:   %s\n' % self.first_name
         obj_text += 'Last Name:    %s\n' % self.last_name
-        obj_text += 'Email:     %s\n' % self.email
-        obj_text += 'Application submitted on:    %s\n' % self.apply_date
-        obj_text += '\nApplication Details:\n\n%s\n\n' % self.app_details
+        obj_text += 'Email:        %s\n' % self.email
+        obj_text += 'Address:\n\n%s\n\n' % self.address
+        obj_text += 'Phone:        %s\n' % self.phone
+        obj_text += 'ID:           %s\n' % self.college_id
+        obj_text += 'Year:         %s\n' % self.college_year
+        obj_text += 'Major:        %s\n' % self.major
+        obj_text += 'Hours:\n\n%s\n\n' % self.hours
+        obj_text += 'Application Details:\n\n%s\n\n' % self.app_details
+        obj_text += 'CV:           http://eua.carthage.edu/assets/%s\n' % self.cv
         return obj_text
-        
+
     def __unicode__(self):
         return u'%s %s' % (self.last_name, self.first_name)
