@@ -1,14 +1,14 @@
+# -*- coding: utf-8 -*-
 from django import forms
 from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from djforms.core.models import GenericChoice
 from django.db.models import permalink
-from tagging.fields import TagField
-from tagging.models import Tag
-import tagging
+
+from djforms.core.models import GenericChoice, YEAR_CHOICES
 
 import datetime
+from tagging.fields import TagField
 
 class Department(models.Model):
     """ Department """
@@ -17,18 +17,18 @@ class Department(models.Model):
     number        = models.CharField(max_length=3, verbose_name = 'Department Number')
     contact_name  = models.CharField(max_length=100, verbose_name = 'Department Contact')
     contact_phone = models.CharField(max_length=100, verbose_name = 'Department Phone')
-    
+
     class Meta:
         verbose_name_plural = 'departments'
         db_table = 'job_departments'
         ordering = ('name',)
-  
+
     class Admin:
         prepopulated_fields = {'slug': ('name',)}
-  
+
     def __unicode__(self):
         return '%s' % self.name
-  
+
     @permalink
     def get_absolute_url(self):
         return ('department_detail', None, { 'slug':self.slug })
@@ -38,7 +38,6 @@ class Post(models.Model):
     """ Post model """
     period              = models.ForeignKey(GenericChoice, related_name="post_period")
     title               = models.CharField(max_length=255, help_text="The title of the job post")
-    #slug                = models.SlugField(verbose_name="Slug", unique=True, help_text="The slug is automatically generated from the title of the job post as you type, and will form a part of the URL for the job posting (e.g. http://www.carthage.edu/forms/job/math-tutors-needed/). If an error appears for this field, you will have to modify the slug field so that it is unique, as an error indicates that the value of the slug already exists in the system. The easiest way to ensure that the slug is unique is to have a descriptive title or simply add -2 to the end of the slug that is generated from the value of the title field.")
     address             = models.CharField(max_length=255, verbose_name = 'Address', help_text="Use the campus building name here if the job is on campus.")
     city                = models.CharField(max_length=128, verbose_name = 'City', default="Kenosha")
     state               = models.CharField(max_length=100, verbose_name = 'State', default="Wisconsin")
@@ -86,13 +85,20 @@ class Post(models.Model):
         
 class JobApplyForm(models.Model):
     """ Job Apply Form """
-    apply_date  = models.DateTimeField(auto_now_add=True)
-    first_name  = models.CharField(max_length=255)
-    last_name   = models.CharField(max_length=255)
-    email       = models.EmailField()
-    app_details = models.TextField(verbose_name = 'What qualifications do you have for this job?')
-    job         = models.ForeignKey(Post, null=True, blank=True)
-    
+    apply_date   = models.DateTimeField(auto_now_add=True)
+    first_name   = models.CharField(max_length=255)
+    last_name    = models.CharField(max_length=255)
+    email        = models.EmailField()
+    address      = models.TextField(verbose_name = 'College Address', help_text="(include Room and Dorm, or Street, City, State)")
+    phone        = models.CharField(max_length=12)
+    college_id   = models.CharField("Carthage ID", max_length="7")
+    college_year = models.CharField("Current Year at Carthage", max_length="1", choices=YEAR_CHOICES)
+    major        = models.CharField(max_length=255)
+    hours        = models.TextField(verbose_name = 'Hours Available', help_text="What hours are you available to work Sunday through Saturday?")
+    app_details  = models.TextField(verbose_name = 'What qualifications do you have for this job?')
+    cv           = models.FileField(u'Résumé', upload_to='files/jobs/cvs/', max_length="256", help_text=u'Many employers are requiring a résumé for consideration for their job postings. Pleae include this in your application. If you don not have one, please contact the Writing Center or the Career Center to help you create or update it.', null=True, blank=True)
+    job          = models.ForeignKey(Post, null=True, blank=True)
+
     def render_email(self):
         obj_text =  'First Name:   %s\n' % self.first_name
         obj_text += 'Last Name:    %s\n' % self.last_name
@@ -103,4 +109,3 @@ class JobApplyForm(models.Model):
         
     def __unicode__(self):
         return u'%s %s' % (self.last_name, self.first_name)
-    

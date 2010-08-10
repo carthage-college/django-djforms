@@ -2,9 +2,12 @@
 {% block title %}{{ post.title }}{% endblock %}
 {% block extra_javascript %}
 {% endblock %}
-{% block extra_style%}
-<link rel="stylesheet" href="/assets/current/css/core/grid-960.css" type="text/css" />
-<link rel="stylesheet" href="/assets/current/css/plugins/icons.css" type="text/css" />
+{% block extra_style %}
+<link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
+<link href="/assets/current/css/core/grid-960.css" rel="stylesheet" type="text/css" />
+<link href="/assets/current/css/plugins/icons.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
     <div id="sitetitle">Available On-Campus Employment</div>
@@ -89,9 +92,16 @@
             {% for jobapplyform in object_list %}
                 <div>
                 <dl class="job-detail">
-                    <dt class="job-header">Application submitted:</dt><dd class="job-data">{{ jobapplyform.apply_date|date:"F j, Y" }}</dd><dd class="clear"></dd>
-                    <dt class="job-header">Student Name:</dt><dd class="job-data">{{ jobapplyform.first_name }} {{ jobapplyform.last_name }}</dd><dd class="clear"></dd>
-                    <dt class="job-header">Student Email:</dt><dd class="job-data"><a href="mailto:{{ jobapplyform.email }}">{{ jobapplyform.email }}</a></dd><dd class="clear"></dd>
+                    <dt class="job-header">Submitted:</dt><dd class="job-data">{{ jobapplyform.apply_date|date:"F j, Y" }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Name:</dt><dd class="job-data">{{ jobapplyform.first_name }} {{ jobapplyform.last_name }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Email:</dt><dd class="job-data"><a href="mailto:{{ jobapplyform.email }}">{{ jobapplyform.email }}</a></dd><dd class="clear"></dd>
+                    <dt class="job-header">Address:</dt><dd class="job-data"><pre style="font-size:1.3em;">{{ jobapplyform.address }}</pre></dd><dd class="clear"></dd>
+                    <dt class="job-header">Phone:</dt><dd class="job-data">{{ jobapplyform.phone }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Carthage ID:</dt><dd class="job-data">{{ jobapplyform.college_id }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Year:</dt><dd class="job-data">{{ jobapplyform.college_year }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Major:</dt><dd class="job-data">{{ jobapplyform.major }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Hours:</dt><dd class="job-data">{{ jobapplyform.hours }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">R&eacute;sum&eacute;:</dt><dd class="job-data"><a href="/assets/{{ jobapplyform.cv }}">Click here to download</a></a></dd><dd class="clear"></dd>
                     <dt class="job-header">Student qualifications:</dt><dd class="clear"></dd>
                 </dl>
                 <p>{{ jobapplyform.app_details }}</p>
@@ -118,38 +128,31 @@
             </dl>
             <p>{{ post.description }}</p>
             <hr />
-            <form method="POST" action="." class="form">{% csrf_token %}
-                <h3 style="color: green;">
-                    Complete the form below to apply for this job.
-                </h3>
-                {% if form.errors %}
-                    <h2 style="color: red;">
-                        Please correct the error{{ form.errors|pluralize }} below.
-                    </h2>
-                {% endif %}
+            <h3 style="color: green;">
+                Complete the form below to apply for this job.
+            </h3>
+            <form method="POST" action="." class="form" enctype="multipart/form-data">{% csrf_token %}
                 <fieldset class="blockLabels">
                     <ol>
                         {% for field in form %}
-                            {% if not field.is_hidden %}
-                                <li class="ctrlHolder">
-                                <h3>{{ field.label_tag }}</h3>
-                                {% if field.errors %}
-                                <div class="warning">
-                                <span class="error-message">*** {{ field.errors|join:", "}}</span>
-                                {% else %}
-                                <div>
-                                {% endif %}
-                                {{field}}
-                                {% if field.help_text %}
-                                <p class="help">{{field.help_text}}</p>
-                                {% endif %}
-                                </div>
-                                </li>
-                            {% endif %}
+                        <li class="ctrlHolder">
+                        <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                        {% if field.errors %}
+                        <div class="warning">
+                        <span class="error-message">{{ field.errors|join:", "}}</span>
+                        {% else %}
+                        <div>
+                        {% endif %}
+                        {{field}}
+                        {% if field.help_text %}
+                        <p class="help">{{field.help_text}}</p>
+                        {% endif %}
+                        </div>
+                        </li>
                         {% endfor %}
                         <li class="btnHolder">
                         <label for="id_submit">&nbsp;&nbsp;</label>
-                        <input type="submit" value="Send application" class="button" />
+                        <input type="submit" value="Submit" class="button" />
                         </li>
                     </ol>
                 </fieldset>

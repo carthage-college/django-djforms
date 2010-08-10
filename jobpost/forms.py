@@ -1,10 +1,11 @@
 from django import forms
 from django.db import models
 from django.forms import ModelForm
+from django.contrib.localflavor.us.forms import USPhoneNumberField
+
 from djforms.jobpost.models import *
-from tagging.models import Tag, TaggedItem
 from djforms.widgets import DateTimeWidget
-from djforms.core.models import GenericChoice
+from djforms.core.models import GenericChoice, YEAR_CHOICES
 
 #Sets up and populates the many to many fields on the EduProfileForm based on entries in Generic Choice and their tags
 try:
@@ -32,10 +33,12 @@ except:
     TYPE_OF_JOB = GenericChoice.objects.none()
 
 class JobApplyForms(forms.ModelForm):
-    job         = forms.ModelChoiceField(queryset=Post.objects.all(), required=False, widget=forms.HiddenInput())
+    phone           = USPhoneNumberField(label="Phone", help_text="Format: XXX-XXX-XXXX")
+    college_year    = forms.CharField(label="Year",widget=forms.Select(choices=YEAR_CHOICES))
 
     class Meta:
         model = JobApplyForm
+        exclude = ('job',)
 
 class PostFormWithHidden(forms.ModelForm):
     period              = forms.ModelChoiceField(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect())
