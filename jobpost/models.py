@@ -32,7 +32,7 @@ class Department(models.Model):
     @permalink
     def get_absolute_url(self):
         return ('department_detail', None, { 'slug':self.slug })
-        
+
 #uses the generic choice field from the core app
 class Post(models.Model):
     """ Post model """

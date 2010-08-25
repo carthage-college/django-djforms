@@ -7,6 +7,8 @@ from djforms.jobpost.models import *
 from djforms.widgets import DateTimeWidget
 from djforms.core.models import GenericChoice, YEAR_CHOICES
 
+from tagging.models import Tag, TaggedItem
+
 #Sets up and populates the many to many fields on the EduProfileForm based on entries in Generic Choice and their tags
 try:
     period_tag = Tag.objects.get(name__iexact='Period')

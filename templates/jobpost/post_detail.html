@@ -77,8 +77,15 @@
                 <div>
                 <dl class="job-detail">
                     <dt class="job-header">Application submitted:</dt><dd class="job-data">{{ jobapplyform.apply_date|date:"F j, Y" }}</dd><dd class="clear"></dd>
-                    <dt class="job-header">Student Name:</dt><dd class="job-data">{{ jobapplyform.first_name }} {{ jobapplyform.last_name }}</dd><dd class="clear"></dd>
-                    <dt class="job-header">Student Email:</dt><dd class="job-data"><a href="mailto:{{ jobapplyform.email }}">{{ jobapplyform.email }}</a></dd><dd class="clear"></dd>
+                    <dt class="job-header">Name:</dt><dd class="job-data">{{ jobapplyform.first_name }} {{ jobapplyform.last_name }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Email:</dt><dd class="job-data"><a href="mailto:{{ jobapplyform.email }}">{{ jobapplyform.email }}</a></dd><dd class="clear"></dd>
+                    <dt class="job-header">Address:</dt><dd class="job-data"><pre style="font-size:1.3em;">{{ jobapplyform.address }}</pre></dd><dd class="clear"></dd>
+                    <dt class="job-header">Phone:</dt><dd class="job-data">{{ jobapplyform.phone }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Carthage ID:</dt><dd class="job-data">{{ jobapplyform.college_id }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Year:</dt><dd class="job-data">{{ jobapplyform.college_year }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Major:</dt><dd class="job-data">{{ jobapplyform.major }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">Hours:</dt><dd class="job-data">{{ jobapplyform.hours }}</dd><dd class="clear"></dd>
+                    <dt class="job-header">R&eacute;sum&eacute;:</dt><dd class="job-data">{% if jobapplyform.cv %}<a href="/assets/{{ jobapplyform.cv }}">Click here to download</a></a>{% endif %}</dd><dd class="clear"></dd>
                     <dt class="job-header">Student qualifications:</dt><dd class="clear"></dd>
                 </dl>
                 <p>{{ jobapplyform.app_details }}</p>
