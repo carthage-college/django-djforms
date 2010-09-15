@@ -111,7 +111,8 @@ class JobApplyForm(models.Model):
         obj_text += 'Major:        %s\n' % self.major
         obj_text += 'Hours:\n\n%s\n\n' % self.hours
         obj_text += 'Application Details:\n\n%s\n\n' % self.app_details
-        obj_text += 'CV:           http://eua.carthage.edu/assets/%s\n' % self.cv
+        if self.cv:
+            obj_text += 'CV:           http://eua.carthage.edu/assets/%s\n' % self.cv
         return obj_text
 
     def __unicode__(self):
