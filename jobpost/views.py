@@ -240,7 +240,7 @@ def post_create(request):
             bcc = settings.MANAGERS
             t = loader.get_template('jobpost/post_created_email.txt')
             c = Context({'data':new_post,})
-            email = EmailMessage("[Job Post Created] %s" % new_post.title, t.render(c), [new_post.creator.email], ["jrhyner@carthage.edu",], bcc, headers = {'Reply-To': new_post.creator.email,'From': new_post.creator.email})
+            email = EmailMessage("[Job Post Created] %s" % new_post.title, t.render(c), [new_post.creator.email], ["vvatistas@carthage.edu",], bcc, headers = {'Reply-To': new_post.creator.email,'From': new_post.creator.email})
             email.send(fail_silently=True)
 
             return HttpResponseRedirect('/forms/job/success')

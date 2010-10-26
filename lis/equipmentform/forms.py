@@ -16,10 +16,13 @@ EQUIPMENT_CHOICES=[ ('MacBook', 'MacBook'),
                     ('PC laptop', 'PC laptop'),
                     ('Data Projector', 'Data Projector'),
                     ('Digital Camera', 'Digital Camera (for still photos)*'),
+                    ('Document Camera', 'Document Camera'),
                     ('Camcorder', 'Camcorder *'),
+                    ('Flip Camcorder', 'Flip Camcorder'),
                     ('CDM Camcorder', 'CDM Camcorder **'),
-                    ('Tripod', 'Tripod'),
+                    ('Voice Recorder', 'Voice Recorder'),
                     ('Microphone', 'Microphone'),
+                    ('Tripod', 'Tripod'),
                     ('Slide projector', 'Slide projector'),]
 
 class EquipmentReserveForm(forms.Form):
