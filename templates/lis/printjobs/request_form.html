@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}LIS Print Job Request{% endblock %}
+{% block extra_javascript %}
+    <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $("#id_date_needed").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",changeFirstDay:false,dateFormat:"mm/dd/yy",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+        });
+    </script>
+{% endblock %}
+{% block extra_style %}
+    <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+    <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.core.css" rel="stylesheet" type="text/css" />
+    <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.theme.css" rel="stylesheet" type="text/css" />
+    <link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
+    <link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
+    <link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    li.ctrlHolder div ul li {display: inline;}
+    .form .blockLabels label {display: inherit;}
+    </style>
+{% endblock %}
+{% block left_nav %}
+    {% include "lis/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>LIS Print Job Request</h1>
+    {% if form.errors %}
+    <h2 style="color: red;">Please correct the error{{ form.errors|pluralize }} below.</h2>
+    {% endif %}
+    <form method="POST" action="." class="form">{% csrf_token %}
+        <input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
+        <fieldset class="blockLabels">
+            <ol>
+                {% for field in form %}
+                    <li class="ctrlHolder">
+                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    {% if field.errors %}
+                        <div class="warning">
+                        <span class="error-message">{{ field.errors|join:", "}}</span>
+                    {% else %}
+                        <div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <p class="help">{{field.help_text}}</p>
+                    {% endif %}
+                    {{field}}
+                    </div>
+                </li>
+                {% endfor %}
+                <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Submit Request" class="button" />
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

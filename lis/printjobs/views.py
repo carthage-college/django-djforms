@@ -1,0 +1,25 @@
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.core.mail import EmailMessage
+from django.shortcuts import render_to_response
+from django.template import RequestContext, loader
+from djforms.lis.printjobs.forms import PrintRequestForm
+
+import datetime
+
+def print_request(request):
+    if request.method=='POST':
+        form = PrintRequestForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            bcc = settings.MANAGERS
+            to = ["cgrugel@carthage.edu",cd['email']]
+            t = loader.get_template('lis/printjobs/request_email.txt')
+            c = RequestContext(request, {'data':cd,'date':datetime.date.today()})
+            email = EmailMessage("[LIS Print Request]: %s from the %s Department" % (cd['name'],cd['department']), t.render(c), cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
+            email.content_subtype = "html"
+            email.send(fail_silently=False)
+            return HttpResponseRedirect('/library/success/')
+    else:
+        form = PrintRequestForm()
+    return render_to_response("lis/printjobs/request_form.html", {"form": form,}, context_instance=RequestContext(request))
