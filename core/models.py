@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.contrib.localflavor.us.models import USStateField
 
 from tagging.fields import TagField
-from tagging.models import Tag
 from imagekit.models import ImageModel
 from userprofile.models import BaseProfile
 

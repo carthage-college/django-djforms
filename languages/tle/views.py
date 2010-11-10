@@ -13,7 +13,8 @@ import datetime
 def application_form(request, type):
     form_name = type.capitalize() + "Form"
     try:
-        form = form = eval(form_name)()
+        #form = form = eval(form_name)()
+        form = eval(form_name)()
     except:
         raise Http404
 
