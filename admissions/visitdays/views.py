@@ -3,46 +3,28 @@ from django.http import HttpResponseRedirect
 from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 
-from djforms.characterquest.forms import ApplicationForm, ApplicationProfileForm
-from djforms.core.models import UserProfile
+from djforms.admissions.visitdays.forms import VisitDayBaseForm
 
-from datetime import date
-
-@login_required
-def application_profile_form(request):
-    today = date.today()
-    x_date = date(today.year, 5, 1)
-    expired = False
-    if x_date < today:
-        expired = True
-
-    try:
-        profile = request.user.get_profile()
-    except:
-        p = UserProfile(user=request.user)
-        p.save()
-        profile = request.user.get_profile()
+def VisitDayForm(request, event_type):
     if request.method=='POST':
-        form = ApplicationForm(request.POST, prefix="applicant")
-        profile_form = ApplicationProfileForm(request.POST, prefix="profile", instance=profile)
-        if form.is_valid() and profile_form.is_valid():
-            profile = profile_form.save()
-            applicant = form.save(commit=False)
-            applicant.profile = profile
-            applicant.save()
-
+        try:
+            form = eval(event_type.capitalize()+"Form")(request.POST)
+        except:
+            form = VisitDayBaseForm(request.POST)
+        if form.is_valid():
+            profile = form.save()
             bcc = settings.MANAGERS
-            recipient_list = ["jramirez@carthage.edu",request.user.email]
+            to = ["larry@carthage.edu",profile.email]
             t = loader.get_template('characterquest/application_email.txt')
             c = RequestContext(request, {'data':applicant,})
-            email = EmailMessage(("CharacterQuest Application: %s %s" % (applicant.profile.user.first_name,applicant.profile.user.last_name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
+            email = EmailMessage(("Visit Day Registration Form: %s on %s" % (event_type.capitalize,profile.date)), t.render(c), profile.email, to, bcc, headers = {'Reply-To': profile.email,'From': profile.email})
             email.content_subtype = "html"
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/character-quest/success')
+            return HttpResponseRedirect('/forms/admissions/success')
     else:
-        form = ApplicationForm(prefix="applicant")
-        profile_form = ApplicationProfileForm(prefix="profile", instance=profile)
-    return render_to_response("characterquest/application_form.html", {"form": form, "profile_form":profile_form, "expired":expired}, context_instance=RequestContext(request))
+        try:
+            form = eval(event_type.capitalize()+"Form")()
+        except:
+            form = VisitDayBaseForm()
+    return render_to_response("admissions/visitday_form.html", {"form": form,"event_type":event_type,}, context_instance=RequestContext(request))
