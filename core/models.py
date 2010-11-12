@@ -16,7 +16,6 @@ BINARY_CHOICES = (
 GENDER_CHOICES = (
     ('Male', 'Male'),
     ('Female', 'Female'),
-    ('Transgender', 'Transgender'),
 )
 MARITAL_CHOICES = (
     ('Single','Single'),
@@ -27,6 +26,7 @@ MARITAL_CHOICES = (
 )
 SEMESTER_CHOICES = (
     ('Fall', 'Fall'),
+    ('January', 'January'),
     ('Spring', 'Spring'),
     ('Summer', 'Summer'),
 )

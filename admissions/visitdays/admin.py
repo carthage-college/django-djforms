@@ -1,10 +1,12 @@
 from django.contrib import admin
-from djforms.characterquest.models import ApplicationProfile
+from djforms.admissions.visitdays.models import VisitDayBaseProfile, VisitDayProfile, VisitDayEvent, VisitDay
 
-class ApplicationProfileAdmin(admin.ModelAdmin):
-    model = ApplicationProfile
-    list_display  = ('first_name', 'last_name', 'email', 'phone', 'city', 'state','zip','gender')
-    raw_id_fields = ('profile',)
-    search_fields = ('last_name', 'email', 'city', 'state','zip','gender')
+class VisitDayProfileAdmin(admin.ModelAdmin):
+    model = VisitDayProfile
+    list_display  = ('first_name', 'last_name', 'email', 'phone', 'city', 'state','postal_code','gender')
+    search_fields = ('last_name', 'email', 'city', 'state','postal_code','gender')
 
-admin.site.register(ApplicationProfile, ApplicationProfileAdmin)
+admin.site.register(VisitDayBaseProfile, VisitDayProfileAdmin)
+admin.site.register(VisitDayProfile, VisitDayProfileAdmin)
+admin.site.register(VisitDayEvent)
+admin.site.register(VisitDay)
