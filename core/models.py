@@ -16,6 +16,7 @@ BINARY_CHOICES = (
 GENDER_CHOICES = (
     ('Male', 'Male'),
     ('Female', 'Female'),
+    ('Decline to State','Decline to State'),
 )
 MARITAL_CHOICES = (
     ('Single','Single'),

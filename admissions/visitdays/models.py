@@ -16,6 +16,7 @@ class VisitDay(models.Model):
     title           = models.CharField(max_length=255)
     description     = models.TextField("Description", help_text="This information will appear above the form.")
     about           = models.TextField("About", help_text="This information will appear in the sidebar next to the form.")
+    email_info      = models.TextField("Email Instructions", help_text="This information will be sent to the registrant.")
     slug            = models.CharField(max_length=255, verbose_name="Slug", unique=True)
 
     def __unicode__(self):
@@ -51,7 +52,7 @@ class VisitDayProfile(VisitDayBaseProfile):
     hs_city         = models.CharField("High School City", max_length=128)
     hs_state        = USStateField("High School State")
     hs_grad_year    = models.IntegerField("High School Graduation Year")
-    entry_as        = models.CharField("Entering as a", max_length="1", choices=ENTRY_CHOICES)
+    entry_as        = models.CharField("Entering as a", max_length="16", choices=ENTRY_CHOICES)
     transfer        = models.CharField("If transfer, list University/College Attended", max_length="255", null=True, blank=True)
     entry_year      = models.IntegerField("Entry Year")
     entry_term      = models.CharField("Entry Term", max_length=32, choices=SEMESTER_CHOICES)
