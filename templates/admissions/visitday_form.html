@@ -1,27 +1,45 @@
 {% extends "base.html" %}
 {% block title %}{{visit_day.title}} &mdash; Admissions &mdash; Carthage College{% endblock %}
-    {% block css %}
-    <style type="text/css" media="screen, projection">
-    /* <![CDATA[ */
-        @import url("http://www.carthage.edu/media/css/douglasfir/global.css");
-        @import url("http://www.carthage.edu/assets/current/css/core/grid-960.css");
-    /* ]]> */
-    </style>
-    <link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />
-    <!--[if IE]>
-        <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
-    <![endif]-->
-    <!--[if IE 6]>
-        <style type="text/css">div#first {width:150px;margin-left:7px;}     div#fourth {margin-right:-1px;}</style>
-    <![endif]-->
-    <link rel="stylesheet" href="http://www.carthage.edu/assets/1.0.0/css/print.css" type="text/css" media="print" />
-    {% endblock %}
+{% block css %}
+<style type="text/css" media="screen, projection">
+/* <![CDATA[ */
+    @import url("http://www.carthage.edu/media/css/douglasfir/global.css");
+    @import url("http://www.carthage.edu/assets/current/css/core/grid-960.css");
+/* ]]> */
+</style>
+<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />
+<!--[if IE]>
+    <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
+<![endif]-->
+<!--[if IE 6]>
+    <style type="text/css">div#first {width:150px;margin-left:7px;}     div#fourth {margin-right:-1px;}</style>
+<![endif]-->
+<link rel="stylesheet" href="http://www.carthage.edu/assets/1.0.0/css/print.css" type="text/css" media="print" />
+{% endblock %}
+{% block extra_javascript %}
+<script src="/assets/js/jquery/plugins/validation/jquery.validationEngine-en.js" type="text/javascript"></script>
+<script src="http://www.carthage.edu/assets/js/jquery/plugins/validation/jquery.validationEngine.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#visit_day_form").validationEngine()
+    $("#id_date").focus();
+});
+function ValidateTransfer(){
+    if($("#id_entry_as").val() =="Transfer" &&  $("#id_transfer").val() == ""){
+        return false;
+    }else{
+        return true;
+    }
+}
+</script>
+{% endblock %}
 {% block extra_style %}
     <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.core.css" rel="stylesheet" type="text/css" />
     <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.theme.css" rel="stylesheet" type="text/css" />
     <link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
     <link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
     <link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
+    <link href="http://www.carthage.edu/assets/css/jquery/plugins/validation/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
     #visit_day_form textarea {width:460px;height:150px;}
     #visit_day_form h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}

@@ -44,11 +44,13 @@ class VisitDayBaseForm(forms.ModelForm):
 class VisitDayForm(forms.ModelForm):
 
     email = forms.EmailField()
-    postal_code = USZipCodeField(label="Zip Code")
+    postal_code = USZipCodeField(label="Zip Code", help_text="Format: 99999 or 99999-9999")
     phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
     mobile = USPhoneNumberField(required=False, help_text="Format: XXX-XXX-XXXX")
     number_attend = forms.CharField(label="Number Attending", widget=forms.Select(choices=[('','--'),('1','1'),('2','2'),('3','3'),('4','4'),('5','5')]))
-
+    hs_grad_year = forms.CharField(max_length=4)
+    entry_year = forms.CharField(max_length=4)
+    
     class Meta:
         model = VisitDayProfile
 
@@ -59,6 +61,28 @@ class VisitDayForm(forms.ModelForm):
         for event in qs:
             choices.append((event.id,event))
         self.fields['date'].choices = choices
+        self.fields['date'].widget.attrs['class'] = 'validate[required]'
+        self.fields['number_attend'].widget.attrs['class'] = 'validate[required]'
+        self.fields['first_name'].widget.attrs['class'] = 'validate[required]'
+        self.fields['last_name'].widget.attrs['class'] = 'validate[required]'
+        self.fields['email'].widget.attrs['class'] = 'validate[required,custom[email]]'
+        self.fields['address'].widget.attrs['class'] = 'validate[required]'
+        self.fields['city'].widget.attrs['class'] = 'validate[required,custom[onlyLetter]]'
+        self.fields['state'].widget.attrs['class'] = 'validate[required]'
+        self.fields['postal_code'].widget.attrs['class'] = 'validate[required,custom[zip]]'
+        self.fields['phone'].widget.attrs['class'] = 'validate[required,custom[telephone]]'
+        self.fields['mobile'].widget.attrs['class'] = 'validate[required,custom[telephone]]'
+        self.fields['gender'].widget.attrs['class'] = 'validate[required]'
+        self.fields['high_school'].widget.attrs['class'] = 'validate[required]'
+        self.fields['hs_city'].widget.attrs['class'] = 'validate[required]'
+        self.fields['hs_state'].widget.attrs['class'] = 'validate[required]'
+        self.fields['hs_grad_year'].widget.attrs['class'] = 'validate[required,custom[year]]'
+        self.fields['entry_as'].widget.attrs['class'] = 'validate[required]'
+        self.fields['transfer'].widget.attrs['class'] = 'validate[funcCall[ValidateTransfer]]'
+        self.fields['entry_year'].widget.attrs['class'] = 'validate[required,custom[year]]'
+        self.fields['entry_term'].widget.attrs['class'] = 'validate[required]'
+        self.fields['academic'].widget.attrs['class'] = 'validate[required]'
+        self.fields['xtracurricular'].widget.attrs['class'] = 'validate[required]'
         self.fields.keyOrder = ['date','number_attend','first_name','last_name',
                                 'email','address','city','state','postal_code',
                                 'phone','mobile','gender','high_school','hs_city',
