@@ -10,7 +10,7 @@ float:left;
 font-weight:bold;
 margin-right:10px;
 padding:5px;
-width:150px;
+width:200px;
 }
 dl dd {
 margin:2px 0;
@@ -22,9 +22,11 @@ padding:5px 0;
 <h1>{{visit_day.title}}</h1>
 {{visit_day.description|safe}}
 {{visit_day.email_info|safe}}
-<p>Find attached a PDF map of the Carthage campus.</p>
-<ul><li><a href="http://www.carthage.edu/about/directions">Directions to Carthage</a></li>
-<li><a href="http://www.carthage.edu/admissions/visit/lodging.cfm">Lodging information</li></ul>
+<ul>
+<li><a href="http://www.carthage.edu/about/directions">Directions to Carthage</a></li>
+<li><a href="http://www.carthage.edu/assets/mediaman/admissions/campusmap-bw.pdf">Carthage Campus Map</a></li>
+<li><a href="http://www.carthage.edu/admissions/visit/lodging.cfm">Lodging information</a></li>
+</ul>
 <h2>Yes, I plan to attend on</h2>
 <dl style="margin-bottom:50px;">
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Date</dt>

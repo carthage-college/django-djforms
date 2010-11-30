@@ -71,7 +71,7 @@ class VisitDayForm(forms.ModelForm):
         self.fields['state'].widget.attrs['class'] = 'validate[required]'
         self.fields['postal_code'].widget.attrs['class'] = 'validate[required,custom[zip]]'
         self.fields['phone'].widget.attrs['class'] = 'validate[required,custom[telephone]]'
-        self.fields['mobile'].widget.attrs['class'] = 'validate[required,custom[telephone]]'
+        #self.fields['mobile'].widget.attrs['class'] = 'validate[custom[telephone]]'
         self.fields['gender'].widget.attrs['class'] = 'validate[required]'
         self.fields['high_school'].widget.attrs['class'] = 'validate[required]'
         self.fields['hs_city'].widget.attrs['class'] = 'validate[required]'

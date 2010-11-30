@@ -24,18 +24,17 @@ def VisitDayForm(request, event_type):
             if event.cur_attendees == event.max_attendees:
                 event.active=False
                 # send admissions email to notify them that the event is full
-                #email = EmailMessage(("[Event FULL] %s on %s" % (visit_day.title,profile.date)), "event is full.", "admissions@carthage.edu", ["larry@carthage.edu"], bcc)
-                email = EmailMessage(("[Event FULL] %s on %s" % (visit_day.title,profile.date)), "event is full.", "larry@carthage.edu", ["larry@carthage.edu"], bcc)
+                email = EmailMessage(("[Event FULL] %s on %s" % (visit_day.title,profile.date)), "event is full.", "admissions@carthage.edu", ["larry@carthage.edu"], bcc)
                 email.send(fail_silently=True)
             event.save()
-            #bcc.append("admissions@carthage.edu")
             #to = ["larry@carthage.edu"]
-            to = [profile.email]
+            to = [profile.email,"admissions@carthage.edu"]
+            frum = "admissions@carthage.edu"
             t = loader.get_template('admissions/visitday_email.txt')
             c = RequestContext(request, {'data':profile,'visit_day':visit_day,'short':short})
-            email = EmailMessage(("%s on %s" % (visit_day.title,profile.date)), t.render(c), profile.email, to, bcc, headers = {'Reply-To': profile.email,'From': profile.email})
+            email = EmailMessage(("%s on %s" % (visit_day.title,profile.date)), t.render(c), frum, to, bcc, headers = {'Reply-To': frum,'From': frum})
             email.content_subtype = "html"
-            email.attach_file('/data2/django_projects/sputnik/staging/assets/mediaman/admissions/campusmap-bw.pdf')
+            #email.attach_file('/data2/django_projects/sputnik/staging/assets/mediaman/admissions/campusmap-bw.pdf')
             email.send(fail_silently=False)
             return HttpResponseRedirect('/forms/admissions/success')
     else:

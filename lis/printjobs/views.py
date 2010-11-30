@@ -13,7 +13,7 @@ def print_request(request):
         if form.is_valid():
             cd = form.cleaned_data
             bcc = settings.MANAGERS
-            to = ["cgrugel@carthage.edu",cd['email']]
+            to = ["mrprintreqs@carthage.edu",cd['email']]
             t = loader.get_template('lis/printjobs/request_email.txt')
             c = RequestContext(request, {'data':cd,'date':datetime.date.today()})
             email = EmailMessage("[LIS Print Request]: %s from the %s Department" % (cd['name'],cd['department']), t.render(c), cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})

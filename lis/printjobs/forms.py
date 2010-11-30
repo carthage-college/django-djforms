@@ -18,12 +18,12 @@ class PrintRequestForm(forms.Form):
     originals       = forms.IntegerField(label="# of Originals", help_text="Each side counts as 1")
     copies          = forms.IntegerField(label="# of Copies")
     paper_type      = forms.ChoiceField(label="Type of Paper", choices=PAPER_CHOICES, widget=forms.RadioSelect())
-    front_back      = forms.ChoiceField(label="Front to Back", choices=BINARY_CHOICES, widget=forms.RadioSelect())
+    front_back      = forms.ChoiceField(label="Double Sided", choices=BINARY_CHOICES, widget=forms.RadioSelect())
     folded          = forms.ChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect())
     stapled         = forms.ChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect())
     collated        = forms.ChoiceField(choices=BINARY_CHOICES, help_text="(kept in order)", widget=forms.RadioSelect())
-    cut             = forms.ChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect())
-    cut_number      = forms.IntegerField(label="# of pieces", required=False)
+    cut             = forms.ChoiceField(label="Page content will be cut into pieces", choices=BINARY_CHOICES, widget=forms.RadioSelect())
+    cut_number      = forms.IntegerField(label="If page content will be cut, number of pieces per page", required=False, help_text="(Paper is cut in Half, Thirds, Fourths, etc.)")
     instructions    = forms.CharField(label="Special Instructions", widget=forms.Textarea, required=False)
 
     #Makes certain that the user picks a date later than today

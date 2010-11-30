@@ -31,6 +31,7 @@ class BookRequestForm(IllBaseForm):
     publisher   = forms.CharField(max_length=100)
     pub_date    = forms.CharField(max_length=100, label="Publication date")
     isbn        = forms.CharField(max_length=17, required=False, label="ISBN")
+    edition     = forms.CharField(max_length=17, required=False, label="Specific Edition?")
     source      = forms.CharField(max_length=255, help_text="Source of the request.", required=False)
     source2     = forms.CharField(max_length=255, required=False, label="Other Source")
     comments    = forms.CharField(widget=forms.Textarea, required=False)
