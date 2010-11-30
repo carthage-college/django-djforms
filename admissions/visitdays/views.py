@@ -28,16 +28,14 @@ def VisitDayForm(request, event_type):
                 email.send(fail_silently=True)
             event.save()
             # send HTML email to attendee
-            to = ["plungerman@gmail.com"]
-            #to = [profile.email]
+            to = [profile.email]
             t = loader.get_template('admissions/visitday_email.html')
             c = RequestContext(request, {'data':profile,'visit_day':visit_day,'short':short})
             email = EmailMessage(("%s on %s" % (visit_day.title,profile.date)), t.render(c), "admissions@carthage.edu", to, bcc)
             email.content_subtype = "html"
             email.send(fail_silently=False)
             # send text mail to admissions folks
-            to = ["larry@carthage.edu"]
-            #to = ["admissions@carthage.edu"]
+            to = ["admissions@carthage.edu"]
             t = loader.get_template('admissions/visitday_email.txt')
             c = RequestContext(request, {'data':profile,'visit_day':visit_day,'short':short})
             email = EmailMessage(("%s on %s" % (visit_day.title,profile.date)), t.render(c), profile.email, to, bcc)
