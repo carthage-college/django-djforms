@@ -42,7 +42,7 @@ def VisitDayForm(request, event_type):
             email.content_subtype = "html"
             email.send(fail_silently=False)
 
-            return HttpResponseRedirect('/forms/admissions/success')
+            return HttpResponseRedirect('/admissions/success/')
     else:
         try:
             form = eval(event_type.capitalize()+"Form")(event_type)
