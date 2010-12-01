@@ -1,4 +1,4 @@
-<pre>
+<pre style="font-size:1.2em;">
 Date                        {{data.date}}
 Number Attending            {{data.number_attend}}
 First Name                  {{data.first_name}}
