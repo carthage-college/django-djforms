@@ -81,8 +81,8 @@ class VisitDayForm(forms.ModelForm):
         self.fields['transfer'].widget.attrs['class'] = 'validate[funcCall[ValidateTransfer]]'
         self.fields['entry_year'].widget.attrs['class'] = 'validate[required,custom[year]]'
         self.fields['entry_term'].widget.attrs['class'] = 'validate[required]'
-        self.fields['academic'].widget.attrs['class'] = 'validate[required]'
-        self.fields['xtracurricular'].widget.attrs['class'] = 'validate[required]'
+        #self.fields['academic'].widget.attrs['class'] = 'validate[required]'
+        #self.fields['xtracurricular'].widget.attrs['class'] = 'validate[required]'
         self.fields.keyOrder = ['date','number_attend','first_name','last_name',
                                 'email','address','city','state','postal_code',
                                 'phone','mobile','gender','high_school','hs_city',

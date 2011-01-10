@@ -56,8 +56,8 @@ class VisitDayProfile(VisitDayBaseProfile):
     transfer        = models.CharField("If transfer, list University/College Attended", max_length="255", null=True, blank=True)
     entry_year      = models.IntegerField("Entry Year")
     entry_term      = models.CharField("Entry Term", max_length=32, choices=SEMESTER_CHOICES)
-    academic        = models.TextField("Academic Interests")
-    xtracurricular  = models.TextField("Extracurricular Interests")
+    academic        = models.TextField("Academic Interests", null=True, blank=True)
+    xtracurricular  = models.TextField("Extracurricular Interests", null=True, blank=True)
     comments        = models.TextField(null=True, blank=True)
 
     def __unicode__(self):

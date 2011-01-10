@@ -12,7 +12,7 @@ def parking_ticket_appeal_form(request):
         form = ParkingTicketAppealForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            to = ['ekuhart@carthage.edu', cd['email']]
+            to = ['rtinker@carthage.edu', cd['email']]
             #to = ['larry@carthage.edu', cd['email']]
             bcc = settings.MANAGERS
             body =  'Name: ' + cd['first_name'] + ' ' + cd['last_name'] + '\n' + \

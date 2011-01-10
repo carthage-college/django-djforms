@@ -29,7 +29,7 @@ padding:5px 0;
     {% for name,value in data.items %}
     {% ifnotequal name "comments" %}
         <dt>{{name}}:</dt>
-        <dd>{{value}}</dd>
+        <dd>{{value|default:"&nbsp;"}}</dd>
     {% endifnotequal %}
     {% endfor %}
 </dl>
