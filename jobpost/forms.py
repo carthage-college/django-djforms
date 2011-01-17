@@ -5,11 +5,16 @@ from django.contrib.localflavor.us.forms import USPhoneNumberField
 
 from djforms.jobpost.models import *
 from djforms.widgets import DateTimeWidget
-from djforms.core.models import GenericChoice, YEAR_CHOICES
+from djforms.core.models import Department, GenericChoice, YEAR_CHOICES
 
 from tagging.models import Tag, TaggedItem
 
-#Sets up and populates the many to many fields on the EduProfileForm based on entries in Generic Choice and their tags
+try:
+    dept_tag = Tag.objects.get(name__iexact='Jobs')
+    DEPARTMENTS = TaggedItem.objects.get_by_model(Department, dept_tag)
+except:
+    DEPARTMENTS = Department.objects.none()
+
 try:
     period_tag = Tag.objects.get(name__iexact='Period')
     PERIOD = TaggedItem.objects.get_by_model(GenericChoice, period_tag).filter(active = True)
@@ -47,7 +52,7 @@ class PostFormWithHidden(forms.ModelForm):
     pay_grade           = forms.ModelChoiceField(queryset=PAY_GRADE, empty_label=None, widget=forms.RadioSelect())
     work_days           = forms.ModelMultipleChoiceField(queryset=WORK_DAYS, widget=forms.CheckboxSelectMultiple())
     type_of_job         = forms.ModelChoiceField(queryset=TYPE_OF_JOB, empty_label=None, widget=forms.RadioSelect())
-    hiring_department   = forms.ModelChoiceField(queryset=Department.objects.all())
+    hiring_department   = forms.ModelChoiceField(queryset=DEPARTMENTS)
     publish             = forms.DateTimeField(help_text="A date for the post to go live on")
     expire_date         = forms.DateTimeField(help_text="A date for the post to expire on")
     creator             = forms.ModelChoiceField(queryset=User.objects.all(), required=False, widget=forms.HiddenInput())

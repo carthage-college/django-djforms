@@ -5,33 +5,10 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.db.models import permalink
 
-from djforms.core.models import GenericChoice, YEAR_CHOICES
+from djforms.core.models import Department, GenericChoice, YEAR_CHOICES
 
 import datetime
 from tagging.fields import TagField
-
-class Department(models.Model):
-    """ Department """
-    name          = models.CharField(max_length=100, verbose_name = 'Department Name')
-    slug          = models.SlugField(unique=True)
-    number        = models.CharField(max_length=3, verbose_name = 'Department Number')
-    contact_name  = models.CharField(max_length=100, verbose_name = 'Department Contact')
-    contact_phone = models.CharField(max_length=100, verbose_name = 'Department Phone')
-
-    class Meta:
-        verbose_name_plural = 'departments'
-        db_table = 'job_departments'
-        ordering = ('name',)
-
-    class Admin:
-        prepopulated_fields = {'slug': ('name',)}
-
-    def __unicode__(self):
-        return '%s' % self.name
-
-    @permalink
-    def get_absolute_url(self):
-        return ('department_detail', None, { 'slug':self.slug })
 
 #uses the generic choice field from the core app
 class Post(models.Model):

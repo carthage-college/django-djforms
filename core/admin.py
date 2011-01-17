@@ -10,6 +10,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 class PhotoAdmin(admin.ModelAdmin):
     pass
 
+admin.site.register(Department)
 admin.site.register(GenericContactForm)
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Photo, PhotoAdmin)

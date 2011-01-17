@@ -2,6 +2,7 @@ import ldap
 #from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
+from djforms.core.models import UserProfile
 
 # Constants
 AUTH_LDAP_SERVER = 'isaac.carthage.edu'
@@ -71,6 +72,8 @@ class LDAPBackend:
                 user.first_name = result_data[0][1]['givenName'][0]
                 user.last_name = result_data[0][1]['sn'][0]
                 user.save()
+                p = UserProfile(user=user)
+                p.save()
             # Success.
             return user
 

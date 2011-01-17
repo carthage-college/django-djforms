@@ -9,7 +9,6 @@ class PostFormModelAdmin(admin.ModelAdmin):
     list_filter   = ('publish', 'departments')
     search_fields = ('title', 'description')
 
-admin.site.register(Department)
 admin.site.register(Post)
 admin.site.register(JobApplyForm)
 

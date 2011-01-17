@@ -10,7 +10,6 @@ from django.contrib.admin.views.decorators import staff_member_required
 from djforms.maintenance.forms import EVSForm, EVSFormUpdate
 from djforms.maintenance.models import MaintenanceRequest
 from djforms.core.forms import UserProfileForm
-from djforms.core.models import UserProfile
 from djforms.core.models import GenericChoice
 
 from operator import attrgetter
@@ -20,13 +19,14 @@ from tagging.models import Tag, TaggedItem
 @login_required
 def maintenance_request_form(request):
     if request.method=='POST':
-        try:
-            profile = request.user.get_profile()
-        except:
-            p = UserProfile(user=request.user)
-            p.save()
-            profile = request.user.get_profile()
+        #try:
+        #    profile = request.user.get_profile()
+        #except:
+        #    p = UserProfile(user=request.user)
+        #    p.save()
+        #    profile = request.user.get_profile()
         form = EVSForm(request.POST, prefix="evs")
+        profile = request.user.get_profile()
         profile_form = UserProfileForm(request.POST, prefix="profile", instance=profile)
         if form.is_valid() and profile_form.is_valid():
             maintenance_request = form.save(commit=False)

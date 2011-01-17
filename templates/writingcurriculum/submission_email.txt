@@ -1,0 +1,33 @@
+<pre style="font-size:1.5em;">
+Date........................ {{data.date_created}}
+First Name.................. {{user.first_name}}
+Last Name................... {{user.last_name}}
+Email....................... {{user.email}}
+Phone....................... {{user.get_profile.phone}}
+Title....................... {{data.course_title}}
+Course Number............... {{data.course_number}}
+Department.................. {{data.department}}
+Term........................ {{data.academic_term}}
+Day or SPS.................. {{data.day_sps}}
+Approved WI Course?......... {{data.approved_wi}}
+If not, when?............... {{data.when_approved_wi}}
+WI Workshop................. {{data.workshop}}
+If not, when?............... {{data.when_workshop}}
+Permission.................. {{data.permission}}
+{% if data.syllabus %}Syllabus.................... <a href="http://{{site_domain}}{{media_url}}{{data.syllabus}}">Click here to download</a>{% else %}<br />{% endif %}
+Description:
+
+{{data.description}}
+
+Objectives:
+
+{{data.objectives}}
+</pre>
+<h2>Criteria</h2>
+{% for criterion_id, criterion in criteria.items %}
+<h3>{{criterion_id}}.</h3>
+<p><strong>Writing Assignment Type</strong>: {{criterion.type_assignment}}</p>
+<p><strong>Number of Pages Required</strong>: {{criterion.number_pages}}</p>
+<p><strong>Percent of student's grade</strong>: {{criterion.percent_grade}}</p>
+<p><strong>Description</strong>: <br /><br />{{criterion.description}}</p>
+{% endfor %}

@@ -49,6 +49,8 @@ urlpatterns = patterns('',
     (r'^languages/', include('djforms.languages.urls')),
     # admissions
     (r'^admissions/', include('djforms.admissions.urls')),
+    # writing across curriculum
+    (r'^writingcurriculum/', include('djforms.writingcurriculum.urls')),
     # auth
     url(r'^accounts/login/$',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),
     url(r'^accounts/logout/$',auth_views.logout,{'next_page': '/forms/accounts/loggedout/'}),

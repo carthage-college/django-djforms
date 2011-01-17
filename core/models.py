@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.localflavor.us.models import USStateField
 
-from tagging.fields import TagField
+from tagging import fields, managers
 from imagekit.models import ImageModel
 from userprofile.models import BaseProfile
 
@@ -44,7 +44,7 @@ class GenericChoice(models.Model):
     value = models.CharField(max_length=255)
     ranking = models.IntegerField(null=True, blank=True, default=0, max_length=3, verbose_name="Ranking", help_text='A number from 0 to 999 to determine this object\'s position in a list.')
     active = models.BooleanField(help_text='Do you want the field to be visable on your form?', verbose_name='Is active?', default=True)
-    tags = TagField()
+    tags = fields.TagField()
 
     def __unicode__(self):
         return self.name
@@ -124,6 +124,34 @@ class Photo(ImageModel):
 
     #def get_absolute_url(self):
     #    return reverse("photo_details", args=[self.pk])
+
+class Department(models.Model):
+    """ Department """
+    name          = models.CharField(max_length=100, verbose_name = 'Department Name')
+    slug          = models.SlugField(unique=True)
+    number        = models.CharField(max_length=3, verbose_name = 'Department Number')
+    contact_name  = models.CharField(max_length=100, verbose_name = 'Department Contact')
+    contact_phone = models.CharField(max_length=100, verbose_name = 'Department Phone')
+    tags          = fields.TagField(blank=True, null=True, default='', help_text="Seperate multiple tags with a space or comma if they contain more than one word.")
+    # tag object manager
+    tag_objects   = managers.ModelTaggedItemManager()
+    # Default object manager
+    objects       = models.Manager()
+
+    class Meta:
+        verbose_name_plural = 'departments'
+        db_table = 'core_departments'
+        ordering = ('name',)
+
+    class Admin:
+        prepopulated_fields = {'slug': ('name',)}
+
+    def __unicode__(self):
+        return '%s' % self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('department_detail', None, { 'slug':self.slug })
 
 STATE_CHOICES = (
     ('','------------'),

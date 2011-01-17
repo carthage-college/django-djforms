@@ -7,7 +7,8 @@ from django.views.generic import date_based, list_detail
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.admin.views.decorators import staff_member_required
 from djforms.jobpost.forms import JobApplyForms, PostFormWithHidden, PostFormWithoutHidden, PostFormMostHidden
-from djforms.jobpost.models import Post, Department, JobApplyForm
+from djforms.jobpost.models import Post, JobApplyForm
+from djforms.core.models import Department
 from django.contrib.auth.models import User
 
 from dateutil import parser
