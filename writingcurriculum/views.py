@@ -11,7 +11,7 @@ from djforms.core.forms import UserProfileForm
 from djforms.core.models import UserProfile
 from djforms.core.models import GenericChoice
 from djforms.writingcurriculum.forms import SubmissionForm
-from djforms.writingcurriculum.models import Criterion
+from djforms.writingcurriculum.models import Criterion, CourseCriteria
 
 @login_required
 def submission_form(request):
@@ -39,13 +39,14 @@ def submission_form(request):
         if form.is_valid() and profile_form.is_valid():
             submission = form.save(commit=False)
             submission.user = request.user
+            submission.updated_by = request.user
             submission.syllabus = request.FILES.get('wac-syllabus')
             submission.save()
             profile_form.save()
             for key in criteria:
-                c = Criterion(None, criteria[key]['type_assignment'],criteria[key]['number_pages'],criteria[key]['percent_grade'],criteria[key]['description'])
+                c = CourseCriteria(None, None, submission.id, criteria[key]['type_assignment'],criteria[key]['number_pages'],criteria[key]['percent_grade'],criteria[key]['description'])
                 c.save()
-                submission.criteria.add(c)
+                #submission.criteria.add(c)
             submission.save()
 
             #bcc = settings.MANAGERS
