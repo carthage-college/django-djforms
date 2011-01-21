@@ -16,8 +16,8 @@ class Criterion(models.Model):
     name                = models.CharField(max_length=255, null=True, blank=True)
 
 class CourseProposal(models.Model):
-    user                = models.ForeignKey(User, verbose_name="Created by", related_name="course_proposal_user")
-    updated_by          = models.ForeignKey(User, verbose_name="Updated by", related_name="course_proposal_updated_by")
+    user                = models.ForeignKey(User, verbose_name="Created by", related_name="course_proposal_user",editable=False)
+    updated_by          = models.ForeignKey(User, verbose_name="Updated by", related_name="course_proposal_updated_by",editable=False)
     date_created        = models.DateTimeField("Date Created", auto_now_add=True)
     date_updated        = models.DateTimeField("Date Updated", auto_now=True)
     course_title        = models.CharField("Course Title", max_length=128)

@@ -17,5 +17,10 @@ class CourseProposalAdmin(admin.ModelAdmin):
     inlines = (CriterionInline,)
     exclude = ('criteria',)
 
+    def save_model(self, request, obj, form, change):
+        if change:
+            obj.updated_by = request.user
+        obj.save()
+
 admin.site.register(Criterion, CriterionAdmin)
 admin.site.register(CourseProposal, CourseProposalAdmin)
