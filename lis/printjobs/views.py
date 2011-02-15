@@ -9,7 +9,7 @@ import datetime
 
 def print_request(request):
     if request.method=='POST':
-        form = PrintRequestForm(request.POST)
+        form = PrintRequestForm(request.POST, request.FILES)
         if form.is_valid():
             cd = form.cleaned_data
             bcc = settings.MANAGERS
@@ -18,6 +18,9 @@ def print_request(request):
             c = RequestContext(request, {'data':cd,'date':datetime.date.today()})
             email = EmailMessage("[LIS Print Request]: %s from the %s Department" % (cd['name'],cd['department']), t.render(c), cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
             email.content_subtype = "html"
+            attachments = request.FILES
+            for field, value in request.FILES.items():
+                email.attach(value.name, value.read(), value.content_type)
             email.send(fail_silently=False)
             return HttpResponseRedirect('/library/success/')
     else:

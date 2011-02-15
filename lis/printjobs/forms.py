@@ -25,6 +25,9 @@ class PrintRequestForm(forms.Form):
     cut             = forms.ChoiceField(label="Page content will be cut into pieces", choices=BINARY_CHOICES, widget=forms.RadioSelect())
     cut_number      = forms.IntegerField(label="If page content will be cut, number of pieces per page", required=False, help_text="(Paper is cut in Half, Thirds, Fourths, etc.)")
     instructions    = forms.CharField(label="Special Instructions", widget=forms.Textarea, required=False)
+    file1           = forms.FileField(label="File 1", max_length="256", required=False)
+    file2           = forms.FileField(label="File 2", max_length="256", required=False)
+    file3           = forms.FileField(label="File 3", max_length="256", required=False)
 
     #Makes certain that the user picks a date later than today
     def clean_date_needed(self):

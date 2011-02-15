@@ -6,6 +6,7 @@ class GenericChoiceAdmin(admin.ModelAdmin):
 
 class UserProfileAdmin(admin.ModelAdmin):
     raw_id_fields = ("user",)
+    search_fields = ('user__last_name','user__first_name','user__email','user__username',)
 
 class PhotoAdmin(admin.ModelAdmin):
     pass
