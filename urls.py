@@ -49,6 +49,8 @@ urlpatterns = patterns('',
     (r'^languages/', include('djforms.languages.urls')),
     # admissions
     (r'^admissions/', include('djforms.admissions.urls')),
+    # polisci
+    (r'^political-science/', include('djforms.polisci.urls')),
     # writing across curriculum
     (r'^writingcurriculum/', include('djforms.writingcurriculum.urls')),
     # auth

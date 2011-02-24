@@ -19,14 +19,14 @@ from tagging.models import Tag, TaggedItem
 @login_required
 def maintenance_request_form(request):
     if request.method=='POST':
-        #try:
-        #    profile = request.user.get_profile()
-        #except:
+        try:
+            profile = request.user.get_profile()
+        except:
+            profile = ''
         #    p = UserProfile(user=request.user)
         #    p.save()
         #    profile = request.user.get_profile()
         form = EVSForm(request.POST, prefix="evs")
-        profile = request.user.get_profile()
         profile_form = UserProfileForm(request.POST, prefix="profile", instance=profile)
         if form.is_valid() and profile_form.is_valid():
             maintenance_request = form.save(commit=False)

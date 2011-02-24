@@ -50,7 +50,7 @@ class VisitDayForm(forms.ModelForm):
     number_attend = forms.CharField(label="Number Attending", widget=forms.Select(choices=[('','--'),('1','1'),('2','2'),('3','3'),('4','4'),('5','5')]))
     hs_grad_year = forms.CharField(max_length=4)
     entry_year = forms.CharField(max_length=4)
-    
+
     class Meta:
         model = VisitDayProfile
 
@@ -71,7 +71,6 @@ class VisitDayForm(forms.ModelForm):
         self.fields['state'].widget.attrs['class'] = 'validate[required]'
         self.fields['postal_code'].widget.attrs['class'] = 'validate[required,custom[zip]]'
         self.fields['phone'].widget.attrs['class'] = 'validate[required,custom[telephone]]'
-        #self.fields['mobile'].widget.attrs['class'] = 'validate[custom[telephone]]'
         self.fields['gender'].widget.attrs['class'] = 'validate[required]'
         self.fields['high_school'].widget.attrs['class'] = 'validate[required]'
         self.fields['hs_city'].widget.attrs['class'] = 'validate[required]'

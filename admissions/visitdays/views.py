@@ -40,7 +40,7 @@ def VisitDayForm(request, event_type):
             #to = ["larry@carthage.edu"]
             t = loader.get_template('admissions/visitday_email.txt')
             c = RequestContext(request, {'data':profile,'visit_day':visit_day,'short':short})
-            email = EmailMessage(("%s on %s for %s, %s" % (visit_day.title,profile.date,profile.last_name,profile.first_name)), t.render(c), profile.email, to, bcc)
+            email = EmailMessage(("%s on %s for %s, %s" % (visit_day.title,profile.date,profile.last_name,profile.first_name)), t.render(c), 'admissions@carthage.edu', to, bcc, headers = {'Reply-To': profile.email,})
             email.content_subtype = "html"
             email.send(fail_silently=False)
 
