@@ -49,10 +49,8 @@ def submission_form(request):
                 #submission.criteria.add(c)
             submission.save()
 
-            #bcc = settings.MANAGERS
-            bcc = []
-            #recipient_list = ["msnavely@carthage.edu"]
-            recipient_list = ["skirk@carthage.edu"]
+            bcc = settings.MANAGERS
+            recipient_list = ["msnavely@carthage.edu"]
             t = loader.get_template('writingcurriculum/submission_email.txt')
             c = RequestContext(request, {'data':submission,'user':request.user,'criteria':criteria})
             email = EmailMessage(("[WAC Submission] %s: by %s %s" % (submission.course_title,request.user.first_name,request.user.last_name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
