@@ -5,35 +5,39 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('larry@carthage.edu'),
+    (''),
 )
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = '!'         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
-DATABASE_NAME = 'djforms'
+DATABASES = {
+    'default': {
+        'HOST': 'localhost',
+        'NAME': 'djforms',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': '',
+        'PASSWORD': ''
+    },
+}
 
 TIME_ZONE = 'America/Chicago'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = True
-
+DEFAULT_CHARSET = 'utf-8'
+FILE_CHARSET = 'utf-8'
 ROOT_URLCONF = 'djforms.urls'
 MEDIA_ROOT = '/data2/django_projects/djforms/assets'
 MEDIA_URL = '/assets/'
 ADMIN_MEDIA_PREFIX = '/djmedia/'
 AUTH_PROFILE_MODULE = 'core.UserProfile'
-SECRET_KEY = 'zp(!1yvo=g1j58@)29m$bxpl5$o3-g5i!$z*##jbfz=j_(g&-)'
+SECRET_KEY = ''
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
 )
-
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
@@ -60,9 +64,12 @@ INSTALLED_APPS = (
     # third party projects
     'authority',
     'imagekit',
+    'oembed',
     'tagging',
     'userprofile',
     # djforms stuff
+    'djforms.admissions',
+    'djforms.admissions.visitdays',
     'djforms.alumni',
     'djforms.alumni.memory',
     'djforms.characterquest',
@@ -70,8 +77,12 @@ INSTALLED_APPS = (
     #'djforms.eduform',
     #'djforms.forms',
     'djforms.jobpost',
+    'djforms.languages',
     'djforms.maintenance',
+    'djforms.lacrossegolfinvite',
     'djforms.security',
+    'djforms.video',
+    'djforms.writingcurriculum',
 )
 # auth stuff
 AUTHENTICATION_BACKENDS = (
@@ -85,8 +96,11 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 LOG_FILEPATH = os.path.join(os.path.dirname(__file__), "logs/")
 LOG_FILENAME = LOG_FILEPATH + "debug.log"
 # SMTP settings
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'webmaster@carthage.edu'
-EMAIL_HOST_PASSWORD = ''
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+#EMAIL_USE_TLS = True
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_HOST_USER = ''
+#EMAIL_HOST_PASSWORD = ''
+#EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = ''
+SERVER_EMAIL = ''
+SERVER_MAIL=""
