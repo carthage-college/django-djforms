@@ -43,6 +43,8 @@ urlpatterns = patterns('',
     (r'^poetry-festival/', include('djforms.poetryfestival.urls')),
     # for the security appeal form environment
     (r'^security/', include('djforms.security.urls')),
+    # for the video forms
+    (r'^video/', include('djforms.video.urls')),
     # for the lacrosse golf invite form environment
     (r'^lacrossegolfinvite/', include('djforms.lacrossegolfinvite.urls')),
     # for the modern language form environment

@@ -3,8 +3,6 @@ from django.contrib.localflavor.us.models import USStateField
 
 from djforms.core.models import GenericContact, GENDER_CHOICES, SEMESTER_CHOICES
 
-from tagging.fields import TagField
-
 ENTRY_CHOICES = [
     ('Freshman','Freshman'),
     ('Transfer','Transfer'),

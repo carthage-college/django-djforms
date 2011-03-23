@@ -5,7 +5,6 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib.admin.views.decorators import staff_member_required
 
 from djforms.core.forms import UserProfileForm
 from djforms.core.models import UserProfile
