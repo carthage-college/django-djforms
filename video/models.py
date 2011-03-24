@@ -38,6 +38,9 @@ class Contest(models.Model):
     def phone(self):
         return self.user.get_profile().phone
 
+    def year(self):
+        return YEAR_CHOICES[self.college_year][1]
+
     def __unicode__(self):
         return self.title
 

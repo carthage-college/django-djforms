@@ -23,7 +23,7 @@
     <h1>Student Video Contest Archives</h1>
     {% for video in videos %}
     <h3>{{video.title}}</h3>
-    <h5>By {{video.user.first_name}} {{video.user.last_name}}, {{video.college_year}}</h5>
+    <h5>By {{video.user.first_name}} {{video.user.last_name}}, {{video.year}}</h5>
     <p>
     {% oembed 500x350 %}{{video.url}}{% endoembed %}
     </p>
