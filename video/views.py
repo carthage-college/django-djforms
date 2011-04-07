@@ -21,7 +21,7 @@ def contest_form(request):
             contest.tags = "Lives Worth Living,"
             contest.save()
             bcc = settings.MANAGERS
-            recipient_list = ["larry@carthage.edu"]
+            recipient_list = ["drobinson@carthage.edu"]
             t = loader.get_template('video/contest_email.html')
             c = RequestContext(request, {'data':contest,'user':request.user,})
             email = EmailMessage(("[Video Contest Submission] %s: by %s %s" % (contest.title,request.user.first_name,request.user.last_name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})

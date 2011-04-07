@@ -6,7 +6,7 @@
     @import url("http://www.carthage.edu/media/css/douglasfir/global.css");
 /* ]]> */
 </style>
-<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />
+<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />
 <!--[if IE]>
     <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
 <![endif]-->
@@ -21,9 +21,10 @@
     <link href="http://www.carthage.edu/assets/css/jquery/plugins/jquery.uniform.css" rel="stylesheet" type="text/css" />
     <link href="http://eua.carthage.edu/static/css/jquery/themes/sunny/jquery-ui.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
-    #contest textarea {width:460px;height:150px;}
-    #contest h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}
-    #second ol {margin:0;}
+    #video-contest textarea {width:460px;height:150px;}
+    #video-contest h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}
+    #second ol { list-style-type: decimal;}
+    #second .form ol {margin:0; list-style: none outside none;}
     li.ctrlHolder div ul li {display: inline;}
     .form .blockLabels label {display: inherit;}
     </style>
@@ -34,7 +35,12 @@
 {% block content %}
 <div class="buffer">
     <h1>Student Video Contest Entry Form</h1>
-    <p>Deadline: May 1, 2011.</p>
+    <h3>How to enter:</h3>
+    <ol>
+    <li>Create a one- to five-minute video about an aspect of student life at Carthage.</li>
+    <li>Upload your video to YouTube and submit this entry form by Wednesday, May 4, 2011.</li>
+    </ol>
+    <p>Deadline: May 4, 2011.</p>
     <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
     <form method="POST" action="." class="form" id="video-contest">{% csrf_token %}
         <fieldset class="blockLabels">
@@ -62,5 +68,12 @@
             </ol>
         </fieldset>
     </form>
+</div>
+{% endblock %}
+{% block sidebar %}
+<div id="third">
+    <div class="buffer">
+        <ul class="links"><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/">Contest Overview</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/why/">Why?</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/guidelines/">Contest Guidelines</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/ideas/">Video Format Ideas</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="http://www.carthage.edu/videos/entry">Contest Entry Form</a></p></li></ul>
+    </div>
 </div>
 {% endblock %}

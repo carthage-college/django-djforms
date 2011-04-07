@@ -40,7 +40,7 @@ MIDDLEWARE_CLASSES = (
 )
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
+    'django.template.loaders.app_directories.Loader',
 )
 TEMPLATE_DIRS = (
     "/data2/django_projects/djforms/templates/",
@@ -48,7 +48,8 @@ TEMPLATE_DIRS = (
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
     "djforms.context_processors.sitevars",
-    "django.core.context_processors.auth",
+    #"django.core.context_processors.auth",
+    "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.request",
     "django.core.context_processors.debug",
     "django.core.context_processors.media",

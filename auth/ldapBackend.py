@@ -10,6 +10,9 @@ AUTH_LDAP_BASE_USER = "cn=webldap, o=CARTHAGE"
 AUTH_LDAP_BASE_PASS = "w3Bs1t3"
 
 class LDAPBackend:
+    supports_object_permissions = False
+    supports_anonymous_user = False
+
     def authenticate(self, username=None, password=None):
         if not password:
             #raise PermissionDenied

@@ -11,7 +11,7 @@ class Contest(models.Model):
     user                = models.ForeignKey(User, verbose_name="Created by", related_name="contest_user",editable=False)
     updated_by          = models.ForeignKey(User, verbose_name="Updated by", related_name="contest_updated_by",editable=False)
     college_year        = models.CharField("Current Year at Carthage", max_length="1", choices=YEAR_CHOICES)
-    url                 = models.URLField("Video URL", verify_exists=False, max_length=255)
+    url                 = models.URLField("Video URL", verify_exists=False, max_length=255, help_text="YouTube, Vimeo, Blip.tv URL")
     title               = models.CharField(max_length=128)
     description         = models.TextField("Description")
     # dates
