@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Student Video Contest Entry Form &mdash; Carthage College{% endblock %}
+{% block title %}LUC/Carthage MSW 10 Year Reunion &mdash; Carthage College{% endblock %}
 {% block css %}
 <style type="text/css" media="screen, projection">
 /* <![CDATA[ */
@@ -14,6 +14,18 @@
     <style type="text/css">div#first {width:150px;margin-left:7px;}     div#fourth {margin-right:-1px;}</style>
 <![endif]-->
 {% endblock %}
+{% block extra_javascript %}
+<script src="/assets/js/jquery/plugins/jquery.charCount.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#id_update").charCount({
+            allowed: 500,
+            warning: 20,
+            counterText: 'Characters left: '
+        });
+    });
+</script>
+{% endblock %}
 {% block extra_style %}
     <link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
     <link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
@@ -21,28 +33,25 @@
     <link href="http://www.carthage.edu/assets/css/jquery/plugins/jquery.uniform.css" rel="stylesheet" type="text/css" />
     <link href="http://eua.carthage.edu/static/css/jquery/themes/sunny/jquery-ui.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
-    #video-contest textarea {width:460px;height:150px;}
-    #video-contest h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}
-    #second ol { list-style-type: decimal;}
-    #second .form ol {margin:0; list-style: none outside none;}
+    #contact textarea {width:460px;height:150px;}
+    #contact h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}
+    #second ol {margin:0;}
     li.ctrlHolder div ul li {display: inline;}
     .form .blockLabels label {display: inherit;}
+    /* Character Count styles */
+    #contact .counter{ font-size:20px; font-weight:bold; color:#ccc; }
+    #contact .warning{color:#600;}
+    #contact .exceeded{color:#e00;}
     </style>
 {% endblock %}
 {% block left_nav %}
-    {% include "video/left_nav.html" %}
+    {% include "alumni/left_nav.html" %}
 {% endblock %}
 {% block content %}
 <div class="buffer">
-    <h1>Student Video Contest Entry Form</h1>
-    <h3>How to enter:</h3>
-    <ol>
-    <li>Create a one- to five-minute video about an aspect of student life at Carthage.</li>
-    <li>Upload your video to YouTube and submit this entry form by Wednesday, May 4, 2011.</li>
-    </ol>
-    <p>Deadline: May 4, 2011.</p>
+    <h1>LUC/Carthage MSW 10 Year Reunion Contact Form</h1>
     <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
-    <form method="POST" action="." class="form" id="contest">{% csrf_token %}
+    <form method="POST" action="." class="form" id="contact">{% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}
@@ -63,17 +72,10 @@
                 {% endfor %}
                 <li class="btnHolder">
                     <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Submit Request" class="button" />
+                    <input type="submit" value="Submit" class="button" />
                 </li>
             </ol>
         </fieldset>
     </form>
-</div>
-{% endblock %}
-{% block sidebar %}
-<div id="third">
-    <div class="buffer">
-        <ul class="links"><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/">Contest Overview</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/why/">Why?</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/guidelines/">Contest Guidelines</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/ideas/">Video Format Ideas</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="http://www.carthage.edu/videos/entry">Contest Entry Form</a></p></li></ul>
-    </div>
 </div>
 {% endblock %}
