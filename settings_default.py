@@ -73,6 +73,7 @@ INSTALLED_APPS = (
     'djforms.admissions.visitdays',
     'djforms.alumni',
     'djforms.alumni.memory',
+    'djforms.alumni.msw',
     'djforms.characterquest',
     'djforms.core',
     #'djforms.eduform',
