@@ -26,4 +26,9 @@ def reunion_contact_form(request):
 
 def reunion_contact_detail(request, id):
     contact = get_object_or_404(ReunionContact,id=id)
-    return render_to_response("alumni/msw/reunion_contact_email.html", {"contact": contact,}, context_instance=RequestContext(request))
+    return render_to_response("alumni/msw/reunion_contact_detail.html", {"contact": contact,}, context_instance=RequestContext(request))
+
+def reunion_contact_archives(request):
+    contacts = ReunionContact.objects.all().order_by("last_name")
+    return render_to_response("alumni/msw/reunion_contact_archives.html", {"contacts": contacts,}, context_instance=RequestContext(request))
+
