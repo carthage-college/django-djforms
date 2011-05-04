@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Biology &mdash; Genomics &mdash; Phage Hunters Applicants &mdash; Carthage College{% endblock %}
+{% block css %}
+<style type="text/css" media="screen, projection">
+/* <![CDATA[ */
+    @import url("http://www.carthage.edu/media/css/douglasfir/global.css");
+/* ]]> */
+/*DL, DT, DD TAGS LIST DATA*/
+dl {
+    margin-bottom:20px;
+}
+ 
+dl dt {
+    background:#5f9be3;
+    color:#fff;
+    float:left;
+    font-weight:bold;
+    margin-right:10px;
+    padding:5px;
+    width:100px;
+}
+ 
+dl dd {
+    margin:2px 0;
+    padding:5px 0;
+}
+</style>
+<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />
+<!--[if IE]>
+    <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
+<![endif]-->
+<!--[if IE 6]>
+    <style type="text/css">div#first {width:150px;margin-left:7px;}     div#fourth {margin-right:-1px;}</style>
+<![endif]-->
+{% endblock %}
+{% block left_nav %}
+    {% include "alumni/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>Phage Hunters Applicants</h1>
+    {% for applicant in applicants %}
+    <div style="float:right;"><h2><a href="{{applicant.get_absolute_url}}">View Profile</a></h2></div>
+    <div style="padding-bottom:10px;margin-bottom:10px; border-bottom: 1px #000 solid;">
+    <dl>
+        <dt>Name</dt>
+        <dd>{{applicant.first_name}} {{applicant.last_name}}</dd>
+        <dt>email</dt>
+        <dd>{{applicant.email}}</dd>
+        <dt>Address</dt>
+        <dd>{{applicant.address}}</dd>
+        <dt>City</dt>
+        <dd>{{applicant.city}}</dd>
+        <dt>State</dt>
+        <dd>{{applicant.state}}</dd>
+        <dt>Zip</dt>
+        <dd>{{applicant.postal_code}}</dd>
+        <dt>Phone</dt>
+        <dd>{{applicant.phone}}</dd>
+        <dt>Gender</dt>
+        <dd>{{applicant.gender}}</dd>
+        <dt>High School</dt>
+        <dd>{{applicant.high_school}}</dd>
+        <dt>GPA</dt>
+        <dd>{{applicant.gpa}}</dd>
+        <dt>ACT</dt>
+        <dd>{{applicant.act}}</dd>
+        <dt>ACT Math</dt>
+        <dd>{{applicant.act_math}}</dd>
+        <dt>ACT Science</dt>
+        <dd>{{applicant.act_science}}</dd>
+    </dl>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

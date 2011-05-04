@@ -23,5 +23,9 @@ class ReunionContact(GenericContact):
     memory          = models.TextField('Favorite Memory about your time at LUC/Carthage')
     update          = models.TextField('Brief Update', help_text="What's Happened Since You Graduated (500 characters max)")
 
+
+    def __unicode__(self):
+        return u'%s %s' % (self.last_name, self.first_name)
+
     def get_absolute_url(self):
         return reverse("reunion_contact_detail", args=[self.pk])

@@ -1,6 +1,5 @@
 from django import forms
 
-from djforms.widgets import *
 from djforms.core.models import BINARY_CHOICES, GENDER_CHOICES, MARITAL_CHOICES, SEMESTER_CHOICES
 
 import datetime

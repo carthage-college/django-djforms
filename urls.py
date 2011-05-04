@@ -33,6 +33,8 @@ urlpatterns = patterns('',
     (r'^maintenance/', include('djforms.maintenance.urls')),
     # for the alumni forms
     (r'^alumni/', include('djforms.alumni.urls')),
+    # for the alumni forms
+    (r'^biology/', include('djforms.biology.urls')),
     # CharacterQuest
     (r'^character-quest/', include('djforms.characterquest.urls')),
     # generic request complete

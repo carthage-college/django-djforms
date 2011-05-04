@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Biology &mdash; Genomics &mdash; Phage Hunters Application &mdash; Carthage College{% endblock %}
+{% block css %}
+<style type="text/css" media="screen, projection">
+/* <![CDATA[ */
+    @import url("http://www.carthage.edu/media/css/douglasfir/global.css");
+/* ]]> */
+</style>
+<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />
+<!--[if IE]>
+    <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
+<![endif]-->
+<!--[if IE 6]>
+    <style type="text/css">div#first {width:150px;margin-left:7px;}     div#fourth {margin-right:-1px;}</style>
+<![endif]-->
+{% endblock %}
+{% block left_nav %}
+    {% include "biology/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+<h1>Success</h1>
+<p>Thank you for your interest in the Phage Hunters course at Carthage. You will receive an email with the information you have provided to us.</p>
+<p>We will contact you with the results of our admissions process.</p>
+</div>
+{% endblock %}
+{% block sidebar %}
+<div id="third">
+    <div class="buffer">
+        <h1 style="font-size:18px;">Research Opportunities</h1><img src="http://www.carthage.edu/assets/mediaman/images/SURE.jpg" width="235"><h4 style="color:#FFFFFF; font-size:15px;">SURE</h4><p><a href="http://www.carthage.edu/features/sure-2009/">Summer Undergraduate Research Experience</a> lets students work one-on-one with a faculty mentor.</p><hr style="margin-top:15px; margin-bottom:15px">
+        <h1><div style="font-size:18px;">Freshman students get research experience in new phage genomics course</div></h1><img src="http://www.carthage.edu/assets/mediaman/biology-images/Tobiason-Deb-Genomics2011.jpg" height="157" width="235" alt="Stratford Theatre" title="Stratford Theatre" /><p>Biology professor Deborah Tobiason selected to participate in Howard Hughes Medical Institute's Science Education Alliance. She will teach a new course in phage genomics research starting in Fall 2011. Read <a href="http://www.carthage.edu/features/genomics-research/">more</a>.</p>
+    </div>
+</div>
+{% endblock %}

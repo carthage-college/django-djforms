@@ -76,8 +76,6 @@ INSTALLED_APPS = (
     'djforms.alumni.msw',
     'djforms.characterquest',
     'djforms.core',
-    #'djforms.eduform',
-    #'djforms.forms',
     'djforms.jobpost',
     'djforms.languages',
     'djforms.maintenance',

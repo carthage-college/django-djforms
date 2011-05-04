@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 from djforms.core.models import STATE_CHOICES
-from djforms.widgets import *
 
 NOMINATED_FOR =  [
     ('Distinguished Alumni Achievement Award', 'Distinguished Alumni Achievement Award'),

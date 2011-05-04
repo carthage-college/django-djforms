@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.localflavor.us.forms import USPhoneNumberField
-from djforms.widgets import *
 from djforms.core.models import BINARY_CHOICES
 
 PAPER_CHOICES = [

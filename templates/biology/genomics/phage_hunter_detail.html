@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Biology &mdash; Genomics &mdash; Phage Hunters Application &mdash; Carthage College{% endblock %}
+{% block extra_javascript %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#print-link h2').prepend('<a href="#print">Print</a>');
+    $('#print-link h2 a').click(function() {
+        window.print();
+        return false;
+    });
+});
+</script>
+{% endblock %}
+{% block left_nav %}
+    {% include "biology/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+<div id="print-link"><h2></h2></div>
+<pre style="font-size:1.5em;">
+First Name.................. {{applicant.first_name}}
+Last Name................... {{applicant.last_name}}
+Address..................... {{applicant.address}}
+City........................ {{applicant.city}}
+State....................... {{applicant.state}}
+Zip......................... {{applicant.postal_code}}
+Email....................... {{applicant.email}}
+Phone....................... {{applicant.phone}}
+Gender...................... {{applicant.gender}}
+
+High School................. {{applicant.high_school}}
+GPA......................... {{applicant.gpa}}
+ACT......................... {{applicant.act}}
+ACT Math.................... {{applicant.act_math}}
+ACT Science................. {{applicant.act_science}}
+
+</pre>
+<h4>Intended Majors</h4>
+<p>{% for v in applicant.majors %}{{v}}{% if not forloop.last %}, {% endif %}{% endfor %}{% if applicant.intended_majors_other and applicant.intended_majors %},{% endif %} {{applicant.intended_majors_other}}</p>
+
+<h4>High School Science</h4>
+<pre>{{applicant.high_school_science}}</pre>
+<br />
+
+<h4>Biology/Chemistry Courses</h4>
+<p>{{applicant.biology_chemistry_courses}}
+
+<h4>Research Experience</h4>
+<p>{{applicant.research_experience}}</p>
+
+<h4>Why are you interested in the program?</h4>
+<p>{{applicant.program_interest}}</p>
+
+<h4>Lab work?</h4>
+<p>{{applicant.lab_work}}</p>
+
+</div>
+{% endblock %}

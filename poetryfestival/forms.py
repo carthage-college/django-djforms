@@ -1,5 +1,4 @@
 from django import forms
-from djforms.widgets import *
 
 class SignupForm(forms.Form):
     first_name = forms.CharField(max_length=50)

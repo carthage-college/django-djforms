@@ -4,7 +4,6 @@ from django.forms import ModelForm
 from django.contrib.localflavor.us.forms import USPhoneNumberField
 
 from djforms.jobpost.models import *
-from djforms.widgets import DateTimeWidget
 from djforms.core.models import Department, GenericChoice, YEAR_CHOICES
 
 from tagging.models import Tag, TaggedItem
@@ -92,8 +91,6 @@ class PostFormWithoutHidden(forms.ModelForm):
         return expiredate
 
 class PostFormMostHidden(forms.ModelForm):
-    expire_date         = forms.DateTimeField(help_text="A date for the post to expire on", widget=DateTimeWidget)
-
     class Meta:
         model = Post
         fields = ('num_positions', 'expire_date')

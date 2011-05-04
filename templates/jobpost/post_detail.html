@@ -1,8 +1,16 @@
 {% extends "base.html" %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block extra_javascript %}
+<script src="{{jquery_version}}" type="text/javascript"></script>
+<script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#id_publish, #id_expire_date").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",changeFirstDay:false,dateFormat:"mm/dd/yy",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+    });
+</script>
 {% endblock %}
 {% block extra_style %}
+<link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
 <link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
 <link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
 <link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
