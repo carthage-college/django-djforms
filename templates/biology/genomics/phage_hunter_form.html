@@ -35,7 +35,7 @@
 <img src="http://www.carthage.edu/assets/mediaman/biology-images/biology2.jpg" /><div id="sitetitle"><span style="font-face:times;">Biology</span></div>
 <div class="buffer">
     <h1>Phage Hunters Application Form</h1>
-    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    <p class="help"><strong>All fields are required.</strong></p>
     <form method="POST" action="." class="form" id="applicant">{% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
@@ -44,7 +44,7 @@
                     {% if field.name == "intended_majors_other" %}
                         <div style="padding-left: 25px;">Other: {{field}}</div>
                     {% else %}
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    <h3>{{ field.label_tag }}</h3>
                     {% if field.errors %}
                         <div class="warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>
