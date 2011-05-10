@@ -26,17 +26,19 @@ State....................... {{applicant.state}}
 Zip......................... {{applicant.postal_code}}
 Email....................... {{applicant.email}}
 Phone....................... {{applicant.phone}}
-Gender...................... {{applicant.gender}}
 
 High School................. {{applicant.high_school}}
 GPA......................... {{applicant.gpa}}
-ACT......................... {{applicant.act}}
+ACT Composite............... {{applicant.act_comp}}
 ACT Math.................... {{applicant.act_math}}
 ACT Science................. {{applicant.act_science}}
+SAT Composite............... {{applicant.sat_comp}}
+SAT Math.................... {{applicant.sat_math}}
+SAT Critical Reading........ {{applicant.sat_read}}
 
 </pre>
 <h4>Intended Majors</h4>
-<p>{% for v in applicant.majors %}{{v}}{% if not forloop.last %}, {% endif %}{% endfor %}{% if applicant.intended_majors_other and applicant.intended_majors %},{% endif %} {{applicant.intended_majors_other}}</p>
+<p>{{applicant.intended_majors}}</p>
 
 <h4>High School Science</h4>
 <pre>{{applicant.high_school_science}}</pre>

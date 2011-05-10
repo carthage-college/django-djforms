@@ -4,6 +4,8 @@ from django.contrib.localflavor.us.forms import USPhoneNumberField
 from sputnik.apps.utilities.forms.fields import KungfuTimeField
 from djforms.core.models import BINARY_CHOICES
 
+import datetime
+
 STATUS_CHOICES=[('', '---------- select ----------'),
                 ('Undergraduate Student', 'Undergraduate Student'),
                 ('Graduate Student', 'Graduate Student'),
@@ -58,5 +60,5 @@ class EricRequestForm(IllBaseForm):
 
 def _clean_date(date):
     if date <= datetime.date.today():
-        raise forms.ValidationError("You must pick a date after today!")
+        raise forms.ValidationError("You must pick a date after today.")
     return date
