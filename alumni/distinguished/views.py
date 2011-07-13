@@ -24,7 +24,7 @@ def nomination_form(request):
             email = EmailMessage("Distinguished Alumni Award Nomination: %s" % nominee['name'], t.render(c), nominator['email'], to, bcc, headers = {'Reply-To': nominator['email'],'From': nominator[ 'email']})
             email.content_subtype = "html"
             email.send(fail_silently=False)
-            return HttpResponseRedirect('/alumni/distinguished-alumni/success/')
+            return HttpResponseRedirect('/alumni/distinguished-alumni/nomination/success/')
     else:
         nominee_form = NomineeForm(prefix="nominee")
         nominator_form = NominatorForm(prefix="nominator")

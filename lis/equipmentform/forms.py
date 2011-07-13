@@ -1,6 +1,8 @@
 from django import forms
 from sputnik.apps.utilities.forms.fields import KungfuTimeField
 
+import datetime
+
 STATUS_CHOICES=[('', '---------- pick one ----------'),
                 ('Trustee', 'Trustee'),
                 ('Administration', 'Administration'),

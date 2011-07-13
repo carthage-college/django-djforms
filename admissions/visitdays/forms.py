@@ -26,7 +26,7 @@ class VisitDayBaseForm(forms.ModelForm):
 
     def __init__(self,event_type,*args,**kwargs):
         super(VisitDayBaseForm,self).__init__(*args,**kwargs)
-        qs = VisitDayEvent.objects.exclude(active=False).filter(date__gte=now).filter(event__slug=event_type)
+        qs = VisitDayEvent.objects.exclude(active=False).filter(date__gte=now).filter(event__slug=event_type).order_by("date")
         choices = [('','---choose a date---')]
         for event in qs:
             choices.append((event.id,event))
@@ -56,7 +56,7 @@ class VisitDayForm(forms.ModelForm):
 
     def __init__(self,event_type,*args,**kwargs):
         super(VisitDayForm,self).__init__(*args,**kwargs)
-        qs = VisitDayEvent.objects.exclude(active=False).filter(date__gt=now).filter(event__slug=event_type)
+        qs = VisitDayEvent.objects.exclude(active=False).filter(date__gt=now).filter(event__slug=event_type).order_by("date")
         choices = [('','---choose a date---')]
         for event in qs:
             choices.append((event.id,event))

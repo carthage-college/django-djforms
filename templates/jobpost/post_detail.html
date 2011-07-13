@@ -14,8 +14,8 @@
 <link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
 <link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
 <link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
-<link href="/assets/current/css/core/grid-960.css" rel="stylesheet" type="text/css" />
-<link href="/assets/current/css/plugins/icons.css" rel="stylesheet" type="text/css" />
+<link href="/djassets/current/css/core/grid-960.css" rel="stylesheet" type="text/css" />
+<link href="/djassets/current/css/plugins/icons.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
     <div id="sitetitle">Available On-Campus Employment</div>
@@ -93,7 +93,7 @@
                     <dt class="job-header">Year:</dt><dd class="job-data">{{ jobapplyform.college_year }}</dd><dd class="clear"></dd>
                     <dt class="job-header">Major:</dt><dd class="job-data">{{ jobapplyform.major }}</dd><dd class="clear"></dd>
                     <dt class="job-header">Hours:</dt><dd class="job-data">{{ jobapplyform.hours }}</dd><dd class="clear"></dd>
-                    <dt class="job-header">R&eacute;sum&eacute;:</dt><dd class="job-data">{% if jobapplyform.cv %}<a href="/assets/{{ jobapplyform.cv }}">Click here to download</a></a>{% endif %}</dd><dd class="clear"></dd>
+                    <dt class="job-header">R&eacute;sum&eacute;:</dt><dd class="job-data">{% if jobapplyform.cv %}<a href="/djassets/{{ jobapplyform.cv }}">Click here to download</a></a>{% endif %}</dd><dd class="clear"></dd>
                     <dt class="job-header">Student qualifications:</dt><dd class="clear"></dd>
                 </dl>
                 <p>{{ jobapplyform.app_details }}</p>
@@ -116,7 +116,7 @@
                     <dt class="job-header">Year:</dt><dd class="job-data">{{ jobapplyform.college_year }}</dd><dd class="clear"></dd>
                     <dt class="job-header">Major:</dt><dd class="job-data">{{ jobapplyform.major }}</dd><dd class="clear"></dd>
                     <dt class="job-header">Hours:</dt><dd class="job-data">{{ jobapplyform.hours }}</dd><dd class="clear"></dd>
-                    <dt class="job-header">R&eacute;sum&eacute;:</dt><dd class="job-data">{% if jobapplyform.cv %}<a href="/assets/{{ jobapplyform.cv }}">Click here to download</a></a>{% endif %}</dd><dd class="clear"></dd>
+                    <dt class="job-header">R&eacute;sum&eacute;:</dt><dd class="job-data">{% if jobapplyform.cv %}<a href="/djassets/{{ jobapplyform.cv }}">Click here to download</a></a>{% endif %}</dd><dd class="clear"></dd>
                     <dt class="job-header">Student qualifications:</dt><dd class="clear"></dd>
                 </dl>
                 <p>{{ jobapplyform.app_details }}</p>
