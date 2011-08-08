@@ -29,6 +29,7 @@ ROOT_URLCONF = 'djforms.urls'
 MEDIA_ROOT = '/data2/django_projects/djforms/assets'
 MEDIA_URL = '/assets/'
 ADMIN_MEDIA_PREFIX = '/djmedia/'
+STATIC_URL = "/djmedia/"
 AUTH_PROFILE_MODULE = 'core.UserProfile'
 SECRET_KEY = ''
 
@@ -37,6 +38,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
