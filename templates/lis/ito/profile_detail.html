@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Individual Technology Objective &mdash; Libary and Information Services &mdash; Carthage College{% endblock %}
+{% block extra_javascript %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#print-link h2').prepend('<a href="#print">Print</a>');
+    $('#print-link h2 a').click(function() {
+        window.print();
+        return false;
+    });
+    $('#print-link h2 a .edit').click(function() {
+        return false;
+    });
+});
+</script>
+{% endblock %}
+{% block left_nav %}
+    {% include "lis/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <div id="edit-link" class="fright"><h2>&nbsp;| <a class="edit" href="{{profile.get_update_url}}">Edit</a></h2></div>
+    <div id="print-link"><h2></h2></div>
+
+    <dl>
+        <dt>Name</dt>
+        <dd><a href="mailto:{{profile.email}}">{{profile.first_name|default_if_none:"&nbsp;"}} {{profile.last_name|default_if_none:"&nbsp;"}}</a></dd>
+        <dt>Department</dt>
+        <dd>{{profile.department}}</dd>
+        <dt>ITO Objective</dt>
+        <dd>{{profile.objective}}</dd>
+        <dt>Has Partner</dt>
+        <dd>{{profile.partner}}</dd>
+        <dt>Partner name</dt>
+        <dd>{{profile.partner_name|default:"&nbsp;"}}</dd>
+        <dt>Comments</dt>
+        <dd>{{profile.comments|default_if_none:"&nbsp;"}}</dd>
+    </dl>
+</div>
+{% endblock %}

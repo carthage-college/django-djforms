@@ -8,4 +8,10 @@ urlpatterns = patterns('',
     (r'^room-reserve/$', 'djforms.lis.roomform.views.room_reserve'),
     (r'^ill/request/(?P<type>[\d\w]+)/$', 'djforms.lis.ill.views.request_form'),
     url(r'^success/$', direct_to_template, {'template': 'lis/data_entered.html'}),
+    # lis ito
+    url(r'^ito/profile/success/$', direct_to_template, {'template': 'lis/ito/profile_done.html'}),
+    url(r'^ito/profile/archives/$', 'djforms.lis.ito.views.profile_archives', name="profile_archives"),
+    url(r'^ito/profile/(?P<id>\d+)/update/$', 'djforms.lis.ito.views.profile_form', name="profile_update"),
+    url(r'^ito/profile/(?P<id>\d+)/detail/$', 'djforms.lis.ito.views.profile_detail', name="profile_detail"),
+    url(r'^ito/profile/$', 'djforms.lis.ito.views.profile_form', name='profile_form'),
 )

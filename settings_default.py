@@ -28,8 +28,7 @@ FILE_CHARSET = 'utf-8'
 ROOT_URLCONF = 'djforms.urls'
 MEDIA_ROOT = '/data2/django_projects/djforms/assets'
 MEDIA_URL = '/assets/'
-ADMIN_MEDIA_PREFIX = '/djmedia/'
-STATIC_URL = "/djmedia/"
+STATIC_URL = '/djmedia/'
 AUTH_PROFILE_MODULE = 'core.UserProfile'
 SECRET_KEY = ''
 
@@ -41,7 +40,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
+    'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
 TEMPLATE_DIRS = (
@@ -50,7 +49,6 @@ TEMPLATE_DIRS = (
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
     "djforms.context_processors.sitevars",
-    #"django.core.context_processors.auth",
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.request",
     "django.core.context_processors.debug",
