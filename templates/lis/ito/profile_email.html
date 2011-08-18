@@ -2,6 +2,12 @@
 First Name.................. {{profile.first_name}}
 Last Name................... {{profile.last_name}}
 Email....................... {{profile.email}}
+Department.................. {{profile.department}}
+Partner?.................... {{profile.partner}}
+{% if profile.partner_name %}Parnter's Name.............. {{profile.partner_name}}{% endif %}
 </pre>
-
-<a href="http://{{site_domain}}{{profile.get_absolute_url}}">Full Profile</a>
+<h3>ITO Objective</h3>
+<p>{{profile.objective}}</p>
+<h3>Comments</h3>
+<p>{{profile.comments|default_if_none:"&nbsp;"}}</p>
+<p><a href="http://www.carthage.edu{{profile.get_absolute_url}}">Full Profile</a></p>

@@ -33,7 +33,7 @@ def profile_form(request, id=None):
             data.save()
             # we don't want to send an email if you are a manager
             if not request.user.has_perm('ito.ito_can_manage_profile'):
-                users = User.objects.filter(groups__permissions = Permission.objects.get(codename='ito_can_manage_profile'))
+                users = User.objects.filter(groups__permissions = Permission.objects.get(codename='ito_can_manage_profile')).order_by('-id')
                 bcc = []
                 for u in users:
                     bcc.append(u.email)

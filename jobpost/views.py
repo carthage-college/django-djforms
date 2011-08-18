@@ -160,6 +160,7 @@ def post_detail(request, pid, page=0):
                 t = loader.get_template('jobpost/email.txt')
                 c = Context({'data':job,'post':post})
                 email = EmailMessage("[Job application] %s" % post.title, t.render(c), request.user.email, [post.creator.email,], bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
+                email.content_subtype = "html"
                 email.send(fail_silently=True)
                 return HttpResponseRedirect('/forms/job/success')
         else:
@@ -242,8 +243,8 @@ def post_create(request):
             t = loader.get_template('jobpost/post_created_email.txt')
             c = Context({'data':new_post,})
             email = EmailMessage("[Job Post Created] %s" % new_post.title, t.render(c), new_post.creator.email, ["vvatistas@carthage.edu",], bcc, headers = {'Reply-To': new_post.creator.email,'From': new_post.creator.email})
+            email.content_subtype = "html"
             email.send(fail_silently=True)
-
             return HttpResponseRedirect('/forms/job/success')
     else:
         form = PostFormWithHidden()

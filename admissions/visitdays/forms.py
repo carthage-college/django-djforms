@@ -94,6 +94,10 @@ class VisitDayForm(forms.ModelForm):
             raise forms.ValidationError("If you are a transfer student, please list the school from which you are trasferring.")
         return self.cleaned_data['transfer']
 
+class CaptureForm(VisitDayForm):
+    class Meta:
+        model = VisitDayProfile
+
 class WeekdayForm(VisitDayForm):
     class Meta:
         model = VisitDayProfile
