@@ -34,7 +34,7 @@ def VisitDayForm(request, event_type):
             c = RequestContext(request, {'data':profile,'visit_day':visit_day,'short':short})
             email = EmailMessage(("%s on %s" % (visit_day.title,profile.date)), t.render(c), "admissions@carthage.edu", to, bcc)
             email.content_subtype = "html"
-            email.send(fail_silently=False)
+            email.send(fail_silently=True)
             # send text mail to admissions folks
             to = ["admissions@carthage.edu"]
             #to = ["larry@carthage.edu"]
@@ -42,7 +42,7 @@ def VisitDayForm(request, event_type):
             c = RequestContext(request, {'data':profile,'visit_day':visit_day,'short':short})
             email = EmailMessage(("%s on %s for %s, %s" % (visit_day.title,profile.date,profile.last_name,profile.first_name)), t.render(c), 'admissions@carthage.edu', to, bcc, headers = {'Reply-To': profile.email,})
             email.content_subtype = "html"
-            email.send(fail_silently=False)
+            email.send(fail_silently=True)
 
             return HttpResponseRedirect('/admissions/success/')
     else:

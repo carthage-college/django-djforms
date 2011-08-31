@@ -3,5 +3,5 @@ Data from job submission at:
 
 http://eua.carthage.edu/forms/job/{{post.slug}}
 
-{{data.render_email|safe}}
+<pre style="fontsize:1.5em;">{{data.render_email|safe}}</pre>
 {% endautoescape %}
