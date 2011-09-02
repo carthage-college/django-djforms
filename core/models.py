@@ -5,7 +5,7 @@ from django.contrib.localflavor.us.models import USStateField
 
 from tagging import fields, managers
 from imagekit.models import ImageModel
-from userprofile.models import BaseProfile, Avatar
+from userprofile.models import BaseProfile
 
 import datetime
 
@@ -98,7 +98,6 @@ class UserProfile(BaseProfile):
     college_id = models.CharField("Carthage ID", max_length="7",null=True, blank=True)
     college_year = models.CharField("Current Year at Carthage",max_length="1",choices=YEAR_CHOICES,null=True, blank=True)
     permission = models.ManyToManyField(GenericChoice, verbose_name='Permissions', null=True, blank=True)
-    mugshot = models.ForeignKey(Avatar)
 
     def __unicode__(self):
         return "%s %s's profile with username: %s" % (self.user.first_name, self.user.last_name, self.user.username)
