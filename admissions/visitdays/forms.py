@@ -91,7 +91,7 @@ class VisitDayForm(forms.ModelForm):
 
     def clean_transfer(self):
         if self.cleaned_data.get('entry_as')=="Transfer" and not self.cleaned_data.get('transfer'):
-            raise forms.ValidationError("If you are a transfer student, please list the school from which you are trasferring.")
+            raise forms.ValidationError("Please include the school you attended and the location (city & state).")
         return self.cleaned_data['transfer']
 
 class CaptureForm(VisitDayForm):
