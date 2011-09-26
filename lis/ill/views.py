@@ -30,5 +30,4 @@ def request_form(request, type):
             email.send(fail_silently=True)
             return HttpResponseRedirect('/forms/lis/success')
             #return render_to_response("lis/ill/request_email.txt", {"data": cd,'user':request.user,'date':datetime.date.today(),'type':type}, context_instance=RequestContext(request))
-        
     return render_to_response("lis/ill/request_form.html", {"form": form,'type':type}, context_instance=RequestContext(request))

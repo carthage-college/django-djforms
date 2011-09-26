@@ -20,7 +20,8 @@ export_evs_requests.short_description = "Export the selected EVS Maintenance Req
 
 class MaintenanceRequestAdmin(admin.ModelAdmin):
     model = MaintenanceRequest
-    list_display  = ('id', 'building_name', 'room_number', 'type_of_request', 'date_created', 'damage_charge', 'first_name', 'last_name', 'email', 'phone', 'status')
+    list_display  = ('id', 'building_name', 'room_number', 'type_of_request', 'date_created', 'damage_charge', 'last_name', 'first_name', 'email', 'phone', 'status')
+    ordering = ['-id','building','type_of_request','date_created','user__last_name','user__email','status']
     #list_filter   = ('building_name', 'type_of_request')
     search_fields = ('building__name', 'room_number', 'type_of_request__name')
     actions       = [export_evs_requests]
