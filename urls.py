@@ -27,8 +27,6 @@ urlpatterns = patterns('',
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    # for contact forms environment
-    (r'^contact/', include('djforms.contact.urls')),
     # for the maintenance/evs form environment
     (r'^maintenance/', include('djforms.maintenance.urls')),
     # for the alumni forms
@@ -43,6 +41,8 @@ urlpatterns = patterns('',
     (r'^job/', include('djforms.jobpost.urls')),
     # poetry festival sign up form
     (r'^poetry-festival/', include('djforms.poetryfestival.urls')),
+    # office of the president forms
+    (r'^president/', include('djforms.president.urls')),
     # for the security appeal form environment
     (r'^security/', include('djforms.security.urls')),
     # for the video forms

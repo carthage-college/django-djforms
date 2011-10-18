@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Comments &mdash; Presidential Search &mdash; Carthage College{% endblock %}
+{% block extra_style %}
+    {% include "includes/extra_sytle.html" %}
+{% endblock %}
+{% block left_nav %}
+    {% include "president/search_left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>Comments</h1>
+    {% include "includes/generic_form.html" %}
+</div>
+{% endblock %}
