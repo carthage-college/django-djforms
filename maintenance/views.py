@@ -16,13 +16,17 @@ from operator import attrgetter
 from itertools import chain
 from tagging.models import Tag, TaggedItem
 
+import logging
+logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.INFO,)
+
 @login_required
 def maintenance_request_form(request):
     if request.method=='POST':
-        try:
-            profile = request.user.get_profile()
-        except:
-            profile = ''
+        profile = request.user.get_profile()
+        # try:
+        #    profile = request.user.get_profile()
+        # except:
+        #    profile = ''
         #    p = UserProfile(user=request.user)
         #    p.save()
         #    profile = request.user.get_profile()
@@ -68,16 +72,21 @@ def maintenance_requests(request):
     Simple view to display all requests from the current user
     """
 
+    logging.debug("boo!")
     # set up our permissions base via tags
     # building name tag
     building_name_tag = Tag.objects.get(name__iexact='Building Name')
-    building_perms = TaggedItem.objects.get_by_model(request.user.get_profile().permission.all(), building_name_tag).filter(active=True)
+    logging.debug("tag = %s" % building_name_tag)
+    #building_perms = TaggedItem.objects.get_by_model(request.user.get_profile().permission.all(), building_name_tag).filter(active=True)
+    building_perms = TaggedItem.objects.get_by_model(request.user.get_profile().permission.all(), building_name_tag)
+    logging.debug("building perms = %s" % building_perms)
     bpids = []
     for p in building_perms:
         bpids.append(p.id)
     # type of request tag
     type_of_request_tag = Tag.objects.get(name__iexact='Maintenance Request Type')
-    type_perms = TaggedItem.objects.get_by_model(request.user.get_profile().permission.all(), type_of_request_tag).filter(active=True)
+    #type_perms = TaggedItem.objects.get_by_model(request.user.get_profile().permission.all(), type_of_request_tag).filter(active=True)
+    type_perms = TaggedItem.objects.get_by_model(request.user.get_profile().permission.all(), type_of_request_tag)
     tpids = []
     for p in type_perms:
         tpids.append(p.id)
@@ -98,7 +107,9 @@ def maintenance_requests(request):
             key=attrgetter('date_created'), reverse=True)
     # reviewers
     elif request.user.groups.filter(id=4):
+        logging.debug("my buildings = %s" % bpids)
         my_reqs = MaintenanceRequest.objects.filter(type_of_request__in=bpids)
+        logging.debug("my reqs = %s" % my_reqs)
     # student
     else:
         my_reqs = MaintenanceRequest.objects.filter(user__username=request.user.username).order_by("-date_created")
