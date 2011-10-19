@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Comments &mdash; Presidential Search &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
     {% include "president/search_left_nav.html" %}
 {% endblock %}
@@ -7,5 +8,9 @@
 <div class="buffer">
 <h1>Success</h1>
 <p>Thank you for your comments. We appreciate your input.</p>
+</div>
+{% endblock %}
+{% block sidebar %}
+<div id="third">
 </div>
 {% endblock %}

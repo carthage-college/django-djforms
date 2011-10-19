@@ -25,7 +25,6 @@ dl dd {
     padding:5px 0;
 }
 </style>
-<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />
 <!--[if IE]>
     <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
 <![endif]-->
@@ -33,6 +32,7 @@ dl dd {
     <style type="text/css">div#first {width:150px;margin-left:7px;}     div#fourth {margin-right:-1px;}</style>
 <![endif]-->
 {% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
     {% include "biology/left_nav.html" %}
 {% endblock %}

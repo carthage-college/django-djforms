@@ -13,10 +13,11 @@ def contact_form(request):
         if form.is_valid():
             cd = form.cleaned_data
             bcc = settings.MANAGERS
-            to = ["larry@carthage.edu",]
-            t = loader.get_template('president/contact/contact_email.txt')
+            #to = ["presidentsearch@carthage.edu",]
+            to = ["skirk@carthage.edu",]
+            t = loader.get_template('president/contact/email.html')
             c = RequestContext(request, {'data':cd,})
-            email = EmailMessage(("[Presidential Search Comments] %s" % data["name"]), t.render(c), data["email"], to, bcc, headers = {'Reply-To': data["email"],'From': data["email"]})
+            email = EmailMessage(("[Presidential Search Comments] %s" % cd["name"]), t.render(c), cd["email"], to, bcc, headers = {'Reply-To': cd["email"],'From': cd["email"]})
             email.content_subtype = "html"
             email.send(fail_silently=True)
             return HttpResponseRedirect('/forms/president/contact/success')

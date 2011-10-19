@@ -6,7 +6,6 @@
     @import url("http://www.carthage.edu/media/css/douglasfir/global.css");
 /* ]]> */
 </style>
-<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />
 <!--[if IE]>
     <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
 <![endif]-->
@@ -14,20 +13,9 @@
     <style type="text/css">div#first {width:150px;margin-left:7px;}     div#fourth {margin-right:-1px;}</style>
 <![endif]-->
 {% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
-    <link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
-    <link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
-    <link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
-    <link href="http://www.carthage.edu/assets/css/jquery/plugins/jquery.uniform.css" rel="stylesheet" type="text/css" />
-    <link href="http://eua.carthage.edu/static/css/jquery/themes/sunny/jquery-ui.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-    #video-contest textarea {width:460px;height:150px;}
-    #video-contest h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}
-    #second ol { list-style-type: decimal;}
-    #second .form ol {margin:0; list-style: none outside none;}
-    li.ctrlHolder div ul li {display: inline;}
-    .form .blockLabels label {display: inherit;}
-    </style>
+    {% include "includes/extra_form_style.html" %}
 {% endblock %}
 {% block left_nav %}
     {% include "video/left_nav.html" %}
@@ -42,32 +30,7 @@
     </ol>
     <p>Deadline: May 4, 2011.</p>
     <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
-    <form method="POST" action="." class="form" id="contest">{% csrf_token %}
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in form %}
-                    <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div>
-                    {% endif %}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    {{field}}
-                    </div>
-                </li>
-                {% endfor %}
-                <li class="btnHolder">
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Submit Request" class="button" />
-                </li>
-            </ol>
-        </fieldset>
-    </form>
+    {% include "includes/generic_form.html" %}
 </div>
 {% endblock %}
 {% block sidebar %}

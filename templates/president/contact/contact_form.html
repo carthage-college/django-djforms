@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Comments &mdash; Presidential Search &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
-    {% include "includes/extra_sytle.html" %}
+    {% include "includes/extra_form_style.html" %}
 {% endblock %}
 {% block left_nav %}
     {% include "president/search_left_nav.html" %}
@@ -9,6 +10,12 @@
 {% block content %}
 <div class="buffer">
     <h1>Comments</h1>
+    <p>The search committee welcomes input from the community on the search for the 19th president of the College. This is a time for community members to reflect on the future of the College, opportunities for growth and the challenges we face.  As these institutional priorities take shape, we also welcome observations on the leadership qualities and attributes our next President should have.</p>
+    <p>We invite you to submit your thoughts in the form below.</p>
     {% include "includes/generic_form.html" %}
+</div>
+{% endblock %}
+{% block sidebar %}
+<div id="third">
 </div>
 {% endblock %}

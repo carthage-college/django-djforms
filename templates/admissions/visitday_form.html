@@ -7,7 +7,6 @@
     @import url("http://www.carthage.edu/assets/current/css/core/grid-960.css");
 /* ]]> */
 </style>
-<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />
 <!--[if IE]>
     <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
 <![endif]-->
@@ -46,6 +45,7 @@ function ValidateTransfer(){
     #second ol {margin:0;}
     </style>
 {% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
     {% include "admissions/left_nav.html" %}
 {% endblock %}
