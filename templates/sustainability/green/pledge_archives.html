@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}The Green Pledge &mdash; Sustainability &mdash; Carthage College{% endblock %}
+{% block extra_javascript %}
+    <script src="https://www.carthage.edu/assets/js/jquery/plugins/jquery.nyroModal.custom.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('a[rel=popupperson]').nm();
+        });
+    </script>
+{% endblock %}
+{% block extra_style %}
+    <link rel="stylesheet" href="https://www.carthage.edu/assets/css/jquery/plugins/nyroModal.css" type="text/css" />
+{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "sustainability/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>The Green Pledge Participants</h1>
+    <ol class="numbers">
+    {% for pledge in pledges %}
+    <li><a target="_blank" href="{{pledge.get_absolute_url}}" rel="popupperson">{{pledge.first_name}} {{pledge.last_name}}</a>
+    {% if pledge.comments %}
+    <p>{{pledge.comments}}</p>
+    </li>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}

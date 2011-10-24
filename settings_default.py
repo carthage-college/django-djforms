@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 import os.path
 
+#DEBUG = False
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    (''),
+    ('larry@carthage.edu'),
 )
 MANAGERS = ADMINS
 
@@ -74,20 +75,22 @@ INSTALLED_APPS = (
     'djforms.alumni',
     'djforms.alumni.memory',
     'djforms.alumni.msw',
+    'djforms.biology.genomics',
     'djforms.characterquest',
     'djforms.core',
     'djforms.jobpost',
     'djforms.languages',
+    'djforms.lis.ito',
     'djforms.maintenance',
-    'djforms.lacrossegolfinvite',
     'djforms.security',
+    'djforms.sustainability.green',
     'djforms.video',
     'djforms.writingcurriculum',
 )
 # auth stuff
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    #'djforms.auth.ldapBackend.LDAPBackend',
+    'djforms.auth.ldapBackend.LDAPBackend',
 )
 LOGIN_URL = '/forms/accounts/login/'
 LOGIN_REDIRECT_URL = '/forms/'
@@ -96,11 +99,11 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 LOG_FILEPATH = os.path.join(os.path.dirname(__file__), "logs/")
 LOG_FILENAME = LOG_FILEPATH + "debug.log"
 # SMTP settings
-#EMAIL_USE_TLS = True
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_HOST_USER = ''
-#EMAIL_HOST_PASSWORD = ''
-#EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = ''
-SERVER_EMAIL = ''
-SERVER_MAIL=""
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'confirmation@carthage.edu'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'larry@carthage.edu'
+SERVER_EMAIL = 'larry@carthage.edu'
+SERVER_MAIL="larry@carthage.edu"
