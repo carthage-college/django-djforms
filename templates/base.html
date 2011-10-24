@@ -53,10 +53,10 @@
             <ul id="about">
                 <li><a href="http://www.carthage.edu/finaid/">Financial Aid Home</a></li>
                 {% if not user.is_anonymous %}
-                    <li><a href="/forms/accounts/logout/">Logout</a></li>
+                    <li><a href="/forms/accounts/logout/?next={{request.path}}">Logout</a></li>
                 {% else %}
                     <li>
-                        <a href="/forms/accounts/login/">Login</a>
+                        <a href="/forms/accounts/login/?next={{request.path}}">Login</a>
                     </li>
                 {% endif %}
                 {% if user.is_superuser %}
@@ -95,9 +95,9 @@
                 Users:
                 <br />
                 {% if not user.is_anonymous %}
-                    <a href="/forms/accounts/logout/">Logout</a>
+                    <a href="/forms/accounts/logout/?next={{request.path}}">Logout</a>
                 {% else %}
-                    <a href="/forms/accounts/login/?next=/forms/job/createpost/">Login</a>
+                    <a href="/forms/accounts/login/?next={{request.path}}">Login</a>
                 {% endif %}
             </p>
             <div style="clear:both;"></div>

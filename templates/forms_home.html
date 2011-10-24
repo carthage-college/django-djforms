@@ -4,10 +4,10 @@
 <div id="first">
     <ul id="about">
         {% if not user.is_anonymous %}
-            <li><a href="/forms/accounts/logout/">Logout</a></li>
+            <li><a href="/forms/accounts/logout/?next={{request.path}}">Logout</a></li>
         {% else %}
             <li>
-                <a href="/forms/accounts/login/">Login</a>
+                <a href="/forms/accounts/login/?next={{request.path}}">Login</a>
             </li>
         {% endif %}
         {% if user.is_superuser %}
