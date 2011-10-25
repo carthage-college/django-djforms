@@ -6,11 +6,6 @@ def loggedout(request, template_name='accounts/logged_out.html'):
     """
     Remove the authenticated user's ID from the request.
     """
-    # openid:
-    try:
-        del request.session['openid']
-    except KeyError:
-        pass
     # django auth
     try:
         del request.session[SESSION_KEY]

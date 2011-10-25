@@ -9,8 +9,15 @@ from django.contrib.auth.decorators import login_required
 from djforms.sustainability.green.forms import PledgeForm
 from djforms.sustainability.green.models import Pledge
 
+#@login_required(login_url='https://www.carthage.edu/forms/accounts/login/?next=https://www.carthage.edu/sustainability/green/pledge/')
 @login_required
 def pledge_form(request):
+    '''
+    if not request.user.username:
+        return HttpResponseRedirect("https://www.carthage.edu/forms/accounts/login/?next=https://www.carthage.edu/sustainability/green/pledge/")
+    else:
+        user = request.user
+    '''
     user = request.user
     try:
         pledge = Pledge.objects.get(user=user)
@@ -27,7 +34,7 @@ def pledge_form(request):
             frm = user.email
             to = ["skirk@carthage.edu",]
             t = loader.get_template('sustainability/green/pledge_email.html')
-            c = RequestContext(request, {'pledge':data,})
+            c = RequestContext(request, {'data':data,})
             email = EmailMessage(("[Sustainability Pledge] %s %s" % (user.first_name,user.last_name)), t.render(c), frm, to, bcc, headers = {'Reply-To': frm,'From': frm})
             email.content_subtype = "html"
             email.send()
