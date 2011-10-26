@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('djforms.jobpost.views',
-    url(r'^success/$',
+    url(r'^success',
       view    = 'data_entered',
       name    = 'data_entered',
     ),
