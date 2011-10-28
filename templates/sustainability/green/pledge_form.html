@@ -13,7 +13,10 @@
     {% if pledge %}
         <p class="notice">Thank you for your commitment to the Green Pledge. <a href="{% url pledge_archives %}">View others who as well</a>.</p>
     {% endif %}
-    <p>I, <strong style="color:green;">{{user.first_name}} {{user.last_name}}</strong>, pledge to preserve, conserve, and protect the world’s natural resources to the best of my ability.  Specifically, I will follow the three Rs of Reduce, Reuse, and Recycle in my local environment by doing as many of the following as I can, and I will encourage others to do so.</p>
+    {% if anon %}
+        <p><a href="/forms/accounts/login/?next={{request.path}}">Please login</a> so that you can show your support by completing our form.</p>
+    {% endif %}
+    <p>I{% if not anon %}, <strong style="color:green;">{{user.first_name}} {{user.last_name}}</strong>,{% endif %} pledge to preserve, conserve, and protect the world’s natural resources to the best of my ability.  Specifically, I will follow the three Rs of Reduce, Reuse, and Recycle in my local environment by doing as many of the following as I can, and I will encourage others to do so.</p>
     <h2 style="color:green;">Reduce</h2>
     <ul class="bullets">
     <li>Turn off any lights or power-consuming devices when they are not in use</li>
@@ -33,10 +36,12 @@
     <li>Take special items like batteries, ink cartridges, and electronics to appropriate recycling venues</li>
     <li>Purchase items made of recycled materials whenever possible</li>
     </ul>
-
-    {% if not pledge %}
+    {% if not pledge and not anon %}
         {% include "includes/generic_form.html" %}
         <p>Once you click "submit", your name will appear in <a href="/sustainability/green/pledge/archives/">the list of those are now dedicated to the green initiative at Carthage and beyond</a>.</a>
+    {% endif %}
+    {% if anon %}
+        <p><a href="/forms/accounts/login/?next={{request.path}}">Please login in order to  make the pledge</a>.</p>
     {% endif %}
     <p class="small">This pledge began at Carthage College, Kenosha, WI, in October 2010.  It is intended to serve as a model for college and university students and everyone else.  Please feel free modify the text to fit your group or community and pass it along.</p>
 </div>
