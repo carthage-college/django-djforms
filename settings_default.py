@@ -30,6 +30,8 @@ ROOT_URLCONF = 'djforms.urls'
 MEDIA_ROOT = '/data2/django_projects/djforms/assets'
 MEDIA_URL = '/assets/'
 STATIC_URL = '/djmedia/'
+SERVER_URL = "http://www.carthage.edu"
+API_URL = "%s/%s" % (SERVER_URL, "api")
 AUTH_PROFILE_MODULE = 'core.UserProfile'
 SECRET_KEY = ''
 
