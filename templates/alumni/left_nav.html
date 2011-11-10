@@ -1,14 +1,5 @@
+{% load get_api %}
 <div id="first">
-    <ul id='nav' class='sf-vertical'>
-        <li><a href="http://www.carthage.edu/alumni/110/">1-10 Club</a></li>
-        <li><a href="http://www.carthage.edu/alumni/ambassadors/">Alumni Ambassadors</a></li>
-        <li><a href="http://www.carthage.edu/alumni/mission/">Alumni Association</a></li>
-        <li><a href="http://www.carthage.edu/alumni/apps/">Alumni Directory</a></li>
-        <li><a href="http://www.carthage.edu/alumni/apps/classnotes">Class Notes</a></li>
-        <li><a href="http://www.carthage.edu/alumni/distinguished-alumni/nomination/">Distinguished Alumni Awards</a></li>
-        <li><a href="http://www.carthage.edu/giving/">Gifts to Carthage</a></li>
-        <li><a href="http://www.carthage.edu/alumni/galleries/">Photo Gallery</a></li>
-        <li><a href="http://www.carthage.edu/academics/registrar/transcripts/">Transcripts</a></li>
-        <li><a href="http://www.carthage.edu/alumni/travel/">Travel</a></li>
-    </ul>
+{% get_api_object as menu menutree menu 117 code %}
+{{menu}}
 </div>

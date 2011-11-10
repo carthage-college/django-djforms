@@ -1,3 +1,5 @@
+{% load get_api %}
 <div id="first">
-<ul class="sf-vertical" id="nav"><li><a href="/biology/">Biology</a></li><li><a href="/biology/faculty/">Faculty</a></li><li><a href="/biology/courses/">Courses</a></li><li class="last-featured"><a href="/biology/requirements/">Requirements</a></li><li><a href="/biology/special-programs/">Special Programs</a></li><li><a href="/biology/opportunities/">Opportunities</a></li><li><a href="/biology/student-voices/">Student Voices</a></li><li><a href="/biology/student-organizations/">Student Organizations</a></li><li><a href="/biology/careers/">Careers</a></li><li><a href="/biology/resources/">Resources</a></li><li><a href="/pre-health/">Pre-Health</a></li><li><a href="/occupational-therapy/">3/2 Occupational Therapy</a></li></ul>
+    {% get_api_object as menu menutree menu 43 code %}
+    {{menu}}
 </div>

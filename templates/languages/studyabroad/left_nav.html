@@ -1,3 +1,5 @@
+{% load get_api %}
 <div id="first">
-<ul class="sf-vertical" id="nav"><li><a href="http://www.carthage.edu/study-abroad/">Study Abroad</a></li><li><a href="http://www.carthage.edu/study-abroad/faq/">FAQs</a></li><li><a href="http://www.carthage.edu/study-abroad/coordinator/">Program Coordinator</a></li><li><a href="http://www.carthage.edu/study-abroad/scholarships/">Scholarships</a></li><li><a href="http://www.carthage.edu/study-abroad/student-voices/">Student Voices</a></li><li><a href="http://www.carthage.edu/study-abroad/abroad/">For Students Already Abroad</a></li><li><a href="http://www.carthage.edu/study-abroad/resources/">Resources</a></li></ul>
+    {% get_api_object as menu menutree menu 94 code %}
+    {{menu}}
 </div>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load get_api %}
 {% block title %}Comments &mdash; Presidential Search &mdash; Carthage College{% endblock %}
 {% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
@@ -11,6 +12,5 @@
 </div>
 {% endblock %}
 {% block sidebar %}
-<div id="third">
-</div>
+    {% include "president/search_side_bar.html" %}
 {% endblock %}

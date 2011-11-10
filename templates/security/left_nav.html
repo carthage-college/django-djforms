@@ -1,19 +1,5 @@
+{% load get_api %}
 <div id="first">
-    <ul class="sf-vertical" id="nav">
-        <li><a href="http://www.carthage.edu/campus-life/">Campus Life</a></li>
-        <li><a href="http://www.carthage.edu/campus-life/security/">Security</a></li>
-        <li><a href="http://www.carthage.edu/campus-life/security/welcome/">Director's Welcome</a></li>
-        <li class="last-featured"><a href="http://www.carthage.edu/campus-life/security/security-staff/">Security Staff</a></li>
-        <li><a href="http://www.carthage.edu/campus-life/security/blue-light-telephones/">Blue Light Telephones</a></li>
-        <li><a href="http://www.carthage.edu/campus-life/security/building-hours/">Building Hours</a></li>
-        <li><a href="http://www.carthage.edu/campus-life/security/campus-satelite-shuttle-service/">Campus Satelite Shuttle Service</a></li>
-        <li><a href="http://www.carthage.edu/security/tipform/">Crime Report Tip Form</a></li>
-        <li><a href="http://www.carthage.edu/campus-life/security/parking-permits/">Resident Parking Permits</a></li>
-        <li><a href="http://www.carthage.edu/campus-life/security/parking-policies/">Parking Policies</a></li>
-        <li><a href="http://www.carthage.edu/security/parkingappeal/">Parking Ticket Appeal Form</a></li>
-        <li><a href="http://www.carthage.edu/campus-life/security/standards-of-security/">Standards of Security</a></li>
-        <li><a href="http://www.carthage.edu/campus-life/security/title-ii-report/">Title II Report</a></li>
-        <li><a href="http://www.carthage.edu/campus-life/security/links/">Links</a></li>
-        <li><a href="http://www.carthage.edu/campus-life/security/snow-removal-policies/">Snow Removal Policies</a></li>
-    </ul>
+    {% get_api_object as menu menutree menu 72 code %}
+    {{menu}}
 </div>

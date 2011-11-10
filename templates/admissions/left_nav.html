@@ -1,11 +1,5 @@
+{% load get_api %}
 <div id="first">
-	<ul id="nav" class="sf-vertical">
-		<li><a href="http://www.carthage.edu/admissions/">Admissions Home</a></li>
-		<li class="last-featured"><a href="http://www.carthage.edu/admissions/inforeq/">Request Information</a></li>
-		<li><a href="http://www.carthage.edu/admissions/visit/visitdays.cfm">Visit Days</a></li>
-		<li><a href="http://www.carthage.edu/about/directions/">Directions to Carthage</a></li>
-		<li><a href="http://www.carthage.edu/admissions/visit/attractions.cfm">Attractions</a></li>
-		<li><a href="http://www.carthage.edu/admissions/visit/lodging.cfm">Lodging</a></li>
-		<li><a href="http://www.carthage.edu/admissions/visit/dining.cfm">Dining</a></li>
-	</ul>
+    {% get_api_object as menu menutree menu 169 code %}
+    {{menu}}
 </div>

@@ -17,31 +17,5 @@
 </div>
 {% endblock %}
 {% block sidebar %}
-<div id="third">
-    <div class="buffer">
-        <h1 style="font-size:18px;">Carthage at a Glance</h1>
-        
-        <h2 style="font-size:15px; margin-bottom:2px; margin-top:20px;"><strong>Enrollment</strong></h2> 
-        <p>2,500 full-time students<br />
-        3,400 total students</p>
-        
-        <h2 style="font-size:15px; margin-bottom:2px; margin-top:20px;"><strong>Freshman Snapshot</strong></h2>
-        <p>Average high school GPA: 3.31<br />
-        Average midrange ACT score: 22-27</p>
-        <p>More than 1/3 of entering students are in the top 20% of their class.</p>
-        
-        <h2 style="font-size:15px; margin-bottom:2px; margin-top:20px;"><strong>Academics</strong></h2>
-        <p>More than <a href="/academics/">50 areas of study</a><br />
-        Average class size: 17<br />
-        Student to faculty ratio: 14:1</p>
-        
-        <h2 style="font-size:15px; margin-bottom:2px; margin-top:20px;"><strong>Campus</strong></h2>
-        <p>100-acre arboretum situated on the shore of Lake Michigan in Kenosha, midway between Milwaukee and Chicago.</p>
-        <p>$130 million invested in campus development during the last decade.</p>
-    </div>
-    
-    <div class="buffer">
-        <img style="width:235px;" title="The Class of 2011 was Carthage's largest graduating class in its 164-year history." src="http://www.carthage.edu/assets/photologue/photos/cache/Commencement2011-LineUp3-530_20110523T222017_display.jpg">
-    </div>
-</div>
+    {% include "president/search_side_bar.html" %}
 {% endblock %}

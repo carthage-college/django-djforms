@@ -1,3 +1,5 @@
+{% load get_api %}
 <div id="first">
-<ul class="sf-vertical" id="nav"><li><a href="http://www.carthage.edu/modern-languages/tle/">Target Language Experts</a></li><li><a href="http://www.carthage.edu/modern-languages/tle/about/">About the Program</a></li><li><a href="http://www.carthage.edu/modern-languages/tle/apply/">Apply to the Program</a></li><li><a href="http://www.carthage.edu/modern-languages/tle/meet/">Current TLEs</a></li><li><a href="http://www.carthage.edu/modern-languages/tle/voices/">TLE Voices</a></li><li><a href="http://www.carthage.edu/modern-languages/">Modern Languages at Carthage</a></li></ul>
+    {% get_api_object as menu menutree menu 103 code %}
+    {{menu}}
 </div>

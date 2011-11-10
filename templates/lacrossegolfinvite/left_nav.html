@@ -1,5 +1,5 @@
+{% load get_api %}
 <div id="first">
-    <ul class="sf-vertical" id="nav">
-        <li><a href="/forms/lacrossegolfinvite/">Lacrosse Golf Invite Form</a></li>
-    </ul>
+{% get_api_object as menu menutree menu 192 code %}
+{{menu}}
 </div>

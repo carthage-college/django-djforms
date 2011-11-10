@@ -34,9 +34,5 @@
 </div>
 {% endblock %}
 {% block sidebar %}
-<div id="third">
-    <div class="buffer">
-        <ul class="links"><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/">Contest Overview</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/why/">Why?</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/guidelines/">Contest Guidelines</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="/videos/ideas/">Video Format Ideas</a></p></li><li><p style="font-size: 16px; margin-bottom: 3px;"><a href="http://www.carthage.edu/videos/entry">Contest Entry Form</a></p></li></ul>
-    </div>
-</div>
+    {% include "video/side_bar.html" %}
 {% endblock %}

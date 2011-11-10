@@ -1,11 +1,7 @@
+{% load get_api %}
 <div id="first">
-<ul class="sf-vertical" id="nav"><li class="last-featured"><a href="http://www.carthage.edu/library">Library and Technology Home</a></li><li><a href="http://www.carthage.edu/library/reference/books">Find Books</a></li><li><a href="http://www.carthage.edu/library/reference/articles">Find Articles</a></li><li><a href="">Find Reference</a><ul><li><a href="http://www.carthage.edu/library/reference/dictionaries">Dictionaries</a></li><li><a href="http://www.carthage.edu/library/reference/encyclopedias">Encyclopedias</a></li><li><a href="http://www.carthage.edu/library/reference/newspapers">Newspapers</a></li></ul></li><li><a href="http://libguides.carthage.edu">Find Subject Guides</a></li><li><a href="http://www.carthage.edu/library/circulation/interlibrary-loan">Interlibrary Loan</a></li><li class="last-featured"><a href="http://www.carthage.edu/library/circulation/equipment-checkout">Equipment Checkout</a></li><li class="last-featured"><a href="http://www.carthage.edu/writing/">Writing Center</a></li><li class="last-featured"><a href="/tutoring/">Tutoring</a></li><li><a href="http://www.carthage.edu/library/computing/bring-your-computer-to-campus">Bringing your computer to campus</a></li><li><a href="http://www.carthage.edu/library/computing/password">Passwords/Accounts</a></li><li><a href="http://www.carthage.edu/library/computing/printing">Printing</a></li><li><a href="http://www.carthage.edu/library/media/classroom-technology">Classroom Technology</a></li><li><a href="http://www.carthage.edu/library/media/video-channel">Video and Media</a></li><li class="last-featured"><a href="http://www.carthage.edu/library/information/faculty-staff-resources">Faculty - Staff Resources</a></li><li><a href="http://www.carthage.edu/familyfun">Friday Family Fun Night</a></li><li><a href="http://www.carthage.edu/childrens-literature">Center for Children's Literature</a></li><li class="last-featured"><a href="http://www.carthage.edu/library/archives/staubitz">Staubitz  Archives</a></li><li><a href="http://www.carthage.edu/library/information/about">About LIS</a></li></ul>
-<div class="buffer">
-<p> Library &amp; Information Services </p>
-<p>
-Carthage College<br />
-2001 Alford Park Dr<br />
-Kenosha, WI 53140
-</p>
-</div>
+{% get_api_object as menu menutree menu 144 code %}
+{{menu}}
+{% get_api_object as about_lis cms snippet 800 code %}
+{{about_lis}}
 </div>

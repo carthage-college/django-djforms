@@ -19,7 +19,6 @@
         For emergencies, please contact the Dean of Students Office at: <strong>551-5800</strong>
     </p>
     <form method="POST" action="." class="form">{% csrf_token %}
-        <input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}
