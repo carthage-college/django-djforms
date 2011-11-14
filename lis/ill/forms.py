@@ -28,7 +28,7 @@ class IllBaseForm(forms.Form):
 class BookRequestForm(IllBaseForm):
     # book info
     author      = forms.CharField(max_length=100, label="Author or Authors", help_text="If it is a collection, provide the editor or editors here.")
-    title       = forms.CharField(max_length=100)
+    title       = forms.CharField(max_length=200)
     publisher   = forms.CharField(max_length=100)
     pub_date    = forms.CharField(max_length=100, label="Publication date")
     isbn        = forms.CharField(max_length=17, required=False, label="ISBN")
@@ -45,7 +45,7 @@ class ArticleRequestForm(IllBaseForm):
     pub_date    = forms.CharField(max_length=100, label="Publication date")
     pages       = forms.CharField(max_length=100)
     author      = forms.CharField(max_length=100, label="Author", help_text="Include only the first listed author of the article.")
-    title       = forms.CharField(max_length=100)
+    title       = forms.CharField(max_length=200)
     issn        = forms.CharField(max_length=17, required=False, label="ISSN")
     source      = forms.CharField(max_length=255, help_text="Source of the request.", required=False)
     comments    = forms.CharField(widget=forms.Textarea, required=False)
@@ -54,7 +54,7 @@ class EricRequestForm(IllBaseForm):
     # ERIC info
     ericn       = forms.CharField(max_length=17, required=False, label="ERIC Document Number (ED#)")
     author      = forms.CharField(max_length=100, label="Author of document")
-    title       = forms.CharField(max_length=100)
+    title       = forms.CharField(max_length=200)
     pub_date    = forms.CharField(max_length=100, label="Publication date")
     comments    = forms.CharField(widget=forms.Textarea, required=False)
 

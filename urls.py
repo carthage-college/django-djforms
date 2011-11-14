@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
-from django.views.generic.simple import direct_to_template
+from django.views.generic.simple import direct_to_template, redirect_to
 from djforms.core.views import data_entered
 from djforms.auth.views import loggedout
 
@@ -60,7 +60,8 @@ urlpatterns = patterns('',
     # writing across curriculum
     (r'^writingcurriculum/', include('djforms.writingcurriculum.urls')),
     # auth
-    url(r'^accounts/login/$',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),
+    url(r'^accounts/login',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),
     url(r'^accounts/logout/$',auth_views.logout,{'next_page': '/forms/accounts/loggedout/'}),
     url(r'^accounts/loggedout',loggedout,{'template_name': 'accounts/logged_out.html'}),
+    url(r'^accounts/$', redirect_to, {'url': '/forms/', 'permanent': True}),
 )

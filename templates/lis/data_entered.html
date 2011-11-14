@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}LIS Requests{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
     {% include "lis/left_nav.html" %}
 {% endblock %}
@@ -8,4 +9,7 @@
 <h1>Request Submitted</h1>
 <p>Your request has been submited.  You should recieve a copy via e-mail</p>
 </div>
+{% endblock %}
+{% block sidebar %}
+    {% include "lis/side_bar.html" %}
 {% endblock %}

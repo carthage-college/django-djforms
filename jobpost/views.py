@@ -167,7 +167,7 @@ def post_detail(request, pid, page=0):
             form = JobApplyForms()
         return render_to_response("jobpost/post_detail.html", {'form':form,'post':post}, context_instance=RequestContext(request))
 
-@permission_required('jobpost.can_manage', login_url= '/forms/accounts/login')
+@permission_required('jobpost.can_manage')
 def post_manage(request, pid):
     post = get_object_or_404(Post, id=pid)
     if request.method == 'POST':
@@ -178,11 +178,12 @@ def post_manage(request, pid):
     else:
         form = PostFormWithoutHidden(instance=post)
     return render_to_response("jobpost/post_manage.html", {"form": form,'original': post}, context_instance=RequestContext(request))
-@permission_required('jobpost.can_manage', login_url= '/forms/accounts/login')
+
+@permission_required('jobpost.can_manage')
 def post_manage_list(request, page=0):
     """
     Post list
-    
+
     Template: ``jobpost/post_manage_list.html``
     Context:
         object_list
