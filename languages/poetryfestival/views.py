@@ -3,7 +3,7 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from djforms.poetryfestival.forms import SignupForm
+from djforms.languages.poetryfestival.forms import SignupForm
 
 def signup_form(request):
     if request.method == 'POST':
@@ -25,4 +25,4 @@ def signup_form(request):
             return HttpResponseRedirect('/forms/poetry-festival/success')
     else:
         form = SignupForm()
-    return render_to_response('poetryfestival/signup_form.html', {'form': form}, context_instance=RequestContext(request))
+    return render_to_response('languages/poetryfestival/signup_form.html', {'form': form}, context_instance=RequestContext(request))

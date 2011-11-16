@@ -39,8 +39,6 @@ urlpatterns = patterns('',
     (r'^success/$', 'djforms.core.views.data_entered'),
     # for the job post environment
     (r'^job/', include('djforms.jobpost.urls')),
-    # poetry festival sign up form
-    (r'^poetry-festival/', include('djforms.poetryfestival.urls')),
     # office of the president forms
     (r'^president/', include('djforms.president.urls')),
     # for the security appeal form environment
