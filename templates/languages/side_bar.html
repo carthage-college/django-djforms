@@ -1,11 +1,14 @@
 {% load get_api %}
 <div id="third">
-{% get_api_object as sidebar cms snippet 25 code %}
+{% get_api_object as links cms snippet 25 code %}
 {{links}}
+<div class="buffer">
 {% get_api_object as news cms newspageblock 78 code %}
 {{news}}
+</div>
 {% get_api_object as study_abroad cms snippet 476 code %}
 {{study_abroad}}
 {% get_api_object as tle cms snippet 385 code %}
 {{tle}}
 </div>
+
