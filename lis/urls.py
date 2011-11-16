@@ -3,6 +3,7 @@ from django.views.generic.simple import direct_to_template, redirect_to
 
 urlpatterns = patterns('',
     # For room and equipment reserve environment
+    url(r'^secure/reference/articles', direct_to_template, {'template': 'lis/secure/reference/articles.html'}),
     url(r'^equipment-reserve/$', 'djforms.lis.equipmentform.views.equipment_reserve'),
     url(r'^print-request/$', 'djforms.lis.printjobs.views.print_request'),
     url(r'^room-reserve/$', 'djforms.lis.roomform.views.room_reserve'),

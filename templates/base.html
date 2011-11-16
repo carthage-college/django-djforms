@@ -42,10 +42,17 @@
 </head>
 {% block body %}
 <body id="Home" class="home">
+    {% block banner %}
+    <div id="banner" class="container">
+        <a href="/cla/"><img src="http://www.carthage.edu/assets/img/banners/Top-8-percent-header.gif" /></a>
+    </div>
+    {% endblock %}
     <div id="wrapper" class="container">
+    <div class="stone">
         <div id="Header">
             <div id="topnav">
                 <h1><a href="http://www.carthage.edu/?ext"><img src="/assets/current/img/ui/3flame_top_sm.gif" alt="Carthage" /></a></h1>
+                {% block globalnavinclude %}{% include "includes/globalnav.html" %}{% endblock %}
             </div>
         </div>
         {% block left_nav %}
@@ -101,9 +108,10 @@
                 {% endif %}
             </p>
             <div style="clear:both;"></div>
-            <div id="tagline"><img alt="Truth, Strength, Service. Together." src="/assets/1.0.0/img/ui/tagline.gif"" border="0" /></div>
+            <div id="tagline"><img alt="Truth, Strength, Service. Together." src="/assets/1.0.0/img/ui/tagline.gif" border="0" /></div>
         </div><!-- end footer -->
-    </div>
+    </div><!-- end stone -->
+    </div><!-- end wrapper -->
 </body>
 {% endblock %}
 </html>

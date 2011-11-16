@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Articles &mdash; Reference &mdash; Libary and Information Services &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "lis/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as banner cms snippet 1202 code %}
+{{banner}}
+{% get_api_object as title cms snippet 124 code %}
+{{title}}
+<div class="buffer">
+    {% if not user.is_anonymous %}
+    {% get_api_object as protected_content cms snippet 1201 code %}
+    {{protected_content}}
+    {% else %}
+    <p>You need to <a href="/forms/accounts/login?next={{request.path}}">log in</a> to view this content.</p>
+    {% endif %}
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "lis/side_bar.html" %}
+{% endblock %}
