@@ -1,18 +1,11 @@
 {% extends "base.html" %}
 {% block title %}International Poetry Festival Sign Up{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
-<link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
-<link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
-<link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
-<style>
-#signup textarea {
-    width:600px;
-    height:150px;
-}
-</style>
+    {% include "includes/extra_form_style.html" %}
 {% endblock %}
 {% block left_nav %}
-    {% include "poetryfestival/left_nav.html" %}
+    {% include "languages/left_nav.html" %}
 {% endblock %}
 {% block content %}
 <div class="buffer">
@@ -22,7 +15,7 @@
         Please take the time to ensure that all the required fields are filled
         out completely and accurately.
     </p>
-    <form action="." class="form" id="signup" method="post">{% csrf_token %}
+    <form action="." class="form" id="profile" method="post">{% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}
@@ -49,4 +42,7 @@
         </fieldset>
     </form>
 </div>
+{% endblock %}
+{% block sidebar %}
+    {% include "languages/side_bar.html" %}
 {% endblock %}
