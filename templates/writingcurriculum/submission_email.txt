@@ -1,17 +1,17 @@
 <pre style="font-size:1.5em;">
 Date........................ {{data.date_created}}
-First Name.................. {{user.first_name}}
-Last Name................... {{user.last_name}}
+First name.................. {{user.first_name}}
+Last name................... {{user.last_name}}
 Email....................... {{user.email}}
 Phone....................... {{user.get_profile.phone}}
 Title....................... {{data.course_title}}
-Course Number............... {{data.course_number}}
+Course number............... {{data.course_number}}
 Department.................. {{data.department}}
 Term........................ {{data.academic_term}}
 Day or SPS.................. {{data.day_sps}}
-Approved WI Course?......... {{data.approved_wi}}
+Approved WI course?......... {{data.approved_wi}}
 If not, when?............... {{data.when_approved_wi}}
-WI Workshop................. {{data.workshop}}
+WI workshop................. {{data.workshop}}
 If not, when?............... {{data.when_workshop}}
 Permission.................. {{data.permission}}
 {% if data.syllabus %}Syllabus.................... <a href="http://{{site_domain}}{{media_url}}{{data.syllabus}}">Click here to download</a>{% else %}<br />{% endif %}
@@ -22,6 +22,14 @@ Description:
 Objectives:
 
 {{data.objectives}}
+
+Three learning outcomes:
+
+{{data.learning_outcomes}}
+
+Assessment methods:
+
+{{data.assessment_methods}}
 </pre>
 <h2>Criteria</h2>
 {% for criterion_id, criterion in criteria.items %}
