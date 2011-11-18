@@ -91,7 +91,7 @@ INSTALLED_APPS = (
 # auth stuff
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'djforms.auth.ldapBackend.LDAPBackend',
+    'djforms.core.auth.ldapBackend.LDAPBackend',
 )
 LOGIN_URL = '/forms/accounts/login/'
 LOGIN_REDIRECT_URL = '/forms/'

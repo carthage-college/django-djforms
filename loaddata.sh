@@ -1,1 +1,1 @@
-python manage.py loaddata fixtures/*.json --settings=djforms.settings
+python manage.py loaddata core/fixtures/*.json --settings=djforms.settings
