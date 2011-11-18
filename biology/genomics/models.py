@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.core.urlresolvers import reverse
 from djforms.core.models import BINARY_CHOICES
 
@@ -36,5 +37,4 @@ class PhageHunter(GenericContact):
         return u'%s %s' % (self.last_name, self.first_name)
 
     def get_absolute_url(self):
-        return reverse("phage_hunter_detail", args=[self.pk])
-
+        return "http://%s%s" % (settings.SERVER_URL, reverse("phage_hunter_detail", args=[self.pk]))

@@ -13,10 +13,10 @@ from djforms.lis.ito.forms import ProfileForm
 from djforms.lis.ito.models import Profile
 
 @login_required
-def profile_form(request, id=None):
+def profile_form(request, pid=None):
     profile = None
-    if id:
-        profile = get_object_or_404(Profile, id=id)
+    if pid:
+        profile = get_object_or_404(Profile, id=pid)
         if (profile.user.id != request.user.id) and not request.user.has_perm('ito.ito_can_manage_profile'):
             raise Http404
     if request.method=='POST':
@@ -53,11 +53,11 @@ def profile_form(request, id=None):
             form = ProfileForm(instance=profile)
         else:
             form = ProfileForm()
-    return render_to_response("lis/ito/profile_form.html", {"form": form,"id":id,}, context_instance=RequestContext(request))
+    return render_to_response("lis/ito/profile_form.html", {"form": form,"id":pid,}, context_instance=RequestContext(request))
 
 @staff_member_required
-def profile_detail(request, id):
-    profile = get_object_or_404(Profile, id=id)
+def profile_detail(request, pid):
+    profile = get_object_or_404(Profile, id=pid)
     if (profile.user.id != request.user.id) and not request.user.has_perm('ito.ito_can_manage_profile'):
         raise Http404
     return render_to_response("lis/ito/profile_detail.html", {"profile": profile,}, context_instance=RequestContext(request))

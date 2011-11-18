@@ -14,8 +14,8 @@ def phage_hunter_form(request):
         if form.is_valid():
             data = form.save()
             bcc = settings.MANAGERS
-            #recipient_list = ["larry@carthage.edu",]
-            recipient_list = ["dtobiason@carthage.edu","ppfaffle@carthage.edu",]
+            recipient_list = ["larry@carthage.edu",]
+            #recipient_list = ["dtobiason@carthage.edu","ppfaffle@carthage.edu",]
             t = loader.get_template('biology/genomics/phage_hunter_email.html')
             c = RequestContext(request, {'applicant':data,})
             email = EmailMessage(("[Phage Hunters Application] %s %s" % (data.first_name,data.last_name)), t.render(c), data.email, recipient_list, bcc, headers = {'Reply-To': data.email,'From': data.email})
@@ -27,8 +27,8 @@ def phage_hunter_form(request):
     return render_to_response("biology/genomics/phage_hunter_form.html", {"form": form,}, context_instance=RequestContext(request))
 
 @staff_member_required
-def phage_hunter_detail(request, id):
-    applicant = get_object_or_404(PhageHunter, id=id)
+def phage_hunter_detail(request, pid):
+    applicant = get_object_or_404(PhageHunter, id=pid)
     return render_to_response("biology/genomics/phage_hunter_detail.html", {"applicant": applicant,}, context_instance=RequestContext(request))
 
 @staff_member_required

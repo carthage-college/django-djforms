@@ -51,7 +51,6 @@ TEMPLATE_DIRS = (
     "/data2/django_projects/sputnik/production/sputnik/templates/"
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "djforms.context_processors.sitevars",
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.request",
     "django.core.context_processors.debug",

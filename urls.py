@@ -47,8 +47,6 @@ urlpatterns = patterns('',
     (r'^sustainability/', include('djforms.sustainability.urls')),
     # for the video forms
     (r'^video/', include('djforms.video.urls')),
-    # for the lacrosse golf invite form environment
-    (r'^lacrossegolfinvite/', include('djforms.lacrossegolfinvite.urls')),
     # for the modern language form environment
     (r'^languages/', include('djforms.languages.urls')),
     # admissions

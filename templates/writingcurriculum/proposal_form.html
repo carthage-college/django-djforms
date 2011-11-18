@@ -161,6 +161,7 @@
                                 <li><hr /></li>
                             </ul>
                             {% for criterion_id, criterion in criteria.items %}
+                            <input type="hidden" name="wac-id[]" value="{{criterion.id}}" />
                             <ul id="doop_{{criterion_id}}">
                                 <li><input type="text" maxlength="255" name="wac-type_assignment[]" value="{{criterion.type_assignment}}" />
                                     &nbsp;[<a href="javascript:;" class="crita">Criterion A</a>]<div class="criterion"> Writing Assignment Type (Do not include in-class exams)</div>

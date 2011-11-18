@@ -18,7 +18,7 @@ try:
 except:
     DEPTS = Department.objects.none()
 
-class SubmissionForm(forms.ModelForm):
+class ProposalForm(forms.ModelForm):
     department      = forms.ModelChoiceField(queryset=DEPTS)
     academic_term   = forms.ModelChoiceField(queryset=PERIOD, empty_label=None, widget=forms.RadioSelect())
     day_sps         = forms.ChoiceField(label="Day or SPS", choices=DAY_SPS_CHOICES, widget=forms.RadioSelect())

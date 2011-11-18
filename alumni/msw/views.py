@@ -24,8 +24,8 @@ def reunion_contact_form(request):
         form = ReunionContactForm()
     return render_to_response("alumni/msw/reunion_contact_form.html", {"form": form,}, context_instance=RequestContext(request))
 
-def reunion_contact_detail(request, id):
-    contact = get_object_or_404(ReunionContact,id=id)
+def reunion_contact_detail(request, cid):
+    contact = get_object_or_404(ReunionContact,id=cid)
     return render_to_response("alumni/msw/reunion_contact_detail.html", {"contact": contact,}, context_instance=RequestContext(request))
 
 def reunion_contact_archives(request):
