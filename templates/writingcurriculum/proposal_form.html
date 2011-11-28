@@ -40,12 +40,13 @@
             $("#id_wac-when_approved_wi").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
             $("#id_wac-when_workshop").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
             $("#clone").click(function () {
-                if (copies < 4) {
+                if (copies <= 4) {
                     copies++;
                     newId = "doop_" + copies;
                     $("#doop_master").clone().attr("id",newId).appendTo("#duplicates");
+                    $.growlUI('Criteria items: ', copies);
                 }else{
-                    $.growlUI('Warning', 'Limit 5');
+                    $.growlUI('Warning', 'Criteria Limit: 5');
                 }
                 initialise();
             });
@@ -54,8 +55,9 @@
                     delid = "doop_" + copies;
                     $("#doop_" + copies ).remove();
                     copies--;
+                    $.growlUI('Criteria items: ', copies);
                 }else{
-                    $.growlUI('Warning', 'Nothing to delete');
+                    $.growlUI('Warning', 'No criterion to delete');
                 }
             });
         });
@@ -158,11 +160,11 @@
                                         Describe how you will help students successfully complete the assignment, and when during the semester this assignment will be addressed.
                                     </div>
                                 </li>
-                                <li><hr /></li>
+                                <li><hr /><input type="hidden" name="wac-id[]" /></li>
                             </ul>
-                            {% for criterion_id, criterion in criteria.items %}
-                            <input type="hidden" name="wac-id[]" value="{{criterion.id}}" />
-                            <ul id="doop_{{criterion_id}}">
+                            {# for criterion_id, criterion in criteria.items #}
+                            {% for criterion in criteria %}
+                            <ul id="doop_{{forloop.counter}}">
                                 <li><input type="text" maxlength="255" name="wac-type_assignment[]" value="{{criterion.type_assignment}}" />
                                     &nbsp;[<a href="javascript:;" class="crita">Criterion A</a>]<div class="criterion"> Writing Assignment Type (Do not include in-class exams)</div>
                                 </li>
@@ -178,7 +180,7 @@
                                         Describe how you will help students successfully complete the assignment, and when during the semester this assignment will be addressed.
                                     </div>
                                 </li>
-                                <li><hr /></li>
+                                <li><hr /><input type="hidden" name="wac-id[]" value="{{criterion.id}}" /></li>
                             </ul>
                             {% endfor %}
                         </li>

@@ -14,7 +14,8 @@ If not, when?............... {{data.when_approved_wi}}
 WI workshop................. {{data.workshop}}
 If not, when?............... {{data.when_workshop}}
 Permission.................. {{data.permission}}
-{% if data.syllabus %}Syllabus.................... <a href="http://{{site_domain}}{{media_url}}{{data.syllabus}}">Click here to download</a>{% else %}<br />{% endif %}
+{% if data.syllabus %}Syllabus.................... <a href="http://www.carthage.edu/assets/{{data.syllabus}}">Click here to download</a>
+{% endif %}
 Description:
 
 {{data.description}}
@@ -32,8 +33,8 @@ Assessment methods:
 {{data.assessment_methods}}
 </pre>
 <h2>Criteria</h2>
-{% for criterion_id, criterion in criteria.items %}
-<h3>{{criterion_id}}.</h3>
+{% for criterion in data.criteria.all %}
+<h3>{{forloop.counter}}.</h3>
 <p><strong>Writing Assignment Type</strong>: {{criterion.type_assignment}}</p>
 <p><strong>Number of Pages Required</strong>: {{criterion.number_pages}}</p>
 <p><strong>Percent of student's grade</strong>: {{criterion.percent_grade}}</p>

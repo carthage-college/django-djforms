@@ -10,30 +10,28 @@ from djforms.core.forms import UserProfileForm
 from djforms.core.models import UserProfile
 from djforms.core.models import GenericChoice
 from djforms.writingcurriculum.forms import ProposalForm
-from djforms.writingcurriculum.models import CourseCriteria, CourseProposal, Criterion
+from djforms.writingcurriculum.models import CourseCriteria, CourseProposal
 
 import logging
 logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.INFO,)
 
 @login_required
 def proposal_form(request, pid=None):
-    criteria = {}
     proposal = None
     if pid:
         proposal = get_object_or_404(CourseProposal,id=pid)
-        #criteria = proposal.criteria.all()
-        x = 1
-        for c in proposal.coursecriteria_set.all():
-            criteria[x] = {
+        # create list for GET requests to populate criteria field
+        criteria = []
+        for copies, c in enumerate(proposal.criteria.all()):
+            criteria.append({
                 'id':c.id,
                 'type_assignment':c.type_assignment,
                 'number_pages':c.number_pages,
                 'percent_grade':c.percent_grade,
-                'description':c.description,
-            }
-            x += 1
-        #copies = criteria.count
-        copies = x-1
+                'description':c.description
+            })
+        # add 1 because lists are 0 based
+        copies = copies+1
 
     if request.method=='POST':
         try:
@@ -49,29 +47,69 @@ def proposal_form(request, pid=None):
         form = ProposalForm(request.POST, request.FILES, prefix="wac", instance=proposal)
         profile_form = UserProfileForm(request.POST, prefix="profile", instance=profile)
         pid = request.POST.getlist('wac-id[]')
+
         type_assignment = request.POST.getlist('wac-type_assignment[]')
         number_pages = request.POST.getlist('wac-number_pages[]')
         percent_grade = request.POST.getlist('wac-percent_grade[]')
         description = request.POST.getlist('wac-description[]')
-        for x in range (1,len(type_assignment)):
-            criteria[x] = {
-                'id':pid[x],
-                'type_assignment':type_assignment[x],
-                'number_pages':number_pages[x],
-                'percent_grade':percent_grade[x],
-                'description':description[x],
-            }
+        # len could use any of the above 4 lists
+        criteria = []
+        for i in range (0,len(type_assignment)):
+            criteria.append({
+                'id':pid[i],
+                'type_assignment':type_assignment[i],
+                'number_pages':number_pages[i],
+                'percent_grade':percent_grade[i],
+                'description':description[i]
+            })
+        # delete the 'doop' element used for javascript copy
+        del criteria[0]
+
         if form.is_valid() and profile_form.is_valid():
             proposal = form.save(commit=False)
             proposal.user = request.user
             proposal.updated_by = request.user
-            proposal.syllabus = request.FILES.get('wac-syllabus')
+            if request.FILES.get('wac-syllabus'):
+                proposal.syllabus = request.FILES.get('wac-syllabus')
             proposal.save()
             profile_form.save()
-            for key in criteria:
-                criterion = Criterion("%s %s" %(c.course_title, key)).save()
-                c = CourseCriteria(criterion, proposal.id, criteria[key]['type_assignment'],criteria[key]['number_pages'],criteria[key]['percent_grade'],criteria[key]['description'])
-                c.save()
+
+            # CRUD
+            # new list with original criteria objects
+            criteria_orig = []
+            for p in proposal.criteria.all():
+                criteria_orig.append(p)
+            # flow control vars
+            x = len(criteria_orig)
+            y = len(criteria)
+            for i in range (0,max(x,y)):
+                # if we have more exisiting criteria than new.
+                # else we have more new criteria than existing.
+                # update the current, delete any extras.
+                if x >= y:
+                    if i < y:
+                        # update objects
+                        criteria_orig[i].type_assignment = criteria[i]['type_assignment']
+                        criteria_orig[i].number_pages = criteria[i]['number_pages']
+                        criteria_orig[i].percent_grade = criteria[i]['percent_grade']
+                        criteria_orig[i].description = criteria[i]['description']
+                        criteria_orig[i].save()
+                    else:
+                        # delete any leftover objects
+                        criteria_orig[i].delete()
+                else:
+                    if i < x:
+                        # update objects
+                        criteria_orig[i].type_assignment = criteria[i]['type_assignment']
+                        criteria_orig[i].number_pages = criteria[i]['number_pages']
+                        criteria_orig[i].percent_grade = criteria[i]['percent_grade']
+                        criteria_orig[i].description = criteria[i]['description']
+                        criteria_orig[i].save()
+                    else:
+                        c = CourseCriteria(type_assignment=criteria[i]['type_assignment'],number_pages=criteria[i]['number_pages'],percent_grade=criteria[i]['percent_grade'],description=criteria[i]['description'])
+                        c.save()
+                        proposal.criteria.add(c)
+            # save the proposal object
             proposal.save()
 
             bcc = settings.MANAGERS
@@ -81,11 +119,13 @@ def proposal_form(request, pid=None):
             c = RequestContext(request, {'data':proposal,'user':request.user,'criteria':criteria})
             email = EmailMessage(("[WAC Proposal] %s: by %s %s" % (proposal.course_title,request.user.first_name,request.user.last_name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
             email.content_subtype = "html"
+            #if proposal.syllabus:
+            #    email.attach(proposal.syllabus.name.split('/')[2],proposal.syllabus)
             email.send(fail_silently=True)
             return HttpResponseRedirect('/forms/writingcurriculum/success')
     else:
         if not proposal:
-            criteria[0] = ""
+            criteria = [""]
             copies = len(criteria)-1
         form = ProposalForm(prefix="wac", instance=proposal)
         profile_form = UserProfileForm(prefix="profile")

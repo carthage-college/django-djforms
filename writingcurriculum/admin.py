@@ -1,12 +1,22 @@
+from django import forms
 from django.contrib import admin
 from djforms.writingcurriculum.models import *
 
-class CriterionInline(admin.TabularInline):
-    model = CourseCriteria
+class CourseCriteriaForm(forms.ModelForm):
+    class Meta:
+        model = CourseCriteria
+
+class CriteriaInline(admin.TabularInline):
+    model = CourseProposal.criteria.through
     extra = 5
 
-class CriterionAdmin(admin.ModelAdmin):
-    inlines = (CriterionInline,)
+class CourseCriteriaAdmin(admin.ModelAdmin):
+    form =  CourseCriteriaForm
+    fieldsets = (
+        (None, {
+            'fields': ('type_assignment', 'number_pages', 'percent_grade', 'description')
+        }),
+    )
 
 class CourseProposalAdmin(admin.ModelAdmin):
     model = CourseProposal
@@ -14,7 +24,7 @@ class CourseProposalAdmin(admin.ModelAdmin):
     search_fields = ('course_title', 'description','objectives')
     ordering = ('-date_created',)
     raw_id_fields = ("user","updated_by",)
-    inlines = (CriterionInline,)
+    inlines = (CriteriaInline,)
     exclude = ('criteria',)
 
     def save_model(self, request, obj, form, change):
@@ -22,5 +32,5 @@ class CourseProposalAdmin(admin.ModelAdmin):
             obj.updated_by = request.user
         obj.save()
 
-admin.site.register(Criterion, CriterionAdmin)
+admin.site.register(CourseCriteria, CourseCriteriaAdmin)
 admin.site.register(CourseProposal, CourseProposalAdmin)
