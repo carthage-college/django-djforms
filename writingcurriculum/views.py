@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader
@@ -20,6 +20,9 @@ def proposal_form(request, pid=None):
     proposal = None
     if pid:
         proposal = get_object_or_404(CourseProposal,id=pid)
+        # check perms
+        if proposal.user != request.user:
+            raise Http404
         # create list for GET requests to populate criteria field
         criteria = []
         for copies, c in enumerate(proposal.criteria.all()):
@@ -133,6 +136,6 @@ def proposal_form(request, pid=None):
 
 @login_required
 def my_proposals(request):
-    objects = CourseProposal.objects.all().order_by("-date_created")
+    objects = CourseProposal.objects.filter(user=request.user).order_by("-date_created")
     return render_to_response("writingcurriculum/my_proposals.html", {"objects": objects,}, context_instance=RequestContext(request))
 

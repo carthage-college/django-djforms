@@ -1,5 +1,6 @@
 <pre style="font-size:1.5em;">
-Date........................ {{data.date_created}}
+Date created................ {{data.date_created}}
+Date updated................ {{data.date_updated}}
 First name.................. {{user.first_name}}
 Last name................... {{user.last_name}}
 Email....................... {{user.email}}
