@@ -44,7 +44,7 @@
                     copies++;
                     newId = "doop_" + copies;
                     $("#doop_master").clone().attr("id",newId).appendTo("#duplicates");
-                    $.growlUI('Criteria items: ', copies);
+                    $.growlUI('Criteria: ', copies);
                 }else{
                     $.growlUI('Warning', 'Criteria Limit: 5');
                 }
@@ -55,7 +55,7 @@
                     delid = "doop_" + copies;
                     $("#doop_" + copies ).remove();
                     copies--;
-                    $.growlUI('Criteria items: ', copies);
+                    $.growlUI('Criteria: ', copies);
                 }else{
                     $.growlUI('Warning', 'No criterion to delete');
                 }

@@ -116,8 +116,7 @@ def proposal_form(request, pid=None):
             proposal.save()
 
             bcc = settings.MANAGERS
-            #recipient_list = ["msnavely@carthage.edu"]
-            recipient_list = ["larry@carthage.edu"]
+            recipient_list = ["msnavely@carthage.edu"]
             t = loader.get_template('writingcurriculum/proposal_email.txt')
             c = RequestContext(request, {'data':proposal,'user':request.user,'criteria':criteria})
             email = EmailMessage(("[WAC Proposal] %s: by %s %s" % (proposal.course_title,request.user.first_name,request.user.last_name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
