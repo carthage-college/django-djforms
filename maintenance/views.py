@@ -27,9 +27,9 @@ def maintenance_request_form(request):
         except:
             logging.debug("username = %s" % request.user.username)
             profile = ''
-        #   p = UserProfile(user=request.user)
-        #   p.save()
-        #   profile = request.user.get_profile()
+            p = UserProfile(user=request.user)
+            p.save()
+            profile = request.user.get_profile()
         form = EVSForm(request.POST, prefix="evs")
         profile_form = UserProfileForm(request.POST, prefix="profile", instance=profile)
         if form.is_valid() and profile_form.is_valid():

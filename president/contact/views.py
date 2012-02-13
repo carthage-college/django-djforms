@@ -13,7 +13,8 @@ def contact_form(request):
         if form.is_valid():
             cd = form.cleaned_data
             bcc = settings.MANAGERS
-            to = ["presidentsearch@carthage.edu",]
+            #to = ["presidentsearch@carthage.edu",]
+            to = ["larry@carthage.edu",]
             frm = cd.get("email")
             if not frm:
                 frm = "confirmation@carthage.edu"

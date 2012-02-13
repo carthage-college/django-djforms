@@ -17,6 +17,7 @@ logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.INFO,)
 
 @login_required
 def proposal_form(request, pid=None):
+    copies=1
     proposal = None
     if pid:
         proposal = get_object_or_404(CourseProposal,id=pid)
@@ -44,9 +45,9 @@ def proposal_form(request, pid=None):
             # at auth time
             logging.debug("username = %s" % request.user.username)
             profile = ''
-            #p = UserProfile(user=request.user)
-            #p.save()
-            #profile = request.user.get_profile()
+            p = UserProfile(user=request.user)
+            p.save()
+            profile = request.user.get_profile()
         form = ProposalForm(request.POST, request.FILES, prefix="wac", instance=proposal)
         profile_form = UserProfileForm(request.POST, prefix="profile", instance=profile)
         pid = request.POST.getlist('wac-id[]')
