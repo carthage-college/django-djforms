@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}LIS Room Reservations{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_javascript %}
 <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js"></script>
 <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.ptTimeSelect.js" type="text/javascript"></script>
@@ -16,9 +17,6 @@
 <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.core.css" rel="stylesheet" type="text/css" />
 <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.theme.css" rel="stylesheet" type="text/css" />
 <link href="http://www.carthage.edu/assets/css/jquery/plugins/jquery.ptTimeSelect.css" rel="stylesheet" type="text/css" />
-<link href="http://www.carthage.edu/assets/current/css/plugins/forms.css" rel="stylesheet" type="text/css" />
-<link href="http://www.carthage.edu/assets/current/css/overrides/forms.css" rel="stylesheet" type="text/css" />
-<link href="http://www.carthage.edu/assets/current/css/overrides/forms.bridge.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 #ptTimeSelectCntr {color: #303030;background: #ebebeb;font: .74em Arial, Verdana, sans-serif;text-align: center;line-height: 1.6em;margin: 2.5em 0;}
 .tab_content_container {
@@ -36,7 +34,6 @@
 <p>This Form is to be used to request <b>occasional or single</b> use of a room.  For semester-long use, please contact the Registrar.</p>
 <p>You may view room availabilities by looking at <a href="http://scheduler.carthage.edu/resourcescheduler">Resource Scheduler</a>. The username is guest@carthage.edu, and the password is guest. On the lefthand side of the screen you will then find a +sign next to Carthage. Click on that sign and continue to the building and the room that you are interested in reserving. </p>
 <p><a href="http://www.carthage.edu/ais/media/roominstructions.htm">Instructions</a> are available for equipment in these rooms.</p>
-<p>To view a table of media<br/>assets in classrooms:<br/> <input type="button" value="view room table" onClick="window.open('http://www.carthage.edu/ais/media/roomtable.cfm');"><br/><br/></p>
 {% if form.errors %}
    <h2 style="color: red;">
        Please correct the error{{ form.errors|pluralize }} below.

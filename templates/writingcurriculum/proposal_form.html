@@ -1,20 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Writing Intensive Course Proposal Form &mdash; Carthage College{% endblock %}
-{% block css %}
-<style type="text/css" media="screen, projection">
-/* <![CDATA[ */
-    @import url("http://www.carthage.edu/media/css/douglasfir/global.css");
-/* ]]> */
-</style>
-<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />
-<!--[if IE]>
-    <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
-<![endif]-->
-<!--[if IE 6]>
-    <style type="text/css">div#first {width:150px;margin-left:7px;}     div#fourth {margin-right:-1px;}</style>
-<![endif]-->
-<link rel="stylesheet" href="http://www.carthage.edu/assets/1.0.0/css/print.css" type="text/css" media="print" />
-{% endblock %}
 {% block extra_javascript %}
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.core.js" type="text/javascript" charset="utf-8"></script>
@@ -63,16 +48,14 @@
         });
     </script>
 {% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
-    {% include "includes/extra_form_style.html" %}
     <style type="text/css">
     #profile h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}
     #second ol {margin:0;}
     .criteria ul.bullets li{list-style:disc outside;margin-left:30px;}
     .criteria p {margin-bottom:20px;}
     #doop_master {display: none;}
-    li.ctrlHolder div ul li {display: inline;}
-    .form .blockLabels label {display: inherit;}
     .criterion {width:350px;float:right;}
     .ctrlcx {width:36px;float:right;}
     #duplicates .wac-description {width:294px;height:150px;}

@@ -1,0 +1,167 @@
+{% extends "athletics/base.html" %}
+{% block title %}Soccer Camp Registration Form &mdash; Athletics &mdash; Carthage College{% endblock %}
+{% block extra_javascript %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(function() {
+            var session = 0;
+            var {% if form.data.session == 100 %}deposit = 50;{% else %}deposit = 200;{% endif %}
+            var pre_session = 0;
+            var reg_fee = {{form.data.reg_fee|default:0}};
+            {% if form.data.session %}
+                $('label[for="id_amount_0"]:odd').append(': $' + deposit);
+            {% endif %}
+            {% if form.data.reg_fee %}
+                $('label[for="id_amount_1"]').append(': $' + {{form.data.reg_fee}});
+            {% endif %}
+            $('#id_reg_fee').attr('readonly', true);
+            $('#id_payment_method_0').click(function() {
+                $('#payment-details').show();
+            });
+            $('#id_payment_method_1').click(function() {
+                $('#payment-details').hide();
+            });
+            $('#id_payment_method_2').click(function() {
+                $('#payment-details').hide();
+            });
+            $('#id_football_0').click(function() {
+                reg_fee = reg_fee + 25;
+                $('#id_reg_fee').attr('value', reg_fee);
+                $('label[for="id_amount_1"]').html('<input type="radio" id="id_amount_1" value="Full amount" name="amount" /> Full amount: $' + reg_fee);
+            });
+            $('#id_football_1').click(function() {
+                reg_fee = reg_fee - 25;
+                $('#id_reg_fee').attr('value', reg_fee);
+                $('label[for="id_amount_1"]').html('<input type="radio" id="id_amount_1" value="Full amount" name="amount" /> Full amount: $' + reg_fee);
+            });
+            $('input[id^="id_session_"]').click(function() {
+                session = $(this).attr('value').split('|')[1];
+                reg_fee += session - pre_session;
+                pre_session = session;
+                $('#id_reg_fee').attr('value', reg_fee);
+                if (session == 100) {
+                    deposit = 50;
+                } else {
+                    deposit = 200;
+                }
+                $('label[for="id_amount_0"]:odd').html('<input type="radio" id="id_amount_0" value="' + deposit + '" name="amount" /> Deposit: $' + deposit);
+                $('label[for="id_amount_1"]').html('<input type="radio" id="id_amount_1" value="Full amount" name="amount" /> Full amount: $' + reg_fee);
+            });
+        });
+    </script>
+{% endblock %}
+{% block extra_style %}
+<style type="text/css" media="screen, projection">
+#id_reg_fee {color:#800;font-weight:bold;}
+{% if form.data.payment_method == "Credit Card" %}#payment-details { display:inherit; }{% else %}#payment-details { display:none; }{% endif %}
+#profile h2 {margin-bottom:7px;margin-top:7px;font-size:1.6em;background-color:#cacaca;padding:3px;}
+#session-info > ol li {display:block;margin-bottom:5px;}
+</style>
+{% endblock %}
+{% block content %}
+<div id="first">
+    <div class="buffer" style="background-color:#fff;">
+    <h1>Soccer Camp Registration Form</h1>
+    <p><strong>HOW TO REGISTER:</strong>
+    Complete this form and submit it by clicking on the "Register" button.</p>
+    <p><strong>Note</strong>:
+    A $200.00 deposit is required with each reservation
+    ($50 deposit for the Day Camp and Junior Kickers programs).
+    <strong>THE DEPOSIT IS NON-REFUNDABLE</strong>.
+    The deposit is applied to camp fee.
+    There is a late fee; call for details.</p>
+    <h4>Method of Payment</h4>
+    <p><strong>Note</strong>:
+    The Carthage web site supports secure credit card transactions.</p>
+    <p>
+    Credit Cards are only accepted through online registration,
+    not at check-ins. If you have a balance coming or did not pay
+    in full at time of registration, cash or check are the only methods of payment.</p>
+    <p>After you complete the registration form, we will send confirmation via email.</p>
+    <p class="help"><strong>All fields are required.</strong></p>
+    {{form.errors}}
+    <form method="post" action="." class="form" id="profile">{% csrf_token %}
+        {% for field in form %}
+            {% if field.name == "gender" %}
+                <fieldset class="blockLabels">
+                <h2>Personal Information</h2>
+                <ol>
+            {% endif %}
+            {% if field.name == "parent_guard" %}
+                </ol>
+                </fieldset>
+                <fieldset class="blockLabels">
+                <h2>Contact Information</h2>
+                <ol>
+            {% endif %}
+            {% if field.name == "roommate" %}
+                </ol>
+                </fieldset>
+                <fieldset class="blockLabels">
+                <h2>Housing Information</h2>
+                <ol>
+            {% endif %}
+            {% if field.name == "session" %}
+                </ol>
+                </fieldset>
+                <fieldset class="blockLabels" id="session-info">
+                <h2>Session Information</h2>
+                <ol>
+            {% endif %}
+            {% if field.name == "reg_fee" %}
+                </ol>
+                </fieldset>
+                <fieldset class="blockLabels">
+                <h2>Method of Payment</h2>
+                <ol>
+            {% endif %}
+            {% if field.name == "card_number" %}
+                </ol>
+                </fieldset>
+                <fieldset class="blockLabels" id="payment-details">
+                <h2>Credit Card Details</h2>
+                <ol>
+            {% endif %}
+            <li class="ctrlHolder">
+                <h3>{{ field.label_tag }}</h3>
+                {% if field.errors %}
+                    <div class="warning">
+                    <span class="error-message">{{ field.errors|join:", "}}</span>
+                {% else %}
+                    <div>
+                {% endif %}
+                {% if field.help_text %}
+                    <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                {{field}}
+                </div>
+            </li>
+            {% if forloop.last %}
+                </ol>
+                </fieldset>
+            {% endif %}
+        {% endfor %}
+        <fieldset class="blockLabels">
+            <ol>
+                <li class="btnHolder">
+                    <p>Make all checks payable to: <strong>Carthage College</strong>, and mail to:</p>
+                    <blockquote>
+                    Carthage College<br />
+                    Soccer Office<br />
+                    2001 Alford Park Drive<br />
+                    Kenosha, WI  53140</blockquote>
+                    <p>Upon receipt of your registration, additional information will be sent to you including check-in procedures, items to bring, medical release forms, and directions.</p>
+                    <p>IMPORTANT: Full payment due before June 10th (in addition to the medical forms and assumption of risk form).</p>
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Register" class="button" />
+                    <p>
+                    <h2>Questions?</h2>
+                    <strong>Call Steve Domin at (262) 551-5930</strong></p>
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+    </div>
+</div>
+{% include "athletics/side_bar.html" %}
+{% endblock %}

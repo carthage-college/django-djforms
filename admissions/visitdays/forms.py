@@ -10,8 +10,6 @@ import datetime
 now = datetime.datetime.today()
 
 from django.conf import settings
-import logging
-logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG,)
 
 class VisitDayBaseForm(forms.ModelForm):
 

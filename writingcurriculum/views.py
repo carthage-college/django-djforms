@@ -12,9 +12,6 @@ from djforms.core.models import GenericChoice
 from djforms.writingcurriculum.forms import ProposalForm
 from djforms.writingcurriculum.models import CourseCriteria, CourseProposal
 
-import logging
-logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.INFO,)
-
 @login_required
 def proposal_form(request, pid=None):
     copies=1
@@ -43,7 +40,6 @@ def proposal_form(request, pid=None):
         except:
             # trying to track down why a profile might not be created
             # at auth time
-            logging.debug("username = %s" % request.user.username)
             profile = ''
             p = UserProfile(user=request.user)
             p.save()
