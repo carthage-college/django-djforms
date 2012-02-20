@@ -10,7 +10,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from djforms.maintenance.forms import EVSForm, EVSFormUpdate
 from djforms.maintenance.models import MaintenanceRequest
 from djforms.core.forms import UserProfileForm
-from djforms.core.models import GenericChoice
+from djforms.core.models import GenericChoice, UserProfile
 
 from operator import attrgetter
 from itertools import chain
