@@ -24,35 +24,10 @@
 {% block content %}
 <div class="buffer">
     <h1>LIS Print Job Request</h1>
+    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
     {% if form.errors %}
     <h2 style="color: red;">Please correct the error{{ form.errors|pluralize }} below.</h2>
     {% endif %}
-    <form method="POST" action="." class="form" enctype="multipart/form-data">{% csrf_token %}
-        <input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in form %}
-                    <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div>
-                    {% endif %}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    {{field}}
-                    </div>
-                </li>
-                {% endfor %}
-                <li class="btnHolder">
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Submit Request" class="button" />
-                </li>
-            </ol>
-        </fieldset>
-    </form>
+    {% include "includes/generic_form_multi.html" %}
 </div>
 {% endblock %}

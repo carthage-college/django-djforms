@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Maintenance Request Form{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
     {% include "maintenance/left_nav.html" %}
 {% endblock %}
@@ -13,7 +14,7 @@
     <p>
         For emergencies, please contact the Dean of Students Office at: <strong>551-5800</strong>
     </p>
-    <form method="POST" action="." class="form">{% csrf_token %}
+    <form method="POST" action="." class="form" id="profile">{% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}
