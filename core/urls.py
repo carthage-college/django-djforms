@@ -28,7 +28,7 @@ urlpatterns = patterns('',
     # alumni
     (r'^alumni/', include('djforms.alumni.urls')),
     # athletics
-    (r'^athletics/', include('djforms.athletics.urls')),
+    #(r'^athletics/', include('djforms.athletics.urls')),
     # biology
     (r'^biology/', include('djforms.biology.urls')),
     # CharacterQuest

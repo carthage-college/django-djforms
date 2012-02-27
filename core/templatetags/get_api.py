@@ -21,9 +21,12 @@ class ApiObjectNode(Node):
             conn.request("GET", url)
             response = conn.getresponse()
             #logging.debug("status = %s, %s) % (r1.status, r1.reason)
-            obj = response.read()
+            if response.status != 404:
+                obj = response.read()
+            else:
+                obj = ""
         except:
-            obj = None
+            obj = ""
         context[self.context_var] = obj
         return ''
 

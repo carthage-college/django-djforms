@@ -6,10 +6,6 @@
     {% include "writingcurriculum/left_nav.html" %}
 {% endblock %}
 {% block content %}
-{% get_api_object as banner cms snippet 252 code %}
-{{banner}}
-{% get_api_object as title cms snippet 223 code %}
-{{title}}
 <div class="buffer">
 <h1>Success</h1>
 <p>Your information has been submited.</p>
@@ -18,4 +14,3 @@
 {% block sidebar %}
     {% include "writingcurriculum/side_bar.html" %}
 {% endblock %}
-

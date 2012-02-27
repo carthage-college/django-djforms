@@ -121,7 +121,7 @@ def proposal_form(request, pid=None):
             #if proposal.syllabus:
             #    email.attach(proposal.syllabus.name.split('/')[2],proposal.syllabus)
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/writingcurriculum/success')
+            return HttpResponseRedirect('/forms/writingcurriculum/success/')
     else:
         if not proposal:
             criteria = [""]
