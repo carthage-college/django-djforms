@@ -3,15 +3,19 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 
-from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
+from djforms.athletics.soccer.forms import SoccerCampRegistrationForm, SoccerCampProcessorForm
 
 import logging
 logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.INFO,)
 
 def camp_registration(request):
     if request.POST:
-        form = SoccerCampRegistrationForm('0.99', request.POST) # charge for $0.99
-        if form.is_valid():
+        form_reg = SoccerCampRegistrationForm(request.POST)
+        form_proc = SoccerCampProcessorForm(request.POST)
+        if form_reg.is_valid():
+            reg_data = form_reg.cleaned_data
+            if reg_data['payment_method'] == "Credit Card" and form_proc.is_valid():
+                proc_data = form_proc.cleaned_data
             # logging shows the data you would likely store in a model
             r = form.gateway_response
             logging.debug("Transaction ID: %s" % (r.trans_id))
@@ -19,8 +23,9 @@ def camp_registration(request):
             logging.debug("Message: %s" % (r.message))
             return HttpResponseRedirect('/forms/athletics/soccer/camp/success/')
     else:
-        form = SoccerCampRegistrationForm(None)
+        form_reg = SoccerCampRegistrationForm(None)
+        form_proc = SoccerCampProcessorForm(None)
 
     return render_to_response('athletics/soccer/camp_registration.html',
-                              {'form': form,},
+                              {'form_reg': form_reg, 'form_proc':form_proc,},
                               context_instance=RequestContext(request))

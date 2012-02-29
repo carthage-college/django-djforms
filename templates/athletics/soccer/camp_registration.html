@@ -5,14 +5,14 @@
     <script type="text/javascript">
         $(function() {
             var session = 0;
-            var {% if form.data.session == 100 %}deposit = 50;{% else %}deposit = 200;{% endif %}
+            var {% if form_reg.data.session == 100 %}deposit = 50;{% else %}deposit = 200;{% endif %}
             var pre_session = 0;
-            var reg_fee = {{form.data.reg_fee|default:0}};
-            {% if form.data.session %}
+            var reg_fee = {{form_reg.data.reg_fee|default:0}};
+            {% if form_reg.data.session %}
                 $('label[for="id_amount_0"]:odd').append(': $' + deposit);
             {% endif %}
-            {% if form.data.reg_fee %}
-                $('label[for="id_amount_1"]').append(': $' + {{form.data.reg_fee}});
+            {% if form_reg.data.reg_fee %}
+                $('label[for="id_amount_1"]').append(': $' + {{form_reg.data.reg_fee}});
             {% endif %}
             $('#id_reg_fee').attr('readonly', true);
             $('#id_payment_method_0').click(function() {
@@ -53,9 +53,10 @@
 {% block extra_style %}
 <style type="text/css" media="screen, projection">
 #id_reg_fee {color:#800;font-weight:bold;}
-{% if form.data.payment_method == "Credit Card" %}#payment-details { display:inherit; }{% else %}#payment-details { display:none; }{% endif %}
+{% if form_reg.data.payment_method == "Credit Card" %}#payment-details { display:inherit; }{% else %}#payment-details { display:none; }{% endif %}
 #profile h2 {margin-bottom:7px;margin-top:7px;font-size:1.6em;background-color:#cacaca;padding:3px;}
 #session-info > ol li {display:block;margin-bottom:5px;}
+#first img { display: inline; }
 </style>
 {% endblock %}
 {% block content %}
@@ -78,10 +79,9 @@
     not at check-ins. If you have a balance coming or did not pay
     in full at time of registration, cash or check are the only methods of payment.</p>
     <p>After you complete the registration form, we will send confirmation via email.</p>
-    <p class="help"><strong>All fields are required.</strong></p>
-    {{form.errors}}
+    <p class="help"><img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> denotes a required field.</p>
     <form method="post" action="." class="form" id="profile">{% csrf_token %}
-        {% for field in form %}
+        {% for field in form_reg %}
             {% if field.name == "gender" %}
                 <fieldset class="blockLabels">
                 <h2>Personal Information</h2>
@@ -115,15 +115,8 @@
                 <h2>Method of Payment</h2>
                 <ol>
             {% endif %}
-            {% if field.name == "card_number" %}
-                </ol>
-                </fieldset>
-                <fieldset class="blockLabels" id="payment-details">
-                <h2>Credit Card Details</h2>
-                <ol>
-            {% endif %}
             <li class="ctrlHolder">
-                <h3>{{ field.label_tag }}</h3>
+                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
                 {% if field.errors %}
                     <div class="warning">
                     <span class="error-message">{{ field.errors|join:", "}}</span>
@@ -136,11 +129,32 @@
                 {{field}}
                 </div>
             </li>
-            {% if forloop.last %}
+        {% endfor %}
+        {% for field in form_proc %}
+            {% if field.name == "cc_first_name" %}
                 </ol>
                 </fieldset>
+                <fieldset class="blockLabels" id="payment-details">
+                <h2>Credit Card Details</h2>
+                <ol>
             {% endif %}
+            <li class="ctrlHolder">
+                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                {% if field.errors %}
+                <div class="warning">
+                <span class="error-message">{{ field.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {% if field.help_text %}
+                <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                {{field}}
+                </div>
+            </li>
         {% endfor %}
+        </ol>
+        </fieldset>
         <fieldset class="blockLabels">
             <ol>
                 <li class="btnHolder">

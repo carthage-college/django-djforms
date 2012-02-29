@@ -13,6 +13,8 @@ handler500 = 'djforms.core.views.server_error'
 urlpatterns = patterns('',
     # home
     (r'^$', direct_to_template, {'template': 'forms_home.html'}),
+    # academics
+    (r'^academics/', include('djforms.academics.urls')),
     # auth
     url(r'^accounts/login',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),
     url(r'^accounts/logout/$',auth_views.logout,{'next_page': '/forms/accounts/loggedout/'}),
@@ -20,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^accounts/$', redirect_to, {'url': '/forms/', 'permanent': True}),
     # CSV
     (r'^admin/(?P<app_label>[\d\w]+)/(?P<model_name>[\d\w]+)/csv/', 'djforms.core.util.admin_list_export'),
+    # admin
     (r'^admin/', admin.site.urls),
     # admin/docs
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -28,7 +31,7 @@ urlpatterns = patterns('',
     # alumni
     (r'^alumni/', include('djforms.alumni.urls')),
     # athletics
-    #(r'^athletics/', include('djforms.athletics.urls')),
+    (r'^athletics/', include('djforms.athletics.urls')),
     # biology
     (r'^biology/', include('djforms.biology.urls')),
     # CharacterQuest
