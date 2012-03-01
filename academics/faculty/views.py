@@ -12,8 +12,8 @@ def distinguished_teaching_award(request):
         if form.is_valid():
             data = form.cleaned_data
             bcc = settings.MANAGERS
-            recipient_list = ["larry@carthage.edu",]
-            #recipient_list = ["wwilliams@carthage.edu",]
+            #recipient_list = ["larry@carthage.edu",]
+            recipient_list = ["wwilliams@carthage.edu",]
             t = loader.get_template('academics/faculty/distinguished_teaching_award_email.html')
             c = RequestContext(request, {'object':data,})
             email = EmailMessage(("[Distinguished Teaching Award Nomination] %s submitted by %s" % (data['nominee'], data['name'])), t.render(c), data['email'], recipient_list, bcc, headers = {'Reply-To': data['email'],'From': data['email']})
