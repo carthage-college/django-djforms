@@ -1,0 +1,10 @@
+{% load get_api %}
+<div id="third">
+    <div class="buffer">
+    {% get_api_object as sidebar cms newspageblock 322 code %}
+    {{sidebar}}
+    </div>
+    {% get_api_object as sidebar cms snippet 1240 code %}
+    {{sidebar}}
+</div>
+

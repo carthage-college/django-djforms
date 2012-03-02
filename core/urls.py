@@ -30,6 +30,8 @@ urlpatterns = patterns('',
     (r'^admissions/', include('djforms.admissions.urls')),
     # alumni
     (r'^alumni/', include('djforms.alumni.urls')),
+    # astronomy
+    (r'^astronomy/', include('djforms.astronomy.urls')),
     # athletics
     (r'^athletics/', include('djforms.athletics.urls')),
     # biology

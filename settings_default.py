@@ -26,7 +26,7 @@ SITE_ID = 1
 USE_I18N = True
 DEFAULT_CHARSET = 'utf-8'
 FILE_CHARSET = 'utf-8'
-ROOT_URLCONF = 'djforms.urls'
+ROOT_URLCONF = 'djforms.core.urls'
 MEDIA_ROOT = '/data2/django_projects/djforms/assets'
 MEDIA_URL = '/assets/'
 STATIC_URL = '/djmedia/'
@@ -70,28 +70,13 @@ INSTALLED_APPS = (
     'oembed',
     'tagging',
     'userprofile',
-    # djforms stuff
-    'djforms.admissions',
-    'djforms.admissions.visitdays',
-    'djforms.alumni',
-    'djforms.alumni.memory',
-    'djforms.alumni.msw',
-    'djforms.biology.genomics',
-    'djforms.characterquest',
+    # core
     'djforms.core',
-    'djforms.jobpost',
-    'djforms.languages',
-    'djforms.lis.ito',
-    'djforms.maintenance',
-    'djforms.security',
-    'djforms.sustainability.green',
-    'djforms.video',
-    'djforms.writingcurriculum',
 )
 # auth stuff
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'djforms.core.auth.ldapBackend.LDAPBackend',
+    #'djforms.core.auth.ldapBackend.LDAPBackend',
 )
 LOGIN_URL = '/forms/accounts/login/'
 LOGIN_REDIRECT_URL = '/forms/'
@@ -102,9 +87,22 @@ LOG_FILENAME = LOG_FILEPATH + "debug.log"
 # SMTP settings
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'confirmation@carthage.edu'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'djangoforms'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = 'larry@carthage.edu'
 SERVER_EMAIL = 'larry@carthage.edu'
 SERVER_MAIL="larry@carthage.edu"
+# Authorize.net
+GATEWAY_API_LOGIN = ""
+GATEWAY_TRANS_KEY = ""
+GATEWAY_USE_TEST_MODE = True
+GATEWAY_USE_TEST_URL = True
+GATEWAY_AUTHORIZE_ONLY = True
+GATEWAY_NAME = "AimGateway"
+# TrustCommerce
+TC_LOGIN = ""
+TC_PASSWORD = ""
+TC_LIVE = True
+TC_AVS = False
+TC_AUTH_TYPE = "sale"
