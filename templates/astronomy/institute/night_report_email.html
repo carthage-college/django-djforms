@@ -1,0 +1,30 @@
+<style>
+dl {margin-bottom:50px;}
+dl dt {
+background:#5f9be3;
+color:#fff;
+float:left;
+font-weight:bold;
+margin-right:10px;
+padding:5px;
+width:175px;
+}
+dl dd {
+margin:2px 0;
+padding:5px 0;
+}
+</style>
+<h1>Griffin Observatory Night Report</h1>
+<h3>Information</h3>
+<dl>
+    {% for name,value in object.items %}
+    {% if name != "comments" and name != "problems" %}
+        <dt>{{name}}:</dt>
+        <dd>{{value|default:"&nbsp;"}}</dd>
+    {% endif %}
+    {% endfor %}
+</dl>
+<h4>Problems</h4>
+<p>{{object.problems}}</p>
+<h4>Comments</h4>
+<p>{{object.comments}}</p>
