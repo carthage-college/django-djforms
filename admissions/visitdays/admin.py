@@ -9,7 +9,7 @@ class VisitDayProfileAdmin(admin.ModelAdmin):
 class VisitDayEventAdmin(admin.ModelAdmin):
     model = VisitDayEvent
     list_display = ('date','time','event','max_attendees','cur_attendees','active')
-    ordering = ['date',]
+    ordering = ['-date',]
 
 admin.site.register(VisitDayBaseProfile, VisitDayProfileAdmin)
 admin.site.register(VisitDayProfile, VisitDayProfileAdmin)

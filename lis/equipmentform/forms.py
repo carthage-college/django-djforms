@@ -24,6 +24,7 @@ EQUIPMENT_CHOICES=[ ('MacBook', 'MacBook'),
                     ('Voice Recorder', 'Voice Recorder'),
                     ('Microphone', 'Microphone'),
                     ('Tripod', 'Tripod'),
+                    ('Projection Screen', 'Projection Screen'),
                     ('Slide projector', 'Slide projector'),]
 
 class EquipmentReserveForm(forms.Form):
