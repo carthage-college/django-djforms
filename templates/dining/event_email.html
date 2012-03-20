@@ -1,0 +1,12 @@
+<h1>Event Request Form</h1>
+<h3>Information</h3>
+<dl style="margin-bottom:30px;">
+    {% for name,value in object.items %}
+    {% if name != "comments" and name != "problems" %}
+        <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">{{name}}</dt>
+        <dd style="margin:2px 0; padding:5px 0;">{{value|default:"&nbsp;"}}</dd>
+    {% endif %}
+    {% endfor %}
+</dl>
+<h4>Comments</h4>
+<p>{{object.comments}}</p>
