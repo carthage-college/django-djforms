@@ -8,7 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from djforms.dining.forms import EventForm
 from djforms.dining.models import Event
 
-def request_form(request):
+def event_form(request):
     if request.method=='POST':
         form = EventForm(request.POST)
         if form.is_valid():

@@ -106,3 +106,4 @@ TC_PASSWORD = ""
 TC_LIVE = True
 TC_AVS = False
 TC_AUTH_TYPE = "sale"
+TC_CYCLE = "1m"

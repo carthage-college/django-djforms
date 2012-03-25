@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.localflavor.us.forms import USZipCodeField
 
 from djforms.core.models import STATE_CHOICES
+from djforms.processors.models import GenericPayment
 from djforms.processors.trust_commerce import PaymentProcessor
 
 # dummy classes to hold data
@@ -16,7 +17,7 @@ class Order(object):
         self.contact = Contact()
         self.card = Card()
 
-class GenericPaymentForm(forms.Form):
+class GenericPaymentForm(forms.ModelForm):
     """
     A generic form to collect credit card information and the charge the credit card.
     """
@@ -32,6 +33,9 @@ class GenericPaymentForm(forms.Form):
     expiration_month    = forms.CharField(max_length=2, required=False)
     expiration_year     = forms.CharField(max_length=4, required=False)
     security_code       = forms.CharField(max_length=4, required=False)
+
+    class Meta:
+        model = GenericPayment
 
 class TrustCommerceForm(GenericPaymentForm):
     """

@@ -8,8 +8,12 @@
     <script type="text/javascript">
         $(function() {
             $("#id_event_date").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
-            $('#id_start_time').ptTimeSelect();
-            $('#id_end_time').ptTimeSelect();
+            $('#id_event_start').ptTimeSelect();
+            $('#id_event_end').ptTimeSelect();
+            $('#id_service_start').ptTimeSelect();
+            $('#id_service_end').ptTimeSelect();
+            $('#id_program_start').ptTimeSelect();
+            $('#id_program_end').ptTimeSelect();
         });
     </script>
 {% endblock %}

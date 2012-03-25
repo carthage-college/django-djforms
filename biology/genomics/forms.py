@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import ModelForm
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from djforms.core.models import STATE_CHOICES, BINARY_CHOICES
