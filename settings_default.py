@@ -56,6 +56,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.debug",
     "django.core.context_processors.media",
 )
+
 INSTALLED_APPS = (
     # django apps
     'django.contrib.admin',
@@ -70,9 +71,25 @@ INSTALLED_APPS = (
     'oembed',
     'tagging',
     'userprofile',
-    # core
+    # djforms stuff
+    'djforms.admissions',
+    'djforms.admissions.visitdays',
+    'djforms.alumni',
+    'djforms.alumni.memory',
+    'djforms.alumni.msw',
+    'djforms.biology.genomics',
+    'djforms.characterquest',
     'djforms.core',
+    'djforms.jobpost',
+    'djforms.lis.ito',
+    'djforms.languages',
+    'djforms.maintenance',
+    'djforms.security',
+    'djforms.sustainability.green',
+    'djforms.video',
+    'djforms.writingcurriculum',
 )
+
 # auth stuff
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
