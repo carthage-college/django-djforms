@@ -42,7 +42,7 @@ def application_profile_form(request):
             email = EmailMessage(("CharacterQuest Application: %s %s" % (applicant.profile.user.first_name,applicant.profile.user.last_name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
             email.content_subtype = "html"
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/character-quest/success')
+            return HttpResponseRedirect('/forms/character-quest/success/')
     else:
         form = ApplicationForm(prefix="applicant")
         profile_form = ApplicationProfileForm(prefix="profile", instance=profile)
