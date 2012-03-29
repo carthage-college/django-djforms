@@ -6,10 +6,11 @@ from django.http import HttpResponseRedirect
 
 from djforms.processors.forms import SubscriptionOrderForm as OrderForm, ContactForm, TrustCommerceForm as CreditCardForm
 from djforms.giving.models import Campaign
-#from djforms.giving.forms import SubscriptionForm
-
+"""
 import logging
 logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG,)
+#logging.debug("response: %s" % r.__dict__)
+"""
 
 def subscription(request, campaign=""):
     # giving campaigns
@@ -19,7 +20,6 @@ def subscription(request, campaign=""):
     if request.POST:
         ct_form = ContactForm(request.POST, prefix="ct")
         or_form = OrderForm(request.POST, prefix="or")
-        logging.debug("or form raw: %s" % or_form)
         if ct_form.is_valid() and or_form.is_valid():
             ct_data = ct_form.save()
             or_data = or_form.save(commit=False)
@@ -28,6 +28,7 @@ def subscription(request, campaign=""):
             or_data.save()
             cc_form = CreditCardForm(or_data, request.POST, prefix="cc")
             if cc_form.is_valid():
+                # save and update order
                 cc_data = cc_form.cleaned_data
                 r = cc_form.processor_response
                 or_data.status = r.msg['status']
@@ -43,7 +44,7 @@ def subscription(request, campaign=""):
                 email = EmailMessage(("[Subscription Donation] %s %s" % (or_data.contact.first_name,or_data.contact.last_name)), t.render(c), or_data.contact.email, recipient_list, bcc, headers = {'Reply-To': or_data.contact.email,'From': or_data.contact.email})
                 email.content_subtype = "html"
                 email.send(fail_silently=True)
-
+                # redirect
                 url = '/forms/giving/subscription/success/%s' % campaign
                 return HttpResponseRedirect(url)
             else:
@@ -74,14 +75,3 @@ def subscription_success(request, campaign=""):
     return render_to_response('giving/subscription_success.html',
                               { 'campaign': campaign, },
                               context_instance=RequestContext(request))
-
-"""
-#logging.debug("response: %s" % r.__dict__)
-response dict fail:
-
-{'status': 'decline', 'tclink_version': '3.4.4-Python-Linux-x86_64', 'success': False, 'transactionData': {'cc': '4111111111111111', 'demo': 'y', 'avs': 'n', 'operator': 'DJ Forms', 'password': 'n3r0tic', 'custid': '602400', 'cycle': '1m', 'name': 'luther x kurkowski', 'cvv': '222', 'media': 'cc', 'amount': '1000', 'payments': '48', 'exp': '0112', 'action': 'store'}, 'demo': 'y', 'auth': u'store', 'avs': 'n', 'operator': 'DJ Forms', 'msg': 'cvv', 'response': <djforms.processors.trust_commerce.PaymentProcessor instance at 0x7f53d99d6e60>, 'password': 'n3r0tic', 'custid': '602400', 'order': <Order: Order object>, 'card': {'expiration_month': u'1', 'billing_name': u'luther x kurkowski', 'security_code': u'222', 'card_number': u'4111111111111111', 'expiration_year': u'2012'}, 'cycle': u'1m'}
-
-response dict success:
-
-{'status': 'approved', 'tclink_version': '3.4.4-Python-Linux-x86_64', 'success': True, 'transactionData': {'cc': '4111111111111111', 'demo': 'y', 'avs': 'n', 'operator': 'DJ Forms', 'password': 'n3r0tic', 'custid': '602400', 'cycle': '1m', 'name': 'luther x kurkowski', 'cvv': '123', 'media': 'cc', 'amount': '1000', 'payments': '48', 'exp': '0112', 'action': 'store'}, 'demo': 'y', 'auth': u'store', 'avs': 'n', 'operator': 'DJ Forms', 'msg': {'status': 'approved', 'cvv': 'M', 'transid': '023-0108301993', 'billingid': 'N3GGKY', 'avs': '0'}, 'response': <djforms.processors.trust_commerce.PaymentProcessor instance at 0x7f53d9ef4e60>, 'password': 'n3r0tic', 'custid': '602400', 'order': <Order: Order object>, 'card': {'expiration_month': u'1', 'billing_name': u'luther x kurkowski', 'security_code': u'123', 'card_number': u'4111111111111111', 'expiration_year': u'2012'}, 'cycle': u'1m'}
-"""
