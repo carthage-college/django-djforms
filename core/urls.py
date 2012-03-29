@@ -40,6 +40,8 @@ urlpatterns = patterns('',
     (r'^character-quest/', include('djforms.characterquest.urls')),
     # dining
     (r'^dining/', include('djforms.dining.urls')),
+    # giving
+    (r'^giving/', include('djforms.giving.urls')),
     # LIS
     (r'^lis/', include('djforms.lis.urls')),
     # for the job post environment

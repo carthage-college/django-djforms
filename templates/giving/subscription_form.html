@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Subscription Donations Form &mdash; Giving &mdash; Carthage College{% endblock %}
+{% block extra_style %}
+    <style type="text/css">
+    .form input[type=text] {width: 350px; }
+    #profile h2 {margin:7px 0 7px 5px;font-size:1.6em;background-color:#cacaca;padding:3px 0 3px 5px;width:99%;}
+    li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
+    #id_cc-security_code{width:35px;}
+    </style>
+{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "giving/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as header cms snippet 1239 code %}
+{{header}}
+<div class="buffer">
+    <h1>{{campaign.title|default:"Subscription Donations"}}</h1>
+    <p>{{campaign.description}}</p>
+    {% if cc_form.errors or or_form.errors or ct_form.errors %}
+        <p class="error">There were errors with the data submitted, see below.</p>
+    {% endif %}
+    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    <form method="post" action="." class="form" id="profile"{% block extra_form_tag %}{% endblock%}>{% csrf_token %}
+        {% for hidden in or_form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+        <fieldset class="blockLabels">
+            <ol>
+            <h2>Subscription Information</h2>
+                {% for field in or_form.visible_fields %}
+                    <li class="ctrlHolder">
+                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    {% if field.errors %}
+                        <div class="warning">
+                        <span class="error-message">{{ field.errors|join:", "}}</span>
+                    {% else %}
+                        <div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <p class="help">{{field.help_text}}</p>
+                    {% endif %}
+                    {{field}}
+                    </div>
+                    </li>
+                {% endfor %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <h2>Contact Information</h2>
+            <ol>
+                {% for field in ct_form %}
+                    <li class="ctrlHolder">
+                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    {% if field.errors %}
+                        <div class="warning">
+                        <span class="error-message">{{ field.errors|join:", "}}</span>
+                    {% else %}
+                        <div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <p class="help">{{field.help_text}}</p>
+                    {% endif %}
+                    {{field}}
+                    </div>
+                    </li>
+                {% endfor %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <h2>Billing Information</h2>
+            {% if cc_form.errors and status == "decline" %}
+                <div style="padding-left:4px;">
+                <p class="error">The transaction was declined for the following reason:</p>
+                <ul>
+                {% for field in cc_form %}
+                {% if field.errors %}<li><span class="error-message">{{ field.errors|striptags }}</span></li>{% endif %}
+                {% endfor %}
+                </ul>
+                </div>
+            {% endif %}
+            <ol>
+                {% for field in cc_form %}
+                    {% if field.name == "expiration_month" %}
+                    <li class="ctrlHolder">
+                    <h3 class="required">Expiration Date</h3>
+                    <div>{{field}}
+                    {% else %}{% if field.name == "expiration_year" %}&mdash;&nbsp;{{field}}</div></li>
+                    {% else %}
+                    <li class="ctrlHolder">
+                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    {% if field.errors %}
+                        <div class="warning">
+                        <span class="error-message">{{ field.errors|join:", "}}</span>
+                    {% else %}
+                        <div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <p class="help">{{field.help_text}}</p>
+                    {% endif %}
+                    {{field}}
+                    </div>
+                    </li>
+                    {% endif %}{% endif %}
+                {% endfor %}
+                <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Submit" class="button" />
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "giving/side_bar.html" %}
+{% endblock %}

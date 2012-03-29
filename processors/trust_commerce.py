@@ -6,49 +6,48 @@ class PaymentProcessor():
     """
     TrustCommerce payment processing module.
     Reqs:
-    1) order object
-    2) contact object within order object
-    3) card object within order object
+    1) card object
+    2) order object
     """
 
-    def __init__(self, order=None):
+    def __init__(self, card=None, order=None):
         self.demo = 'y'
-        self.AVS = 'n'
+        self.avs = settings.TC_AVS
         self.custid = settings.TC_LOGIN
         self.password = settings.TC_PASSWORD
         if not settings.TC_LIVE:
             self.demo = 'n'
-        if settings.TC_AVS:
-            self.AVS = 'y'
         self.cycle = settings.TC_CYCLE
         self.auth = settings.TC_AUTH_TYPE
-        self.tclink_version = tclink.getVersion()
         self.order = order
+        self.card = card
         self.status = None
         self.success = None
         self.msg = None
+        self.operator = settings.TC_OPERATOR
+        self.tclink_version = tclink.getVersion()
         self.response = self.capture_payment()
 
-    def prepare_post(self, data):
+    def prepare_post(self):
         # See tclink developer's guide for additional fields and info.
-        # Convert amount to cents, no decimal point
-        amount = unicode((data.total * 100))
-
-        # convert exp date to mmyy from mm/yy or mm/yyyy
-        exp = u"%.2d%.2d" % (int(data.card.expire_month), (int(data.card.expire_year) % 100))
 
         # auth type
-        action = self.auth
-        if data.auth == "subscription":
-            action = "store"
+        if self.order.auth:
+            self.auth = self.order.auth
 
         # override avs from form
-        if data.avs == 'y':
+        if self.order.avs == "True":
             self.avs = 'y'
 
         # billing period
-        if data.cycle:
-            self.cycle = data.cycle
+        if self.order.cycle:
+            self.cycle = self.order.cycle
+
+        # Convert amount to cents, no decimal point
+        amount = unicode((int(self.order.total) * 100))
+
+        # convert exp date to mmyy from mm/yy or mm/yyyy
+        exp = u"%.2d%.2d" % (int(self.card['expiration_month']), (int(self.card['expiration_year']) % 100))
 
         self.transactionData = {
             # account data
@@ -56,29 +55,30 @@ class PaymentProcessor():
             'password'      : self.password,
             'demo'          : self.demo,
             # customer data
-            'name'          : data.contact.first_name + u' ' + data.contact.last_name,
+            'name'          : self.card['billing_name'],
             # transaction data
             'media'         : 'cc',
-            'action'        : action,
-            'amount'        : amount,           # in cents
-            'cc'            : data.card.num,    # use '4111111111111111' for test
-            'exp'           : exp,              # 4 digits eg 0108
-            'cvv'           : data.card.ccv,
-            'avs'           : self.avs          # address verification - see tclink dev guide
+            'action'        : self.auth,
+            'amount'        : amount,                   # in cents
+            'cc'            : self.card['card_number'], # use '4111111111111111' for test
+            'exp'           : exp,                      # 4 digits eg 0108
+            'cvv'           : self.card['security_code'],
+            'avs'           : self.avs,                 # address verification
+            'operator'      : self.operator
         }
 
         # address verification
-        if avs == 'y':
-            self.transactionData['address1'] = data.bill_street1
-            self.transactionData['city']     = data.bill_city
-            self.transactionData['state']    = data.bill_state
-            self.transactionData['zip']      = data.bill_postal_code
-            self.transactionData['country']  = data.bill_country
+        if self.avs == 'y':
+            self.transactionData['address1'] = order.contact.address1
+            self.transactionData['address2'] = order.contact.address2
+            self.transactionData['city']     = order.contact.city
+            self.transactionData['state']    = order.contact.state
+            self.transactionData['zip']      = order.contact.postal_code
 
         # subscription/recurring billing
-        if action == "subscription":
-            self.transactionData['cycle'] = self.cycle
-            self.transactionData['payments'] = data.payments
+        if self.auth == "store":
+            self.transactionData['cycle'] = self.order.cycle
+            self.transactionData['payments'] = unicode(self.order.payments)
 
         for key, value in self.transactionData.items():
             if isinstance(value, unicode):
@@ -89,28 +89,28 @@ class PaymentProcessor():
         process the transaction through tclink
         """
 
-        self.prepare_post(self.order)
+        if self.order:
+            self.prepare_post()
+            result = tclink.send(self.transactionData)
+            status = result['status']
+            success = False
 
-        result = tclink.send(self.transactionData)
-        status = result ['status']
-        success = False
-
-        if status == 'approved':
-            success = True
-            msg = result
-        else:
-            if status == 'declined':
-                msg = 'Transaction was declined.  Reason: %s' % result['declinetype']
-
-            elif status == 'baddata':
-                msg = 'Improperly formatted data. Offending fields: %s' % result['offenders']
-
+            if status == 'approved':
+                success = True
+                msg = result
             else:
-                status = "error"
-                msg = 'An error occurred: %s' % result['errortype']
+                if status == 'decline':
+                    msg = result['declinetype']
 
-        self.status = status
-        self.success = success
-        self.msg = msg
+                elif status == 'baddata':
+                    msg = result['offenders']
+
+                else:
+                    status = "error"
+                    msg = 'An error occurred: %s' % result['errortype']
+
+            self.status = status
+            self.success = success
+            self.msg = msg
 
         return self

@@ -1,0 +1,13 @@
+{% load get_api %}
+<div id="third">
+    {% if campaing %}
+    <div class="buffer">
+    <p>{{campaign.about}}</p>
+    </div>
+    {% endif %}
+    {% get_api_object as sidebar cms snippet 472 code %}
+    {{sidebar}}
+    {% get_api_object as sidebar cms snippet 646 code %}
+    {{sidebar}}
+</div>
+
