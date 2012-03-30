@@ -3,11 +3,11 @@
 <h3>Subscription Donation Information</h3>
 <dl style="margin-bottom:30px;">
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Donation</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.total}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">${{order.total}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Time interval</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.cycle}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{% if order.cycle == "1m" %}Monthly{% endif %}{% if order.cycle == "3m" %}Quarterly{% endif %}{% if order.cycle == "1y" %}Yearly{% endif %}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Duration</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.payments}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{order.payments}} months</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Transaction ID</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{order.transid}}</dd>
 </dl>

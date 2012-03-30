@@ -1,13 +1,5 @@
 from django.db import models
 
-'''
-approved = The transaction was successfully authorized.
-accepted = The transaction has been successfully accepted into the system.
-decline  = The transaction was declined; see "Decline Type" on page 22 for further details.
-baddata  = Invalid fields were passed; see "Error Type" on page 23 for further details.
-error    = System Error when processing the transaction; see "Error Type" on page 23 for further details.
-'''
-
 ORDER_STATUS = (
     ('Blocked', 'Blocked'),
     ('In Process', 'In Process'),
@@ -18,7 +10,6 @@ ORDER_STATUS = (
     ('baddata', 'Bad data'),
     ('error', 'Error'),
 )
-
 
 class Contact(models.Model):
     """
@@ -34,18 +25,35 @@ class Contact(models.Model):
     state       = models.CharField(max_length=2, verbose_name="State")
     postal_code = models.CharField(max_length=10, verbose_name="Zip")
 
+    def __unicode__(self):
+        return u'%s %s' % (self.last_name, self.first_name)
+
 class Order(models.Model):
     """
     Orders contain a copy of all the information at the time the order was
     placed.
     """
     contact             = models.ForeignKey(Contact)
-    total               = models.CharField(max_length=100, null=True, blank=True)
+    total               = models.DecimalField(decimal_places=2, max_digits=10)
     time_stamp          = models.DateTimeField("Timestamp", auto_now_add=True)
     status              = models.CharField("Status", max_length=20, choices=ORDER_STATUS, blank=True)
     auth                = models.CharField(max_length=16) # shop or store
     avs                 = models.BooleanField(default=False)
     cycle               = models.CharField(max_length=4, null=True, blank=True)
     payments            = models.IntegerField(null=True, blank=True)
+    start_date          = models.DateField(null=True, blank=True)
     billingid           = models.CharField(max_length=100, null=True, blank=True)
     transid             = models.CharField(max_length=100, null=True, blank=True)
+
+    def __unicode__(self):
+        return u'%s %s' % (self.contact.last_name, self.contact.first_name)
+
+    def first_name(self):
+        return self.contact.first_name
+
+    def last_name(self):
+        return self.contact.last_name
+
+    def email(self):
+        return self.contact.email
+

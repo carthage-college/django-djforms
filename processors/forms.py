@@ -15,7 +15,12 @@ PAYMENT = (
     ('48', '4 years'),
     ('60', '5 years'),
 )
-
+CYCLES = (
+    ('', '--------'),
+    ('lm', 'Monthly'),
+    ('3m', 'Quarterly'),
+    ('1y', 'Yearly'),
+)
 EXP_MONTH = [(x, x) for x in xrange(1, 13)]
 EXP_YEAR = [(x, x) for x in xrange(date.today().year,
                                        date.today().year + 15)]
@@ -37,7 +42,7 @@ class OrderForm(forms.ModelForm):
     """
     avs                 = forms.CharField(widget=forms.HiddenInput())
     auth                = forms.CharField(widget=forms.HiddenInput())
-    cycle               = forms.CharField(widget=forms.HiddenInput())
+    cycle               = forms.CharField(widget=forms.HiddenInput(), required=False)
     total               = forms.CharField(max_length=100, label="Donation amount")
 
     class Meta:
@@ -48,11 +53,12 @@ class SubscriptionOrderForm(OrderForm):
     """
     A subscrition form for recurring billing
     """
-    payments            = forms.IntegerField(widget=forms.Select(choices=PAYMENT), max_value=60, min_value=12, label="Subscription Duration", help_text="Choose the number of years during which you want to donate the set amount above every month.")
+    payments            = forms.IntegerField(widget=forms.Select(choices=PAYMENT), max_value=60, min_value=12, label="Subscription Duration", help_text="Choose the number of years during which you want to donate the set amount above.")
+    cycle               = forms.CharField(widget=forms.Select(choices=CYCLES), required=True, label="Subscription interval", help_text="Choose how often the donation should be sent during the term of the subscription.")
 
     class Meta:
         model = Order
-        fields = ('total', 'payments','avs', 'cycle', 'auth')
+        fields = ('total', 'cycle', 'payments', 'avs', 'start_date', 'auth')
         exclude = ('contact', 'time_stamp', 'status', 'billingid', 'transid')
 
 class CreditCardForm(forms.Form):
@@ -93,7 +99,7 @@ class TrustCommerceForm(CreditCardForm):
 
         response = PaymentProcessor(cleaned_data, self.order)
         self.processor_response = response
-        if response.status != "approved":
+        if response.status != "approved" and response.status != 'accepted':
             if response.msg == "cc":
                 self._errors["card_number"] = self.error_class(["Invalid credit card number"])
             elif response.msg == "cvv":

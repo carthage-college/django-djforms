@@ -32,15 +32,15 @@ class PaymentProcessor():
         # See tclink developer's guide for additional fields and info.
 
         # auth type
-        if self.order.auth:
+        if hasattr(self.order, 'auth'):
             self.auth = self.order.auth
 
         # override avs from form
-        if self.order.avs == "True":
+        if hasattr(self.order, 'avs') and self.order.avs == "True":
             self.avs = 'y'
 
         # billing period
-        if self.order.cycle:
+        if hasattr(self.order, 'cycle'):
             self.cycle = self.order.cycle
 
         # Convert amount to cents, no decimal point
@@ -79,6 +79,8 @@ class PaymentProcessor():
         if self.auth == "store":
             self.transactionData['cycle'] = self.order.cycle
             self.transactionData['payments'] = unicode(self.order.payments)
+            if hasattr(self.order, 'start_date'):
+                self.transactionData['start'] = unicode(self.order.start_date)
 
         for key, value in self.transactionData.items():
             if isinstance(value, unicode):
@@ -95,19 +97,19 @@ class PaymentProcessor():
             status = result['status']
             success = False
 
-            if status == 'approved':
+            if status == 'approved' or status == 'accepted':
                 success = True
                 msg = result
             else:
                 if status == 'decline':
                     msg = result['declinetype']
-
                 elif status == 'baddata':
                     msg = result['offenders']
-
+                elif status == 'error':
+                    msg == result['errortype']
                 else:
                     status = "error"
-                    msg = 'An error occurred: %s' % result['errortype']
+                    msg = 'An error occurred: %s' % result
 
             self.status = status
             self.success = success

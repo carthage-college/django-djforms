@@ -28,9 +28,10 @@ if __name__ == "__main__":
     #o.auth="sale"
     o.auth="store"
     #o.cycle=""
-    o.cycle="1m"
+    o.cycle="3m"
     #o.payments=""
-    o.payments="12"
+    o.payments="48"
+    o.start_date="2012-05-01"
     o.avs=False
     o.bill_street = "1234 Main St."
     o.bill_city = "Springfield"
