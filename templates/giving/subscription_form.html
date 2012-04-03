@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load get_api %}
-{% block title %}Subscription Donations Form &mdash; Giving &mdash; Carthage College{% endblock %}
+{% block title %}Multi-Year Pledge Donations Form &mdash; Giving &mdash; Carthage College{% endblock %}
 
 {% block extra_javascript %}
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript" charset="utf-8"></script>
@@ -29,8 +29,10 @@
 {% get_api_object as header cms snippet 1239 code %}
 {{header}}
 <div class="buffer">
-    <h1>{{campaign.title|default:"Subscription Donations"}}</h1>
-    <p>{{campaign.description}}</p>
+    <h1>{{campaign.title|default:"Multi-year Pledge Donations"}}</h1>
+    <div class="content">{{campaign.description}}</div>
+    <p>Would you rather make a one-time gift?
+    <a href="https://www.carthage.edu/giving/donations/keymaster/?key=SFEM">Click here</a>.</p>
     {% if cc_form.errors or or_form.errors or ct_form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
@@ -41,7 +43,7 @@
         {% endfor %}
         <fieldset class="blockLabels">
             <ol>
-            <h2>Subscription Information</h2>
+            <h2>Pledge Information</h2>
                 {% for field in or_form.visible_fields %}
                     <li class="ctrlHolder">
                     <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
@@ -65,7 +67,9 @@
             <ol>
                 {% for field in ct_form %}
                     <li class="ctrlHolder">
+                    {% if field.name != "address2" %}
                     <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    {% endif %}
                     {% if field.errors %}
                         <div class="warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>

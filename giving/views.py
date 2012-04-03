@@ -5,17 +5,15 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 
 from djforms.processors.forms import SubscriptionOrderForm as OrderForm, ContactForm, TrustCommerceForm as CreditCardForm
-from djforms.giving.models import Campaign
-"""
+from djforms.core.models import Promotion
+
 import logging
 logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG,)
-#logging.debug("response: %s" % r.__dict__)
-"""
 
 def subscription(request, campaign=""):
     # giving campaigns
     if campaign:
-        campaign = get_object_or_404(Campaign, slug=campaign)
+        campaign = get_object_or_404(Promotion, slug=campaign)
     status = None
     if request.POST:
         ct_form = ContactForm(request.POST, prefix="ct")
@@ -31,21 +29,27 @@ def subscription(request, campaign=""):
                 # save and update order
                 cc_data = cc_form.cleaned_data
                 r = cc_form.processor_response
+                # deal with payments
+                years = str( int(or_data.payments) / 12 )
+                if or_data.cycle != "1m":
+                    or_data.payments = str( int(or_data.payments) / int(or_data.cycle[:-1]) )
                 or_data.status = r.msg['status']
                 or_data.billingid = r.msg['billingid']
                 or_data.transid = r.msg['transid']
+                if campaign:
+                    or_data.promotion = campaign
                 or_data.save()
                 # sendmail
                 bcc = settings.MANAGERS
                 recipient_list = ["larry@carthage.edu",]
                 #recipient_list = ["lhansen@carthage.edu","fleisky@carthage.edu",]
                 t = loader.get_template('giving/subscription_email.html')
-                c = RequestContext(request, {'order':or_data,'campaign':campaign,})
+                c = RequestContext(request, {'order':or_data,'campaign':campaign,'years':years,})
                 email = EmailMessage(("[Subscription Donation] %s %s" % (or_data.contact.first_name,or_data.contact.last_name)), t.render(c), or_data.contact.email, recipient_list, bcc, headers = {'Reply-To': or_data.contact.email,'From': or_data.contact.email})
                 email.content_subtype = "html"
                 email.send(fail_silently=True)
                 # redirect
-                url = '/forms/giving/subscription/success/%s' % campaign
+                url = '/forms/giving/subscription/success/%s' % campaign.slug
                 return HttpResponseRedirect(url)
             else:
                 r = cc_form.processor_response
@@ -70,7 +74,7 @@ def subscription(request, campaign=""):
 def subscription_success(request, campaign=""):
     # giving campaigns
     if campaign:
-        campaign = get_object_or_404(Campaign, slug=campaign)
+        campaign = get_object_or_404(Promotion, slug=campaign)
 
     return render_to_response('giving/subscription_success.html',
                               { 'campaign': campaign, },

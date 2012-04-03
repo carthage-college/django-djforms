@@ -11,8 +11,13 @@ class UserProfileAdmin(admin.ModelAdmin):
 class PhotoAdmin(admin.ModelAdmin):
     pass
 
+class PromotionAdmin(admin.ModelAdmin):
+    model = Promotion
+    prepopulated_fields = {"slug": ("title",)}
+
 admin.site.register(Department)
 admin.site.register(GenericContactForm)
-admin.site.register(UserProfile, UserProfileAdmin)
-admin.site.register(Photo, PhotoAdmin)
 admin.site.register(GenericChoice, GenericChoiceAdmin)
+admin.site.register(Photo, PhotoAdmin)
+admin.site.register(Promotion, PromotionAdmin)
+admin.site.register(UserProfile, UserProfileAdmin)

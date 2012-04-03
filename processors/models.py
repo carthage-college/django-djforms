@@ -1,4 +1,5 @@
 from django.db import models
+from djforms.core.models import Promotion
 
 ORDER_STATUS = (
     ('Blocked', 'Blocked'),
@@ -34,6 +35,7 @@ class Order(models.Model):
     placed.
     """
     contact             = models.ForeignKey(Contact)
+    promotion           = models.ForeignKey(Promotion, null=True, blank=True)
     total               = models.DecimalField(decimal_places=2, max_digits=10)
     time_stamp          = models.DateTimeField("Timestamp", auto_now_add=True)
     status              = models.CharField("Status", max_length=20, choices=ORDER_STATUS, blank=True)

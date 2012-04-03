@@ -4,11 +4,11 @@ from djforms.processors.models import *
 class OrderAdmin(admin.ModelAdmin):
     model = Order
 
-    list_display  = ('last_name', 'first_name', 'email', 'time_stamp', 'status', 'auth', 'avs', 'cycle', 'payments', 'start_date')
-    ordering      = ['contact__last_name', '-time_stamp','status','auth','avs','cycle','payments','start_date']
-    list_filter   = ('status','auth','avs','cycle','payments')
+    list_display  = ('last_name', 'first_name', 'email', 'promotion', 'time_stamp', 'status', 'auth', 'avs', 'cycle', 'payments', 'start_date')
+    ordering      = ['contact__last_name', 'promotion', '-time_stamp','status','auth','avs','cycle','payments','start_date']
+    list_filter   = ('status','auth','avs','cycle','payments','promotion')
     search_fields = ('email,', 'last_name', 'transid')
-    raw_id_fields = ("contact",)
+    raw_id_fields = ('contact','promotion')
 
 class ContactAdmin(admin.ModelAdmin):
     model = Contact

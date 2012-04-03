@@ -80,7 +80,8 @@ class PaymentProcessor():
             self.transactionData['cycle'] = self.order.cycle
             self.transactionData['payments'] = unicode(self.order.payments)
             if hasattr(self.order, 'start_date'):
-                self.transactionData['start'] = unicode(self.order.start_date)
+                if self.order.start_date:
+                    self.transactionData['start'] = unicode(self.order.start_date)
 
         for key, value in self.transactionData.items():
             if isinstance(value, unicode):

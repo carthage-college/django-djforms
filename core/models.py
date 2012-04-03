@@ -153,6 +153,20 @@ class Department(models.Model):
     def get_absolute_url(self):
         return ('department_detail', None, { 'slug':self.slug })
 
+class Promotion(models.Model):
+    """
+    Promotions and campaigns for ecommerce apps
+    """
+    title           = models.CharField(max_length=255)
+    description     = models.TextField("Description", help_text="This information will appear above the form.")
+    about           = models.TextField("About", help_text="This information will appear in the sidebar next to the form.", null=True, blank=True)
+    thank_you       = models.TextField("Thank you", help_text="This information will be appear after the visitor successfully submits the form.")
+    email_info      = models.TextField("Email instructions", help_text="This information will be sent to the contact email address of the person filling out the form.")
+    slug            = models.SlugField(max_length=255, verbose_name="Slug", unique=True)
+
+    def __unicode__(self):
+        return self.title
+
 STATE_CHOICES = (
     ('','------------'),
     ('AL', 'Alabama'),

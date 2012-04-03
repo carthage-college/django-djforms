@@ -17,9 +17,9 @@ PAYMENT = (
 )
 CYCLES = (
     ('', '--------'),
-    ('lm', 'Monthly'),
+    ('1m', 'Monthly'),
     ('3m', 'Quarterly'),
-    ('1y', 'Yearly'),
+    ('12m', 'Yearly'),
 )
 EXP_MONTH = [(x, x) for x in xrange(1, 13)]
 EXP_YEAR = [(x, x) for x in xrange(date.today().year,
@@ -43,7 +43,7 @@ class OrderForm(forms.ModelForm):
     avs                 = forms.CharField(widget=forms.HiddenInput())
     auth                = forms.CharField(widget=forms.HiddenInput())
     cycle               = forms.CharField(widget=forms.HiddenInput(), required=False)
-    total               = forms.CharField(max_length=100, label="Donation amount")
+    total               = forms.CharField(max_length=100, label="Donation")
 
     class Meta:
         model = Order
@@ -53,8 +53,8 @@ class SubscriptionOrderForm(OrderForm):
     """
     A subscrition form for recurring billing
     """
-    payments            = forms.IntegerField(widget=forms.Select(choices=PAYMENT), max_value=60, min_value=12, label="Subscription Duration", help_text="Choose the number of years during which you want to donate the set amount above.")
-    cycle               = forms.CharField(widget=forms.Select(choices=CYCLES), required=True, label="Subscription interval", help_text="Choose how often the donation should be sent during the term of the subscription.")
+    payments            = forms.IntegerField(widget=forms.Select(choices=PAYMENT), max_value=60, min_value=12, label="Duration", help_text="Choose the number of years during which you want to donate the set amount above.")
+    cycle               = forms.CharField(widget=forms.Select(choices=CYCLES), required=True, label="Interval", help_text="Choose how often the donation should be sent during the term of the pledge.")
 
     class Meta:
         model = Order
@@ -69,7 +69,7 @@ class CreditCardForm(forms.Form):
     card_number         = forms.CharField(max_length=19)
     expiration_month    = forms.CharField(max_length=2, widget=forms.Select(choices=EXP_MONTH))
     expiration_year     = forms.CharField(max_length=4, widget=forms.Select(choices=EXP_YEAR))
-    security_code       = forms.CharField(max_length=4, required=True)
+    security_code       = forms.CharField(max_length=4, required=True, help_text="The three or four digit security code on the back of your credit card.")
 
 from django.conf import settings
 
