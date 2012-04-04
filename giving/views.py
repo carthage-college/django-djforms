@@ -10,7 +10,7 @@ from djforms.core.models import Promotion
 import logging
 logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG,)
 
-def subscription(request, campaign=""):
+def pledge(request, campaign=""):
     # giving campaigns
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
@@ -43,13 +43,13 @@ def subscription(request, campaign=""):
                 bcc = settings.MANAGERS
                 recipient_list = ["larry@carthage.edu",]
                 #recipient_list = ["lhansen@carthage.edu","fleisky@carthage.edu",]
-                t = loader.get_template('giving/subscription_email.html')
+                t = loader.get_template('giving/pledge_email.html')
                 c = RequestContext(request, {'order':or_data,'campaign':campaign,'years':years,})
-                email = EmailMessage(("[Subscription Donation] %s %s" % (or_data.contact.first_name,or_data.contact.last_name)), t.render(c), or_data.contact.email, recipient_list, bcc, headers = {'Reply-To': or_data.contact.email,'From': or_data.contact.email})
+                email = EmailMessage(("[pledge Donation] %s %s" % (or_data.contact.first_name,or_data.contact.last_name)), t.render(c), or_data.contact.email, recipient_list, bcc, headers = {'Reply-To': or_data.contact.email,'From': or_data.contact.email})
                 email.content_subtype = "html"
                 email.send(fail_silently=True)
                 # redirect
-                url = '/forms/giving/subscription/success/%s' % campaign.slug
+                url = '/forms/giving/pledge/success/%s' % campaign.slug
                 return HttpResponseRedirect(url)
             else:
                 r = cc_form.processor_response
@@ -67,15 +67,15 @@ def subscription(request, campaign=""):
         or_form = OrderForm(prefix="or", initial={'cycle': "1m", 'avs':False,'auth':'store',})
         cc_form = CreditCardForm(prefix="cc")
 
-    return render_to_response('giving/subscription_form.html',
+    return render_to_response('giving/pledge_form.html',
                               {'ct_form': ct_form, 'or_form': or_form, 'cc_form': cc_form, 'status': status, 'campaign': campaign,},
                               context_instance=RequestContext(request))
 
-def subscription_success(request, campaign=""):
+def pledge_success(request, campaign=""):
     # giving campaigns
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
 
-    return render_to_response('giving/subscription_success.html',
+    return render_to_response('giving/pledge_success.html',
                               { 'campaign': campaign, },
                               context_instance=RequestContext(request))
