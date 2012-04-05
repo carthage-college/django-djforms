@@ -49,7 +49,10 @@ def pledge(request, campaign=""):
                 email.content_subtype = "html"
                 email.send(fail_silently=True)
                 # redirect
-                url = '/forms/giving/pledge/success/%s' % campaign.slug
+                slug = ""
+                if campaign:
+                    slug = campaign.slug
+                url = 'http://www.carthage.edu/forms/giving/pledge/success/%s' % slug
                 return HttpResponseRedirect(url)
             else:
                 r = cc_form.processor_response

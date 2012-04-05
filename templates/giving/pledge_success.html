@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load get_api %}
-{% block title %}Subscription Donations Form &mdash; Giving &mdash; Carthage College{% endblock %}
+{% block title %}Pledge Donations Form &mdash; Giving &mdash; Carthage College{% endblock %}
 {% block extra_style %}
     <style type="text/css">
     .form input[type=text] {width: 350px; }
@@ -9,15 +9,17 @@
     #id_cc-security_code{width:35px;}
     </style>
 {% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block columns %}<link href="https://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
     {% include "giving/left_nav.html" %}
 {% endblock %}
 {% block content %}
-{% get_api_object as header cms snippet 1239 code %}
+{% get_api_object as banner cms snippet 398 code %}
+{{banner}}
+{% get_api_object as header cms snippet 283 code %}
 {{header}}
 <div class="buffer">
-    <h1>{{campaign.title|default:"Subscription Donation"}}</h1>
+    <h1>{{campaign.title|default:"Pledge Donation"}}</h1>
     <p>{{campaign.thank_you|default:"Thank you for donating to Carthage College."}}</p>
 </div>
 {% endblock %}
