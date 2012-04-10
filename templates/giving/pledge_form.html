@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load get_api %}
-{% block title %}Multi-Year Pledge Donations Form &mdash; Giving &mdash; Carthage College{% endblock %}
+{% block title %}{{campaign.title|default:"Multi-year Pledge Donations"}} Form &mdash; Giving &mdash; Carthage College{% endblock %}
 {% block extra_javascript %}
     <script src="https://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://www.carthage.edu/assets/js/jquery/plugins/jquery.bgiframe.min.js" type="text/javascript"></script>
@@ -32,8 +32,10 @@
 <div class="buffer">
     <h1>{{campaign.title|default:"Multi-year Pledge Donations"}}</h1>
     <div class="content">{{campaign.description}}</div>
+    {% if not campaign.description %}
     <p>Would you rather make a one-time gift?
-    <a href="https://www.carthage.edu/giving/donations/keymaster/?key=SFEM">Click here</a>.</p>
+    <a href="https://www.carthage.edu/giving/donations/">Click here</a>.</p>
+    {% endif %}
     {% if cc_form.errors or or_form.errors or ct_form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}

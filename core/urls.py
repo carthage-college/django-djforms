@@ -3,7 +3,7 @@ from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
 from django.views.generic.simple import direct_to_template, redirect_to
 from djforms.core.views import data_entered
-from djforms.core.auth.views import loggedout
+from djauth.views import loggedout
 
 admin.autodiscover()
 
