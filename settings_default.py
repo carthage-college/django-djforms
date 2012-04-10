@@ -89,11 +89,16 @@ INSTALLED_APPS = (
     'djforms.video',
     'djforms.writingcurriculum',
 )
-
-# auth stuff
+# LDAP Constants
+LDAP_SERVER = 'hendrix.carthage.edu'
+LDAP_PORT = '636'
+LDAP_PROTOCOL = "ldaps"
+LDAP_USER = "cn=webldap, o=CARTHAGE"
+LDAP_PASS = "w3Bs1t3"
+# auth backends
 AUTHENTICATION_BACKENDS = (
+    'djauth.ldapBackend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
-    #'djforms.core.auth.ldapBackend.LDAPBackend',
 )
 LOGIN_URL = '/forms/accounts/login/'
 LOGIN_REDIRECT_URL = '/forms/'
@@ -120,7 +125,7 @@ GATEWAY_NAME = "AimGateway"
 # TrustCommerce
 TC_LOGIN = ""
 TC_PASSWORD = ""
-TC_LIVE = True
+TC_LIVE = False
 TC_AVS = 'n'
 #TC_AUTH_TYPE = "store"
 TC_AUTH_TYPE = "sale"
