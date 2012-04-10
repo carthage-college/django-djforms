@@ -2,6 +2,7 @@ from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.localflavor.us.models import USStateField
+from django.db.models.signals import post_save
 
 from tagging import fields, managers
 from imagekit.models import ImageModel
@@ -101,6 +102,15 @@ class UserProfile(BaseProfile):
 
     def __unicode__(self):
         return "%s %s's profile with username: %s" % (self.user.first_name, self.user.last_name, self.user.username)
+
+def create_profile(sender, instance, created, **kwargs):
+    """Create the UserProfile when a new User is saved"""
+    if created:
+        profile = UserProfile()
+        profile.user = instance
+        profile.save()
+
+post_save.connect(create_profile, sender=User)
 
 class Photo(ImageModel):
     title = models.CharField(max_length=256)
