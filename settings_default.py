@@ -63,6 +63,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.formtools',
     'django.contrib.sessions',
     'django.contrib.sites',
     # third party projects
@@ -80,6 +81,7 @@ INSTALLED_APPS = (
     'djforms.biology.genomics',
     'djforms.characterquest',
     'djforms.core',
+    'djforms.giving',
     'djforms.jobpost',
     'djforms.lis.ito',
     'djforms.languages',

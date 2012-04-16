@@ -43,13 +43,32 @@ try:
 except:
     BEVERAGES       = GenericChoice.objects.none()
 
-class EventForm(forms.ModelForm):
+class EventForm1(forms.ModelForm):
     email           = forms.EmailField()
-    building        = forms.ModelChoiceField(queryset=BUILDINGS, label="Building name", help_text="Name of the building on campus")
-    open_to         = forms.ModelMultipleChoiceField(queryset=OPEN_TO, widget=forms.CheckboxSelectMultiple())
-    room_set_up     = forms.ModelMultipleChoiceField(queryset=ROOM_SET_UP, widget=forms.CheckboxSelectMultiple(), label="Room set-up", help_text="Check all that apply")
     event_start     = KungfuTimeField(label="Event starts at", help_text="(Format HH:MM am/pm)")
     event_end       = KungfuTimeField(label="Event Ends at", help_text="(Format HH:MM am/pm)")
+
+    class Meta:
+        model = Event
+        fields = ('first_name', 'last_name', 'email', 'extension', 'event_name', 'event_date', 'event_start', 'event_end')
+
+
+class EventForm2(forms.ModelForm):
+    building        = forms.ModelChoiceField(queryset=BUILDINGS, label="Building name", help_text="Name of the building on campus")
+    open_to         = forms.ModelMultipleChoiceField(queryset=OPEN_TO, widget=forms.CheckboxSelectMultiple())
+
+    class Meta:
+        model = Event
+        fields = ('building', 'room_number', 'department', 'coordinator', 'purpose', 'account_number', 'open_to', 'facility_att', 'housing_att')
+
+class EventForm3(forms.ModelForm):
+    room_set_up     = forms.ModelMultipleChoiceField(queryset=ROOM_SET_UP, widget=forms.CheckboxSelectMultiple(), label="Room set-up", help_text="Check all that apply")
+
+    class Meta:
+        model = Event
+        fields = ('room_set_up', 'room_set_other', 'rounds', 'six_rect', 'table_cloth', 'breakout', 'registration', 'skirting', 'head', 'other')
+
+class EventForm4(forms.ModelForm):
     service_start   = KungfuTimeField(label="Service time start", help_text="(format HH:MM am/pm)")
     service_end     = KungfuTimeField(label="Service time end", help_text="(format HH:MM am/pm)")
     program_start   = KungfuTimeField(label="Program time start", help_text="(format HH:MM am/pm)")
@@ -60,5 +79,10 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        exclude = ('created_on','updated_on',)
+        fields = ('dining_att', 'service_start', 'service_end', 'program_start', 'program_end', 'meal_service', 'menu_desc', 'other_reqs', 'bar_payment', 'beverages', 'bev_brands')
 
+class EventForm5(forms.ModelForm):
+
+    class Meta:
+        model = Event
+        fields = ('slide', 'data_proj', 'overhead', 'tv_vcr', 'cordless_mic', 'fixed_mic', 'flip_chart', 'coat_rack', 'chalkboard', 'laptop', 'table_podium', 'free_podium', 'screen', 'other')

@@ -1,12 +1,51 @@
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.mail import EmailMessage
+from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader
-from django.contrib.admin.views.decorators import staff_member_required
 
-from djforms.dining.forms import EventForm
+from djforms.dining.forms import EventForm1, EventForm2, EventForm3, EventForm4, EventForm5
 from djforms.dining.models import Event
+
+
+class CateringEventWizard(SessionWizardView):
+    """
+    Form wizard view for processing the event steps
+    """
+    file_storage = FileSystemStorage(location='/assets/files/dining')
+    template_name = "dining/event_form_wizard.html"
+
+    def done(self, form_list, **kwargs):
+        """
+        data = form.save()
+        bcc = settings.MANAGERS
+        recipient_list = ["larry@carthage.edu",]
+        t = loader.get_template('dining/event_email.html')
+        c = RequestContext(request, {'object':data,})
+        email = EmailMessage(("[Event Request Form] %s: %s %s" % (data.department,data.first_name,data.last_name)), t.render(c), data.email, recipient_list, bcc, headers = {'Reply-To': data.email,'From': data.email})
+        email.content_subtype = "html"
+        email.send(fail_silently=True)
+        """
+        return HttpResponseRedirect('/forms/dining/event/success/')
+
+    def get_form(self, step=None, data=None, files=None):
+        form = super(CateringEventWizard, self).get_form(step, data, files)
+        if step == '1':
+            form.user = self.request.user
+        #template_name = "dining/event_form_%s.html" % step
+        #template_name = "dining/event_form_wizard.html"
+        return form
+
+    """
+    def get_form_instance(self, step):
+        return self.instance_dict.get(step, Event)
+    def get_form(self, step=None, data=None, files=None):
+        template_name = "dining/event_form_%s.html" % step
+        return form
+    """
 
 def event_form(request):
     if request.method=='POST':
