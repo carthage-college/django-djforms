@@ -51,6 +51,21 @@ class Event(models.Model):
     bar_payment     = models.ForeignKey(GenericChoice, verbose_name="Bar payment options", related_name="dining_event_bar_payment")
     beverages       = models.ManyToManyField(GenericChoice, verbose_name="Beverage requirements", related_name="dining_event_beverages")
     bev_brands      = models.CharField("Specific beverage labels/brands", max_length="255", null=True, blank=True, help_text="Basic red or white table wine will be served unless otherwise specified. Beer will be served on tap unless specified otherwise. Please include specific labels or brands other than the standard offerings listed above.")
+    # equipment
+    slide           = models.CharField("Slide projector", max_length=2, null=True, blank=True)
+    data_proj       = models.CharField("Data projector", max_length=2, null=True, blank=True)
+    overhead        = models.CharField("Overhead projector", max_length=2, null=True, blank=True)
+    tv_vcr          = models.CharField("TV/VCR", max_length=2, null=True, blank=True)
+    cordless_mic    = models.CharField("Cordless mic", max_length=2, null=True, blank=True)
+    fixed_mic       = models.CharField("Cordless mic", max_length=2, null=True, blank=True)
+    flip_chart      = models.CharField("Flip chart", max_length=2, null=True, blank=True)
+    coat_rack       = models.CharField("Coat rack", max_length=2, null=True, blank=True)
+    chalkboard      = models.CharField("Chalkboard", max_length=2, null=True, blank=True)
+    laptop          = models.CharField("Laptop", max_length=2, null=True, blank=True)
+    table_podium    = models.CharField("Podium (table top)", max_length=2, null=True, blank=True)
+    free_podium     = models.CharField("Podium (free standing)", max_length=2, null=True, blank=True)
+    screen          = models.CharField("Portable screen", max_length=2, null=True, blank=True)
+    other           = models.CharField("Other", max_length=255, null=True, blank=True)
 
     def __unicode__(self):
         return u'%s: %s %s' % (self.department, self.last_name, self.first_name)
