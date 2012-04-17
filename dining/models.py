@@ -1,17 +1,15 @@
 from django.db import models
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
 from djforms.core.models import GenericChoice
 
 class Event(models.Model):
+    user            = models.ForeignKey(User, related_name="dining_event_user")
     # dates
     created_on      = models.DateTimeField(auto_now_add=True)
     updated_on      = models.DateTimeField("Date updated", auto_now=True)
-    # requested by
-    first_name      = models.CharField(max_length=128)
-    last_name       = models.CharField(max_length=126)
-    email           = models.EmailField()
     extension       = models.CharField("Phone extension", max_length=4)
     # event and sponsor info
     event_name      = models.CharField(max_length=128)
@@ -46,10 +44,10 @@ class Event(models.Model):
     program_start   = models.TimeField("Program time start", help_text="(format HH:MM am/pm)")
     program_end     = models.TimeField("Program time end", help_text="(format HH:MM am/pm)")
     meal_service    = models.ForeignKey(GenericChoice, related_name="dining_event_meal_service")
-    menu_desc       = models.TextField("Menu descriptio")
-    other_reqs      = models.CharField("Other requirements", max_length=4, help_text="(e.g. decor, colors, etc.)", null=True, blank=True)
+    menu_desc       = models.TextField("Menu description")
+    other_reqs      = models.CharField("Other requirements", max_length=255, help_text="(e.g. decor, colors, etc.)", null=True, blank=True)
     bar_payment     = models.ForeignKey(GenericChoice, verbose_name="Bar payment options", related_name="dining_event_bar_payment")
-    beverages       = models.ManyToManyField(GenericChoice, verbose_name="Beverage requirements", related_name="dining_event_beverages")
+    beverages       = models.ManyToManyField(GenericChoice, verbose_name="Beverage requirements", related_name="dining_event_beverages", null=True, blank=True)
     bev_brands      = models.CharField("Specific beverage labels/brands", max_length="255", null=True, blank=True, help_text="Basic red or white table wine will be served unless otherwise specified. Beer will be served on tap unless specified otherwise. Please include specific labels or brands other than the standard offerings listed above.")
     # equipment
     slide           = models.CharField("Slide projector", max_length=2, null=True, blank=True)

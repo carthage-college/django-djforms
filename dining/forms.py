@@ -44,22 +44,21 @@ except:
     BEVERAGES       = GenericChoice.objects.none()
 
 class EventForm1(forms.ModelForm):
-    email           = forms.EmailField()
     event_start     = KungfuTimeField(label="Event starts at", help_text="(Format HH:MM am/pm)")
     event_end       = KungfuTimeField(label="Event Ends at", help_text="(Format HH:MM am/pm)")
+    building        = forms.ModelChoiceField(queryset=BUILDINGS, label="Building name", help_text="Name of the building on campus")
 
     class Meta:
         model = Event
-        fields = ('first_name', 'last_name', 'email', 'extension', 'event_name', 'event_date', 'event_start', 'event_end')
+        fields = ('extension', 'event_name', 'event_date', 'event_start', 'event_end', 'building', 'room_number')
 
 
 class EventForm2(forms.ModelForm):
-    building        = forms.ModelChoiceField(queryset=BUILDINGS, label="Building name", help_text="Name of the building on campus")
     open_to         = forms.ModelMultipleChoiceField(queryset=OPEN_TO, widget=forms.CheckboxSelectMultiple())
 
     class Meta:
         model = Event
-        fields = ('building', 'room_number', 'department', 'coordinator', 'purpose', 'account_number', 'open_to', 'facility_att', 'housing_att')
+        fields = ('department', 'coordinator', 'purpose', 'account_number', 'open_to', 'facility_att', 'housing_att')
 
 class EventForm3(forms.ModelForm):
     room_set_up     = forms.ModelMultipleChoiceField(queryset=ROOM_SET_UP, widget=forms.CheckboxSelectMultiple(), label="Room set-up", help_text="Check all that apply")
@@ -74,8 +73,8 @@ class EventForm4(forms.ModelForm):
     program_start   = KungfuTimeField(label="Program time start", help_text="(format HH:MM am/pm)")
     program_end     = KungfuTimeField(label="Program time end", help_text="(format HH:MM am/pm)")
     meal_service    = forms.ModelChoiceField(queryset=MEAL_SERVICE)
-    bar_payment     = forms.ModelMultipleChoiceField(queryset=BAR_PAY, widget=forms.CheckboxSelectMultiple(), label="Bar payment options")
-    beverages       = forms.ModelMultipleChoiceField(queryset=BEVERAGES, widget=forms.CheckboxSelectMultiple(), label="Beverage requirements")
+    bar_payment     = forms.ModelChoiceField(queryset=BAR_PAY, widget=forms.RadioSelect(), empty_label=None, label="Bar payment options")
+    beverages       = forms.ModelMultipleChoiceField(queryset=BEVERAGES, widget=forms.CheckboxSelectMultiple(), label="Beverage requirements", required=False)
 
     class Meta:
         model = Event

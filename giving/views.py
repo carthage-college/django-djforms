@@ -7,9 +7,6 @@ from django.http import HttpResponseRedirect
 from djforms.processors.forms import SubscriptionOrderForm as OrderForm, ContactForm, TrustCommerceForm as CreditCardForm
 from djforms.core.models import Promotion
 
-import logging
-logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG,)
-
 def pledge(request, campaign=""):
     # giving campaigns
     if campaign:
