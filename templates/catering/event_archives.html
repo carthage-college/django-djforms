@@ -1,0 +1,24 @@
+{% extends "catering/event_base.html" %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "catering/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>Catering Event Request Archives</h1>
+    {% for event in events %}
+        <div style="float:right;"><h3><a href="{{event.get_absolute_url}}">View Event</a></h3></div>
+        <div style="padding-bottom:10px;margin-bottom:10px; border-bottom: 1px #000 solid;">
+            <dl>
+                <dt>Contact name</dt>
+                <dd><a href="mailto:{{event.user.email}}">{{event.user.first_name}} {{event.user.last_name}}</a> x{{event.extension}}</dd>
+                <dt>Event name</dt>
+                <dd>{{event.event_name}}</dd>
+                <dt>Date</dt>
+                <dd>{{event.event_date}}</dd>
+            </dl>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+{% block sidebar %}{% endblock %}
