@@ -22,11 +22,11 @@ class Event(models.Model):
     coordinator     = models.CharField("Event coordinator", max_length=128, help_text="On site contact before, during, after event")
     purpose         = models.CharField("Purpose of Event", max_length=128, help_text="e.g. student recruitment, development, etc.")
     account_number  = models.CharField("Department account number(s)", max_length=255)
-    open_to         = models.ManyToManyField(GenericChoice, verbose_name="Event open to", related_name="dining_event_open_to")
+    open_to         = models.ManyToManyField(GenericChoice, verbose_name="Event open to", related_name="dining_event_open_to", null=True, blank=True)
     # facility requirements
     facility_att    = models.CharField("Expected facility attendance", max_length=4)
     housing_att     = models.CharField("Expected housing attendance", max_length=4)
-    room_set_up     = models.ManyToManyField(GenericChoice, verbose_name="Room set-up", help_text="Check all that apply.", related_name="dining_event_room_set_up")
+    room_set_up     = models.ManyToManyField(GenericChoice, verbose_name="Room set-up", help_text="Check all that apply.", related_name="dining_event_room_set_up", null=True, blank=True)
     room_set_other  = models.FileField(verbose_name="", upload_to='files/dining/', max_length="255", null=True, blank=True, help_text='If you chose "other" above, please attach a diagram to ensure proper set-up.')
     # table arrangement
     rounds          = models.CharField("Round tables", max_length=3, null=True, blank=True)
@@ -53,9 +53,9 @@ class Event(models.Model):
     slide           = models.CharField("Slide projector", max_length=2, null=True, blank=True)
     data_proj       = models.CharField("Data projector", max_length=2, null=True, blank=True)
     overhead        = models.CharField("Overhead projector", max_length=2, null=True, blank=True)
-    tv_vcr          = models.CharField("TV/VCR", max_length=2, null=True, blank=True)
+    tv_dvd          = models.CharField("TV/DVD", max_length=2, null=True, blank=True)
     cordless_mic    = models.CharField("Cordless mic", max_length=2, null=True, blank=True)
-    fixed_mic       = models.CharField("Cordless mic", max_length=2, null=True, blank=True)
+    fixed_mic       = models.CharField("Fixed mic", max_length=2, null=True, blank=True)
     flip_chart      = models.CharField("Flip chart", max_length=2, null=True, blank=True)
     coat_rack       = models.CharField("Coat rack", max_length=2, null=True, blank=True)
     chalkboard      = models.CharField("Chalkboard", max_length=2, null=True, blank=True)
@@ -63,17 +63,11 @@ class Event(models.Model):
     table_podium    = models.CharField("Podium (table top)", max_length=2, null=True, blank=True)
     free_podium     = models.CharField("Podium (free standing)", max_length=2, null=True, blank=True)
     screen          = models.CharField("Portable screen", max_length=2, null=True, blank=True)
-    other           = models.CharField("Other", max_length=255, null=True, blank=True)
+    other_equip     = models.CharField("Other", max_length=255, null=True, blank=True)
 
     def __unicode__(self):
-        return u'%s: %s %s' % (self.department, self.last_name, self.first_name)
+        return u'%s: %s, %s' % (self.department, self.user.last_name, self.user.first_name)
 
     def get_absolute_url(self):
-        return "http://%s%s" % (settings.SERVER_URL, reverse("dining_event_request_detail", args=[self.pk]))
+        return "http://%s%s" % (settings.SERVER_URL, reverse("dining_event_detail", args=[self.pk]))
 
-    """
-    high_school_science         = models.TextField(max_length=128, help_text="Please list all high school science courses that you have completed.")
-    biology_chemistry_courses   = models.TextField("Biology/Chemistry Courses", help_text="Please describe the biology and/or chemistry courses you have taken.")
-    research_experience         = models.TextField(help_text="Please describe any research experience.")
-
-    """

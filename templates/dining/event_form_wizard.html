@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-{% load get_api %}
+{% extends "dining/event_base.html" %}
 {% block title %}Event Request Form: Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }} &mdash; Dining & Catering &mdash; Carthage College{% endblock %}
 {% block extra_javascript %}
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript" charset="utf-8"></script>
@@ -21,25 +20,21 @@
     <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
     <link href="http://www.carthage.edu/assets/css/jquery/plugins/jquery.ptTimeSelect.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
-    .form input[type=text] {width: 350px !important; }
     #ptTimeSelectCntr {color: #303030;background: #ebebeb;font: .74em Arial, Verdana, sans-serif;text-align: center;line-height: 1.6em;margin: 2.5em 0;}
     .tab_content_container { width: 705px; }
     li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
+    #id_0-extension, #id_0-event_date, #id_0-event_start, #id_0-event_end,
+    #id_1-housing_att, #id_1-facility_att,
+    #id_2-rounds, #id_2-six_rect, #id_2-table_cloth, #id_2-breakout, #id_2-registration, #id_2-skirting, #id_2-head,
+    #id_3-dining_att, #id_3-service_start, #id_3-service_end, #id_3-program_start, #id_3-program_end,
+    #id_4-slide, #id_4-data_proj, #id_4-overhead, #id_4-tv_dvd, #id_4-cordless_mic, #id_4-fixed_mic, #id_4-flip_chart,
+    #id_4-coat_rack, #id_4-chalkboard, #id_4-laptop, #id_4-table_podium, #id_4-free_podium, #id_4-screen { width: 100px; }
     </style>
 {% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block left_nav %}
-    {% include "dining/left_nav.html" %}
-{% endblock %}
 {% block content %}
-{% get_api_object as header cms snippet 1239 code %}
-{{header}}
 <div class="buffer">
     <h1>Event Request Form: Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</h1>
     <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
-    {% include "includes/generic_form_wizard.html" %}
+    {% include "includes/generic_form_wizard_multi.html" %}
 </div>
-{% endblock %}
-{% block sidebar %}
-    {% include "dining/side_bar.html" %}
 {% endblock %}

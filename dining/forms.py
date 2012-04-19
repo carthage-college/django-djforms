@@ -54,18 +54,18 @@ class EventForm1(forms.ModelForm):
 
 
 class EventForm2(forms.ModelForm):
-    open_to         = forms.ModelMultipleChoiceField(queryset=OPEN_TO, widget=forms.CheckboxSelectMultiple())
+    open_to         = forms.ModelMultipleChoiceField(queryset=OPEN_TO, widget=forms.CheckboxSelectMultiple(), required=True)
 
     class Meta:
         model = Event
         fields = ('department', 'coordinator', 'purpose', 'account_number', 'open_to', 'facility_att', 'housing_att')
 
 class EventForm3(forms.ModelForm):
-    room_set_up     = forms.ModelMultipleChoiceField(queryset=ROOM_SET_UP, widget=forms.CheckboxSelectMultiple(), label="Room set-up", help_text="Check all that apply")
+    room_set_up     = forms.ModelMultipleChoiceField(queryset=ROOM_SET_UP, widget=forms.CheckboxSelectMultiple(), label="Room set-up", help_text="Check all that apply", required=True)
 
     class Meta:
         model = Event
-        fields = ('room_set_up', 'room_set_other', 'rounds', 'six_rect', 'table_cloth', 'breakout', 'registration', 'skirting', 'head', 'other')
+        fields = ('room_set_up', 'room_set_other', 'rounds', 'six_rect', 'table_cloth', 'breakout', 'registration', 'skirting', 'head', 'other_table')
 
 class EventForm4(forms.ModelForm):
     service_start   = KungfuTimeField(label="Service time start", help_text="(format HH:MM am/pm)")
@@ -84,4 +84,4 @@ class EventForm5(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ('slide', 'data_proj', 'overhead', 'tv_vcr', 'cordless_mic', 'fixed_mic', 'flip_chart', 'coat_rack', 'chalkboard', 'laptop', 'table_podium', 'free_podium', 'screen', 'other')
+        fields = ('slide', 'data_proj', 'overhead', 'tv_dvd', 'cordless_mic', 'fixed_mic', 'flip_chart', 'coat_rack', 'chalkboard', 'laptop', 'table_podium', 'free_podium', 'screen', 'other_equip')
