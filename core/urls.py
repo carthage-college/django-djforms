@@ -36,10 +36,10 @@ urlpatterns = patterns('',
     (r'^athletics/', include('djforms.athletics.urls')),
     # biology
     (r'^biology/', include('djforms.biology.urls')),
+    # catering
+    (r'^catering/', include('djforms.catering.urls')),
     # CharacterQuest
     (r'^character-quest/', include('djforms.characterquest.urls')),
-    # dining
-    (r'^dining/', include('djforms.dining.urls')),
     # giving
     (r'^giving/', include('djforms.giving.urls')),
     # LIS

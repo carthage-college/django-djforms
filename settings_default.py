@@ -80,6 +80,7 @@ INSTALLED_APPS = (
     'djforms.alumni.memory',
     'djforms.alumni.msw',
     'djforms.biology.genomics',
+    'djforms.catering',
     'djforms.characterquest',
     'djforms.core',
     'djforms.giving',
