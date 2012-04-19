@@ -1,0 +1,15 @@
+{% load get_api %}
+<div id="first">
+    {% get_api_object as menu menutree menu 192 code %}
+    {{menu}}
+    <ul id="nav" class="sf-vertical">
+        <li class="last-featured"></li>
+        <li><a href="/forms/cating/event/">Event Request Form</a></li>
+    {% if not user.is_anonymous %}
+        <li><a href="/forms/catering/event/archives/">Event Archives</a></li>
+        <li><a href="/forms/accounts/logout/?next={{request.path}}">Logout</a></li>
+    {% else %}
+        <li><a href="/forms/accounts/login/?next={{request.path}}">Login</a></li>
+    {% endif %}
+    </ul>
+</div>
