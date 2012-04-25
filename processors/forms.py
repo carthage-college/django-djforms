@@ -105,7 +105,7 @@ class TrustCommerceForm(CreditCardForm):
             elif response.msg == "cvv":
                 self._errors["security_code"] = self.error_class(["Invalid security code"])
             else:
-                raise forms.ValidationError("Transaction was declined: %s" % response.msg)
+                raise forms.ValidationError("Transaction was declined")
         #if response.status == "decline":
             #self._errors["card_number"] = self.error_class(["Transaction was declined: %s" % response.msg])
         #    raise forms.ValidationError("Transaction was declined: %s" % response.msg)
