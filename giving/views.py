@@ -24,7 +24,6 @@ def pledge(request, campaign=""):
             cc_form = CreditCardForm(or_data, request.POST, prefix="cc")
             if cc_form.is_valid():
                 # save and update order
-                cc_data = cc_form.cleaned_data
                 r = cc_form.processor_response
                 # deal with payments
                 years = str( int(or_data.payments) / 12 )

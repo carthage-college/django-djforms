@@ -4,9 +4,7 @@
     {{ block.super }}
     <script type="text/javascript">
         $(function() {
-            var session = 0;
-            var {% if form_reg.data.session == 100 %}deposit = 50;{% else %}deposit = 200;{% endif %}
-            var pre_session = 0;
+            var {% if form_reg.data.session == "Boys & Girls day camp|195" or form_reg.data.session == "Boys & Girls Jr. Kickers Session I|100" or form_reg.data.session == "Boys & Girls Jr. Kickers Session II|100" %}deposit = 50;{% else %}deposit = 200;{% endif %}
             var reg_fee = {{form_reg.data.reg_fee|default:0}};
             {% if form_reg.data.session %}
                 $('label[for="id_amount_0"]:odd').append(': $' + deposit);
@@ -25,26 +23,27 @@
                 $('#payment-details').hide();
             });
             $('#id_football_0').click(function() {
-                reg_fee = reg_fee + 25;
+                reg_fee += 25;
                 $('#id_reg_fee').attr('value', reg_fee);
                 $('label[for="id_amount_1"]').html('<input type="radio" id="id_amount_1" value="Full amount" name="amount" /> Full amount: $' + reg_fee);
             });
             $('#id_football_1').click(function() {
-                reg_fee = reg_fee - 25;
+                reg_fee -= 25;
                 $('#id_reg_fee').attr('value', reg_fee);
                 $('label[for="id_amount_1"]').html('<input type="radio" id="id_amount_1" value="Full amount" name="amount" /> Full amount: $' + reg_fee);
             });
             $('input[id^="id_session_"]').click(function() {
-                session = $(this).attr('value').split('|')[1];
-                reg_fee += session - pre_session;
-                pre_session = session;
-                $('#id_reg_fee').attr('value', reg_fee);
-                if (session == 100) {
+                reg_fee = parseInt($(this).attr('value').split('|')[1]);
+                if (reg_fee == 100 || reg_fee == 195) {
                     deposit = 50;
                 } else {
                     deposit = 200;
                 }
-                $('label[for="id_amount_0"]:odd').html('<input type="radio" id="id_amount_0" value="' + deposit + '" name="amount" /> Deposit: $' + deposit);
+                if ($('#id_football_0:checked').val()) {
+                    reg_fee += 25;
+                }
+                $('#id_reg_fee').attr('value', reg_fee);
+                $('label[for="id_amount_0"]:odd').html('<input type="radio" id="id_amount_0" value="Deposit" name="amount" /> Deposit: $' + deposit);
                 $('label[for="id_amount_1"]').html('<input type="radio" id="id_amount_1" value="Full amount" name="amount" /> Full amount: $' + reg_fee);
             });
         });
@@ -57,6 +56,9 @@
 #profile h2 {margin-bottom:7px;margin-top:7px;font-size:1.6em;background-color:#cacaca;padding:3px;}
 #session-info > ol li {display:block;margin-bottom:5px;}
 #first img { display: inline; }
+#id_security_code, #id_reg_fee{width:35px;}
+#id_card_number {width:150px;}
+#id_postal_code, #id_home_phone, #id_work_phone, #id_dob {width:100px;}
 </style>
 {% endblock %}
 {% block content %}
@@ -81,17 +83,29 @@
     <p>After you complete the registration form, we will send confirmation via email.</p>
     <p class="help"><img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> denotes a required field.</p>
     <form method="post" action="." class="form" id="profile">{% csrf_token %}
+        <fieldset class="blockLabels">
+            <h2>Contact Information</h2>
+            <ol>
+            {% for field in form_con %}
+                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                {% if field.errors %}
+                <div class="warning">
+                <span class="error-message">{{ field.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {% if field.help_text %}
+                <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                {{field}}
+                </div>
+            {% endfor %}
+            </ol>
+        </fieldset>
         {% for field in form_reg %}
             {% if field.name == "gender" %}
                 <fieldset class="blockLabels">
                 <h2>Personal Information</h2>
-                <ol>
-            {% endif %}
-            {% if field.name == "parent_guard" %}
-                </ol>
-                </fieldset>
-                <fieldset class="blockLabels">
-                <h2>Contact Information</h2>
                 <ol>
             {% endif %}
             {% if field.name == "roommate" %}
@@ -116,7 +130,9 @@
                 <ol>
             {% endif %}
             <li class="ctrlHolder">
+                {% if field.name != "address2" %}
                 <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                {% endif %}
                 {% if field.errors %}
                     <div class="warning">
                     <span class="error-message">{{ field.errors|join:", "}}</span>
@@ -130,14 +146,12 @@
                 </div>
             </li>
         {% endfor %}
+        </ol>
+        </fieldset>
+        <fieldset class="blockLabels" id="payment-details">
+            <h2>Credit Card Details</h2>
+            <ol>
         {% for field in form_proc %}
-            {% if field.name == "cc_first_name" %}
-                </ol>
-                </fieldset>
-                <fieldset class="blockLabels" id="payment-details">
-                <h2>Credit Card Details</h2>
-                <ol>
-            {% endif %}
             <li class="ctrlHolder">
                 <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
                 {% if field.errors %}

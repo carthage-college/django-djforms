@@ -32,11 +32,11 @@ SHIRT_SIZES = (
 SESSIONS = (
     ('Girls resident|395', 'Girls Resident $395.00'),
     ('Girls commuter|295', 'Girls Commuter $295.00'),
-    ('Boys & Girls Jr. Kickers|100', 'Boys & Girls Jr. Kickers $100.00'),
+    ('Boys & Girls Jr. Kickers Session I|100', 'Boys & Girls Jr. Kickers Session I $100.00'),
     ('Boys resident|395', 'Boys Resident $395.00'),
     ('Boys commuter|295', 'Boys Commuter $295.00'),
     ('Boys & Girls day camp|195', 'Boys & Girls Day $195.00'),
-    ('Boys & Girls Jr. Kickers|100', 'Boys & Girls. Jr. Kickers $100.00'),
+    ('Boys & Girls Jr. Kickers Session II|100', 'Boys & Girls. Jr. Kickers Session II $100.00'),
     ('Soccer mom camp|245', 'Soccer Mom Camp $245'),
 )
 
@@ -57,6 +57,7 @@ class SoccerCampRegistrationForm(forms.Form):
     """
     # personal info
     gender              = forms.TypedChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect())
+    """
     first_name          = forms.CharField(max_length=100)
     last_name           = forms.CharField(max_length=100)
     address1            = forms.CharField(max_length=255, label="Address")
@@ -65,14 +66,15 @@ class SoccerCampRegistrationForm(forms.Form):
     state               = forms.CharField(widget=forms.Select(choices=STATE_CHOICES))
     postal_code         = USZipCodeField(label="Zip code")
     email               = forms.EmailField()
+    """
     dob                 = forms.DateField(label = "Date of birth")
     years_attend        = forms.TypedChoiceField(choices=YEAR_CHOICES, widget=forms.RadioSelect(), label="Past years attended")
     goalkeeper          = forms.ChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect(), label="Goalkeeper?")
     shirt_size          = forms.CharField(widget=forms.Select(choices=SHIRT_SIZES), label="T-shirt size")
     # contact info
     parent_guard        = forms.CharField(max_length=100, label="Parent or guardian name")
-    home_phone          = USPhoneNumberField(max_length=12, required=False)
-    work_phone          = USPhoneNumberField(max_length=12, required=False)
+    #home_phone          = USPhoneNumberField(max_length=12, required=False)
+    #work_phone          = USPhoneNumberField(max_length=12, required=False)
     # housing
     roommate            = forms.CharField(max_length=100, label="Roommate request", required=False)
     dorm                = forms.CharField(max_length=100, label="Reside in dorm", help_text="Near teammates and/or friends&mdash;please be specific", required=False)
@@ -82,7 +84,12 @@ class SoccerCampRegistrationForm(forms.Form):
     # payment
     reg_fee             = forms.CharField(max_length=7, label="Registration Fee Total")
     payment_method      = forms.TypedChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect())
+    amount              = forms.TypedChoiceField(choices=AMOUNT_CHOICES, widget=forms.RadioSelect())
 
 class SoccerCampProcessorForm(TrustCommerceForm):
-    amount              = forms.TypedChoiceField(choices=AMOUNT_CHOICES, widget=forms.RadioSelect())
+
+    def __init__(self,*args,**kwargs):
+        super(SoccerCampProcessorForm,self).__init__(*args,**kwargs)
+        #self.fields.keyOrder = ['amount','billing_name','card_number','expiration_month','expiration_year','security_code']
+        self.fields.keyOrder = ['billing_name','card_number','expiration_month','expiration_year','security_code']
 

@@ -29,7 +29,7 @@ class ContactForm(forms.ModelForm):
     """
     A generic form to collect contact info
     """
-    phone               = USPhoneNumberField(label="Phone number")
+    phone               = USPhoneNumberField(label="Phone number", max_length=12, help_text="Format: XXX-XXX-XXXX")
     state               = forms.CharField(widget=forms.Select(choices=STATE_CHOICES), required=True)
     postal_code         = USZipCodeField()
 
