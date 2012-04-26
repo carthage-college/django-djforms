@@ -35,7 +35,7 @@ class PaymentProcessor():
         # See tclink developer's guide for additional fields and info.
 
         # auth type
-        if hasattr(self.order, 'auth'):
+        if self.order.auth and self.order.auth != "":
             self.auth = self.order.auth
 
         # override avs from form
@@ -52,7 +52,7 @@ class PaymentProcessor():
         # convert exp date to mmyy from mm/yy or mm/yyyy
         exp = u"%.2d%.2d" % (int(self.card['expiration_month']), (int(self.card['expiration_year']) % 100))
 
-        logging.debug("demo = %s" % self.demo)
+        logging.debug("auth = %s" % self.auth)
         self.transactionData = {
             # account data
             'custid'        : self.custid,

@@ -81,6 +81,9 @@
     not at check-ins. If you have a balance coming or did not pay
     in full at time of registration, cash or check are the only methods of payment.</p>
     <p>After you complete the registration form, we will send confirmation via email.</p>
+    {% if form_proc.errors or form_con.errors or form_reg.errors %}
+        <p class="error">There were errors with the data submitted, see below.</p>
+    {% endif %}
     <p class="help"><img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> denotes a required field.</p>
     <form method="post" action="." class="form" id="profile">{% csrf_token %}
         <fieldset class="blockLabels">
@@ -150,6 +153,9 @@
         </fieldset>
         <fieldset class="blockLabels" id="payment-details">
             <h2>Credit Card Details</h2>
+            {% if form_proc.errors %}
+                <div class="error">{{form_proc.non_field_errors}}</div>
+            {% endif %}
             <ol>
         {% for field in form_proc %}
             <li class="ctrlHolder">

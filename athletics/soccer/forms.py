@@ -3,7 +3,6 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, BINARY_CHOICES
-from djforms.processors.forms import TrustCommerceForm
 
 YEAR_CHOICES = (
     ('1', '1'),
@@ -85,11 +84,4 @@ class SoccerCampRegistrationForm(forms.Form):
     reg_fee             = forms.CharField(max_length=7, label="Registration Fee Total")
     payment_method      = forms.TypedChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect())
     amount              = forms.TypedChoiceField(choices=AMOUNT_CHOICES, widget=forms.RadioSelect())
-
-class SoccerCampProcessorForm(TrustCommerceForm):
-
-    def __init__(self,*args,**kwargs):
-        super(SoccerCampProcessorForm,self).__init__(*args,**kwargs)
-        #self.fields.keyOrder = ['amount','billing_name','card_number','expiration_month','expiration_year','security_code']
-        self.fields.keyOrder = ['billing_name','card_number','expiration_month','expiration_year','security_code']
 

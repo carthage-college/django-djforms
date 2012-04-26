@@ -16,9 +16,11 @@ def pledge(request, campaign=""):
         ct_form = ContactForm(request.POST, prefix="ct")
         or_form = OrderForm(request.POST, prefix="or")
         if ct_form.is_valid() and or_form.is_valid():
-            ct_data = ct_form.save()
+            # we might have a record for 'contact' so we use get_or_create() method
+            contact, created = Contact.objects.get_or_create(first_name=con_data['first_name'], last_name=con_data['last_name'], email=con_data['email'], phone=con_data['phone'],address1=con_data[
+'address1'],address2=con_data['address2'],city=con_data['city'],state=con_data['state'],postal_code=con_data['postal_code'])
             or_data = or_form.save(commit=False)
-            or_data.contact = ct_data
+            or_data.contact = contact
             or_data.status = "In Process"
             or_data.save()
             cc_form = CreditCardForm(or_data, request.POST, prefix="cc")
