@@ -56,24 +56,12 @@ class SoccerCampRegistrationForm(forms.Form):
     """
     # personal info
     gender              = forms.TypedChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect())
-    """
-    first_name          = forms.CharField(max_length=100)
-    last_name           = forms.CharField(max_length=100)
-    address1            = forms.CharField(max_length=255, label="Address")
-    address2            = forms.CharField(max_length=255, label="")
-    city                = forms.CharField(max_length=128)
-    state               = forms.CharField(widget=forms.Select(choices=STATE_CHOICES))
-    postal_code         = USZipCodeField(label="Zip code")
-    email               = forms.EmailField()
-    """
     dob                 = forms.DateField(label = "Date of birth")
     years_attend        = forms.TypedChoiceField(choices=YEAR_CHOICES, widget=forms.RadioSelect(), label="Past years attended")
     goalkeeper          = forms.ChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect(), label="Goalkeeper?")
     shirt_size          = forms.CharField(widget=forms.Select(choices=SHIRT_SIZES), label="T-shirt size")
     # contact info
     parent_guard        = forms.CharField(max_length=100, label="Parent or guardian name")
-    #home_phone          = USPhoneNumberField(max_length=12, required=False)
-    #work_phone          = USPhoneNumberField(max_length=12, required=False)
     # housing
     roommate            = forms.CharField(max_length=100, label="Roommate request", required=False)
     dorm                = forms.CharField(max_length=100, label="Reside in dorm", help_text="Near teammates and/or friends&mdash;please be specific", required=False)
@@ -84,4 +72,3 @@ class SoccerCampRegistrationForm(forms.Form):
     reg_fee             = forms.CharField(max_length=7, label="Registration Fee Total")
     payment_method      = forms.TypedChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect())
     amount              = forms.TypedChoiceField(choices=AMOUNT_CHOICES, widget=forms.RadioSelect())
-

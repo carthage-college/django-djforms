@@ -1,8 +1,66 @@
 <h1>Soccer Camp Registration</h1>
-
-<h2>Contact Info</h2>
-<pre style="font-size:1.5em;">
-First Name.................. {{contact.first_name}}
-Last Name................... {{contact.last_name}}
-Email....................... {{contact.email}}
-</pre>
+<h3>Contact Information</h3>
+<dl style="margin-bottom:30px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">First name</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.first_name}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Last name</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.last_name}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Address</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.address1}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">&nbsp;</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.address2|default:"&nbsp;"}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">City</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.city}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">State</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.state}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Zip</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.postal_code}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Email</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.email}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Phone</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.phone}}</dd>
+</dl>
+<hr />
+<h3>Personal Information</h3>
+<dl style="margin-bottom:30px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Gender</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.gender}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Date of birth</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.dob}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Years attended</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.years_attend}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Goalkeeper?</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.goalkeeper}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Shirt size</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.shirt_size}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Parent/guardian</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.parent_guard}}</dd>
+</dl>
+<hr />
+<h3>Housing Information</h3>
+<dl style="margin-bottom:30px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Roommate request</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.roommate}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Reside in dorm</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.dorm}}</dd>
+</dl>
+<hr />
+<h3>Session Information</h3>
+<dl style="margin-bottom:30px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Session</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.session}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Soccer ball</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.football}}</dd>
+</dl>
+<hr />
+<h3>Registration Information</h3>
+<dl style="margin-bottom:30px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Registration fee</dt>
+    <dd style="margin:2px 0; padding:5px 0;">${{data.reg.reg_fee}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Payment method</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.payment_method}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Amount paid</dt>
+    <dd style="margin:2px 0; padding:5px 0;">${{data.total}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Transaction ID</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.transid}}</dd>
+</dl>

@@ -3,7 +3,8 @@ from djforms.core.models import Promotion
 
 ORDER_STATUS = (
     ('Blocked', 'Blocked'),
-    ('In Process', 'In Process'),
+    ('In process', 'In process'),
+    ('Pay later', 'Pay later'),
     ('Cancelled', 'Cancelled'),
     ('approved', 'Approved'),
     ('accepted', 'Accepted'),
