@@ -26,8 +26,9 @@ Housing attendance.......... {{event.housing_att}}
 <h2>Room Set Up</h2>
 <pre style="font-size:1.5em;">
 Room set-up................. {% for item in event.room_set_up.all %}{{item}}{% if not forloop.last %}, {% endif %}{% endfor %}
-Room set-up other........... {% if event.room_set_other %}<a href="{{media_url}}{{event.room_set_other}}">Download file</a>{% endif %}
+Room set-up other........... {% if event.room_set_other %}<a href="http://www.carthage.edu/assets/{{event.room_set_other}}">Download file</a>{% endif %}
 Round tables................ {{event.rounds}}
+8 foot rectangle tables..... {{event.eight_rect}}
 6 foot rectangle tables..... {{event.six_rect}}
 Table cloth................. {{event.table_cloth}}
 Breakout tables............. {{event.breakout}}

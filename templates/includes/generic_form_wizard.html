@@ -27,10 +27,10 @@
             <li class="btnHolder">
                 <label for="id_submit">&nbsp;&nbsp;</label>
                 {% if wizard.steps.prev %}
-                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" class="button">First step</button>
-                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="button">Prev step</button>
+                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}" class="button">First</button>
+                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="button">Previous</button>
                 {% endif %}
-                <input type="submit" value="Submit" class="button" />
+                <input type="submit" value="{% if wizard.steps.step1 == wizard.steps.count %}Submit{% else %}Next Step{% endif %}" class="button" />
             </li>
         </ol>
     </fieldset>
