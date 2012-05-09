@@ -1,14 +1,12 @@
-<h1>Event Request Form</h1>
-
-<h2>Contact Info</h2>
-<pre style="font-size:1.5em;">
+<h4>Contact Info</h4>
+<pre style="font-size:1em;">
 First Name.................. {{event.user.first_name}}
 Last Name................... {{event.user.last_name}}
 Email....................... {{event.user.email}}
 Extension................... {{event.extension}}
 </pre>
-<h2>Event Info</h2>
-<pre style="font-size:1.5em;">
+<h4>Event Info</h4>
+<pre style="font-size:1em;">
 Name........................ {{event.event_name}}
 Date........................ {{event.event_date}}
 Start at.................... {{event.event_start}}
@@ -23,8 +21,8 @@ Open to..................... {% for item in event.open_to.all %}{{item}}{% if no
 Facility attendance......... {{event.facility_att}}
 Housing attendance.......... {{event.housing_att}}
 </pre>
-<h2>Room Set Up</h2>
-<pre style="font-size:1.5em;">
+<h4>Room Set Up</h4>
+<pre style="font-size:1em;">
 Room set-up................. {% for item in event.room_set_up.all %}{{item}}{% if not forloop.last %}, {% endif %}{% endfor %}
 Room set-up other........... {% if event.room_set_other %}<a href="http://www.carthage.edu/assets/{{event.room_set_other}}">Download file</a>{% endif %}
 Round tables................ {{event.rounds}}
@@ -37,8 +35,8 @@ Table skirting.............. {{event.skirting}}
 Head tables................. {{event.head}}
 Other tables................ {{event.other_table}}
 </pre>
-<h2>Dining Requirements</h2>
-<pre style="font-size:1.5em;">
+<h4>Dining Requirements</h4>
+<pre style="font-size:1em;">
 Dining attendance........... {{event.dining_att}}
 Service start time.......... {{event.service_start}}
 Service end time............ {{event.service_end}}
@@ -51,8 +49,8 @@ Bar payment................. {{event.bar_payment}}
 Beverage requirements....... {% for item in event.beverages.all %}{{item}}{% if not forloop.last %}, {% endif %}{% endfor %}
 Beverage brands............. {{event.bev_brands}}
 </pre>
-<h2>Equipment</h2>
-<pre style="font-size:1.5em;">
+<h4>Equipment</h4>
+<pre style="font-size:1em;">
 Slide projector............. {{event.slide}}
 Data projector.............. {{event.data_proj}}
 Overhead projector.......... {{event.overhead}}

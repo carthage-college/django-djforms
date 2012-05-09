@@ -78,7 +78,7 @@ class EventForm4(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ('dining_att', 'service_start', 'service_end', 'program_start', 'program_end', 'meal_service', 'menu_desc', 'other_reqs', 'bar_payment', 'beverages', 'bev_brands')
+        fields = ('dining_att', 'service_start', 'service_end', 'program_start', 'program_end', 'meal_service', 'menu_desc', 'other_reqs', 'bar_payment', 'beverages')
 
 class EventForm5(forms.ModelForm):
 
