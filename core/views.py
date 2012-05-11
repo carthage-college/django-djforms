@@ -34,8 +34,9 @@ def four_oh_four_error(request, template_name='404.html'):
         'media_url': settings.MEDIA_URL,'layout':[0,1],
     })))
 
-def send_mail(request, recipients, subject, femail, template, data):
-        bcc = settings.MANAGERS
+def send_mail(request, recipients, subject, femail, template, data, bcc=None):
+        if not bcc:
+            bcc = settings.MANAGERS
         t = loader.get_template(template)
         c = RequestContext(request, {'data':data,})
         email = EmailMessage(subject, t.render(c), femail, recipients, bcc, headers = {'Reply-To': femail,'From': femail})
