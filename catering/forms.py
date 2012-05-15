@@ -7,6 +7,8 @@ from djforms.core.models import GenericChoice
 from sputnik.apps.utilities.forms.fields import KungfuTimeField
 from tagging.models import Tag, TaggedItem
 
+import datetime
+
 try:
     building_tag    = Tag.objects.get(name__iexact='Building Name')
     BUILDINGS       = TaggedItem.objects.get_by_model(GenericChoice, building_tag).filter(active=True).order_by("name")
@@ -52,6 +54,25 @@ class EventForm1(forms.ModelForm):
         model = Event
         fields = ('extension', 'event_name', 'event_date', 'event_start', 'event_end', 'building', 'room_number')
 
+    def clean_event_date(self):
+        # dates
+        today = datetime.date.today()
+        event_date = self.cleaned_data.get('event_date')
+        biz_date = today
+
+        # minimum of 3 business days prior. handles past and current days.
+        for i in range(3):
+            biz_date += datetime.timedelta(days=1)
+            # monday = 0
+            while biz_date.weekday() not in (0,1,2,3,4):
+                biz_date += datetime.timedelta(days=1)
+        if event_date < biz_date:
+            raise forms.ValidationError("Minimum of 3 business days before event date.")
+
+        # maximum of 180 days into the future
+        if event_date >= (today + datetime.timedelta(days=180)):
+            raise forms.ValidationError("Maximum of 180 days before event date.")
+        return self.cleaned_data['event_date']
 
 class EventForm2(forms.ModelForm):
     open_to         = forms.ModelMultipleChoiceField(queryset=OPEN_TO, widget=forms.CheckboxSelectMultiple(), required=True)
