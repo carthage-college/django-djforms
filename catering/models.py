@@ -13,7 +13,7 @@ class Event(models.Model):
     extension       = models.CharField("Phone extension", max_length=4)
     # event and sponsor info
     event_name      = models.CharField(max_length=128)
-    event_date      = models.DateField(help_text="Allow for a minumum of 3 business days before the day of the event.")
+    event_date      = models.DateField(help_text="Allow for a minumum of 3 business days before the day of the event, and a maximum of 180 days.")
     event_start     = models.TimeField("Starts at", help_text="(Format HH:MM am/pm)")
     event_end       = models.TimeField("Ends at", help_text="(Format HH:MM am/pm)")
     building        = models.ForeignKey(GenericChoice, verbose_name="Building name", help_text="Name of the building on campus", related_name="catering_event_building")

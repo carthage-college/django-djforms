@@ -116,9 +116,9 @@ EMAIL_HOST_USER = 'confirmation@carthage.edu'
 EMAIL_HOST_PASSWORD = 'djangoforms'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-DEFAULT_FROM_EMAIL = 'larry@carthage.edu'
-SERVER_EMAIL = 'larry@carthage.edu'
-SERVER_MAIL="larry@carthage.edu"
+DEFAULT_FROM_EMAIL = 'confirmation@carthage.edu'
+SERVER_EMAIL = 'confirmation@carthage.edu'
+SERVER_MAIL="confirmation@carthage.edu"
 # Authorize.net
 GATEWAY_API_LOGIN = ""
 GATEWAY_TRANS_KEY = ""
