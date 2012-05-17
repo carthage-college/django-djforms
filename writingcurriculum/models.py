@@ -12,12 +12,7 @@ DAY_SPS_CHOICES = (
 
 PERCENT_CHOICES = tuple((str(n), str(n)) for n in range(5,105,5))
 
-#class Criterion(models.Model):
-#    name                = models.CharField(max_length=255, null=True, blank=True)
-
 class CourseCriteria(models.Model):
-    #criterion           = models.ForeignKey(Criterion,null=True,blank=True,editable=False)
-    #course_proposal     = models.ForeignKey(CourseProposal)
     type_assignment     = models.CharField(max_length=255, null=True, blank=True)
     number_pages        = models.CharField(max_length=3, null=True, blank=True)
     percent_grade       = models.CharField(max_length=3, null=True, blank=True)
@@ -43,7 +38,6 @@ class CourseProposal(models.Model):
     description         = models.TextField("Course Description")
     objectives          = models.TextField("Objectives")
     criteria            = models.ManyToManyField(CourseCriteria, related_name="course_proposal_criterion", null=True, blank=True)
-    #criteria            = models.ManyToManyField(Criterion, through='CourseCriteria', related_name="course_proposal_criterion", null=True, blank=True)
     syllabus            = models.FileField(upload_to='files/writingcurriculum/', max_length="256", help_text='If you have a syllabus developed and available in an acceptable file format (.doc, .rtf, .pdf), the committee would appreciate being able to examine it as well. Use the Browse button to find the file on your computer. The file (one file, please) will be uploaded when you hit Submit below.', null=True, blank=True)
     learning_outcomes   = models.TextField("Three Learning Outcomes", help_text='Please provide three student learning outcomes for writing. These outcomes should address the question: how will taking this class improve student writing? These outcomes can be course/discipline specific. For example, "after completing this course, students will be able to define key concepts in the field of chemistry in writing" is a clear writing outcome. Other examples might include, "after completing this course, students will be able to write an analytical essay with a clear thesis, and provide adequate support for that thesis," or, "after completing this course, students will be able to cite in APA style."')
     assessment_methods  = models.TextField("Assessment Methods", null=True, blank=True, help_text='We assume that your student learning outcomes will be assessed through writing assignments. However, if this is NOT the case, please describe below how you will assess student progress on the learning outcomes you have identified (if you leave this field empty, we will assume you are assessing through your writing assignments).')

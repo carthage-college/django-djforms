@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Registration &mdash; Model United Nations &mdash; Political Science &mdash; Carthage College{% endblock %}
+{% block extra_javascript %}
+    <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.uniform.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.bgiframe.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.dialog.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function() {
+            var copies = {{copies}};
+            initialise();
+            $("select, input, textarea, input:checkbox, input:radio, input:file").uniform();
+            $("#clone").click(function () {
+                if (copies <= 4) {
+                    copies++;
+                    newId = "doop_" + copies;
+                    $("#doop_master").clone().attr("id",newId).appendTo("#duplicates");
+                    $.growlUI('Criteria: ', copies);
+                }else{
+                    $.growlUI('Warning', 'Criteria Limit: 5');
+                }
+                initialise();
+            });
+            $("#destroy").click(function () {
+                if (copies > 0) {
+                    delid = "doop_" + copies;
+                    $("#doop_" + copies ).remove();
+                    copies--;
+                    $.growlUI('Criteria: ', copies);
+                }else{
+                    $.growlUI('Warning', 'No criterion to delete');
+                }
+            });
+        });
+    </script>
+{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block extra_style %}
+    <style type="text/css">
+    #profile h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}
+    #second ol {margin:0;}
+    #second li { margin: 0 0 0.5em 0;
+}
+    .criteria ul.bullets li{list-style:disc outside;margin-left:30px;}
+    .criteria p {margin-bottom:20px;}
+    #doop_master {display: none;}
+    .criterion {width:250px;float:right;}
+    .ctrlcx {width:36px;float:right;}
+    #duplicates .wac-description {width:294px;height:150px;}
+    div.growlUI { background: url(/media/img/ico/information.png) no-repeat 10px 10px; height:90px; }
+    div.growlUI h1, div.growlUI h2 {
+        font-size: 1.4em; color: white; padding: 5px 5px 5px 75px; text-align: left
+    }
+    .form input {width: 350px !important; }
+    </style>
+{% endblock %}
+{% block left_nav %}
+    {% include "polisci/mun/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as header cms snippet 161 code %}
+{{header}}
+<div class="buffer">
+    <h1>Registration Form</h1>
+    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    {% if form.errors %}
+    <p class="error">There were errors with the data submitted, see below.</p>
+    {% endif %}
+    <form method="post" action="." class="form" id="profile">{% csrf_token %}
+        <fieldset class="blockLabels">
+            <ol>
+                {% for field in form %}
+                    <li class="ctrlHolder">
+                    {% if field.name != "school_address2" %}
+                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    {% endif %}
+                    {% if field.errors %}
+                        <div class="warning">
+                        <span class="error-message">{{ field.errors|join:", "}}</span>
+                    {% else %}
+                        <div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <p class="help">{{field.help_text}}</p>
+                    {% endif %}
+                    {{field}}
+                    </div>
+                    </li>
+                    {% if field.name == "number_of_stu" %}
+                    <li class="ctrlHolder buffer-top">
+                        <h5>General Assembly Members:</h5>
+                        <p>
+                            This simulation will be open to all states but priority
+                            is placed on filling the nations most relevant to the
+                            topic. These nations include the choices listed below.
+                            Reminder: China, France, Russian Federation, United Kingdom,
+                            and United States are all permanent members of the Security
+                            Council with veto power. Countries will be assigned on
+                            a &quot;first come, first serve&quot; basis. Schools with more than
+                            one delegation are required to represent at least one lesser-developed state.
+                            The topic areas for this plenary session are &quot;Strengthening the Role of the
+                            UN&quot; and &quot;Realizing the Millennium Development Goals&quot;.
+                            There are three (3) concurrent General Assembly sessions.
+                        </p>
+                        <p>The order in which you select a country will determine its ranking preference, with "1" being highest.</p>
+                        <div id="delegation1" class="fleft">
+                        <h5>Delegation 1</h5>
+                        <ol>
+                        <li>1.{{c_form.d1c1}}</li>
+                        <li>2.{{c_form.d1c2}}</li>
+                        <li>3.{{c_form.d1c3}}</li>
+                        <li>4.{{c_form.d1c4}}</li>
+                        <li>5.{{c_form.d1c5}}</li>
+                        </ol>
+                        </div>
+                        <p class="clear"><strong>NOTE</strong>: *Designates Security Council membership.</p>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <ol>
+                <li>
+                    <h5 style="color:#ff0000;">General Assembly Conference Fees:</h5>
+                    <p> $25 per delegation (3 people/Special Plenary delegation; maximum 5 delegations/school) and $7 per delegate</p>
+                    <p><strong>Security Council:</strong><br />
+                    The topic areas for this Security Council are &quot;Nuclear Non-Proliferation and Disarmament&quot; and &quot;Sovereignty and Humanitarian Intervention&quot;. This year the following countries will also be on the Security Council: Iran, North Korea, Pakistan and Syria. As always, additional countries that are not on the Security Council but are relevant to Security Council discussions may be called into the session to present their side of events and to answer questions asked by Security Council members.</p>
+                    <h5 style="color:#ff0000;">Security Council Fee:</h5>
+                    <p>Delegate fee for the Security Council simulation is $10/student. There is no additional delegation fee for this simulation.</p>
+                    <p><strong>PLEASE NOTE: If you receive a Security Council country you must have four (4) students to represent the country - three (3) for the concurrent General Assembly sessions and one (1) for the Security Council. Delegates will be working Individually</strong> and delegation fees are non-refundable. Please contact Dr. Roberg if your school would like to bring more than five delegations. We will try to accomodate if possible.</p>
+                </li>
+                <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Submit" class="button" />
+                </li>
+                <li class="btnHolder">
+                    <p>If you have further questions please contact:</p>
+                    <blockquote>
+                        <p><strong>Dr. Jeffrey L. Roberg<br>
+                                   Carthage College<br>
+                                   2001 Alford Park Drive<br>
+                                   Kenosha, WI 53140</strong></p>
+                        <p>Email: <a href="mailto:jroberg@carthage.edu">jroberg@carthage.edu</a></p>
+                    </blockquote>
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
