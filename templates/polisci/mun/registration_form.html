@@ -1,41 +1,6 @@
 {% extends "base.html" %}
 {% load get_api %}
 {% block title %}Registration &mdash; Model United Nations &mdash; Political Science &mdash; Carthage College{% endblock %}
-{% block extra_javascript %}
-    <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.core.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.uniform.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.bgiframe.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.dialog.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">
-        $(function() {
-            var copies = {{copies}};
-            initialise();
-            $("select, input, textarea, input:checkbox, input:radio, input:file").uniform();
-            $("#clone").click(function () {
-                if (copies <= 4) {
-                    copies++;
-                    newId = "doop_" + copies;
-                    $("#doop_master").clone().attr("id",newId).appendTo("#duplicates");
-                    $.growlUI('Criteria: ', copies);
-                }else{
-                    $.growlUI('Warning', 'Criteria Limit: 5');
-                }
-                initialise();
-            });
-            $("#destroy").click(function () {
-                if (copies > 0) {
-                    delid = "doop_" + copies;
-                    $("#doop_" + copies ).remove();
-                    copies--;
-                    $.growlUI('Criteria: ', copies);
-                }else{
-                    $.growlUI('Warning', 'No criterion to delete');
-                }
-            });
-        });
-    </script>
-{% endblock %}
 {% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
     <style type="text/css">
@@ -104,15 +69,55 @@
                             UN&quot; and &quot;Realizing the Millennium Development Goals&quot;.
                             There are three (3) concurrent General Assembly sessions.
                         </p>
-                        <p>The order in which you select a country will determine its ranking preference, with "1" being highest.</p>
+                        <p>The order in which you select a country will determine its ranking preference, with the first having highest rank.</p>
                         <div id="delegation1" class="fleft">
-                        <h5>Delegation 1</h5>
+                        <h5 style="text-align:center;">Delegation 1</h5>
                         <ol>
-                        <li>1.{{c_form.d1c1}}</li>
-                        <li>2.{{c_form.d1c2}}</li>
-                        <li>3.{{c_form.d1c3}}</li>
-                        <li>4.{{c_form.d1c4}}</li>
-                        <li>5.{{c_form.d1c5}}</li>
+                        <li>{{c_form.d1c1}}</li>
+                        <li>{{c_form.d1c2}}</li>
+                        <li>{{c_form.d1c3}}</li>
+                        <li>{{c_form.d1c4}}</li>
+                        <li>{{c_form.d1c5}}</li>
+                        </ol>
+                        </div>
+                        <div id="delegation2" class="fleft" style="margin-left:5px;">
+                        <h5 style="text-align:center;">Delegation 2</h5>
+                        <ol>
+                        <li>{{c_form.d2c1}}</li>
+                        <li>{{c_form.d2c2}}</li>
+                        <li>{{c_form.d2c3}}</li>
+                        <li>{{c_form.d2c4}}</li>
+                        <li>{{c_form.d2c5}}</li>
+                        </ol>
+                        </div>
+                        <div id="delegation3" class="fleft" style="margin-left:5px;">
+                        <h5 style="text-align:center;">Delegation 3</h5>
+                        <ol>
+                        <li>{{c_form.d3c1}}</li>
+                        <li>{{c_form.d3c2}}</li>
+                        <li>{{c_form.d3c3}}</li>
+                        <li>{{c_form.d3c4}}</li>
+                        <li>{{c_form.d3c5}}</li>
+                        </ol>
+                        </div>
+                        <div id="delegation4" class="fleft" style="margin-left:5px;">
+                        <h5 style="text-align:center;">Delegation 4</h5>
+                        <ol>
+                        <li>{{c_form.d4c1}}</li>
+                        <li>{{c_form.d4c2}}</li>
+                        <li>{{c_form.d4c3}}</li>
+                        <li>{{c_form.d4c4}}</li>
+                        <li>{{c_form.d4c5}}</li>
+                        </ol>
+                        </div>
+                        <div id="delegation5" class="fleft" style="margin-left:5px;">
+                        <h5 style="text-align:center;">Delegation 5</h5>
+                        <ol>
+                        <li>{{c_form.d5c1}}</li>
+                        <li>{{c_form.d5c2}}</li>
+                        <li>{{c_form.d5c3}}</li>
+                        <li>{{c_form.d5c4}}</li>
+                        <li>{{c_form.d5c5}}</li>
                         </ol>
                         </div>
                         <p class="clear"><strong>NOTE</strong>: *Designates Security Council membership.</p>

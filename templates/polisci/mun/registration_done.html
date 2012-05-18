@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Registration &mdash; Model United Nations &mdash; Political Science &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "polisci/mun/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as header cms snippet 161 code %}
+{{header}}
+<div class="buffer">
+<h2>High School Conference Registration</h2>
+<p>
+Thank you for registering.  We will contact you
+to provide additional information shortly.
+If you have any questions, please direct them to:
+</p>
+<p>
+<strong>
+Dr. Jeffrey L. Roberg<br />
+Carthage College<br />
+2001 Alford Park Drive<br />
+Kenosha, WI 53140
+</strong>
+</p>
+<p>E-mail: <a href="mailto:jroberg@carthage.edu">jroberg@carthage.edu</a><br /></p>
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "polisci/mun/side_bar.html" %}
+{% endblock %}
