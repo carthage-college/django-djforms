@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Admissions Form &mdash; Adult Education &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="https://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block extra_style %}
+<style type="text/css">
+    .form input[type=text] {width: 350px !important; }
+    #second ol { list-style-type: decimal;}
+    #second .form ol {margin:0; list-style: none outside none;}
+    #second .form ol li {margin-left: 0;}
+    #second h2 { color: #000000; font-size: 1.4em; font-weight: bold; }
+    #second p { line-height: 1.4; margin-bottom: 0; }
+    li.ctrlHolder div ul li {display: inline;padding-right:3px;}
+    .form .blockLabels label {display: inherit;}
+    #profile textarea {width:460px;height:150px;}
+    #profile input[type="text"], textarea { background: none repeat scroll 0 0 #ffffff; border: 1px solid #ffffff; border-radius: 3px 3px 3px 3px; box-shadow: 0 4px 4px 0 #aaaaaa inset; height: 20px; margin: 1px; padding: 5px; position: relative; }
+</style>
+{% endblock %}
+{% block left_nav %}
+    {% include "adulted/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as header cms snippet 1239 code %}
+{{header}}
+<div class="buffer">
+    <h1>Admissions Form</h1>
+    <p class="help">Fields marked with <img src="https://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    {% if form_proc.errors or form_con.errors or form_reg.errors %}
+        <p class="error">There were errors with the data submitted, see below.</p>
+    {% endif %}
+    <form method="post" action="." class="form" id="profile">{% csrf_token %}
+        <fieldset class="blockLabels">
+            <h2>Contact Information</h2>
+            <ol>
+            {% for field in contact_form %}
+                <li class="ctrlHolder">
+                {% if field.name != "address2" %}
+                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                {% endif %}
+                {% if field.errors %}
+                <div class="warning">
+                <span class="error-message">{{ field.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {% if field.help_text %}
+                <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                {{field}}
+                </div>
+                </li>
+            {% endfor %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <h2>Personal Information</h2>
+            <ol>
+            {% for field in personal_form %}
+            <li class="ctrlHolder">
+                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                {% if field.errors %}
+                    <div class="warning">
+                    <span class="error-message">{{ field.errors|join:", "}}</span>
+                {% else %}
+                    <div>
+                {% endif %}
+                {% if field.help_text %}
+                    <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                {{field}}
+                </div>
+            </li>
+            {% endfor %}
+            </ol>
+        </fieldset>
+        {% for field in employment_form %}
+            {% if field.name == "employer" %}
+                <fieldset class="blockLabels">
+                <h2>Personal Information</h2>
+                <ol>
+            {% endif %}
+            {% if field.name == "past_employer1" %}
+                </ol>
+                </fieldset>
+                <fieldset class="blockLabels">
+                <h2>Employment History</h2>
+                <ol>
+            {% endif %}
+            <li class="ctrlHolder">
+                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                {% if field.errors %}
+                <div class="warning">
+                <span class="error-message">{{ field.errors|join:", "}}</span>
+                {% else %}
+                <div>
+                {% endif %}
+                {% if field.help_text %}
+                <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                {{field}}
+                </div>
+            </li>
+        {% endfor %}
+        </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <ol>
+                <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Submit" class="button" />
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
+{% block sidebar %}
+{% endblock %}

@@ -35,6 +35,7 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
+        exclude = ('middle_name','country',)
 
 class OrderForm(forms.ModelForm):
     """

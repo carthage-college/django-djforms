@@ -1,5 +1,6 @@
 from django.db import models
 from djforms.core.models import Promotion
+from django_countries import CountryField
 
 ORDER_STATUS = (
     ('Blocked', 'Blocked'),
@@ -18,6 +19,7 @@ class Contact(models.Model):
     Contact details for an order
     """
     first_name  = models.CharField(max_length=100)
+    middle_name = models.CharField(max_length=100, null=True, blank=True)
     last_name   = models.CharField(max_length=100)
     email       = models.EmailField()
     phone       = models.CharField(max_length=12, verbose_name='Phone Number', help_text="Format: XXX-XXX-XXXX")
@@ -26,6 +28,7 @@ class Contact(models.Model):
     city        = models.CharField(max_length=128, verbose_name="City")
     state       = models.CharField(max_length=2, verbose_name="State")
     postal_code = models.CharField(max_length=10, verbose_name="Zip")
+    country     = CountryField(null=True, blank=True)
 
     def __unicode__(self):
         return u'%s %s' % (self.last_name, self.first_name)

@@ -76,6 +76,7 @@ INSTALLED_APPS = (
     # djforms stuff
     'djforms.admissions',
     'djforms.admissions.visitdays',
+    'djforms.adulted',
     'djforms.alumni',
     'djforms.alumni.memory',
     'djforms.alumni.msw',
