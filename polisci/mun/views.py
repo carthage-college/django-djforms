@@ -14,8 +14,7 @@ def registration_form(request):
             data = form.cleaned_data
             dele = c_form.is_valid()
             bcc = settings.MANAGERS
-            #recipient_list = ["jroberg@carthage.edu",]
-            recipient_list = [settings.SERVER_EMAIL,]
+            recipient_list = ["jroberg@carthage.edu",]
             t = loader.get_template('polisci/mun/registration_email.html')
             c = RequestContext(request, {'object':data,'dele':c_form.cleaned_data,})
             email = EmailMessage(("[Model United Nations Registration] %s of %s" % (data['faculty_advisor'],data['school_name'])), t.render(c), data['email'], recipient_list, bcc, headers = {'Reply-To': data['email'],'From': data['email']})
