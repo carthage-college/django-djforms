@@ -38,10 +38,11 @@ class CateringEventWizard(SessionWizardView):
         event.beverages = xfields['beverages']
         event.save()
         bcc = settings.MANAGERS
-        recipient_list = ["dhoffman1@carthage.edu","jchilson@carthage.edu,","mmichaud@carthage.edu","security@carthage.edu"]
+        recipient_list = ["dhoffman1@carthage.edu","jchilson@carthage.edu,","mmichaud@carthage.edu"]
         t = loader.get_template('catering/event_email.html')
         c = RequestContext(self.request, {'event':event,})
         email = event.user.email
+        recipient_list.append(email)
         email = EmailMessage(("[Event Request Form] %s: %s %s" % (event.department,event.user.first_name,event.user.last_name)), t.render(c), email, recipient_list, bcc, headers = {'Reply-To': email,'From': email})
         email.content_subtype = "html"
         email.send(fail_silently=True)
