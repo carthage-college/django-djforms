@@ -15,7 +15,7 @@
                 <dt>Event name</dt>
                 <dd>{{event.event_name}}</dd>
                 <dt>Date</dt>
-                <dd>{{event.event_date}}</dd>
+                <dd>{{event.event_date|date:"l"}}, {{event.event_date}}</dd>
             </dl>
         </div>
     {% endfor %}
