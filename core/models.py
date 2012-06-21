@@ -18,7 +18,7 @@ BINARY_CHOICES = (
 GENDER_CHOICES = (
     ('Male', 'Male'),
     ('Female', 'Female'),
-    ('Decline to State','Decline to State'),
+    ('Decline to state','Decline to state'),
 )
 MARITAL_CHOICES = (
     ('Single','Single'),
@@ -184,7 +184,7 @@ class Promotion(models.Model):
         return self.title
 
 STATE_CHOICES = (
-    ('','------------'),
+    ('','State'),
     ('AL', 'Alabama'),
     ('AK', 'Alaska'),
     ('AS', 'American Samoa'),
@@ -244,7 +244,7 @@ STATE_CHOICES = (
 )
 
 COUNTRIES = (
-    ('','------------'),
+    ('','Country'),
     ('AF', _(u'Afghanistan')),
     ('AX', _(u'\xc5land Islands')),
     ('AL', _(u'Albania')),

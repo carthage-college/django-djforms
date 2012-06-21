@@ -1,61 +1,218 @@
-{% extends "base.html" %}
+{% extends "adulted/home.html" %}
 {% load get_api %}
 {% block title %}Admissions Form &mdash; Adult Education &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="https://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block css %}
+    <style type="text/css" media="screen, projection">
+    /* <![CDATA[ */
+        @import url("{{media_url}}/current/css/overrides/adulted.css");
+        body {font-size:13px;}
+    /* ]]> */
+    </style>
+{% endblock %}
+{% block extra_javascript %}
+<script src="/assets/apps/InFieldLabels/jquery.infieldlabel.min.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8">
+// Test for 'placeholder'
+jQuery(function() {
+    jQuery.support.placeholder = false;
+    test = document.createElement('input');
+    if('placeholder' in test) jQuery.support.placeholder = true;
+});
+// This adds placeholder support to browsers that wouldn't otherwise support it.
+$(function() {
+    $("label").inFieldLabels();
+    $("input").attr("autocomplete","off");
+});
+</script>
+{% endblock %}
 {% block extra_style %}
 <style type="text/css">
-    .form input[type=text] {width: 350px !important; }
-    #second ol { list-style-type: decimal;}
-    #second .form ol {margin:0; list-style: none outside none;}
-    #second .form ol li {margin-left: 0;}
-    #second h2 { color: #000000; font-size: 1.4em; font-weight: bold; }
-    #second p { line-height: 1.4; margin-bottom: 0; }
-    li.ctrlHolder div ul li {display: inline;padding-right:3px;}
-    .form .blockLabels label {display: inherit;}
-    #profile textarea {width:460px;height:150px;}
-    #profile input[type="text"], textarea { background: none repeat scroll 0 0 #ffffff; border: 1px solid #ffffff; border-radius: 3px 3px 3px 3px; box-shadow: 0 4px 4px 0 #aaaaaa inset; height: 20px; margin: 1px; padding: 5px; position: relative; }
+#second {width:745px;padding-right:0px;}
+#fourth {float:left;overflow:hidden;padding-top:20px;180px; }
+#second ol { list-style-type: decimal;}
+#second ul { margin: 0; }
+#second .form ol {margin:0; list-style: none outside none;}
+#second .form ol li {margin-left: 0;}
+#second h2 { color: #000000; font-size: 1.4em; font-weight: normal; }
+#second h1 { margin-top: 1em; }
+#second p { line-height: 1.4; margin-bottom: 0; }
+li.ctrlHolder div ul li {display: inline;padding-right:3px;}
+#profile .inline li {display: inline; }
+#profile .inline li { position: relative; margin: 10px 0;}
+#profile .inline li  label { position: absolute; top: -1; left: 0; margin-left:7px;margin-top:7px;}
+#profile .inline li  br {display: none;}
+
+#profile textarea {width:460px;height:150px;}
+#profile input[type="text"], input[type="email"], textarea { background: #ffffff; border: 2px solid #ffffff; border-radius: 3px 3px 3px 3px; box-shadow: 0 4px 4px 0 #aaaaaa inset; height: 20px; margin: 1px; padding: 5px; }
+#profile select { border: 2px solid #ffffff; border-radius: 3px 3px 3px 3px; box-shadow: 0 4px 4px 0 #aaaaaa inset; height: 30px; margin: 1px; padding: 5px; position: relative; }
+fieldset { background: none repeat scroll 0 0 #FCFAEB; position: relative; }
+fieldset { border: 1px solid #DDD8B0; border-radius: 3px 3px 3px 3px; box-shadow: 0 1px 0 #FFFFFF inset; margin: 0 auto 8px; padding: 12px 17px; }
+#profile textarea:hover,
+#profile select:hover,
+#profile input[type=text]:hover,
+#profile input[type=number]:hover,
+#profile input[type=password]:hover,
+#profile input[type=email]:hover { border:2px solid #d7d0a0;box-shadow:0;outline:none;color:#3e3e3e; }
+#profile textarea:focus,
+#profile select:focus,
+#profile input[type=text]:focus,
+#profile input[type=number]:focus,
+#profile input[type=password]:focus,
+#profile input[type=email]:focus { border:2px solid #6caf2a;box-shadow:0;outline:none;color:#3e3e3e; }
+#profile input.required { background-color: #F0DDDD;}
+#profile input[type='radio'].required { background-color: #F0DDDD;}
+#profile input.error, textarea.error, select.error, .uneditable-input.error {
+    background-image: url("http://static.duolingo.com/images/input-error-image_mv_c49949a5249697e1fe6245de92eb4bc7.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+#id_state, .required { background-color: #F0DDDD;}
+.form input[type=text] {width: 350px; }
+.form input.tiny {margin:0;width:30px;vertical-align:middle;}
+.form input.small {margin:0;width:100px;vertical-align:middle;}
+.form input.medium {margin:0;width:150px;}
+.form input.large {margin:0;width:250px;}
+.hasPlaceholder { color: #777; }
+/* steps */
+.dotholder { height: 20px; position: absolute; right: 0; top: -30px; width: 180px; }
+.dot.active { background: none repeat scroll 0 0 #d7d0a0; }
+.dot { background: none repeat scroll 0 0 #CFCFCF; border-radius: 10px 10px 10px 10px; color: white; float: left; font: 500 14px/20px "Helvetica",sans-serif; height: 20px; margin: 0 10px 0 0; text-align: center; width: 20px; }
+.top40 { margin-top: 40px; }
+/* Success, error & notice boxes for messages and errors. */
+.error, .notice, .success {padding: .3em; margin-bottom: 1.8em; border: 2px solid #ddd;}
+.error {background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4;}
+.notice {background: #FFF6BF; color: #514721; border-color: #FFD324;}
+.success {background: #E6EFC2; color: #264409; border-color: #C6D880;}
+.error a {color: #8a1f11;}
+.notice a {color: #514721;}
+.success a {color: #264409;}
+form p { position: relative; margin: 10px 0;}
+form p label { position: absolute; top: 0; left: 0;}
+form p br {display: none;}
+
 </style>
 {% endblock %}
-{% block left_nav %}
-    {% include "adulted/left_nav.html" %}
-{% endblock %}
 {% block content %}
-{% get_api_object as header cms snippet 1239 code %}
-{{header}}
+<div id="second">
 <div class="buffer">
-    <h1>Admissions Form</h1>
-    <p class="help">Fields marked with <img src="https://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
-    {% if form_proc.errors or form_con.errors or form_reg.errors %}
+    {% if personal_form.errors or contact_form.errors or employment_form.errors or education_goals_form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
+    <h1>Admissions Form</h1>
+    <p style="padding-bottom:10px;">Fields with <span class="required">background color</span> are required.</p>
     <form method="post" action="." class="form" id="profile">{% csrf_token %}
         <fieldset class="blockLabels">
+            <div class="dotholder">
+                <div class="dot active">1</div>
+                <div class="dot">2</div>
+                <div class="dot">3</div>
+                <div class="dot">4</div>
+                <div class="dot">5</div>
+                <div class="dot">6</div>
+            </div>
             <h2>Contact Information</h2>
-            <ol>
-            {% for field in contact_form %}
-                <li class="ctrlHolder">
-                {% if field.name != "address2" %}
-                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                {% endif %}
-                {% if field.errors %}
-                <div class="warning">
-                <span class="error-message">{{ field.errors|join:", "}}</span>
-                {% else %}
-                <div>
-                {% endif %}
-                {% if field.help_text %}
-                <p class="help">{{field.help_text}}</p>
-                {% endif %}
-                {{field}}
-                </div>
-                </li>
-            {% endfor %}
-            </ol>
+            <h3>Name</h3>
+            <ul class="inline">
+            <li><label for="id_first_name" class="placeholder">First name</label><br />
+            <input class="medium required{% if contact_form.first_name.errors %} error{% endif %}" id="id_first_name" type="text" name="first_name" placeholder="First name" maxlength="100" value="{{contact_form.data.first_name}}" required /></li>
+            <li><label for="id_middle_name" class="placeholder">Middle name</label><br />
+            <input class="medium" id="id_middle_name" type="text" name="middle_name" placeholder="Middle name" maxlength="100" value="{{contact_form.data.middle_name}}" /></li>
+            <li><label for="id_last_name" class="placeholder">Last name</label><br />
+            <input class="medium required{% if contact_form.last_name.errors %} error{% endif %}" id="id_last_name" type="text" name="last_name" placeholder="Last name" maxlength="100" value="{{contact_form.data.last_name}}" required /></li>
+            <li><label for="id_previous_last_name" class="placeholder">Previous last name</label><br />
+            <input class="medium" id="id_previous_last_name" type="text" name="previous_last_name" placeholder="Previous last name" maxlength="100" value="{{contact_form.data.previous_last_name}}" /></li>
+            </ul>
+            <h3>Address</h3>
+            <ul class="inline">
+            <li><label for="id_address1" class="placeholder">Address</label><br />
+            <input class="large required{% if contact_form.address1.errors %} error{% endif %}" id="id_address1" type="text" name="address1" placeholder="Address" maxlength="255" value="{{contact_form.data.address1}}" required /></li>
+            <li><label for="id_address2" class="placeholder">Address 2</label><br />
+            <input class="large" id="id_address2" type="text" name="address2" placeholder="Address 2" maxlength="255" value="{{contact_form.data.address2}}" /></li>
+            </ul>
+            <ul class="inline">
+            <li><label for="id_city" class="placeholder">City</label><br />
+            <input class="small required{% if contact_form.city.errors %} error{% endif %}" id="id_city" type="text" name="city" placeholder="City" maxlength="255" value="{{contact_form.data.city}}" /></li>
+            <li>{{contact_form.state}} {% if contact_form.state.errors %} <span class="notice">Required</span>{% endif %}</li>
+            <li><label for="id_postal_code" class="placeholder">Zip</label><br />
+            <input class="small required{% if contact_form.postal_code.errors %} error{% endif %}" id="id_postal_code" type="text" name="postal_code" placeholder="Zip" maxlength="10" value="{{contact_form.data.postal_code}}" required /> {% if contact_form.postal_code.errors %}<span class="notice">Format: XXXXX</span>{% endif %}</li>
+            </ul>
+            <ul class="inline">
+            <li><label for="id_email" class="placeholder">Email</label><br />
+            <input class="large required{% if contact_form.email.errors %} error{% endif %}" id="id_email" type="email" name="email" placeholder="Email" maxlength="255" value="{{contact_form.data.email}}" required /></li>
+            <li><label for="id_phone" class="placeholder">Phone: xxx-xxx-xxxx</label><br />
+            <input class="large required{% if contact_form.phone.errors %} error{% endif %}" id="id_phone" type="text" name="phone" placeholder="Phone: xxx-xxx-xxxx" maxlength="255" value="{{contact_form.data.phone}}" required /> {% if contact_form.phone.errors %}<span class="notice">Format: XXX-XXX-XXXX</span>{% endif %}</li>
+            </ul>
         </fieldset>
-        <fieldset class="blockLabels">
+        <fieldset class="blockLabels top40">
+            <div class="dotholder">
+                <div class="dot active">1</div>
+                <div class="dot active">2</div>
+                <div class="dot">3</div>
+                <div class="dot">4</div>
+                <div class="dot">5</div>
+                <div class="dot">6</div>
+            </div>
             <h2>Personal Information</h2>
+            <ul><li class="ctrlHolder">
+            <div>
+            <h3>Gender</h3>
+            <ul>
+                <li><label for="id_gender_0"><input class="required" {% if personal_form.data.gender == "Male" %}checked="checked" {% endif %}type="radio" id="id_gender_0" value="Male" name="gender" /> Male</label></li>
+                <li><label for="id_gender_1"><input class="required" {% if personal_form.data.gender == "Female" %}checked="checked" {% endif %}type="radio" id="id_gender_1" value="Female" name="gender" /> Female</label></li>
+                <li><label for="id_gender_2"><input class="required" {% if personal_form.data.gender == "Deceline to state" %}checked="checked" {% endif %}type="radio" id="id_gender_2" value="Decline to state" name="gender" /> Decline to State</label></li>
+                {% if personal_form.gender.errors %}<li><span class="notice">Chose one</span>{% endif %}
+            </ul></div>
+            </li></ul>
+            <ul class="inline">
+            <li><label for="id_ss_num" class="placeholder">Social security number</label><br />
+            <input class="medium required{% if personal_form.ss_num.errors %} error{% endif %}" type="text" name="ss_num" id="id_ss_num" placeholder="Social security number" maxlength="11" value="{{personal_form.data.ss_num}}" required />{% if personal_form.dob.errors %} <span class="notice">Format: xxx-xx-xxxx</span>{% endif %}</li>
+            <li><label for="id_dob" class="placeholder">Date of birth: dd/mm/yyyy</label><br />
+            <input class="medium required{% if personal_form.dob.errors %} error{% endif %}" type="text" name="dob" id="id_dob" placeholder="Date of birth: dd/mm/yyyy" maxlength="10" value="{{personal_form.data.dob}}" required />{% if personal_form.dob.errors %} <span class="notice">Format: dd/mm/yyyy</span>{% endif %}</li>
+            </ul>
+            <ul class="inline">
+            <li><label for="id_pob" class="placeholder">Place of birth: city, state, zip, country</label><br />
+            <input class="large required{% if personal_form.pob.errors %} error{% endif %}" type="text" name="pob" id="id_pob" placeholder="Place of birth: city, state, zip, country" maxlength="255" value="{{personal_form.data.pob}}" required /></li>
+            </ul>
+        </fieldset>
+        <fieldset class="blockLabels top40">
+            <div class="dotholder">
+                <div class="dot active">1</div>
+                <div class="dot active">2</div>
+                <div class="dot active">3</div>
+                <div class="dot">4</div>
+                <div class="dot">5</div>
+                <div class="dot">6</div>
+            </div>
+            <h2>Employment</h2>
+            <ul class="inline">
+            <li><label for="id_employer" class="placeholder">Employer</label><br />
+            <input class="large" id="id_employer" type="text" name="employer" placeholder="Employer" maxlength="128" value="{{employment_form.data.employer}}" /></li>
+            <li><label for="id_position" class="placeholder">Position</label><br />
+            <input class="large" id="id_position" type="text" name="position" placeholder="Position" maxlength="128" value="{{employment_form.data.position}}" /></li>
+            </ul>
+            <ul><li class="ctrlHolder">
+            <div>
+            <h3>Does your employer offer tuition reimbursement?</h3>
+            <ul>
+                <li class="required"><label for="id_tuition_reimburse_0"><input {% if employment_form.data.tuition_reimburse == "Yes" %}checked="checked" {% endif %}type="radio" id="id_tuition_reimburse_0" value="Yes" name="tuition_reimburse" /> Yes</label></li>
+                <li class="required"><label for="id_tuition_reimburse_1"><input {% if employment_form.data.tuition_reimburse == "No" %}checked="checked" {% endif %}type="radio" id="id_tuition_reimburse_1" value="No" name="tuition_reimburse" /> No</label></li>
+                {% if employment_form.tuition_reimburse.errors %}<li><span class="notice">Chose one</span>{% endif %}
+            </ul>
+            </div>
+            </li></ul>
+        </fieldset>
+        <fieldset class="blockLabels top40">
+            <div class="dotholder">
+                <div class="dot active">1</div>
+                <div class="dot active">2</div>
+                <div class="dot active">3</div>
+                <div class="dot active">4</div>
+                <div class="dot">5</div>
+                <div class="dot">6</div>
+            </div>
+            <h2>Educational Plans</h2>
             <ol>
-            {% for field in personal_form %}
+            {% for field in education_goals_form %}
             <li class="ctrlHolder">
                 <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
                 {% if field.errors %}
@@ -73,36 +230,6 @@
             {% endfor %}
             </ol>
         </fieldset>
-        {% for field in employment_form %}
-            {% if field.name == "employer" %}
-                <fieldset class="blockLabels">
-                <h2>Personal Information</h2>
-                <ol>
-            {% endif %}
-            {% if field.name == "past_employer1" %}
-                </ol>
-                </fieldset>
-                <fieldset class="blockLabels">
-                <h2>Employment History</h2>
-                <ol>
-            {% endif %}
-            <li class="ctrlHolder">
-                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                {% if field.errors %}
-                <div class="warning">
-                <span class="error-message">{{ field.errors|join:", "}}</span>
-                {% else %}
-                <div>
-                {% endif %}
-                {% if field.help_text %}
-                <p class="help">{{field.help_text}}</p>
-                {% endif %}
-                {{field}}
-                </div>
-            </li>
-        {% endfor %}
-        </ol>
-        </fieldset>
         <fieldset class="blockLabels">
             <ol>
                 <li class="btnHolder">
@@ -113,6 +240,8 @@
         </fieldset>
     </form>
 </div>
-{% endblock %}
-{% block sidebar %}
+</div>
+<div id="fourth">
+    {% include "adulted/fourth_col.html" %}
+</div>
 {% endblock %}

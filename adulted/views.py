@@ -11,12 +11,12 @@ def admissions_form(request):
         contact_form = ContactForm(request.POST)
         personal_form = PersonalForm(request.POST)
         employment_form = EmploymentForm(request.POST)
-        education_form = EducationForm(request.POST)
-        if contact_form.is_valid() and personal_form.is_valid() and employment_form.is_valid() and education_form.is_valid():
+        education_goals_form = EducationGoalsForm(request.POST)
+        if contact_form.is_valid() and personal_form.is_valid() and employment_form.is_valid() and education_goals_form.is_valid():
             contact = contact_form.cleaned_data
             personal = personal_form.cleaned_data
             employment = employment_form.cleaned_data
-            education = education_form.cleaned_data
+            education = education_goals_form.cleaned_data
             bcc = settings.MANAGERS
             #recipient_list = ["tom@carthage.edu","brichards@carthage.edu","jweiser@carthage.edu",]
             recipient_list = [settings.SERVER_EMAIL,]
@@ -30,5 +30,5 @@ def admissions_form(request):
         contact_form = ContactForm()
         personal_form = PersonalForm()
         employment_form = EmploymentForm()
-        education_form = EducationForm()
-    return render_to_response("adulted/admissions_form.html", {"contact_form": contact_form,"personal_form":personal_form,"employment_form":employment_form,"education_form":education_form,}, context_instance=RequestContext(request))
+        education_goals_form = EducationGoalsForm()
+    return render_to_response("adulted/admissions_form.html", {"contact_form": contact_form,"personal_form":personal_form,"employment_form":employment_form,"education_goals_form":education_goals_form,}, context_instance=RequestContext(request))

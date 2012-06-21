@@ -5,17 +5,60 @@ from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, COUNTRIES, BINARY
 from djforms.processors.models import Contact, Order
 from djforms.adulted.models import Admissions
 
+import datetime
+NOW    = datetime.datetime.now()
+MONTH  = int(NOW.month)
+YEAR   = int(NOW.year)
+YEAR7  = YEAR
+YEAR14 = YEAR
+
+EDUCATION_GOAL = (
+    (1,"I would like to earn my first bachelor's degree."),
+    (6,"I already have a bachelor's degree and now would like to complete an additional major."),
+    (7,"I would like to take classes for my own personal interest."),
+    (2,"I would like to earn my first bachelor's degree and also become certified to teach."),
+    (3,"I would like to apply to the Master of Education program."),
+    (4,"I would like to apply to the Accelerated Certification for Teachers program."),
+    (5,"I already have a bachelor's degree and now would like to earn certification to teach."),
+)
+
+PROGRAM_CHOICES = (
+    ("7week","7 week format"),
+    ("14week","14 week Undergraduate or Graduate"),
+)
+
+# 7 week years
+if MONTH > 8:
+    YEAR7 =+ 1
+
+# 14 week years
+if MONTH > 2 and MONTH < 10:
+    YEAR14 =+ 1
+
+SESSION7 = (
+    ("7-AG-%s" % YEAR7, "January %s" % YEAR7),
+    ("7-AK-%s" % YEAR7, "February %s" % YEAR7),
+    ("7-AM-%s" % YEAR7, "April %s" % YEAR7),
+    ("7-AS-%s" % YEAR7, "May %s" % YEAR7),
+    ("7-AT-%s" % YEAR7, "July %s" % YEAR7),
+)
+SESSION14 = (
+    ("14-A-%s" % YEAR14, "September %s" % YEAR14),
+    ("14-C-%s" % YEAR14, "February %s" % YEAR14),
+)
+
 class ContactForm(forms.ModelForm):
     """
     Contact form based on the generic processor model
     """
-    previous_last       = forms.CharField(max_length=128, required=False, label="Previous Last Name")
+    previous_last_name  = forms.CharField(max_length=128, required=False, label="Previous Last Name")
     phone               = USPhoneNumberField(max_length=12, help_text="Format: XXX-XXX-XXXX")
     state               = forms.CharField(widget=forms.Select(choices=STATE_CHOICES), required=True)
     postal_code         = USZipCodeField(label="Zip")
 
     class Meta:
         model = Contact
+        exclude = ('country',)
 
 class PersonalForm(forms.Form):
     """
@@ -24,9 +67,7 @@ class PersonalForm(forms.Form):
     gender              = forms.TypedChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect())
     ss_num              = USSocialSecurityNumberField(label="Social security number")
     dob                 = forms.DateField(label = "Date of birth", help_text="Format: dd/mm/yyyy")
-    birth_city          = forms.CharField(max_length=128)
-    birth_state         = forms.CharField(widget=forms.Select(choices=STATE_CHOICES))
-    birth_country       = forms.CharField(widget=forms.Select(choices=COUNTRIES))
+    pob                 = forms.CharField(label = "Place of birth", help_text="City, state, zip, country", max_length=255)
 
 class EmploymentForm(forms.Form):
     """
@@ -35,43 +76,15 @@ class EmploymentForm(forms.Form):
     # current employment
     employer            = forms.CharField(max_length=128, required=False)
     position            = forms.CharField(max_length=128, required=False)
-    tuition_reimburse   = forms.TypedChoiceField(widget=forms.RadioSelect(choices=BINARY_CHOICES), label="Does your employer offer tuition reimbursement?")
-    # employment history
-    past_employer1      = forms.CharField(max_length=128, required=False)
-    past_position1      = forms.CharField(max_length=128, required=False)
-    past_dates1         = forms.CharField(max_length=128, required=False)
-    past_employer2      = forms.CharField(max_length=128, required=False)
-    past_position2      = forms.CharField(max_length=128, required=False)
-    past_dates2         = forms.CharField(max_length=128, required=False)
-    past_employer3      = forms.CharField(max_length=128, required=False)
-    past_position3      = forms.CharField(max_length=128, required=False)
-    past_dates3         = forms.CharField(max_length=128, required=False)
+    tuition_reimburse   = forms.TypedChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect(), label="Does your employer offer tuition reimbursement?")
 
-class EducationForm(forms.Form):
-    """
-    education background
-    """
-    # high schools and colleges
-    school1             = forms.CharField(max_length=128, required=False, label="School")
-    location1           = forms.CharField(max_length=128, required=False, label="Location")
-    dip_degree1         = forms.CharField(max_length=128, required=False, label="Diploma/Degree")
-    attend1             = forms.CharField(max_length=128, required=False, label="Dates attended")
-    school2             = forms.CharField(max_length=128, required=False, label="School")
-    location2           = forms.CharField(max_length=128, required=False, label="Location")
-    dip_degree2         = forms.CharField(max_length=128, required=False, label="Diploma/Degree")
-    attend2             = forms.CharField(max_length=128, required=False, label="Dates attended")
-    school3             = forms.CharField(max_length=128, required=False, label="School")
-    location3           = forms.CharField(max_length=128, required=False, label="Location")
-    dip_degree3         = forms.CharField(max_length=128, required=False, label="Diploma/Degree")
-    attend3             = forms.CharField(max_length=128, required=False, label="Dates attended")
-    school4             = forms.CharField(max_length=128, required=False, label="School")
-    location4           = forms.CharField(max_length=128, required=False, label="Location")
-    dip_degree4         = forms.CharField(max_length=128, required=False, label="Diploma/Degree")
-    attend4             = forms.CharField(max_length=128, required=False, label="Dates attended")
-    school5             = forms.CharField(max_length=128, required=False, label="School")
-    location5           = forms.CharField(max_length=128, required=False, label="Location")
-    dip_degree5         = forms.CharField(max_length=128, required=False, label="Diploma/Degree")
-    attend5             = forms.CharField(max_length=128, required=False, label="Dates attended")
-    military_service    = forms.CharField(widget=forms.Select(choices=BINARY_CHOICES), label="Have you ever served in the military?")
-    statement           = forms.CharField(widget=forms.Textarea)
-    payment_method      = forms.CharField(widget=forms.Select(choices=PAYMENT_CHOICES))
+class EducationGoalsForm(forms.Form):
+
+    educationalgoal     = forms.TypedChoiceField(choices=EDUCATION_GOAL, widget=forms.RadioSelect(), label="What degree are you intending to pursue?")
+    program             = forms.TypedChoiceField(choices=PROGRAM_CHOICES, widget=forms.RadioSelect(), label="Choose the scheduling format")
+    session7            = forms.TypedChoiceField(choices=SESSION7, widget=forms.RadioSelect(), label="Upcoming 7 Week Sessions")
+    session14           = forms.TypedChoiceField(choices=SESSION14, widget=forms.RadioSelect(), label="Upcoming 14 Week Sessions")
+    intented_major      = forms.CharField(max_length=128)
+    intented_minor      = forms.CharField(max_length=128)
+    certificiation      = forms.CharField(max_length=128, label="Intended certification")
+
