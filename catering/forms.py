@@ -35,7 +35,7 @@ except:
 
 try:
     bar_pay_tag     = Tag.objects.get(name__iexact='Bar payment')
-    BAR_PAY         = TaggedItem.objects.get_by_model(GenericChoice, bar_pay_tag).filter(active=True).order_by("name")
+    BAR_PAY         = TaggedItem.objects.get_by_model(GenericChoice, bar_pay_tag).filter(active=True).order_by("ranking")
 except:
     BAR_PAY         = GenericChoice.objects.none()
 

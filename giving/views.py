@@ -39,7 +39,7 @@ def pledge(request, campaign=""):
                 or_data.save()
                 # sendmail
                 bcc = settings.MANAGERS
-                recipient_list = ["lhansen@carthage.edu","fleisky@carthage.edu",]
+                recipient_list = ["lpieta@carthage.edu","lhansen@carthage.edu",]
                 t = loader.get_template('giving/pledge_email.html')
                 c = RequestContext(request, {'order':or_data,'campaign':campaign,'years':years,})
                 email = EmailMessage(("[pledge Donation] %s %s" % (or_data.contact.first_name,or_data.contact.last_name)), t.render(c), or_data.contact.email, recipient_list, bcc, headers = {'Reply-To': or_data.contact.email,'From': or_data.contact.email})
