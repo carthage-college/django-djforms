@@ -4,6 +4,8 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 
+from djforms.processors.models import Contact, Order
+from djforms.processors.forms import TrustCommerceForm
 from djforms.adulted.forms import *
 
 def admissions_form(request):
@@ -12,7 +14,8 @@ def admissions_form(request):
         personal_form = PersonalForm(request.POST)
         employment_form = EmploymentForm(request.POST)
         education_goals_form = EducationGoalsForm(request.POST)
-        if contact_form.is_valid() and personal_form.is_valid() and employment_form.is_valid() and education_goals_form.is_valid():
+        fee_form = ApplicationFeeForm(request.POST)
+        if contact_form.is_valid() and personal_form.is_valid() and employment_form.is_valid() and education_goals_form.is_valid() and fee_form.is_valid():
             contact = contact_form.cleaned_data
             personal = personal_form.cleaned_data
             employment = employment_form.cleaned_data
@@ -26,9 +29,17 @@ def admissions_form(request):
             email.content_subtype = "html"
             email.send(fail_silently=True)
             return HttpResponseRedirect('/forms/adulted/admissions/success/')
+        else:
+            if request.POST.get('payment_type') == "Credit Card":
+                payment_form = TrustCommerceForm(None, request.POST)
+                payment_form.is_valid()
+            else:
+                payment_form = TrustCommerceForm()
     else:
         contact_form = ContactForm()
         personal_form = PersonalForm()
         employment_form = EmploymentForm()
         education_goals_form = EducationGoalsForm()
-    return render_to_response("adulted/admissions_form.html", {"contact_form": contact_form,"personal_form":personal_form,"employment_form":employment_form,"education_goals_form":education_goals_form,}, context_instance=RequestContext(request))
+        fee_form = ApplicationFeeForm()
+        payment_form = TrustCommerceForm()
+    return render_to_response("adulted/admissions_form.html", {"contact_form":contact_form,"personal_form":personal_form,"employment_form":employment_form,"education_goals_form":education_goals_form,"fee_form":fee_form,"payment_form":payment_form,}, context_instance=RequestContext(request))

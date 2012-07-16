@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField, USSocialSecurityNumberField
 
 from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, COUNTRIES, BINARY_CHOICES, PAYMENT_CHOICES
-from djforms.processors.models import Contact, Order
+from djforms.processors.models import Contact
 from djforms.adulted.models import Admissions
 
 import datetime
@@ -11,6 +11,9 @@ MONTH  = int(NOW.month)
 YEAR   = int(NOW.year)
 YEAR7  = YEAR
 YEAR14 = YEAR
+
+UNI_YEARS  = [(x, x) for x in xrange(1926,datetime.date.today().year + 1)]
+UNI_YEARS2 = [(x, x) for x in xrange(1926,datetime.date.today().year + 3)]
 
 EDUCATION_GOAL = (
     (1,"I would like to earn my first bachelor's degree."),
@@ -29,11 +32,11 @@ PROGRAM_CHOICES = (
 
 # 7 week years
 if MONTH > 8:
-    YEAR7 =+ 1
+    YEAR7 += 1
 
 # 14 week years
 if MONTH > 2 and MONTH < 10:
-    YEAR14 =+ 1
+    YEAR14 += 1
 
 SESSION7 = (
     ("7-AG-%s" % YEAR7, "January %s" % YEAR7),
@@ -43,7 +46,7 @@ SESSION7 = (
     ("7-AT-%s" % YEAR7, "July %s" % YEAR7),
 )
 SESSION14 = (
-    ("14-A-%s" % YEAR14, "September %s" % YEAR14),
+    ("14-A-%s" % YEAR14, "September %s" % YEAR7),
     ("14-C-%s" % YEAR14, "February %s" % YEAR14),
 )
 
@@ -84,7 +87,14 @@ class EducationGoalsForm(forms.Form):
     program             = forms.TypedChoiceField(choices=PROGRAM_CHOICES, widget=forms.RadioSelect(), label="Choose the scheduling format")
     session7            = forms.TypedChoiceField(choices=SESSION7, widget=forms.RadioSelect(), label="Upcoming 7 Week Sessions")
     session14           = forms.TypedChoiceField(choices=SESSION14, widget=forms.RadioSelect(), label="Upcoming 14 Week Sessions")
-    intented_major      = forms.CharField(max_length=128)
-    intented_minor      = forms.CharField(max_length=128)
-    certificiation      = forms.CharField(max_length=128, label="Intended certification")
+    intended_major      = forms.CharField(max_length=128, required=False)
+    intended_minor      = forms.CharField(max_length=128, required=False)
+    certificiation      = forms.CharField(max_length=128, label="Intended certification", required=False)
 
+class ApplicationFeeForm(forms.Form):
+    """
+    Application Fee form
+    """
+    #amount              = forms.CharField(max_length=6, required=True, initial="$10.00", label="Application Fee")
+    amount              = forms.CharField(widget=forms.HiddenInput(), initial="$10.00")
+    payment_type        = forms.TypedChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect())
