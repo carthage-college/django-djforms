@@ -12,8 +12,8 @@ YEAR   = int(NOW.year)
 YEAR7  = YEAR
 YEAR14 = YEAR
 
-UNI_YEARS  = [(x, x) for x in xrange(1926,datetime.date.today().year + 1)]
-UNI_YEARS2 = [(x, x) for x in xrange(1926,datetime.date.today().year + 3)]
+UNI_YEARS1 = [x for x in reversed(xrange(1926,datetime.date.today().year + 1))]
+UNI_YEARS2 = [x for x in reversed(xrange(1926,datetime.date.today().year + 3))]
 
 EDUCATION_GOAL = (
     (1,"I would like to earn my first bachelor's degree."),
@@ -26,8 +26,8 @@ EDUCATION_GOAL = (
 )
 
 PROGRAM_CHOICES = (
-    ("7week","7 week format"),
-    ("14week","14 week Undergraduate or Graduate"),
+    ("7","7 week format"),
+    ("14","14 week Undergraduate or Graduate"),
 )
 
 # 7 week years
@@ -85,11 +85,16 @@ class EducationGoalsForm(forms.Form):
 
     educationalgoal     = forms.TypedChoiceField(choices=EDUCATION_GOAL, widget=forms.RadioSelect(), label="What degree are you intending to pursue?")
     program             = forms.TypedChoiceField(choices=PROGRAM_CHOICES, widget=forms.RadioSelect(), label="Choose the scheduling format")
-    session7            = forms.TypedChoiceField(choices=SESSION7, widget=forms.RadioSelect(), label="Upcoming 7 Week Sessions")
-    session14           = forms.TypedChoiceField(choices=SESSION14, widget=forms.RadioSelect(), label="Upcoming 14 Week Sessions")
+    session7            = forms.TypedChoiceField(choices=SESSION7, widget=forms.RadioSelect(), label="Upcoming 7 Week Sessions", required=False)
+    session14           = forms.TypedChoiceField(choices=SESSION14, widget=forms.RadioSelect(), label="Upcoming 14 Week Sessions", required=False)
     intended_major      = forms.CharField(max_length=128, required=False)
     intended_minor      = forms.CharField(max_length=128, required=False)
     certificiation      = forms.CharField(max_length=128, label="Intended certification", required=False)
+
+    def clean_session7(self):
+        if not self.cleaned_data.get('session7') and not self.cleaned_data.get('session14'):
+            self._errors["session7"] = self.error_class(["Choose either a 7 or 14 week upcoming session"])
+        return self.cleaned_data
 
 class ApplicationFeeForm(forms.Form):
     """

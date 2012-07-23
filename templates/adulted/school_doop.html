@@ -1,0 +1,61 @@
+<div id="doop_master" class="notice">
+    <input type="button" value="Remove This School" style="margin-top:9px;" class="destroy_school button fright" />
+    <input type="hidden" value="college" name="school_type[]">
+    <input type="hidden" value="{{s.school_code}}" class="school_code" name="school_code[]">
+    <dl class="fleft">
+    <dt>Name</dt>
+    <dd><input type="text" value="{{s.school_name}}" class="large" name="school_name[]" /></dd>
+    <dt>City</dt>
+    <dd><input type="text" value="{{s.school_city}}" class="large" name="school_city[]"></dd>
+    <dt>State</dt>
+    <dd><input type="text" value="{{s.school_state}}" class="large" name="school_state[]"></dd>
+    </dl>
+    <dl class="fright" style="margin-top:30px;">
+        <div>
+            <label for="doop_att_from_month" class="labelpad">Attended from:</label>
+            <select name="doop_att_from_month[]" class="doop_att_from_month">
+                <option value="0"></option>
+                {% for m,n in months.items %}
+                <option value="{{m}}"{% if s.doop_att_from_month == m %} selected="selected"{% endif %}>{{n}}</option>
+                {% endfor %}
+            </select>
+            <select name="doop_att_from_year[]" class="doop_att_from_year">
+                <option value=""></option>
+                {% for year in years1 %}
+                    <option value="{{year}}"{% if s.doop_att_from_year == year %} selected="selected"{% endif %}>{{year}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="doop_att_to_month" class="labelpad">Attended to:</label>
+            <select name="doop_att_to_month[]" class="doop_att_to_month">
+                <option value="0"></option>
+                {% for m,n in months.items %}
+                <option value="{{m}}"{% if s.doop_att_to_month == m %} selected="selected"{% endif %}>{{n}}</option>
+                {% endfor %}
+            </select>
+            <select name="doop_att_to_year[]" class="doop_att_to_year">
+                <option value=""></option>
+                {% for year in years2 %}
+                    <option value="{{year}}"{% if s.doop_att_to_year == year %} selected="selected"{% endif %}>{{year}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="doop_grad_month" class="labelpad">Date of graduation:</label>
+            <select name="doop_grad_month[]" class="doop_grad_month">
+                <option value="0"></option>
+                {% for m,n in months.items %}
+                <option value="{{m}}"{% if s.doop_grad_month == m %} selected="selected"{% endif %}>{{n}}</option>
+                {% endfor %}
+            </select>
+            <select name="doop_grad_year[]" class="doop_grad_year">
+                <option value=""></option>
+                {% for year in years2 %}
+                    <option value="{{year}}"{% if s.doop_grad_year == year %} selected="selected"{% endif %}>{{year}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </dl>
+    <div style="clear:both;"></div>
+</div>

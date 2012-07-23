@@ -3,12 +3,16 @@ from django.http import HttpResponseRedirect
 from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
+from django.utils.dates import MONTHS
 
+from djforms.core.models import STATE_CHOICES
 from djforms.processors.models import Contact, Order
 from djforms.processors.forms import TrustCommerceForm
 from djforms.adulted.forms import *
 
 def admissions_form(request):
+    doop = 0
+    schools = []
     if request.method=='POST':
         contact_form = ContactForm(request.POST)
         personal_form = PersonalForm(request.POST)
@@ -42,4 +46,8 @@ def admissions_form(request):
         education_goals_form = EducationGoalsForm()
         fee_form = ApplicationFeeForm()
         payment_form = TrustCommerceForm()
-    return render_to_response("adulted/admissions_form.html", {"contact_form":contact_form,"personal_form":personal_form,"employment_form":employment_form,"education_goals_form":education_goals_form,"fee_form":fee_form,"payment_form":payment_form,}, context_instance=RequestContext(request))
+
+    extra_context = {"contact_form":contact_form,"personal_form":personal_form,"doop":doop,"states":STATE_CHOICES,
+                         "employment_form":employment_form,"education_goals_form":education_goals_form,"schools":schools,
+                         "fee_form":fee_form,"payment_form":payment_form,"months":MONTHS, "years1":UNI_YEARS1,"years2":UNI_YEARS2,}
+    return render_to_response("adulted/admissions_form.html", extra_context, context_instance=RequestContext(request))
