@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     url(r'^memory/$', 'djforms.alumni.memory.views.questionnaire_form', name='memory_questionnaire_form'),
     # homecoming attendance
     url(r'^homecoming/success/$', direct_to_template, {'template': 'alumni/homecoming/attendance_done.html'}),
+    url(r'^homecoming/attendees/(?P<year>\d+)/$', 'djforms.alumni.homecoming.views.attendees', name="homecoming_attendees"),
     url(r'^homecoming/attendees/$', 'djforms.alumni.homecoming.views.attendees', name="homecoming_attendees"),
     url(r'^homecoming/$', 'djforms.alumni.homecoming.views.attendance', name='homecoming_attendance'),
     # mws reunion
