@@ -3,7 +3,6 @@ from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeFie
 
 from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, COUNTRIES, BINARY_CHOICES, PAYMENT_CHOICES
 from djforms.processors.models import Contact
-from djforms.adulted.models import Admissions
 
 import datetime
 NOW    = datetime.datetime.now()
@@ -62,6 +61,10 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         exclude = ('country',)
+
+    def __init__(self,*args,**kwargs):
+        super(ContactForm,self).__init__(*args,**kwargs)
+        self.fields['state'].widget.attrs['class'] = 'required'
 
 class PersonalForm(forms.Form):
     """

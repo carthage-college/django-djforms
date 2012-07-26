@@ -2,9 +2,6 @@ from django.conf import settings
 
 import tclink
 
-import logging
-logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG,)
-
 class PaymentProcessor():
     """
     TrustCommerce payment processing module.
@@ -52,7 +49,6 @@ class PaymentProcessor():
         # convert exp date to mmyy from mm/yy or mm/yyyy
         exp = u"%.2d%.2d" % (int(self.card['expiration_month']), (int(self.card['expiration_year']) % 100))
 
-        logging.debug("auth = %s" % self.auth)
         self.transactionData = {
             # account data
             'custid'        : self.custid,

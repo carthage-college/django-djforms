@@ -136,31 +136,33 @@ $(function() {
             $("#doop_master").find("input[name^=school_city]").val(city);
             $("#doop_master").find("input[name^=school_state]").val(state);
             // dates
-            $("#doop_master").find(".doop_att_from_month option").filter(function() {
-                return $(this).val() == $("#att_from_month").val();
+            $("#doop_master").find(".from_month option").filter(function() {
+                return $(this).val() == $("#from_month_orig").val();
             }).attr('selected', true);
-            $("#doop_master").find(".doop_att_from_year option").filter(function() {
-                return $(this).val() == $("#att_from_year").val();
+            $("#doop_master").find(".from_year option").filter(function() {
+                return $(this).val() == $("#from_year_orig").val();
             }).attr('selected', true);
-            $("#doop_master").find(".doop_att_to_month option").filter(function() {
-                return $(this).val() == $("#att_to_month").val();
+            $("#doop_master").find(".to_month option").filter(function() {
+                return $(this).val() == $("#to_month_orig").val();
             }).attr('selected', true);
-            $("#doop_master").find(".doop_att_to_year option").filter(function() {
-                return $(this).val() == $("#att_to_year").val();
+            $("#doop_master").find(".to_year option").filter(function() {
+                return $(this).val() == $("#to_year_orig").val();
             }).attr('selected', true);
-            $("#doop_master").find(".doop_grad_month option").filter(function() {
-                return $(this).val() == $("#grad_month").val();
+            $("#doop_master").find(".grad_month option").filter(function() {
+                return $(this).val() == $("#grad_month_orig").val();
             }).attr('selected', true);
-            $("#doop_master").find(".doop_grad_year option").filter(function() {
-                return $(this).val() == $("#grad_year").val();
+            $("#doop_master").find(".grad_year option").filter(function() {
+                return $(this).val() == $("#grad_year_orig").val();
             }).attr('selected', true);
             // clone the doop
             $("#doop_master").clone().attr("id",newId).appendTo("#selected_schools");
             // clear the doop and dynamic selects
             $("#doop_master").find(".school_code").val("");
+            $("#doop_master").find(".school_name").val("");
+            $("#doop_master").find(".school_city").val("");
+            $("#doop_master").find(".school_state").val("");
             $("#doop_master").find('*').attr('selected', false);
-            $("select[name^=att_]").find('*').attr('selected', false);
-            $("select[name^=grad_]").find('*').attr('selected', false);
+            $("select[name$=_orig]").find('*').attr('selected', false);
             $("#states").children().removeProp('selected');
             $("#cities").empty();
             $("#schools").empty();
@@ -431,17 +433,14 @@ form dd { margin: 0; }
                     <h3 class="required">Choose a Session</h3>
                 {% endif %}
             </li>
-            {% for field in education_goals_form %}
-            {% if field.name == "session7" or field.name == "session14" %}
             <li class="ctrlHolder">
-                <h3>{{ field.label_tag }}</h3>
-                <div>
-                    <p class="help">{{field.help_text}}</p>
-                    {{field}}
-                </div>
+                <h3>Upcoming 7 Week Sessions</h3>
+                <div>{{education_goals_form.session7}}</div>
             </li>
-            {% endif %}
-            {% endfor %}
+            <li class="ctrlHolder">
+                <h3>Upcoming 14 Week Sessions</h3>
+                <div>{{education_goals_form.session14}}</div>
+            </li>
             </ol>
             <h3><label for="id_intended_major">Intended major</label></h3>
             <div>
@@ -466,16 +465,20 @@ form dd { margin: 0; }
                 <div class="dot">6</div>
             </div>
             <h2>Colleges you have attended</h2>
+            <div id="doop_master" class="notice">
+                {% include "adulted/school_doop.html" %}
+            </div>
             <div id="selected_schools">
                 <div id="selected_schools_introtext">
                     <p class="notice">Please choose your school(s) from the selections below. Please make sure to click the "ADD" button once you have found your school and entered the appropriate dates. Once you have added a school, it will appear in this box. If a school does not appear in this box, it has not been added to your application. You can list as many schools as necessary.</p>
                     {% if schools %}
                         {% for s in schools %}
+                            <div id="doop_master_{{forloop.counter}}" class="notice">
                             {% include "adulted/school_doop.html" %}
+                            </div>
                         {% endfor %}
                     {% endif %}
                 </div>
-                {% include "adulted/school_doop.html" %}
             </div>
             <div id="selectschool" style="height:200px">
             <h3 style="margin-top:10px;">Please select the state and then city to find your school.</h3>
@@ -520,11 +523,11 @@ form dd { margin: 0; }
                 <input type="button" name="toggle_schools" id="toggle_schools" class="button" value="Click here if your school is not listed" />
             </div>
             <div>
-                <label for="att_from_month" class="labelpad">Attended from:</label>
-                <select name="att_from_month" id="att_from_month">
+                <label for="from_month_orig" class="labelpad">Attended from:</label>
+                <select name="from_month_orig" id="from_month_orig">
                     <option value="0"></option> <option value="1" >January</option><option value="2" >February</option><option value="3" >March</option><option value="4" >April</option><option value="5" >May</option><option value="6" >June</option><option value="7" >July</option><option value="8" >August</option><option value="9" >September</option><option value="10" >October</option><option value="11" >November</option><option value="12" >December</option>
                 </select>
-                <select name="att_from_year" id="att_from_year">
+                <select name="from_year_orig" id="from_year_orig">
                     <option value="0"></option>
                     {% for year in years1 %}
                         <option value="{{year}}">{{year}}</option>
@@ -532,11 +535,11 @@ form dd { margin: 0; }
                 </select>
             </div>
             <div>
-                <label for="att_to_month" class="labelpad">Attended to:</label>
-                <select name="att_to_month" id="att_to_month">
+                <label for="to_month_orig" class="labelpad">Attended to:</label>
+                <select name="to_month_orig" id="to_month_orig">
                     <option value="0"></option> <option value="1" >January</option><option value="2" >February</option><option value="3" >March</option><option value="4" >April</option><option value="5" >May</option><option value="6" >June</option><option value="7" >July</option><option value="8" >August</option><option value="9" >September</option><option value="10" >October</option><option value="11" >November</option><option value="12" >December</option>
                 </select>
-                <select name="att_to_year" id="att_to_year">
+                <select name="to_year_orig" id="to_year_orig">
                     <option value="0"></option>
                     {% for year in years2 %}
                         <option value="{{year}}">{{year}}</option>
@@ -544,11 +547,11 @@ form dd { margin: 0; }
                 </select>
             </div>
             <div>
-                <label for="grad_month" class="labelpad">Date of graduation:</label>
-                <select name="grad_month" id="grad_month">
+                <label for="grad_month_orig" class="labelpad">Date of graduation:</label>
+                <select name="grad_month_orig" id="grad_month_orig">
                     <option value="0"></option> <option value="1" >January</option><option value="2" >February</option><option value="3" >March</option><option value="4" >April</option><option value="5" >May</option><option value="6" >June</option><option value="7" >July</option><option value="8" >August</option><option value="9" >September</option><option value="10" >October</option><option value="11" >November</option><option value="12" >December</option>
                 </select>
-                <select name="grad_year" id="grad_year">
+                <select name="grad_year_orig" id="grad_year_orig">
                     <option value="0"></option>
                     {% for year in years2 %}
                         <option value="{{year}}">{{year}}</option>

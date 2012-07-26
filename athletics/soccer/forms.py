@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
-from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
+from djforms.core.models import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
 
 YEAR_CHOICES = (
     ('1', '1'),
