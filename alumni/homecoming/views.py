@@ -26,6 +26,6 @@ def attendance(request):
     return render_to_response("alumni/homecoming/attendance_form.html", {"form": form,}, context_instance=RequestContext(request))
 
 def attendees(request):
-    attendees = Attendee.objects.all().order_by("last_name")
+    attendees = Attendee.objects.all().order_by("grad_year, last_name")
     return render_to_response("alumni/homecoming/attendance_archives.html", {"attendees": attendees,}, context_instance=RequestContext(request))
 
