@@ -52,6 +52,8 @@ urlpatterns = patterns('',
     (r'^languages/', include('djforms.languages.urls')),
     # maintenance/evs
     (r'^maintenance/', include('djforms.maintenance.urls')),
+    # music
+    (r'^music/', include('djforms.music.urls')),
     # polisci
     (r'^political-science/', include('djforms.polisci.urls')),
     # president

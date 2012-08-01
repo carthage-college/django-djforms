@@ -38,7 +38,8 @@ YEAR_CHOICES = (
     ('1','Freshman'),
     ('2','Sophmore'),
     ('3','Junior'),
-    ('4','Senior')
+    ('4','Senior'),
+    ('5','Other')
 )
 PAYMENT_CHOICES = (
     ('Credit Card', 'Credit Card'),
