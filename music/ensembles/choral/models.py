@@ -14,7 +14,7 @@ CHORAL_CHOICES = (
 )
 
 class TimeSlot(models.Model):
-    date_time       = models.CharField("Time slot", max_length="128", unique=True)
+    date_time       = models.CharField("Time slot", max_length="128")
     active          = models.BooleanField(default=True)
 
     class Meta:
