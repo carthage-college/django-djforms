@@ -15,7 +15,7 @@ def attendance(request):
         if form.is_valid():
             attendee = form.save()
             bcc = settings.MANAGERS
-            recipient_list = ["mfisher@carthage.edu",]
+            recipient_list = ["alumnioffice@carthage.edu",]
             #recipient_list = ["larry@carthage.edu",]
             t = loader.get_template('alumni/homecoming/attendance_email.html')
             c = RequestContext(request, {'attendee':attendee,})
