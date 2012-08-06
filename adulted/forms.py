@@ -16,12 +16,12 @@ UNI_YEARS2 = [x for x in reversed(xrange(1926,datetime.date.today().year + 3))]
 
 EDUCATION_GOAL = (
     (1,"I would like to earn my first bachelor's degree."),
-    (6,"I already have a bachelor's degree and now would like to complete an additional major."),
-    (7,"I would like to take classes for my own personal interest."),
     (2,"I would like to earn my first bachelor's degree and also become certified to teach."),
     (3,"I would like to apply to the Master of Education program."),
     (4,"I would like to apply to the Accelerated Certification for Teachers program."),
     (5,"I already have a bachelor's degree and now would like to earn certification to teach."),
+    (6,"I already have a bachelor's degree and now would like to complete an additional major."),
+    (7,"I would like to take classes for my own personal interest."),
 )
 
 PROGRAM_CHOICES = (
@@ -30,7 +30,7 @@ PROGRAM_CHOICES = (
 )
 
 # 7 week years
-if MONTH > 8:
+if MONTH >= 8:
     YEAR7 += 1
 
 # 14 week years
@@ -94,7 +94,7 @@ class EducationGoalsForm(forms.Form):
     intended_minor      = forms.CharField(max_length=128, required=False)
     certificiation      = forms.CharField(max_length=128, label="Intended certification", required=False)
 
-    def clean_session7(self):
+    def clean(self):
         if not self.cleaned_data.get('session7') and not self.cleaned_data.get('session14'):
             self._errors["session7"] = self.error_class(["Choose either a 7 or 14 week upcoming session"])
         return self.cleaned_data
@@ -103,6 +103,5 @@ class ApplicationFeeForm(forms.Form):
     """
     Application Fee form
     """
-    #amount              = forms.CharField(max_length=6, required=True, initial="$10.00", label="Application Fee")
     amount              = forms.CharField(widget=forms.HiddenInput(), initial="$10.00")
     payment_type        = forms.TypedChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect())
