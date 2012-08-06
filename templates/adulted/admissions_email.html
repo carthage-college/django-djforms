@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<style>
+dl {margin-bottom:50px;}
+dl dt {
+background:#5f9be3;
+color:#fff;
+float:left;
+font-weight:bold;
+margin-right:10px;
+padding:5px;
+width:200px;
+}
+dl dd {
+margin:2px 0;
+padding:5px 0;
+}
+</style>
+</head>
+<body>
+<h1>Admissions Application</h1>
+<p><strong>${{data.fee.amount}} Payment type: {{data.fee.payment_type}}</strong> {% if data.fee.payment_type == "Credit Card" %}[Transaction ID: {{data.order.transid}}]{% endif %}</p>
+<h2>Contact Information</h2>
+<dl style="margin-bottom:50px;">
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">First name</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.contact.first_name}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Last name</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.contact.last_name}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Email</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.contact.email}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Address</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.contact.address1}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Address2</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.contact.address2|default:"&nbsp;"}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">City</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.contact.city}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">State</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.contact.state}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Zip</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.contact.postal_code}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Phone</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.contact.phone}}</dd>
+</dl>
+<h2>Personal Information</h2>
+<dl style="margin-bottom:50px;">
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Social security</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.personal.ss_num}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Date of birth</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.personal.dob}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Place of birth</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.personal.pob}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Gender</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.personal.gender}}</dd>
+</dl>
+<h2>Employment</h2>
+<dl style="margin-bottom:50px;">
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Employer</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.employment.employer}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Position</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.employment.position}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Tuituion Reimbursement</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.employment.tuition_reimburse}}</dd>
+</dl>
+<h2>Education</h2>
+<dl style="margin-bottom:50px;">
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Educational goal</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.education.educationalgoalname}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Program</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.education.program}} week</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Session</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{% if data.education.session7 %}{{data.education.session7}}{% else %}{{data.education.session14}}{% endif %}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Intended major</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.education.intended_major}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Intended minor</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.education.intended_minor}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Intended certificiation</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.education.certificiation}}</dd>
+</dl>
+<h2>Schools Attended</h2>
+{% for s in data.schools %}
+<dl style="margin-bottom:50px;">
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Name & code</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{s.school_name}} [{{s.school_code}}]</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">City</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{s.school_city}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">State</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{s.school_state}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">From</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{s.from_month}}/{{s.from_year}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">To</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{s.to_month}}/{{s.to_year}}</dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Graduation Date</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{s.grad_month}}/{{s.grad_year}}</dd>
+</dl>
+{% endfor %}
+</body>
+</html>

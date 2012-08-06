@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.localflavor.us.forms import USPhoneNumberField
 
-from sputnik.apps.utilities.forms.fields import KungfuTimeField
+from djforms.core.fields import KungfuTimeField
 from djforms.core.models import BINARY_CHOICES
 
 import datetime

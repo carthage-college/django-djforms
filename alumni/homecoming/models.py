@@ -18,6 +18,3 @@ class Attendee(GenericContact):
     def __unicode__(self):
         return u'%s %s' % (self.last_name, self.first_name)
 
-    def get_absolute_url(self):
-        return reverse("reunion_contact_detail", args=[self.pk])
-

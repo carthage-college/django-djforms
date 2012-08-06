@@ -3,188 +3,24 @@
 {% block title %}Admissions Form &mdash; Adult Education &mdash; Carthage College{% endblock %}
 {% block extra_javascript %}
 <script src="/static/forms/apps/InFieldLabels/jquery.infieldlabel.min.js" type="text/javascript"></script>
-<script type="text/javascript" charset="utf-8">
-function sel(num) {
-    if (num == 14) {
-            $('input[name=session7]:radio').attr('disabled', 'disabled')
-            $('input[name=session7]:radio').removeAttr('checked');
-            $('input[name=session14]:radio').removeAttr('disabled')
-            $('input[name=session7]:radio').attr('checked', false);
-    }
-    else if (num == 7) {
-            $('input[name=session14]:radio').attr('disabled', 'disabled')
-            $('input[name=session7]:radio').removeAttr('disabled')
-            $('input[name=session14]:radio').attr('checked', false);
-    }
-}
-
-$(function() {
-    /* simulate html5 placeholder feature for broken-ass browsers */
-    jQuery.support.placeholder = false;
-    test = document.createElement('input');
-    // inFieldLabels plugin adds placeholder feature similar to html5.
-    if('placeholder' in test) jQuery.support.placeholder = true;
-    if(!$.support.placeholder) {
-        $("label").inFieldLabels();
-        $("input").attr("autocomplete","off");
-    } else {
-        $(".placeholder").hide();
-    }
-
-    /* payment options. hide credit card form if not cc. */
-    $('#id_payment_type_0').click(function() {
-        $('#payment-details').show();
-    });
-    $('#id_payment_type_1').click(function() {
-        $('#payment-details').hide();
-    });
-    $('#id_payment_type_2').click(function() {
-        $('#payment-details').hide();
-    });
-
-    /* control logic for 7/14 week sessions where some things are only
-       offered in 14 week session
-    */
-    $("[id^=id_educationalgoal_]").click(function() {
-        num = $(this).val();
-        if (num == 1 || num == 6 || num == 7) {
-            if ($('input[name=program][value=7]:radio').attr('disabled')) {
-                $('input[name=program][value=7]:radio').removeAttr('disabled');
-                $('input[name=session7]:radio').removeAttr('disabled')
-            }
-        }
-        else if (num == 2 || num == 3 || num == 4 || num == 5) {
-            if (!$('input[name=program][value=7]:radio').attr('disabled')) {
-                $('input[name=program][value=7]:radio').attr('disabled', 'disabled');
-                $('input[name=session7]:radio').attr('disabled', 'disabled')
-                $('input[name=program][value=14]:radio').attr('checked', true)
-                sel(14);
-            }
-        }
-    });
-    // disable access to the unselected 7/14 week session
-    $("[id^=id_program_]").click(function() {
-        sel($(this).val());
-    });
-
-    /* dynamic selection of schools based on state and city. */
-    // state select field populated via ajax which returns HTML
-    $("#states").change(function() {
-        var id=$(this).val();
-        var dataString = 'state='+ id;
-        $.ajax ({
-            type: "POST",
-            url: "/jenzabar/admissions/cities/",
-            data: dataString,
-            cache: false,
-            success: function(html) {
-                $("#cities").html(html);
-            }
-        });
-    });
-    // city select field populated via ajax based on state selected
-    $("#cities").change(function() {
-        var dataString = 'city='+ $(this).val() + '&state=' + $("#states").val();
-        $.ajax ({
-            type: "POST",
-            url: "/jenzabar/admissions/schools/",
-            data: dataString,
-            cache: false,
-            success: function(html) {
-                $("#schools").html(html);
-            }
-        });
-    });
-
-    /* toggle between manual and dynamic selection of schools */
-    $("#toggle_schools").click(function() {
-        $('#selectschool, #manualschool').slideToggle();
-        $(this).val($(this).val() == 'Return to school listings' ? 'Click here if your school is not listed' : 'Return to school listings');
-        return false;
-    });
-
-    /* add and remove schools */
-    // remove schools
-    $(".destroy_school").live('click', function() {
-        $(this).parent().remove();
-    });
-    // add schools
+<script type="text/javascript">
     var doop = {{doop}};
-    $("#add_school").click(function () {
-        if ($("#toggle_schools").val() == "Return to school listings" ) {
-            dynamic = false;
-            city = $("#man_city").val();
-            state = $("#man_state").val();
-            school = $("#man_school").val();
-        } else {
-            dynamic = true;
-            city = $("#cities").val();
-            state = $("#states").val();
-            school = $("#schools").val(); // used for error handling only
-        }
-        if (city && state && school) {
-            doop++;
-            newId = "doop_" + doop;
-            // error handling above does not work with .text() in select elements
-            // so we use val() for error handling and then reassign here
-            if (dynamic) {
-                school = $("#schools").text();
-            }
-            // names and places
-            $("#doop_master").find(".school_code").val($("#schools").val());
-            $("#doop_master").find("input[name^=school_name]").val(school);
-            $("#doop_master").find("input[name^=school_city]").val(city);
-            $("#doop_master").find("input[name^=school_state]").val(state);
-            // dates
-            $("#doop_master").find(".from_month option").filter(function() {
-                return $(this).val() == $("#from_month_orig").val();
-            }).attr('selected', true);
-            $("#doop_master").find(".from_year option").filter(function() {
-                return $(this).val() == $("#from_year_orig").val();
-            }).attr('selected', true);
-            $("#doop_master").find(".to_month option").filter(function() {
-                return $(this).val() == $("#to_month_orig").val();
-            }).attr('selected', true);
-            $("#doop_master").find(".to_year option").filter(function() {
-                return $(this).val() == $("#to_year_orig").val();
-            }).attr('selected', true);
-            $("#doop_master").find(".grad_month option").filter(function() {
-                return $(this).val() == $("#grad_month_orig").val();
-            }).attr('selected', true);
-            $("#doop_master").find(".grad_year option").filter(function() {
-                return $(this).val() == $("#grad_year_orig").val();
-            }).attr('selected', true);
-            // clone the doop
-            $("#doop_master").clone().attr("id",newId).appendTo("#selected_schools");
-            // clear the doop and dynamic selects
-            $("#doop_master").find(".school_code").val("");
-            $("#doop_master").find(".school_name").val("");
-            $("#doop_master").find(".school_city").val("");
-            $("#doop_master").find(".school_state").val("");
-            $("#doop_master").find('*').attr('selected', false);
-            $("select[name$=_orig]").find('*').attr('selected', false);
-            $("#states").children().removeProp('selected');
-            $("#cities").empty();
-            $("#schools").empty();
-            $("#man_state").val('');
-            $("#man_city").val('');
-            $("#man_school").val('');
-        } else {
-            error = "Required fields are empty: ";
-            if (!city){
-                error += "City, "
-            }
-            if (!state){
-                error += "State, "
-            }
-            if (!school){
-                error += "School"
-            }
-            alert(error);
-        }
+    $(function() {
+    {% if education_goals_form.data.session7 %}
+        $('input[name=session14]:radio').attr('disabled', 'disabled');
+    {% endif %}
+    {% if education_goals_form.data.session14 %}
+        $('input[name=session7]:radio').attr('disabled', 'disabled');
+    {% endif %}
+    {% if education_goals_form.data.program == "7" %}
+        $('#id_program_1').attr('disabled', 'disabled');
+    {% endif %}
+    {% if education_goals_form.data.program == "14" %}
+        $('#id_program_0').attr('disabled', 'disabled');
+    {% endif %}
     });
-});
 </script>
+<script src="/static/forms/js/adulted/admissions.js" type="text/javascript"></script>
 {% endblock %}
 {% block extra_style %}
 <style type="text/css">
@@ -202,90 +38,9 @@ $(function() {
 #id_state:hover {border: 2px solid #d7d0a0 !important;}
 #id_state:focus {border: 2px solid #6caf2a !important;}
 #doop_master {display: none;}
-
-/* generic css */
-#profile .inline li {display: inline; }
-#profile .inline li { position: relative; margin: 10px 0;}
-#profile .inline li label { position: absolute; top: -1; left: 0; margin-top:7px;margin-left:7px;}
-#profile .inline li  br {display: none;}
-#profile textarea {width:460px;height:150px;}
-#profile input[type="text"], input[type="email"], textarea { background: #ffffff; border: 2px solid #ffffff; border-radius: 3px 3px 3px 3px; box-shadow: 0 4px 4px 0 #aaaaaa inset; height: 20px; margin: 1px; padding: 5px; }
-#profile select { border: 2px solid #ffffff; border-radius: 3px 3px 3px 3px; box-shadow: 0 4px 4px 0 #aaaaaa inset; margin: 1px; padding: 5px; position: relative; }
-#profile textarea:hover,
-#profile select:hover,
-#profile input[type=text]:hover,
-#profile input[type=number]:hover,
-#profile input[type=password]:hover,
-#profile input[type=email]:hover { border:2px solid #d7d0a0;box-shadow:0;outline:none;color:#3e3e3e; }
-#profile textarea:focus,
-#profile select:focus,
-#profile input[type=text]:focus,
-#profile input[type=number]:focus,
-#profile input[type=password]:focus,
-#profile input[type=email]:focus { border:2px solid #6caf2a;box-shadow:0;outline:none;color:#3e3e3e; }
-#profile input.required {border: 2px solid #f0dddd; background:#faf5f5;}
-#profile input[type='radio'].required { background-color: #f0dddd;}
-#profile input.error, textarea.error, select.error, .uneditable-input.error {
-    background-image: url("http://static.duolingo.com/images/input-error-image_mv_c49949a5249697e1fe6245de92eb4bc7.png");
-    background-position: right center;
-    background-repeat: no-repeat;
-}
-.form input[type=text] {width: 350px; }
-.form input.tiny {margin:0;width:30px;vertical-align:middle;}
-.form input.small {margin:0;width:100px;vertical-align:middle;}
-.form input.medium {margin:0;width:150px;}
-.form input.large {margin:0;width:250px;}
-.form input.button {
-    background: -moz-linear-gradient(center top , #C6D880,#E6EFC2) repeat scroll 0 0 transparent;
-    border-color: #C6D880;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 5px 5px 5px 5px;
-    box-shadow: none !important;
-    -moz-box-sizing: border-box;
-    height: 25px;
-    width:auto;
-    color: #514721;
-    font-weight:bold;
-    cursor: pointer;
-    padding: 3px 5px;
-    text-decoration: none;
-    opacity: 0.6;
-}
-.form input.button:hover {
-    background: -moz-linear-gradient(center top , #C6D880,#FFF6BF) repeat scroll 0 0 transparent;
-    border-color: #FFD324;
-    color: #800;
-}
-fieldset { background: none repeat scroll 0 0 #FCFAEB; position: relative; }
-fieldset { border: 1px solid #DDD8B0; border-radius: 3px 3px 3px 3px; box-shadow: 0 1px 0 #FFFFFF inset; margin: 0 auto 8px; padding: 12px 17px; }
-li.ctrlHolder div ul li {display: inline;padding-right:3px;}
-.radin {padding-bottom:7px;}
-.radin li {display: inline;padding-right:3px;}
-
-/* steps */
-.dotholder { height: 20px; position: absolute; right: 0; top: -30px; width: 180px; }
-.dot.active { background: none repeat scroll 0 0 #d7d0a0; }
-.dot { background: none repeat scroll 0 0 #CFCFCF; border-radius: 10px 10px 10px 10px; color: white; float: left; font: 500 14px/20px "Helvetica",sans-serif; height: 20px; margin: 0 10px 0 0; text-align: center; width: 20px; }
-.top40 { margin-top: 40px; }
-/* Success, error & notice boxes for messages and errors. */
-.error, .notice, .success {padding: .3em; margin-bottom: 1em; border: 2px solid #ddd;}
-.error {background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4;}
-.notice {background: #FFF6BF; color: #514721; border-color: #FFD324;}
-.success {background: #E6EFC2; color: #264409; border-color: #C6D880;}
-.error a {color: #8a1f11;}
-.notice a {color: #514721;}
-.success a {color: #264409;}
-.required {border: 2px solid #f0dddd;background:#faf5f5;}
-form p { position: relative; margin: 10px 0;}
-form p label { position: absolute; top: 0; left: 0;}
-form p br {display: none;}
-form dd { margin: 0; }
-.fleft {float:left;}
-.fright {float:right;}
-.labelpad {float:left;width:150px;}
 {% if fee_form.data.payment_type == "Credit Card" %}#payment-details { display:inherit; }{% else %}#payment-details { display:none; }{% endif %}
 </style>
+<link href="/static/forms/css/djforms.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
 <div id="second">
@@ -308,34 +63,34 @@ form dd { margin: 0; }
             <h2>Contact Information</h2>
             <h3>Name</h3>
             <ul class="inline">
-            <li><label for="id_first_name" class="placeholder">First name</label><br />
-            <input class="medium required{% if contact_form.first_name.errors %} error{% endif %}" id="id_first_name" type="text" name="first_name" placeholder="First name" maxlength="100" value="{{contact_form.data.first_name}}" {% if not template_debug %}required {% endif %}/></li>
-            <li><label for="id_middle_name" class="placeholder">Middle name</label><br />
-            <input class="medium" id="id_middle_name" type="text" name="middle_name" placeholder="Middle name" maxlength="100" value="{{contact_form.data.middle_name}}" /></li>
-            <li><label for="id_last_name" class="placeholder">Last name</label><br />
-            <input class="medium required{% if contact_form.last_name.errors %} error{% endif %}" id="id_last_name" type="text" name="last_name" placeholder="Last name" maxlength="100" value="{{contact_form.data.last_name}}" {% if not template_debug %}required {% endif %}/></li>
-            <li><label for="id_previous_last_name" class="placeholder">Previous last name</label><br />
-            <input class="medium" id="id_previous_last_name" type="text" name="previous_last_name" placeholder="Previous last name" maxlength="100" value="{{contact_form.data.previous_last_name}}" /></li>
+                <li><label for="id_first_name" class="placeholder">First name</label><br />
+                <input class="medium required{% if contact_form.first_name.errors %} error{% endif %}" id="id_first_name" type="text" name="first_name" placeholder="First name" maxlength="100" value="{{contact_form.data.first_name}}" {% if not template_debug %}required {% endif %}/></li>
+                <li><label for="id_middle_name" class="placeholder">Middle name</label><br />
+                <input class="medium" id="id_middle_name" type="text" name="middle_name" placeholder="Middle name" maxlength="100" value="{{contact_form.data.middle_name}}" /></li>
+                <li><label for="id_last_name" class="placeholder">Last name</label><br />
+                <input class="medium required{% if contact_form.last_name.errors %} error{% endif %}" id="id_last_name" type="text" name="last_name" placeholder="Last name" maxlength="100" value="{{contact_form.data.last_name}}" {% if not template_debug %}required {% endif %}/></li>
+                <li><label for="id_previous_last_name" class="placeholder">Previous last name</label><br />
+                <input class="medium" id="id_previous_last_name" type="text" name="previous_last_name" placeholder="Previous last name" maxlength="100" value="{{contact_form.data.previous_last_name}}" /></li>
             </ul>
             <h3>Address</h3>
             <ul class="inline">
-            <li><label for="id_address1" class="placeholder">Address</label><br />
-            <input class="large required{% if contact_form.address1.errors %} error{% endif %}" id="id_address1" type="text" name="address1" placeholder="Address" maxlength="255" value="{{contact_form.data.address1}}" {% if not template_debug %}required {% endif %}/></li>
-            <li><label for="id_address2" class="placeholder">Address 2</label><br />
-            <input class="large" id="id_address2" type="text" name="address2" placeholder="Address 2" maxlength="255" value="{{contact_form.data.address2}}" /></li>
+                <li><label for="id_address1" class="placeholder">Address</label><br />
+                <input class="large required{% if contact_form.address1.errors %} error{% endif %}" id="id_address1" type="text" name="address1" placeholder="Address" maxlength="255" value="{{contact_form.data.address1}}" {% if not template_debug %}required {% endif %}/></li>
+                <li><label for="id_address2" class="placeholder">Address 2</label><br />
+                <input class="large" id="id_address2" type="text" name="address2" placeholder="Address 2" maxlength="255" value="{{contact_form.data.address2}}" /></li>
             </ul>
             <ul class="inline">
-            <li><label for="id_city" class="placeholder">City</label><br />
-            <input class="small required{% if contact_form.city.errors %} error{% endif %}" id="id_city" type="text" name="city" placeholder="City" maxlength="255" value="{{contact_form.data.city}}" /></li>
-            <li>{{contact_form.state}} {% if contact_form.state.errors %} <span class="error">State Required</span>{% endif %}</li>
-            <li><label for="id_postal_code" class="placeholder">Zip</label><br />
-            <input class="small required{% if contact_form.postal_code.errors %} error{% endif %}" id="id_postal_code" type="text" name="postal_code" placeholder="Zip" maxlength="10" value="{{contact_form.data.postal_code}}" {% if not template_debug %}required {% endif %}/> {% if contact_form.postal_code.errors %}<span class="error">Format: XXXXX</span>{% endif %}</li>
+                <li><label for="id_city" class="placeholder">City</label><br />
+                <input class="small required{% if contact_form.city.errors %} error{% endif %}" id="id_city" type="text" name="city" placeholder="City" maxlength="255" value="{{contact_form.data.city}}" /></li>
+                <li>{{contact_form.state}} {% if contact_form.state.errors %} <span class="error">State Required</span>{% endif %}</li>
+                <li><label for="id_postal_code" class="placeholder">Zip</label><br />
+                <input class="small required{% if contact_form.postal_code.errors %} error{% endif %}" id="id_postal_code" type="text" name="postal_code" placeholder="Zip" maxlength="10" value="{{contact_form.data.postal_code}}" {% if not template_debug %}required {% endif %}/> {% if contact_form.postal_code.errors %}<span class="error">Format: XXXXX</span>{% endif %}</li>
             </ul>
             <ul class="inline">
-            <li><label for="id_email" class="placeholder">Email</label><br />
-            <input class="large required{% if contact_form.email.errors %} error{% endif %}" id="id_email" type="email" name="email" placeholder="Email" maxlength="255" value="{{contact_form.data.email}}" {% if not template_debug %}required {% endif %}/></li>
-            <li><label for="id_phone" class="placeholder">Phone: xxx-xxx-xxxx</label><br />
-            <input class="large required{% if contact_form.phone.errors %} error{% endif %}" id="id_phone" type="text" name="phone" placeholder="Phone: xxx-xxx-xxxx" maxlength="255" value="{{contact_form.data.phone}}" {% if not template_debug %}required {% endif %}/> {% if contact_form.phone.errors %}<span class="error">Format: XXX-XXX-XXXX</span>{% endif %}</li>
+                <li><label for="id_email" class="placeholder">Email</label><br />
+                <input class="large required{% if contact_form.email.errors %} error{% endif %}" id="id_email" type="email" name="email" placeholder="Email" maxlength="255" value="{{contact_form.data.email}}" {% if not template_debug %}required {% endif %}/></li>
+                <li><label for="id_phone" class="placeholder">Phone: xxx-xxx-xxxx</label><br />
+                <input class="large required{% if contact_form.phone.errors %} error{% endif %}" id="id_phone" type="text" name="phone" placeholder="Phone: xxx-xxx-xxxx" maxlength="255" value="{{contact_form.data.phone}}" {% if not template_debug %}required {% endif %}/> {% if contact_form.phone.errors %}<span class="error">Format: XXX-XXX-XXXX</span>{% endif %}</li>
             </ul>
         </fieldset>
         <fieldset class="blockLabels top40">
@@ -356,14 +111,14 @@ form dd { margin: 0; }
                 {% if personal_form.gender.errors %}<li><span class="error">Chose one</span>{% endif %}
             </ul>
             <ul class="inline">
-            <li><label for="id_ss_num" class="placeholder">Social security number</label><br />
-            <input class="required{% if personal_form.ss_num.errors %} error{% endif %}" style="width:180px;" type="text" name="ss_num" id="id_ss_num" placeholder="Social security number" maxlength="11" value="{{personal_form.data.ss_num}}" {% if not template_debug %}required {% endif %}/>{% if personal_form.ss_num.errors %} <span class="error">xxx-xx-xxxx</span>{% endif %}</li>
-            <li><label for="id_dob" class="placeholder">Date of birth: dd/mm/yyyy</label><br />
-            <input class="required{% if personal_form.dob.errors %} error{% endif %}" style="width:200px;" type="text" name="dob" id="id_dob" placeholder="Date of birth: dd/mm/yyyy" maxlength="10" value="{{personal_form.data.dob}}" {% if not template_debug %}required {% endif %}/>{% if personal_form.dob.errors %} <span class="error">dd/mm/yyyy</span>{% endif %}</li>
+                <li><label for="id_ss_num" class="placeholder">Social security number</label><br />
+                <input class="required{% if personal_form.ss_num.errors %} error{% endif %}" style="width:180px;" type="text" name="ss_num" id="id_ss_num" placeholder="Social security number" maxlength="11" value="{{personal_form.data.ss_num}}" {% if not template_debug %}required {% endif %}/>{% if personal_form.ss_num.errors %} <span class="error">xxx-xx-xxxx</span>{% endif %}</li>
+                <li><label for="id_dob" class="placeholder">Date of birth: dd/mm/yyyy</label><br />
+                <input class="required{% if personal_form.dob.errors %} error{% endif %}" style="width:200px;" type="text" name="dob" id="id_dob" placeholder="Date of birth: dd/mm/yyyy" maxlength="10" value="{{personal_form.data.dob}}" {% if not template_debug %}required {% endif %}/>{% if personal_form.dob.errors %} <span class="error">dd/mm/yyyy</span>{% endif %}</li>
             </ul>
             <ul class="inline">
-            <li><label for="id_pob" class="placeholder">Place of birth: city, state, zip, country</label><br />
-            <input class="required{% if personal_form.pob.errors %} error{% endif %}" type="text" name="pob" id="id_pob" placeholder="Place of birth: city, state, zip, country" maxlength="255" value="{{personal_form.data.pob}}" {% if not template_debug %}required {% endif %}/></li>
+                <li><label for="id_pob" class="placeholder">Place of birth: city, state, zip, country</label><br />
+                <input class="required{% if personal_form.pob.errors %} error{% endif %}" type="text" name="pob" id="id_pob" placeholder="Place of birth: city, state, zip, country" maxlength="255" value="{{personal_form.data.pob}}" {% if not template_debug %}required {% endif %}/></li>
             </ul>
         </fieldset>
         <fieldset class="blockLabels top40">
@@ -386,7 +141,7 @@ form dd { margin: 0; }
             <ul class="radin">
                 <li><label for="id_tuition_reimburse_0"><input {% if employment_form.data.tuition_reimburse == "Yes" %}checked="checked" {% endif %}type="radio" id="id_tuition_reimburse_0" value="Yes" name="tuition_reimburse" /> Yes</label></li>
                 <li><label for="id_tuition_reimburse_1"><input {% if employment_form.data.tuition_reimburse == "No" %}checked="checked" {% endif %}type="radio" id="id_tuition_reimburse_1" value="No" name="tuition_reimburse" /> No</label></li>
-                {% if employment_form.tuition_reimburse.errors %}<li><span class="error">Chose one</span>{% endif %}
+                {% if employment_form.tuition_reimburse.errors %}<li><span class="error">Chose one</span></li>{% endif %}
             </ul>
         </fieldset>
         <fieldset class="blockLabels top40">
@@ -405,16 +160,30 @@ form dd { margin: 0; }
                 <h3 class="required">What degree are you intending to pursue?</h3>
             {% endif %}
             <ul>
-                <li><label for="id_educationalgoal_0"><input type="radio" id="id_educationalgoal_0" value="1" name="educationalgoal" /> I would like to earn my first bachelor&#39;s degree.</label></li>
-                <li><label for="id_educationalgoal_1"><input type="radio" id="id_educationalgoal_1" value="6" name="educationalgoal" /> I already have a bachelor&#39;s degree and now would like to complete an additional major.</label></li>
-                <li><label for="id_educationalgoal_2"><input type="radio" id="id_educationalgoal_2" value="7" name="educationalgoal" /> I would like to take classes for my own personal interest.</label></li>
+                <li><label for="id_educationalgoal_0">
+                <input type="radio" id="id_educationalgoal_0" value="1" name="educationalgoal" {% if education_goals_form.data.educationalgoal == "1" %}checked="checked" {% endif %}/>
+                I would like to earn my first bachelor&#39;s degree.</label></li>
+                <li><label for="id_educationalgoal_1">
+                <input type="radio" id="id_educationalgoal_1" value="6" name="educationalgoal" {% if education_goals_form.data.educationalgoal == "6" %}checked="checked" {% endif %}/>
+                I already have a bachelor&#39;s degree and now would like to complete an additional major.</label></li>
+                <li><label for="id_educationalgoal_2">
+                <input type="radio" id="id_educationalgoal_2" value="7" name="educationalgoal" {% if education_goals_form.data.educationalgoal == "7" %}checked="checked" {% endif %}/>
+                I would like to take classes for my own personal interest.</label></li>
             </ul>
             <p class="notice">The following programs are only offered in the 14-week format</p>
             <ul>
-                <li><label for="id_educationalgoal_3"><input type="radio" id="id_educationalgoal_3" value="2" name="educationalgoal" /> I would like to earn my first bachelor&#39;s degree and also become certified to teach.</label></li>
-                <li><label for="id_educationalgoal_4"><input type="radio" id="id_educationalgoal_4" value="3" name="educationalgoal" /> I would like to apply to the Master of Education program.</label></li>
-                <li><label for="id_educationalgoal_5"><input type="radio" id="id_educationalgoal_5" value="4" name="educationalgoal" /> I would like to apply to the Accelerated Certification for Teachers program.</label></li>
-                <li><label for="id_educationalgoal_6"><input type="radio" id="id_educationalgoal_6" value="5" name="educationalgoal" /> I already have a bachelor&#39;s degree and now would like to earn certification to teach.</label></li>
+                <li><label for="id_educationalgoal_3">
+                <input type="radio" id="id_educationalgoal_3" value="2" name="educationalgoal" {% if education_goals_form.data.educationalgoal == "2" %}checked="checked" {% endif %}/>
+                I would like to earn my first bachelor&#39;s degree and also become certified to teach.</label></li>
+                <li><label for="id_educationalgoal_4">
+                <input type="radio" id="id_educationalgoal_4" value="3" name="educationalgoal" {% if education_goals_form.data.educationalgoal == "3" %}checked="checked" {% endif %}/>
+                I would like to apply to the Master of Education program.</label></li>
+                <li><label for="id_educationalgoal_5">
+                <input type="radio" id="id_educationalgoal_5" value="4" name="educationalgoal" {% if education_goals_form.data.educationalgoal == "4" %}checked="checked" {% endif %}/>
+                I would like to apply to the Accelerated Certification for Teachers program.</label></li>
+                <li><label for="id_educationalgoal_6">
+                <input type="radio" id="id_educationalgoal_6" value="5" name="educationalgoal" {% if education_goals_form.data.educationalgoal == "5" %}checked="checked" {% endif %}/>
+                I already have a bachelor&#39;s degree and now would like to earn certification to teach.</label></li>
             </ul>
             {% if education_goals_form.program.errors %}
                 <h3 class="error" style="margin:9px 0;">Choose 7 or 14 week format</h3>
@@ -422,8 +191,12 @@ form dd { margin: 0; }
                 <h3 class="required">Choose the scheduling format</h3>
             {% endif %}
             <ul>
-                <li><label for="id_program_0"><input type="radio" id="id_program_0" value="7" name="program" /> 7 week format</label></li>
-                <li><label for="id_program_1"><input type="radio" id="id_program_1" value="14" name="program" /> 14 week Undergraduate or Graduate</label></li>
+                <li><label for="id_program_0">
+                <input type="radio" id="id_program_0" value="7" name="program" {% if education_goals_form.data.program == "7" %}checked="checked" {% endif %} />
+                7 week format</label></li>
+                <li><label for="id_program_1">
+                <input type="radio" id="id_program_1" value="14" name="program" {% if education_goals_form.data.program == "14" %}checked="checked" {% endif %} />
+                14 week Undergraduate or Graduate</label></li>
             </ul>
             <ol>
             <li>
@@ -444,15 +217,15 @@ form dd { margin: 0; }
             </ol>
             <h3><label for="id_intended_major">Intended major</label></h3>
             <div>
-                <input id="id_intended_major" type="text" name="intended_major" maxlength="128" />
+                <input id="id_intended_major" type="text" name="intended_major" maxlength="128" value="{{education_goals_form.data.intended_major}}" />
             </div>
             <h3><label for="id_intended_minor">Intended minor</label></h3>
             <div>
-                <input id="id_intended_minor" type="text" name="intended_minor" maxlength="128" />
+                <input id="id_intended_minor" type="text" name="intended_minor" maxlength="128" value="{{education_goals_form.data.intended_minor}}" />
             </div>
             <h3><label for="id_certificiation">Intended certification</label></h3>
             <div>
-                <input id="id_certificiation" type="text" name="certificiation" maxlength="128" />
+                <input id="id_certificiation" type="text" name="certificiation" maxlength="128" value="{{education_goals_form.data.certificiation}}" />
             </div>
         </fieldset>
         <fieldset class="blockLabels top40">
@@ -464,7 +237,7 @@ form dd { margin: 0; }
                 <div class="dot active">5</div>
                 <div class="dot">6</div>
             </div>
-            <h2>Colleges you have attended</h2>
+            <h2>Schools you have attended</h2>
             <div id="doop_master" class="notice">
                 {% include "adulted/school_doop.html" %}
             </div>
@@ -525,7 +298,10 @@ form dd { margin: 0; }
             <div>
                 <label for="from_month_orig" class="labelpad">Attended from:</label>
                 <select name="from_month_orig" id="from_month_orig">
-                    <option value="0"></option> <option value="1" >January</option><option value="2" >February</option><option value="3" >March</option><option value="4" >April</option><option value="5" >May</option><option value="6" >June</option><option value="7" >July</option><option value="8" >August</option><option value="9" >September</option><option value="10" >October</option><option value="11" >November</option><option value="12" >December</option>
+                    <option value="0"></option>
+                    {% for m,n in months.items %}
+                    <option value="{{m}}">{{n}}</option>
+                    {% endfor %}
                 </select>
                 <select name="from_year_orig" id="from_year_orig">
                     <option value="0"></option>
@@ -537,7 +313,10 @@ form dd { margin: 0; }
             <div>
                 <label for="to_month_orig" class="labelpad">Attended to:</label>
                 <select name="to_month_orig" id="to_month_orig">
-                    <option value="0"></option> <option value="1" >January</option><option value="2" >February</option><option value="3" >March</option><option value="4" >April</option><option value="5" >May</option><option value="6" >June</option><option value="7" >July</option><option value="8" >August</option><option value="9" >September</option><option value="10" >October</option><option value="11" >November</option><option value="12" >December</option>
+                    <option value="0"></option>
+                    {% for m,n in months.items %}
+                    <option value="{{m}}">{{n}}</option>
+                    {% endfor %}
                 </select>
                 <select name="to_year_orig" id="to_year_orig">
                     <option value="0"></option>
@@ -549,7 +328,10 @@ form dd { margin: 0; }
             <div>
                 <label for="grad_month_orig" class="labelpad">Date of graduation:</label>
                 <select name="grad_month_orig" id="grad_month_orig">
-                    <option value="0"></option> <option value="1" >January</option><option value="2" >February</option><option value="3" >March</option><option value="4" >April</option><option value="5" >May</option><option value="6" >June</option><option value="7" >July</option><option value="8" >August</option><option value="9" >September</option><option value="10" >October</option><option value="11" >November</option><option value="12" >December</option>
+                    <option value="0"></option>
+                    {% for m,n in months.items %}
+                    <option value="{{m}}">{{n}}</option>
+                    {% endfor %}                   
                 </select>
                 <select name="grad_year_orig" id="grad_year_orig">
                     <option value="0"></option>
@@ -576,27 +358,28 @@ form dd { margin: 0; }
             <h3><label for="id_amount">Application Fee: $10.00</label></h3>
             <input type="hidden" id="id_amount" value="10.00" name="amount" />
             <ul class="radin">
-            <li><label for="id_payment_type_0">
-            <input type="radio" name="payment_type" value="Credit Card" id="id_payment_type_0" /> Credit Card
-            </label></li>
-            <li><label for="id_payment_type_1">
-            <input type="radio" name="payment_type" value="Check" id="id_payment_type_1" /> Check
-            </label></li>
-            <li><label for="id_payment_type_2">
-            <input type="radio" name="payment_type" value="Cash/Money Order " id="id_payment_type_2" /> Cash/Money Order
-            </label></li>
+                <li><label for="id_payment_type_0">
+                <input type="radio" name="payment_type" value="Credit Card" id="id_payment_type_0" {% if fee_form.data.payment_type == "Credit Card" %}checked="checked" {% endif %}/> Credit Card
+                </label></li>
+                <li><label for="id_payment_type_1">
+                <input type="radio" name="payment_type" value="Check" id="id_payment_type_1" {% if fee_form.data.payment_type == "Check" %}checked="checked" {% endif %}/> Check
+                </label></li>
+                <li><label for="id_payment_type_2">
+                <input type="radio" name="payment_type" value="Cash/Money Order" id="id_payment_type_2" {% if fee_form.data.payment_type == "Cash/Money Order" %}checked="checked" {% endif %}/> Cash/Money Order
+                </label></li>
+                {% if fee_form.payment_type.errors %}<li><span class="error">Chose a payment type</span></li>{% endif %}
             </ul>
             {% if payment_form.errors and payment_form.non_field_errors %}
                 <div class="error">{{payment_form.non_field_errors}}</div>
             {% endif %}
             <div id="payment-details">
                 <ul class="inline">
-                <li><label for="id_billing_name" class="placeholder">Name on credit card</label><br />
-                <input class="medium required{% if payment_form.billing_name.errors %} error{% endif %}" id="id_billing_name" type="text" name="billing_name" placeholder="Name on credit card" maxlength="100" value="{{payment_form.data.billing_name}}" {% if not template_debug %}required {% endif %}/></li>
-                <li><label for="id_billing_name" class="placeholder">Credit card number</label><br />
-                <input class="medium required{% if payment_form.card_number.errors %} error{% endif %}" id="id_card_number" type="text" name="card_number" placeholder="Credit card number" maxlength="100" value="{{payment_form.data.card_number}}" {% if not template_debug %}required {% endif %}/></li>
-                <li><label for="id_security_code" class="placeholder">3 or 4 digit security code</label><br />
-                <input class="medium required{% if payment_form.security_code.errors %} error{% endif %}" id="id_security_code" type="text" name="security_code" max_length="4" placeholder="3 or 4 digit security code" maxlength="100" value="{{payment_form.data.security_code}}" {% if not template_debug %}required {% endif %}/><span class="help"> (See back of card)</span></li>
+                    <li><label for="id_billing_name" class="placeholder">Name on credit card</label><br />
+                    <input class="medium required{% if payment_form.billing_name.errors %} error{% endif %}" id="id_billing_name" type="text" name="billing_name" placeholder="Name on credit card" maxlength="100" value="{{payment_form.data.billing_name}}" {% if not template_debug %}required {% endif %}/></li>
+                    <li><label for="id_billing_name" class="placeholder">Credit card number</label><br />
+                    <input class="medium required{% if payment_form.card_number.errors %} error{% endif %}" id="id_card_number" type="text" name="card_number" placeholder="Credit card number" maxlength="100" value="{{payment_form.data.card_number}}" {% if not template_debug %}required {% endif %}/></li>
+                    <li><label for="id_security_code" class="placeholder">3 or 4 digit security code</label><br />
+                    <input class="medium required{% if payment_form.security_code.errors %} error{% endif %}" id="id_security_code" type="text" name="security_code" max_length="4" placeholder="3 or 4 digit security code" maxlength="100" value="{{payment_form.data.security_code}}" {% if not template_debug %}required {% endif %}/><span class="help"> (See back of card)</span></li>
                 </ul>
                 <p>Expiration date</p>
                 <div>

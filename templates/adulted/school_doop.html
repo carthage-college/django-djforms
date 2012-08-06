@@ -15,13 +15,13 @@
             <select name="from_month[]" class="from_month">
                 <option value="0"></option>
                 {% for m,n in months.items %}
-                <option value="{{m}}"{% if s.from_month == m %} selected="selected"{% endif %}>{{n}}</option>
+                <option value="{{m}}"{% if s.from_month|add:"0" == m %} selected="selected"{% endif %}>{{n}}</option>
                 {% endfor %}
             </select>
             <select name="from_year[]" class="from_year">
                 <option value=""></option>
                 {% for year in years1 %}
-                    <option value="{{year}}"{% if s.from_year == year %} selected="selected"{% endif %}>{{year}}</option>
+                    <option value="{{year}}"{% if s.from_year|add:"0" == year %} selected="selected"{% endif %}>{{year}}</option>
                 {% endfor %}
             </select>
         </div>
@@ -30,13 +30,13 @@
             <select name="to_month[]" class="to_month">
                 <option value="0"></option>
                 {% for m,n in months.items %}
-                <option value="{{m}}"{% if s.to_month == m %} selected="selected"{% endif %}>{{n}}</option>
+                <option value="{{m}}"{% if s.to_month|add:"0" == m %} selected="selected"{% endif %}>{{n}}</option>
                 {% endfor %}
             </select>
             <select name="to_year[]" class="to_year">
                 <option value=""></option>
                 {% for year in years2 %}
-                    <option value="{{year}}"{% if s.to_year == year %} selected="selected"{% endif %}>{{year}}</option>
+                    <option value="{{year}}"{% if s.to_year|add:"0" == year %} selected="selected"{% endif %}>{{year}}</option>
                 {% endfor %}
             </select>
         </div>
@@ -45,13 +45,13 @@
             <select name="grad_month[]" class="grad_month">
                 <option value="0"></option>
                 {% for m,n in months.items %}
-                <option value="{{m}}"{% if s.grad_month == m %} selected="selected"{% endif %}>{{n}}</option>
+                <option value="{{m}}"{% if s.grad_month|add:"0" == m %} selected="selected"{% endif %}>{{n}}</option>
                 {% endfor %}
             </select>
             <select name="grad_year[]" class="grad_year">
                 <option value=""></option>
                 {% for year in years2 %}
-                    <option value="{{year}}"{% if s.grad_year == year %} selected="selected"{% endif %}>{{year}}</option>
+                    <option value="{{year}}"{% if s.grad_year|add:"0" == year %} selected="selected"{% endif %}>{{year}}</option>
                 {% endfor %}
             </select>
         </div>

@@ -1,14 +1,14 @@
 function sel(num) {
     if (num == 14) {
-            $('input[name=session7]:radio').attr('disabled', 'disabled')
-            $('input[name=session7]:radio').removeAttr('checked');
-            $('input[name=session14]:radio').removeAttr('disabled')
-            $('input[name=session7]:radio').attr('checked', false);
+        $('input[name=session7]:radio').attr('disabled', 'disabled');
+        $('input[name=session7]:radio').removeAttr('checked');
+        $('input[name=session14]:radio').removeAttr('disabled');
+        $('input[name=session7]:radio').attr('checked', false);
     }
     else if (num == 7) {
-            $('input[name=session14]:radio').attr('disabled', 'disabled')
-            $('input[name=session7]:radio').removeAttr('disabled')
-            $('input[name=session14]:radio').attr('checked', false);
+        $('input[name=session14]:radio').attr('disabled', 'disabled');
+        $('input[name=session7]:radio').removeAttr('disabled');
+        $('input[name=session14]:radio').attr('checked', false);
     }
 }
 

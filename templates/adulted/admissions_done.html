@@ -1,0 +1,21 @@
+{% extends "adulted/home.html" %}
+{% load get_api %}
+{% block title %}Admissions Form &mdash; Adult Education &mdash; Carthage College{% endblock %}
+{% block extra_style %}
+<style type="text/css">
+/* app specific css */
+#second {width:745px;padding-right:0px;}
+</style>
+{% endblock %}
+{% block content %}
+<div id="second">
+<div class="buffer">
+<h1>Success</h1>
+<p>We have received your application to the Adult Education Program at Carthage.</p>
+<p>Someone from admissions will be in contact with you presently.</p>
+</div>
+</div>
+<div id="fourth">
+    {% include "adulted/fourth_col.html" %}
+</div>
+{% endblock %}

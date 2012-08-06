@@ -1,5 +1,5 @@
 from django import forms
-from sputnik.apps.utilities.forms.fields import KungfuTimeField
+from djforms.core.fields import KungfuTimeField
 
 import datetime
 

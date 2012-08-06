@@ -15,8 +15,8 @@ from directory.core import do_sql
 
 from datetime import datetime
 
-#TO_LIST = ["tom@carthage.edu","jweiser@carthage.edu",]
-TO_LIST = [settings.SERVER_EMAIL,]
+TO_LIST = ["tom@carthage.edu","jweiser@carthage.edu",]
+#TO_LIST = [settings.SERVER_EMAIL,]
 BCC = settings.MANAGERS
 
 def _insert(data):

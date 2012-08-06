@@ -2,7 +2,6 @@ from django.template import RequestContext, loader
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.core.mail import EmailMessage
 
 from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
 from djforms.processors.models import Contact, Order
