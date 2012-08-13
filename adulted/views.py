@@ -11,18 +11,10 @@ from djforms.processors.models import Order
 from djforms.processors.forms import TrustCommerceForm
 from djforms.adulted.forms import *
 from djforms.adulted.models import School
-from directory.core import do_sql
-
-from datetime import datetime
 
 TO_LIST = ["tom@carthage.edu","jweiser@carthage.edu",]
 #TO_LIST = [settings.SERVER_EMAIL,]
 BCC = settings.MANAGERS
-
-def _insert(data):
-    NOW = str(datetime.now().strftime("%m/%d/%Y"))
-    YEAR = int(datetime.now().strftime("%Y"))
-    MONTH = int(datetime.now().strftime("%m"))
 
 def admissions_form(request):
     schools = []
@@ -64,6 +56,8 @@ def admissions_form(request):
                     order.save()
                     data['order'] = order
                     # insert into informix and send mail
+                    result = _insert(data)
+                    # TODO: send email if result = fail, log data
                     send_mail(request, TO_LIST, "[Adult Education Admissions Application] %s, %s" % (contact['last_name'],contact['first_name']), contact['email'], "adulted/admissions_email.html", data, BCC)
                     return HttpResponseRedirect(reverse('adulted_admissions_success'))
                 else:
@@ -78,6 +72,8 @@ def admissions_form(request):
                     payment_form.is_valid()
             else:
                 # insert and send mail
+                result = _insert(data)
+                # TODO: send email if result = fail, log data
                 send_mail(request, TO_LIST, "[Adult Education Admissions Application] %s, %s" % (contact['last_name'],contact['first_name']), contact['email'], "adulted/admissions_email.html", data, BCC)
                 return HttpResponseRedirect(reverse('adulted_admissions_success'))
         else:

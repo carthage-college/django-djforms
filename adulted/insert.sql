@@ -1,69 +1,73 @@
-
-<cfset purge_date = "#DateFormat(DateAdd('yyyy',2,Now()),'yyyy-mm-dd')#" />
-<cfset form.birth_date = CreateDate(form.birth_date_year, form.birth_date_month, form.birth_date_day) />
-<cfset now_time = "#TimeFormat(Now(),'HHmm')#" />
+What is CreateUUID?
 <cfset temp_uuid = #CreateUUID()# />
 
-<cftry>
-    <!--- create unifying id number --->
-    <cfquery name="q_create_app" datasource="#application.dsn#">
-        INSERT INTO apptmp_rec (add_date,add_tm,app_source,stat,reason_txt)
-        VALUES ("#now_date#",
-            "#now_time#",
-            "AEA",
-            "P",
-            "#temp_uuid#")
-    </cfquery>
+Are we collecting country?
+form.perm_ctry
 
-    <!--- get unifying id (uid) --->
-    <cfquery name="lookup_apptmp_no" datasource="#application.dsn#">
-        SELECT apptmp_no
-        FROM apptmp_rec
-        WHERE reason_txt = "#temp_uuid#"
-    </cfquery>
+Are we adding?
+    address2
+    gender
+    ss
+    pob
+    middle_name
+    previous_name
+    employer
+    position
+    reimbursement
+    major
+    minor
+    cert
 
-    <!--- personal information (name, address, contact info) --->
-    <cfquery name="q_create_id" datasource="#application.dsn#">
-        INSERT INTO app_idtmp_rec
-           (id, firstname, lastname, addr_line1, city, st, zip, ctry, phone,
-            aa, add_date, ofc_add_by, upd_date, purge_date, 
-            prsp_no, name_sndx, correct_addr, decsd, valid)
-        VALUES ("#lookup_apptmp_no.apptmp_no#",
-            "#form.first_name#",
-            "#form.last_name#",
-            "#form.perm_line1#",
+
+<!--- create unifying id number --->
+INSERT INTO apptmp_rec (add_date,add_tm,app_source,stat,reason_txt)
+       VALUES ("#now_date#",
+               "#now_time#",
+               "AEA",
+               "P",
+               "#temp_uuid#")
+
+<!--- get unifying id (uid) --->
+SELECT apptmp_no
+       FROM apptmp_rec
+       WHERE reason_txt = "#temp_uuid#"
+
+<!--- personal information (name, address, contact info) --->
+INSERT INTO app_idtmp_rec
+       (id, firstname, lastname, addr_line1, city, st, zip, ctry, phone,
+        aa, add_date, ofc_add_by, upd_date, purge_date, 
+        prsp_no, name_sndx, correct_addr, decsd, valid)
+       VALUES ("#lookup_apptmp_no.apptmp_no#",
+               "#form.first_name#",
+               "#form.last_name#",
+               "#form.perm_line1#",
             "#form.perm_city#",
             "#form.perm_st#",
             "#form.perm_zip#",
             "#form.perm_ctry#",
             "#library.format_phone_number(form.home_phone)#",
-
             "PERM",
             "#now_date#",
             "ADLT",
             "#now_date#",
             "#purge_date#",
-            
             "0",
             "",
             "Y",
             "N",
             "Y"
-           )
-    </cfquery>
-    
-    <!--- not sure what this does, but it's probably important --->
-    <cfquery name="q_create_site" datasource="#application.dsn#">
-        INSERT INTO app_sitetmp_rec
-               (id, home, site, beg_date)
-        VALUES ("#lookup_apptmp_no.apptmp_no#",
+)
+
+<!--- not sure what this does, but it's probably important --->
+INSERT INTO app_sitetmp_rec
+           (id, home, site, beg_date)
+       VALUES ("#lookup_apptmp_no.apptmp_no#",
                 "Y",
                 "CART",
                 "#now_date#"
                 )
-    </cfquery>
-    
-    <!--- decode programs, subprograms, plan_enr_sess and plan_enr_yr --->
+
+ <!--- decode programs, subprograms, plan_enr_sess and plan_enr_yr --->
     <cfif listFind("1,2,5,6,7",form.educationalgoal) GT 0>
         <cfset program4="UNDG" />
         <cfif form.program EQ "7week">
@@ -83,12 +87,12 @@
         <cfset plan_enr_sess = ListGetAt(form.start, 2, "-") />
         <cfset plan_enr_yr = ListGetAt(form.start, 3, "-") />
         <cfset start_session = ListGetAt(form['start'], 2, "-") />
-        <cfset start_year = ListGetAt(form['start'], 3, "-") />      
+        <cfset start_year = ListGetAt(form['start'], 3, "-") />
     <cfelse>
         <cfset plan_enr_sess = "" />
         <cfset plan_enr_yr = "" />
         <cfset start_session = "" />
-        <cfset start_year = "" />      
+        <cfset start_year = "" />
     </cfif>
 
     <cfif IsNull(program4)>
@@ -109,7 +113,7 @@
                     "#start_session#",
                     "#start_year#",
                     "4",
-    
+
                     "#now_date#",
                     "0.00",
                     "",
@@ -119,7 +123,7 @@
                     <cfelse>
                         "",
                     </cfif>
-    
+
                     "#program4#",
                     "#subprogram#",
                     "0",
@@ -141,7 +145,7 @@
                 "#now_date#"
                 )
     </cfquery>
-    
+
     <!--- schools loop --->
     <cfloop from="1" to="#form.schoolcount#" index="i">
         <cfset formtest = 'school_name' & i />
@@ -178,13 +182,13 @@
             </cfquery>
         </cfif>
     </cfloop>
-    
+
     <cfcatch type="any">
         error handling
     </cfcatch>
 </cftry>
-    
-    <!--- record payment information to Informix --->
+
+   <!--- record payment information to Informix --->
     <cfquery name="q_payment" datasource="#application.dsn#">
         UPDATE apptmp_rec
         SET 

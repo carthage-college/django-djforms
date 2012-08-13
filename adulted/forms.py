@@ -2,17 +2,20 @@ from django import forms
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField, USSocialSecurityNumberField
 
 from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, COUNTRIES, BINARY_CHOICES, PAYMENT_CHOICES
+from directory.core import do_sql
 from djforms.processors.models import Contact
 
-import datetime
-NOW    = datetime.datetime.now()
+from datetime import datetime, date
+from dateutil.relativedelta import relativedelta
+
+NOW    = datetime.now()
 MONTH  = int(NOW.month)
 YEAR   = int(NOW.year)
 YEAR7  = YEAR
 YEAR14 = YEAR
 
-UNI_YEARS1 = [x for x in reversed(xrange(1926,datetime.date.today().year + 1))]
-UNI_YEARS2 = [x for x in reversed(xrange(1926,datetime.date.today().year + 3))]
+UNI_YEARS1 = [x for x in reversed(xrange(1926,date.today().year + 1))]
+UNI_YEARS2 = [x for x in reversed(xrange(1926,date.today().year + 3))]
 
 EDUCATION_GOAL = (
     (1,"I would like to earn my first bachelor's degree."),
@@ -44,6 +47,8 @@ SESSION7 = (
     ("7-AS-%s" % YEAR7, "May %s" % YEAR7),
     ("7-AT-%s" % YEAR7, "July %s" % YEAR7),
 )
+if MONTH < 9:
+    YEAR7 = YEAR
 SESSION14 = (
     ("14-A-%s" % YEAR14, "September %s" % YEAR7),
     ("14-C-%s" % YEAR14, "February %s" % YEAR14),
@@ -105,3 +110,157 @@ class ApplicationFeeForm(forms.Form):
     """
     amount              = forms.CharField(widget=forms.HiddenInput(), initial="$10.00")
     payment_type        = forms.TypedChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect())
+
+
+def _insert(data):
+    """
+    private method to insert data into informix for adult education applications
+    """
+
+    DATE = datetime.now().strftime("%m/%d/%Y")
+    YEAR = int(datetime.now().strftime("%Y"))
+    MONTH = int(datetime.now().strftime("%m"))
+    TIME = datetime.now().strftime("%H:%M:%S")
+    PURGE_DATE = (date.today() + relativedelta( months = +2 )).strftime("%m/%d/%Y")
+    TEMP_ID = ""
+
+    # create unifying id number
+    sql =   """
+            INSERT
+            INTO apptmp_rec
+                (add_date,add_tm,app_source,stat,reason_txt)
+            VALUES
+                (DATE, TIME, "AEA", "P", TEMP_ID)
+            """
+    do_sql(sql)
+
+    # get unifying id (uid)
+    sql =   """
+            SELECT apptmp_no
+            FROM   apptmp_rec
+            WHERE  reason_txt = TEMP_ID
+            """
+    do_sql(sql)
+    # TODO: grab results
+    apptmp_no = ""
+
+    # personal information
+    sql =   """
+            INSERT INTO app_idtmp_rec (
+                id, firstname, lastname, addr_line1, city, st, zip, ctry, phone,
+                aa, add_date, ofc_add_by, upd_date, purge_date,
+                prsp_no, name_sndx, correct_addr, decsd, valid)
+            VALUES (
+                apptmp_no,
+                data["contact"]["first_name"], data["contact"]["last_name"],
+                data["contact"].address1, data["contact"]["city"],
+                data["contact"]["state"], data["contact"]["postal_code"],"US",
+                data["contact"]["phone"], "PERM", DATE, "ADLT", DATE, PURGE_DATE,
+                "0", "", "Y", "N", "Y")
+            """
+    do_sql(sql)
+
+    # jenzabar freakiness
+    sql =   """
+            INSERT INTO app_sitetmp_rec
+                (id, home, site, beg_date)
+            VALUES (apptmp_no, "Y", "CART", DATE)
+            """
+    do_sql(sql)
+
+    # Education plans
+    #
+    # decode programs, subprograms, plan_enr_sess and plan_enr_yr
+    if data["education"]["educationgoal"] in (1,2,5,6,7):
+        program4 = "UNDG"
+        if data["education"]["program"] == "7":
+            subprogram = "7WK"
+        else:
+            subprogram="PTSM"
+    elif data["education"]["educationgoal"] == "3":
+        program4 = "GRAD"
+        subprogram="MED"
+    elif data["education"]["educationgoal"] == "4":
+        program4 = "ACT"
+        subprogram = "ACT"
+    else:
+        program4 = ""
+        subprogram = ""
+
+    # seesion info from code: e.g. 14-C-2013
+    if data["education"]["program"] == "7":
+        start = data["education"]["session7"].split('-')
+    elif data["education"]["program"] == "14":
+        start = data["education"]["session14"].split('-')
+    if isinstance(start, list):
+        plan_enr_sess = start[0]
+        plan_enr_yr = start[2]
+        start_session = start[0]
+        start_year = start[2]
+    else:
+        plan_enr_sess = ""
+        plan_enr_yr = ""
+        start_session = ""
+        start_year = ""
+
+    sql =   """
+            INSERT INTO app_admtmp_rec (
+                id, primary_app, plan_enr_sess, plan_enr_yr, intend_hrs_enr,
+                add_date, parent_contr, enrstat, rank, emailaddr,
+                prog, subprog, upd_uid, add_uid, upd_date, act_choice, stuint_wt, jics_candidate)
+            VALUES (
+                apptmp_no, "Y", "#start_session#", "#start_year#", "4", DATE, "0.00", "", "0",
+                data["contact"].email, program4, subprogram, "0", "0", DATE, "", "0", "N")
+            """
+    do_sql(sql)
+
+    # birthday
+    sql =   """
+            INSERT INTO app_proftmp_rec
+                (id, birth_date, church_id, prof_last_upd_date)
+            VALUES (apptmp_no, data["personal"]["dob"], "0", DATE)
+            """
+    do_sql(sql)
+
+    # schools
+
+    for school in data["schools"]:
+        # attended from
+        try:
+            attend_from = datetime(int(school.from_year),int(school.from_month), 1)
+        except:
+            attend_from = datetime(1900,1,1)
+        # attende to
+        try:
+            attend_to = datetime(int(school.to_year),int(school.to_month), 1)
+        except:
+            attend_to = datetime(1900,1,1)
+        # grad date
+        try:
+            grad_date = datetime(int(school.grad_year),int(school.grad_month), 1)
+        except:
+            grad_date = datetime(1900,1,1)
+
+        sql =   """
+                INSERT INTO app_edtmp_rec (
+                    id, ceeb, fullname, city, st, enr_date, dep_date, grad_date,
+                    stu_id, sch_id, app_reltmp_no, rel_id,priority, zip, aa, ctgry)
+                VALUES (
+                    apptmp_no,
+                    school.school_code, school.school_name, school.school_city,
+                    school.school_state, attend_from, attend_to, grad_date,
+                    0,0,0,0,0,"", "ac","COL")
+                """
+        do_sql(sql)
+
+
+    # payment info
+    sql =   """
+            UPDATE
+                apptmp_rec
+            SET
+                payment_method = data["fee"]["payment_type"], stat = "H"
+            WHERE
+                apptmp_no = apptmp_no
+            """
+    do_sql(sql)
