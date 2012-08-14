@@ -2,8 +2,8 @@ from django import forms
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField, USSocialSecurityNumberField
 
 from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, COUNTRIES, BINARY_CHOICES, PAYMENT_CHOICES
-from directory.core import do_sql
 from djforms.processors.models import Contact
+from jenzabar import INFORMIX_EARL_TEST
 
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
@@ -122,51 +122,41 @@ def _insert(data):
     MONTH = int(datetime.now().strftime("%m"))
     TIME = datetime.now().strftime("%H:%M:%S")
     PURGE_DATE = (date.today() + relativedelta( months = +2 )).strftime("%m/%d/%Y")
-    TEMP_ID = ""
+
+    engine = create_engine(INFORMIX_EARL_TEST)
+    connection = engine.connect()
+
 
     # create unifying id number
-    sql =   """
-            INSERT
-            INTO apptmp_rec
-                (add_date,add_tm,app_source,stat,reason_txt)
-            VALUES
-                (DATE, TIME, "AEA", "P", TEMP_ID)
-            """
-    do_sql(sql)
-
+    sql =   'INSERT INTO apptmp_rec (add_date,add_tm,app_source,stat) VALUES (%s, %s, "AEA", "P")' % (DATE,TIME)
+    connection.execute(sql)
     # get unifying id (uid)
-    sql =   """
-            SELECT apptmp_no
-            FROM   apptmp_rec
-            WHERE  reason_txt = TEMP_ID
-            """
-    do_sql(sql)
-    # TODO: grab results
-    apptmp_no = ""
+    sql =   "SELECT DISTINCT dbinfo('sqlca.sqlerrd1') FROM apptmp_rec"
+    objects = connection.execute(sql)
+    # retrieve the id
+    for r in objects:
+        apptmp_no = r[0]
 
     # personal information
     sql =   """
             INSERT INTO app_idtmp_rec (
-                id, firstname, lastname, addr_line1, city, st, zip, ctry, phone,
-                aa, add_date, ofc_add_by, upd_date, purge_date,
+                id, firstname, middlename, lastname, addr_line1, addr_line2, city, st, zip, ctry,
+                phone, ss_no, aa, add_date, ofc_add_by, upd_date, purge_date,
                 prsp_no, name_sndx, correct_addr, decsd, valid)
-            VALUES (
-                apptmp_no,
-                data["contact"]["first_name"], data["contact"]["last_name"],
-                data["contact"].address1, data["contact"]["city"],
-                data["contact"]["state"], data["contact"]["postal_code"],"US",
-                data["contact"]["phone"], "PERM", DATE, "ADLT", DATE, PURGE_DATE,
-                "0", "", "Y", "N", "Y")
-            """
-    do_sql(sql)
+            VALUES (%s,"%s","%s","%s","%s","%s","%s","%s","%s","USA",
+                    "%s","%s","PERM","%s","ADLT","%s","%s","0", "", "Y", "N", "Y")
+            """ % (apptmp_no,data["contact"]["first_name"],data["contact"]["middle_name"],data["contact"]["last_name"],
+                   data["contact"]["address1"],data["contact"]["address2"],data["contact"]["city"],data["contact"]["state"],
+                   data["contact"]["postal_code"],data["contact"]["phone"],data["personal"]["ss_num"],DATE,DATE,PURGE_DATE)
+    connection.execute(sql)
 
     # jenzabar freakiness
     sql =   """
             INSERT INTO app_sitetmp_rec
                 (id, home, site, beg_date)
-            VALUES (apptmp_no, "Y", "CART", DATE)
-            """
-    do_sql(sql)
+            VALUES (%s, "Y", "CART", "%s")
+            """ % (apptmp_no, DATE)
+    connection.execute(sql)
 
     # Education plans
     #
@@ -208,22 +198,20 @@ def _insert(data):
                 id, primary_app, plan_enr_sess, plan_enr_yr, intend_hrs_enr,
                 add_date, parent_contr, enrstat, rank, emailaddr,
                 prog, subprog, upd_uid, add_uid, upd_date, act_choice, stuint_wt, jics_candidate)
-            VALUES (
-                apptmp_no, "Y", "#start_session#", "#start_year#", "4", DATE, "0.00", "", "0",
-                data["contact"].email, program4, subprogram, "0", "0", DATE, "", "0", "N")
-            """
-    do_sql(sql)
+            VALUES (%s,"Y", "%s", "%s", "4", "%s", "0.00", "", "0",
+                "%s", "%s", "%s", "0", "0", "%s", "", "0", "N")
+            """ % (apptmp_no,start_session,start_year,DATE,data["contact"]["email"], program4, subprogram,DATE)
+    connection.execute(sql)
 
     # birthday
     sql =   """
             INSERT INTO app_proftmp_rec
-                (id, birth_date, church_id, prof_last_upd_date)
-            VALUES (apptmp_no, data["personal"]["dob"], "0", DATE)
-            """
-    do_sql(sql)
+                (id, birth_date, birthplace_city, sex, church_id, prof_last_upd_date)
+            VALUES (%s,"%s","%s","%s","0","%s")
+            """ % (apptmp_no, data["personal"]["dob"], data["personal"]["pob"], data["personal"]["gender"], DATE)
+    connection.execute(sql)
 
     # schools
-
     for school in data["schools"]:
         # attended from
         try:
@@ -245,22 +233,21 @@ def _insert(data):
                 INSERT INTO app_edtmp_rec (
                     id, ceeb, fullname, city, st, enr_date, dep_date, grad_date,
                     stu_id, sch_id, app_reltmp_no, rel_id,priority, zip, aa, ctgry)
-                VALUES (
-                    apptmp_no,
+                VALUES (%s,"%s","%s","%s","%s","%s","%s","%s",0,0,0,0,0,"", "ac","COL")
+                """ % (apptmp_no,
                     school.school_code, school.school_name, school.school_city,
-                    school.school_state, attend_from, attend_to, grad_date,
-                    0,0,0,0,0,"", "ac","COL")
-                """
-        do_sql(sql)
-
+                    school.school_state, attend_from, attend_to, grad_date)
+        connection.execute(sql)
 
     # payment info
     sql =   """
             UPDATE
                 apptmp_rec
             SET
-                payment_method = data["fee"]["payment_type"], stat = "H"
+                payment_method = "%s", stat = "H"
             WHERE
-                apptmp_no = apptmp_no
-            """
-    do_sql(sql)
+                apptmp_no = %s
+            """ % (data["fee"]["payment_type"], apptmp_no)
+    connection.execute(sql)
+    connection.close()
+

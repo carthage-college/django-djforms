@@ -1,8 +1,24 @@
 What is CreateUUID?
 <cfset temp_uuid = #CreateUUID()# />
 
-Are we collecting country?
-form.perm_ctry
+this seems to be the way to do CreateUUID from informix:
+
+INSERT INTO serialtest VALUES(0, 'Mickey', 'Mouse');
+SELECT DISTINCT dbinfo('sqlca.sqlerrd1') FROM serialtest;
+
+see:
+
+http://www.dbforums.com/informix/1622102-getting-serial-number-after-insert.html
+http://stackoverflow.com/questions/4270843/informix-how-to-get-the-rowid-of-the-last-insert-statement
+
+or
+
+SELECT id_customer, name, customerSince, isDeleted
+FROM Customers
+WHERE id_customer = DBINFO( 'sqlca.sqlerrd1' );
+
+http://www.justskins.com/forums/identity-in-informix-96235.html
+
 
 Are we adding?
     address2

@@ -58,7 +58,7 @@ def admissions_form(request):
                     # insert into informix and send mail
                     result = _insert(data)
                     # TODO: send email if result = fail, log data
-                    send_mail(request, TO_LIST, "[Adult Education Admissions Application] %s, %s" % (contact['last_name'],contact['first_name']), contact['email'], "adulted/admissions_email.html", data, BCC)
+                    #send_mail(request, TO_LIST, "[Adult Education Admissions Application] %s, %s" % (contact['last_name'],contact['first_name']), contact['email'], "adulted/admissions_email.html", data, BCC)
                     return HttpResponseRedirect(reverse('adulted_admissions_success'))
                 else:
                     r = payment_form.processor_response
@@ -74,7 +74,7 @@ def admissions_form(request):
                 # insert and send mail
                 result = _insert(data)
                 # TODO: send email if result = fail, log data
-                send_mail(request, TO_LIST, "[Adult Education Admissions Application] %s, %s" % (contact['last_name'],contact['first_name']), contact['email'], "adulted/admissions_email.html", data, BCC)
+                #send_mail(request, TO_LIST, "[Adult Education Admissions Application] %s, %s" % (contact['last_name'],contact['first_name']), contact['email'], "adulted/admissions_email.html", data, BCC)
                 return HttpResponseRedirect(reverse('adulted_admissions_success'))
         else:
             if request.POST.get('payment_type') == "Credit Card":
