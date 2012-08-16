@@ -13,7 +13,7 @@ YEARS   = [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +1))]
 YEARS.insert(0,("","---"))
 
 class AttendeeForm(forms.ModelForm):
-    email           = forms.EmailField()
+    email           = forms.EmailField(required=False)
     state           = forms.CharField(widget=forms.Select(choices=STATE_CHOICES), required=False)
     grad_class      = forms.CharField(max_length=4, widget=forms.Select(choices=YEARS))
     guests          = forms.CharField(widget=forms.Select(choices=GUESTS))
