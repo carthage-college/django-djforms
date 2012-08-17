@@ -369,7 +369,7 @@
                 </label></li>
                 {% if fee_form.payment_type.errors %}<li><span class="error">Choose a payment type</span></li>{% endif %}
             </ul>
-            {% if payment_form.errors and payment_form.non_field_errors %}
+            {% if payment_form.errors and payment_form.non_field_errors and order %}
                 <div class="error">{{payment_form.non_field_errors}}</div>
             {% endif %}
             <div id="payment-details">

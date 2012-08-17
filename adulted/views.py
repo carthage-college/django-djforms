@@ -18,6 +18,7 @@ BCC = settings.MANAGERS
 
 def admissions_form(request):
     schools = []
+    order = None
     if request.method=='POST':
         contact_form = ContactForm(request.POST)
         personal_form = PersonalForm(request.POST)
@@ -43,10 +44,12 @@ def admissions_form(request):
             total = fee['amount']
             # fetch the real name for educational goal, so we can display it in email rather than ID
             data['education']['educationalgoalname'] = EDUCATION_GOAL[int(data['education']['educationalgoal'])-1][1]
+            subject = "[Adult Education Admissions Application] %s, %s" % (contact['last_name'],contact['first_name'])
+            email = contact['email']
             # credit card payment
             if fee['payment_type'] == "Credit Card":
                 # contact must be Contact model object
-                contact, created = Contact.objects.get_or_create(first_name=contact['first_name'],last_name=contact['last_name'],email=contact['email'],phone=contact['phone'],address1=contact['address1'],address2=contact['address2'],city=contact['city'],state=contact['state'],postal_code=contact['postal_code'])
+                contact, created = Contact.objects.get_or_create(first_name=contact['first_name'],last_name=contact['last_name'],email=email,phone=contact['phone'],address1=contact['address1'],address2=contact['address2'],city=contact['city'],state=contact['state'],postal_code=contact['postal_code'])
                 order = Order(contact=contact,total=total,auth="sale",status="In Process")
                 payment_form = TrustCommerceForm(order, request.POST)
                 if payment_form.is_valid():
@@ -90,7 +93,7 @@ def admissions_form(request):
         fee_form = ApplicationFeeForm()
         payment_form = TrustCommerceForm()
 
-    extra_context = {"contact_form":contact_form,"personal_form":personal_form,"doop":len(schools),"states":STATE_CHOICES,
+    extra_context = {"contact_form":contact_form,"personal_form":personal_form,"order":order,"doop":len(schools),"states":STATE_CHOICES,
                          "employment_form":employment_form,"education_goals_form":education_goals_form,"schools":schools,
                          "fee_form":fee_form,"payment_form":payment_form,"months":MONTHS, "years1":UNI_YEARS1,"years2":UNI_YEARS2,}
     return render_to_response("adulted/admissions_form.html", extra_context, context_instance=RequestContext(request))

@@ -44,7 +44,7 @@ class PaymentProcessor():
             self.cycle = self.order.cycle
 
         # Convert amount to cents, no decimal point
-        amount = unicode((int(self.order.total) * 100))
+        amount = unicode( int( float(self.order.total) * 100 ) )
 
         # convert exp date to mmyy from mm/yy or mm/yyyy
         exp = u"%.2d%.2d" % (int(self.card['expiration_month']), (int(self.card['expiration_year']) % 100))
