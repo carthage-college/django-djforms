@@ -1,10 +1,12 @@
 from django import forms
+from django.conf import settings
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField, USSocialSecurityNumberField
 
 from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, COUNTRIES, BINARY_CHOICES, PAYMENT_CHOICES
 from djforms.processors.models import Contact
 from jenzabar import INFORMIX_EARL_TEST
 
+from sqlalchemy import create_engine
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
@@ -112,7 +114,10 @@ class ApplicationFeeForm(forms.Form):
     payment_type        = forms.TypedChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect())
 
 
-def _insert(data):
+import logging
+logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG)
+
+def insert(data):
     """
     private method to insert data into informix for adult education applications
     """
@@ -128,16 +133,17 @@ def _insert(data):
 
 
     # create unifying id number
-    sql =   'INSERT INTO apptmp_rec (add_date,add_tm,app_source,stat) VALUES (%s, %s, "AEA", "P")' % (DATE,TIME)
+    sql =   'INSERT INTO apptmp_rec (add_date,add_tm,app_source,stat) VALUES ("%s","%s","AEA","P")' % (DATE,TIME)
+    logging.debug("unique id = %s" % sql)
     connection.execute(sql)
     # get unifying id (uid)
     sql =   "SELECT DISTINCT dbinfo('sqlca.sqlerrd1') FROM apptmp_rec"
+    logging.debug("select id = %s" % sql)
     objects = connection.execute(sql)
     # retrieve the id
     for r in objects:
         apptmp_no = r[0]
-
-    # personal information
+    # contact information (plus ss_num)
     sql =   """
             INSERT INTO app_idtmp_rec (
                 id, firstname, middlename, lastname, addr_line1, addr_line2, city, st, zip, ctry,
@@ -148,6 +154,7 @@ def _insert(data):
             """ % (apptmp_no,data["contact"]["first_name"],data["contact"]["middle_name"],data["contact"]["last_name"],
                    data["contact"]["address1"],data["contact"]["address2"],data["contact"]["city"],data["contact"]["state"],
                    data["contact"]["postal_code"],data["contact"]["phone"],data["personal"]["ss_num"],DATE,DATE,PURGE_DATE)
+    logging.debug("contact info = %s" % sql)
     connection.execute(sql)
 
     # jenzabar freakiness
@@ -156,21 +163,22 @@ def _insert(data):
                 (id, home, site, beg_date)
             VALUES (%s, "Y", "CART", "%s")
             """ % (apptmp_no, DATE)
+    logging.debug("jenzabar freakiness = %s" % sql)
     connection.execute(sql)
 
     # Education plans
     #
     # decode programs, subprograms, plan_enr_sess and plan_enr_yr
-    if data["education"]["educationgoal"] in (1,2,5,6,7):
+    if data["education"]["educationalgoal"] in (1,2,5,6,7):
         program4 = "UNDG"
         if data["education"]["program"] == "7":
             subprogram = "7WK"
         else:
             subprogram="PTSM"
-    elif data["education"]["educationgoal"] == "3":
+    elif data["education"]["educationalgoal"] == "3":
         program4 = "GRAD"
         subprogram="MED"
-    elif data["education"]["educationgoal"] == "4":
+    elif data["education"]["educationalgoal"] == "4":
         program4 = "ACT"
         subprogram = "ACT"
     else:
@@ -201,14 +209,16 @@ def _insert(data):
             VALUES (%s,"Y", "%s", "%s", "4", "%s", "0.00", "", "0",
                 "%s", "%s", "%s", "0", "0", "%s", "", "0", "N")
             """ % (apptmp_no,start_session,start_year,DATE,data["contact"]["email"], program4, subprogram,DATE)
+    logging.debug("session info = %s" % sql)
     connection.execute(sql)
 
-    # birthday
+    # personal info
     sql =   """
             INSERT INTO app_proftmp_rec
                 (id, birth_date, birthplace_city, sex, church_id, prof_last_upd_date)
             VALUES (%s,"%s","%s","%s","0","%s")
             """ % (apptmp_no, data["personal"]["dob"], data["personal"]["pob"], data["personal"]["gender"], DATE)
+    logging.debug("more personal info = %s" % sql)
     connection.execute(sql)
 
     # schools
@@ -237,6 +247,7 @@ def _insert(data):
                 """ % (apptmp_no,
                     school.school_code, school.school_name, school.school_city,
                     school.school_state, attend_from, attend_to, grad_date)
+        logging.debug("school info = %s" % sql)
         connection.execute(sql)
 
     # payment info
@@ -248,6 +259,7 @@ def _insert(data):
             WHERE
                 apptmp_no = %s
             """ % (data["fee"]["payment_type"], apptmp_no)
+    logging.debug("payment info = %s" % sql)
     connection.execute(sql)
     connection.close()
 

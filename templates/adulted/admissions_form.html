@@ -107,8 +107,8 @@
             <ul class="radin">
                 <li><label for="id_gender_0"><input class="required" {% if personal_form.data.gender == "Male" %}checked="checked" {% endif %}type="radio" id="id_gender_0" value="Male" name="gender" /> Male</label></li>
                 <li><label for="id_gender_1"><input class="required" {% if personal_form.data.gender == "Female" %}checked="checked" {% endif %}type="radio" id="id_gender_1" value="Female" name="gender" /> Female</label></li>
-                <li><label for="id_gender_2"><input class="required" {% if personal_form.data.gender == "Deceline to state" %}checked="checked" {% endif %}type="radio" id="id_gender_2" value="Decline to state" name="gender" /> Decline to State</label></li>
-                {% if personal_form.gender.errors %}<li><span class="error">Chose one</span>{% endif %}
+                <li><label for="id_gender_2"><input class="required" {% if personal_form.data.gender == "Decline to state" %}checked="checked" {% endif %}type="radio" id="id_gender_2" value="Decline to state" name="gender" /> Decline to State</label></li>
+                {% if personal_form.gender.errors %}<li><span class="error">Choose one</span></li>{% endif %}
             </ul>
             <ul class="inline">
                 <li><label for="id_ss_num" class="placeholder">Social security number</label><br />
@@ -141,7 +141,7 @@
             <ul class="radin">
                 <li><label for="id_tuition_reimburse_0"><input {% if employment_form.data.tuition_reimburse == "Yes" %}checked="checked" {% endif %}type="radio" id="id_tuition_reimburse_0" value="Yes" name="tuition_reimburse" /> Yes</label></li>
                 <li><label for="id_tuition_reimburse_1"><input {% if employment_form.data.tuition_reimburse == "No" %}checked="checked" {% endif %}type="radio" id="id_tuition_reimburse_1" value="No" name="tuition_reimburse" /> No</label></li>
-                {% if employment_form.tuition_reimburse.errors %}<li><span class="error">Chose one</span></li>{% endif %}
+                {% if employment_form.tuition_reimburse.errors %}<li><span class="error">Choose one</span></li>{% endif %}
             </ul>
         </fieldset>
         <fieldset class="blockLabels top40">
@@ -367,7 +367,7 @@
                 <li><label for="id_payment_type_2">
                 <input type="radio" name="payment_type" value="Cash/Money Order" id="id_payment_type_2" {% if fee_form.data.payment_type == "Cash/Money Order" %}checked="checked" {% endif %}/> Cash/Money Order
                 </label></li>
-                {% if fee_form.payment_type.errors %}<li><span class="error">Chose a payment type</span></li>{% endif %}
+                {% if fee_form.payment_type.errors %}<li><span class="error">Choose a payment type</span></li>{% endif %}
             </ul>
             {% if payment_form.errors and payment_form.non_field_errors %}
                 <div class="error">{{payment_form.non_field_errors}}</div>

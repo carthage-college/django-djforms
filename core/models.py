@@ -44,7 +44,7 @@ YEAR_CHOICES = (
 PAYMENT_CHOICES = (
     ('Credit Card', 'Credit Card'),
     ('Check', 'Check'),
-    ('Cash/Money Order ', 'Cash/Money Order '),
+    ('Cash/Money Order', 'Cash/Money Order'),
 )
 #For making choices for choice fields for forms
 class GenericChoice(models.Model):
