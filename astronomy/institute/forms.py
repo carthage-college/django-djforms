@@ -20,7 +20,7 @@ PROGRAM_CHOICES = (
     ("Other programs or activities","Other programs or activities"),
 )
 
-INTEREST_CHOICES = (
+DEGREES = (
     ("A great deal","A great deal"),
     ("Some","Some"),
     ("Not much","Not much"),
@@ -35,13 +35,7 @@ LEARNING_EXPERIENCE = (
     ("Poor","Poor"),
 )
 
-MOTIVATION = (
-    ("A great deal", "A great deal"),
-    ("Somewhat", "Somewhat"),
-    ("Very little", "Very little"),
-)
-
-ONETOTEN = [(x, x) for x in xrange(1, 10)]
+ONETOTEN = [(x, x) for x in xrange(1, 11)]
 
 class NightReportForm(forms.Form):
     """
@@ -78,13 +72,21 @@ class EvaluationForm(forms.Form):
     attending           = forms.CharField(label = "Number attending (including yourself)", widget=forms.Select(choices=ONETOTEN))
     education           = forms.CharField(label = "Education level", widget=forms.Select(choices=EDUCATION))
     past_programs       = forms.ChoiceField(label = "Have you participated in other programs in the past?", choices=BINARY_CHOICES, widget=forms.RadioSelect())
-    programs_activity   = forms.CharField(label = "If yes, please list the programs and/or activities.", max_length=255, required=False)
+    programs_activity   = forms.CharField(label = "", help_text = "If yes, please list the programs and/or activities.", max_length=255, required=False)
     prior_experience    = forms.CharField(label = "Astronomy/Physics experience", help_text = "Have you participated in programs or activities related to astronomy or physics besides this program?", widget=forms.Select(choices=PROGRAM_CHOICES))
-    other_experience    = forms.CharField(label = "If other, please list them.", max_length=255)
-    interest            = forms.ChoiceField(label = "Interest in astronomy and physics", help_text = "Overall, how much interest would you say you had prior to this program in topics related to astronomy and physics?", choices=INTEREST_CHOICES, widget=forms.RadioSelect())
-    rate_learning       = forms.ChoiceField(label = "Rate your learning experience", help_text = "All in all, how would you rate your learning experience in this program?", choices=LEARNING_EXPERIENCE, widget=forms.RadioSelect())
-    reinforced          = forms.ChoiceField(label = "Knowledge of astronomy", help_text = "Did this program strengthen your knowledge of astronomy?", choices=MOTIVATION, widget=forms.RadioSelect())
-    motivation          = forms.ChoiceField(label = "Further study", help_text = "Did this program motivate you to learn more about astronomy?", choices=MOTIVATION, widget=forms.RadioSelect())
-    study_comments      = forms.CharField (label  = "Please elaborate", widget=forms.Textarea, required=False)
-    dependence          = forms.ChoiceField(label = "Dependence on astronomy", help_text = "Do you agree that this program helped you understand how life and other features of our planet depend upon astronomical processes?", choices=ONETOTEN, widget=forms.RadioSelect())
+    other_experience    = forms.CharField(label = "", help_text = "If other, please list them.", max_length=255, required=False)
+    interest            = forms.ChoiceField(label = "Interest in astronomy and physics", help_text = "Overall, how much interest would you say you had prior to this program in topics related to astronomy and physics?", choices=ONETOTEN, widget=forms.RadioSelect(), required=False)
+    rate_learning       = forms.ChoiceField(label = "Rate your learning experience", help_text = "All in all, how would you rate your learning experience in this program?", choices=ONETOTEN, widget=forms.RadioSelect(), required=False)
+    motivation          = forms.ChoiceField(label = "Further study", help_text = "Did this program motivate you to learn more about astronomy?", choices=DEGREES, widget=forms.RadioSelect(), required=False)
+    knowledge           = forms.ChoiceField(label = "Knowledge of astronomy", help_text = "Did this program strengthen your knowledge of astronomy?", choices=DEGREES, widget=forms.RadioSelect(), required=False)
+    knowledge_comments  = forms.CharField (label  = "", help_text = "Please elaborate", widget=forms.Textarea, required=False)
+    dependence          = forms.ChoiceField(label = "Dependence on astronomy", help_text = "Do you agree that this program helped you understand how life and other features of our planet depend upon astronomical processes?", choices=DEGREES, widget=forms.RadioSelect(), required=False)
+    examples            = forms.CharField (label  = "Examples", help_text = "Please provide one or two examples from this program that helped you understand the links between astronomy and Earth and tell us how it was helpful.", widget=forms.Textarea, required=False)
+    cosmos              = forms.ChoiceField(label = "Our place in the universe", help_text = "Do you agree that this program helped you develop a sense of your place in the broader universe?", choices=DEGREES, widget=forms.RadioSelect(), required=False)
+    connection1         = forms.ChoiceField(label = "", help_text = "I realize that humans are but a small piece of a very large universe.", choices=DEGREES, widget=forms.RadioSelect(), required=False)
+    connection2         = forms.ChoiceField(label = "", help_text = "I feel that human existence is a result of large-scale astronomical processes.", choices=DEGREES, widget=forms.RadioSelect(), required=False)
+    connection3         = forms.ChoiceField(label = "", help_text = "I feel that, like the rest of nature, humans are parts of the larger whole we call the universe.", choices=DEGREES, widget=forms.RadioSelect(), required=False)
+    connection4         = forms.ChoiceField(label = "", help_text = "I feel that scientific methods and research are good foundations to understand the place of humans in the universe.", choices=DEGREES, widget=forms.RadioSelect(), required=False)
+    connection5         = forms.ChoiceField(label = "", help_text = "Even though findings, concepts and theories may shift, the methods of scientific research and reasoning are sound ways to understand the universe.", choices=DEGREES, widget=forms.RadioSelect(), required=False)
+    comments            = forms.CharField(label = "Comments and suggestions", help_text = "Please provide suggestions you think might help make this program better.", widget=forms.Textarea, required=False)
 

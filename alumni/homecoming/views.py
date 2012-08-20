@@ -9,17 +9,23 @@ from djforms.alumni.homecoming.models import Attendee
 
 import datetime
 
+if settings.DEBUG:
+    TO_LIST = ["larry@carthage.edu",]
+else:
+    TO_LIST = ["alumnioffice@carthage.edu",]
+BCC = settings.MANAGERS
+
 def attendance(request):
     if request.method=='POST':
         form = AttendeeForm(request.POST)
         if form.is_valid():
             attendee = form.save()
-            bcc = settings.MANAGERS
-            recipient_list = ["alumnioffice@carthage.edu",]
-            #recipient_list = ["larry@carthage.edu",]
             t = loader.get_template('alumni/homecoming/attendance_email.html')
+            email = settings.DEFAULT_FROM_EMAIL
+            if attendee.email:
+                email = attendee.email
             c = RequestContext(request, {'attendee':attendee,})
-            email = EmailMessage(("[Homecoming Attendee] %s %s" % (attendee.first_name,attendee.last_name)), t.render(c), attendee.email, recipient_list, bcc, headers = {'Reply-To': attendee.email,'From': attendee.email})
+            email = EmailMessage(("[Homecoming Attendee] %s %s" % (attendee.first_name,attendee.last_name)), t.render(c), email, TO_LIST, BCC, headers = {'Reply-To': email,'From': email})
             email.content_subtype = "html"
             email.send(fail_silently=True)
             return HttpResponseRedirect('/forms/alumni/homecoming/success/')

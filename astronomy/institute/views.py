@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.core.mail import EmailMessage
+from djforms.core.views import send_mail
 from django.shortcuts import render_to_response
 from django.template import RequestContext, loader
 
@@ -10,18 +10,15 @@ if settings.DEBUG:
     TO_LIST = ["larry@carthage.edu",]
 else:
     TO_LIST = ["darion@carthage.edu",]
+BCC = settings.MANAGERS
 
 def night_report(request):
     if request.method=='POST':
         form = NightReportForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            bcc = settings.MANAGERS
-            t = loader.get_template('astronomy/institute/night_report_email.html')
-            c = RequestContext(request, {'object':data,})
-            email = EmailMessage(("[Griffin Observatory Night Report] Submitted by: %s of %s" % (data['name'],data['organization'])), t.render(c), data['email'], TO_LIST, bcc, headers = {'Reply-To': data['email'],'From': data['email']})
-            email.content_subtype = "html"
-            email.send(fail_silently=True)
+            subject = "[Griffin Observatory Night Report] Submitted by: %s of %s" % (data['name'],data['organization'])
+            send_mail(request, TO_LIST, subject, data['email'], "astronomy/institute/night_report_email.html", data, BCC)
             return HttpResponseRedirect('/forms/astronomy/institute/night-report/success/')
     else:
         form = NightReportForm()
@@ -32,12 +29,8 @@ def evaluation(request):
         form = EvaluationForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            bcc = settings.MANAGERS
-            t = loader.get_template('astronomy/institute/evaluation_email.html')
-            c = RequestContext(request, {'object':data,})
-            email = EmailMessage(("[Griffin Observatory Evaluation] Submitted by: %s" % (data['name'])), t.render(c), data['email'], TO_LIST, bcc, headers = {'Reply-To': data['email'],'From': data['email']})
-            email.content_subtype = "html"
-            email.send(fail_silently=True)
+            subject = "[Griffin Observatory Evaluation] Submitted by: %s" % data['name']
+            send_mail(request, TO_LIST, subject, data['email'], "astronomy/institute/evaluation_email.html", data, BCC)
             return HttpResponseRedirect('/forms/astronomy/institute/evaluation/success/')
     else:
         form = EvaluationForm()
