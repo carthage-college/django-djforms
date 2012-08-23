@@ -77,10 +77,10 @@ class PostFormWithoutHidden(forms.ModelForm):
     hiring_department   = forms.ModelChoiceField(queryset=Department.objects.all())
     publish             = forms.DateTimeField(help_text="A date for the post to go live on")
     expire_date         = forms.DateTimeField(help_text="A date for the post to expire on")
-    creator             = forms.ModelChoiceField(queryset=User.objects.all(), required=False)
 
     class Meta:
         model = Post
+        exclude = ('creator',)
 
     #Makes sure the user picks an expire date later than the post date
     def clean_date(self):

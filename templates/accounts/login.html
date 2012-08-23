@@ -49,7 +49,11 @@
             </form>
         {% else %}
             <h2>You are already logged in</h2>
+            {% if next %}
+                <p><a href="{{next}}">Click here to continue on to your destination.</a><p>
+            {% else %}
             <p><a href="/forms/accounts/logout/">Do you want to log out and log in as a new user?</a></p>
+            {% endif %}
         {% endif %}
     </div>
 </div>

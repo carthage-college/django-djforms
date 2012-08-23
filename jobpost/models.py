@@ -40,7 +40,7 @@ class Post(models.Model):
     created_at          = models.DateTimeField(auto_now_add=True)
     updated_at          = models.DateTimeField(auto_now=True)
     active              = models.BooleanField(help_text='Is active?', default=False)
-    tags                = TagField(help_text="A comma separated list of key words used for the search function.")
+    #tags                = TagField(help_text="A comma separated list of key words used for the search function.")
     creator             = models.ForeignKey(User, null=True, blank=True)
     
     class Meta:

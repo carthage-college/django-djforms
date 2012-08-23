@@ -1,0 +1,22 @@
+{% autoescape off %}
+<html lang="en-US">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{% block title %}{% endblock %}</title>
+    {% block redirect %}{% endblock %}
+    {% block metatags %}{% endblock %}
+    {% block feeds %}{% endblock %}
+    {% block css %}{% include "includes/extra_form_style.html" %}{% endblock %}
+    {% block css_columns %}{% endblock %}
+    {% block jquery_css %}{% endblock %}
+    {% block extra_style %}{% endblock %}
+    {% block javascript %}<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>{% endif %}
+    {% block extra_javascript %}{% endblock %}
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+{% block content %}
+{% endblock %}
+</body>
+</html>
+{% endautoescape %}

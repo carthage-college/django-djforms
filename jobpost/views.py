@@ -15,11 +15,28 @@ from dateutil import parser
 import datetime
 import re
 
-@login_required
+from django.views.decorators.csrf import csrf_exempt
+
+from directory.core import do_sql
+
+@csrf_exempt
+@staff_member_required
+def applicants_delete(request):
+    """
+    Accepts: POST request with variable 'data'
+    Returns: status
+    """
+    if request.method == "POST":
+        pid = request.POST.get('data')
+        job = JobApplyForm.objects.filter(id=pid).delete()
+        return HttpResponse("success", mimetype="text/plain; charset=utf-8")
+    else:
+        return HttpResponse("POST required", mimetype="text/plain; charset=utf-8")
+
+
 def data_entered(request):
     return render_to_response('jobpost/data_entered.html', context_instance=RequestContext(request))
 
-@login_required
 def post_list(request, page=0):
     """
     Post list
@@ -57,8 +74,8 @@ def post_list(request, page=0):
     """
     return list_detail.object_list(
         request,
-        queryset = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1),
-        paginate_by = 5,
+        queryset = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1).order_by("-publish"),
+        paginate_by = 25,
         page = page,
     )
 
@@ -103,11 +120,10 @@ def user_post_list(request, page=0):
         request,
         queryset = Post.objects.filter(creator = current_user),
         template_name = 'jobpost/user_post_list.html',
-        paginate_by = 5,
+        paginate_by = 25,
         page = page,
     )
 
-@login_required
 def post_detail(request, pid, page=0):
     """
     Post detail
@@ -116,25 +132,25 @@ def post_detail(request, pid, page=0):
     Context:
         object:
             the object to be detailed
-        """
+    """
     #if the user is staff they see the applicants, and if they are the creator they can expire the post
     post = get_object_or_404(Post, id=pid)
     if request.user.is_staff:
         if post.creator==request.user:
             if request.method == 'POST':
-                form = PostFormMostHidden(request.POST, instance=post)
+                form = PostFormWithoutHidden(request.POST, instance=post)
                 if form.is_valid():
                     post.num_positions = request.POST['num_positions']
                     post.expire_date = parser.parse(request.POST['expire_date'])
                     post.save()
                     return HttpResponseRedirect('/forms/job/success')
             else:
-                form = PostFormMostHidden(instance=post)
+                form = PostFormWithoutHidden(instance=post)
             return list_detail.object_list(
                 request,
                 queryset = JobApplyForm.objects.filter(job=post),
                 template_name = 'jobpost/post_detail.html',
-                paginate_by = 5,
+                paginate_by = 25,
                 page = page,
                 extra_context = {'post':post, "form": form},
             )
@@ -218,8 +234,8 @@ def post_manage_list(request, page=0):
     return list_detail.object_list(
         request,
         #queryset = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now()),
-        queryset = Post.objects.all(),
-        paginate_by = 5,
+        queryset = Post.objects.all().order_by("-publish"),
+        paginate_by = 25,
         template_name = 'jobpost/post_manage_list.html',
         page = page,
     )
@@ -251,7 +267,6 @@ def post_create(request):
         form = PostFormWithHidden()
     return render_to_response("jobpost/add_form.html", {'form':form}, context_instance=RequestContext(request))
 
-@login_required
 def department_list(request, page=0):
     """
     Department list
@@ -291,15 +306,14 @@ def department_list(request, page=0):
         request,
         queryset = Department.objects.all(),
         template_name = 'jobpost/department_list.html',
-        paginate_by = 20,
+        paginate_by = 25,
         page = page,
     )
 
-@login_required
 def department_detail(request, slug, page=0):
     """
     Department detail
-    
+
     Template: ``jobpost/department_detail.html``
     Context:
         object_list
@@ -337,13 +351,13 @@ def department_detail(request, slug, page=0):
         department = Department.objects.get(slug__iexact=slug)
     except Department.DoesNotExist:
         raise Http404
-  
+
     return list_detail.object_list(
         request,
         queryset = department.post_set.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1),
         extra_context = { 'department': department },
         template_name = 'jobpost/department_detail.html',
-        paginate_by = 5,
+        paginate_by = 25,
         page = page,
     )
 
@@ -367,15 +381,14 @@ we|well|were|what|whatever|when|whence|whenever|where|whereafter|whereas|whereby
 which|while|whither|who|whoever|whole|whom|whose|why|will|with|within|without|would|yet|you|your|yours|yourself|
 yourselves)\b"""
 
-@login_required
 def search(request, page=0):
     """
     Search for jobpost posts.
-    
+
     This template will allow you to setup a simple search form that will try to return results based on
     given search strings. The queries will be put through a stop words filter to remove words like
     'the', 'a', or 'have' to help imporve the result set.
-    
+
     Template: ``jobs/post_search.html``
     Context:
     object_list
@@ -394,7 +407,7 @@ def search(request, page=0):
                 queryset = Post.objects.filter(description__icontains=cleaned_search_term, publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1),
                 #extra_context = {'search_term':search_term},
                 template_name="jobpost/post_search.html", 
-                paginate_by=5,
+                paginate_by=25,
                 page = page,
             )
         else:

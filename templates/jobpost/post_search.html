@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "jobpost/base.html" %}
 {% block title %}Post search{% endblock %}
 {% block content %}
     <div class="buffer">
@@ -10,10 +10,9 @@
     </p>
     </form>
     {% if message %}
-  <p class="message">{{ message }}</p>
+    <p class="message">{{ message }}</p>
     {% endif %}
-    
-    {% if object_list %}  
+    {% if object_list %}
     <div class="post_list">
         {% for post in object_list %}
         <div>

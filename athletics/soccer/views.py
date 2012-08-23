@@ -8,8 +8,8 @@ from djforms.processors.models import Contact, Order
 from djforms.processors.forms import ContactForm, TrustCommerceForm
 from djforms.core.views import send_mail
 
-#TO_LIST = ["sdomin@carthage.edu",]
-TO_LIST = ["larry@carthage.edu",]
+TO_LIST = ["sdomin@carthage.edu",]
+#TO_LIST = ["larry@carthage.edu",]
 
 def camp_registration(request):
     if request.POST:
