@@ -2,8 +2,9 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.views.generic import date_based, list_detail
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.admin.views.decorators import staff_member_required
 from djforms.jobpost.forms import JobApplyForms, PostFormWithHidden, PostFormWithoutHidden, PostFormMostHidden
@@ -14,10 +15,6 @@ from django.contrib.auth.models import User
 from dateutil import parser
 import datetime
 import re
-
-from django.views.decorators.csrf import csrf_exempt
-
-from directory.core import do_sql
 
 @csrf_exempt
 @staff_member_required
