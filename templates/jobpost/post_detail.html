@@ -29,7 +29,7 @@ $(function() {
                 $.ajax ({
                     type: "POST",
                     url: "/forms/job/applicants/delete/",
-                    data: {{post.id}},
+                    data: {pid:{{post.id}},},
                     cache: false,
                     error:function(xhr, ajaxOptions, thrownError) {
                         $("#dialog-confirm").dialog( "close" );

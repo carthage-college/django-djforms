@@ -25,7 +25,7 @@ def maintenance_request_form(request):
         try:
             profile = request.user.get_profile()
         except:
-            logging.debug("username = %s" % request.user.username)
+            logging.info("username = %s" % request.user.username)
             profile = ''
             p = UserProfile(user=request.user)
             p.save()

@@ -20,6 +20,7 @@
         @import url("https://www.carthage.edu/assets/current/css/core/grid-960.css");
         @import url("http://www.carthage.edu/assets/current/css/plugins/icons.css");
     /* ]]> */
+        #about {margin-top:70px;}
     </style>
     <!--[if IE]>
         <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
@@ -31,9 +32,10 @@
     <link href="/assets/css/jquery/plugins/searchmeme/searchMeme.css" rel="stylesheet" type="text/css" />
     {% else %}
     <style type="text/css" media="screen, projection">
+    body {background-color:#E5DCC1 !important;font-family:verdana,arial,sans-serif; font-size:.9em;}
     #nav, #about {float: left; list-style: none outside none; padding-right:5px;  }
     #nav li, #about li { display: inline; list-style-type: none; overflow: hidden; }
-    #about {border-right:1px solid #800; }
+    #about {border-right:1px solid #800;}
     #nav {padding-left:5px;}
     </style>
     {% endif %}
@@ -65,7 +67,7 @@
     {% block columns %}{% endblock %}
 </head>
 {% block body %}
-<body id="Home" class="home">
+<body>
     <div id="wrapper" class="container">
     <div class="stone">
         {% if user.is_staff %}
@@ -91,13 +93,9 @@
                 {% endif %}
             </ul>
             <ul id="nav">
-                <li><a href="http://www.carthage.edu/finaid/">Financial Aid Home</a></li>
+                <li><a href="http://www.carthage.edu/finaid/" target="_blank">Financial Aid Home</a></li>
                 {% if not user.is_anonymous %}
                     <li><a href="/forms/accounts/logout/?next=/forms/job/">Logout</a></li>
-                {% else %}
-                    <li>
-                        <a href="/forms/accounts/login/?next={{request.path}}">Login</a>
-                    </li>
                 {% endif %}
                 {% if user.is_superuser %}
                     <li><a href="/forms/admin/">Administration</a></li>

@@ -24,8 +24,8 @@ def applicants_delete(request):
     Returns: status
     """
     if request.method == "POST":
-        pid = request.POST.get('data')
-        job = JobApplyForm.objects.filter(id=pid).delete()
+        pid = request.POST.get('pid')
+        JobApplyForm.objects.filter(job__id=pid).delete()
         return HttpResponse("success", mimetype="text/plain; charset=utf-8")
     else:
         return HttpResponse("POST required", mimetype="text/plain; charset=utf-8")
@@ -303,7 +303,7 @@ def department_list(request, page=0):
         request,
         queryset = Department.objects.all(),
         template_name = 'jobpost/department_list.html',
-        paginate_by = 25,
+        paginate_by = 50,
         page = page,
     )
 
