@@ -33,6 +33,7 @@ try:
 except:
     MEAL_SERVICE    = GenericChoice.objects.none()
 
+"""
 try:
     bar_pay_tag     = Tag.objects.get(name__iexact='Bar payment')
     BAR_PAY         = TaggedItem.objects.get_by_model(GenericChoice, bar_pay_tag).filter(active=True).order_by("ranking")
@@ -44,6 +45,7 @@ try:
     BEVERAGES       = TaggedItem.objects.get_by_model(GenericChoice, beverage_tag).filter(active=True).order_by("name")
 except:
     BEVERAGES       = GenericChoice.objects.none()
+"""
 
 class EventForm1(forms.ModelForm):
     event_start     = KungfuTimeField(label="Event starts at", help_text="(Format HH:MM am/pm)")
@@ -94,12 +96,12 @@ class EventForm4(forms.ModelForm):
     program_start   = KungfuTimeField(label="Program time start", help_text="(format HH:MM am/pm)")
     program_end     = KungfuTimeField(label="Program time end", help_text="(format HH:MM am/pm)")
     meal_service    = forms.ModelChoiceField(queryset=MEAL_SERVICE)
-    bar_payment     = forms.ModelChoiceField(queryset=BAR_PAY, widget=forms.RadioSelect(), empty_label=None, label="Bar payment options")
-    beverages       = forms.ModelMultipleChoiceField(queryset=BEVERAGES, widget=forms.CheckboxSelectMultiple(), label="Beverage requirements", required=False)
+    #bar_payment     = forms.ModelChoiceField(queryset=BAR_PAY, widget=forms.RadioSelect(), empty_label=None, label="Bar payment options", required=False)
+    #beverages       = forms.ModelMultipleChoiceField(queryset=BEVERAGES, widget=forms.CheckboxSelectMultiple(), label="Beverage requirements", required=False)
 
     class Meta:
         model = Event
-        fields = ('dining_att', 'service_start', 'service_end', 'program_start', 'program_end', 'meal_service', 'menu_desc', 'other_reqs', 'bar_payment', 'beverages')
+        fields = ('dining_att', 'service_start', 'service_end', 'program_start', 'program_end', 'meal_service', 'menu_desc', 'other_reqs', )
 
 class EventForm5(forms.ModelForm):
 

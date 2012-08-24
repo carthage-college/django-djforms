@@ -47,8 +47,8 @@ class Event(models.Model):
     meal_service    = models.ForeignKey(GenericChoice, related_name="catering_event_meal_service")
     menu_desc       = models.TextField("Menu description")
     other_reqs      = models.CharField("Other requirements", max_length=255, help_text="(e.g. decor, colors, etc.)", null=True, blank=True)
-    bar_payment     = models.ForeignKey(GenericChoice, verbose_name="Bar payment options", related_name="catering_event_bar_payment")
-    beverages       = models.ManyToManyField(GenericChoice, verbose_name="Beverage requirements", related_name="catering_event_beverages", null=True, blank=True)
+    #bar_payment     = models.ForeignKey(GenericChoice, verbose_name="Bar payment options", related_name="catering_event_bar_payment", null=True, blank=True)
+    #beverages       = models.ManyToManyField(GenericChoice, verbose_name="Beverage requirements", related_name="catering_event_beverages", null=True, blank=True)
     #bev_brands      = models.CharField("Specific beverage labels/brands", max_length="255", null=True, blank=True, help_text="Basic red or white table wine will be served unless otherwise specified. Beer will be served on tap unless specified otherwise. Please include specific labels or brands other than the standard offerings listed above.")
     # equipment
     slide           = models.CharField("Slide projector", max_length=2, null=True, blank=True)
