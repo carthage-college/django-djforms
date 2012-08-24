@@ -15,6 +15,11 @@ import os.path
 storage_location = os.path.join(settings.MEDIA_ROOT, "files/catering/temp/")
 storage = FileSystemStorage(location=storage_location)
 
+if settings.DEBUG:
+    TO_LIST = ["larry@carthage.edu",]
+else:
+    TO_LIST = ["dhoffman1@carthage.edu","jchilson@carthage.edu,","mmichaud@carthage.edu", "jklabechek@carthage.edu"]
+
 class CateringEventWizard(SessionWizardView):
     """
     Form wizard view for processing the event steps
@@ -38,12 +43,11 @@ class CateringEventWizard(SessionWizardView):
         event.beverages = xfields['beverages']
         event.save()
         bcc = settings.MANAGERS
-        recipient_list = ["dhoffman1@carthage.edu","jchilson@carthage.edu,","mmichaud@carthage.edu", "jklabechek@carthage.edu"]
         t = loader.get_template('catering/event_email.html')
         c = RequestContext(self.request, {'event':event,})
         email = event.user.email
-        recipient_list.append(email)
-        email = EmailMessage(("[Event Request Form] %s: %s %s" % (event.department,event.user.first_name,event.user.last_name)), t.render(c), email, recipient_list, bcc, headers = {'Reply-To': email,'From': email})
+        TO_LIST.append(email)
+        email = EmailMessage(("[Event Request Form] %s: %s %s" % (event.department,event.user.first_name,event.user.last_name)), t.render(c), email, TO_LIST, bcc, headers = {'Reply-To': email,'From': email})
         email.content_subtype = "html"
         email.send(fail_silently=True)
         return HttpResponseRedirect('http://%s/forms/catering/event/success/' % settings.SERVER_URL)

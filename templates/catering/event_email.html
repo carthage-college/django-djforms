@@ -45,9 +45,6 @@ Program end time............ {{event.program_end}}
 Meal service................ {{event.meal_service}}
 Menu description............ {{event.menu_desc}}
 Other requirements.......... {{event.other_reqs}}
-Bar payment................. {{event.bar_payment}}
-Beverage requirements....... {% for item in event.beverages.all %}{{item}}{% if not forloop.last %}, {% endif %}{% endfor %}
-Beverage brands............. {{event.bev_brands}}
 </pre>
 <h4>Equipment</h4>
 <pre style="font-size:1em;">
