@@ -125,7 +125,7 @@ def insert(data):
     DATE = datetime.now().strftime("%m/%d/%Y")
     YEAR = int(datetime.now().strftime("%Y"))
     MONTH = int(datetime.now().strftime("%m"))
-    TIME = datetime.now().strftime("%H:%M:%S")
+    TIME = datetime.now().strftime("%H%M")
     PURGE_DATE = (date.today() + relativedelta( months = +2 )).strftime("%m/%d/%Y")
 
     engine = create_engine(INFORMIX_EARL_TEST)
@@ -213,11 +213,12 @@ def insert(data):
     connection.execute(sql)
 
     # personal info
+    dob = data["personal"]["pob"].strftime("%m/%d/%Y")
     sql =   """
             INSERT INTO app_proftmp_rec
                 (id, birth_date, birthplace_city, sex, church_id, prof_last_upd_date)
             VALUES (%s,"%s","%s","%s","0","%s")
-            """ % (apptmp_no, data["personal"]["dob"], data["personal"]["pob"], data["personal"]["gender"], DATE)
+            """ % (apptmp_no, dob, data["personal"]["pob"], data["personal"]["gender"], DATE)
     logging.debug("more personal info = %s" % sql)
     connection.execute(sql)
 
