@@ -50,5 +50,5 @@ def not_in_group(user):
         notin = False
         if staff or faculty:
             notin = True
-        return group
+        return notin
     return False
