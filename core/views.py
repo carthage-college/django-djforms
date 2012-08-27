@@ -43,3 +43,12 @@ def send_mail(request, recipients, subject, femail, template, data, bcc=None):
         email.content_subtype = "html"
         email.send(fail_silently=True)
 
+def not_in_group(user):
+    if user:
+        staff = user.groups.filter(name='Staff').count() == 0
+        faculty = user.groups.filter(name='Faculty').count() == 0
+        notin = False
+        if staff or faculty:
+            notin = True
+        return group
+    return False

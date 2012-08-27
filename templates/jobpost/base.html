@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 {% autoescape off %}
+{% load ifusergroup %}
 <html lang="en-US">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -13,7 +14,7 @@
     <meta name="MSSmartTagsPreventParsing" content="true" />
     {% endblock %}
     {% block css %}
-    {% if user.is_staff %}
+    {% ifusergroup Staff Faculty %}
     <style type="text/css" media="screen, projection">
     /* <![CDATA[ */
         @import url("https://www.carthage.edu/media/css/douglasfir/global.css");
@@ -38,13 +39,13 @@
     #about {border-right:1px solid #800;}
     #nav {padding-left:5px;}
     </style>
-    {% endif %}
+    {% endifusergroup %}
     {% include "includes/extra_form_style.html" %}
     {% endblock %}
     {% block extra_style %}{% endblock %}
     {% block javascript %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-    {% if user.is_staff %}
+    {% ifusergroup Staff Faculty %}
     <script src="https://www.carthage.edu/media/js/douglasfir/globalnav.js" type="text/javascript"></script>
     <script src="https://www.carthage.edu/media/js/douglasfir/superfish/superfish.js" type="text/javascript"></script>
     <script src="/assets/js/jquery/plugins/jquery.searchMeme.js" type="text/javascript"></script>
@@ -61,7 +62,7 @@
         });
     });
     </script>
-    {% endif %}
+    {% endifusergroup %}
     {% endblock %}
     {% block extra_javascript %}{% endblock %}
     {% block columns %}{% endblock %}
@@ -70,24 +71,24 @@
 <body>
     <div id="wrapper" class="container">
     <div class="stone">
-        {% if user.is_staff %}
+        {% ifusergroup Staff Faculty %}
         <div id="Header">
             <div id="topnav">
                 <h1><a href="http://www.carthage.edu/?ext"><img src="/assets/current/img/ui/3flame_top_sm.gif" alt="Carthage" /></a></h1>
                 {% block globalnavinclude %}{% include "includes/globalnav.html" %}{% endblock %}
             </div>
         </div>
-        {% endif %}
+        {% endifusergroup %}
         {% block left_nav %}
         <div id="first">
             <ul id="about">
                 <li><a href="/forms/job/">Available Jobs</a></li>
                 <!-- <li><a href="/forms/job/search/">Search for Jobs</a></li> -->
                 <li><a href="/forms/job/departments/">Jobs by Department</a></li>
-                {% if user.is_staff %}
+                {% ifusergroup Staff Faculty %}
                 <li><a href="/forms/job/createpost/">Create a Job Post</a></li>
                 <li><a href="/forms/job/user-post-list/">Your Posts</a></li>
-                {% endif %}
+                {% endifusergroup %}
                 {% if perms.jobpost.can_manage %}
                 <li><a href="/forms/job/post-manage-list/">Manage Job Posts</a></li>
                 {% endif %}
@@ -109,7 +110,7 @@
         </div>
         {% block sidebar %}
         {% endblock %}
-        {% if user.is_staff %}
+        {% ifusergroup Staff Faculty %}
         <div id="footer">
             <p>Carthage College<br />
             2001 Alford Park Drive<br />
@@ -131,7 +132,7 @@
             <div style="clear:both;"></div>
             <div id="tagline"><img alt="Truth, Strength, Service. Together." src="/assets/img/ui/tagline.gif" border="0" /></div>
         </div><!-- end footer -->
-        {% endif %}
+        {% endifusergroup %}
     </div><!-- end stone -->
     </div><!-- end wrapper -->
 </body>

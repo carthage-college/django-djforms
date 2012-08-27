@@ -5,21 +5,21 @@ from django.template import RequestContext, loader, Context
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.views.generic import date_based, list_detail
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.contrib.auth.models import User
 
 from djforms.jobpost.forms import JobApplyForms, PostFormWithHidden, PostFormWithoutHidden, PostFormMostHidden
 from djforms.jobpost.models import Post, JobApplyForm
 from djforms.core.models import Department
-from djforms.core.views import send_mail
+from djforms.core.views import send_mail, not_in_group
 
 from dateutil import parser
 import datetime
 import re
 
 @csrf_exempt
-@staff_member_required
+@login_required
+@user_passes_test(not_in_group, login_url='/forms/accounts/login/')
 def applicants_delete(request):
     """
     Accepts: POST request with variable 'data'
@@ -27,11 +27,14 @@ def applicants_delete(request):
     """
     if request.method == "POST":
         pid = request.POST.get('pid')
-        JobApplyForm.objects.filter(job__id=pid).delete()
-        return HttpResponse("success", mimetype="text/plain; charset=utf-8")
+        job = Post.objects.get(id=pid)
+        if job.creator == request.user:
+            JobApplyForm.objects.filter(job__id=pid).delete()
+            return HttpResponse("Success", mimetype="text/plain; charset=utf-8")
+        else:
+            return HttpResponse("Permission denied", mimetype="text/plain; charset=utf-8")
     else:
         return HttpResponse("POST required", mimetype="text/plain; charset=utf-8")
-
 
 def data_entered(request):
     return render_to_response('jobpost/data_entered.html', context_instance=RequestContext(request))
@@ -78,7 +81,8 @@ def post_list(request, page=0):
         page = page,
     )
 
-@staff_member_required
+@login_required
+@user_passes_test(not_in_group, login_url='/forms/accounts/login/')
 def user_post_list(request, page=0):
     """
     Post list
@@ -135,7 +139,7 @@ def post_detail(request, pid, page=0):
     #if the user is staff they see the applicants, and if they are the creator they can expire the post
     post = get_object_or_404(Post, id=pid)
     if request.user.is_staff:
-        if post.creator==request.user:
+        if post.creator == request.user:
             if request.method == 'POST':
                 form = PostFormWithoutHidden(request.POST, instance=post)
                 if form.is_valid():
@@ -241,7 +245,8 @@ def post_manage_list(request, page=0):
         page = page,
     )
 
-@staff_member_required
+@login_required
+@user_passes_test(not_in_group, login_url='/forms/accounts/login/')
 def post_create(request):
     """
     Post list
