@@ -4,22 +4,25 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 
+from djforms.core.views import send_mail
 from djforms.polisci.mun.forms import ModelUnitedNationsRegistrationForm, ModelUnitedNationsCountriesForm
+
+if settings.DEBUG:
+    TO_LIST = ["larry@carthage.edu",]
+else:
+    TO_LIST = ["vmartinez1@carthage.edu",]
+BCC = settings.MANAGERS
 
 def registration_form(request):
     if request.method=='POST':
         form = ModelUnitedNationsRegistrationForm(request.POST)
         c_form = ModelUnitedNationsCountriesForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
+            obj = form.cleaned_data
             dele = c_form.is_valid()
-            bcc = settings.MANAGERS
-            recipient_list = ["jroberg@carthage.edu",]
-            t = loader.get_template('polisci/mun/registration_email.html')
-            c = RequestContext(request, {'object':data,'dele':c_form.cleaned_data,})
-            email = EmailMessage(("[Model United Nations Registration] %s of %s" % (data['faculty_advisor'],data['school_name'])), t.render(c), data['email'], recipient_list, bcc, headers = {'Reply-To': data['email'],'From': data['email']})
-            email.content_subtype = "html"
-            email.send(fail_silently=True)
+            data = {'object':obj,'dele':c_form.cleaned_data,}
+            subject = "[Model United Nations Registration] %s of %s" % (obj['faculty_advisor'],obj['school_name'])
+            send_mail(request, TO_LIST, subject, obj['email'], "polisci/mun/registration_email.html", data, BCC)
             return HttpResponseRedirect('/forms/political-science/model-united-nations/success/')
     else:
         form = ModelUnitedNationsRegistrationForm()

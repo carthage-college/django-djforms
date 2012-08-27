@@ -7,10 +7,12 @@ from django.views.generic import date_based, list_detail
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.models import User
+
 from djforms.jobpost.forms import JobApplyForms, PostFormWithHidden, PostFormWithoutHidden, PostFormMostHidden
 from djforms.jobpost.models import Post, JobApplyForm
 from djforms.core.models import Department
-from django.contrib.auth.models import User
+from djforms.core.views import send_mail
 
 from dateutil import parser
 import datetime
@@ -172,9 +174,11 @@ def post_detail(request, pid, page=0):
                 bcc = settings.MANAGERS
                 t = loader.get_template('jobpost/email.txt')
                 c = Context({'data':job,'post':post})
-                email = EmailMessage("[Job application] %s" % post.title, t.render(c), request.user.email, [post.creator.email,], bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
+                frum = job.email
+                email = EmailMessage("[Job application] %s" % post.title, t.render(c), frum, [post.creator.email,], bcc, headers = {'Reply-To': frum,'From': frum})
                 email.content_subtype = "html"
                 email.send(fail_silently=True)
+                #send_mail(request, TO_LIST, subject, contact['email'], "adulted/admissions_email.html", data, BCC)
                 return HttpResponseRedirect('/forms/job/success')
         else:
             form = JobApplyForms()
