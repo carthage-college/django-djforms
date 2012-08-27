@@ -70,14 +70,14 @@ div.growlUI h1, div.growlUI h2 {
 {% endblock %}
 {% block content %}
     <div class="span-18 prepend-1 buffer-top">
-    <div id="print-link"><h2><a href="#" id="dialog-click" title="You are about to remove all applicants for this job post.">Remove all applicants</a> | </h2></div>
-    <div id="dialog-confirm" title="Remove all applicants?">
-    <p>
-    <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-    You are about to remove all applicants for this job post. Are you certain?
-    </p>
-    </div>
     {% if user.is_staff %}
+        <div id="print-link"><h2><a href="#" id="dialog-click" title="You are about to remove all applicants for this job post.">Remove all applicants</a> | </h2></div>
+        <div id="dialog-confirm" title="Remove all applicants?">
+        <p>
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+        You are about to remove all applicants for this job post. Are you certain?
+        </p>
+        </div>
         <h1 class="page_title">{{ post.title }}</h1>
         <dl class="job-detail">
             <dt class="job-header">Job posted on:</dt><dd class="job-data">{{ post.publish|date:"F j, Y" }}</dd>
