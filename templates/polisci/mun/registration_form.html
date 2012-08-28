@@ -55,21 +55,8 @@
                     </li>
                     {% if field.name == "number_of_stu" %}
                     <li class="ctrlHolder buffer-top">
-                        <h5>General Assembly Members:</h5>
-                        <p>
-                            This simulation will be open to all states but priority
-                            is placed on filling the nations most relevant to the
-                            topic. These nations include the choices listed below.
-                            Reminder: China, France, Russian Federation, United Kingdom,
-                            and United States are all permanent members of the Security
-                            Council with veto power. Countries will be assigned on
-                            a &quot;first come, first serve&quot; basis. Schools with more than
-                            one delegation are required to represent at least one lesser-developed state.
-                            The topic areas for this plenary session are &quot;Strengthening the Role of the
-                            UN&quot; and &quot;Realizing the Millennium Development Goals&quot;.
-                            There are three (3) concurrent General Assembly sessions.
-                        </p>
-                        <p>The order in which you select a country will determine its ranking preference, with the first having highest rank.</p>
+                        {% get_api_object as ga_mem cms snippet 1409 code %}
+                        {{ga_mem}}
                         <div id="delegation1" class="fleft">
                         <h5 style="text-align:center;">Delegation 1</h5>
                         <ol>
@@ -129,13 +116,8 @@
         <fieldset class="blockLabels">
             <ol>
                 <li>
-                    <h5 style="color:#ff0000;">General Assembly Conference Fees:</h5>
-                    <p> $25 per delegation (3 people/Special Plenary delegation; maximum 5 delegations/school) and $7 per delegate</p>
-                    <p><strong>Security Council:</strong><br />
-                    The topic areas for this Security Council are &quot;Nuclear Non-Proliferation and Disarmament&quot; and &quot;Sovereignty and Humanitarian Intervention&quot;. This year the following countries will also be on the Security Council: Iran, North Korea, Pakistan and Syria. As always, additional countries that are not on the Security Council but are relevant to Security Council discussions may be called into the session to present their side of events and to answer questions asked by Security Council members.</p>
-                    <h5 style="color:#ff0000;">Security Council Fee:</h5>
-                    <p>Delegate fee for the Security Council simulation is $10/student. There is no additional delegation fee for this simulation.</p>
-                    <p><strong>PLEASE NOTE: If you receive a Security Council country you must have four (4) students to represent the country - three (3) for the concurrent General Assembly sessions and one (1) for the Security Council. Delegates will be working Individually</strong> and delegation fees are non-refundable. Please contact Dr. Roberg if your school would like to bring more than five delegations. We will try to accomodate if possible.</p>
+                    {% get_api_object as ga_fees cms snippet 1410 code %}
+                    {{ga_fees}}
                 </li>
                 <li class="btnHolder">
                     <label for="id_submit">&nbsp;&nbsp;</label>
