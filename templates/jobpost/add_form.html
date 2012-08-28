@@ -5,7 +5,7 @@
 <script src="http://www.carthage.edu/assets/js/xinha/init.js" type="text/javascript"></script>
 <script src="http://www.carthage.edu/assets/js/xinha/XinhaCore.js" type="text/javascript"></script>
 <script src="http://www.carthage.edu/assets/js/xinha/job-apps.js" type="text/javascript"></script>
-<script src="http://www.carthage.edu/djmedia/js/urlify.js" type="text/javascript"></script>
+<script src="http://www.carthage.edu/sdjmedia/js/urlify.js" type="text/javascript"></script>
 <script src="{{jquery_version}}" type="text/javascript"></script>
 <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -13,11 +13,10 @@
         $("#id_publish, #id_expire_date").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",changeFirstDay:false,dateFormat:"mm/dd/yy",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
     });
 </script>
-<script src="http://www.carthage.edu/djmedia/js/getElementsBySelector.js" type="text/javascript"></script>
+<script src="http://www.carthage.edu/sdjmedia/js/getElementsBySelector.js" type="text/javascript"></script>
 {% endblock %}
 {% block extra_style %}
 <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
-<link href="http://eua.carthage.edu/assets/forms.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
     <div class="buffer">
@@ -58,9 +57,6 @@
                 </ol>
             </fieldset>
             <script type="text/javascript">document.getElementById("id_title").focus();</script>
-            <script type="text/javascript">
-                document.getElementById("id_slug").onchange = function() { this._changed = true; };document.getElementById("id_title").onkeyup = function() { var e = document.getElementById("id_slug"); if(!e._changed) { e.value = URLify(document.getElementById("id_title").value, 50);} };
-            </script>
         </form>
     </div>
 {% endblock %}
