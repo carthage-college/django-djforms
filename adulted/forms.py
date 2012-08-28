@@ -213,32 +213,34 @@ def insert(data):
     connection.execute(sql)
 
     # personal info
-    dob = data["personal"]["pob"].strftime("%m/%d/%Y")
     sql =   """
             INSERT INTO app_proftmp_rec
                 (id, birth_date, birthplace_city, sex, church_id, prof_last_upd_date)
             VALUES (%s,"%s","%s","%s","0","%s")
-            """ % (apptmp_no, dob, data["personal"]["pob"], data["personal"]["gender"], DATE)
+            """ % (apptmp_no, data["personal"]["dob"].strftime("%m/%d/%Y"), data["personal"]["pob"], data["personal"]["gender"], DATE)
     logging.debug("more personal info = %s" % sql)
     connection.execute(sql)
 
     # schools
     for school in data["schools"]:
+        code = school.school_code
+        if not code:
+            code = 0000
         # attended from
         try:
-            attend_from = datetime(int(school.from_year),int(school.from_month), 1)
+            attend_from = datetime(int(school.from_year),int(school.from_month), 1).strftime("%m/%d/%Y")
         except:
-            attend_from = datetime(1900,1,1)
+            attend_from = datetime(1900,1,1).strftime("%m/%d/%Y")
         # attende to
         try:
-            attend_to = datetime(int(school.to_year),int(school.to_month), 1)
+            attend_to = datetime(int(school.to_year),int(school.to_month), 1).strftime("%m/%d/%Y")
         except:
-            attend_to = datetime(1900,1,1)
+            attend_to = datetime(1900,1,1).strftime("%m/%d/%Y")
         # grad date
         try:
-            grad_date = datetime(int(school.grad_year),int(school.grad_month), 1)
+            grad_date = datetime(int(school.grad_year),int(school.grad_month), 1).strftime("%m/%d/%Y")
         except:
-            grad_date = datetime(1900,1,1)
+            grad_date = datetime(1900,1,1).strftime("%m/%d/%Y")
 
         sql =   """
                 INSERT INTO app_edtmp_rec (
@@ -246,7 +248,7 @@ def insert(data):
                     stu_id, sch_id, app_reltmp_no, rel_id,priority, zip, aa, ctgry)
                 VALUES (%s,"%s","%s","%s","%s","%s","%s","%s",0,0,0,0,0,"", "ac","COL")
                 """ % (apptmp_no,
-                    school.school_code, school.school_name, school.school_city,
+                    code, school.school_name, school.school_city,
                     school.school_state, attend_from, attend_to, grad_date)
         logging.debug("school info = %s" % sql)
         connection.execute(sql)
@@ -263,4 +265,3 @@ def insert(data):
     logging.debug("payment info = %s" % sql)
     connection.execute(sql)
     connection.close()
-
