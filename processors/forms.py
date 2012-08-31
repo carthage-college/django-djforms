@@ -60,7 +60,7 @@ class SubscriptionOrderForm(OrderForm):
     class Meta:
         model = Order
         fields = ('total', 'cycle', 'payments', 'avs', 'start_date', 'auth')
-        exclude = ('contact', 'time_stamp', 'status', 'billingid', 'transid')
+        exclude = ('contact', 'time_stamp', 'status', 'billingid', 'transid','operator')
 
 class CreditCardForm(forms.Form):
     """

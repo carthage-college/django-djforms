@@ -43,6 +43,10 @@ class PaymentProcessor():
         if hasattr(self.order, 'cycle'):
             self.cycle = self.order.cycle
 
+        # operator
+        if attr(self.order, 'operator'):
+            self.operator = self.order.operator
+
         # Convert amount to cents, no decimal point
         amount = unicode( int( float(self.order.total) * 100 ) )
 

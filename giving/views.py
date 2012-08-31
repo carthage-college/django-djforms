@@ -4,10 +4,10 @@ from django.template import RequestContext, loader
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 
-from djforms.processors.forms import SubscriptionOrderForm as OrderForm, ContactForm, TrustCommerceForm as CreditCardForm
+from djforms.processors.forms import DonationOrderForm, SubscriptionOrderForm, ContactForm, TrustCommerceForm as CreditCardForm
 from djforms.core.models import Promotion
 
-def pledge(request, campaign=""):
+def giving_form(request, transaction, campaign=None):
     # giving campaigns
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
@@ -71,7 +71,7 @@ def pledge(request, campaign=""):
                               {'ct_form': ct_form, 'or_form': or_form, 'cc_form': cc_form, 'status': status, 'campaign': campaign,},
                               context_instance=RequestContext(request))
 
-def pledge_success(request, campaign=""):
+def pledge_success(request, transaction, campaign=None):
     # giving campaigns
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)

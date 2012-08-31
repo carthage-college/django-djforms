@@ -40,6 +40,7 @@ class Order(models.Model):
     """
     contact             = models.ForeignKey(Contact)
     promotion           = models.ForeignKey(Promotion, null=True, blank=True)
+    operator            = models.CharField(max_length=255, null=True, blank=True) # department etc
     total               = models.DecimalField(decimal_places=2, max_digits=10)
     time_stamp          = models.DateTimeField("Timestamp", auto_now_add=True)
     status              = models.CharField("Status", max_length=20, choices=ORDER_STATUS, blank=True)
