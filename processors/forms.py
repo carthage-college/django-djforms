@@ -7,23 +7,8 @@ from djforms.processors.trust_commerce import PaymentProcessor
 
 from datetime import date
 
-PAYMENT = (
-    ('', '--------'),
-    ('12', '1 year'),
-    ('24', '2 years'),
-    ('36', '3 years'),
-    ('48', '4 years'),
-    ('60', '5 years'),
-)
-CYCLES = (
-    ('', '--------'),
-    ('1m', 'Monthly'),
-    ('3m', 'Quarterly'),
-    ('12m', 'Yearly'),
-)
 EXP_MONTH = [(x, x) for x in xrange(1, 13)]
-EXP_YEAR = [(x, x) for x in xrange(date.today().year,
-                                       date.today().year + 15)]
+EXP_YEAR = [(x, x) for x in xrange(date.today().year, date.today().year + 15)]
 
 class ContactForm(forms.ModelForm):
     """
@@ -35,7 +20,7 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        exclude = ('middle_name','country',)
+        exclude = ('middle_name','spouse','relation','country','class_of','matching_company','thrivent_financial','opt_in')
 
 class OrderForm(forms.ModelForm):
     """
@@ -49,18 +34,6 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ('total',)
-
-class SubscriptionOrderForm(OrderForm):
-    """
-    A subscrition form for recurring billing
-    """
-    payments            = forms.IntegerField(widget=forms.Select(choices=PAYMENT), max_value=60, min_value=12, label="Duration", help_text="Choose the number of years during which you want to donate the set amount above.")
-    cycle               = forms.CharField(widget=forms.Select(choices=CYCLES), required=True, label="Interval", help_text="Choose how often the donation should be sent during the term of the pledge.")
-
-    class Meta:
-        model = Order
-        fields = ('total', 'cycle', 'payments', 'avs', 'start_date', 'auth')
-        exclude = ('contact', 'time_stamp', 'status', 'billingid', 'transid','operator')
 
 class CreditCardForm(forms.Form):
     """

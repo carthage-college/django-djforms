@@ -2,19 +2,28 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template import RequestContext, loader
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 
-from djforms.processors.forms import DonationOrderForm, SubscriptionOrderForm, ContactForm, TrustCommerceForm as CreditCardForm
+from djforms.processors.forms import TrustCommerceForm as CreditCardForm
+from djforms.giving.forms import *
 from djforms.core.models import Promotion
 
 def giving_form(request, transaction, campaign=None):
+    """
+    multipurpose method to handle various types of donations
+    """
+    or_form_name = transaction.capitalize() + "OrderForm"
+    try:
+        form = eval(or_form_name)()
+    except:
+        raise Http404
     # giving campaigns
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
     status = None
     if request.POST:
         ct_form = ContactForm(request.POST, prefix="ct")
-        or_form = OrderForm(request.POST, prefix="or")
+        or_form = eval(or_form_name)(request.POST, prefix="or")
         if ct_form.is_valid() and or_form.is_valid():
             # we might have a record for 'contact' so we use get_or_create() method
             contact, created = Contact.objects.get_or_create(first_name=con_data['first_name'], last_name=con_data['last_name'], email=con_data['email'], phone=con_data['phone'],address1=con_data[
@@ -40,7 +49,7 @@ def giving_form(request, transaction, campaign=None):
                 # sendmail
                 bcc = settings.MANAGERS
                 recipient_list = ["lpieta@carthage.edu","lhansen@carthage.edu",]
-                t = loader.get_template('giving/pledge_email.html')
+                t = loader.get_template('giving/%s_email.html' % transaction)
                 c = RequestContext(request, {'order':or_data,'campaign':campaign,'years':years,})
                 email = EmailMessage(("[pledge Donation] %s %s" % (or_data.contact.first_name,or_data.contact.last_name)), t.render(c), or_data.contact.email, recipient_list, bcc, headers = {'Reply-To': or_data.contact.email,'From': or_data.contact.email})
                 email.content_subtype = "html"
@@ -63,19 +72,23 @@ def giving_form(request, transaction, campaign=None):
             cc_form = CreditCardForm(None, request.POST, prefix="cc")
             cc_form.is_valid()
     else:
+        if transaction == "pledge":
+            initial = {'cycle':"1m",'avs':False,'auth':'store',}
+        else:
+            initial = {'avs':False,'auth':'shop',}
         ct_form = ContactForm(prefix="ct")
-        or_form = OrderForm(prefix="or", initial={'cycle': "1m", 'avs':False,'auth':'store',})
+        or_form = eval(or_form_name)(prefix="or", initial=initial)
         cc_form = CreditCardForm(prefix="cc")
 
-    return render_to_response('giving/pledge_form.html',
+    return render_to_response('giving/%s_form.html' % transaction,
                               {'ct_form': ct_form, 'or_form': or_form, 'cc_form': cc_form, 'status': status, 'campaign': campaign,},
                               context_instance=RequestContext(request))
 
-def pledge_success(request, transaction, campaign=None):
+def giving_success(request, transaction, campaign=None):
     # giving campaigns
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
 
-    return render_to_response('giving/pledge_success.html',
+    return render_to_response('giving/%s_success.html' % transaction,
                               { 'campaign': campaign, },
                               context_instance=RequestContext(request))

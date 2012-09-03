@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load get_api %}
-{% block title %}{{campaign.title|default:"Pledge Subscription"}} Form &mdash; Giving &mdash; Carthage College{% endblock %}
+{% block title %}{{campaign.title|default:"Giving to Carthage"}} Form &mdash; Giving &mdash; Carthage College{% endblock %}
 {% block extra_javascript %}
     <script src="https://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="https://www.carthage.edu/assets/js/jquery/plugins/jquery.bgiframe.min.js" type="text/javascript"></script>
@@ -33,11 +33,7 @@
     <div id="security"><div style="margin-left:30px;">
     <a href="https://www.securitymetrics.com/site_certificate.adp?s=72%2e47%2e217%2e18&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics for PCI Compliance, QSA, IDS, Penetration Testing, Forensics, and Vulnerability Assessment" border="0"></a>
     </div></div>
-    <h1>{{campaign.title|default:"Pledge Subscription"}}</h1>
-    {% if not campaign.description %}
-    <p>Would you rather make a one-time gift?
-    <a href="https://www.carthage.edu/giving/donations/">Click here</a>.</p>
-    {% endif %}
+    <h1>{{campaign.title|default:"Your Giving Matters"}}</h1>
     <div class="content clear">
         {% if campaign.description %}
             {{campaign.description}}
@@ -56,7 +52,6 @@
             </p>
         {% endif %}
     </div>
-
     {% if cc_form.errors or or_form.errors or ct_form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
@@ -66,8 +61,8 @@
         {{ hidden }}
         {% endfor %}
         <fieldset class="blockLabels">
+            <h2>Donation Information</h2>
             <ol>
-            <h2>Pledge Information</h2>
                 {% for field in or_form.visible_fields %}
                     <li class="ctrlHolder">
                     <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
