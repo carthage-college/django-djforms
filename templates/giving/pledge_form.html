@@ -56,7 +56,6 @@
             </p>
         {% endif %}
     </div>
-
     {% if cc_form.errors or or_form.errors or ct_form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
@@ -118,14 +117,9 @@
         </fieldset>
         <fieldset class="blockLabels">
             <h2>Billing Information</h2>
-            {% if cc_form.errors and status == "decline" %}
+            {% if cc_form.errors %}
                 <div style="padding-left:4px;">
-                <p class="error">The transaction was declined for the following reason:</p>
-                <ul>
-                {% for field in cc_form %}
-                {% if field.errors %}<li><span class="error-message">{{ field.errors|striptags }}</span></li>{% endif %}
-                {% endfor %}
-                </ul>
+                <p class="error">The transaction was declined for the following reason:{% if status == "baddata" or status == "decline" %} <strong>{{status}}</strong>{% endif %}</p>
                 </div>
             {% endif %}
             <ol>

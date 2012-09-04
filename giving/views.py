@@ -7,6 +7,13 @@ from django.http import HttpResponseRedirect, Http404
 from djforms.processors.forms import TrustCommerceForm as CreditCardForm
 from djforms.giving.forms import *
 from djforms.core.models import Promotion
+from djforms.core.views import send_mail
+
+if settings.DEBUG:
+    TO_LIST = [settings.SERVER_EMAIL,]
+else:
+    TO_LIST = ["lpieta@carthage.edu","lhansen@carthage.edu",]
+BCC = settings.MANAGERS
 
 def giving_form(request, transaction, campaign=None):
     """
@@ -25,21 +32,35 @@ def giving_form(request, transaction, campaign=None):
         ct_form = ContactForm(request.POST, prefix="ct")
         or_form = eval(or_form_name)(request.POST, prefix="or")
         if ct_form.is_valid() and or_form.is_valid():
+            contact = ct_form.save()
+            """
+            ct_data = ct_form.cleaned_data
             # we might have a record for 'contact' so we use get_or_create() method
-            contact, created = Contact.objects.get_or_create(first_name=con_data['first_name'], last_name=con_data['last_name'], email=con_data['email'], phone=con_data['phone'],address1=con_data[
-'address1'],address2=con_data['address2'],city=con_data['city'],state=con_data['state'],postal_code=con_data['postal_code'])
+            contact, created = Contact.objects.get_or_create(first_name=ct_data['first_name'],last_name=ct_data['last_name'],email=ct_data['email'],phone=ct_data['phone'],address1=ct_data['address1'],address2=ct_data['address2'],city=ct_data['city'],state=ct_data['state'],postal_code=ct_data['postal_code'])
+            contact.spouse=ct_data['spouse']
+            contact.relation=ct_data['relation']
+            contact.class_of=ct_data['class_of']
+            contact.matching_company=ct_data['matching_company']
+            contact.thrivent_financial=ct_data['thrivent_financial']
+            contact.opt_in=ct_data['opt_in']
+            contact.save()
+            """
             or_data = or_form.save(commit=False)
             or_data.contact = contact
             or_data.status = "In Process"
+            or_data.operator = "DJForms Giving: %s" % transaction
             or_data.save()
             cc_form = CreditCardForm(or_data, request.POST, prefix="cc")
             if cc_form.is_valid():
                 # save and update order
                 r = cc_form.processor_response
-                # deal with payments
-                years = str( int(or_data.payments) / 12 )
-                if or_data.cycle != "1m":
-                    or_data.payments = str( int(or_data.payments) / int(or_data.cycle[:-1]) )
+                if transaction == "pledge":
+                    # deal with payments
+                    years = str( int(or_data.payments) / 12 )
+                    if or_data.cycle != "1m":
+                        or_data.payments = str( int(or_data.payments) / int(or_data.cycle[:-1]) )
+                else:
+                    years = None
                 or_data.status = r.msg['status']
                 or_data.billingid = r.msg['billingid']
                 or_data.transid = r.msg['transid']
@@ -47,13 +68,10 @@ def giving_form(request, transaction, campaign=None):
                     or_data.promotion = campaign
                 or_data.save()
                 # sendmail
-                bcc = settings.MANAGERS
-                recipient_list = ["lpieta@carthage.edu","lhansen@carthage.edu",]
-                t = loader.get_template('giving/%s_email.html' % transaction)
-                c = RequestContext(request, {'order':or_data,'campaign':campaign,'years':years,})
-                email = EmailMessage(("[pledge Donation] %s %s" % (or_data.contact.first_name,or_data.contact.last_name)), t.render(c), or_data.contact.email, recipient_list, bcc, headers = {'Reply-To': or_data.contact.email,'From': or_data.contact.email})
-                email.content_subtype = "html"
-                email.send(fail_silently=True)
+                data = {'order':or_data,'campaign':campaign,'years':years,}
+                subject = "[pledge Donation] %s %s" % (or_data.contact.first_name,or_data.contact.last_name)
+                email = or_data.contact.email
+                send_mail(request, TO_LIST, subject, email, 'giving/%s_email.html' % transaction, data, BCC)
                 # redirect
                 slug = ""
                 if campaign:
@@ -62,11 +80,11 @@ def giving_form(request, transaction, campaign=None):
                 return HttpResponseRedirect(url)
             else:
                 r = cc_form.processor_response
-                status = r.status
                 if r:
-                    or_data.status = status
+                    or_data.status = r.status
                 else:
                     or_data.status = "Blocked"
+                status = or_data.status
                 or_data.save()
         else:
             cc_form = CreditCardForm(None, request.POST, prefix="cc")

@@ -1,39 +1,39 @@
-<h1>{{campaign|default:"Subscription Donation"}}</h1>
-<p>{{campaign.email_info}}</p>
+<h1>{{data.campaign|default:"Subscription Donation"}}</h1>
+<p>{{data.campaign.email_info}}</p>
 <h3>Subscription Donation Information</h3>
 <dl style="margin-bottom:30px;">
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Donation</dt>
-    <dd style="margin:2px 0; padding:5px 0;">${{order.total}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">${{data.order.total}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Time interval</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{% if order.cycle == "1m" %}Monthly{% endif %}{% if order.cycle == "3m" %}Quarterly{% endif %}{% if order.cycle == "12m" %}Yearly{% endif %}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{% if data.order.cycle == "1m" %}Monthly{% endif %}{% if data.order.cycle == "3m" %}Quarterly{% endif %}{% if data.order.cycle == "12m" %}Yearly{% endif %}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Payments</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.payments}} over {{years}} years.</dd>
-    {% if order.start_date %}
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.payments}} over {{data.years}} years.</dd>
+    {% if data.order.start_date %}
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Start date</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.start_date}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.start_date}}</dd>
     {% endif %}
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Transaction ID</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.transid}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.transid}}</dd>
 </dl>
 <hr />
 <h3>Contact Information</h3>
 <dl style="margin-bottom:30px;">
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">First name</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.contact.first_name}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.first_name}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Last name</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.contact.last_name}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.last_name}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Email</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.contact.email}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.email}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Phone</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.contact.phone}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.phone}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Address</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.contact.address1}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.address1}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">&nbsp;</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.contact.address2|default:"&nbsp;"}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.address2|default:"&nbsp;"}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">City</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.contact.city}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.city}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">State</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.contact.state}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.state}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Zip</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.contact.postal_code}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.postal_code}}</dd>
 </dl>

@@ -20,7 +20,6 @@ class ApiObjectNode(Node):
             conn = httplib.HTTPConnection(settings.SERVER_URL)
             conn.request("GET", url)
             response = conn.getresponse()
-            #logging.debug("status = %s, %s) % (r1.status, r1.reason)
             if response.status != 404:
                 obj = response.read()
             else:

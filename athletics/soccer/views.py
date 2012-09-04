@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.template import RequestContext, loader
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
@@ -8,8 +9,11 @@ from djforms.processors.models import Contact, Order
 from djforms.processors.forms import ContactForm, TrustCommerceForm
 from djforms.core.views import send_mail
 
-TO_LIST = ["sdomin@carthage.edu",]
-#TO_LIST = ["larry@carthage.edu",]
+if settings.DEBUG:
+    TO_LIST = [settings.SERVER_EMAIL,]
+else:
+    TO_LIST = ["sdomin@carthage.edu",]
+BCC = settings.MANAGERS
 
 def camp_registration(request):
     if request.POST:
@@ -38,13 +42,12 @@ def camp_registration(request):
                     order.transid = r.msg['transid']
                     order.save()
                     order.reg = reg_data
-                    send_mail(request, TO_LIST, "Soccer camp registration", order.contact.email, "athletics/soccer/camp_registration_email.html", order)
+                    send_mail(request, TO_LIST, "Soccer camp registration", order.contact.email, "athletics/soccer/camp_registration_email.html", order, BCC)
                     return HttpResponseRedirect(reverse('soccer_camp_success'))
                 else:
                     r = form_proc.processor_response
-                    status = r.status
                     if r:
-                        order.status = status
+                        order.status = r.status
                     else:
                         order.status = "Blocked"
                     order.save()
@@ -53,7 +56,7 @@ def camp_registration(request):
             else:
                 order = Order(contact=contact,total=total,status="Pay later")
                 order.reg = reg_data
-                send_mail(request, TO_LIST, "Soccer camp registration", order.contact.email, "athletics/soccer/camp_registration_email.html", order)
+                send_mail(request, TO_LIST, "Soccer camp registration", order.contact.email, "athletics/soccer/camp_registration_email.html", BCC)
                 return HttpResponseRedirect(reverse('soccer_camp_success'))
         else:
             if request.POST.get('payment_method') == "Credit Card":

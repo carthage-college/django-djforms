@@ -2,6 +2,9 @@ from django.conf import settings
 
 import tclink
 
+import logging
+logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.INFO)
+
 class PaymentProcessor():
     """
     TrustCommerce payment processing module.
@@ -44,7 +47,7 @@ class PaymentProcessor():
             self.cycle = self.order.cycle
 
         # operator
-        if attr(self.order, 'operator'):
+        if hasattr(self.order, 'operator'):
             self.operator = self.order.operator
 
         # Convert amount to cents, no decimal point
@@ -98,6 +101,7 @@ class PaymentProcessor():
 
         if self.order:
             self.prepare_post()
+            logging.info("tdata = %s" % self.transactionData)
             result = tclink.send(self.transactionData)
             status = result['status']
             success = False
