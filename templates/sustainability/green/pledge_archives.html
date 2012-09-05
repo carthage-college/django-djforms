@@ -20,7 +20,7 @@
     <h1>The Green Pledge Participants</h1>
     <ol class="numbers">
     {% for pledge in pledges %}
-    <li><a target="_blank" href="{{pledge.get_absolute_url}}" rel="popupperson">{{pledge.first_name}} {{pledge.last_name}}</a>
+    <li>{{pledge.first_name}} {{pledge.last_name}}
     {% if pledge.comments %}
     <p>{{pledge.comments}}</p>
     </li>
