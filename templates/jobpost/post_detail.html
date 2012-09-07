@@ -20,6 +20,9 @@ $(function() {
         window.print();
         return false;
     });
+    $('#apply-form').submit(function(){
+        $('input[type=submit]', this).attr('disabled', 'disabled');
+    });
     $( "#dialog-confirm" ).dialog({
         autoOpen: false,
         resizable: false,
@@ -206,7 +209,7 @@ div.growlUI h1, div.growlUI h2 {
             <h3 style="color: green;">
                 Complete the form below to apply for this job.
             </h3>
-            <form method="POST" action="." class="form" enctype="multipart/form-data">{% csrf_token %}
+            <form id="apply-form" method="POST" action="." class="form" enctype="multipart/form-data">{% csrf_token %}
                 <fieldset class="blockLabels">
                     <ol>
                         {% for field in form %}
@@ -227,7 +230,7 @@ div.growlUI h1, div.growlUI h2 {
                         {% endfor %}
                         <li class="btnHolder">
                         <label for="id_submit">&nbsp;&nbsp;</label>
-                        <input type="submit" value="Submit" class="button" />
+                        <input type="submit" value="Submit" class="button" id="apply-submit" />
                         </li>
                     </ol>
                 </fieldset>
