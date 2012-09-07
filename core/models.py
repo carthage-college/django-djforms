@@ -46,6 +46,16 @@ PAYMENT_CHOICES = (
     ('Check', 'Check'),
     ('Cash/Money Order', 'Cash/Money Order'),
 )
+SHIRT_SIZES = (
+    ("XS",  "Extra Small"),
+    ("S",   "Small"),
+    ("M",   "Medium"),
+    ("L",   "Large"),
+    ("XL",  "Extra Large"),
+    ("2X",  "2X Large"),
+    ("3X",  "3X Large")
+)
+
 #For making choices for choice fields for forms
 class GenericChoice(models.Model):
     name = models.CharField(unique=True, max_length=255)
