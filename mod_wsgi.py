@@ -6,7 +6,7 @@ sys.path.append('/usr/lib/python2.6/site-packages/')
 sys.path.append('/usr/lib/python2.6/')
 sys.path.append('/data2/django_trunk/')
 sys.path.append('/data2/django_projects/')
-sys.path.append('/data2/django_projects/sputnik/production/')
+#sys.path.append('/data2/django_projects/sputnik/production/')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'djforms.settings'
 os.environ['PYTHON_EGG_CACHE'] = '/var/cache/python/.python-eggs'

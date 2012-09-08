@@ -6,8 +6,8 @@ from django.core.serializers import serialize
 #set up command-line options
 
 parser = OptionParser()
-parser.add_option("-s", "--settings", help="project settings file e.g. sputnik.settings", dest="settings")
-parser.add_option("-a", "--app", help="name of the application in your project e.g. sputnik.apps.content.cms.models", dest="app_mod")
+parser.add_option("-s", "--settings", help="project settings file e.g. djforms.settings", dest="settings")
+parser.add_option("-a", "--app", help="name of the application in your project e.g. djforms.core.models", dest="app_mod")
 parser.add_option("-m", "--model_name", help="name of the model you want to export e.g. Page", dest="model_name")
 
 if __name__ == '__main__':

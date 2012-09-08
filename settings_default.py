@@ -48,7 +48,6 @@ TEMPLATE_LOADERS = (
 )
 TEMPLATE_DIRS = (
     "/data2/django_projects/djforms/templates/",
-    "/data2/django_projects/sputnik/production/sputnik/templates/"
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
     "djforms.context_processors.sitevars",
