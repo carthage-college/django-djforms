@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from djforms.core.models import BINARY_CHOICES, GenericChoice
 from djforms.writingcurriculum.models import CourseProposal, DAY_SPS_CHOICES
-from djforms.jobpost.models import Department
+from djforms.core.models import Department
 
 from tagging.models import Tag, TaggedItem
 

@@ -33,18 +33,6 @@ def giving_form(request, transaction, campaign=None):
         or_form = eval(or_form_name)(request.POST, prefix="or")
         if ct_form.is_valid() and or_form.is_valid():
             contact = ct_form.save()
-            """
-            ct_data = ct_form.cleaned_data
-            # we might have a record for 'contact' so we use get_or_create() method
-            contact, created = Contact.objects.get_or_create(first_name=ct_data['first_name'],last_name=ct_data['last_name'],email=ct_data['email'],phone=ct_data['phone'],address1=ct_data['address1'],address2=ct_data['address2'],city=ct_data['city'],state=ct_data['state'],postal_code=ct_data['postal_code'])
-            contact.spouse=ct_data['spouse']
-            contact.relation=ct_data['relation']
-            contact.class_of=ct_data['class_of']
-            contact.matching_company=ct_data['matching_company']
-            contact.thrivent_financial=ct_data['thrivent_financial']
-            contact.opt_in=ct_data['opt_in']
-            contact.save()
-            """
             or_data = or_form.save(commit=False)
             or_data.contact = contact
             or_data.status = "In Process"
@@ -71,6 +59,7 @@ def giving_form(request, transaction, campaign=None):
                 data = {'order':or_data,'campaign':campaign,'years':years,}
                 subject = "[pledge Donation] %s %s" % (or_data.contact.first_name,or_data.contact.last_name)
                 email = or_data.contact.email
+                TO_LIST.append(email)
                 send_mail(request, TO_LIST, subject, email, 'giving/%s_email.html' % transaction, data, BCC)
                 # redirect
                 slug = ""

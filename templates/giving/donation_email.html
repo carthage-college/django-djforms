@@ -1,17 +1,10 @@
 <h1>{{campaign|default:"Subscription Donation"}}</h1>
+<p><strong>Campaign ID</strong>: {{campaign.slug}}</p>
 <p>{{campaign.email_info}}</p>
 <h3>Subscription Donation Information</h3>
 <dl style="margin-bottom:30px;">
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Donation</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Amount</dt>
     <dd style="margin:2px 0; padding:5px 0;">${{order.total}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Time interval</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{% if order.cycle == "1m" %}Monthly{% endif %}{% if order.cycle == "3m" %}Quarterly{% endif %}{% if order.cycle == "12m" %}Yearly{% endif %}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Payments</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.payments}} over {{years}} years.</dd>
-    {% if order.start_date %}
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Start date</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{order.start_date}}</dd>
-    {% endif %}
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Transaction ID</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{order.transid}}</dd>
 </dl>

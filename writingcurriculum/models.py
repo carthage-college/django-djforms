@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from djforms.core.models import GenericChoice, BINARY_CHOICES
-from djforms.jobpost.models import Department
+from djforms.core.models import Department
 
 DAY_SPS_CHOICES = (
     ('Day', 'Day'),

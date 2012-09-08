@@ -60,7 +60,7 @@ SHIRT_SIZES = (
 class GenericChoice(models.Model):
     name = models.CharField(unique=True, max_length=255)
     value = models.CharField(max_length=255)
-    ranking = models.IntegerField(null=True, blank=True, default=0, max_length=3, verbose_name="Ranking", help_text='A number from 0 to 999 to determine this object\'s position in a list.')
+    ranking = models.IntegerField(null=True, blank=True, default=0, max_length=3, verbose_name="Ranking", help_text="A number from 0 to 999 to determine this object's position in a list.")
     active = models.BooleanField(help_text='Do you want the field to be visable on your form?', verbose_name='Is active?', default=True)
     tags = fields.TagField()
 
