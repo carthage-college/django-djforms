@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Presentation Form &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "scholars/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as title cms snippet 1014 code %}
+{{title}}
+<div class="buffer">
+    <h1>Celebration of Scholars Presentation Form</h1>
+    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    {% include "includes/generic_form_multi.html" %}
+</div>
+{% endblock %}

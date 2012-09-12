@@ -28,7 +28,7 @@ def parking_ticket_appeal_form(request):
                     'Appeal Comments: ' +  '\n' + cd['appeal_box'] + '\n'
             email = EmailMessage("Parking Violation Appeal Request", body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/security/success')
+            return HttpResponseRedirect('/forms/security/success/')
     else:
         form = ParkingTicketAppealForm()
     return render_to_response('security/parking_ticket_appeal_form.html', {'form': form}, context_instance=RequestContext(request))

@@ -6,6 +6,7 @@ from django.template import RequestContext, loader
 
 from djforms.alumni.homecoming.forms import AttendeeForm
 from djforms.alumni.homecoming.models import Attendee
+from djforms.core.views import send_mail
 
 import datetime
 
@@ -20,14 +21,11 @@ def attendance(request):
         form = AttendeeForm(request.POST)
         if form.is_valid():
             attendee = form.save()
-            t = loader.get_template('alumni/homecoming/attendance_email.html')
             email = settings.DEFAULT_FROM_EMAIL
             if attendee.email:
                 email = attendee.email
-            c = RequestContext(request, {'attendee':attendee,})
-            email = EmailMessage(("[Homecoming Attendee] %s %s" % (attendee.first_name,attendee.last_name)), t.render(c), email, TO_LIST, BCC, headers = {'Reply-To': email,'From': email})
-            email.content_subtype = "html"
-            email.send(fail_silently=True)
+            subject = "[Homecoming Attendee] %s %s" % (attendee.first_name,attendee.last_name)
+            send_mail(request, TO_LIST, subject, email, "alumni/homecoming/attendance_email.html", attendee, BCC)
             return HttpResponseRedirect('/forms/alumni/homecoming/success/')
     else:
         form = AttendeeForm()

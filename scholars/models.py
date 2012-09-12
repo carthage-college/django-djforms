@@ -10,7 +10,8 @@ WORK_TYPES = (
     ('','----select----'),
     ('SURE','SURE'),
     ('Thesis','Thesis'),
-    ('Course work','Course work')
+    ('Course work','Course work'),
+    ('Other','Other')
 )
 
 PRESENTOR_TYPES = (

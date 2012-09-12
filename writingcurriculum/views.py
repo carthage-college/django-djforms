@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 
 from djforms.core.forms import UserProfileForm
 from djforms.core.models import UserProfile
-from djforms.core.models import GenericChoice
 from djforms.writingcurriculum.forms import ProposalForm
 from djforms.writingcurriculum.models import CourseCriteria, CourseProposal
 

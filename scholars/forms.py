@@ -20,4 +20,7 @@ class PresentationForm(forms.ModelForm):
         model = Presentation
         exclude = ('user','updated_by','date_created','date_updated','presenters','ranking','leader')
 
-
+    def __init__(self,*args,**kwargs):
+        super(PresentationForm,self).__init__(*args,**kwargs)
+        self.fields.keyOrder = ['title','funding','requirements','work_type','permission',
+        'abstract_text','abstract_file','department','tags']

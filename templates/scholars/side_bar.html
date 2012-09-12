@@ -1,0 +1,9 @@
+{% load get_api %}
+<div id="third">
+{% get_api_object as snippet cms snippet 1342 code %}
+{{snippet}}
+{% get_api_object as newsblock cms newspageblock 400 code %}
+{{newsblock}}
+{% get_api_object as videoblock cms videopageblock 261 code %}
+{{videoblock}}
+</div>

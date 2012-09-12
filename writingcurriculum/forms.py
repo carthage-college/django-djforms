@@ -29,6 +29,7 @@ class ProposalForm(forms.ModelForm):
     class Meta:
         model = CourseProposal
         exclude = ('user','updated_by','date_created','date_updated','criteria')
+
     def clean_when_approved_wi(self):
         if self.cleaned_data.get('approved_wi')=="No" and not self.cleaned_data.get('when_approved_wi'):
             raise forms.ValidationError("You must provide a date when the course will be approved by the department.")

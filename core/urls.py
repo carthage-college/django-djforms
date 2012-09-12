@@ -58,10 +58,12 @@ urlpatterns = patterns('',
     (r'^political-science/', include('djforms.polisci.urls')),
     # president
     (r'^president/', include('djforms.president.urls')),
-    # generic request complete
-    (r'^success/$', 'djforms.core.views.data_entered'),
     # for the security appeal form environment
     (r'^security/', include('djforms.security.urls')),
+    # for the security appeal form environment
+    (r'^scholars/', include('djforms.scholars.urls')),
+    # generic request complete
+    (r'^success/$', 'djforms.core.views.data_entered'),
     # sustainability
     (r'^sustainability/', include('djforms.sustainability.urls')),
     # video
