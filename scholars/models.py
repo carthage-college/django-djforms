@@ -25,7 +25,7 @@ PRESENTOR_TYPES = (
 class Presenter(models.Model):
     first_name          = models.CharField(max_length=128)
     last_name           = models.CharField(max_length=128)
-    leader              = models.BooleanField("Presentation leader")
+    leader              = models.BooleanField("Presentation leader", default=False)
     prez_type           = models.CharField("Presenter type", max_length="16", choices=PRESENTOR_TYPES)
     college_year        = models.CharField("Current year at Carthage", max_length="1", choices=YEAR_CHOICES)
     major               = models.CharField(max_length=128)
@@ -64,7 +64,7 @@ class Presentation(models.Model):
     funding             = models.TextField(null=True, blank=True)
     requirements        = models.TextField(null=True, blank=True)
     work_type           = models.CharField(max_length=2, choices=WORK_TYPES)
-    permission          = models.BooleanField(help_text="Do you grant Carthage permission to reproduce your presentation?")
+    permission          = models.BooleanField(help_text="Do you grant Carthage permission to reproduce your presentation?", default=True)
     abstract_text       = models.TextField(null=True, blank=True, help_text='')
     abstract_file       = models.FileField(upload_to='files/scholars/abstracts', max_length="256", help_text='Upload an abstract in PDF format', null=True, blank=True)
 

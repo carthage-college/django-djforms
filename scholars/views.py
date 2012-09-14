@@ -6,9 +6,10 @@ from django.template import RequestContext, loader
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from djforms.scholars.forms import PresentationForm
+from djforms.scholars.forms import PresentationForm, DEPTS
 from djforms.scholars.models import Presenter, Presentation
 from djforms.core.views import send_mail
+from djforms.core.models import SHIRT_SIZES, YEAR_CHOICES
 
 import datetime
 
@@ -127,9 +128,9 @@ def presentation_form(request, pid=None):
     else:
         if not presentation:
             presenters = [""]
-            copies = len(presenters)-1
+            copies = len(presenters)
         form = PresentationForm(instance=presentation)
-    return render_to_response("scholars/presentation_form.html", {"form": form, "presenters": presenters, "copies":copies}, context_instance=RequestContext(request))
+    return render_to_response("scholars/presentation_form.html", {"form":form,"presenters":presenters,"copies":copies,"shirts":SHIRT_SIZES,"cyears":YEAR_CHOICES,"depts":DEPTS,}, context_instance=RequestContext(request))
 
 def presentation_archives(request, year=None):
     if year:

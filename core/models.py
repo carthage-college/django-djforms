@@ -47,6 +47,7 @@ PAYMENT_CHOICES = (
     ('Cash/Money Order', 'Cash/Money Order'),
 )
 SHIRT_SIZES = (
+    ('','---------'),
     ("XS",  "Extra Small"),
     ("S",   "Small"),
     ("M",   "Medium"),

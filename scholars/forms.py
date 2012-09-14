@@ -14,7 +14,6 @@ except:
 
 
 class PresentationForm(forms.ModelForm):
-    department      = forms.ModelChoiceField(queryset=DEPTS,required=False)
 
     class Meta:
         model = Presentation
@@ -23,4 +22,4 @@ class PresentationForm(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super(PresentationForm,self).__init__(*args,**kwargs)
         self.fields.keyOrder = ['title','funding','requirements','work_type','permission',
-        'abstract_text','abstract_file','department','tags']
+        'abstract_text','abstract_file','tags']

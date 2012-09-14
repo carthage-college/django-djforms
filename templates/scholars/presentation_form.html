@@ -1,7 +1,79 @@
 {% extends "base.html" %}
 {% load get_api %}
 {% block title %}Presentation Form &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block extra_javascript %}
+    <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function() {
+            var copies = {{copies}};
+            $("#clone").click(function () {
+                copies++;
+                newId = "doop_" + copies;
+                $("#doop_master").clone().attr("id",newId).appendTo("#duplicates");
+                $.growlUI('Additional Presenters: ', copies);
+            });
+            $("#destroy").click(function () {
+                if (copies > 0) {
+                    delid = "doop_" + copies;
+                    $("#doop_" + copies ).remove();
+                    copies--;
+                    $.growlUI('Additional Presenters: ', copies);
+                }else{
+                    $.growlUI('Warning', 'No presenters to delete');
+                }
+            });
+            // remove presenter button "X"
+            $(".destroy_school").live('click', function() {
+                if (copies > 0) {
+                    copies--;
+                    $(this).parent().remove();
+                    $.growlUI('Additional Presenters: ', copies);
+                }else{
+                    $.growlUI('Warning', 'No presenters to delete');
+                }
+
+            });
+            $("input[name='prez_type[]']").click(function () {
+                if ( $(this).val()=="Student" ) {
+                    $(this).parent().nextAll('.student:first').addClass("shown");
+                    $(this).parent().nextAll('.facstaff:first').removeClass("shown");
+                } else {
+                    $(this).parent().nextAll('.facstaff:first').addClass("shown");
+                    $(this).parent().nextAll('.student:first').removeClass("shown");
+                }
+            });
+        });
+    </script>
+{% endblock %}
+{% block extra_style %}
+    <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    #second ol {margin:0;}
+    #second li {margin-left:0;}
+    #second p {line-height: 1.1;margin-bottom: .5em;}
+    #doop_master {display: none;}
+    div.growlUI { background: url(/media/img/ico/information.png) no-repeat 10px 10px; height:90px; }
+    div.growlUI h1, div.growlUI h2 {
+        font-size: 1.4em; color: white; padding: 5px 5px 5px 75px; text-align: left
+    }
+    .form input[type=text] {width: 350px;}
+    .form input[type=file] {width: 200px;}
+    .form input.tiny {margin:0;width:30px;vertical-align:middle;}
+    .form input.small {margin:0;width:100px;vertical-align:middle;}
+    .form input.medium {margin:0;width:150px;}
+    .form input.large {margin:0;width:250px;}
+    .ctrlcx {float:right;width:36px;}
+    .presenter { border: 1px solid #FFD324; border-radius: 3px 3px 3px 3px; box-shadow: 0 1px 0 #FFFFFF inset; margin: 0 auto 8px; padding: 6px 8px; background-color:#FFF6BF; }
+    .hidden {display:none;}
+    .facstaff {display:none;}
+    .student {display:none;}
+    .shown {display:block;}
+    .mtop {margin-top:9px;}
+    .fleft{width:220px;}
+    .fright{width:230px;}
+    </style>
+{% endblock %}
 {% block left_nav %}
     {% include "scholars/left_nav.html" %}
 {% endblock %}
@@ -11,6 +83,6 @@
 <div class="buffer">
     <h1>Celebration of Scholars Presentation Form</h1>
     <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
-    {% include "includes/generic_form_multi.html" %}
+    {% include "scholars/form_multi.html" %}
 </div>
 {% endblock %}
