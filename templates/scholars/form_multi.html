@@ -1,61 +1,15 @@
 {% extends "includes/generic_form_multi.html" %}
 {% block extra_fields %}
 <li class="ctrlHolder">
+    <div id="doop_master" class="presenter">
+        <input type="button" value="X" title="Remove Presenter" class="destroy_school button fright" />
+        {% include "scholars/presenters.html" %}
+    </div>
     <h3><label>Presenters</label></h3>
     <div class="presenter">
-        <div class="fleft">
-            <h4>Your Info</h4>
-            <p><strong>Name:</strong> <span>{{user.first_name}} {{user.last_name}}</span></p>
-            <input type="radio" name="prez_type[]" value="Student" /> Student <input type="radio" name="prez_type[]" value="Faculty" /> Faculty <input type="radio" name="prez_type[]" value="Staff" /> Staff
-        </div>
-        <div class="fright">
-            <dl>
-                <dt>Shirt</dt>
-                <dd>
-                    <select name="shirt[]">
-                    {% for n,v in shirts %}
-                        <option value="{{n}}">{{v}}</option>
-                    {% endfor %}
-                    </select>
-                </dd>
-                <dt>Photo</dt><dd><input type="file" name="mug_shot[]"></dd>
-            </dl>
-        </div>
-        <div class="clear"></div>
-        <div class="facstaff">
-            <div class="mtop">
-            <p><strong>Department</strong></p>
-            <p>
-                <select name="department[]">
-                    <option value="">----select----</option>
-                    {% for d in depts %}
-                        <option value="{{d.name}}"{% if presentation.leader.department == d.name %}selected="selected"{% endif %}>{{d.name}}</option>
-                    {% endfor %}
-                </select>
-            </p>
-            </div>
-        </div>
-        <div class="student">
-            <div class="fleft mtop">
-                <p><strong>College Year</strong></p>
-                <p>
-                    <select name="college_year[]">
-                    {% for n,v in cyears %}
-                        <option value="{{n}}">{{v}}</option>
-                    {% endfor %}
-                    </select>
-                </p>
-                <p><strong>Major</strong></p>
-                <p><input type="text" value="{{presentation.leader.major}}" name="major[]" class="medium" maxlength="128" /></p>
-            </div>
-            <div class="fright mtop">
-                <p><strong>Hometown</strong></p>
-                <p><input type="text" value="{{presentation.leader.hometown}}" name="hometown[]" class="medium" maxlength="128" /></p>
-                <p><strong>Sponsor</strong></p>
-                <p><input type="text" value="{{presentation.leader.sponsor}}" name="sponsor[]" class="medium" maxlength="128"/></p>
-            </div>
-        </div>
-        <div class="clear"></div>
+        {% with presentation.leader.department as department %}{% with presentation.leader.major as major %}{% with presentation.leader.hometown as hometown %}{% with presentation.leader.sponsor as sponsor %}{% with user as leader %}
+                {% include "scholars/presenters.html" %}
+        {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
     </div>
 </li>
 <li style="margin-top:10px;">Click on the "plus" symbol to add more presenters, and use the "minus" symbol to remove presenters.
@@ -65,12 +19,12 @@
     </div>
 </li>
 <li class="ctrlHolder" id="duplicates">
-    <div id="doop_master" class="presenter">
-        {% include "scholars/presenters.html" %}
-    </div>
     {% for p in presenters %}
     <div id="doop_{{forloop.counter}}" class="presenter">
-        {% include "scholars/presenters.html" %}
+        {% with p.department as department %}{% with p.major as major %}{% with p.hometown as hometown %}{% with p.sponsor as sponsor %}
+                <input type="button" value="X" title="Remove Presenter" class="destroy_school button fright" />
+                {% include "scholars/presenters.html" %}
+        {% endwith %}{% endwith %}{% endwith %}{% endwith %}
     </div>
     {% endfor %}
 </li>

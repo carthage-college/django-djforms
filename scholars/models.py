@@ -14,27 +14,29 @@ WORK_TYPES = (
     ('Other','Other')
 )
 
-PRESENTOR_TYPES = (
+PRESENTER_TYPES = (
     ('','----select----'),
     ('Student','Student'),
     ('Faculty','Faculty'),
     ('Staff','Staff'),
-    ('Other','Other')
 )
 
 class Presenter(models.Model):
     first_name          = models.CharField(max_length=128)
     last_name           = models.CharField(max_length=128)
     leader              = models.BooleanField("Presentation leader", default=False)
-    prez_type           = models.CharField("Presenter type", max_length="16", choices=PRESENTOR_TYPES)
-    college_year        = models.CharField("Current year at Carthage", max_length="1", choices=YEAR_CHOICES)
-    major               = models.CharField(max_length=128)
-    hometown            = models.CharField(max_length=128)
+    prez_type           = models.CharField("Presenter type", max_length="16", choices=PRESENTER_TYPES)
+    college_year        = models.CharField("Current year at Carthage", max_length="1", choices=YEAR_CHOICES, null=True, blank=True)
+    major               = models.CharField(max_length=128, null=True, blank=True)
+    hometown            = models.CharField(max_length=128, null=True, blank=True)
     sponsor             = models.CharField(max_length=128, null=True, blank=True)
     department          = models.ForeignKey(Department, null=True, blank=True)
-    shirt               = models.CharField(max_length=2, choices=SHIRT_SIZES)
-    mugshot             = models.ImageField(max_length=255, upload_to="files/scholars/mugshots", help_text="75 dpi and .jpg only")
+    shirt               = models.CharField(max_length=2, choices=SHIRT_SIZES, null=True, blank=True)
+    mugshot             = models.ImageField(max_length=255, upload_to="files/scholars/mugshots", help_text="75 dpi and .jpg only", null=True, blank=True)
     ranking             = models.IntegerField(null=True, blank=True, default=0)
+
+    def __unicode__(self):
+        return "%s %s" % (self.first_name, self.last_name)
 
     def year(self):
         return YEAR_CHOICES[self.college_year][1]
@@ -59,11 +61,11 @@ class Presentation(models.Model):
     objects             = models.Manager()
     # core
     title               = models.CharField("Presentation title", max_length=128)
-    leader              = models.ForeignKey(Presenter, verbose_name="Presentation leader", related_name="presentation_leader",editable=False)
+    leader              = models.ForeignKey(Presenter, verbose_name="Presentation leader", related_name="presentation_leader", null=True, blank=True)
     presenters          = models.ManyToManyField(Presenter, related_name="presentation_presenters", null=True, blank=True)
     funding             = models.TextField(null=True, blank=True)
     requirements        = models.TextField(null=True, blank=True)
-    work_type           = models.CharField(max_length=2, choices=WORK_TYPES)
+    work_type           = models.CharField(max_length=32, choices=WORK_TYPES)
     permission          = models.BooleanField(help_text="Do you grant Carthage permission to reproduce your presentation?", default=True)
     abstract_text       = models.TextField(null=True, blank=True, help_text='')
     abstract_file       = models.FileField(upload_to='files/scholars/abstracts', max_length="256", help_text='Upload an abstract in PDF format', null=True, blank=True)

@@ -7,9 +7,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from djforms.scholars.forms import PresentationForm, DEPTS
-from djforms.scholars.models import Presenter, Presentation
+from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES
 from djforms.core.views import send_mail
-from djforms.core.models import SHIRT_SIZES, YEAR_CHOICES
+from djforms.core.models import Department, SHIRT_SIZES, YEAR_CHOICES
 
 import datetime
 
@@ -20,16 +20,18 @@ else:
 BCC = settings.MANAGERS
 
 def _update_presenters(presenter, presenters):
+    if presenters['department']:
+        presenter.department = Department.objects.get(slug=presenters['department'])
     presenter.first_name   = presenters['first_name']
     presenter.last_name    = presenters['last_name']
     presenter.prez_type    = presenters['prez_type']
+    presenter.leader       = presenters['leader']
     presenter.college_year = presenters['college_year']
     presenter.major        = presenters['major']
     presenter.hometown     = presenters['hometown']
     presenter.sponsor      = presenters['sponsor']
-    presenter.department   = presenters['department']
     presenter.shirt        = presenters['shirt']
-    presenter.mugshot      = presenters['mugshot']
+    #presenter.mugshot      = presenters['mugshot']
     presenter.save()
     return presenter
 
@@ -51,35 +53,39 @@ def presentation_form(request, pid=None):
         copies = copies+1
 
     if request.method=='POST':
-        form = PresentationlForm(request.POST, request.FILES, instance=presentation)
+        form = PresentationForm(request.POST, request.FILES, instance=presentation)
         pids = request.POST.getlist('pid[]')
 
-        first_name   = request.POST.getlist('prez-first_name[]')
-        last_name    = request.POST.getlist('prez-last_name[]')
-        prez_type    = request.POST.getlist('prez-prez_type[]')
-        college_year = request.POST.getlist('prez-college_year[]')
-        major        = request.POST.getlist('prez-major[]')
-        hometown     = request.POST.getlist('prez-hometown[]')
-        sponsor      = request.POST.getlist('prez-sponsor[]')
-        department   = request.POST.getlist('prez-department[]')
-        shirt        = request.POST.getlist('prez-shirt[]')
-        mugshot      = request.POST.getlist('prez-mugshot[]')
+        first_name   = request.POST.getlist('first_name[]')
+        last_name    = request.POST.getlist('last_name[]')
+        prez_type    = request.POST.getlist('prez_type[]')
+        leader       = request.POST.getlist('leader[]')
+        college_year = request.POST.getlist('college_year[]')
+        major        = request.POST.getlist('major[]')
+        hometown     = request.POST.getlist('hometown[]')
+        sponsor      = request.POST.getlist('sponsor[]')
+        department   = request.POST.getlist('department[]')
+        shirt        = request.POST.getlist('shirt[]')
+        mugshot      = request.POST.getlist('mugshot[]')
 
         presenters = []
-        # len could use any of the above
-        for i in range (0,len(last_name)):
+        for i in range (0,len(prez_type)):
+            try:
+                mugshot[i] = mugshot
+            except:
+                mugshot = None
             presenters.append({
-                'id':pids[i],
                 'first_name':first_name[i],
                 'last_name':last_name[i],
                 'prez_type':prez_type[i],
+                'leader':leader[i],
                 'college_year':college_year[i],
                 'major':major[i],
                 'hometown':hometown[i],
                 'sponsor':sponsor[i],
                 'department':department[i],
                 'shirt':shirt[i],
-                'mugshot':mugshot[i]
+                'mugshot':mugshot
             })
         # delete the 'doop' element used for javascript copy
         del presenters[0]
@@ -87,7 +93,6 @@ def presentation_form(request, pid=None):
         if form.is_valid():
             presentation = form.save(commit=False)
             presentation.user = request.user
-            presentation.leader = request.user
             presentation.updated_by = request.user
             if request.FILES.get('abstract_file'):
                 presentation.abstract_file = request.FILES.get('abstract_file')
@@ -102,35 +107,37 @@ def presentation_form(request, pid=None):
             x = len(presenters_orig)
             y = len(presenters)
             for i in range (0,max(x,y)):
-                # if we have more exisiting criteria than new.
-                # else we have more new criteria than existing.
+                # if we have more exisiting presenters than new.
+                # else we have more new presenters than existing.
                 # update the current, delete any extras.
                 if x >= y:
                     if i < y:
                         # update objects
-                        _update_presenters(presenters_orig[i], presenters[i])
+                        p = _update_presenters(presenters_orig[i], presenters[i])
                     else:
                         # delete any leftover objects
                         presenters_orig[i].delete()
                 else:
                     if i < x:
                         # update objects
-                        _update_presenters(presenters_orig[i], presenters[i])
+                        p = _update_presenters(presenters_orig[i], presenters[i])
                     else:
                         presenter = Presenter()
                         p = _update_presenters(presenter, presenters[i])
                         presentation.presenters.add(p)
+                if p.leader:
+                    presentation.leader = p
             # save the presentation object
             presentation.save()
             subject = "[Celebration of Scholars Presentation] %s: by %s %s" % (presentation.title,request.user.first_name,request.user.last_name)
             send_mail(request, TO_LIST, subject, request.user.email, "scholars/presentation_email.html", presentation, BCC)
-            return HttpResponseRedirect('/forms/scholars/success/')
+            return HttpResponseRedirect('/forms/scholars/presentation/success/')
     else:
         if not presentation:
             presenters = [""]
             copies = len(presenters)
         form = PresentationForm(instance=presentation)
-    return render_to_response("scholars/presentation_form.html", {"form":form,"presenters":presenters,"copies":copies,"shirts":SHIRT_SIZES,"cyears":YEAR_CHOICES,"depts":DEPTS,}, context_instance=RequestContext(request))
+    return render_to_response("scholars/presentation_form.html", {"form":form,"presenters":presenters,"copies":copies,"shirts":SHIRT_SIZES,"cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,}, context_instance=RequestContext(request))
 
 def presentation_archives(request, year=None):
     if year:

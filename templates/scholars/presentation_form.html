@@ -34,7 +34,7 @@
                 }
 
             });
-            $("input[name='prez_type[]']").click(function () {
+            $("select[name='prez_type[]']").change(function () {
                 if ( $(this).val()=="Student" ) {
                     $(this).parent().nextAll('.student:first').addClass("shown");
                     $(this).parent().nextAll('.facstaff:first').removeClass("shown");
@@ -85,4 +85,7 @@
     <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
     {% include "scholars/form_multi.html" %}
 </div>
+{% endblock %}
+{% block sidebar %}
+    {% include "scholars/side_bar.html" %}
 {% endblock %}

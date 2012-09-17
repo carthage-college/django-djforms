@@ -32,9 +32,9 @@ class Contact(models.Model):
     state               = models.CharField(max_length=2, verbose_name="State")
     postal_code         = models.CharField(max_length=10, verbose_name="Zip")
     country             = CountryField(null=True, blank=True)
-    matching_company    = models.BooleanField(verbose_name='I/we are employed by a matching gift company.', null=True, blank=True)
-    thrivent_financial  = models.BooleanField(verbose_name='I/we are eligible for the Thrivent Financial for Lutherans matching gift program.', null=True, blank=True)
-    opt_in              = models.BooleanField(verbose_name='I would like more information about planned gifts such as charitable trusts, charitable gifts annuities, life insurance, or will inclusions.', null=True, blank=True)
+    matching_company    = models.BooleanField(verbose_name='I/we are employed by a matching gift company.')
+    thrivent_financial  = models.BooleanField(verbose_name='I/we are eligible for the Thrivent Financial for Lutherans matching gift program.')
+    opt_in              = models.BooleanField(verbose_name='I would like more information about planned gifts such as charitable trusts, charitable gifts annuities, life insurance, or will inclusions.')
 
     def __unicode__(self):
         return u'%s %s' % (self.last_name, self.first_name)

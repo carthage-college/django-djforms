@@ -45,7 +45,7 @@ def proposal_form(request, pid=None):
             profile = request.user.get_profile()
         form = ProposalForm(request.POST, request.FILES, prefix="wac", instance=proposal)
         profile_form = UserProfileForm(request.POST, prefix="profile", instance=profile)
-        pid = request.POST.getlist('wac-id[]')
+        pids = request.POST.getlist('wac-id[]')
 
         type_assignment = request.POST.getlist('wac-type_assignment[]')
         number_pages = request.POST.getlist('wac-number_pages[]')
@@ -55,7 +55,7 @@ def proposal_form(request, pid=None):
         criteria = []
         for i in range (0,len(type_assignment)):
             criteria.append({
-                'id':pid[i],
+                'id':pids[i],
                 'type_assignment':type_assignment[i],
                 'number_pages':number_pages[i],
                 'percent_grade':percent_grade[i],
