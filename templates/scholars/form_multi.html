@@ -6,25 +6,24 @@
         {% include "scholars/presenters.html" %}
     </div>
     <h3><label>Presenters</label></h3>
-    <div class="presenter">
-        {% with presentation.leader.department as department %}{% with presentation.leader.major as major %}{% with presentation.leader.hometown as hometown %}{% with presentation.leader.sponsor as sponsor %}{% with user as leader %}
-                {% include "scholars/presenters.html" %}
-        {% endwith %}{% endwith %}{% endwith %}{% endwith %}{% endwith %}
-    </div>
 </li>
-<li style="margin-top:10px;">Click on the "plus" symbol to add more presenters, and use the "minus" symbol to remove presenters.
+<li style="margin-top:10px;">
+    <p>Click on the "plus" symbol to add more presenters, and use the "X" button to remove presenters.</p>
+    <p style="float:left;"><strong class="help">All fields are required except the photo.</strong></p>
+
     <div class="ctrlcx">
         <img id="clone" src="http://www.carthage.edu/assets/img/ico/silk/icons/add.png" />
-        <img id="destroy" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" />
     </div>
 </li>
 <li class="ctrlHolder" id="duplicates">
     {% for p in presenters %}
     <div id="doop_{{forloop.counter}}" class="presenter">
-        {% with p.department as department %}{% with p.major as major %}{% with p.hometown as hometown %}{% with p.sponsor as sponsor %}
-                <input type="button" value="X" title="Remove Presenter" class="destroy_school button fright" />
-                {% include "scholars/presenters.html" %}
-        {% endwith %}{% endwith %}{% endwith %}{% endwith %}
+        {% if forloop.counter != 1 %}
+        <input type="button" value="X" title="Remove Presenter" class="destroy_school button fright" />
+        {% else %}
+        <div style="height:25px;width:25px;float:right;">&nbsp;</div>
+        {% endif %}
+        {% include "scholars/presenters.html" %}
     </div>
     {% endfor %}
 </li>

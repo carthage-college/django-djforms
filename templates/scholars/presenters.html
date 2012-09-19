@@ -1,24 +1,9 @@
-        {% if leader %}
-        <div class="fleft">
-            <h4>Your Info</h4>
-            <p><strong>Name:</strong> <span>{{user.first_name}} {{user.last_name}}</span></p>
-            <strong>Type:</strong>
-            <select name="prez_type[]">
-            {% for n,v in types %}
-                <option value="{{n}}"{% if p.prez_type == n %} selected="selected"{% endif %}>{{v}}</option>
-            {% endfor %}
-            </select>
-            <input type="hidden" name="first_name[]" value="{{user.first_name}}" />
-            <input type="hidden" name="last_name[]" value="{{user.last_name}}" />
-            <input type="hidden" name="leader[]" value="True" />
-        </div>
-        {% else %}
         <div class="fleft">
             <dl style="margin-bottom:9px;">
             <dt>First name</dt>
-            <dd><input class="medium" type="text" name="first_name[]" value="{{p.first_name}}" /></dd>
+            <dd><input class="medium" type="text" name="first_name[]" value="{% if forloop.counter == 1 %}{{user.first_name}}" readonly="readonly"{% else %}{{p.first_name}}"{% endif %} /></dd>
             <dt>Last name</dt>
-            <dd><input class="medium" type="text" name="last_name[]" value="{{p.last_name}}" /></dd>
+            <dd><input class="medium" type="text" name="last_name[]" value="{% if forloop.counter == 1 %}{{user.last_name}}" readonly="readonly"{% else %}{{p.last_name}}"{% endif %} /></dd>
             </dl>
             <strong>Type:</strong>
             <select name="prez_type[]">
@@ -26,10 +11,8 @@
                 <option value="{{n}}"{% if p.prez_type == n %} selected="selected"{% endif %}>{{v}}</option>
             {% endfor %}
             </select>
-            <input type="hidden" name="leader[]" value="" />
-            </select>
+            <input type="hidden" name="leader[]" value="{% if forloop.counter == 1 %}True{% endif %}" />
         </div>
-        {% endif %}
         <div class="fright">
             <dl>
                 <dt>Shirt</dt>
@@ -40,7 +23,12 @@
                     {% endfor %}
                     </select>
                 </dd>
-                <dt>Photo</dt><dd><input type="file" name="mug_shot[]"></dd>
+                <dt>Photo</dt>
+                <dd>
+                    <input type="hidden" name="mugshoth[]" class="mugshot" value="{{forloop.counter}}" />
+                    <input type="file" name="mugshot[]">
+                    <p style="margin-top:5px;">{% if p.mugshot %}<a href="{{media_url}}{{p.mugshot}}">Current photo</a>{% endif %}</p>
+                </dd>
             </dl>
         </div>
         <div class="clear"></div>
@@ -51,7 +39,7 @@
                 <select name="department[]">
                     <option value="">----select----</option>
                     {% for d in depts %}
-                        <option value="{{d.slug}}"{% if department.slug == d.slug %}selected="selected"{% endif %}>{{d.name}}</option>
+                        <option value="{{d.name}}"{% if p.department == d %} selected="selected"{% endif %}>{{d.name}}</option>
                     {% endfor %}
                 </select>
             </p>
@@ -68,13 +56,13 @@
                     </select>
                 </p>
                 <p><strong>Major</strong></p>
-                <p><input type="text" value="{{major}}" name="major[]" class="medium" maxlength="128" /></p>
+                <p><input type="text" value="{{p.major}}" name="major[]" class="medium" maxlength="128" /></p>
             </div>
             <div class="fright mtop">
                 <p><strong>Hometown</strong></p>
-                <p><input type="text" value="{{hometown}}" name="hometown[]" class="medium" maxlength="128" /></p>
+                <p><input type="text" value="{{p.hometown}}" name="hometown[]" class="medium" maxlength="128" /></p>
                 <p><strong>Sponsor</strong></p>
-                <p><input type="text" value="{{sponsor}}" name="sponsor[]" class="medium" maxlength="128"/></p>
+                <p><input type="text" value="{{p.sponsor}}" name="sponsor[]" class="medium" maxlength="128"/></p>
             </div>
         </div>
         <div class="clear"></div>

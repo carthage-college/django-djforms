@@ -22,10 +22,10 @@ PRESENTER_TYPES = (
 )
 
 class Presenter(models.Model):
-    first_name          = models.CharField(max_length=128)
-    last_name           = models.CharField(max_length=128)
+    first_name          = models.CharField(max_length=128, null=True, blank=True)
+    last_name           = models.CharField(max_length=128, null=True, blank=True)
     leader              = models.BooleanField("Presentation leader", default=False)
-    prez_type           = models.CharField("Presenter type", max_length="16", choices=PRESENTER_TYPES)
+    prez_type           = models.CharField("Presenter type", max_length="16", choices=PRESENTER_TYPES, null=True, blank=True)
     college_year        = models.CharField("Current year at Carthage", max_length="1", choices=YEAR_CHOICES, null=True, blank=True)
     major               = models.CharField(max_length=128, null=True, blank=True)
     hometown            = models.CharField(max_length=128, null=True, blank=True)

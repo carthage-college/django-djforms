@@ -19,9 +19,12 @@ else:
     TO_LIST = ["dmunk@carthage.edu",]
 BCC = settings.MANAGERS
 
+import logging
+logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG)
+
 def _update_presenters(presenter, presenters):
     if presenters['department']:
-        presenter.department = Department.objects.get(slug=presenters['department'])
+        presenter.department = Department.objects.get(name=presenters['department'])
     presenter.first_name   = presenters['first_name']
     presenter.last_name    = presenters['last_name']
     presenter.prez_type    = presenters['prez_type']
@@ -31,13 +34,13 @@ def _update_presenters(presenter, presenters):
     presenter.hometown     = presenters['hometown']
     presenter.sponsor      = presenters['sponsor']
     presenter.shirt        = presenters['shirt']
-    #presenter.mugshot      = presenters['mugshot']
+    presenter.mugshot      = presenters['mugshot']
     presenter.save()
     return presenter
 
 @login_required
 def presentation_form(request, pid=None):
-    copies=1
+    presenters = []
     presentation = None
     if pid:
         presentation = get_object_or_404(Presentation,id=pid)
@@ -45,16 +48,12 @@ def presentation_form(request, pid=None):
         if presentation.user != request.user:
             raise Http404
         # create list for GET requests to populate criteria field
-        presenters = []
         for copies, p in enumerate(presentation.presenters.all()):
-            if not p.leader:
-                presenters.append(p)
-        # add 1 because lists are 0 based
-        copies = copies+1
+            presenters.append(p)
 
     if request.method=='POST':
         form = PresentationForm(request.POST, request.FILES, instance=presentation)
-        pids = request.POST.getlist('pid[]')
+        logging.debug("mugshots: request.FILES = %s" % request.FILES)
 
         first_name   = request.POST.getlist('first_name[]')
         last_name    = request.POST.getlist('last_name[]')
@@ -66,14 +65,21 @@ def presentation_form(request, pid=None):
         sponsor      = request.POST.getlist('sponsor[]')
         department   = request.POST.getlist('department[]')
         shirt        = request.POST.getlist('shirt[]')
-        mugshot      = request.POST.getlist('mugshot[]')
+        mugshoth     = request.POST.getlist('mugshoth[]')
+        mugshot      = request.FILES.getlist('mugshot[]')
+        logging.debug("mugshot list from FILES = %s" % mugshot)
+        logging.debug("mugshot list from POST = %s" % request.POST.getlist('mugshot[]'))
+        logging.debug("mugshoth list from POST = %s" % mugshoth)
 
-        presenters = []
-        for i in range (0,len(prez_type)):
-            try:
-                mugshot[i] = mugshot
-            except:
-                mugshot = None
+        h = len(mugshot)
+        for i in range (1,len(last_name)):
+            if mugshoth[i]:
+                mug = mugshot[len(mugshot)-h]
+                h -= 1
+            else:
+                mug = None
+            logging.debug("mugshoth item from POST = %s" % mugshoth[i])
+            logging.debug("mugshot item from FILES = %s" % mug)
             presenters.append({
                 'first_name':first_name[i],
                 'last_name':last_name[i],
@@ -85,10 +91,8 @@ def presentation_form(request, pid=None):
                 'sponsor':sponsor[i],
                 'department':department[i],
                 'shirt':shirt[i],
-                'mugshot':mugshot
+                'mugshot':mug
             })
-        # delete the 'doop' element used for javascript copy
-        del presenters[0]
 
         if form.is_valid():
             presentation = form.save(commit=False)
@@ -133,10 +137,8 @@ def presentation_form(request, pid=None):
             send_mail(request, TO_LIST, subject, request.user.email, "scholars/presentation_email.html", presentation, BCC)
             return HttpResponseRedirect('/forms/scholars/presentation/success/')
     else:
-        if not presentation:
-            presenters = [""]
-            copies = len(presenters)
         form = PresentationForm(instance=presentation)
+    copies = len(presenters) + 1
     return render_to_response("scholars/presentation_form.html", {"form":form,"presenters":presenters,"copies":copies,"shirts":SHIRT_SIZES,"cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,}, context_instance=RequestContext(request))
 
 def presentation_archives(request, year=None):

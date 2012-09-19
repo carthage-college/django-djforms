@@ -11,30 +11,22 @@
                 copies++;
                 newId = "doop_" + copies;
                 $("#doop_master").clone().attr("id",newId).appendTo("#duplicates");
-                $.growlUI('Additional Presenters: ', copies);
-            });
-            $("#destroy").click(function () {
-                if (copies > 0) {
-                    delid = "doop_" + copies;
-                    $("#doop_" + copies ).remove();
-                    copies--;
-                    $.growlUI('Additional Presenters: ', copies);
-                }else{
-                    $.growlUI('Warning', 'No presenters to delete');
-                }
+                $.growlUI('Number of Presenters: ', copies);
+                $("#" + newId).find('.mugshot:first').val(copies);
+                //alert($("#" + newId).find('.mugshot:first').val());
             });
             // remove presenter button "X"
             $(".destroy_school").live('click', function() {
                 if (copies > 0) {
                     copies--;
                     $(this).parent().remove();
-                    $.growlUI('Additional Presenters: ', copies);
+                    $.growlUI('Number of Presenters: ', copies);
                 }else{
                     $.growlUI('Warning', 'No presenters to delete');
                 }
 
             });
-            $("select[name='prez_type[]']").change(function () {
+            $("select[name='prez_type[]']").live('change', function () {
                 if ( $(this).val()=="Student" ) {
                     $(this).parent().nextAll('.student:first').addClass("shown");
                     $(this).parent().nextAll('.facstaff:first').removeClass("shown");
