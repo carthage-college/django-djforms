@@ -34,11 +34,12 @@ def _update_presenters(presenter, presenters):
     presenter.hometown     = presenters['hometown']
     presenter.sponsor      = presenters['sponsor']
     presenter.shirt        = presenters['shirt']
-    presenter.mugshot      = presenters['mugshot']
+    if presenters['mugshot']:
+        presenter.mugshot  = presenters['mugshot']
     presenter.save()
     return presenter
 
-@login_required
+#@login_required
 def presentation_form(request, pid=None):
     presenters = []
     presentation = None
@@ -50,10 +51,11 @@ def presentation_form(request, pid=None):
         # create list for GET requests to populate criteria field
         for copies, p in enumerate(presentation.presenters.all()):
             presenters.append(p)
+        # add 1 since lists are zero based
+        copies += 1
 
     if request.method=='POST':
         form = PresentationForm(request.POST, request.FILES, instance=presentation)
-        logging.debug("mugshots: request.FILES = %s" % request.FILES)
 
         first_name   = request.POST.getlist('first_name[]')
         last_name    = request.POST.getlist('last_name[]')
@@ -67,19 +69,17 @@ def presentation_form(request, pid=None):
         shirt        = request.POST.getlist('shirt[]')
         mugshoth     = request.POST.getlist('mugshoth[]')
         mugshot      = request.FILES.getlist('mugshot[]')
-        logging.debug("mugshot list from FILES = %s" % mugshot)
-        logging.debug("mugshot list from POST = %s" % request.POST.getlist('mugshot[]'))
-        logging.debug("mugshoth list from POST = %s" % mugshoth)
 
+        if pid:
+            presenters = []
         h = len(mugshot)
         for i in range (1,len(last_name)):
-            if mugshoth[i]:
+            if mugshoth[i] == "True":
                 mug = mugshot[len(mugshot)-h]
                 h -= 1
             else:
                 mug = None
-            logging.debug("mugshoth item from POST = %s" % mugshoth[i])
-            logging.debug("mugshot item from FILES = %s" % mug)
+
             presenters.append({
                 'first_name':first_name[i],
                 'last_name':last_name[i],
@@ -133,13 +133,22 @@ def presentation_form(request, pid=None):
                     presentation.leader = p
             # save the presentation object
             presentation.save()
-            subject = "[Celebration of Scholars Presentation] %s: by %s %s" % (presentation.title,request.user.first_name,request.user.last_name)
-            send_mail(request, TO_LIST, subject, request.user.email, "scholars/presentation_email.html", presentation, BCC)
+            data = {"presentation":presentation,"pid":pid,}
+            status = ""
+            if pid:
+                status = " (updated)"
+            subject = "[Celebration of Scholars Presentation] %s%s: by %s %s" % (presentation.title,status,request.user.first_name,request.user.last_name)
+            send_mail(request, TO_LIST, subject, request.user.email, "scholars/presentation_email.html", data, BCC)
             return HttpResponseRedirect('/forms/scholars/presentation/success/')
+        else:
+            copies = len(presenters) + 1
+
     else:
         form = PresentationForm(instance=presentation)
-    copies = len(presenters) + 1
-    return render_to_response("scholars/presentation_form.html", {"form":form,"presenters":presenters,"copies":copies,"shirts":SHIRT_SIZES,"cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,}, context_instance=RequestContext(request))
+        if not pid:
+            presenters = [""]
+            copies = 1
+    return render_to_response("scholars/presentation_form.html", {"form":form,"presenters":presenters,"copies":copies,"shirts":SHIRT_SIZES,"cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,"pid":pid,}, context_instance=RequestContext(request))
 
 def presentation_archives(request, year=None):
     if year:

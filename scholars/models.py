@@ -21,6 +21,12 @@ PRESENTER_TYPES = (
     ('Staff','Staff'),
 )
 
+STATUS = (
+    ('','----select----'),
+    ('Complete','Complete'),
+    ('Incomplete','Incomplete'),
+)
+
 class Presenter(models.Model):
     first_name          = models.CharField(max_length=128, null=True, blank=True)
     last_name           = models.CharField(max_length=128, null=True, blank=True)
@@ -67,8 +73,11 @@ class Presentation(models.Model):
     requirements        = models.TextField(null=True, blank=True)
     work_type           = models.CharField(max_length=32, choices=WORK_TYPES)
     permission          = models.BooleanField(help_text="Do you grant Carthage permission to reproduce your presentation?", default=True)
+    shared              = models.BooleanField(help_text="Have you shared your proposal with your faculty sponsor?", default=True)
     abstract_text       = models.TextField(null=True, blank=True, help_text='')
     abstract_file       = models.FileField(upload_to='files/scholars/abstracts', max_length="256", help_text='Upload an abstract in PDF format', null=True, blank=True)
+    poster_file         = models.FileField(upload_to='files/scholars/posters', max_length="256", help_text='Upload a poster file', null=True, blank=True)
+    status              = models.CharField(max_length=32, choices=STATUS, default="Incomplete", null=True, blank=True)
 
     class Meta:
         ordering  = ('-date_created',)

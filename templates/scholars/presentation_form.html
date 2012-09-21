@@ -7,15 +7,19 @@
     <script type="text/javascript">
         $(function() {
             var copies = {{copies}};
+            // copy duplicate master for new presenter
             $("#clone").click(function () {
                 copies++;
                 newId = "doop_" + copies;
                 $("#doop_master").clone().attr("id",newId).appendTo("#duplicates");
                 $.growlUI('Number of Presenters: ', copies);
-                $("#" + newId).find('.mugshot:first').val(copies);
-                //alert($("#" + newId).find('.mugshot:first').val());
             });
-            // remove presenter button "X"
+            // flag presenters that have a mugshot for upload.
+            // cgi on the backend does not include empty filefields in []
+            $(".mugshot").live('change', function() {
+                $(this).next(':hidden').val("True");
+            });
+            // remove presenter
             $(".destroy_school").live('click', function() {
                 if (copies > 0) {
                     copies--;
@@ -24,8 +28,8 @@
                 }else{
                     $.growlUI('Warning', 'No presenters to delete');
                 }
-
             });
+            // swith for faculty/staff vs student
             $("select[name='prez_type[]']").live('change', function () {
                 if ( $(this).val()=="Student" ) {
                     $(this).parent().nextAll('.student:first').addClass("shown");
@@ -55,15 +59,14 @@
     .form input.small {margin:0;width:100px;vertical-align:middle;}
     .form input.medium {margin:0;width:150px;}
     .form input.large {margin:0;width:250px;}
-    .ctrlcx {float:right;width:36px;}
+    .ctrlcx {float:right;width:25px;}
     .presenter { border: 1px solid #FFD324; border-radius: 3px 3px 3px 3px; box-shadow: 0 1px 0 #FFFFFF inset; margin: 0 auto 8px; padding: 6px 8px; background-color:#FFF6BF; }
     .hidden {display:none;}
     .facstaff {display:none;}
     .student {display:none;}
     .shown {display:block;}
     .mtop {margin-top:9px;}
-    .fleft{width:220px;}
-    .fright{width:230px;}
+    .fleft{width:265px;}
     </style>
 {% endblock %}
 {% block left_nav %}

@@ -2,15 +2,14 @@
 {% block extra_fields %}
 <li class="ctrlHolder">
     <div id="doop_master" class="presenter">
-        <input type="button" value="X" title="Remove Presenter" class="destroy_school button fright" />
+        <img class="destroy_school fright" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" title="Remove Presenter" alt="Remove Presenter" />
         {% include "scholars/presenters.html" %}
     </div>
     <h3><label>Presenters</label></h3>
 </li>
 <li style="margin-top:10px;">
-    <p>Click on the "plus" symbol to add more presenters, and use the "X" button to remove presenters.</p>
+    <p>Click on the <img style="margin-bottom:-3px;" src="http://www.carthage.edu/assets/img/ico/silk/icons/add.png" /> symbol to add more presenters. Click on the <img style="margin-bottom:-3px;" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" /> icon to remove presenters.</p>
     <p style="float:left;"><strong class="help">All fields are required except the photo.</strong></p>
-
     <div class="ctrlcx">
         <img id="clone" src="http://www.carthage.edu/assets/img/ico/silk/icons/add.png" />
     </div>
@@ -19,9 +18,9 @@
     {% for p in presenters %}
     <div id="doop_{{forloop.counter}}" class="presenter">
         {% if forloop.counter != 1 %}
-        <input type="button" value="X" title="Remove Presenter" class="destroy_school button fright" />
+        <img class="destroy_school fright" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" title="Remove Presenter" alt="Remove Presenter" />
         {% else %}
-        <div style="height:25px;width:25px;float:right;">&nbsp;</div>
+        <div style="height:15px;width:15px;float:right;">&nbsp;</div>
         {% endif %}
         {% include "scholars/presenters.html" %}
     </div>
