@@ -3,11 +3,10 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from djforms.scholars.forms import PresentationForm, DEPTS
-from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES
+from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES, STATUS
 from djforms.core.views import send_mail
 from djforms.core.models import Department, SHIRT_SIZES, YEAR_CHOICES
 
@@ -39,10 +38,12 @@ def _update_presenters(presenter, presenters):
     presenter.save()
     return presenter
 
-#@login_required
+@login_required
 def presentation_form(request, pid=None):
     presenters = []
     presentation = None
+    manager = request.user.has_perm('scholars.manage_presentation')
+
     if pid:
         presentation = get_object_or_404(Presentation,id=pid)
         # check perms
@@ -72,6 +73,9 @@ def presentation_form(request, pid=None):
 
         if pid:
             presenters = []
+        # here we deal with the problem of file fields not including
+        # an item in list if there is no file selected for upload.
+        # mugshoth is a hidden field to mirror mugshot as counter.
         h = len(mugshot)
         for i in range (1,len(last_name)):
             if mugshoth[i] == "True":
@@ -81,25 +85,23 @@ def presentation_form(request, pid=None):
                 mug = None
 
             presenters.append({
-                'first_name':first_name[i],
-                'last_name':last_name[i],
-                'prez_type':prez_type[i],
-                'leader':leader[i],
-                'college_year':college_year[i],
-                'major':major[i],
-                'hometown':hometown[i],
-                'sponsor':sponsor[i],
-                'department':department[i],
-                'shirt':shirt[i],
+                'first_name':first_name[i],'last_name':last_name[i],
+                'prez_type':prez_type[i], 'leader':leader[i],
+                'college_year':college_year[i], 'major':major[i],
+                'hometown':hometown[i], 'sponsor':sponsor[i],
+                'department':department[i], 'shirt':shirt[i],
                 'mugshot':mug
             })
 
         if form.is_valid():
+            # save and include some other values and commit
             presentation = form.save(commit=False)
             presentation.user = request.user
             presentation.updated_by = request.user
             if request.FILES.get('abstract_file'):
                 presentation.abstract_file = request.FILES.get('abstract_file')
+            if request.POST.get('status'):
+                presentation.status = request.POST.get('status')
             presentation.save()
 
             # CRUD
@@ -148,9 +150,12 @@ def presentation_form(request, pid=None):
         if not pid:
             presenters = [""]
             copies = 1
-    return render_to_response("scholars/presentation_form.html", {"form":form,"presenters":presenters,"copies":copies,"shirts":SHIRT_SIZES,"cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,"pid":pid,}, context_instance=RequestContext(request))
 
-def presentation_archives(request, year=None):
+    context = {"form":form,"presenters":presenters,"copies":copies,"shirts":SHIRT_SIZES,"cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,"pid":pid,"manager":manager,"status":STATUS,}
+    return render_to_response("scholars/presentation_form.html", context, context_instance=RequestContext(request))
+
+
+def scholars_archives(request, year=None):
     if year:
         year = int(year)
     else:

@@ -2,6 +2,9 @@
 {% load get_api %}
 {% block title %}Presentation Form &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
 {% block extra_javascript %}
+    <script src="http://www.carthage.edu/assets/js/xinha/init.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://www.carthage.edu/assets/js/xinha/XinhaCore.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://www.carthage.edu/assets/js/xinha/celebration.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.core.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
@@ -49,18 +52,18 @@
     #second li {margin-left:0;}
     #second p {line-height: 1.1;margin-bottom: .5em;}
     #doop_master {display: none;}
-    div.growlUI { background: url(/media/img/ico/information.png) no-repeat 10px 10px; height:90px; }
-    div.growlUI h1, div.growlUI h2 {
-        font-size: 1.4em; color: white; padding: 5px 5px 5px 75px; text-align: left
-    }
+    div.growlUI {background: url(/media/img/ico/information.png) no-repeat 10px 10px; height:90px;}
+    div.growlUI h1, div.growlUI h2 {font-size: 1.4em; color: white; padding: 5px 5px 5px 75px; text-align: left;}
     .form input[type=text] {width: 350px;}
     .form input[type=file] {width: 200px;}
     .form input.tiny {margin:0;width:30px;vertical-align:middle;}
     .form input.small {margin:0;width:100px;vertical-align:middle;}
     .form input.medium {margin:0;width:150px;}
     .form input.large {margin:0;width:250px;}
+    .form .blockLabels label {display: inline;}
+
     .ctrlcx {float:right;width:25px;}
-    .presenter { border: 1px solid #FFD324; border-radius: 3px 3px 3px 3px; box-shadow: 0 1px 0 #FFFFFF inset; margin: 0 auto 8px; padding: 6px 8px; background-color:#FFF6BF; }
+    .presenter {border: 1px solid #FFD324; border-radius: 3px 3px 3px 3px; box-shadow: 0 1px 0 #FFFFFF inset; margin: 0 auto 8px; padding: 6px 8px; background-color:#FFF6BF;}
     .hidden {display:none;}
     .facstaff {display:none;}
     .student {display:none;}

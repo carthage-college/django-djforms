@@ -22,9 +22,8 @@ PRESENTER_TYPES = (
 )
 
 STATUS = (
-    ('','----select----'),
-    ('Complete','Complete'),
     ('Incomplete','Incomplete'),
+    ('Complete','Complete'),
 )
 
 class Presenter(models.Model):
@@ -80,8 +79,9 @@ class Presentation(models.Model):
     status              = models.CharField(max_length=32, choices=STATUS, default="Incomplete", null=True, blank=True)
 
     class Meta:
-        ordering  = ('-date_created',)
-        get_latest_by = 'date_created'
+        ordering        = ('-date_created',)
+        get_latest_by   = 'date_created'
+        permissions     = ( ("manage_presentation", "manage presentation"), )
 
     def __unicode__(self):
         return self.title

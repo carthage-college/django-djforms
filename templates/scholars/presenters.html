@@ -1,68 +1,68 @@
-        <div class="fleft">
-            <dl style="margin-bottom:9px;">
-            <dt>First name</dt>
-            <dd><input class="medium" type="text" name="first_name[]" value="{% if forloop.counter == 1 %}{{user.first_name}}" readonly="readonly"{% else %}{{p.first_name}}"{% endif %} /></dd>
-            <dt>Last name</dt>
-            <dd><input class="medium" type="text" name="last_name[]" value="{% if forloop.counter == 1 %}{{user.last_name}}" readonly="readonly"{% else %}{{p.last_name}}"{% endif %} /></dd>
-            </dl>
-            <strong>Type:</strong>
-            <select name="prez_type[]">
-            {% for n,v in types %}
-                <option value="{{n}}"{% if p.prez_type == n %} selected="selected"{% endif %}>{{v}}</option>
+<div class="fleft">
+    <dl style="margin-bottom:9px;">
+    <dt>First name</dt>
+    <dd><input class="medium" type="text" name="first_name[]" value="{% if forloop.counter == 1 %}{{user.first_name}}" readonly="readonly"{% else %}{{p.first_name}}"{% endif %} /></dd>
+    <dt>Last name</dt>
+    <dd><input class="medium" type="text" name="last_name[]" value="{% if forloop.counter == 1 %}{{user.last_name}}" readonly="readonly"{% else %}{{p.last_name}}"{% endif %} /></dd>
+    </dl>
+    <strong>Type:</strong>
+    <select name="prez_type[]">
+    {% for n,v in types %}
+        <option value="{{n}}"{% if p.prez_type == n %} selected="selected"{% endif %}>{{v}}</option>
+    {% endfor %}
+    </select>
+    <input type="hidden" name="leader[]" value="{% if forloop.counter == 1 %}True{% endif %}" />
+</div>
+<div>
+    <dl>
+        <dt>Shirt</dt>
+        <dd>
+            <select name="shirt[]">
+            {% for n,v in shirts %}
+                <option value="{{n}}"{% if p.shirt == n %} selected="selected"{% endif %}>{{v}}</option>
             {% endfor %}
             </select>
-            <input type="hidden" name="leader[]" value="{% if forloop.counter == 1 %}True{% endif %}" />
-        </div>
-        <div>
-            <dl>
-                <dt>Shirt</dt>
-                <dd>
-                    <select name="shirt[]">
-                    {% for n,v in shirts %}
-                        <option value="{{n}}"{% if p.shirt == n %} selected="selected"{% endif %}>{{v}}</option>
-                    {% endfor %}
-                    </select>
-                </dd>
-                <dt>Photo</dt>
-                <dd>
-                    <input type="file" name="mugshot[]" class="mugshot">
-                    <input type="hidden" name="mugshoth[]" class="mugshoth" value="" />
-                    {% if p.mugshot and pid %}<p style="margin-top:5px;"><a href="{{media_url}}{{p.mugshot}}">Current photo</a></p>{% endif %}
-                </dd>
-            </dl>
-        </div>
-        <div class="clear"></div>
-        <div class="facstaff{% if p.prez_type == 'Faculty' or p.prez_type == 'Staff' %} shown{% endif %}">
-            <div class="mtop">
-            <p>
-                <strong>Department:</strong>
-                <select name="department[]">
-                    <option value="">----select----</option>
-                    {% for d in depts %}
-                        <option value="{{d.name}}"{% if p.department == d %} selected="selected"{% endif %}>{{d.name}}</option>
-                    {% endfor %}
-                </select>
-            </p>
-            </div>
-        </div>
-        <div class="student{% if p.prez_type == 'Student' %} shown{% endif %}">
-            <div class="fleft mtop">
-                <p><strong>College Year</strong></p>
-                <p>
-                    <select name="college_year[]">
-                    {% for n,v in cyears %}
-                        <option value="{{n}}"{% if p.college_year == n %} selected="selected"{% endif %}>{{v}}</option>
-                    {% endfor %}
-                    </select>
-                </p>
-                <p><strong>Major</strong></p>
-                <p><input type="text" value="{{p.major}}" name="major[]" class="medium" maxlength="128" /></p>
-            </div>
-            <div class="mtop">
-                <p><strong>Hometown</strong></p>
-                <p><input type="text" value="{{p.hometown}}" name="hometown[]" class="medium" maxlength="128" /></p>
-                <p><strong>Sponsor</strong></p>
-                <p><input type="text" value="{{p.sponsor}}" name="sponsor[]" class="medium" maxlength="128"/></p>
-            </div>
-        </div>
-        <div class="clear"></div>
+        </dd>
+        <dt>Photo</dt>
+        <dd>
+            <input type="file" name="mugshot[]" class="mugshot">
+            <input type="hidden" name="mugshoth[]" class="mugshoth" value="" />
+            {% if p.mugshot and pid %}<p style="margin-top:5px;"><a href="{{media_url}}{{p.mugshot}}">Current photo</a></p>{% endif %}
+        </dd>
+    </dl>
+</div>
+<div class="clear"></div>
+<div class="facstaff{% if p.prez_type == 'Faculty' or p.prez_type == 'Staff' %} shown{% endif %}">
+    <div class="mtop">
+    <p>
+        <strong>Department:</strong>
+        <select name="department[]">
+            <option value="">----select----</option>
+            {% for d in depts %}
+                <option value="{{d.name}}"{% if p.department == d %} selected="selected"{% endif %}>{{d.name}}</option>
+            {% endfor %}
+        </select>
+    </p>
+    </div>
+</div>
+<div class="student{% if p.prez_type == 'Student' %} shown{% endif %}">
+    <div class="fleft mtop">
+        <p><strong>College Year</strong></p>
+        <p>
+            <select name="college_year[]">
+            {% for n,v in cyears %}
+                <option value="{{n}}"{% if p.college_year == n %} selected="selected"{% endif %}>{{v}}</option>
+            {% endfor %}
+            </select>
+        </p>
+        <p><strong>Major</strong></p>
+        <p><input type="text" value="{{p.major}}" name="major[]" class="medium" maxlength="128" /></p>
+    </div>
+    <div class="mtop">
+        <p><strong>Hometown</strong></p>
+        <p><input type="text" value="{{p.hometown}}" name="hometown[]" class="medium" maxlength="128" /></p>
+        <p><strong>Sponsor</strong></p>
+        <p><input type="text" value="{{p.sponsor}}" name="sponsor[]" class="medium" maxlength="128"/></p>
+    </div>
+</div>
+<div class="clear"></div>

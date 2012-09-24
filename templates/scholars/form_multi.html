@@ -1,5 +1,15 @@
 {% extends "includes/generic_form_multi.html" %}
 {% block extra_fields %}
+{% if manager %}
+<li class="ctrlHolder">
+    <h3><label>Status</label></h3>
+    <select name="status">
+    {% for n,v in status %}
+        <option value="{{n}}"{% if p.status == n %} selected="selected"{% endif %}>{{v}}</option>
+    {% endfor %}
+    </select>
+</li>
+{% endif %}
 <li class="ctrlHolder">
     <div id="doop_master" class="presenter">
         <img class="destroy_school fright" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" title="Remove Presenter" alt="Remove Presenter" />
