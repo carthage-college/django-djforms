@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Presentation Detail &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "scholars/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as title cms snippet 1014 code %}
+{{title}}
+<div class="buffer">
+    <h1>{{p.title}}</h1>
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "scholars/side_bar.html" %}
+{% endblock %}

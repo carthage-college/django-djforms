@@ -95,12 +95,8 @@ class Presentation(models.Model):
         return ('presentation_update', [str(self.id)])
 
     def get_presenters(self):
-        presenters = []
-        for p in self.presenters.all:
-            if not p.leader:
-                presenters.append(p)
+        return self.presenters.order_by('-leader','last_name')
 
-        return presenters
 
     def get_students(self):
         students = []

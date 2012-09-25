@@ -13,7 +13,7 @@
 <li class="ctrlHolder">
     <div id="doop_master" class="presenter">
         <img class="destroy_school fright" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" title="Remove Presenter" alt="Remove Presenter" />
-        {% include "scholars/presenters.html" %}
+        {% include "scholars/presentation/presenters.inc.html" %}
     </div>
     <h3><label>Presenters</label></h3>
 </li>
@@ -32,7 +32,7 @@
         {% else %}
         <div style="height:15px;width:15px;float:right;">&nbsp;</div>
         {% endif %}
-        {% include "scholars/presenters.html" %}
+        {% include "scholars/presentation/presenters.inc.html" %}
     </div>
     {% endfor %}
 </li>

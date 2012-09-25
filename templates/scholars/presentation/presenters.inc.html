@@ -39,7 +39,7 @@
         <select name="department[]">
             <option value="">----select----</option>
             {% for d in depts %}
-                <option value="{{d.name}}"{% if p.department == d %} selected="selected"{% endif %}>{{d.name}}</option>
+                <option value="{{d.name}}"{% if p.department|slugify == d|slugify %} selected="selected"{% endif %}>{{d.name}}</option>
             {% endfor %}
         </select>
     </p>

@@ -29,6 +29,7 @@ FILE_CHARSET = 'utf-8'
 ROOT_URLCONF = 'djforms.core.urls'
 MEDIA_ROOT = '/data2/django_projects/djforms/assets'
 MEDIA_URL = '/assets/'
+ROOT_DIR = os.path.dirname(__file__)
 STATIC_URL = '/djmedia/'
 SERVER_URL = "www.carthage.edu"
 API_URL = "%s/%s" % (SERVER_URL, "api")
