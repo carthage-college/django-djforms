@@ -3,11 +3,8 @@
 {% if manager %}
 <li class="ctrlHolder">
     <h3><label>Status</label></h3>
-    <select name="status">
-    {% for n,v in status %}
-        <option value="{{n}}"{% if p.status == n %} selected="selected"{% endif %}>{{v}}</option>
-    {% endfor %}
-    </select>
+    <p class="help">Is this presentation complete?</p>
+    <input type="checkbox" id="id_status" name="status"{% if presentation.status %} checked="checked"{% endif %} />
 </li>
 {% endif %}
 <li class="ctrlHolder">

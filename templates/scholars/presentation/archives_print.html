@@ -6,45 +6,7 @@
 </head>
 <body>
     {% for p in presentations %}
-        <div class="presentation">
-            <p><strong>{{p.title}}</strong></p>
-            {% for o in p.get_presenters %}
-                {% if o.prez_type == "Student" %}
-                    <div class="person">
-                        <p>
-                            {% if o.mugshot %}<img class="headshot" src="{{media_url}}{{o.mugshot}}" />{% endif %}
-                            <strong>Name</strong>: {{o.first_name}} {{o.last_name}}, {{o.college_year}}<br />
-                            <strong>Major</strong>: {{o.major}}<br />
-                            <strong>Hometown</strong>: {{o.hometown}}<br />
-                            <strong>Faculty Sponsor</strong>: {{o.sponsor}}<br />
-                        </p>
-                    </div>
-                    <div style="clear:both;"></div>
-                {% endif %}
-                {% if o.prez_type == "Faculty" or o.prez_type == "Staff" %}
-                    <div class="person">
-                        <p>
-                            {% if o.mugshot %}<img class="headshot" src="{{media_url}}{{o.mugshot}}" />{% endif %}
-                            <strong>Name</strong>: {{o.first_name}} {{o.last_name}}<br />
-                            <strong>Department</strong>: {{o.department}}<br />
-                        </p>
-                    </div>
-                    <div style="clear:both;"></div>
-                {% endif %}
-            {% endfor %}
-            <div class="work-type">
-            {{p.work_type}}
-            </div>
-            <div class="abstract">
-            {{p.abstract_text}}
-            </div>
-            {% if p.funding %}
-            <p><strong>Funding</strong></p>
-            <div class="funding">
-            {{p.funding}}
-            </div>
-            {% endif %}
-        </div>
+        {% include "scholars/presentation/detail_data.inc.html" %}
     {% endfor %}
 </body>
 </html>

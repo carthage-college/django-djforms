@@ -21,12 +21,9 @@ PRESENTER_TYPES = (
     ('Staff','Staff'),
 )
 
-STATUS = (
-    ('Incomplete','Incomplete'),
-    ('Complete','Complete'),
-)
-
 class Presenter(models.Model):
+    date_created        = models.DateTimeField("Date Created", auto_now_add=True)
+    date_updated        = models.DateTimeField("Date Updated", auto_now=True)
     first_name          = models.CharField(max_length=128, null=True, blank=True)
     last_name           = models.CharField(max_length=128, null=True, blank=True)
     leader              = models.BooleanField("Presentation leader", default=False)
@@ -76,7 +73,7 @@ class Presentation(models.Model):
     abstract_text       = models.TextField(null=True, blank=True, help_text='')
     abstract_file       = models.FileField(upload_to='files/scholars/abstracts', max_length="256", help_text='Upload an abstract in PDF format', null=True, blank=True)
     poster_file         = models.FileField(upload_to='files/scholars/posters', max_length="256", help_text='Upload a poster file', null=True, blank=True)
-    status              = models.CharField(max_length=32, choices=STATUS, default="Incomplete", null=True, blank=True)
+    status              = models.BooleanField(default=False)
 
     class Meta:
         ordering        = ('-date_created',)
@@ -97,11 +94,18 @@ class Presentation(models.Model):
     def get_presenters(self):
         return self.presenters.order_by('-leader','last_name')
 
+    def mugshot_status(self):
+        status = True
+        for p in self.presenters.all:
+            if not p.mugshot:
+                status = False
+                break
+        return status
 
     def get_students(self):
         students = []
         for s in self.presenters.all:
-            if not s.leader and s.prez_type=="Student":
+            if s.prez_type=="Student":
                 students.append(s)
         return students
 

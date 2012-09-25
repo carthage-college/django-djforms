@@ -1,16 +1,17 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect, Http404
-from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader
 from django.contrib.auth.decorators import login_required
 
-from djforms.scholars.forms import PresentationForm, DEPTS
-from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES, STATUS
+from djforms.scholars.views.forms import PresentationForm, DEPTS
+from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES
 from djforms.core.views import send_mail
 from djforms.core.models import Department, SHIRT_SIZES, YEAR_CHOICES
 
 import datetime, os
+
+YEAR = int(datetime.date.today().year)
 
 if settings.DEBUG:
     TO_LIST = ["larry@carthage.edu",]
@@ -106,7 +107,10 @@ def form(request, pid=None):
             if request.FILES.get('abstract_file'):
                 presentation.abstract_file = request.FILES.get('abstract_file')
             if request.POST.get('status'):
-                presentation.status = request.POST.get('status')
+                if request.POST.get('status') == "on":
+                    presentation.status = True
+                else:
+                    presentation.status = False
             presentation.save()
 
             # CRUD
@@ -156,7 +160,7 @@ def form(request, pid=None):
             presenters = [""]
             copies = 1
 
-    context = {"form":form,"presenters":presenters,"copies":copies,"shirts":SHIRT_SIZES,"cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,"pid":pid,"manager":manager,"status":STATUS,}
+    context = {"presentation":presentation,"form":form,"presenters":presenters,"copies":copies,"shirts":SHIRT_SIZES,"cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,"pid":pid,"manager":manager,}
     return render_to_response("scholars/presentation/form.html", context, context_instance=RequestContext(request))
 
 
@@ -164,8 +168,8 @@ def archives(request, year=None, medium=None):
     if year:
         year = int(year)
     else:
-        year = int(datetime.date.today().year)
-    presentations = Presentation.objects.filter(date_created__year=year).order_by("user__last_name")
+        year = YEAR
+    presentations = Presentation.objects.filter(date_created__year=year).filter(status=True).order_by("user__last_name")
 
     template = "scholars/presentation/archives_screen.html"
     if medium:
@@ -175,6 +179,16 @@ def archives(request, year=None, medium=None):
         return render_to_response(template, {"presentations": presentations,"year":year,}, context_instance=RequestContext(request))
     else:
         raise Http404, "Page not found"
+
+
+@login_required
+def status(request):
+    if request.method=='POST':
+        status = request.POST["status"]
+        presentations = Presentation.objects.filter(date_updated__year=YEAR).filter(status=status)
+    else:
+        presentations = None
+    return render_to_response("scholars/presentation/status.html", {"presentations":presentations,"status":status,}, context_instance=RequestContext(request))
 
 
 def detail(request, pid):

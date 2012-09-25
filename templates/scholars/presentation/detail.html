@@ -9,7 +9,7 @@
 {% get_api_object as title cms snippet 1014 code %}
 {{title}}
 <div class="buffer">
-    <h1>{{p.title}}</h1>
+    {% include "scholars/presentation/detail_data.inc.html" %}
 </div>
 {% endblock %}
 {% block sidebar %}
