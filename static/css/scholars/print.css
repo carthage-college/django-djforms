@@ -117,7 +117,7 @@ h2 {font-size:13pt;}
 
 .person {display: block;font-size: 10pt;margin-bottom:10pt;page-break-inside: avoid;page-break-before: auto;page-break-after: auto;}
 .personmain {page-break-inside:avoid;column-break-after:avoid;}
-.headshot {display:block; float:left;margin-right:7px;margin-bottom:7px; width:100px;
+.mugshot {display:block; float:left;margin-right:7px;margin-bottom:7px; width:100px;
 page-break-before: auto; /* 'always,' 'avoid,' 'left,' 'inherit,' or 'right' */
 page-break-after: auto; /* 'always,' 'avoid,' 'left,' 'inherit,' or 'right' */
 page-break-inside: avoid; /* or 'auto' */

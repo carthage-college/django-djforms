@@ -24,10 +24,12 @@
                 </li>
             {% endfor %}
             {% block extra_fields %}{% endblock %}
+            {% block buttons %}
             <li class="btnHolder">
                 <label for="id_submit">&nbsp;&nbsp;</label>
                 <input type="submit" value="Submit" class="button" />
             </li>
+            {% endblock %}
         </ol>
     </fieldset>
 </form>

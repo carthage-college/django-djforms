@@ -41,7 +41,7 @@ class Presenter(models.Model):
         return "%s %s" % (self.first_name, self.last_name)
 
     def year(self):
-        return YEAR_CHOICES[self.college_year][1]
+        return YEAR_CHOICES[int(self.college_year)][1]
 
     def presenter_type(self):
         return PRESENTOR_TYPES[self.prez_type][1]
@@ -62,12 +62,13 @@ class Presentation(models.Model):
     # Default object manager
     objects             = models.Manager()
     # core
-    title               = models.CharField("Presentation title", max_length=128)
+    title               = models.CharField("Presentation title", max_length=256)
     leader              = models.ForeignKey(Presenter, verbose_name="Presentation leader", related_name="presentation_leader", null=True, blank=True)
     presenters          = models.ManyToManyField(Presenter, related_name="presentation_presenters", null=True, blank=True)
     funding             = models.TextField(null=True, blank=True)
     requirements        = models.TextField(null=True, blank=True)
     work_type           = models.CharField(max_length=32, choices=WORK_TYPES)
+    work_type_other     = models.CharField(max_length=256, null=True, blank=True)
     permission          = models.BooleanField(help_text="Do you grant Carthage permission to reproduce your presentation?", default=True)
     shared              = models.BooleanField(help_text="Have you shared your proposal with your faculty sponsor?", default=True)
     abstract_text       = models.TextField(null=True, blank=True, help_text='')
@@ -96,7 +97,7 @@ class Presentation(models.Model):
 
     def mugshot_status(self):
         status = True
-        for p in self.presenters.all:
+        for p in self.presenters.all():
             if not p.mugshot:
                 status = False
                 break
@@ -130,5 +131,4 @@ class Presentation(models.Model):
 
     def presentation_type(self):
         return WORK_TYPES[self.work_type][1]
-
 

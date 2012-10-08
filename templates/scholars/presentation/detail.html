@@ -2,6 +2,22 @@
 {% load get_api %}
 {% block title %}Presentation Detail &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
 {% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block extra_javascript %}
+<script type="text/javascript">
+$(function() {
+    $('#print-link h2').prepend('<a href="#print">Print</a>');
+    $('#print-link h2 a').click(function() {
+        window.print();
+        return false;
+    });
+});
+</script>
+{% endblock %}
+{% block extra_style %}
+<style type="text/css">
+{% include "scholars/presentation/screen.css" %}
+</style>
+{% endblock %}
 {% block left_nav %}
     {% include "scholars/left_nav.html" %}
 {% endblock %}
@@ -9,6 +25,7 @@
 {% get_api_object as title cms snippet 1014 code %}
 {{title}}
 <div class="buffer">
+    <div id="print-link"><h2></h2></div><div class="clear"></div>
     {% include "scholars/presentation/detail_data.inc.html" %}
 </div>
 {% endblock %}

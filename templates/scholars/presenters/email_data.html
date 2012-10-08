@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+{% autoescape off %}
+<html>
+<head>
+<style type="text/css">
+body {font-size:1.1em;font-family:verdana, arial, sans-serif;}
+{% include "scholars/presentation/screen.css" %}
+.presentation {margin-bottom:30px;page-break-after:always;}
+.presentation .title {font-weight:bold;font-size:1.5em; border-top:1px solid #000; }
+.presentation .text {display:block;}
+.person {display: block;font-size: 10pt;margin-bottom:10pt;page-break-inside: avoid;page-break-before: auto;page-break-after: auto;}
+.personmain {page-break-inside:avoid;column-break-after:avoid;}
+.mugshot {display:block; float:left;margin-right:7px;margin-bottom:7px; width:100px; }
+.name {font-weight:bold;font-size: 10pt;}
+.work-type p {font-size:1.3em;font-weight:bold;}
+.work-type p span {font-size:1.1em;font-weight:normal;}
+</style>
+</head>
+<body>
+{{data.content}}
+<h3>Missing items</h3>
+{% with p=data.p %}
+    <ol>
+    {% if not p.mugshot_status %}
+    <li>Profile photos missing</li>
+    {% endif %}
+    {% if not p.poster %}
+    <li>Poster missing</li>
+    {% endif %}
+    </ol>
+    <h2>Presentation</h2>
+    {% include "scholars/presentation/detail_data.inc.html" %}
+{% endwith %}
+</body>
+</html>
+{% endautoescape %}

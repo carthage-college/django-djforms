@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Presentation Form &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
+{% block extra_javascript %}
+    <script src="{{media_url}}js/xinha/init.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{media_url}}js/xinha/XinhaCore.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{media_url}}js/xinha/celebration.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+{% block left_nav %}
+    {% include "scholars/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as title cms snippet 1014 code %}
+{{title}}
+<div class="buffer">
+    <h1>Email Presenters Form</h1>
+
+    {% if data %}
+        <h4>If you are satisfied with the content below, click on the "execute" button, and your email will be sent to the presentation leaders.</h4>
+        <h4>If you would like to update the content, click on the "edit" button.</h4>
+        <div class="buffer" style="background-color:#efefef;">
+        {{data.content}}
+        </div>
+        <form method="post" action="." class="form" id="profile"{% block extra_form_tag %}{% endblock%}>{% csrf_token %}
+        <div style="display:none;">
+        <table>
+        {{form}}
+        </table>
+        </div>
+        <p><br /><input type="button" name="update" value="Edit" class="button fleft" onclick="javascript:history.go(-1)" />&nbsp;<input type="submit" name="execute" value="Execute" class="button fright" /></p>
+        </form>
+    {% else %}
+        <p>
+        Compose an email to send to those celebration of scholars lead presenters
+        whose presentation is incomplete. The content of their presentation,
+        including any missing items, will be clearly outlined in the email.
+        </p>
+        {% include "scholars/presenters/email_form.inc.html" %}
+    {% endif %}
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "scholars/side_bar.html" %}
+{% endblock %}
