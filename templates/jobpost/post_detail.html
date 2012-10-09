@@ -160,7 +160,7 @@ div.growlUI h1, div.growlUI h2 {
                     <dt class="job-header">Year:</dt><dd class="job-data">{{ jobapplyform.college_year }}</dd><dd class="clear"></dd>
                     <dt class="job-header">Major:</dt><dd class="job-data">{{ jobapplyform.major }}</dd><dd class="clear"></dd>
                     <dt class="job-header">Hours:</dt><dd class="job-data">{{ jobapplyform.hours }}</dd><dd class="clear"></dd>
-                    <dt class="job-header">R&eacute;sum&eacute;:</dt><dd class="job-data">{% if jobapplyform.cv %}<a href="/djassets/{{ jobapplyform.cv }}">Click here to download</a></a>{% endif %}</dd><dd class="clear"></dd>
+                    <dt class="job-header">R&eacute;sum&eacute;:</dt><dd class="job-data">{% if jobapplyform.cv %}<a href="{{media_url}}{{ jobapplyform.cv }}">Click here to download</a></a>{% endif %}</dd><dd class="clear"></dd>
                     <dt class="job-header">Student qualifications:</dt><dd class="clear"></dd>
                 </dl>
                 <p>{{ jobapplyform.app_details }}</p>
@@ -183,7 +183,7 @@ div.growlUI h1, div.growlUI h2 {
                     <dt class="job-header">Year:</dt><dd class="job-data">{{ jobapplyform.college_year }}</dd><dd class="clear"></dd>
                     <dt class="job-header">Major:</dt><dd class="job-data">{{ jobapplyform.major }}</dd><dd class="clear"></dd>
                     <dt class="job-header">Hours:</dt><dd class="job-data">{{ jobapplyform.hours }}</dd><dd class="clear"></dd>
-                    <dt class="job-header">R&eacute;sum&eacute;:</dt><dd class="job-data">{% if jobapplyform.cv %}<a href="/djassets/{{ jobapplyform.cv }}">Click here to download</a></a>{% endif %}</dd><dd class="clear"></dd>
+                    <dt class="job-header">R&eacute;sum&eacute;:</dt><dd class="job-data">{% if jobapplyform.cv %}<a href="{{media_url}}{{ jobapplyform.cv }}">Click here to download</a></a>{% endif %}</dd><dd class="clear"></dd>
                     <dt class="job-header">Student qualifications:</dt><dd class="clear"></dd>
                 </dl>
                 <p>{{ jobapplyform.app_details }}</p>
