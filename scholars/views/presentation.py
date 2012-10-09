@@ -49,7 +49,7 @@ def form(request, pid=None):
     if pid:
         presentation = get_object_or_404(Presentation,id=pid)
         # check perms
-        if presentation.user != request.user:
+        if presentation.user != request.user and not manager:
             raise Http404
     else:
         try:
