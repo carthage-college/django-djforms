@@ -183,7 +183,9 @@ def form(request, pid=None):
 
 @permission_required('scholars.manage_presentation', login_url="/forms/accounts/login/")
 def manager(request):
-    presentations = Presentation.objects.filter(date_updated__year=YEAR)
+    #presentations = Presentation.objects.filter(date_updated__year=YEAR)
+    presentations = Presentation.objects.all().order_by("-date_created")
+
     return render_to_response (
         "scholars/presentation/manager.html",
         {"presentations":presentations,},

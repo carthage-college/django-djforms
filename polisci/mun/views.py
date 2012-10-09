@@ -17,9 +17,8 @@ def registration_form(request):
     if request.method=='POST':
         form = ModelUnitedNationsRegistrationForm(request.POST)
         c_form = ModelUnitedNationsCountriesForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and c_form.is_valid():
             obj = form.cleaned_data
-            dele = c_form.is_valid()
             data = {'object':obj,'dele':c_form.cleaned_data,}
             subject = "[Model United Nations Registration] %s of %s" % (obj['faculty_advisor'],obj['school_name'])
             send_mail(request, TO_LIST, subject, obj['email'], "polisci/mun/registration_email.html", data, BCC)

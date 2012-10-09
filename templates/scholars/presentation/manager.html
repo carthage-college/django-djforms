@@ -40,7 +40,7 @@ table.tablesorter {
             <td><a href="{{p.get_absolute_url}}">{{p.title}}</a></td>
             <td>{{p.leader.first_name}} {{p.leader.last_name}}</td>
             <td>{{p.status}}</td>
-            <td class="edit center"><a title="Edit this presentation" href="{% url djforms.scholars.views.presentation.form p.id %}"> </a></td>
+            <td class="edit center"><a title="Edit this presentation" href="{% url djforms.scholars.views.presentation.form p.id %}">&nbsp;</a></td>
         </tr>
         {% endfor %}
         </tbody>
