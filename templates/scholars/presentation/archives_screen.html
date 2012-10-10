@@ -15,7 +15,7 @@
         <th width="350">Title</th>
         <th width="150">Lead Presenter</th>
     </tr>
-    {% for p in presentations %}
+    {% for p in prez %}
         <tr class="{% cycle odd,even %}">
             <td><a href="{{p.get_absolute_url}}">{{p.title}}</a></td>
             <td>{{p.leader.first_name}} {{p.leader.last_name}}</td>

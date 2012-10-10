@@ -231,7 +231,7 @@ def email_presenters(request):
     )
 
 
-def archives(request, year=None, medium=None):
+def archives(request, ptype, medium, year=None):
     """
     Year based archives, defaults to current year
     """
@@ -240,16 +240,17 @@ def archives(request, year=None, medium=None):
     else:
         year = YEAR
 
-    presentations = Presentation.objects.filter(date_updated__year=year)
-    presentations.filter(status=True).order_by("user__last_name")
-
-    template = "scholars/presentation/archives_screen.html"
-    if medium:
-        template = "scholars/presentation/archives_%s.html" % medium
+    template = "scholars/%s/archives_%s.html" % (ptype, medium)
 
     if os.path.isfile(os.path.join(settings.ROOT_DIR, "templates", template)):
+        if ptype == "presentation":
+            p = Presentation.objects.filter(date_updated__year=year)
+            p.filter(status=True).order_by("user__last_name")
+        else:
+            p = Presenter.objects.filter(date_updated__year=year).order_by("last_name")
+
         return render_to_response (
-            template, {"presentations": presentations,"year":year,},
+            template, {"prez": p,"year":year,},
             context_instance=RequestContext(request)
         )
     else:
