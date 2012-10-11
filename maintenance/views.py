@@ -25,7 +25,6 @@ def maintenance_request_form(request):
         try:
             profile = request.user.get_profile()
         except:
-            logging.info("username = %s" % request.user.username)
             profile = ''
             p = UserProfile(user=request.user)
             p.save()
@@ -39,7 +38,10 @@ def maintenance_request_form(request):
             maintenance_request.status = 'New'
             maintenance_request.save()
             form.save_m2m()
-            profile_form.save()
+            if profile_form["phone"]:
+                p = profile_form.cleaned_data
+                profile.phone = p["phone"]
+                profile.save()
             bcc = settings.MANAGERS
             recipient_list = ["jramirez@carthage.edu"]
 

@@ -104,7 +104,7 @@ class UserProfile(BaseProfile):
     """
     User profile model
     """
-    phone   = models.CharField(max_length=12, verbose_name='Phone Number', help_text="Format: XXX-XXX-XXXX")
+    phone   = models.CharField(max_length=12, verbose_name='Phone Number', help_text="Format: XXX-XXX-XXXX", null=True, blank=True)
     address = models.CharField(max_length=255, verbose_name = 'Address', null=True, blank=True)
     city    = models.CharField(max_length=128, verbose_name = 'City', null=True, blank=True)
     state   = USStateField()
