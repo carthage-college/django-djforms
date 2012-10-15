@@ -12,7 +12,7 @@ class PhageHunterForm(forms.ModelForm):
 
     class Meta:
         model = PhageHunter
-        exclude = ('created_on','updated_on',)
+        exclude = ('created_at','updated_at',)
 
     def clean(self):
         if not self.cleaned_data.get('act_comp') and not self.cleaned_data.get('act_math') and not self.cleaned_data.get('act_science') and not self.cleaned_data.get('sat_comp') and not self.cleaned_data.get('sat_math') and not self.cleaned_data.get('sat_read'):

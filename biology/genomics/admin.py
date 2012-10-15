@@ -5,6 +5,6 @@ class PhageHunterAdmin(admin.ModelAdmin):
     model = PhageHunter
     list_display  = ('first_name', 'last_name', 'email',)
     search_fields = ('last_name', 'email',)
-    ordering = ['created_on',]
+    ordering = ['created_at',]
 
 admin.site.register(PhageHunter, PhageHunterAdmin)

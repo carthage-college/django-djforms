@@ -83,10 +83,11 @@ class GenericChoice(models.Model):
 
 #For making contacts for forms
 class GenericContact(models.Model):
-    creation_date = models.DateTimeField(auto_now_add=True)
-    first_name = models.CharField(max_length=128)
-    last_name = models.CharField(max_length=128)
-    email = models.EmailField()
+    created_at          = models.DateTimeField(auto_now_add=True)
+    updated_at          = models.DateTimeField(auto_now=True)
+    first_name          = models.CharField(max_length=128)
+    last_name           = models.CharField(max_length=128)
+    email               = models.EmailField()
 
     class Meta:
         abstract = True

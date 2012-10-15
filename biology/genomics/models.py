@@ -8,9 +8,6 @@ from django.contrib.localflavor.us.models import USStateField
 from djforms.core.models import GenericContact
 
 class PhageHunter(GenericContact):
-    # dates
-    created_on  = models.DateTimeField("Date Created", auto_now_add=True)
-    updated_on  = models.DateTimeField("Date Updated", auto_now=True)
     #core
     address         = models.CharField(max_length=255)
     city            = models.CharField(max_length=128)

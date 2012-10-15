@@ -6,9 +6,6 @@ from djforms.core.models import GenericContact
 
 class Attendee(GenericContact):
     maiden_name     = models.CharField(max_length=128, null=True, blank=True)
-    # dates
-    created_on      = models.DateTimeField("Date Created", auto_now_add=True)
-    updated_on      = models.DateTimeField("Date Updated", auto_now=True)
     #core
     grad_class      = models.CharField("Graduating class", max_length=4)
     city            = models.CharField(max_length=128, null=True, blank=True)

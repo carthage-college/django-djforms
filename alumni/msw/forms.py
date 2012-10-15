@@ -11,7 +11,7 @@ class ReunionContactForm(forms.ModelForm):
 
     class Meta:
         model = ReunionContact
-        exclude = ('created_on','updated_on',)
+        exclude = ('created_at','updated_at',)
 
     def clean_update(self):
         if len(self.cleaned_data.get('update')) > 500:

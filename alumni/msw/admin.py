@@ -5,6 +5,6 @@ class ReunionContactAdmin(admin.ModelAdmin):
     model = ReunionContact
     list_display  = ('first_name', 'last_name', 'email',)
     search_fields = ('last_name', 'email',)
-    ordering = ['created_on',]
+    ordering = ['created_at',]
 
 admin.site.register(ReunionContact, ReunionContactAdmin)

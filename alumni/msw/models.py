@@ -5,9 +5,6 @@ from django.contrib.localflavor.us.models import USStateField
 from djforms.core.models import GenericContact
 
 class ReunionContact(GenericContact):
-    # dates
-    created_on      = models.DateTimeField("Date Created", auto_now_add=True)
-    updated_on      = models.DateTimeField("Date Updated", auto_now=True)
     #core
     cohort          = models.CharField(max_length=128)
     address         = models.CharField(max_length=255)
