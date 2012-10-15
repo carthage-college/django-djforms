@@ -13,7 +13,7 @@ class PaymentProcessor():
     2) order object
     """
 
-    def __init__(self, card=None, order=None):
+    def __init__(self, card=None, order=None, contact=None):
         self.demo = 'n'
         self.avs = settings.TC_AVS
         self.custid = settings.TC_LOGIN
@@ -23,6 +23,7 @@ class PaymentProcessor():
         self.cycle = settings.TC_CYCLE
         self.auth = settings.TC_AUTH_TYPE
         self.order = order
+        self.contact = contact
         self.card = card
         self.status = None
         self.success = None
@@ -48,7 +49,8 @@ class PaymentProcessor():
 
         # operator
         if hasattr(self.order, 'operator'):
-            self.operator = self.order.operator
+            # OJO: if value exceeds 20 characters, trans returns "baddata"
+            self.operator = self.order.operator[:20]
 
         # Convert amount to cents, no decimal point
         amount = unicode( int( float(self.order.total) * 100 ) )
@@ -66,21 +68,21 @@ class PaymentProcessor():
             # transaction data
             'media'         : 'cc',
             'action'        : self.auth,
-            'amount'        : amount,                   # in cents
-            'cc'            : self.card['card_number'], # use '4111111111111111' for test
-            'exp'           : exp,                      # 4 digits eg 0108
-            'cvv'           : self.card['security_code'],
-            'avs'           : self.avs,                 # address verification
+            'amount'        : amount,                       # in cents
+            'cc'            : self.card['card_number'],     # 4111111111111111
+            'exp'           : exp,                          # 4 digits eg 0108
+            'cvv'           : self.card['security_code'],   # 3 or 4 digits
+            'avs'           : self.avs,                     # address verification
             'operator'      : self.operator
         }
 
         # address verification
         if self.avs == 'y':
-            self.transactionData['address1'] = order.contact.address1
-            self.transactionData['address2'] = order.contact.address2
-            self.transactionData['city']     = order.contact.city
-            self.transactionData['state']    = order.contact.state
-            self.transactionData['zip']      = order.contact.postal_code
+            self.transactionData['address1'] = self.contact.address1
+            self.transactionData['address2'] = self.contact.address2
+            self.transactionData['city']     = self.contact.city
+            self.transactionData['state']    = self.contact.state
+            self.transactionData['zip']      = self.contact.postal_code
 
         # subscription/recurring billing
         if self.auth == "store":
@@ -101,11 +103,11 @@ class PaymentProcessor():
 
         if self.order:
             self.prepare_post()
-            logging.info("tdata = %s" % self.transactionData)
             result = tclink.send(self.transactionData)
             status = result['status']
             success = False
 
+            logging.info("tdata = %s" % self.transactionData)
             if status == 'approved' or status == 'accepted':
                 success = True
                 msg = result

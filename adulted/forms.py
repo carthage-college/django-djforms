@@ -4,6 +4,7 @@ from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeFie
 
 from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, COUNTRIES, BINARY_CHOICES, PAYMENT_CHOICES
 from djforms.processors.models import Contact
+from djforms.processors.forms import ContactForm
 from jenzabar import INFORMIX_EARL_TEST
 
 from sqlalchemy import create_engine
@@ -39,7 +40,7 @@ if MONTH >= 8:
     YEAR7 += 1
 
 # 14 week years
-if MONTH > 2 and MONTH < 10:
+if MONTH > 2 and MONTH <= 10:
     YEAR14 += 1
 
 SESSION7 = (
@@ -56,21 +57,16 @@ SESSION14 = (
     ("14-C-%s" % YEAR14, "February %s" % YEAR14),
 )
 
-class ContactForm(forms.ModelForm):
+class AdultContactForm(ContactForm):
     """
-    Contact form based on the generic processor model
+    Adult Ed contact form based on the generic processor contact model & its form
     """
-    previous_last_name  = forms.CharField(max_length=128, required=False, label="Previous Last Name")
-    phone               = USPhoneNumberField(max_length=12, help_text="Format: XXX-XXX-XXXX")
-    state               = forms.CharField(widget=forms.Select(choices=STATE_CHOICES), required=True)
-    postal_code         = USZipCodeField(label="Zip")
-
     class Meta:
         model = Contact
-        exclude = ('country',)
+        fields = ('first_name','second_name','last_name','previous_name','address1','address2','city','state','postal_code','email','phone')
 
     def __init__(self,*args,**kwargs):
-        super(ContactForm,self).__init__(*args,**kwargs)
+        super(AdultContactForm,self).__init__(*args,**kwargs)
         self.fields['state'].widget.attrs['class'] = 'required'
 
 class PersonalForm(forms.Form):
@@ -151,7 +147,7 @@ def insert(data):
                 prsp_no, name_sndx, correct_addr, decsd, valid)
             VALUES (%s,"%s","%s","%s","%s","%s","%s","%s","%s","USA",
                     "%s","%s","PERM","%s","ADLT","%s","%s","0", "", "Y", "N", "Y")
-            """ % (apptmp_no,data["contact"]["first_name"],data["contact"]["middle_name"],data["contact"]["last_name"],
+            """ % (apptmp_no,data["contact"]["first_name"],data["contact"]["second_name"],data["contact"]["last_name"],
                    data["contact"]["address1"],data["contact"]["address2"],data["contact"]["city"],data["contact"]["state"],
                    data["contact"]["postal_code"],data["contact"]["phone"],data["personal"]["ss_num"],DATE,DATE,PURGE_DATE)
     logging.debug("contact info = %s" % sql)

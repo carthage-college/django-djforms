@@ -15,4 +15,7 @@ urlpatterns = patterns('',
     url(r'^ito/profile/(?P<pid>\d+)/update/$', 'djforms.lis.ito.views.profile_form', name="profile_update"),
     url(r'^ito/profile/(?P<pid>\d+)/detail/$', 'djforms.lis.ito.views.profile_detail', name="profile_detail"),
     url(r'^ito/profile/$', 'djforms.lis.ito.views.profile_form', name='profile_form'),
+    # conference registration
+    #url(r'^conferences/registration/success/$', direct_to_template, {'template': 'lis/conferences/registration_done.html'}, name="conference_registration_success"),
+    #url(r'^conferences/registration/$', 'lis.conferences.registration.views.form', name='registration_form'),
 )

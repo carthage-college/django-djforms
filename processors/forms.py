@@ -2,8 +2,8 @@ from django import forms
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from djforms.core.models import STATE_CHOICES
-from djforms.processors.models import Contact, Order
-from djforms.processors.trust_commerce import PaymentProcessor
+from models import Contact, Order
+from trust_commerce import PaymentProcessor
 
 from datetime import date
 
@@ -20,7 +20,7 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        exclude = ('middle_name','spouse','relation','country','class_of','matching_company','thrivent_financial','opt_in')
+        exclude = ('country','order','second_name','previous_last_name')
 
 class OrderForm(forms.ModelForm):
     """
@@ -52,12 +52,13 @@ class TrustCommerceForm(CreditCardForm):
     Trust commerce payment processor
     """
 
-    def __init__(self, order=None, *args, **kwargs):
+    def __init__(self, order=None, contact=None, *args, **kwargs):
         """
         Allow transaction amount to be passed in for authorizing the credit card during
         validation.
         """
         self.order = order
+        self.contact = contact
         self.processor_response = None
         super(TrustCommerceForm, self).__init__(*args, **kwargs)
 
@@ -71,7 +72,7 @@ class TrustCommerceForm(CreditCardForm):
         if not self.is_valid():
             return cleaned_data
 
-        response = PaymentProcessor(cleaned_data, self.order)
+        response = PaymentProcessor(cleaned_data, self.order, self.contact)
         self.processor_response = response
         if response.status != "approved" and response.status != 'accepted':
             if response.msg == "cc":

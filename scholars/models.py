@@ -70,7 +70,7 @@ class Presentation(models.Model):
     work_type           = models.CharField(max_length=32, choices=WORK_TYPES)
     work_type_other     = models.CharField(max_length=256, null=True, blank=True)
     permission          = models.BooleanField(help_text="Do you grant Carthage permission to reproduce your presentation?", default=True)
-    shared              = models.BooleanField(help_text="Have you shared your proposal with your faculty sponsor?", default=True)
+    shared              = models.BooleanField(help_text="Has your faculty sponsor approved your proposal?", default=True)
     abstract_text       = models.TextField(null=True, blank=True, help_text='')
     abstract_file       = models.FileField(upload_to='files/scholars/abstracts', max_length="256", help_text='Upload an abstract in PDF format', null=True, blank=True)
     poster_file         = models.FileField(upload_to='files/scholars/posters', max_length="256", help_text='Upload a poster file', null=True, blank=True)
@@ -102,20 +102,6 @@ class Presentation(models.Model):
                 status = False
                 break
         return status
-
-    def get_students(self):
-        students = []
-        for s in self.presenters.all:
-            if s.prez_type=="Student":
-                students.append(s)
-        return students
-
-    def get_faculty(self):
-        faculty = []
-        for f in self.presenters.all:
-            if f.prez_type=="Faculty":
-                faculty.append(f)
-        return faculty
 
     def first_name(self):
         return self.user.first_name

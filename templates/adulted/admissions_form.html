@@ -69,8 +69,8 @@
                 <input class="medium" id="id_middle_name" type="text" name="middle_name" placeholder="Middle name" maxlength="100" value="{{contact_form.data.middle_name}}" /></li>
                 <li><label for="id_last_name" class="placeholder">Last name</label><br />
                 <input class="medium required{% if contact_form.last_name.errors %} error{% endif %}" id="id_last_name" type="text" name="last_name" placeholder="Last name" maxlength="100" value="{{contact_form.data.last_name}}" {% if not template_debug %}required {% endif %}/></li>
-                <li><label for="id_previous_last_name" class="placeholder">Previous last name</label><br />
-                <input class="medium" id="id_previous_last_name" type="text" name="previous_last_name" placeholder="Previous last name" maxlength="100" value="{{contact_form.data.previous_last_name}}" /></li>
+                <li><label for="id_previous_name" class="placeholder">Previous name</label><br />
+                <input class="medium" id="id_previous_name" type="text" name="previous_name" placeholder="Previous name" maxlength="100" value="{{contact_form.data.previous_name}}" /></li>
             </ul>
             <h3>Address</h3>
             <ul class="inline">

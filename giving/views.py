@@ -29,16 +29,16 @@ def giving_form(request, transaction, campaign=None):
         campaign = get_object_or_404(Promotion, slug=campaign)
     status = None
     if request.POST:
-        ct_form = ContactForm(request.POST, prefix="ct")
+        ct_form = DonationContactForm(request.POST, prefix="ct")
         or_form = eval(or_form_name)(request.POST, prefix="or")
         if ct_form.is_valid() and or_form.is_valid():
             contact = ct_form.save()
             or_data = or_form.save(commit=False)
-            or_data.contact = contact
             or_data.status = "In Process"
-            or_data.operator = "DJForms Giving: %s" % transaction
+            or_data.operator = "Giving: %s" % transaction
             or_data.save()
-            cc_form = CreditCardForm(or_data, request.POST, prefix="cc")
+            contact.order.add(or_data)
+            cc_form = CreditCardForm(or_data, contact, request.POST, prefix="cc")
             if cc_form.is_valid():
                 # save and update order
                 r = cc_form.processor_response
@@ -57,8 +57,8 @@ def giving_form(request, transaction, campaign=None):
                 or_data.save()
                 # sendmail
                 data = {'order':or_data,'campaign':campaign,'years':years,}
-                subject = "[pledge Donation] %s %s" % (or_data.contact.first_name,or_data.contact.last_name)
-                email = or_data.contact.email
+                subject = "[pledge Donation] %s %s" % (contact.first_name,contact.last_name)
+                email = contact.email
                 TO_LIST.append(email)
                 send_mail(request, TO_LIST, subject, email, 'giving/%s_email.html' % transaction, data, BCC)
                 # redirect
@@ -82,8 +82,8 @@ def giving_form(request, transaction, campaign=None):
         if transaction == "pledge":
             initial = {'cycle':"1m",'avs':False,'auth':'store',}
         else:
-            initial = {'avs':False,'auth':'shop',}
-        ct_form = ContactForm(prefix="ct")
+            initial = {'avs':False,'auth':'sale',}
+        ct_form = DonationContactForm(prefix="ct")
         or_form = eval(or_form_name)(prefix="or", initial=initial)
         cc_form = CreditCardForm(prefix="cc")
 

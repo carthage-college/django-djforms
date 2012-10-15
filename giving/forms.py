@@ -1,7 +1,8 @@
 from django import forms
 
-from djforms.processors.models import Contact, Order
+from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
+from djforms.giving.models import DonationContact
 
 from datetime import date
 
@@ -28,9 +29,9 @@ RELATION_CHOICES = (
 CLASS = [(x, x) for x in reversed(xrange(1926,date.today().year + 1))]
 CLASS.insert(0, ("","-----"))
 
-class ContactForm(ContactForm):
+class DonationContactForm(ContactForm):
     """
-    Contact form
+    Donation Contact form, extends base ContactForm in processors app
     """
     class_of            = forms.ChoiceField(required=False, label='Class of', choices=CLASS)
     matching_company    = forms.BooleanField(required=False, label='I/we are employed by a matching gift company.')
@@ -40,7 +41,7 @@ class ContactForm(ContactForm):
     relation            = forms.ChoiceField(choices=RELATION_CHOICES, label='Relation to Carthage')
 
     class Meta:
-        model = Contact
+        model = DonationContact
         fields = ('first_name','last_name','spouse','relation','class_of','email','phone','address1','address2','city','state','postal_code','matching_company','thrivent_financial','opt_in')
 
 class DonationOrderForm(OrderForm):
@@ -49,10 +50,11 @@ class DonationOrderForm(OrderForm):
     """
 
     total               = forms.CharField(label="Amount",)
+    comments            = forms.CharField(widget=forms.Textarea, label="", help_text='You may provide specific instructions about how you would like Carthage to use your gift. Leave the field blank to donate to the Annual Fund.')
 
     class Meta:
         model = Order
-        fields = ('total','avs','auth')
+        fields = ('total','comments','avs','auth')
 
 class PledgeOrderForm(OrderForm):
     """

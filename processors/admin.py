@@ -1,14 +1,20 @@
 from django.contrib import admin
-from djforms.processors.models import *
+from models import *
 
 class OrderAdmin(admin.ModelAdmin):
     model = Order
 
-    list_display  = ('last_name', 'first_name', 'email', 'promotion', 'time_stamp', 'status', 'auth', 'avs', 'cycle', 'payments', 'start_date')
-    ordering      = ['contact__last_name', 'promotion', '-time_stamp','status','auth','avs','cycle','payments','start_date']
+    list_display  = ('last_name', 'contact_name', 'email', 'promotion', 'time_stamp', 'status', 'auth', 'avs', 'cycle', 'payments', 'start_date')
+    ordering      = ['promotion', '-time_stamp','status','auth','avs','cycle','payments','start_date']
     list_filter   = ('status','auth','avs','cycle','payments','promotion')
     search_fields = ('email,', 'last_name', 'transid')
-    raw_id_fields = ('contact','promotion')
+    raw_id_fields = ('promotion',)
+
+    def contact_name(self, obj):
+        return '<strong><a href="%s%s/">%s</a></strong>' % ('/forms/admin/processors/contact/', obj.cid(), obj.first_name())
+    contact_name.allow_tags = True
+    contact_name.short_description = 'First name (contact info)'
+
 
 class ContactAdmin(admin.ModelAdmin):
     model = Contact

@@ -65,7 +65,7 @@
             <ol>
                 {% for field in or_form.visible_fields %}
                     <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    {% if field.label %}<h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>{% endif %}
                     {% if field.errors %}
                         <div class="warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>

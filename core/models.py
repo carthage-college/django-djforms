@@ -57,6 +57,16 @@ SHIRT_SIZES = (
     ("3X",  "3X Large")
 )
 
+SALUTATION_TITLES = (
+    ('','-------'),
+    ("Mrs.","Mrs."),
+    ("Ms.","Ms."),
+    ("Mr.","Mr."),
+    ("Master.","Master."),
+    ("Prof.","Prof."),
+    ("Dr.","Dr."),
+)
+
 #For making choices for choice fields for forms
 class GenericChoice(models.Model):
     name = models.CharField(unique=True, max_length=255)
@@ -75,7 +85,7 @@ class GenericChoice(models.Model):
 class GenericContact(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=128)
-    last_name = models.CharField(max_length=126)
+    last_name = models.CharField(max_length=128)
     email = models.EmailField()
 
     class Meta:

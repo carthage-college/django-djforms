@@ -22,7 +22,7 @@ def admissions_form(request):
     schools = []
     order = None
     if request.method=='POST':
-        contact_form = ContactForm(request.POST)
+        contact_form = AdultContactForm(request.POST)
         personal_form = PersonalForm(request.POST)
         employment_form = EmploymentForm(request.POST)
         education_goals_form = EducationGoalsForm(request.POST)
@@ -50,15 +50,15 @@ def admissions_form(request):
             email = contact['email']
             # credit card payment
             if fee['payment_type'] == "Credit Card":
-                # contact must be Contact model object
-                contact, created = Contact.objects.get_or_create(first_name=contact['first_name'],last_name=contact['last_name'],email=email,phone=contact['phone'],address1=contact['address1'],address2=contact['address2'],city=contact['city'],state=contact['state'],postal_code=contact['postal_code'])
-                order = Order(contact=contact,total=total,auth="sale",status="In Process",operator="Adult Education Admissions")
-                payment_form = TrustCommerceForm(order, request.POST)
+                contact, created = Contact.objects.get_or_create(first_name=contact['first_name'],last_name=contact['last_name'],second_name=contact['second_name'],previous_name=contact['previous_name'],email=email,phone=contact['phone'],address1=contact['address1'],address2=contact['address2'],city=contact['city'],state=contact['state'],postal_code=contact['postal_code'])
+                order = Order(total=total,auth="sale",status="In Process",operator="Adult Ed Admissions")
+                payment_form = TrustCommerceForm(order, contact, request.POST)
                 if payment_form.is_valid():
                     r = payment_form.processor_response
                     order.status = r.msg['status']
                     order.transid = r.msg['transid']
                     order.save()
+                    contact.order.add(order)
                     data['order'] = order
                     # insert into informix and send mail
                     result = insert(data)
@@ -73,8 +73,7 @@ def admissions_form(request):
                     else:
                         order.status = "Blocked"
                     order.save()
-                    payment_form = TrustCommerceForm(None, request.POST)
-                    payment_form.is_valid()
+                    contact.order.add(order)
             else:
                 # insert and send mail
                 result = insert(data)
@@ -88,7 +87,7 @@ def admissions_form(request):
             else:
                 payment_form = TrustCommerceForm()
     else:
-        contact_form = ContactForm()
+        contact_form = AdultContactForm()
         personal_form = PersonalForm()
         employment_form = EmploymentForm()
         education_goals_form = EducationGoalsForm()

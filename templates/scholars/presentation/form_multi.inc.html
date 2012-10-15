@@ -1,36 +1,14 @@
-{% extends "includes/generic_form_multi.html" %}
-{% block extra_fields %}
-{% if manager %}
-<li class="ctrlHolder">
-    <h3><label>Status</label></h3>
-    <p class="help">Is this presentation complete?</p>
-    <input type="checkbox" id="id_status" name="status"{% if presentation.status %} checked="checked"{% endif %} />
-</li>
-{% endif %}
-<li class="ctrlHolder">
-    <div id="doop_master" class="presenter">
-        <img class="destroy_school fright" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" title="Remove Presenter" alt="Remove Presenter" />
-        {% include "scholars/presentation/presenters.inc.html" %}
-    </div>
-    <h3><label>Presenters</label></h3>
-</li>
-<li style="margin-top:10px;">
-    <p>Click on the <img style="margin-bottom:-3px;" src="http://www.carthage.edu/assets/img/ico/silk/icons/add.png" /> symbol to add more presenters. Click on the <img style="margin-bottom:-3px;" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" /> icon to remove presenters.</p>
-    <p style="float:left;"><strong class="help">All fields are required except the photo.</strong></p>
-    <div class="ctrlcx">
-        <img id="clone" src="http://www.carthage.edu/assets/img/ico/silk/icons/add.png" />
-    </div>
-</li>
-<li class="ctrlHolder" id="duplicates">
-    {% for p in presenters %}
-    <div id="doop_{{forloop.counter}}" class="presenter">
-        {% if forloop.counter != 1 %}
-        <img class="destroy_school fright" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" title="Remove Presenter" alt="Remove Presenter" />
-        {% else %}
-        <div style="height:15px;width:15px;float:right;">&nbsp;</div>
-        {% endif %}
-        {% include "scholars/presentation/presenters.inc.html" %}
-    </div>
-    {% endfor %}
-</li>
-{% endblock %}
+                    <li class="ctrlHolder">
+                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    {% if field.errors %}
+                        <div class="warning">
+                        <span class="error-message">{{ field.errors|join:", "}}</span>
+                    {% else %}
+                        <div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <p class="help">{{field.help_text}}</p>
+                    {% endif %}
+                    {{field}}
+                    </div>
+                    </li>
