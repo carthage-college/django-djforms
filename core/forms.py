@@ -10,5 +10,5 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        exclude = ('user','created_by','updated_by','state','permissions')
+        exclude = ('user','creation_date','created_by','updated_by','state','permissions')
 

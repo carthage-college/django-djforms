@@ -17,7 +17,7 @@ except:
     BUILDING_NAME = GenericChoice.objects.none()
 
 class EVSForm(forms.ModelForm):
-    type_of_request = forms.ModelChoiceField(queryset=TYPE_OF_REQUEST, help_text="Need 'type of request' definitions here.")
+    type_of_request = forms.ModelChoiceField(queryset=TYPE_OF_REQUEST)
     building = forms.ModelChoiceField(queryset=BUILDING_NAME, label="Building Name")
 
     class Meta:

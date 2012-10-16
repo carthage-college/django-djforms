@@ -18,7 +18,7 @@ class MaintenanceRequest(models.Model):
     updated_by          = models.ForeignKey(User, verbose_name="Updated by", related_name="maintenance_request_updated_by", null=True, blank=True, editable=False)
     date_created        = models.DateTimeField("Date Created", auto_now_add=True)
     date_completed      = models.DateTimeField("Date Completed", null=True, blank=True, help_text="Format: yyyy-mm-dd")
-    type_of_request     = models.ForeignKey(GenericChoice, help_text="Need type of request definitions here.", related_name="maintenance_request_type_of_request")
+    type_of_request     = models.ForeignKey(GenericChoice, related_name="maintenance_request_type_of_request")
     status              = models.CharField("Status of request", max_length=100, choices=STATUS_CHOICES)
     building            = models.ForeignKey(GenericChoice, verbose_name="Building Name", help_text="Name of the building on campus", related_name="maintenance_request_building")
     room_number         = models.CharField("Room Number or Location", max_length=50, help_text="If location, use: Lounge, restrooms, common area, lobby, hallway, foyer, etc. ")

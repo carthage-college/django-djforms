@@ -21,7 +21,7 @@ class ApplicationProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ('permission','latitude','longitude','location','user',
-                   'creation_date','country')
+                   'creation_at','updated_at','country')
         fields = ['address','city','state','zip','phone','gender','dob',
                   'campus_address', 'campus_box','college_access_code',
                   'college_id','college_year']
