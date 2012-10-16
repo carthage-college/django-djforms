@@ -8,6 +8,8 @@ PAPER_CHOICES = [
     ('Vellum', 'Vellum'),
 ]
 
+import datetime
+
 class PrintRequestForm(forms.Form):
     name            = forms.CharField()
     department      = forms.CharField(max_length=50)

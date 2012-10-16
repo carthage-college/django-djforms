@@ -36,5 +36,5 @@ def attendees(request, year=None):
         year = int(year)
     else:
         year = int(datetime.date.today().year)
-    attendees = Attendee.objects.filter(created_on__year=year).order_by("-grad_class", "last_name")
+    attendees = Attendee.objects.filter(created_at__year=year).order_by("-grad_class", "last_name")
     return render_to_response("alumni/homecoming/attendance_archives.html", {"attendees": attendees,"year":year,}, context_instance=RequestContext(request))
