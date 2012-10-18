@@ -37,9 +37,6 @@ def proposal_form(request, pid=None):
         try:
             profile = request.user.get_profile()
         except:
-            # trying to track down why a profile might not be created
-            # at auth time
-            profile = ''
             p = UserProfile(user=request.user)
             p.save()
             profile = request.user.get_profile()

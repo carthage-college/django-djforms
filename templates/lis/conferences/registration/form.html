@@ -8,11 +8,14 @@
         $(function() {
             $('#id_total').attr('readonly', true);
             reg_fee = {{ form_ord.data.total|default:0}};
+            var events = [];
+            events[105] = 50;
+            events[106] = 190;
             $('input[id^="id_event_"]').change(function() {
                 if ($(this).is(':checked')) {
-                    reg_fee += parseInt($(this).attr('value'));
+                    reg_fee += events[$(this).attr('value')];
                 } else {
-                    reg_fee -= parseInt($(this).attr('value'));
+                    reg_fee -= events[$(this).attr('value')];
                 }
                 $('#id_total').attr('value', reg_fee);
             });
@@ -66,6 +69,8 @@
                         <p class="help">{{field.help_text}}</p>
                     {% endif %}
                     {{field}}
+                    {% if field.name == "housing" %}<span class="help">Would you like to reserve a space in our on campus housing?</span>{% endif %}
+                    {% if field.name == "event" %}<p class="help">NOTE: Conference fee includes three meals and a visit to Kenosha Civil War Museum)</p>{% endif %}
                     </div>
                     </li>
                 {% endfor %}
@@ -132,5 +137,5 @@
 </div>
 {% endblock %}
 {% block sidebar %}
-    {% include "giving/side_bar.html" %}
+    {% include "lis/conferences/side_bar.html" %}
 {% endblock %}

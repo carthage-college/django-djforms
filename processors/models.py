@@ -59,6 +59,7 @@ class Contact(GenericContact):
     """
     second_name         = models.CharField(max_length=128, verbose_name="Middle name", null=True, blank=True)
     previous_name       = models.CharField(max_length=128, verbose_name="Previous name", null=True, blank=True)
+    salutation          = models.CharField(max_length=16, null=True, blank=True)
     phone               = models.CharField(max_length=12, verbose_name='Phone number', help_text="Format: XXX-XXX-XXXX")
     address1            = models.CharField(max_length=255, verbose_name="Address")
     address2            = models.CharField(max_length=255, verbose_name="", null=True, blank=True)

@@ -20,7 +20,7 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        exclude = ('country','order','second_name','previous_last_name')
+        exclude = ('country','order','second_name','previous_name','salutation')
 
 class OrderForm(forms.ModelForm):
     """

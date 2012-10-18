@@ -9,7 +9,7 @@ from tagging.models import Tag, TaggedItem
 
 try:
     events_tag      = Tag.objects.get(name__iexact='LIS Conference Events')
-    EVENTS          = TaggedItem.objects.get_by_model(GenericChoice, events_tag).filter(active=True).order_by("name")
+    EVENTS          = TaggedItem.objects.get_by_model(GenericChoice, events_tag).filter(active=True).order_by("ranking")
 except:
     EVENTS          = GenericChoice.objects.none()
 
