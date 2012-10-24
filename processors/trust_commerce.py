@@ -48,7 +48,7 @@ class PaymentProcessor():
             self.cycle = self.order.cycle
 
         # operator
-        if hasattr(self.order, 'operator'):
+        if self.order.operator:
             # OJO: if value exceeds 20 characters, trans returns "baddata"
             self.operator = self.order.operator[:20]
 

@@ -98,8 +98,10 @@ INSTALLED_APPS = (
 LDAP_SERVER = 'hendrix.carthage.edu'
 LDAP_PORT = '636'
 LDAP_PROTOCOL = "ldaps"
+LDAP_BASE = "o=CARTHAGE"
 LDAP_USER = "cn=webldap, o=CARTHAGE"
 LDAP_PASS = "w3Bs1t3"
+LDAP_EMAIL_DOMAIN = "carthage.edu"
 # auth backends
 AUTHENTICATION_BACKENDS = (
     'djauth.ldapBackend.LDAPBackend',

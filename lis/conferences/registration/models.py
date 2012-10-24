@@ -6,7 +6,7 @@ from tagging import fields, managers
 
 class RegistrationContact(Contact):
 
-    name_tag            = models.CharField("Name tag name", max_length="128", null=True, blank=True)
+    name_tag            = models.CharField("Name tag name", help_text="Name as you'd like it to appear on your nametag.", max_length="128", null=True, blank=True)
     affiliation         = models.CharField(max_length="256", null=True, blank=True)
     dietary_needs       = models.TextField(null=True, blank=True)
     other_needs         = models.CharField(max_length="256", null=True, blank=True)
