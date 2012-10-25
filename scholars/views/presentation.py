@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 from djforms.scholars.views.forms import EmailPresentersForm, PresentationForm, DEPTS
 from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES
-from djforms.core.views import send_mail
+from djtools.utils.mail import send_mail
 from djforms.core.models import Department, SHIRT_SIZES, YEAR_CHOICES
 
 import datetime, os

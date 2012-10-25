@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 
 from djforms.lis.conferences.registration.forms import RegistrationContactForm, RegistrationOrderForm
 from djforms.processors.forms import TrustCommerceForm
-from djforms.core.views import send_mail
+from djtools.utils.mail import send_mail
 
 if settings.DEBUG:
     TO_LIST = [settings.SERVER_EMAIL,]

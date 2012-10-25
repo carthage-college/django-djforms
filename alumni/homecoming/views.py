@@ -6,7 +6,7 @@ from django.template import RequestContext, loader
 
 from djforms.alumni.homecoming.forms import AttendeeForm
 from djforms.alumni.homecoming.models import Attendee
-from djforms.core.views import send_mail
+from djtools.utils.mail import send_mail
 
 import datetime
 

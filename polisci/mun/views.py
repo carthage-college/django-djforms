@@ -4,7 +4,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 
-from djforms.core.views import send_mail
+from djtools.utils.mail import send_mail
 from djforms.polisci.mun.forms import ModelUnitedNationsRegistrationForm, ModelUnitedNationsCountriesForm
 
 if settings.DEBUG:

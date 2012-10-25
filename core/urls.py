@@ -2,13 +2,14 @@ from django.contrib import admin
 from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
 from django.views.generic.simple import direct_to_template, redirect_to
+
 from djforms.core.views import data_entered
 from djauth.views import loggedout
 
 admin.autodiscover()
 
-handler404 = 'djforms.core.views.four_oh_four_error'
-handler500 = 'djforms.core.views.server_error'
+handler404 = 'djtools.views.errors.four_oh_four_error'
+handler500 = 'djtools.views.errors.server_error'
 
 urlpatterns = patterns('',
     # home

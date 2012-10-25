@@ -11,7 +11,8 @@ from django.contrib.auth.models import User
 from djforms.jobpost.forms import JobApplyForms, PostFormWithHidden, PostFormWithoutHidden, PostFormMostHidden
 from djforms.jobpost.models import Post, JobApplyForm
 from djforms.core.models import Department
-from djforms.core.views import send_mail, not_in_group
+from djforms.core.views import not_in_group
+from djtools.utils.mail import send_mail
 
 from dateutil import parser
 import datetime

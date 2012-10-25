@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from djforms.core.views import send_mail
+from djtools.utils.mail import send_mail
 from django.shortcuts import render_to_response
 from django.template import RequestContext, loader
 

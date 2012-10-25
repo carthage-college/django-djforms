@@ -6,7 +6,7 @@ from django.template import RequestContext, loader, Context
 from django.utils.dates import MONTHS
 
 from djforms.core.models import STATE_CHOICES
-from djforms.core.views import send_mail
+from djtools.utils.mail import send_mail
 from djforms.processors.models import Order
 from djforms.processors.forms import TrustCommerceForm
 from djforms.adulted.forms import *

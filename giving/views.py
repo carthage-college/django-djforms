@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect, Http404
 from djforms.processors.forms import TrustCommerceForm as CreditCardForm
 from djforms.giving.forms import *
 from djforms.core.models import Promotion
-from djforms.core.views import send_mail
+from djtools.utils.mail import send_mail
 
 if settings.DEBUG:
     TO_LIST = [settings.SERVER_EMAIL,]
