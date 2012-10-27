@@ -5,7 +5,7 @@ from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeFie
 from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, COUNTRIES, BINARY_CHOICES, PAYMENT_CHOICES
 from djforms.processors.models import Contact
 from djforms.processors.forms import ContactForm
-from jenzabar import INFORMIX_EARL_TEST
+from djzbar.settings import INFORMIX_EARL_TEST
 
 from sqlalchemy import create_engine
 from datetime import datetime, date

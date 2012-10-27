@@ -1,4 +1,4 @@
-from jenzabar import INFORMIX_EARL_TEST
+from djzbar.settings import INFORMIX_EARL_TEST
 
 from datetime import datetime
 
