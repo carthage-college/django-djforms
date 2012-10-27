@@ -3,7 +3,6 @@ from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
 from django.views.generic.simple import direct_to_template, redirect_to
 
-from djforms.core.views import data_entered
 from djauth.views import loggedout
 
 admin.autodiscover()
@@ -63,8 +62,6 @@ urlpatterns = patterns('',
     (r'^security/', include('djforms.security.urls')),
     # for the security appeal form environment
     (r'^scholars/', include('djforms.scholars.urls')),
-    # generic request complete
-    (r'^success/$', 'djforms.core.views.data_entered'),
     # sustainability
     (r'^sustainability/', include('djforms.sustainability.urls')),
     # video
