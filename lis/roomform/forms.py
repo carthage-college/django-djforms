@@ -1,5 +1,5 @@
 from django import forms
-from djforms.core.fields import KungfuTimeField
+from djtools.fields.time import KungfuTimeField
 
 STATUS_CHOICES=[('', '---------- select ----------'),
                 ('Trustee', 'Trustee'),

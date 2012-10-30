@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from djforms.catering.models import Event
 from djforms.core.models import GenericChoice
 
-from djforms.core.fields import KungfuTimeField
+from djtools.fields.time import KungfuTimeField
 
 from tagging.models import Tag, TaggedItem
 

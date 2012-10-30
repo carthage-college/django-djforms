@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.localflavor.us.forms import USPhoneNumberField
 
-from djforms.core.fields import KungfuTimeField
+from djtools.fields.time import KungfuTimeField
 from djforms.core.models import BINARY_CHOICES
 
 import datetime
