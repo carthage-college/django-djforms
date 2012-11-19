@@ -305,8 +305,8 @@
                 </select>
                 <select name="from_year_orig" id="from_year_orig">
                     <option value="0"></option>
-                    {% for year in years1 %}
-                        <option value="{{year}}">{{year}}</option>
+                    {% for n,v in years1 %}
+                        <option value="{{n}}">{{v}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -320,8 +320,8 @@
                 </select>
                 <select name="to_year_orig" id="to_year_orig">
                     <option value="0"></option>
-                    {% for year in years2 %}
-                        <option value="{{year}}">{{year}}</option>
+                    {% for n,v in years3 %}
+                        <option value="{{n}}">{{v}}</option>
                     {% endfor %}
                 </select>
             </div>
@@ -331,12 +331,12 @@
                     <option value="0"></option>
                     {% for m,n in months.items %}
                     <option value="{{m}}">{{n}}</option>
-                    {% endfor %}                   
+                    {% endfor %}
                 </select>
                 <select name="grad_year_orig" id="grad_year_orig">
                     <option value="0"></option>
-                    {% for year in years2 %}
-                        <option value="{{year}}">{{year}}</option>
+                    {% for n,v in years3 %}
+                        <option value="{{n}}">{{v}}</option>
                     {% endfor %}
                 </select>
             </div>

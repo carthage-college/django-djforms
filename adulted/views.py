@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.utils.dates import MONTHS
 
-from djforms.core.models import STATE_CHOICES
+from djforms.core.models import STATE_CHOICES, YEARS1, YEARS3
 from djtools.utils.mail import send_mail
 from djforms.processors.models import Order
 from djforms.processors.forms import TrustCommerceForm
@@ -96,5 +96,5 @@ def admissions_form(request):
 
     extra_context = {"contact_form":contact_form,"personal_form":personal_form,"order":order,"doop":len(schools),"states":STATE_CHOICES,
                          "employment_form":employment_form,"education_goals_form":education_goals_form,"schools":schools,
-                         "fee_form":fee_form,"payment_form":payment_form,"months":MONTHS, "years1":UNI_YEARS1,"years2":UNI_YEARS2,}
+                         "fee_form":fee_form,"payment_form":payment_form,"months":MONTHS, "years1":YEARS1,"years3":YEARS3,}
     return render_to_response("adulted/admissions_form.html", extra_context, context_instance=RequestContext(request))

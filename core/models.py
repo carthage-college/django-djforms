@@ -67,6 +67,9 @@ SALUTATION_TITLES = (
     ("Dr.","Dr."),
 )
 
+YEARS1 =  [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +1))]
+YEARS3 =  [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +3))]
+
 #For making choices for choice fields for forms
 class GenericChoice(models.Model):
     name = models.CharField(unique=True, max_length=255)

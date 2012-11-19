@@ -17,9 +17,6 @@ YEAR   = int(NOW.year)
 YEAR7  = YEAR
 YEAR14 = YEAR
 
-UNI_YEARS1 = [x for x in reversed(xrange(1926,date.today().year + 1))]
-UNI_YEARS2 = [x for x in reversed(xrange(1926,date.today().year + 3))]
-
 EDUCATION_GOAL = (
     (1,"I would like to earn my first bachelor's degree."),
     (2,"I would like to earn my first bachelor's degree and also become certified to teach."),

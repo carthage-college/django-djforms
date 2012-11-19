@@ -1,5 +1,0 @@
-Data from Parking Violation Appeal form submission at:
-
-http://icv.carthage.edu/forms/securityappeal/
-
-{{data.render_email|safe}} 

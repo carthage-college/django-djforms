@@ -7,9 +7,14 @@ urlpatterns = patterns('',
     url(r'^memory/$', 'djforms.alumni.memory.views.questionnaire_form', name='memory_questionnaire_form'),
     # homecoming attendance
     url(r'^homecoming/success/$', direct_to_template, {'template': 'alumni/homecoming/attendance_done.html'}),
-    url(r'^homecoming/attendees/(?P<year>\d+)/$', 'djforms.alumni.homecoming.views.attendees', name="homecoming_attendees"),
+    url(r'^homecoming/attendees/(?P<year>\d+)/$', 'djforms.alumni.homecoming.views.attendees', name="homecoming_attendees_year"),
     url(r'^homecoming/attendees/$', 'djforms.alumni.homecoming.views.attendees', name="homecoming_attendees"),
     url(r'^homecoming/$', 'djforms.alumni.homecoming.views.attendance', name='homecoming_attendance'),
+    # classnotes
+    url(r'^classnotes/success/$', direct_to_template, {'template': 'alumni/classnotes/done.html'}),
+    url(r'^classnotes/archives/(?P<year>\d+)/$', 'djforms.alumni.classnotes.views.archives', name="classnotes_archives_year"),
+    url(r'^classnotes/archives/$', 'djforms.alumni.classnotes.views.archives', name="classnotes_archives"),
+    url(r'^classnotes/$', 'djforms.alumni.classnotes.views.contact', name='classnotes_form'),
     # mws reunion
     url(r'^msw/reunion/success/$', direct_to_template, {'template': 'alumni/msw/reunion_contact_done.html'}),
     url(r'^msw/reunion/archives/$', 'djforms.alumni.msw.views.reunion_contact_archives', name="reunion_contact_archives"),

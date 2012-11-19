@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Class Notes &mdash; Alumni &mdash; Carthage College{% endblock %}
+{% block left_nav %}
+    {% include "alumni/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as header cms snippet 702 code %}
+{{header}}
+{% get_api_object as title cms snippet 606 code %}
+{{title}}
+<div class="buffer">
+<h1>Success</h1>
+<p>We have received your class notes submission.</p>
+<p><a href="/forms/alumni/classnotes/archives/">Click here</a> to peruse the Class Notes archives.</p>
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "alumni/classnotes/side_bar.html" %}
+{% endblock %}
