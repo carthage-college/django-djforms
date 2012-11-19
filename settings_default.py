@@ -49,6 +49,8 @@ TEMPLATE_LOADERS = (
 )
 TEMPLATE_DIRS = (
     "/data2/django_projects/djforms/templates/",
+    "/data2/django_templates/djdfir/",
+
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
     "djforms.context_processors.sitevars",
