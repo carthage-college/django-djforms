@@ -30,7 +30,7 @@ class ContactForm(forms.ModelForm):
         super(ContactForm,self).__init__(*args,**kwargs)
         self.fields.keyOrder = [
             'salutation','first_name','second_name','last_name','suffix',
-            'previous_name','email','classyear','spousename','spousemaidenname',
+            'previous_name','email','classyear','spousename','spousepreviousname',
             'spouseyear','classnote','picture','caption'
         ]
 

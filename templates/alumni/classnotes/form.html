@@ -43,8 +43,8 @@ $(function() {
                     <input class="medium required{% if form.first_name.errors %} error{% endif %}" id="id_first_name" type="text" name="first_name" placeholder="First name" maxlength="128" value="{{form.data.first_name}}" {% if not template_debug %}required {% endif %}/></li>
                 </li>
                 <li>
-                    <label for="id_middle_name" class="placeholder">Middle name</label><br />
-                    <input class="medium" id="id_middle_name" type="text" name="middle_name" placeholder="Middle name" maxlength="128" value="{{form.data.middle_name}}" />
+                    <label for="id_second_name" class="placeholder">Middle name</label><br />
+                    <input class="medium" id="id_second_name" type="text" name="second_name" placeholder="Middle name" maxlength="128" value="{{form.data.second_name}}" />
                 </li>
             </ul>
             <ul class="inline">
@@ -58,7 +58,7 @@ $(function() {
                 </li>
                 <li>
                     <label for="id_suffix" class="placeholder">Suffix</label><br />
-                    <input class="small" id="id_suffix" type="text" name="suffix" placeholder="Ph.D, MD, Jr, Sr" maxlength="16" />
+                    <input class="small" id="id_suffix" type="text" name="suffix" placeholder="Ph.D, MD, Jr, Sr" maxlength="16" value="{{form.data.suffix}}" />
                 </li>
             </ul>
             <ul class="inline">
@@ -74,11 +74,11 @@ $(function() {
             <ul class="inline">
                 <li>
                     <label for="id_spousename" class="placeholder">Spouse&#39;s name</label><br />
-                    <input class="medium" id="id_spousename" type="text" name="spousename" placeholder="Spous&#39;s name" maxlength="128" />
+                    <input class="medium" id="id_spousename" type="text" name="spousename" placeholder="Spouse&#39;s name" maxlength="128" value="{{form.data.spousename}}" />
                 </li>
                 <li>
-                    <label for="id_spousemaidenname" class="placeholder">Spouse&#39;s previous name</label>
-                    <input class="medium" id="id_spousemaidenname" type="text" name="spousemaidenname" placeholder="Spouse&#39;s previous name" maxlength="32" />
+                    <label for="id_spousepreviousname" class="placeholder">Spouse&#39;s previous name</label>
+                    <input class="medium" id="id_spousepreviousname" type="text" name="spousepreviousname" placeholder="Spouse&#39;s previous name" maxlength="32" value="{{form.data.spousepreviousname}}" />
                 </li>
                 <li>
                     {{form.spouseyear}}
