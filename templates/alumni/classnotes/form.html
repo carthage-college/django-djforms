@@ -2,7 +2,7 @@
 {% block title %}Class Notes &mdash; Alumni &mdash; Carthage College{% endblock %}
 {% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
-<link href="/static/forms/css/djforms.css" rel="stylesheet" type="text/css" />
+<link href="/static/forms/css/djforms.css" rel="stylesheet" type="text/css" media="screen" />
 {% endblock %}
 {% block jquery %}<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>{% endblock %}
 {% block extra_javascript %}
@@ -105,7 +105,7 @@ $(function() {
         </fieldset>
         <br />
         <fieldset class="blockLabels">
-            <ul>
+            <ul class="inline">
                 <li class="btnHolder">
                     <input type="submit" value="Submit" class="button" />
                 </li>
