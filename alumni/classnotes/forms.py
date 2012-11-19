@@ -23,7 +23,7 @@ class ContactForm(forms.ModelForm):
         model = Contact
         exclude = (
             'alumnistatus','pubstatus','pubstatusdate','carthaginianstatus',
-            'pubtext','name','alumnicomments'
+            'pubtext','alumnicomments'
         )
 
     def __init__(self,*args,**kwargs):

@@ -73,8 +73,9 @@
         {% endif %}
         </strong>
         &mdash;
-        {{n.classnote}}
+        {{n.classnote}}&nbsp;<em style="color:#6E6E6E;">Submitted: {{n.created_at|date:"F j, Y"}}</em>
         {% if manager %}
+        &nbsp;
         <a class="jqmodal" href="/forms/admin/classnotes/contact/{{n.id}}/?width=800&height=600&jqmRefresh=true">
             <img src="http://www.carthage.edu/assets/img/ico/silk/icons/pencil.png" alt="edit this note" />
         </a>

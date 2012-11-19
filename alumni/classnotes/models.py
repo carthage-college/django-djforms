@@ -12,7 +12,7 @@ class Contact(GenericContact):
     salutation          = models.CharField(max_length=16, null=True, blank=True,help_text="e.g. Ms., Mr. Dr.")
     suffix              = models.CharField(max_length=16, null=True, blank=True,help_text="e.g. PhD., Esquire, Jr., Sr., III")
     # old fields
-    name                = models.CharField(max_length=255, null=True, blank=True)
+    #name                = models.CharField(max_length=255, null=True, blank=True)
     classyear           = models.CharField("Class",max_length=4)
     spousename          = models.CharField("Spouse's name", max_length=128,blank=True,null=True)
     spousemaidenname    = models.CharField("Spouse's previous name",help_text="e.g. maiden name",max_length=32,blank=True,null=True)
@@ -32,9 +32,5 @@ class Contact(GenericContact):
         db_table = 'alumni_classnotes_contact'
 
     def __unicode__(self):
-        if self.name:
-            name = self.name
-        else:
-            name = "%s, %s (%s)" % (self.last_name, self.first_name, self.classyear)
-        return name
+        return "%s, %s (%s)" % (self.last_name, self.first_name, self.classyear)
 

@@ -21,9 +21,9 @@ class ContactAdminForm(forms.ModelForm):
 
 class ContactAdmin(admin.ModelAdmin):
     form = ContactAdminForm
-    ordering = ('last_name','name','previous_name','classyear','alumnistatus','pubstatus','carthaginianstatus')
-    list_display = ('last_name','first_name','salutation','name','previous_name','suffix','classyear','created_at','alumnistatus','pubstatus','carthaginianstatus')
-    search_fields = ('last_name','name','previous_name','classyear')
+    ordering = ('last_name','previous_name','classyear','alumnistatus','pubstatus','carthaginianstatus')
+    list_display = ('last_name','first_name','salutation','previous_name','suffix','classyear','created_at','alumnistatus','pubstatus','carthaginianstatus')
+    search_fields = ('last_name','previous_name','classyear')
 
 admin.site.register(Contact,ContactAdmin)
 
