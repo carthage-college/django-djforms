@@ -15,7 +15,7 @@ class ContactAdminForm(forms.ModelForm):
         super(ContactAdminForm,self).__init__(*args,**kwargs)
         self.fields.keyOrder = ['salutation','first_name','last_name','second_name',
                                 'suffix','previous_name','email','classyear','spousename',
-                                'spousemaidenname','spouseyear','classnote','alumnicomments',
+                                'spousepreviousname','spouseyear','classnote','alumnicomments',
                                 'pubstatus','pubstatusdate','carthaginianstatus','alumnistatus',
                                 'picture','caption']
 

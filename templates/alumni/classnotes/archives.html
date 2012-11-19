@@ -51,7 +51,7 @@
             <img src="/assets/{{n.picture}}" width="100" />
         </a>
         {% if n.caption %}
-        <div style="margin-top:2px;font-size:.8em;color:#000;width:100px;">{{n.caption}}</div>
+        <div style="margin-top:2px;font-size:.8em;color:#6e6e6e;width:100px;">{{n.caption}}</div>
         {% endif %}
         </div>
         {% endif %}
@@ -64,8 +64,8 @@
         {% endif %}
         {% if n.spousename %}
             &amp; {{n.spousename}}
-            {% if n.spousemaidenname %}
-                ({{n.spousemaidenname}})
+            {% if n.spousepreviousname %}
+                ({{n.spousepreviousname}})
             {% endif %}
             {% if n.spouseyear %}
                 {{n.spouseyear}}
@@ -73,10 +73,10 @@
         {% endif %}
         </strong>
         &mdash;
-        {{n.classnote}}&nbsp;<em style="color:#6E6E6E;">Submitted: {{n.created_at|date:"F j, Y"}}</em>
+        {{n.classnote}}&nbsp;<br /><em style="color:#6e6e6e;">Submitted: {{n.created_at|date:"F j, Y"}}</em>
         {% if manager %}
         &nbsp;
-        <a class="jqmodal" href="/forms/admin/classnotes/contact/{{n.id}}/?width=800&height=600&jqmRefresh=true">
+        <a class="jqmodal" href="{{n.get_edit_url}}?width=800&height=600&jqmRefresh=true">
             <img src="http://www.carthage.edu/assets/img/ico/silk/icons/pencil.png" alt="edit this note" />
         </a>
         {% endif %}

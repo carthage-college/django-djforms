@@ -13,7 +13,7 @@ import datetime
 if settings.DEBUG:
     TO_LIST = ["larry@carthage.edu",]
 else:
-    TO_LIST = ["alumnioffice@carthage.edu",]
+    TO_LIST = ["dmoore2@carthage.edu","eyoung@carthage.edu"]
 BCC = settings.MANAGERS
 
 def contact(request):
