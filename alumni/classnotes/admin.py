@@ -20,10 +20,11 @@ class ContactAdminForm(forms.ModelForm):
                                 'picture','caption']
 
 class ContactAdmin(admin.ModelAdmin):
-    form = ContactAdminForm
-    ordering = ('last_name','previous_name','classyear','alumnistatus','pubstatus','carthaginianstatus')
-    list_display = ('last_name','first_name','salutation','previous_name','suffix','classyear','created_at','alumnistatus','pubstatus','carthaginianstatus')
-    search_fields = ('last_name','previous_name','classyear')
+    form            = ContactAdminForm
+    ordering        = ('last_name','classyear','alumnistatus','pubstatus','carthaginianstatus')
+    list_display    = ('last_name','first_name','classyear','created_at','alumnistatus','pubstatus','carthaginianstatus')
+    search_fields   = ('last_name','first_name','previous_name','classyear')
+    list_filter     = ('alumnistatus','pubstatus','carthaginianstatus')
 
 admin.site.register(Contact,ContactAdmin)
 

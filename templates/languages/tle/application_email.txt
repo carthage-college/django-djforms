@@ -60,7 +60,7 @@ dl dd { margin:2px 0; padding:5px 0; }
 <h3>English</h3>
 <p>{{data.english}}</p>
 <h3>Past Experience</h3>
-<p>{{data.experience}}</p>
+<p>{{data.past_experience}}</p>
 <h3>Personal Interests</h3>
 <p>{{data.personal_interests}}</p>
 <h3>Professional Goals and Ambitions</h3>
