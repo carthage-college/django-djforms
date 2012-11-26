@@ -17,12 +17,13 @@ class PresentationForm(forms.ModelForm):
 
     class Meta:
         model = Presentation
-        exclude = ('user','updated_by','date_created','date_updated','presenters','ranking','leader','status','work_type_other')
+        exclude = ('user','updated_by','date_created','date_updated','presenters','ranking','leader','status','work_type_other','tags')
 
     def __init__(self,*args,**kwargs):
         super(PresentationForm,self).__init__(*args,**kwargs)
         self.fields.keyOrder = ['title','funding','requirements','work_type','permission','shared',
-        'abstract_text','abstract_file','poster_file','tags']
+        'abstract_text','poster_file']
+        #'abstract_text','abstract_file','poster_file']
 
 class EmailPresentersForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea, label="Email content")

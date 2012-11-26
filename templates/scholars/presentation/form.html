@@ -98,6 +98,7 @@
                         {% include "scholars/presentation/form_multi.inc.html" %}
                     {% endif %}
                 {% endfor %}
+                {% if manager %}
                 <li class="ctrlHolder">
                     <h3><label>Status</label></h3>
                     <p class="help">
@@ -105,6 +106,7 @@
                     Is this presentation complete?
                     </p>
                 </li>
+                {% endif %}
                 <li class="ctrlHolder">
                     <div id="doop_master" class="presenter">
                         <img class="destroy_school fright" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" title="Remove Presenter" alt="Remove Presenter" />
@@ -114,7 +116,7 @@
                 </li>
                 <li style="margin-top:10px;">
                     <p>Click on the <img style="margin-bottom:-3px;" src="http://www.carthage.edu/assets/img/ico/silk/icons/add.png" /> symbol to add more presenters. Click on the <img style="margin-bottom:-3px;" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" /> icon to remove presenters.</p>
-                    <p style="float:left;"><strong class="help">All fields are required except the photo.</strong></p>
+                    <p style="float:left;"><strong class="help">All fields are required.</strong></p>
                     <div class="ctrlcx">
                         <img id="clone" src="http://www.carthage.edu/assets/img/ico/silk/icons/add.png" />
                     </div>

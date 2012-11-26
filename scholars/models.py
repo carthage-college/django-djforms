@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from djforms.core.models import GenericChoice, SHIRT_SIZES, YEAR_CHOICES
+from djforms.core.models import GenericChoice, YEAR_CHOICES
 from djforms.core.models import Department
 
 from tagging import fields, managers
@@ -9,9 +9,10 @@ from tagging import fields, managers
 WORK_TYPES = (
     ('','----select----'),
     ('SURE','SURE'),
-    ('Thesis','Thesis'),
-    ('Course work','Course work'),
-    ('Other','Other')
+    ('Senior thesis','Senior thesis'),
+    ('Independent research','Independent research'),
+    ('Course project','Course project'),
+    ("Master's thesis","Master's thesis")
 )
 
 PRESENTER_TYPES = (
@@ -33,8 +34,8 @@ class Presenter(models.Model):
     hometown            = models.CharField(max_length=128, null=True, blank=True)
     sponsor             = models.CharField(max_length=128, null=True, blank=True)
     department          = models.ForeignKey(Department, null=True, blank=True)
-    shirt               = models.CharField(max_length=2, choices=SHIRT_SIZES, null=True, blank=True)
-    mugshot             = models.ImageField(max_length=255, upload_to="files/scholars/mugshots", help_text="75 dpi and .jpg only", null=True, blank=True)
+    #shirt               = models.CharField(max_length=2, choices=SHIRT_SIZES, null=True, blank=True)
+    mugshot             = models.ImageField(max_length=255, upload_to="files/scholars/mugshots", help_text="75 dpi and .jpg only")
     ranking             = models.IntegerField(null=True, blank=True, default=0)
 
     def __unicode__(self):
@@ -46,8 +47,8 @@ class Presenter(models.Model):
     def presenter_type(self):
         return PRESENTOR_TYPES[self.prez_type][1]
 
-    def shirt_size(self):
-        return SHIRT_SIZES[self.shirt][1]
+    #def shirt_size(self):
+    #    return SHIRT_SIZES[self.shirt][1]
 
 class Presentation(models.Model):
     # meta
@@ -65,14 +66,14 @@ class Presentation(models.Model):
     title               = models.CharField("Presentation title", max_length=256)
     leader              = models.ForeignKey(Presenter, verbose_name="Presentation leader", related_name="presentation_leader", null=True, blank=True)
     presenters          = models.ManyToManyField(Presenter, related_name="presentation_presenters", null=True, blank=True)
-    funding             = models.TextField(null=True, blank=True)
+    funding             = models.CharField("Funding source (if applicable)", max_length=256, help_text="e.g. external funding, SURE, etc.", null=True, blank=True)
     requirements        = models.TextField(null=True, blank=True)
     work_type           = models.CharField(max_length=32, choices=WORK_TYPES)
     work_type_other     = models.CharField(max_length=256, null=True, blank=True)
-    permission          = models.BooleanField(help_text="Do you grant Carthage permission to reproduce your presentation?", default=True)
-    shared              = models.BooleanField(help_text="Has your faculty sponsor approved your proposal?", default=True)
-    abstract_text       = models.TextField(null=True, blank=True, help_text='')
-    abstract_file       = models.FileField(upload_to='files/scholars/abstracts', max_length="256", help_text='Upload an abstract in PDF format', null=True, blank=True)
+    permission          = models.BooleanField("Permission to reproduce", help_text="Check box to grant Carthage permission to reproduce your presentation.", default=True)
+    shared              = models.BooleanField("Faculty sponsor approval", help_text="Check box if your faculty sponsor has approved your proposal.", default=True)
+    abstract_text       = models.TextField("Abstract", help_text='Copy and paste your abstract text or start typing.')
+    #abstract_file       = models.FileField(upload_to='files/scholars/abstracts', max_length="256", help_text='Upload an abstract in PDF format', null=True, blank=True)
     poster_file         = models.FileField(upload_to='files/scholars/posters', max_length="256", help_text='Upload a poster file', null=True, blank=True)
     status              = models.BooleanField(default=False)
 
