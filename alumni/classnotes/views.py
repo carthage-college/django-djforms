@@ -32,7 +32,7 @@ def contact(request):
             return HttpResponseRedirect('/forms/alumni/classnotes/success/')
     else:
         form = ContactForm()
-    manager = request.user.has_perm('classnotes.classnotes_can_change_note')
+    manager = request.user.has_perm('classnotes.change_contact')
     return render_to_response("alumni/classnotes/form.html",
         {"form": form,"manager":manager,}, context_instance=RequestContext(request))
 
@@ -47,7 +47,7 @@ def archives(request, year=None):
 
     ns = Contact.objects.exclude(pubstatus=False).exclude(classnote__exact='None')
     notes = ns.filter(classyear__range=[year,year+9]).order_by("-classyear", "last_name")
-    manager = request.user.has_perm('classnotes.classnotes_can_change_note')
+    manager = request.user.has_perm('classnotes.change_contact')
 
     return render_to_response("alumni/classnotes/archives.html", {
         "notes": notes,"year":year,"manager":manager,
