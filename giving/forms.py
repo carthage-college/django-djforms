@@ -50,11 +50,12 @@ class DonationOrderForm(OrderForm):
     """
 
     total               = forms.CharField(label="Amount",)
-    comments            = forms.CharField(widget=forms.Textarea, label="", help_text='You may provide specific instructions about how you would like Carthage to use your gift. Leave the field blank to donate to the Annual Fund.')
+    #comments            = forms.CharField(widget=forms.Textarea, label="", help_text='You may provide specific instructions about how you would like Carthage to use your gift. Leave the field blank to donate to the Annual Fund.', required=False)
 
     class Meta:
         model = Order
-        fields = ('total','comments','avs','auth')
+        #fields = ('total','comments','avs','auth')
+        fields = ('total','avs','auth')
 
 class PledgeOrderForm(OrderForm):
     """
