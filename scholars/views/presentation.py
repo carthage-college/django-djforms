@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from djforms.scholars.views.forms import EmailPresentersForm, PresentationForm, DEPTS
 from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES
 from djtools.utils.mail import send_mail
-from djforms.core.models import Department, SHIRT_SIZES, YEAR_CHOICES
+from djforms.core.models import Department, YEAR_CHOICES
 
 import datetime, os
 
@@ -32,7 +32,6 @@ def _update_presenters(presenter, presenters):
     presenter.major        = presenters.major
     presenter.hometown     = presenters.hometown
     presenter.sponsor      = presenters.sponsor
-    presenter.shirt        = presenters.shirt
     if presenters.mugshot:
         presenter.mugshot  = presenters.mugshot
     if presenters.department:
@@ -78,7 +77,6 @@ def form(request, pid=None):
         hometown     = request.POST.getlist('hometown[]')
         sponsor      = request.POST.getlist('sponsor[]')
         department   = request.POST.getlist('department[]')
-        shirt        = request.POST.getlist('shirt[]')
         mugshoth     = request.POST.getlist('mugshoth[]')
         mugshot      = request.FILES.getlist('mugshot[]')
 
@@ -103,7 +101,7 @@ def form(request, pid=None):
                 prez_type=prez_type[i],leader=leader[i],
                 college_year=college_year[i],major=major[i],
                 hometown=hometown[i],sponsor=sponsor[i],
-                department=dept,shirt=shirt[i],mugshot=mug))
+                department=dept,mugshot=mug))
 
         if form.is_valid():
             # save and include some other values and commit
@@ -173,7 +171,7 @@ def form(request, pid=None):
             copies = 1
 
     context = {"presentation":presentation,"form":form,"presenters":presenters,"copies":copies,
-               "shirts":SHIRT_SIZES,"cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,
+               "cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,
                "pid":pid,"manager":manager,}
     return render_to_response (
         "scholars/presentation/form.html",
