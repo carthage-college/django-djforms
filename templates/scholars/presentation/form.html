@@ -41,6 +41,9 @@
                     $(this).parent().nextAll('.facstaff:first').addClass("shown");
                     $(this).parent().nextAll('.student:first').removeClass("shown");
                 }
+                if ( $(this).val()=="Staff" ) {
+                    $("select[name='department[]']").val("Academic support");
+                }
             });
         });
     </script>

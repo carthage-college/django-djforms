@@ -16,7 +16,7 @@ except:
 class PresentationForm(forms.ModelForm):
 
     permission          = forms.ChoiceField(label="Permission to reproduce", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text="Do you grant Carthage permission to reproduce your presentation?")
-    shared              = forms.ChoiceField(label="Faculty sponsor approval", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text="Has your faculty sponsor approved your proposal?")
+    shared              = forms.ChoiceField(label="Faculty sponsor approval", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text='Has your faculty sponsor approved your proposal? Note: Faculty and staff presenters should choose "yes".')
     need_table          = forms.ChoiceField(label="", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text="Do you need a table for display purposes?")
     need_electricity    = forms.ChoiceField(label="", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text="Do you need electricity for computer or other device?")
 
@@ -29,7 +29,6 @@ class PresentationForm(forms.ModelForm):
         super(PresentationForm,self).__init__(*args,**kwargs)
         self.fields.keyOrder = ['title','funding','work_type','permission','shared',
         'abstract_text','need_table', 'need_electricity','poster_file']
-        #'abstract_text','abstract_file','poster_file']
 
 class EmailPresentersForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea, label="Email content")

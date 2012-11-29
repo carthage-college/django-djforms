@@ -67,7 +67,7 @@ class Presentation(models.Model):
     funding             = models.CharField("Funding source (if applicable)", max_length=256, help_text="e.g. external funding, SURE, etc.", null=True, blank=True)
     work_type           = models.CharField(max_length=32, choices=WORK_TYPES)
     permission          = models.CharField("Permission to reproduce", max_length=3, choices=BINARY_CHOICES, help_text="Do you grant Carthage permission to reproduce your presentation?")
-    shared              = models.CharField("Faculty sponsor approval", max_length=3, choices=BINARY_CHOICES, help_text="Has your faculty sponsor approved your proposal?")
+    shared              = models.CharField("Faculty sponsor approval", max_length=3, choices=BINARY_CHOICES, help_text="Has your faculty sponsor approved your proposal? Note: Faculty and staff presenters should choose 'yes'.")
     abstract_text       = models.TextField("Abstract", help_text='Copy and paste your abstract text or start typing.')
     need_table          = models.CharField(max_length=3, choices=BINARY_CHOICES)
     need_electricity    = models.CharField(max_length=3, choices=BINARY_CHOICES)
