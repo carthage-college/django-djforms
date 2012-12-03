@@ -148,7 +148,6 @@ def form(request, pid=None):
                     presentation.leader = p
             # save the presentation object
             presentation.save()
-            #if not manager and not settings.DEBUG:
             if not manager:
                 data = {"presentation":presentation,"pid":pid,}
                 status = ""

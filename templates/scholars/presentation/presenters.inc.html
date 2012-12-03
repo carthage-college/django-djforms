@@ -1,9 +1,9 @@
 <div class="fleft">
     <dl style="margin-bottom:9px;">
     <dt>First name</dt>
-    <dd><input class="medium" type="text" name="first_name[]" value="{% if forloop.counter == 1 %}{{user.first_name}}" readonly="readonly"{% else %}{{p.first_name}}"{% endif %} /></dd>
+    <dd><input class="medium" type="text" name="first_name[]" value="{% if forloop.counter != 1 %}{{p.first_name}}{% else %}{% if not manager %}{{user.first_name}}{% else %}{{p.first_name}}{% endif %}{% endif %}" /></dd>
     <dt>Last name</dt>
-    <dd><input class="medium" type="text" name="last_name[]" value="{% if forloop.counter == 1 %}{{user.last_name}}" readonly="readonly"{% else %}{{p.last_name}}"{% endif %} /></dd>
+    <dd><input class="medium" type="text" name="last_name[]" value="{% if forloop.counter != 1 %}{{p.last_name}}{% else %}{% if not manager %}{{user.last_name}}{% else %}{{p.last_name}}{% endif %}{% endif %}" /></dd>
     </dl>
     <strong>Type:</strong>
     <select name="prez_type[]">
