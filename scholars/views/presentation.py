@@ -84,7 +84,7 @@ def form(request, pid=None):
             presenters = []
         # here we deal with the problem of file fields not including
         # an item in list if there is no file selected for upload.
-        # mugshoth is a hidden field to mirror mugshot as counter.
+        # mugshot is a hidden field to mirror mugshot as counter.
         h = len(mugshot)
         for i in range (1,len(last_name)):
             if mugshoth[i] == "True":
@@ -148,17 +148,18 @@ def form(request, pid=None):
                     presentation.leader = p
             # save the presentation object
             presentation.save()
-            if not manager and not settings.DEBUG:
+            #if not manager and not settings.DEBUG:
+            if not manager:
                 data = {"presentation":presentation,"pid":pid,}
                 status = ""
                 if pid:
                     status = " (updated)"
-                subject = """
-                          [Celebration of Scholars Presentation] %s%s: by %s %s
-                          """ % (presentation.title,status,request.user.first_name,request.user.last_name)
+                subject = """[Celebration of Scholars Presentation] %s%s: by %s %s""" % (
+                    presentation.title,status,request.user.first_name,request.user.last_name
+                )
                 send_mail (
-                    request, TO_LIST, subject, request.user.email,
-                    "scholars/presentation/email.html", data, BCC
+                            request, TO_LIST, subject, request.user.email,
+                            "scholars/presentation/email.html", data, BCC
                 )
             return HttpResponseRedirect(reverse("presentation_form_done"))
         else:

@@ -25,10 +25,7 @@ def contact(request):
             if contact.email:
                 email = contact.email
             subject = "[Alumni Class Notes] %s %s" % (contact.first_name,contact.last_name)
-            send_mail(
-                request,TO_LIST, subject, email,
-                "alumni/classnotes/email.html", contact, BCC
-            )
+            send_mail(request,TO_LIST, subject, email,"alumni/classnotes/email.html", contact, BCC)
             return HttpResponseRedirect('/forms/alumni/classnotes/success/')
     else:
         form = ContactForm()
