@@ -122,6 +122,7 @@ EMAIL_HOST_USER = 'confirmation@carthage.edu'
 EMAIL_HOST_PASSWORD = 'djangoforms'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+EMAIL_FAIL_SILENTLY = True
 DEFAULT_FROM_EMAIL = 'confirmation@carthage.edu'
 SERVER_EMAIL = 'confirmation@carthage.edu'
 SERVER_MAIL="confirmation@carthage.edu"
