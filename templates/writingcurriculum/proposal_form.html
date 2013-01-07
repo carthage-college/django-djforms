@@ -4,7 +4,6 @@
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.core.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.uniform.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.bgiframe.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.dialog.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
@@ -21,7 +20,6 @@
             }
             var copies = {{copies}};
             initialise();
-            $("select, input, textarea, input:checkbox, input:radio, input:file").uniform();
             $("#id_wac-when_approved_wi").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
             $("#id_wac-when_workshop").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
             $("#clone").click(function () {
@@ -59,12 +57,14 @@
     #doop_master {display: none;}
     .criterion {width:250px;float:right;}
     .ctrlcx {width:36px;float:right;}
-    #duplicates .wac-description {width:294px;height:150px;}
+    #duplicates .wac-description {width:350px;height:150px;}
     div.growlUI { background: url(/media/img/ico/information.png) no-repeat 10px 10px; height:90px; }
     div.growlUI h1, div.growlUI h2 {
         font-size: 1.4em; color: white; padding: 5px 5px 5px 75px; text-align: left
     }
     .form input {width: 350px !important; }
+    .form input[type='radio'] {width:auto !important;}
+    .form input[type='submit'] {width:150px !important;}
     </style>
 {% endblock %}
 {% block left_nav %}
