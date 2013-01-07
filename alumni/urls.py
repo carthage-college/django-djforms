@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     # classnotes
     url(r'^classnotes/success/$', direct_to_template, {'template': 'alumni/classnotes/done.html'}),
     url(r'^classnotes/archives/(?P<year>\d+)/$', 'djforms.alumni.classnotes.views.archives', name="classnotes_archives_year"),
+    url(r'^classnotes/carthaginian/$', 'djforms.alumni.classnotes.views.screenscrape', name="classnotes_archives_year"),
     url(r'^classnotes/archives/$', 'djforms.alumni.classnotes.views.archives', name="classnotes_archives"),
     url(r'^classnotes/$', 'djforms.alumni.classnotes.views.contact', name='classnotes_form'),
     # mws reunion

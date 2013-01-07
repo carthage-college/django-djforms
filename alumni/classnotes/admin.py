@@ -26,5 +26,19 @@ class ContactAdmin(admin.ModelAdmin):
     search_fields   = ('last_name','first_name','previous_name','classyear')
     list_filter     = ('alumnistatus','pubstatus','carthaginianstatus')
 
+    actions = ['set_carthiginian_status']
+
+    def set_carthiginian_status(self, request, queryset):
+        """
+        Loop through all contacts and set carthaginian status
+        """
+        for obj in queryset:
+            obj.carthaginianstatus=True
+            obj.save()
+
+        self.message_user(request, '%s alumni notes were successfully updated to "published in Carthaginian".' % len(queryset))
+
+    set_carthiginian_statusshort_description = 'Update Carthaginian status'
+
 admin.site.register(Contact,ContactAdmin)
 

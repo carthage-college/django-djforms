@@ -49,3 +49,12 @@ def archives(request, year=None):
     return render_to_response("alumni/classnotes/archives.html", {
         "notes": notes,"year":year,"manager":manager,
     }, context_instance=RequestContext(request))
+
+def screenscrape(request):
+    ns = Contact.objects.exclude(carthaginianstatus=True)
+    notes = ns.order_by("classyear", "last_name")
+    manager = request.user.has_perm('classnotes.change_contact')
+
+    return render_to_response("alumni/classnotes/archives.html", {
+        "notes": notes,"year":"Carthaginian","manager":manager,
+    }, context_instance=RequestContext(request))
