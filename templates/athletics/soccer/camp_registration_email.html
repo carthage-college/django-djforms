@@ -40,9 +40,9 @@
 <h3>Housing Information</h3>
 <dl style="margin-bottom:30px;">
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Roommate request</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.roommate}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.roommate|default:"&nbsp;"}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Reside in dorm</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.dorm}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.dorm|default:"&nbsp;"}}</dd>
 </dl>
 <hr />
 <h3>Session Information</h3>
