@@ -29,10 +29,10 @@ SHIRT_SIZES = (
 )
 
 SESSIONS = (
-    ('Girls resident|395', 'Girls Resident $395.00'),
+    ('Girls resident|445', 'Girls Resident $445.00'),
     ('Girls commuter|295', 'Girls Commuter $295.00'),
     ('Boys & Girls Jr. Kickers Session I|100', 'Boys & Girls Jr. Kickers Session I $100.00'),
-    ('Boys resident|395', 'Boys Resident $395.00'),
+    ('Boys resident|445', 'Boys Resident $445.00'),
     ('Boys commuter|295', 'Boys Commuter $295.00'),
     ('Boys & Girls day camp|195', 'Boys & Girls Day $195.00'),
     ('Boys & Girls Jr. Kickers Session II|100', 'Boys & Girls. Jr. Kickers Session II $100.00'),
@@ -50,7 +50,7 @@ class SoccerCampRegistrationForm(forms.Form):
     """
     # personal info
     gender              = forms.TypedChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect())
-    dob                 = forms.DateField(label = "Date of birth")
+    dob                 = forms.DateField(label = "Date of birth", help_text="Format: dd/mm/yyyy")
     years_attend        = forms.TypedChoiceField(choices=YEAR_CHOICES, widget=forms.RadioSelect(), label="Past years attended")
     goalkeeper          = forms.ChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect(), label="Goalkeeper?")
     shirt_size          = forms.CharField(widget=forms.Select(choices=SHIRT_SIZES), label="T-shirt size")
@@ -61,8 +61,8 @@ class SoccerCampRegistrationForm(forms.Form):
     dorm                = forms.CharField(max_length=100, label="Reside in dorm", help_text="Near teammates and/or friends&mdash;please be specific", required=False)
     # session
     session             = forms.TypedChoiceField(choices=SESSIONS, widget=forms.RadioSelect(), help_text="<strong>Note</strong>: enrollment is limited.</p>")
-    football            = forms.ChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect(), label="Soccer ball", help_text="<strong>Resident campers</strong>, please check here if you would like to purchase an official camp soccer ball for $25.00. Payment for ball and deposit must accompany application.")
+    football            = forms.ChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect(), label="Soccer ball", help_text="<strong>Resident campers</strong>, please check here if you would like to purchase an official camp soccer ball for $30.00. Payment for ball and deposit must accompany application.")
     # payment
     reg_fee             = forms.CharField(max_length=7, label="Registration Fee Total")
     payment_method      = forms.TypedChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect())
-    amount              = forms.TypedChoiceField(choices=AMOUNT_CHOICES, widget=forms.RadioSelect())
+    amount              = forms.TypedChoiceField(choices=AMOUNT_CHOICES, widget=forms.RadioSelect(),help_text="NOTE: NO CREDIT CARDS ACCEPTED AT CHECK-INS")

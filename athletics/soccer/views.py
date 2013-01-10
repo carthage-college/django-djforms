@@ -29,7 +29,7 @@ def camp_registration(request):
             if reg_data["amount"] == "Full amount":
                 total = reg_data['reg_fee']
             else:
-                if int(reg_data['reg_fee']) <= 195:
+                if int(reg_data['reg_fee']) < 195:
                     total = 50
                 else:
                     total = 200
@@ -44,7 +44,7 @@ def camp_registration(request):
                     order.save()
                     contact.order.add(order)
                     order.reg = reg_data
-                    send_mail(request, TO_LIST, "Soccer camp registration", order.contact.email, "athletics/soccer/camp_registration_email.html", order, BCC)
+                    send_mail(request, TO_LIST, "Soccer camp registration", contact.email, "athletics/soccer/camp_registration_email.html", order, BCC)
                     return HttpResponseRedirect(reverse('soccer_camp_success'))
                 else:
                     r = form_proc.processor_response
@@ -58,7 +58,8 @@ def camp_registration(request):
             else:
                 order = Order(total=total,status="Pay later")
                 order.reg = reg_data
-                send_mail(request, TO_LIST, "Soccer camp registration", order.contact.email, "athletics/soccer/camp_registration_email.html", BCC)
+                order.contact = contact
+                send_mail(request, TO_LIST, "Soccer camp registration", contact.email, "athletics/soccer/camp_registration_email.html", order, BCC)
                 return HttpResponseRedirect(reverse('soccer_camp_success'))
         else:
             if request.POST.get('payment_method') == "Credit Card":

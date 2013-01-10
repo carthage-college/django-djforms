@@ -23,14 +23,17 @@
                 $('#payment-details').hide();
             });
             $('#id_football_0').click(function() {
-                reg_fee += 25;
+                reg_fee += 30;
+                football = true;
                 $('#id_reg_fee').attr('value', reg_fee);
                 $('label[for="id_amount_1"]').html('<input type="radio" id="id_amount_1" value="Full amount" name="amount" /> Full amount: $' + reg_fee);
             });
             $('#id_football_1').click(function() {
-                reg_fee -= 25;
-                $('#id_reg_fee').attr('value', reg_fee);
-                $('label[for="id_amount_1"]').html('<input type="radio" id="id_amount_1" value="Full amount" name="amount" /> Full amount: $' + reg_fee);
+                if (football == true) {
+                    reg_fee -= 30;
+                    $('#id_reg_fee').attr('value', reg_fee);
+                    $('label[for="id_amount_1"]').html('<input type="radio" id="id_amount_1" value="Full amount" name="amount" /> Full amount: $' + reg_fee);
+                }
             });
             $('input[id^="id_session_"]').click(function() {
                 reg_fee = parseInt($(this).attr('value').split('|')[1]);
@@ -40,7 +43,7 @@
                     deposit = 200;
                 }
                 if ($('#id_football_0:checked').val()) {
-                    reg_fee += 25;
+                    reg_fee += 30;
                 }
                 $('#id_reg_fee').attr('value', reg_fee);
                 $('label[for="id_amount_0"]:odd').html('<input type="radio" id="id_amount_0" value="Deposit" name="amount" /> Deposit: $' + deposit);
@@ -58,6 +61,7 @@
 #id_security_code, #id_reg_fee{width:35px;}
 #id_card_number {width:150px;}
 #id_postal_code, #id_home_phone, #id_work_phone, #id_dob {width:100px;}
+.help { padding-left: 0px; }
 </style>
 {% endblock %}
 {% block banner %}{% endblock %}
