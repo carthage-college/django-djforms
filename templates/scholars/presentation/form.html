@@ -19,6 +19,7 @@
             });
             // flag presenters that have a mugshot for upload.
             // cgi on the backend does not include empty filefields in []
+            // hidden field name = "mugshoth"
             $(".mugshot").live('change', function() {
                 $(this).next(':hidden').val("True");
             });

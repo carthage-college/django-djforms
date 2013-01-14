@@ -11,6 +11,12 @@ from djforms.core.models import UserProfile
 from djforms.writingcurriculum.forms import ProposalForm
 from djforms.writingcurriculum.models import CourseCriteria, CourseProposal
 
+if settings.DEBUG:
+    TO_LIST = [settings.SERVER_EMAIL,]
+else:
+    TO_LIST = ["msnavely@carthage.edu"]
+BCC = settings.MANAGERS
+
 @login_required
 def proposal_form(request, pid=None):
     copies=1
@@ -109,10 +115,9 @@ def proposal_form(request, pid=None):
             proposal.save()
 
             bcc = settings.MANAGERS
-            recipient_list = ["msnavely@carthage.edu"]
             t = loader.get_template('writingcurriculum/proposal_email.txt')
             c = RequestContext(request, {'data':proposal,'user':request.user,'criteria':criteria})
-            email = EmailMessage(("[WAC Proposal] %s: by %s %s" % (proposal.course_title,request.user.first_name,request.user.last_name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
+            email = EmailMessage(("[WAC Proposal] %s: by %s %s" % (proposal.course_title,request.user.first_name,request.user.last_name)), t.render(c), request.user.email, TO_LIST, BCC, headers = {'Reply-To': request.user.email,'From': request.user.email})
             email.content_subtype = "html"
             #if proposal.syllabus:
             #    email.attach(proposal.syllabus.name.split('/')[2],proposal.syllabus)

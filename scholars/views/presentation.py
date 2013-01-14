@@ -58,7 +58,7 @@ def form(request, pid=None):
             pass
 
     if presentation:
-        # create list for GET requests to populate criteria field
+        # create list for GET requests to populate presenters fields
         for copies, p in enumerate(presentation.presenters.all()):
             presenters.append(p)
         # add 1 since lists are zero based
@@ -84,7 +84,7 @@ def form(request, pid=None):
             presenters = []
         # here we deal with the problem of file fields not including
         # an item in list if there is no file selected for upload.
-        # mugshot is a hidden field to mirror mugshot as counter.
+        # mugshoth is a hidden field to mirror mugshot as counter.
         h = len(mugshot)
         for i in range (1,len(last_name)):
             if mugshoth[i] == "True":
