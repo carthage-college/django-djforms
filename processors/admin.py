@@ -4,7 +4,7 @@ from models import *
 class OrderAdmin(admin.ModelAdmin):
     model = Order
 
-    list_display  = ('last_name', 'contact_name', 'email', 'promotion', 'time_stamp', 'status', 'auth', 'avs', 'cycle', 'payments', 'start_date')
+    list_display  = ('last_name', 'contact_name', 'email', 'promotion', 'time_stamp', 'status', 'auth', 'avs', 'cycle', 'payments', 'start_date','transid')
     ordering      = ['promotion', '-time_stamp','status','auth','avs','cycle','payments','start_date']
     list_filter   = ('status','auth','avs','cycle','payments','promotion')
     search_fields = ('email,', 'last_name', 'transid')
