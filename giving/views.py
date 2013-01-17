@@ -27,6 +27,8 @@ def giving_form(request, transaction, campaign=None):
     # giving campaigns
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
+    else:
+        campaign = ""
     status = None
     if request.POST:
         ct_form = DonationContactForm(request.POST, prefix="ct")
@@ -35,7 +37,7 @@ def giving_form(request, transaction, campaign=None):
             contact = ct_form.save()
             or_data = or_form.save(commit=False)
             or_data.status = "In Process"
-            or_data.operator = "Giving: %s" % transaction
+            or_data.operator = "%s %s" % (transaction,campaign)
             or_data.save()
             contact.order.add(or_data)
             cc_form = CreditCardForm(or_data, contact, request.POST, prefix="cc")
