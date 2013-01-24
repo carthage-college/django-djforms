@@ -20,7 +20,7 @@ class CourseCriteriaAdmin(admin.ModelAdmin):
 
 class CourseProposalAdmin(admin.ModelAdmin):
     model = CourseProposal
-    list_display  = ('course_title','course_number','department','academic_term','first_name', 'last_name', 'email', 'phone','approved_wi','workshop','permission')
+    list_display  = ('course_title','date_created','course_number','department','academic_term','first_name', 'last_name', 'email', 'phone','approved_wi','workshop','permission')
     search_fields = ('course_title', 'description','objectives')
     ordering = ('-date_created',)
     raw_id_fields = ("user","updated_by",)
