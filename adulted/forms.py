@@ -74,6 +74,7 @@ class PersonalForm(forms.Form):
     ss_num              = USSocialSecurityNumberField(label="Social security number")
     dob                 = forms.DateField(label = "Date of birth", help_text="Format: dd/mm/yyyy")
     pob                 = forms.CharField(label = "Place of birth", help_text="City, state, zip, country", max_length=255)
+    military            = forms.TypedChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect(), label="Have you ever served in the military?")
 
 class EmploymentForm(forms.Form):
     """
