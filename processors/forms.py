@@ -40,7 +40,7 @@ class CreditCardForm(forms.Form):
     A generic form to collect credit card information and then charge the credit card.
     """
     billing_name        = forms.CharField(max_length=128, label="Name as it appears on credit card")
-    card_number         = forms.CharField(max_length=19)
+    card_number         = forms.CharField(max_length=19, help_text="xxxx-xxxx-xxxx-xxxx or xxxx-xxxx-xxxx-xxx")
     expiration_month    = forms.CharField(max_length=2, widget=forms.Select(choices=EXP_MONTH))
     expiration_year     = forms.CharField(max_length=4, widget=forms.Select(choices=EXP_YEAR))
     security_code       = forms.CharField(max_length=4, required=True, help_text="The three or four digit security code on the back of your credit card.")
