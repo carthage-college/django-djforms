@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from djforms.lis.conferences.registration.forms import RegistrationContactForm, RegistrationOrderForm
+from djforms.lis.conferences.looking_glass.forms import RegistrationContactForm, RegistrationOrderForm
 from djforms.processors.forms import TrustCommerceForm
 from djtools.utils.mail import send_mail
 
@@ -29,8 +29,8 @@ def registration_form(request):
                 order.status = r.msg['status']
                 order.transid = r.msg['transid']
                 order.save()
-                send_mail(request, TO_LIST, "[LIS] Conference Registration", contact.email, "lis/conferences/registration/email.html", order, BCC)
-                return HttpResponseRedirect(reverse('conference_registration_success'))
+                send_mail(request, TO_LIST, "[LIS] e-Looking Glass Registration", contact.email, "lis/conferences/looking_glass/email.html", order, BCC)
+                return HttpResponseRedirect(reverse('looking_glass_registration_success'))
             else:
                 r = form_proc.processor_response
                 if r:
@@ -45,7 +45,7 @@ def registration_form(request):
         form_con = RegistrationContactForm()
         form_ord = RegistrationOrderForm(initial={'avs':False,'auth':'sale',})
         form_proc = TrustCommerceForm()
-    return render_to_response('lis/conferences/registration/form.html',
+    return render_to_response('lis/conferences/looking_glass/form.html',
                               {'form_con': form_con, 'form_ord':form_ord, 'form_proc':form_proc,},
                               context_instance=RequestContext(request))
 

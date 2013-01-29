@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from djforms.lis.conferences.registration.models import RegistrationContact
+from djforms.lis.conferences.looking_glass.models import RegistrationContact
 
 class RegistrationContactAdmin(admin.ModelAdmin):
     model = RegistrationContact

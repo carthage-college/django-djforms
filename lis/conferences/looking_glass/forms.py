@@ -3,7 +3,7 @@ from django import forms
 from djforms.core.models import GenericChoice
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
-from djforms.lis.conferences.registration.models import RegistrationContact
+from djforms.lis.conferences.looking_glass.models import RegistrationContact
 
 from tagging.models import Tag, TaggedItem
 
