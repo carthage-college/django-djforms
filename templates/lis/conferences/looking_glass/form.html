@@ -2,26 +2,6 @@
 {% load get_api %}
 {% block title %}Registration &mdash; Conferences &mdash; Libary and Information Services &mdash; Carthage College{% endblock %}
 {% block columns %}<link href="https://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block extra_javascript %}
-    {{ block.super }}
-    <script type="text/javascript">
-        $(function() {
-            $('#id_total').attr('readonly', true);
-            reg_fee = {{ form_ord.data.total|default:0}};
-            var events = [];
-            events[105] = 50;
-            events[106] = 190;
-            $('input[id^="id_event_"]').change(function() {
-                if ($(this).is(':checked')) {
-                    reg_fee += events[$(this).attr('value')];
-                } else {
-                    reg_fee -= events[$(this).attr('value')];
-                }
-                $('#id_total').attr('value', reg_fee);
-            });
-        });
-    </script>
-{% endblock %}
 {% block extra_style %}
     <link href="https://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://www.carthage.edu/static/satchmo/css/donations.css" type="text/css" />
@@ -128,6 +108,12 @@
                     {% endif %}{% endif %}
                 {% endfor %}
                 <li class="btnHolder">
+                    <h3>Conference Cancellation Policy</h3>
+                    <p>A cancellation must be received by April 16, 2012 by emailing. A refund will be issued.</p>
+                    <p>This conference offers continuing professional undergraduate credit for an additional $50.
+                    A syllabus, including post-conference assignments, is available by emailing
+                    <a href="mailto:mward@carthage.edu">Marilyn Ward</a>. To sign up for this option, please call
+                    Lynn Dahl, <em>Enrichment and Continuing Education Coordinator</em>, at (262) 551-5924.</p>
                     <label for="id_submit">&nbsp;&nbsp;</label>
                     <input type="submit" value="Submit" class="button" />
                 </li>
@@ -137,5 +123,5 @@
 </div>
 {% endblock %}
 {% block sidebar %}
-    {% include "lis/conferences/side_bar.html" %}
+    {% include "lis/conferences/looking_glass/side_bar.html" %}
 {% endblock %}

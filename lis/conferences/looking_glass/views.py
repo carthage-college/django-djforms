@@ -21,7 +21,7 @@ def registration_form(request):
         if form_con.is_valid() and form_ord.is_valid():
             contact = form_con.save()
             order = form_ord.save()
-            order.operator = "LIS Conference"
+            order.operator = "LIS: Looking Glass"
             contact.order.add(order)
             form_proc = TrustCommerceForm(order, contact, request.POST)
             if form_proc.is_valid():
@@ -29,6 +29,7 @@ def registration_form(request):
                 order.status = r.msg['status']
                 order.transid = r.msg['transid']
                 order.save()
+                order.contact = contact
                 send_mail(request, TO_LIST, "[LIS] e-Looking Glass Registration", contact.email, "lis/conferences/looking_glass/email.html", order, BCC)
                 return HttpResponseRedirect(reverse('looking_glass_registration_success'))
             else:
@@ -38,6 +39,10 @@ def registration_form(request):
                 else:
                     order.status = "Blocked"
                 order.save()
+                if settings.DEBUG:
+                    order.contact = contact
+                    send_mail(request, TO_LIST, "[LIS] e-Looking Glass Registration", contact.email, "lis/conferences/looking_glass/email.html", order, BCC)
+                    return HttpResponseRedirect(reverse('looking_glass_registration_success'))
         else:
             form_proc = TrustCommerceForm(None, request.POST)
             form_proc.is_valid()
