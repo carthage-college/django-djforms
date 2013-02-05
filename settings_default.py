@@ -67,6 +67,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.formtools',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.sites',
     # third party projects
