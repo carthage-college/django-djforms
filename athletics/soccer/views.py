@@ -29,7 +29,7 @@ def camp_registration(request):
             if reg_data["amount"] == "Full amount":
                 total = reg_data['reg_fee']
             else:
-                if int(reg_data['reg_fee']) < 195:
+                if int(reg_data['reg_fee']) <= 225:
                     total = 50
                 else:
                     total = 200

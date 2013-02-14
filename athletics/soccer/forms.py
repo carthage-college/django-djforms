@@ -34,7 +34,7 @@ SESSIONS = (
     ('Boys & Girls Jr. Kickers Session I|100', 'Boys & Girls Jr. Kickers Session I $100.00'),
     ('Boys resident|445', 'Boys Resident $445.00 (Goalkeepers check here too--no additional fee)'),
     ('Boys commuter|295', 'Boys Commuter $295.00'),
-    ('Boys & Girls day camp|195', 'Boys & Girls Day $195.00'),
+    ('Boys & Girls day camp|195', 'Boys & Girls Day camp $195.00'),
     ('Boys & Girls Jr. Kickers Session II|100', 'Boys & Girls. Jr. Kickers Session II $100.00'),
     ('Soccer mom camp|245', 'Soccer Mom Camp $245'),
 )
