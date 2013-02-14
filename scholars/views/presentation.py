@@ -17,10 +17,7 @@ YEAR = int(NOW.year)
 if int(NOW.month) > 9 and not settings.DEBUG:
     YEAR += 1
 
-if settings.DEBUG:
-    TO_LIST = ["larry@carthage.edu",]
-else:
-    TO_LIST = ["dmunk@carthage.edu",]
+TO_LIST = ["larry@carthage.edu",]
 BCC = settings.MANAGERS
 
 def _update_presenters(presenter, presenters):
