@@ -16,9 +16,6 @@ from operator import attrgetter
 from itertools import chain
 from tagging.models import Tag, TaggedItem
 
-import logging
-logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.INFO,)
-
 @login_required
 def maintenance_request_form(request):
     if request.method=='POST':

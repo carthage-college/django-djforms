@@ -20,6 +20,9 @@ if int(NOW.month) > 9 and not settings.DEBUG:
 TO_LIST = ["larry@carthage.edu",]
 BCC = settings.MANAGERS
 
+import logging
+logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG)
+
 def _update_presenters(presenter, presenters):
     presenter.first_name   = presenters.first_name
     presenter.last_name    = presenters.last_name
@@ -85,7 +88,10 @@ def form(request, pid=None):
         h = len(mugshot)
         for i in range (1,len(last_name)):
             if mugshoth[i] == "True":
-                mug = mugshot[len(mugshot)-h]
+                try:
+                    mug = mugshot[len(mugshot)-h]
+                except:
+                    logging.exception("Celebration of Scholars mugshot error.")
                 h -= 1
             else:
                 mug = None
