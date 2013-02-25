@@ -15,7 +15,10 @@ urlpatterns = patterns('djforms.lis',
     url(r'^ito/profile/(?P<pid>\d+)/update/$', 'ito.views.profile_form', name="profile_update"),
     url(r'^ito/profile/(?P<pid>\d+)/detail/$', 'ito.views.profile_detail', name="profile_detail"),
     url(r'^ito/profile/$', 'ito.views.profile_form', name='profile_form'),
-    # conference registration
+    # e-looking glass conference registration
     url(r'^conferences/looking-glass/success/$', direct_to_template, {'template': 'lis/conferences/looking_glass/done.html'}, name="looking_glass_registration_success"),
     url(r'^conferences/looking-glass/$', 'conferences.looking_glass.views.registration_form', name='looking_glass_registration_form'),
+    # course-ference registration
+    url(r'^conferences/course-ference/success/$', direct_to_template, {'template': 'lis/conferences/course_ference/done.html'}, name="course_ference_registration_success"),
+    url(r'^conferences/course-ference/$', 'conferences.course_ference.views.registration_form', name='course_ference_registration_form'),
 )

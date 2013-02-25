@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load get_api %}
-{% block title %}e-Looking Glass Registration &mdash; Conferences &mdash; Libary and Information Services &mdash; Carthage College{% endblock %}
+{% block title %}Course-Ference Registration &mdash; Conferences &mdash; Libary and Information Services &mdash; Carthage College{% endblock %}
 {% block columns %}<link href="https://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
     <link href="https://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
@@ -9,7 +9,7 @@
     #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;padding:3px 0 3px 5px;width:99%;}
     li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
     #id_security_code{width:35px;}
-    #id_postal_code, #id_total {width:100px;}
+    #id_postal_code {width:100px;}
     </style>
 {% endblock %}
 {% block left_nav %}
@@ -25,6 +25,7 @@
     <a href="https://www.securitymetrics.com/site_certificate.adp?s=72%2e47%2e217%2e18&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics" border="0"></a>
     </div></div>
     <h1>Conference Registration</h1>
+    <p>The conference fee is <strong>$25.00</strong>, and is payable by credit card.</p>
     {% if form_proc.errors or form_ord.errors or form_con.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
@@ -107,12 +108,8 @@
                 {% endfor %}
                 <li class="btnHolder">
                     <h3>Conference Cancellation Policy</h3>
-                    <p>A cancellation must be received by April 16, 2013 by emailing
+                    <p>A cancellation must be received by August 16, 2013 by emailing
                     <a href="mailto:ezitron@carthage.edu">Lizz Zitron</a>. A refund will be issued.</p>
-                    <p>This conference offers continuing professional undergraduate credit for an additional $50.
-                    A syllabus, including post-conference assignments, is available by emailing
-                    <a href="mailto:mward@carthage.edu">Marilyn Ward</a>. To sign up for this option, please call
-                    Lynn Dahl, <em>Enrichment and Continuing Education Coordinator</em>, at (262) 551-5924.</p>
                     <label for="id_submit">&nbsp;&nbsp;</label>
                     <input type="submit" value="Submit" class="button" />
                 </li>
@@ -122,5 +119,5 @@
 </div>
 {% endblock %}
 {% block sidebar %}
-    {% include "lis/conferences/looking_glass/side_bar.html" %}
+    {% include "lis/conferences/course_ference/side_bar.html" %}
 {% endblock %}
