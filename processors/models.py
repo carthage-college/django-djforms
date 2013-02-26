@@ -24,6 +24,7 @@ class Order(models.Model):
     total               = models.DecimalField(decimal_places=2, max_digits=10)
     comments            = models.TextField(null=True, blank=True)
     time_stamp          = models.DateTimeField("Timestamp", auto_now_add=True)
+    #export_date         = models.DateTimeField(blank=True,null=True)
     status              = models.CharField("Status", max_length=20, choices=ORDER_STATUS, blank=True)
     auth                = models.CharField(max_length=16) # shop or store
     avs                 = models.BooleanField(default=False)

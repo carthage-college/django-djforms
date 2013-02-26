@@ -7,10 +7,14 @@
     <script src="http://www.carthage.edu/assets/js/xinha/XinhaCore.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/xinha/celebration.js" type="text/javascript" charset="utf-8"></script>
     -->
+    <script type="text/javascript" src="/static/forms/js/jHtmlArea-0.7.5.min.js"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.core.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
         $(function() {
+            $("#id_abstract_text").htmlarea({
+                toolbar: ["html","bold", "italic", "underline", "|", "h1", "h2", "h3", "h4", "h5", "h6", "|", "link", "unlink", "|"]
+            });
             var copies = {{copies}};
             // copy duplicate master for new presenter
             $("#clone").click(function () {
@@ -53,8 +57,16 @@
 {% endblock %}
 {% block extra_style %}
     <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+    <link rel="Stylesheet" type="text/css" href="/static/forms/css/jHtmlArea.css" />
     <style type="text/css">
-    #second ol {margin:0;}
+    div.jHtmlArea .ToolBar ul li a.custom_disk_button
+    {
+        background: url(/static/forms/css/disk.png) no-repeat;
+        background-position: 0 0;
+    }
+    div.jHtmlArea { width:500px !important;border: solid 1px #ccc; background: #efefef; }
+    iframe {width:500px !important;height:300px !important;background: #fff;border: solid 1px #ccc;}
+    #second ul, #second ol { margin: 0; }
     #second li {margin-left:0;}
     #second p {line-height: 1.1;margin-bottom: .5em;}
     #doop_master {display: none;}
