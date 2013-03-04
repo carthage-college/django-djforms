@@ -10,10 +10,15 @@ def export_evs_requests(modeladmin, request, queryset):
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=celebration_of_scholars.csv'
     writer = csv.writer(response)
-    writer.writerow(['Title', 'First Name', 'Last Name', 'Email', 'Funding Source', 'Work Type', 'Permission to Reproduce', 'Faculty Sponsor Approval', 'Link'])
+    writer.writerow(['Title', 'Leader', 'Leader Email', 'Presenters', 'Funding Source', 'Work Type', 'Permission to Reproduce', 'Faculty Sponsor Approval', 'Link'])
     for p in queryset:
         link = "http://%s%s" % (settings.SERVER_URL,p.get_absolute_url())
-        writer.writerow([p.title.encode('utf-8'), p.leader.first_name, p.leader.last_name, p.user.email, p.funding, p.work_type, p.permission, p.shared, link])
+        leader = "%s, %s" % (p.leader.first_name, p.leader.last_name)
+        presenters = ""
+        for f in p.presenters.all():
+            if not f.leader:
+                presenters += "%s, %s | " % (f.first_name, f.last_name)
+        writer.writerow([p.title.encode('utf-8'), leader, p.user.email, presenters, p.funding, p.work_type, p.permission, p.shared, link])
     return response
 export_evs_requests.short_description = "Export the selected Celebration of Scholars Submissions"
 
