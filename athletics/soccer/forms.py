@@ -50,7 +50,7 @@ class SoccerCampRegistrationForm(forms.Form):
     """
     # personal info
     gender              = forms.TypedChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect())
-    dob                 = forms.DateField(label = "Date of birth", help_text="Format: dd/mm/yyyy")
+    dob                 = forms.DateField(label = "Date of birth", help_text="Format: mm/dd/yyyy")
     age                 = forms.CharField(max_length=2)
     years_attend        = forms.TypedChoiceField(choices=YEAR_CHOICES, widget=forms.RadioSelect(), label="Number of years attended", help_text="Include this year")
     goalkeeper          = forms.ChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect(), label="Goalkeeper?")
