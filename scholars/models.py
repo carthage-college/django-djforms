@@ -40,7 +40,11 @@ class Presenter(models.Model):
         return "%s %s" % (self.first_name, self.last_name)
 
     def year(self):
-        return YEAR_CHOICES[int(self.college_year)][1]
+        if self.college_year:
+            year = YEAR_CHOICES[int(self.college_year)][1]
+        else:
+            year = None
+        return year
 
     def presenter_type(self):
         return PRESENTOR_TYPES[self.prez_type][1]
