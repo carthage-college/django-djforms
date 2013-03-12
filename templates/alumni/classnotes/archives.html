@@ -89,6 +89,8 @@
 {% block sidebar %}
     {% include "alumni/classnotes/side_bar.html" %}
 {% endblock %}
-{% block modal %}
-{% include "includes/modal_form.html" %}
-{% endblock %}
+{% block modalform %}
+    {% if user.is_staff %}
+        {% include "includes/modal_form.html" %}
+    {% endif %}
+{%endblock%}
