@@ -17,10 +17,11 @@
         <br />
         <ul>
             <li><a href="{% url classnotes_form %}">Submit your class note</a></li>
+            <li><a href="/forms/alumni/classnotes/archives/">Class Notes Archive</a></li>
             {% if manager %}
-            <li><a href="/forms/admin/classnotes/contact/">Manage class note</a></li>
+            <li><a href="/forms/admin/classnotes/contact/">Manage class notes</a></li>
             {% else %}{% if user.is_anonymous %}
-            <li><a href="/forms/accounts/login/?next=/forms/alumni/classnotes/archives/">Manage class note</a></li>
+            <li><a href="/forms/accounts/login/?next=/forms/alumni/classnotes/archives/">Manage class notes</a></li>
             {% endif %}{% endif %}
         </ul>
     </div>
