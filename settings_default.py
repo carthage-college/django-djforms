@@ -50,6 +50,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_DIRS = (
     "/data2/django_projects/djforms/templates/",
     "/data2/django_templates/djdfir/",
+    "/data2/django_templates/djcher/",
 
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
