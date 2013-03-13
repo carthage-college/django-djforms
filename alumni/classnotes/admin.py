@@ -1,7 +1,11 @@
+from django.conf import settings
 from django import forms
 from django.contrib import admin
 from djforms.alumni.classnotes.models import Contact
 from djforms.alumni.classnotes.forms import CLASSYEARS, SPOUSEYEARS
+
+import logging
+logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG)
 
 class ContactAdminForm(forms.ModelForm):
     classyear       = forms.CharField(label="Class", max_length=4, widget=forms.Select(choices=CLASSYEARS))
@@ -21,12 +25,18 @@ class ContactAdminForm(forms.ModelForm):
 
 class ContactAdmin(admin.ModelAdmin):
     form            = ContactAdminForm
-    ordering        = ('last_name','classyear','alumnistatus','pubstatus','carthaginianstatus')
+    ordering        = ('-created_at', 'last_name','classyear','alumnistatus','pubstatus','carthaginianstatus')
     list_display    = ('last_name','first_name','classyear','created_at','alumnistatus','pubstatus','carthaginianstatus')
     search_fields   = ('last_name','first_name','previous_name','classyear')
     list_filter     = ('alumnistatus','pubstatus','carthaginianstatus')
 
     actions = ['set_carthiginian_status']
+
+    def save_model(self, request, obj, form, change):
+        if "alumnistatus" in form.changed_data:
+            if form.changed_data["form.changed_data"]:
+                logging.debug("send eliz email")
+        obj.save()
 
     def set_carthiginian_status(self, request, queryset):
         """

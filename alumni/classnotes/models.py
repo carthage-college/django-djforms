@@ -28,6 +28,8 @@ class Contact(GenericContact):
 
     class Meta:
         db_table = 'alumni_classnotes_contact'
+        ordering  = ['-created_at']
+        get_latest_by = 'created_at'
 
     def __unicode__(self):
         return "%s, %s (%s)" % (self.last_name, self.first_name, self.classyear)
