@@ -7,7 +7,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_display  = ('last_name', 'contact_name', 'email', 'operator', 'promotion', 'time_stamp', 'status', 'auth', 'cycle', 'payments', 'start_date','transid')
     ordering      = ['promotion', '-time_stamp','status','auth','avs','cycle','payments','start_date']
     list_filter   = ('status','auth','avs','cycle','payments','promotion')
-    search_fields = ('transid')
+    search_fields = ('transid',)
     raw_id_fields = ('promotion',)
 
     def contact_name(self, obj):

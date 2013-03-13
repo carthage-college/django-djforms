@@ -4,8 +4,16 @@ from django.contrib import admin
 from djforms.alumni.classnotes.models import Contact
 from djforms.alumni.classnotes.forms import CLASSYEARS, SPOUSEYEARS
 
+from djtools.utils.mail import send_mail
+
 import logging
 logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG)
+
+if settings.DEBUG:
+    TO_LIST = ["larry@carthage.edu",]
+else:
+    TO_LIST = ["eyoung@carthage.edu",]
+BCC = settings.MANAGERS
 
 class ContactAdminForm(forms.ModelForm):
     classyear       = forms.CharField(label="Class", max_length=4, widget=forms.Select(choices=CLASSYEARS))
@@ -31,6 +39,14 @@ class ContactAdmin(admin.ModelAdmin):
     list_filter     = ('alumnistatus','pubstatus','carthaginianstatus')
 
     actions = ['set_carthiginian_status']
+
+    def save_model(self, request, obj, form, change):
+        if "alumnistatus" in form.changed_data:
+            if obj.alumnistatus:
+                email = settings.DEFAULT_FROM_EMAIL
+                subject = "[Alumni Class Notes] Alumni Office has approved the following note"
+                send_mail(request,TO_LIST,subject,email,"alumni/classnotes/email.html",obj,BCC)
+        obj.save()
 
     def set_carthiginian_status(self, request, queryset):
         """
