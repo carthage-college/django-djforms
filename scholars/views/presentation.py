@@ -210,14 +210,13 @@ def email_presenters(request):
                     "scholars/presenters/email_form.html",
                     context,context_instance=RequestContext(request))
             elif "execute" in request.POST:
-                presentations = Presentation.objects.filter(date_updated__year=YEAR).filter(status=False)
+                presentations = Presentation.objects.filter(date_updated__year=YEAR).filter(status=True)
                 for p in presentations:
                     data = {"p":p,"content":form_data["content"]}
-                    #email = ["%s@carthage.edu" % p.user.username,']
-                    email = ["skirk@carthage.edu",]
+                    email = [p.user.email,]
                     send_mail (
                         request, email,
-                        "[Celebration of Scholars] Presentation status: Incomplete",
+                        "[Celebration of Scholars] Next Steps for your presentation",
                         settings.DEFAULT_FROM_EMAIL, "scholars/presenters/email_data.html",
                         data, BCC
                     )
