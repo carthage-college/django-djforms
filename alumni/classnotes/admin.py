@@ -32,12 +32,6 @@ class ContactAdmin(admin.ModelAdmin):
 
     actions = ['set_carthiginian_status']
 
-    def save_model(self, request, obj, form, change):
-        if "alumnistatus" in form.changed_data:
-            if form.changed_data["form.changed_data"]:
-                logging.debug("send eliz email")
-        obj.save()
-
     def set_carthiginian_status(self, request, queryset):
         """
         Loop through all contacts and set carthaginian status
