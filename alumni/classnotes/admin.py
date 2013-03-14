@@ -23,20 +23,27 @@ class ContactAdminForm(forms.ModelForm):
     class Meta(object):
         model = Contact
 
-    def __init__(self,*args,**kwargs):
-        super(ContactAdminForm,self).__init__(*args,**kwargs)
-        self.fields.keyOrder = ['salutation','first_name','last_name','second_name',
-                                'suffix','previous_name','email','classyear','spousename',
-                                'spousepreviousname','spouseyear','classnote','alumnicomments',
-                                'pubstatus','pubstatusdate','carthaginianstatus','alumnistatus',
-                                'picture','caption']
-
 class ContactAdmin(admin.ModelAdmin):
     form            = ContactAdminForm
     ordering        = ('-created_at', 'last_name','classyear','alumnistatus','pubstatus','carthaginianstatus')
     list_display    = ('last_name','first_name','classyear','created_at','alumnistatus','pubstatus','carthaginianstatus')
     search_fields   = ('last_name','first_name','previous_name','classyear')
     list_filter     = ('alumnistatus','pubstatus','carthaginianstatus')
+
+    fieldsets = (
+        ('Name, Class, Email', {
+            'fields': ('salutation','first_name','last_name','second_name','suffix','previous_name','classyear','email')
+        }),
+        ('Spouse', {
+            'fields': ('spousename', 'spousepreviousname', 'spouseyear')
+        }),
+        ('Note', {
+            'fields': ('classnote', 'picture', 'caption', 'alumnicomments')
+        }),
+        ('Publication Information', {
+            'fields': ('alumnistatus', 'pubstatus', 'pubstatusdate', 'carthaginianstatus')
+        }),
+    )
 
     actions = ['set_carthiginian_status']
 
