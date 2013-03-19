@@ -56,6 +56,8 @@ def form(request, pid=None):
             pid = presentation.id
         except:
             pass
+            # 404 after submission period has ended
+            #raise Http404
 
     if presentation:
         # create list for GET requests to populate presenters fields
@@ -91,6 +93,7 @@ def form(request, pid=None):
                 try:
                     mug = mugshot[len(mugshot)-h]
                 except:
+                    mug = None
                     logging.exception("Celebration of Scholars mugshot error.")
                 h -= 1
             else:

@@ -14,12 +14,12 @@ from datetime import date
 @login_required
 def application_profile_form(request):
     today = date.today()
-    x_date = date(today.year, 4, 20)
-    s_date = date(today.year, 3, 26)
+    x_date = date(today.year, 4, 24)
+    s_date = date(today.year, 4, 1)
     expired = False
     if x_date < today or s_date > today:
-        expired = True
-
+        if not request.user.is_staff and not request.user.has_perm('characterquest.change_applicationprofile'):
+            expired = True
     try:
         profile = request.user.get_profile()
     except:
@@ -36,7 +36,7 @@ def application_profile_form(request):
             applicant.save()
 
             bcc = settings.MANAGERS
-            recipient_list = ["jramirez@carthage.edu",request.user.email]
+            recipient_list = ["nwinkler@carthage.edu",request.user.email]
             t = loader.get_template('characterquest/application_email.txt')
             c = RequestContext(request, {'data':applicant,})
             email = EmailMessage(("CharacterQuest Application: %s %s" % (applicant.profile.user.first_name,applicant.profile.user.last_name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
