@@ -127,7 +127,7 @@ class UserProfile(BaseProfile):
     gender  = models.CharField(max_length="16", choices=GENDER_CHOICES, null=True, blank=True)
     campus_address  = models.CharField("Campus Address",max_length="64",null=True, blank=True)
     campus_box = models.CharField("Campus Box #",max_length="4",null=True, blank=True)
-    college_access_code = models.CharField("Carthage Access Code",max_length="7",null=True, blank=True)
+    #college_access_code = models.CharField("Carthage Access Code",max_length="7",null=True, blank=True)
     college_id = models.CharField("Carthage ID", max_length="7",null=True, blank=True)
     college_year = models.CharField("Current Year at Carthage",max_length="1",choices=YEAR_CHOICES,null=True, blank=True)
     permission = models.ManyToManyField(GenericChoice, verbose_name='Permissions', null=True, blank=True)

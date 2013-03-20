@@ -14,7 +14,6 @@ class ApplicationProfileForm(forms.ModelForm):
     dob     = forms.DateField(label="Birthday")
     campus_address = forms.CharField()
     campus_box = forms.CharField(max_length="4")
-    college_access_code = forms.CharField(label="Carthage Access Code",max_length="7")
     college_id = forms.CharField(label="Carthage ID", max_length="7")
     college_year = forms.CharField(label="Year",widget=forms.Select(choices=YEAR_CHOICES))
 
@@ -23,8 +22,7 @@ class ApplicationProfileForm(forms.ModelForm):
         exclude = ('permission','latitude','longitude','location','user',
                    'creation_at','updated_at','country')
         fields = ['address','city','state','zip','phone','gender','dob',
-                  'campus_address', 'campus_box','college_access_code',
-                  'college_id','college_year']
+                  'campus_address', 'campus_box','college_id','college_year']
 
 class ApplicationForm(forms.ModelForm):
 
