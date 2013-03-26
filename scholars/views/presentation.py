@@ -110,12 +110,14 @@ def form(request, pid=None):
                 department=dept,mugshot=mug))
 
         if form.is_valid():
+            if presentation:
+                user = presentation.user
+            else:
+                user = request.user
             # save and include some other values and commit
             presentation = form.save(commit=False)
-            presentation.user = request.user
+            presentation.user = user
             presentation.updated_by = request.user
-            #if request.FILES.get('abstract_file'):
-            #    presentation.abstract_file = request.FILES.get('abstract_file')
             if request.POST.get('status'):
                 if request.POST.get('status') == "on":
                     presentation.status = True

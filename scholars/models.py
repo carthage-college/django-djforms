@@ -54,7 +54,7 @@ class Presenter(models.Model):
 
 class Presentation(models.Model):
     # meta
-    user                = models.ForeignKey(User, verbose_name="Created by", related_name="presentation_created_by",editable=False)
+    user                = models.ForeignKey(User, verbose_name="Created by", related_name="presentation_created_by")
     updated_by          = models.ForeignKey(User, verbose_name="Updated by", related_name="presentation_updated_by",editable=False)
     date_created        = models.DateTimeField("Date Created", auto_now_add=True)
     date_updated        = models.DateTimeField("Date Updated", auto_now=True)
