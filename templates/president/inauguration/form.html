@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}RSVP &mdash; Presidential Inauguration &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "president/inauguration/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as banner cms snippet 340 code %}
+{{banner}}
+{% get_api_object as header cms snippet 221 code %}
+{{header}}
+<div class="buffer">
+    <h1>Presidential Inauguration Ceremony</h1>
+    <h2>Delegate RSVP</h2>
+    <p>
+    The Inauguration of Carthage's 22nd President<br />
+    Dr. Gregory S. Woodward<br />
+    April 26-28, 2013<br />
+    Inauguration Ceremony on Saturday, April 27, 2013<br />
+    </p>
+    <p>
+        Please respond by April 11, 2013 by completing the following
+        form. If you have questions, please contact Mardell Fisher
+        at 262-551-5705 or
+        <a href="mailto:inauguration@carthage.edu">Inauguration@carthage.edu</a>.
+    </p>
+    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    <form method="POST" action="." class="form" id="profile">{% csrf_token %}
+        <fieldset class="blockLabels">
+            <ol>
+                <li class="ctrlHolder"><h2>Your Information</h2></li>
+                {% for field in form %}
+                    {% if field.name == "attend" %}
+                        <li class="ctrlHolder">
+                        <h2>Inaugural Luncheon</h2>
+                        <p>
+                        Please join President Woodward as a special guest
+                        at an Inaugural Luncheon, tobe held at noon on
+                        Saturday, April 27, in the Todd Wehr Center of
+                        Carthage College.</p>
+                        </li>
+                    {% endif %}
+                    <li class="ctrlHolder">
+                    <h3>{{ field.label_tag }}</h3>
+                    {% if field.errors %}
+                        <div class="warning">
+                        <span class="error-message">{{ field.errors|join:", "}}</span>
+                    {% else %}
+                        <div>
+                    {% endif %}
+                    {% if field.help_text %}
+                        <p class="help">{{field.help_text}}</p>
+                    {% endif %}
+                    {{field}}
+                    </div>
+                    </li>
+                {% endfor %}
+                <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Submit RSVP" class="button" />
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "president/inauguration/side_bar.html" %}
+{% endblock %}
