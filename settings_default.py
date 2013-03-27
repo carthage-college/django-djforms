@@ -78,10 +78,12 @@ INSTALLED_APPS = (
     'tagging',
     'userprofile',
     # djforms stuff
+
     'djforms.admissions',
     'djforms.admissions.visitdays',
     'djforms.adulted',
-    'djforms.alumni',
+    'djforms.alumni.classnotes',
+    'djforms.alumni.homecoming',
     'djforms.alumni.memory',
     'djforms.alumni.msw',
     'djforms.biology.genomics',
@@ -95,10 +97,15 @@ INSTALLED_APPS = (
     'djforms.lis.conferences.looking_glass',
     'djforms.languages',
     'djforms.maintenance',
+    'djforms.music.ensembles.choral',
+    'djforms.president.inauguration',
+    'djforms.processors',
     'djforms.security',
+    'djforms.scholars',
     'djforms.sustainability.green',
     'djforms.video',
     'djforms.writingcurriculum',
+    'djtools',
 )
 # LDAP Constants
 LDAP_SERVER = 'hendrix.carthage.edu'
