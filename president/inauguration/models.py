@@ -5,11 +5,13 @@ from django.contrib.localflavor.us.models import USStateField
 from djforms.core.models import GenericContact, BINARY_CHOICES
 
 class RsvpContact(GenericContact):
-    institution     = models.CharField("Name of Institution", max_length=128)
-    year_founded    = models.CharField("Year Founded",max_length=4)
-    job_title       = models.CharField("Delegate's Title", max_length=128)
+    institution     = models.CharField("Name of institution", max_length=128)
+    year_founded    = models.CharField("Year founded", max_length=4)
+    job_title       = models.CharField("Delegate's title", max_length=128)
+    degree          = models.CharField("Delegate's highest degree", max_length=128)
     cohort          = models.CharField("Guest's name", max_length=128)
-    address         = models.CharField(max_length=256)
+    address1        = models.CharField("Delegate's Preferred Mailing Address", max_length=256)
+    address2        = models.CharField("", max_length=256, null=True, blank=True)
     city            = models.CharField(max_length=128)
     state           = USStateField()
     postal_code     = models.CharField(max_length=10, verbose_name = 'Zip code')
