@@ -120,3 +120,4 @@ class Presentation(models.Model):
     def presentation_type(self):
         return WORK_TYPES[self.work_type][1]
 
+

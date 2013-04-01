@@ -11,7 +11,7 @@ def export_evs_requests(modeladmin, request, queryset):
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=celebration_of_scholars.csv'
     writer = csv.writer(response)
-    writer.writerow(['Title', 'Leader', 'Leader Email', 'Presenters', 'Funding Source', 'Work Type', 'Permission to Reproduce', 'Faculty Sponsor Approval', 'Table', 'Electricity', 'Link'])
+    writer.writerow(['Title', 'Leader', 'Leader Email', 'Sponsor', 'Presenters', 'Funding Source', 'Work Type', 'Permission to Reproduce', 'Faculty Sponsor Approval', 'Table', 'Electricity', 'Link'])
     for p in queryset:
         link = "http://%s%s" % (settings.SERVER_URL,p.get_absolute_url())
         leader = "%s, %s" % (p.leader.last_name, p.leader.first_name)
@@ -22,7 +22,7 @@ def export_evs_requests(modeladmin, request, queryset):
             title = smart_str(p.title, encoding='utf-8', strings_only=False, errors='strict')
             funding = smart_str(p.funding, encoding='utf-8', strings_only=False, errors='strict')
             work_type = smart_str(p.work_type, encoding='utf-8', strings_only=False, errors='strict')
-        writer.writerow([title, leader, p.user.email, presenters[:-1], funding, work_type, p.permission, p.shared, p.need_table, p.need_electricity, link])
+        writer.writerow([title, leader, p.user.email, p.leader.sponsor, presenters[:-1], funding, work_type, p.permission, p.shared, p.need_table, p.need_electricity, link])
     return response
 export_evs_requests.short_description = "Export the selected Celebration of Scholars Submissions"
 
