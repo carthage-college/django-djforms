@@ -28,15 +28,17 @@ table.tablesorter {
     <table id="presentation_list_table" class="tablesorter">
         <thead>
         <tr>
+            <th style="width:20px;">&nbsp;</th>
             <th style="width:365px;">Title</th>
             <th style="width:200px;">Presenter</th>
             <th style="width:100px;">Complete</th>
-            <th style="width:100px;">Manage</th>
+            <th style="width:80px;">Manage</th>
         </tr>
         </thead>
         <tbody>
         {% for p in presentations %}
         <tr class="{% cycle 'odd' 'even' %}">
+            <td>{{forloop.counter}}</td>
             <td><a href="{{p.get_absolute_url}}">{{p.title}}</a></td>
             <td><a href="mailto:{{p.user.email}}">{{p.leader.first_name}} {{p.leader.last_name}}</a></td>
             <td>{{p.status}}</td>
