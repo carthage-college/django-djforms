@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load get_api %}
-{% block title %}Course-Ference Registration &mdash; Conferences &mdash; Libary and Information Services &mdash; Carthage College{% endblock %}
+{% block title %}Course-Ference {{reg_type|capfirst}} Registration &mdash; Conferences &mdash; Libary and Information Services &mdash; Carthage College{% endblock %}
 {% block columns %}<link href="https://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
     <link href="https://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
@@ -24,7 +24,7 @@
     <div id="security"><div style="margin-left:30px;">
     <a href="https://www.securitymetrics.com/site_certificate.adp?s=72%2e47%2e217%2e18&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics" border="0"></a>
     </div></div>
-    <h1>Conference Registration</h1>
+    <h1>{{reg_type|capfirst}} Registration</h1>
     <p>The conference fee is <strong>$25.00</strong>, and is payable by credit card.</p>
     {% if form_proc.errors or form_ord.errors or form_con.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
@@ -107,7 +107,6 @@
                     {% endif %}{% endif %}
                 {% endfor %}
                 <li class="btnHolder">
-                    <h3>Conference Cancellation Policy</h3>
                     <label for="id_submit">&nbsp;&nbsp;</label>
                     <input type="submit" value="Submit" class="button" />
                 </li>
