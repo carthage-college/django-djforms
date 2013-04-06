@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load get_api %}
-{% block title %}Course-Ference {{reg_type|capfirst}} Registration &mdash; Conferences &mdash; Libary and Information Services &mdash; Carthage College{% endblock %}
+{% block title %}Forecasting Next Generation Libraries Virtual Exhibit Hall Vendor Registration &mdash; Conferences &mdash; Libary and Information Services &mdash; Carthage College{% endblock %}
 {% block columns %}<link href="https://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
     <link href="https://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
@@ -21,16 +21,15 @@
 {% get_api_object as header cms snippet 124 code %}
 {{header}}
 <div class="buffer">
-    <div id="security"><div style="margin-left:30px;">
+    <h1>Forecasting Next Generation Libraries Virtual Exhibit Hall</h1>
+    <div id="security"><div style="margin-left:10px;">
     <a href="https://www.securitymetrics.com/site_certificate.adp?s=72%2e47%2e217%2e18&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics" border="0"></a>
     </div></div>
-    <h1>{{reg_type|capfirst}} Registration</h1>
-    <p>The conference fee is <strong>$25.00</strong>, and is payable by credit card.</p>
+    <p class="help fleft">Fields marked with <img src="https://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
     {% if form_proc.errors or form_ord.errors or form_con.errors %}
-        <p class="error">There were errors with the data submitted, see below.</p>
+        <p class="error clear">There were errors with the data submitted, see below.</p>
     {% endif %}
-    <p class="help">Fields marked with <img src="https://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
-    <form method="post" action="." class="form" id="profile">{% csrf_token %}
+    <form method="post" action="." class="form clear" id="profile">{% csrf_token %}
         {% for hidden in form_ord.hidden_fields %}
         {{ hidden }}
         {% endfor %}

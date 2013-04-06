@@ -1,0 +1,15 @@
+{% extends "lis/conferences/course_ference/vendor/form.html" %}
+{% load get_api %}
+{% block content %}
+{% get_api_object as banner cms snippet 252 code %}
+{{banner}}
+{% get_api_object as header cms snippet 124 code %}
+{{header}}
+<div class="buffer">
+    <h1>Forecasting Next Generation Libraries Virtual Exhibit Hall</h1>
+    <h2>Thank you for participating</h2>
+    <p>
+        Thank you for participating in our Virtual Exhibit Hall. You will be contacted directly as to where to submit your presentation in July. Please note the guidelines for the presentation can be found on the Virtual Exhibit Hall page on our web site.
+    </p>
+</div>
+{% endblock %}

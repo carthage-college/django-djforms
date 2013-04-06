@@ -64,3 +64,12 @@ def registration_form(request, reg_type):
                               {'form_con': form_con, 'form_ord':form_ord, 'form_proc':form_proc, 'reg_type':reg_type,},
                               context_instance=RequestContext(request))
 
+def registration_success(request, reg_type):
+    try:
+        template = "lis/conferences/course_ference/%s/done.html" % reg_type
+        os.stat(os.path.join(settings.ROOT_DIR, "templates", template))
+    except:
+        raise Http404
+
+    return render_to_response(template, context_instance=RequestContext(request))
+

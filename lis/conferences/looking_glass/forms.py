@@ -11,7 +11,6 @@ FEE_CHOICES = (
     ("40","Student Rate $40"),
 )
 
-
 class RegistrationContactForm(ContactForm):
     """
     LIS conference registration contact form, extends
