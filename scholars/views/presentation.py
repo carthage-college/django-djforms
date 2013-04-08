@@ -215,21 +215,22 @@ def email_presenters(request):
                     "scholars/presenters/email_form.html",
                     context,context_instance=RequestContext(request))
             elif "execute" in request.POST:
-                presentations = Presentation.objects.filter(date_updated__year=YEAR).filter(status=True)
+                #presentations = Presentation.objects.filter(date_updated__year=YEAR).filter(status=True)
+                presentations = Presentation.objects.filter(date_updated__year=YEAR).filter(user__username="skirk")
+                if settings.DEBUG:
+                    EMAIL = settings.SERVER_EMAIL
+                    BCC = ( ('larry@carthage.edu'),)
+                else:
+                    EMAIL = "dmunk@carthage.edu"
+                    BCC = ( ('dmunk@carthage.edu'),)
                 for p in presentations:
-                    data = {"p":p,"content":form_data["content"]}
-                    email = [p.user.email,]
-                    if settings.DEBUG:
-                        FROM = settings.SERVER_EMAIL
-                        BCC = ( ('larry@carthage.edu'),)
-                    else:
-                        FROM = "dmunk@carthage.edu"
-                        BCC = ( ('dmunk@carthage.edu'),)
-                    send_mail (
-                        request, email,
-                        "[Celebration of Scholars] Next Steps for your presentation",
-                        FROM, "scholars/presenters/email_data.html", data, BCC
-                    )
+                    BCC += (p.user.email,)
+                data = {"content":form_data["content"]}
+                send_mail (
+                    request, [EMAIL,],
+                    "[Celebration of Scholars] Next Steps for your presentation",
+                    EMAIL, "scholars/presenters/email_data.html", data, BCC
+                )
                 return HttpResponseRedirect(reverse("email_presenters_done"))
             else:
                 return HttpResponseRedirect(reverse("email_presenters_form"))
