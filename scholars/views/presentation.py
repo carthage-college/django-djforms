@@ -219,11 +219,16 @@ def email_presenters(request):
                 for p in presentations:
                     data = {"p":p,"content":form_data["content"]}
                     email = [p.user.email,]
+                    if settings.DEBUG:
+                        FROM = settings.SERVER_EMAIL
+                        BCC = ( ('larry@carthage.edu'),)
+                    else:
+                        FROM = "dmunk@carthage.edu"
+                        BCC = ( ('dmunk@carthage.edu'),)
                     send_mail (
                         request, email,
                         "[Celebration of Scholars] Next Steps for your presentation",
-                        settings.DEFAULT_FROM_EMAIL, "scholars/presenters/email_data.html",
-                        data, BCC
+                        FROM, "scholars/presenters/email_data.html", data, BCC
                     )
                 return HttpResponseRedirect(reverse("email_presenters_done"))
             else:
