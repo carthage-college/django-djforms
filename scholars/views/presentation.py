@@ -215,14 +215,13 @@ def email_presenters(request):
                     "scholars/presenters/email_form.html",
                     context,context_instance=RequestContext(request))
             elif "execute" in request.POST:
-                #presentations = Presentation.objects.filter(date_updated__year=YEAR).filter(status=True)
-                presentations = Presentation.objects.filter(date_updated__year=YEAR).filter(user__username="skirk")
+                presentations = Presentation.objects.filter(date_updated__year=YEAR).filter(status=True)
                 if settings.DEBUG:
                     EMAIL = settings.SERVER_EMAIL
                     BCC = ( ('larry@carthage.edu'),)
                 else:
                     EMAIL = "dmunk@carthage.edu"
-                    BCC = ( ('dmunk@carthage.edu'),)
+                    BCC = ( ('dmunk@carthage.edu'),('larry@carthage.edu'), )
                 for p in presentations:
                     BCC += (p.user.email,)
                 data = {"content":form_data["content"]}
