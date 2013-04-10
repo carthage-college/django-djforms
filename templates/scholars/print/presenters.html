@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Celebration of Scholars Print Shirts</title>
+    <link href="https://psc.carthage.edu/scholars/assets/css/pdf.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="container">
+        <h1>Celebration of Scholars: Presenters & Sponsors</h1>
+        <h2>Student Presenters</h2>
+        {% for s in students %}
+            <span style="width:25px;">{{s.name}}</span>|<span>{{s.sponsor}}</span><br />
+        {% endfor %}
+        <h2>Faculty Presenters</h2>
+        {% for f in faculty %}{% if f.name %}
+            <span style="width:25px;">{{f.name}}</span><br />
+        {% endif %}{% endfor %}
+    </div>
+</body>
+</html>

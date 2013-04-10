@@ -1,119 +1,87 @@
-{% extends "base.html" %}
-{% load get_api %}
+{% extends "lis/conferences/course_ference/base.html" %}
 {% block title %}Forecasting Next Generation Libraries Virtual Exhibit Hall Vendor Registration &mdash; Conferences &mdash; Libary and Information Services &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="https://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block extra_style %}
-    <link href="https://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://www.carthage.edu/static/satchmo/css/donations.css" type="text/css" />
-    <style type="text/css">
-    #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;padding:3px 0 3px 5px;width:99%;}
-    li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
-    #id_security_code{width:35px;}
-    #id_postal_code {width:100px;}
-    </style>
-{% endblock %}
-{% block left_nav %}
-    {% include "lis/left_nav.html" %}
-{% endblock %}
+{% block page_title %}Exhibit Hall Vendor Registration{% endblock %}
 {% block content %}
-{% get_api_object as banner cms snippet 252 code %}
-{{banner}}
-{% get_api_object as header cms snippet 124 code %}
-{{header}}
-<div class="buffer">
-    <h1>Forecasting Next Generation Libraries Virtual Exhibit Hall</h1>
     <div id="security"><div style="margin-left:10px;">
     <a href="https://www.securitymetrics.com/site_certificate.adp?s=72%2e47%2e217%2e18&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics" border="0"></a>
     </div></div>
-    <p class="help fleft">Fields marked with <img src="https://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    <h1>Exhibit Hall Vendor Registration</h1>
+    <p><span class="required">Highlighted fields</span> are required.</p>
     {% if form_proc.errors or form_ord.errors or form_con.errors %}
-        <p class="error clear">There were errors with the data submitted, see below.</p>
+        <p class="notice clear">There were errors with the data submitted, see below.</p>
     {% endif %}
-    <form method="post" action="." class="form clear" id="profile">{% csrf_token %}
+    <form method="post" action="." class="form-horizontal" id="profile">{% csrf_token %}
         {% for hidden in form_ord.hidden_fields %}
         {{ hidden }}
         {% endfor %}
-        <fieldset class="blockLabels">
+        <fieldset>
             <h2>Contact Information</h2>
-            <ol>
-                {% for field in form_con.visible_fields %}
-                    <li class="ctrlHolder">
-                    {% if field.label %}<h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>{% endif %}
-                    {% if field.errors %}
-                        <div class="warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div>
-                    {% endif %}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    {{field}}
-                    </div>
-                    </li>
-                {% endfor %}
-            </ol>
-        </fieldset>
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in form_ord.visible_fields %}
-                    <li class="ctrlHolder">
-                        <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                        {% if field.errors %}
-                            <div class="warning">
-                            <span class="error-message">{{ field.errors|join:", "}}</span>
-                        {% else %}
-                            <div>
-                        {% endif %}
-                        {% if field.help_text %}
-                            <p class="help">{{field.help_text}}</p>
-                        {% endif %}
+            {% for field in form_con.visible_fields %}
+                <div class="control-group{% if field.errors %} error{% endif %}">
+                    {% if field.label %}{{ field.label_tag }}{% endif %}
+                    <div class="controls">
                         {{field}}
-                        </div>
-                    </li>
-                {% endfor %}
-            </ol>
+                        {% if field.errors %}<span class="help-inline">{{ field.errors|join:", "}}</span>{% endif %}
+                        {% if field.help_text %}
+                        <div style="clear:both;"></div>
+                        <span class="help-block">{{field.help_text}}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </fieldset>
-        <fieldset class="blockLabels">
-            <h2>Billing Information</h2>
+        <fieldset>
+            {% for field in form_ord.visible_fields %}
+                <div class="control-group{% if field.errors %} error{% endif %}">
+                    {% if field.label %}{{ field.label_tag }}{% endif %}
+                    <div class="controls">
+                        {{field}}
+                        {% if field.errors %}<span class="help-inline">{{ field.errors|join:", "}}</span>{% endif %}
+                        {% if field.help_text %}
+                        <div style="clear:both;"></div>
+                        <span class="help-block">{{field.help_text}}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </fieldset>
+        <fieldset>
+            <h2>Credit Card Information</h2>
             {% if form_proc.errors %}
                 <div style="padding-left:4px;">
-                <p class="error">The transaction was declined{% if status == "baddata" or status == "decline" %} : <strong>{{status}}</strong>{% endif %}</p>
+                <p class="notice">The transaction was declined{% if status == "baddata" or status == "decline" %} : <strong>{{status}}</strong>{% endif %}</p>
                 </div>
             {% endif %}
-            <ol>
-                {% for field in form_proc %}
-                    {% if field.name == "expiration_month" %}
-                    <li class="ctrlHolder">
-                    <h3 class="required">Expiration Date</h3>
-                    <div>{{field}}
-                    {% else %}{% if field.name == "expiration_year" %}&mdash;&nbsp;{{field}}</div></li>
-                    {% else %}
-                    <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div>
-                    {% endif %}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    {{field}}
+            {% for field in form_proc %}
+                {% if field.name == "expiration_month" %}
+                    <div class="control-group">
+                        <label for="id_expiration_date">Expiration date</label>
+                        <div class="controls" style="margin-bottom:9px;">
+                            {{field}}
+                {% else %}{% if field.name == "expiration_year" %}&mdash;&nbsp;{{field}}</div>
+                {% else %}
+                    <div class="control-group{% if field.errors %} error{% endif %}">
+                        {% if field.label %}{{ field.label_tag }}{% endif %}
+                        <div class="controls">
+                            {{field}}
+                            {% if field.errors %}<span class="help-inline">{{ field.errors|join:", "}}</span>{% endif %}
+                            {% if field.help_text %}
+                            <div style="clear:both;"></div>
+                            <span class="help-block">{{field.help_text}}</span>
+                            {% endif %}
+                        </div>
                     </div>
-                    </li>
-                    {% endif %}{% endif %}
-                {% endfor %}
-                <li class="btnHolder">
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Submit" class="button" />
-                </li>
-            </ol>
+                {% endif %}{% endif %}
+            {% endfor %}
+        </fieldset>
+        <fieldset>
+            <div class="control-group">
+                <div class="controls">
+                    <p>
+                        <input type="submit" class="btn btn-primary" value="Submit Registration">
+                    </p>
+                </div>
+            </div>
         </fieldset>
     </form>
-</div>
-{% endblock %}
-{% block sidebar %}
-    {% include "lis/conferences/course_ference/side_bar.html" %}
 {% endblock %}

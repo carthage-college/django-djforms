@@ -5,7 +5,6 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 
 from djforms.lis.conferences.course_ference.forms import *
-from djforms.processors.forms import TrustCommerceForm
 from djtools.utils.mail import send_mail
 
 import os
@@ -23,7 +22,7 @@ def registration_form(request, reg_type):
         form_ord = eval(reg_type.capitalize() + "OrderForm")(initial={'avs':False,'auth':'sale',})
         email_template = "lis/conferences/course_ference/%s/email.html" % reg_type
         os.stat(os.path.join(settings.ROOT_DIR, "templates", email_template))
-        form_proc = TrustCommerceForm()
+        form_proc = ProcessorForm()
     except:
         raise Http404
 
@@ -35,7 +34,7 @@ def registration_form(request, reg_type):
             order = form_ord.save()
             order.operator = "LIS: Course-Ference"
             contact.order.add(order)
-            form_proc = TrustCommerceForm(order, contact, request.POST)
+            form_proc = ProcessorForm(order, contact, request.POST)
             if form_proc.is_valid():
                 r = form_proc.processor_response
                 order.status = r.msg['status']
@@ -43,8 +42,15 @@ def registration_form(request, reg_type):
                 order.save()
                 order.contact = contact
                 TO_LIST.append(contact.email)
-                send_mail(request, TO_LIST, "[LIS] Course-Ference registration: %s" % reg_type, contact.email, email_template % reg_type, order, BCC)
-                return HttpResponseRedirect(reverse('course_ference_registration_success'))
+                send_mail(request, TO_LIST, "[LIS] Course-Ference registration: %s" % reg_type, contact.email, email_template, order, BCC)
+                return HttpResponseRedirect(
+                    reverse('course_ference_registration_success',
+                        kwargs={
+                            'reg_type': reg_type,
+                        },
+                    )
+                )
+
             else:
                 r = form_proc.processor_response
                 if r:
@@ -54,10 +60,21 @@ def registration_form(request, reg_type):
                 order.save()
                 if settings.DEBUG:
                     order.contact = contact
-                    send_mail(request, TO_LIST, "[LIS] Course-Ference registration: %s" % reg_type, contact.email, email_template % reg_type, order, BCC)
-                    return HttpResponseRedirect(reverse('course_ference_registration_success'))
+                    send_mail(
+                        request, TO_LIST, "[LIS] Course-Ference registration: %s" % reg_type,
+                        contact.email, email_template, order, BCC
+                    )
+                    """
+                    return HttpResponseRedirect(
+                        reverse('course_ference_registration_success',
+                            kwargs={
+                                'reg_type': reg_type,
+                            },
+                        )
+                    )
+                    """
         else:
-            form_proc = TrustCommerceForm(None, request.POST)
+            form_proc = ProcessorForm(None, request.POST)
             form_proc.is_valid()
 
     return render_to_response('lis/conferences/course_ference/%s/form.html' % reg_type,

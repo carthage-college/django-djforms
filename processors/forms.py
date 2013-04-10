@@ -29,7 +29,7 @@ class OrderForm(forms.ModelForm):
     avs                 = forms.CharField(widget=forms.HiddenInput())
     auth                = forms.CharField(widget=forms.HiddenInput())
     cycle               = forms.CharField(widget=forms.HiddenInput(), required=False)
-    total               = forms.CharField(max_length=100, label="Donation")
+    total               = forms.CharField(max_length=100)
 
     class Meta:
         model = Order

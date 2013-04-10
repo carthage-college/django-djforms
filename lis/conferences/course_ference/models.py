@@ -6,6 +6,7 @@ from djforms.processors.models import Contact
 from tagging import fields, managers
 
 SECTOR_CHOICES = (
+    ('','---------'),
     ('Publisher','Publisher'),
     ('Aggregator or distributor','Aggregator or distributor'),
     ('Open Source/Access','Open Source/Access'),

@@ -1,0 +1,39 @@
+{% autoescape off %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Celebration of Scholars Print PDF</title>
+    <link href="https://www.carthage.edu/static/forms/css/scholars/pdf.css" rel="stylesheet" />
+</head>
+<body>
+    {% for p in presentations %}
+        <div class="presentation">
+            <p><strong>{{p.title}}</strong></p>
+            {% for s in p.presenters.all %}
+                <div class="person">
+                    <p>
+                        {% if s.mugshot %}<img class="mugshot" src="/assets/files/scholars/mugshots/{{s.mugshot}}" />{% endif %}
+                        {% if s.prez_type == "Student" %}
+                            <strong>: {{s.first_name}} {{s.last_name}}, {{s.college_year}}</strong><br />
+                            <em>Major: {{s.major}}</em><br />
+                            <em>Hometown: {{s.hometown}}</em><br />
+                            <em>Faculty Sponsor: {{s.sponsor}}</em><br />
+                        {% else %}
+                            <strong>: {{s.first_name}} {{s.last_name}}</strong><br />
+                            <em>Department: {{f.department}}</em><br />
+                        {% endif %}
+                    </p>
+                </div>
+                <div style="clear:both;"></div>
+            {% endfor %}
+            <div class="abstract">
+            {{p.abstract_text}}
+            </div>
+            {% if p.funding %}
+            <em>Funding source: {{p.funding}}</em>
+            {% endif %}
+        </div>
+    {% endfor %}
+</body>
+</html>
+{% endautoescape %}
