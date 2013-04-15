@@ -6,7 +6,7 @@ from djforms.core.models import GenericContact, BINARY_CHOICES
 
 class RsvpContact(GenericContact):
     institution     = models.CharField("Name of institution", max_length=128)
-    year_founded    = models.CharField("Year founded", max_length=4)
+    year_founded    = models.CharField("Year founded", max_length=4, null=True, blank=True)
     job_title       = models.CharField("Delegate's title", max_length=128)
     degree          = models.CharField("Delegate's highest degree", max_length=128)
     cohort          = models.CharField("Guest's name", max_length=128)

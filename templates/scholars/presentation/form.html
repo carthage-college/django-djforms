@@ -2,19 +2,19 @@
 {% load get_api %}
 {% block title %}Presentation Form &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
 {% block extra_javascript %}
+    <!--
     <script src="http://www.carthage.edu/assets/js/xinha/init.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/xinha/XinhaCore.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/xinha/celebration.js" type="text/javascript" charset="utf-8"></script>
-    <!--
-    <script type="text/javascript" src="/static/forms/js/jHtmlArea-0.7.5.min.js"></script>
     -->
+    <script type="text/javascript" src="/static/forms/js/jHtmlArea-0.7.5.min.js"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.core.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
         $(function() {
-            //$("#id_abstract_text").htmlarea({
-            //    toolbar: ["html","bold", "italic", "underline", "superscript", "subscript", "|", "h1", "h2", "h3", "h4", "h5", "h6", "|", "indent", "outdent", "horizontalrule", "link", "unlink", "|", "orderedList", "unorderedList"]
-            //});
+            $("#id_abstract_text").htmlarea({
+                toolbar: ["html","bold", "italic", "underline", "superscript", "subscript", "|", "h1", "h2", "h3", "h4", "h5", "h6", "|", "indent", "outdent", "horizontalrule", "link", "unlink", "|", "orderedList", "unorderedList"]
+            });
             var copies = {{copies}};
             // copy duplicate master for new presenter
             $("#clone").click(function () {

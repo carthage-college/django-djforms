@@ -11,7 +11,7 @@ import datetime
 if settings.DEBUG:
     TO_LIST = ["larry@carthage.edu",]
 else:
-    TO_LIST = ["mfisher@carthage.edu",]
+    TO_LIST = ["inauguration@carthage.edu",]
 BCC = settings.MANAGERS
 
 def rsvp_form(request):
