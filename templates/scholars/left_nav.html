@@ -7,7 +7,7 @@
         <li><a href="{% url scholars.views.presentation.email_presenters %}">Email Presenters</a></li>
         {% endif %}
         {% if user.is_superuser %}
-            <li><a href="/forms/admin/">Administration</a></li>
+            <li><a href="/forms/admin/scholars/presentation/">Administration</a></li>
         {% endif %}
         {% if not perms.scholars.manage_presentation %}<li><a href="{% url scholars.views.presentation.form %}">My Presentation</a></li>{% endif %}
         <li><a href="{% url scholars.views.presentation.archives 'presentation' 'screen' %}">Archives</a></li>

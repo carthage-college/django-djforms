@@ -27,15 +27,19 @@ def export_evs_requests(modeladmin, request, queryset):
 export_evs_requests.short_description = "Export the selected Celebration of Scholars Submissions"
 
 class PresentationAdmin(admin.ModelAdmin):
-    model           = Presentation
-    actions         = [export_evs_requests]
-    raw_id_fields   = ("user","updated_by",)
+    model               = Presentation
+    actions             = [export_evs_requests]
+    raw_id_fields       = ("user","updated_by",)
+    list_max_show_all   = 500
+    list_per_page       = 500
+    list_display        = ('title','last_name','first_name','email','sponsor','get_presenters','funding','work_type','permission','shared','need_table','need_electricity','status','poster')
+    ordering            = ['title','work_type','permission','shared','need_table','need_electricity','status']
+    search_fields       = ('title','last_name','email','sponsor','funding')
 
     def save_model(self, request, obj, form, change):
         if change:
             obj.updated_by = request.user
         obj.save()
-
 
 admin.site.register(Presenter)
 admin.site.register(Presentation, PresentationAdmin)

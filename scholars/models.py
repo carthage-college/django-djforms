@@ -37,7 +37,7 @@ class Presenter(models.Model):
     ranking             = models.IntegerField(null=True, blank=True, default=0)
 
     def __unicode__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+        return u"%s %s" % (self.first_name, self.last_name)
 
     def year(self):
         if self.college_year:
@@ -114,8 +114,14 @@ class Presentation(models.Model):
     def email(self):
         return self.user.email
 
-    def phone(self):
-        return self.user.get_profile().phone
+    def sponsor(self):
+        return self.leader.sponsor
+
+    def poster(self):
+        p = False
+        if self.poster_file:
+            p = True
+        return p
 
     def presentation_type(self):
         return WORK_TYPES[self.work_type][1]
