@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from djforms.processors.models import Order
@@ -14,15 +15,20 @@ FEE_CHOICES = (
     ("50","Not for profit: $50 vendor fee"),
 )
 
+if settings.DEBUG:
+    REQ = {'class': 'required'}
+else:
+    REQ = {'class': 'required','required': 'required'}
+
 class ProcessorForm(TrustCommerceForm):
     """
     Override generic form to add required attributes
     """
-    billing_name        = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'class': 'required','required': 'required'}), label="Name on card")
-    card_number         = forms.CharField(label="Card number", max_length=16, widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    expiration_month    = forms.CharField(max_length=2, widget=forms.Select(choices=EXP_MONTH,attrs={'class': 'required input-mini','required': 'required'}))
-    expiration_year     = forms.CharField(max_length=4, widget=forms.Select(choices=EXP_YEAR,attrs={'class': 'required input-small','required': 'required'}))
-    security_code       = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'class': 'required input-mini','required': 'required'}), required=True, help_text="The three or four digit security code on the back of your credit card.")
+    billing_name        = forms.CharField(max_length=128, widget=forms.TextInput(attrs=REQ), label="Name on card")
+    card_number         = forms.CharField(label="Card number", max_length=16, widget=forms.TextInput(attrs=REQ))
+    expiration_month    = forms.CharField(max_length=2, widget=forms.Select(choices=EXP_MONTH,attrs=REQ))
+    expiration_year     = forms.CharField(max_length=4, widget=forms.Select(choices=EXP_YEAR,attrs=REQ))
+    security_code       = forms.CharField(max_length=4, widget=forms.TextInput(attrs=REQ), required=True, help_text="The three or four digit security code on the back of your credit card.")
 
 
 class AttenderContactForm(ContactForm):
@@ -30,20 +36,20 @@ class AttenderContactForm(ContactForm):
     LIS course-ference attender registration contact form, extends
     base ContactForm in processors app
     """
-    first_name      = forms.CharField(max_length=128,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    last_name       = forms.CharField(max_length=128,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    email           = forms.CharField(max_length=75,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    address1        = forms.CharField(max_length=255,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    city            = forms.CharField(max_length=128,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    state           = forms.CharField(widget=forms.Select(choices=STATE_CHOICES, attrs={'class': 'required','required': 'required'}))
-    postal_code     = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs={'class': 'required input-small','required': 'required','maxlength':'10'}))
-    phone           = USPhoneNumberField(widget=forms.TextInput(attrs={'class': 'required','required': 'required','maxlength':'12'}))
-    job_title       = forms.CharField(max_length=128,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    affiliation     = forms.CharField(label="Institution/Organization", max_length=256,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    
+    first_name      = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    last_name       = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    email           = forms.CharField(max_length=75,widget=forms.TextInput(attrs=REQ))
+    address1        = forms.CharField(max_length=255,widget=forms.TextInput(attrs=REQ))
+    city            = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    state           = forms.CharField(widget=forms.Select(choices=STATE_CHOICES, attrs=REQ))
+    postal_code     = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs=REQ))
+    phone           = USPhoneNumberField(widget=forms.TextInput(attrs=REQ))
+    job_title       = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    affiliation     = forms.CharField(label="Institution/Organization", max_length=256,widget=forms.TextInput(attrs=REQ))
+
     class Meta:
         model       = CourseFerenceAttender
-        fields      = ('first_name','last_name','email','address1','address2','city','state','postal_code','job_title','affiliation')
+        fields      = ('first_name','last_name','email','address1','address2','city','state','postal_code','phone','job_title','affiliation')
 
 
 class AttenderOrderForm(OrderForm):
@@ -63,22 +69,23 @@ class VendorContactForm(ContactForm):
     LIS course-ference vendor registration contact form, extends
     base ContactForm in processors app
     """
-    first_name      = forms.CharField(max_length=128,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    last_name       = forms.CharField(max_length=128,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    email           = forms.CharField(max_length=75,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    address1        = forms.CharField(max_length=255,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    city            = forms.CharField(max_length=128,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    state           = forms.CharField(widget=forms.Select(choices=STATE_CHOICES, attrs={'class': 'required','required': 'required'}))
-    postal_code     = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs={'class': 'required input-small','required': 'required','maxlength':'10'}))
-    phone           = USPhoneNumberField(widget=forms.TextInput(attrs={'class': 'required','required': 'required','maxlength':'12'}))
-    affiliation     = forms.CharField(label="Institution/Organization", max_length=256,widget=forms.TextInput(attrs={'class': 'required','required': 'required'}))
-    sector          = forms.CharField(widget=forms.Select(choices=SECTOR_CHOICES, attrs={'class': 'required','required': 'required'}))
-    swag            = forms.CharField(widget=forms.RadioSelect(choices=BINARY_CHOICES, attrs={'class': 'required','required': 'required'}), help_text="Are you able to possibly offer special opportunities, prizes, freebies to attendees (such as drawings, product previews, codes for a free item, etc?)")
-    discussion      = forms.CharField(widget=forms.RadioSelect(choices=BINARY_CHOICES, attrs={'class': 'required','required': 'required'}), help_text="Are you able to participate in either an online discussion forum or live chat to further enhance interaction with attendees?")
+    first_name      = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    last_name       = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    email           = forms.CharField(max_length=75,widget=forms.TextInput(attrs=REQ))
+    address1        = forms.CharField(max_length=255,widget=forms.TextInput(attrs=REQ))
+    city            = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    state           = forms.CharField(widget=forms.Select(choices=STATE_CHOICES, attrs=REQ))
+    postal_code     = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs={'class':'required input-small','required':'required','maxlength':'10'}))
+    phone           = USPhoneNumberField(widget=forms.TextInput(attrs={'class':'required','required':'required','maxlength':'12'}))
+    affiliation     = forms.CharField(label="Institution/Organization",max_length=256,widget=forms.TextInput(attrs=REQ))
+    sector          = forms.CharField(widget=forms.Select(choices=SECTOR_CHOICES, attrs=REQ))
+    description     = forms.CharField(widget=forms.Textarea(attrs={'class':'required','required':'required','rows':'5'}),label="Resources/Materials",required=True,help_text="Provide a brief description of the resources/materials you provide to libraries.")
+    swag            = forms.CharField(widget=forms.RadioSelect(choices=BINARY_CHOICES, attrs=REQ), help_text="Are you able to possibly offer special opportunities, prizes, freebies to attendees (such as drawings, product previews, codes for a free item, etc?)")
+    discussion      = forms.CharField(widget=forms.RadioSelect(choices=BINARY_CHOICES,attrs=REQ),help_text="Are you able to participate in either an online discussion forum or live chat to further enhance interaction with attendees?")
 
     class Meta:
         model       = CourseFerenceVendor
-        fields      = ('affiliation', 'first_name','last_name','email','address1','address2','city','state','postal_code','phone','sector','swag','discussion')
+        fields      = ('affiliation', 'first_name','last_name','email','address1','address2','city','state','postal_code','phone','sector','description','swag','discussion')
 
 
 class VendorOrderForm(OrderForm):
@@ -87,7 +94,7 @@ class VendorOrderForm(OrderForm):
     base OrderForm in processors app
     """
 
-    total           = forms.CharField(label="Type of Organization", widget=forms.RadioSelect(choices=FEE_CHOICES, attrs={'class': 'required','required': 'required'}))
+    total           = forms.CharField(label="Type of Organization", widget=forms.RadioSelect(choices=FEE_CHOICES, attrs=REQ))
 
     class Meta:
         model       = Order

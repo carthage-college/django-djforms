@@ -42,7 +42,11 @@ def registration_form(request, reg_type):
                 order.save()
                 order.contact = contact
                 TO_LIST.append(contact.email)
-                send_mail(request, TO_LIST, "[LIS] Course-Ference registration: %s" % reg_type, contact.email, email_template, order, BCC)
+                send_mail(
+                    request, TO_LIST,
+                    "[LIS] Course-Ference registration: %s" % reg_type,
+                    contact.email, email_template, order, BCC
+                )
                 return HttpResponseRedirect(
                     reverse('course_ference_registration_success',
                         kwargs={
@@ -77,9 +81,14 @@ def registration_form(request, reg_type):
             form_proc = ProcessorForm(None, request.POST)
             form_proc.is_valid()
 
-    return render_to_response('lis/conferences/course_ference/%s/form.html' % reg_type,
-                              {'form_con': form_con, 'form_ord':form_ord, 'form_proc':form_proc, 'reg_type':reg_type,},
-                              context_instance=RequestContext(request))
+    return render_to_response(
+        'lis/conferences/course_ference/%s/form.html' % reg_type,
+        {
+            'form_con': form_con, 'form_ord':form_ord, 'form_proc':form_proc,
+            'reg_type':reg_type,
+        },
+        context_instance=RequestContext(request)
+    )
 
 def registration_success(request, reg_type):
     try:
@@ -88,5 +97,7 @@ def registration_success(request, reg_type):
     except:
         raise Http404
 
-    return render_to_response(template, context_instance=RequestContext(request))
+    return render_to_response(
+        template, context_instance=RequestContext(request)
+    )
 

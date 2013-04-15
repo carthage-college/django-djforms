@@ -26,6 +26,7 @@ class CourseFerenceAttender(Contact):
 class CourseFerenceVendor(CourseFerenceAttender):
 
     sector              = models.CharField("Organizational focus", max_length="32", choices=SECTOR_CHOICES)
+    description         = models.TextField("Resources/Materials", help_text="Brief description of resources/materials you provide to libraries")
     swag                = models.CharField(max_length=3, choices=BINARY_CHOICES, help_text="Are you able to possibly offer special opportunities, prizes, freebies to attendees (such as drawings, product previews, codes for a free item, etc?)")
     discussion          = models.CharField(max_length=3, choices=BINARY_CHOICES, help_text="Are you able to participate in either an online discussion forum or live chat to further enhance interaction with attendees?")
 
