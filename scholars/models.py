@@ -1,5 +1,7 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
 
 from djforms.core.models import Department, GenericChoice, YEAR_CHOICES, BINARY_CHOICES
 
@@ -79,7 +81,8 @@ class Presentation(models.Model):
     status              = models.BooleanField(default=False)
 
     class Meta:
-        ordering        = ('-date_created',)
+        #ordering        = ('-date_created',)
+        ordering        = ('date_created',)
         get_latest_by   = 'date_created'
         permissions     = ( ("manage_presentation", "manage presentation"), )
 
@@ -120,8 +123,9 @@ class Presentation(models.Model):
     def poster(self):
         p = False
         if self.poster_file:
-            p = True
+            p = mark_safe(u'<a href="http://%s/assets/%s">Download</a>' % (settings.SERVER_URL,self.poster_file))
         return p
+    poster.allow_tags = True
 
     def presentation_type(self):
         return WORK_TYPES[self.work_type][1]

@@ -11,9 +11,10 @@ def export_evs_requests(modeladmin, request, queryset):
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=celebration_of_scholars.csv'
     writer = csv.writer(response)
-    writer.writerow(['Title', 'Leader', 'Leader Email', 'Sponsor', 'Presenters', 'Funding Source', 'Work Type', 'Permission to Reproduce', 'Faculty Sponsor Approval', 'Table', 'Electricity', 'Link'])
+    writer.writerow(['Title', 'Leader', 'Leader Email', 'Sponsor', 'Presenters', 'Funding Source', 'Work Type', 'Permission to Reproduce', 'Faculty Sponsor Approval', 'Table', 'Electricity', 'Link','Poster','Date created'])
     for p in queryset:
         link = "http://%s%s" % (settings.SERVER_URL,p.get_absolute_url())
+        poster = "http://%s/assets/%s" % (settings.SERVER_URL,p.poster_file)
         leader = "%s, %s" % (p.leader.last_name, p.leader.first_name)
         presenters = ""
         for f in p.presenters.all():
@@ -22,7 +23,7 @@ def export_evs_requests(modeladmin, request, queryset):
             title = smart_str(p.title, encoding='utf-8', strings_only=False, errors='strict')
             funding = smart_str(p.funding, encoding='utf-8', strings_only=False, errors='strict')
             work_type = smart_str(p.work_type, encoding='utf-8', strings_only=False, errors='strict')
-        writer.writerow([title, leader, p.user.email, p.leader.sponsor, presenters[:-1], funding, work_type, p.permission, p.shared, p.need_table, p.need_electricity, link])
+        writer.writerow([title, leader, p.user.email, p.leader.sponsor, presenters[:-1], funding, work_type, p.permission, p.shared, p.need_table, p.need_electricity, link,poster,p.date_created])
     return response
 export_evs_requests.short_description = "Export the selected Celebration of Scholars Submissions"
 
@@ -32,13 +33,15 @@ class PresentationAdmin(admin.ModelAdmin):
     raw_id_fields       = ("user","updated_by",)
     list_max_show_all   = 500
     list_per_page       = 500
-    list_display        = ('title','last_name','first_name','email','sponsor','get_presenters','funding','work_type','permission','shared','need_table','need_electricity','status','poster')
-    ordering            = ['title','work_type','permission','shared','need_table','need_electricity','status']
-    search_fields       = ('title','last_name','email','sponsor','funding')
+    list_display        = ('title','last_name','first_name','email','sponsor','get_presenters','funding','work_type','permission','shared','need_table','need_electricity','status','poster','date_created')
+    ordering            = ['title','work_type','permission','shared','need_table','need_electricity','status','date_created']
+    search_fields       = ('title','user__last_name','user__email','funding')
 
     def save_model(self, request, obj, form, change):
         if change:
             obj.updated_by = request.user
+        else:
+            obj.updated_by = obj.user
         obj.save()
 
 admin.site.register(Presenter)
