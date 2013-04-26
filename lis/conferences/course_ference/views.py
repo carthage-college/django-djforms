@@ -39,6 +39,8 @@ def registration_form(request, reg_type):
                 r = form_proc.processor_response
                 order.status = r.msg['status']
                 order.transid = r.msg['transid']
+                order.cc_name = form_proc.name
+                order.cc_4_digits = form_proc.card[-4:]
                 order.save()
                 order.contact = contact
                 TO_LIST.append(contact.email)
@@ -61,6 +63,8 @@ def registration_form(request, reg_type):
                     order.status = r.status
                 else:
                     order.status = "Blocked"
+                order.cc_name = form_proc.name
+                order.cc_4_digits = form_proc.card[-4:]
                 order.save()
                 if settings.DEBUG:
                     order.contact = contact

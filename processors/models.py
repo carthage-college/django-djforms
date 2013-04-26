@@ -19,12 +19,14 @@ class Order(models.Model):
     Orders contain a copy of all the information at the time the order was
     placed.
     """
+    cc_name             = models.CharField(max_length=255, null=True, blank=True)
+    cc_4_digits         = models.CharField(max_length=4, null=True, blank=True)
     promotion           = models.ForeignKey(Promotion, null=True, blank=True)
     operator            = models.CharField(max_length=255, null=True, blank=True) # department etc
     total               = models.DecimalField(decimal_places=2, max_digits=10)
     comments            = models.TextField(null=True, blank=True)
     time_stamp          = models.DateTimeField("Timestamp", auto_now_add=True)
-    #export_date         = models.DateTimeField(blank=True,null=True)
+    export_date         = models.DateTimeField(blank=True,null=True)
     status              = models.CharField("Status", max_length=20, choices=ORDER_STATUS, blank=True)
     auth                = models.CharField(max_length=16) # shop or store
     avs                 = models.BooleanField(default=False)

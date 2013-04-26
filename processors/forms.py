@@ -59,6 +59,8 @@ class TrustCommerceForm(CreditCardForm):
         """
         self.order = order
         self.contact = contact
+        self.name = None
+        self.card = None
         self.processor_response = None
         super(TrustCommerceForm, self).__init__(*args, **kwargs)
 
@@ -69,10 +71,13 @@ class TrustCommerceForm(CreditCardForm):
         """
         super(TrustCommerceForm, self).clean()
         cleaned_data = self.cleaned_data
+        self.card = cleaned_data["card_number"]
+        self.name = cleaned_data["billing_name"]
+
         if not self.is_valid():
             return cleaned_data
 
-        response = PaymentProcessor(cleaned_data, self.order, self.contact)
+        response  = PaymentProcessor(cleaned_data, self.order, self.contact)
         self.processor_response = response
         if response.status != "approved" and response.status != 'accepted':
             if response.msg == "cc":

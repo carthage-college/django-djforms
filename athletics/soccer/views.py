@@ -41,6 +41,8 @@ def camp_registration(request):
                     r = form_proc.processor_response
                     order.status = r.msg['status']
                     order.transid = r.msg['transid']
+                    order.cc_name = form_proc.name
+                    order.cc_4_digits = form_proc.card[-4:]
                     order.save()
                     contact.order.add(order)
                     order.reg = reg_data
@@ -52,6 +54,8 @@ def camp_registration(request):
                         order.status = r.status
                     else:
                         order.status = "Blocked"
+                    order.cc_name = form_proc.name
+                    order.cc_4_digits = form_proc.card[-4:]
                     order.save()
                     contact.order.add(order)
                     status = order.status
