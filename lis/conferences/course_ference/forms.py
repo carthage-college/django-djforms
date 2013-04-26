@@ -26,9 +26,11 @@ class ProcessorForm(TrustCommerceForm):
     """
     billing_name        = forms.CharField(max_length=128, widget=forms.TextInput(attrs=REQ), label="Name on card")
     card_number         = forms.CharField(label="Card number", max_length=16, widget=forms.TextInput(attrs=REQ))
-    expiration_month    = forms.CharField(max_length=2, widget=forms.Select(choices=EXP_MONTH,attrs=REQ))
-    expiration_year     = forms.CharField(max_length=4, widget=forms.Select(choices=EXP_YEAR,attrs=REQ))
-    security_code       = forms.CharField(max_length=4, widget=forms.TextInput(attrs=REQ), required=True, help_text="The three or four digit security code on the back of your credit card.")
+    expiration_month    = forms.CharField(max_length=2, widget=forms.Select(choices=EXP_MONTH,attrs={'class': 'required input-mini','required': 'required'}))
+    expiration_year     = forms.CharField(max_length=4, widget=forms.Select(choices=EXP_YEAR,attrs={'class': 'required input-small','required': 'required'}))
+    security_code       = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'class': 'required input-mini','required': 'required'}), required=True, help_text="The three or four digit security code on the back of your credit card.")
+
+
 
 
 class AttenderContactForm(ContactForm):
@@ -42,7 +44,7 @@ class AttenderContactForm(ContactForm):
     address1        = forms.CharField(max_length=255,widget=forms.TextInput(attrs=REQ))
     city            = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
     state           = forms.CharField(widget=forms.Select(choices=STATE_CHOICES, attrs=REQ))
-    postal_code     = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs=REQ))
+    postal_code     = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs={'class': 'required input-small','required': 'required','maxlength':'10'}))
     phone           = USPhoneNumberField(widget=forms.TextInput(attrs=REQ))
     job_title       = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
     affiliation     = forms.CharField(label="Institution/Organization", max_length=256,widget=forms.TextInput(attrs=REQ))

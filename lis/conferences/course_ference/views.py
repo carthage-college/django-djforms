@@ -12,7 +12,7 @@ import os
 if settings.DEBUG:
     TO_LIST = [settings.SERVER_EMAIL,]
 else:
-    TO_LIST = ["ezitron@carthage.edu",]
+    TO_LIST = ["nextgenlibraries@carthage.edu",]
 BCC = settings.MANAGERS
 
 def registration_form(request, reg_type):
