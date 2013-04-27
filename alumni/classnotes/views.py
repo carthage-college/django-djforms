@@ -18,7 +18,7 @@ BCC = settings.MANAGERS
 
 def contact(request):
     if request.method=='POST':
-        form = ContactForm(request.POST)
+        form = ContactForm(request.POST, request.FILES)
         if form.is_valid():
             contact = form.save()
             email = settings.DEFAULT_FROM_EMAIL

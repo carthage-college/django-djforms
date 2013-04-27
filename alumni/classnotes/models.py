@@ -17,6 +17,7 @@ class Contact(GenericContact):
     spousename          = models.CharField("Spouse's name", max_length=128,blank=True,null=True)
     spousepreviousname  = models.CharField("Spouse's previous name",help_text="e.g. maiden name",max_length=32,blank=True,null=True)
     spouseyear          = models.CharField("Spouse's class",max_length=4,blank=True,null=True)
+    hometown            = models.CharField(max_length=128)
     classnote           = models.TextField("Note")
     alumnistatus        = models.BooleanField("Almuni office status",default=False,help_text="Approved by Alumni Office")
     alumnicomments      = models.TextField("Alumni office comments",blank=True,null=True)
