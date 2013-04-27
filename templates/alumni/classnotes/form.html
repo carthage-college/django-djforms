@@ -33,6 +33,7 @@ $(function() {
 <div id="sitetitle">Alumni Class Notes</div>
 <div class="buffer">
     <h1>Submit your Class Note</h1>
+    <p><span class="required">Highlighted fields</span> are required.</p>
     <form method="post" action="." class="form" id="profile" enctype="multipart/form-data">{% csrf_token %}
         <fieldset class="blockLabels">
             <ul class="inline">
@@ -91,6 +92,7 @@ $(function() {
                 <li>
                     <label for="id_hometown" class="placeholder">Home Town</label><br />
                     <input class="xlarge required{% if form.hometown.errors %} error{% endif%}" id="id_hometown" type="text" name="hometown" placeholder="Hometown" maxlength="128" value="{{form.data.hometown}}" {% if not template_debug %}required {% endif %}/>
+                    <div class="help">City and state. Include country, if outside the US.</div>
                 </li>
             </ul>
         </fieldset>
@@ -108,7 +110,7 @@ $(function() {
                     <div class="file_upload">
                         <input type="file" name="picture" id="id_picture" placeholder="Photo" />
                     </div>
-                    <div class="help clear">&nbsp;75 dpi and .jpg only</div>
+                    <div class="help clear">75 dpi and .jpg only</div>
                 </li>
                 <li>
                     <label for="id_caption"><strong>Caption for your photo</strong></label>
