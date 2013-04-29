@@ -32,7 +32,7 @@ class ContactAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Name, Class, Email', {
-            'fields': ('salutation','first_name','last_name','second_name','suffix','previous_name','classyear','email')
+            'fields': ('salutation','first_name','last_name','second_name','suffix','previous_name','classyear','email','hometown')
         }),
         ('Spouse', {
             'fields': ('spousename', 'spousepreviousname', 'spouseyear')
