@@ -71,8 +71,8 @@ class TrustCommerceForm(CreditCardForm):
         """
         super(TrustCommerceForm, self).clean()
         cleaned_data = self.cleaned_data
-        self.card = cleaned_data["card_number"]
-        self.name = cleaned_data["billing_name"]
+        self.card = cleaned_data.get("card_number")
+        self.name = cleaned_data.get("billing_name")
 
         if not self.is_valid():
             return cleaned_data
