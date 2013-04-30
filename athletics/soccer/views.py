@@ -55,7 +55,8 @@ def camp_registration(request):
                     else:
                         order.status = "Blocked"
                     order.cc_name = form_proc.name
-                    order.cc_4_digits = form_proc.card[-4:]
+                    if form_proc.card:
+                        order.cc_4_digits = form_proc.card[-4:]
                     order.save()
                     contact.order.add(order)
                     status = order.status
