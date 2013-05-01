@@ -16,6 +16,8 @@ urlpatterns = patterns('',
     url(r'^classnotes/carthaginian/$', 'djforms.alumni.classnotes.views.screenscrape', name="classnotes_archives_year"),
     url(r'^classnotes/archives/$', 'djforms.alumni.classnotes.views.archives', name="classnotes_archives"),
     url(r'^classnotes/$', 'djforms.alumni.classnotes.views.contact', name='classnotes_form'),
+    # alumni directory
+    url(r'^directory/$', direct_to_template, {'template': 'alumni/directory/home.html'}),
     # mws reunion
     url(r'^msw/reunion/success/$', direct_to_template, {'template': 'alumni/msw/reunion_contact_done.html'}),
     url(r'^msw/reunion/archives/$', 'djforms.alumni.msw.views.reunion_contact_archives', name="reunion_contact_archives"),

@@ -64,7 +64,8 @@ def registration_form(request, reg_type):
                 else:
                     order.status = "Blocked"
                 order.cc_name = form_proc.name
-                order.cc_4_digits = form_proc.card[-4:]
+                if form_proc.card:
+                    order.cc_4_digits = form_proc.card[-4:]
                 order.save()
                 if settings.DEBUG:
                     order.contact = contact
