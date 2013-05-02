@@ -52,8 +52,8 @@ def giving_form(request, transaction, campaign=None):
                 else:
                     years = None
                 or_data.status = r.msg['status']
-                or_data.billingid = r.msg['billingid']
                 or_data.transid = r.msg['transid']
+                or_data.billingid = r.msg.get('billingid')
                 if campaign:
                     or_data.promotion = campaign
                 or_data.save()
