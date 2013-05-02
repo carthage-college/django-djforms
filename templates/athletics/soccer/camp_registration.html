@@ -164,7 +164,7 @@
             <h2>Credit Card Details</h2>
             {% if form_proc.errors and status %}
                 <div style="padding-left:4px;">
-                <p class="error">The transaction was declined: <strong>{{status}}</strong></p>
+                <p class="notice">The transaction failed.{% if status == "baddata" or status == "decline" %}Error: <strong>{{status}}</strong>{% endif %}</p>
                 </div>
             {% endif %}
             <ol>

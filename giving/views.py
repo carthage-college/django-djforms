@@ -12,14 +12,15 @@ from djtools.utils.mail import send_mail
 if settings.DEBUG:
     TO_LIST = [settings.SERVER_EMAIL,]
 else:
-    TO_LIST = ["lpieta@carthage.edu","lhansen@carthage.edu",]
+    TO_LIST = ["lpieta@carthage.edu","lhansen@carthage.edu","bnelson3@carthage.edu"]
 BCC = settings.MANAGERS
 
 def giving_form(request, transaction, campaign=None):
     """
     multipurpose method to handle various types of donations
     """
-    or_form_name = transaction.capitalize() + "OrderForm"
+    trans_cap = transaction.capitalize()
+    or_form_name = trans_cap + "OrderForm"
     try:
         form = eval(or_form_name)()
     except:
@@ -30,14 +31,16 @@ def giving_form(request, transaction, campaign=None):
     else:
         campaign = ""
     status = None
+    years = None
     if request.POST:
         ct_form = DonationContactForm(request.POST, prefix="ct")
         or_form = eval(or_form_name)(request.POST, prefix="or")
         if ct_form.is_valid() and or_form.is_valid():
             contact = ct_form.save()
+            email = contact.email
             or_data = or_form.save(commit=False)
             or_data.status = "In Process"
-            or_data.operator = "%s %s" % (transaction,campaign)
+            or_data.operator = "DJ %s %s" % (trans_cap,campaign)
             or_data.save()
             contact.order.add(or_data)
             cc_form = CreditCardForm(or_data, contact, request.POST, prefix="cc")
@@ -49,25 +52,28 @@ def giving_form(request, transaction, campaign=None):
                     years = str( int(or_data.payments) / 12 )
                     if or_data.cycle != "1m":
                         or_data.payments = str( int(or_data.payments) / int(or_data.cycle[:-1]) )
-                else:
-                    years = None
                 or_data.status = r.msg['status']
                 or_data.transid = r.msg['transid']
                 or_data.billingid = r.msg.get('billingid')
+                or_data.cc_name = cc_form.name
+                or_data.cc_4_digits = cc_form.card[-4:]
                 if campaign:
                     or_data.promotion = campaign
                 or_data.save()
                 # sendmail
+                or_data.contact = contact
                 data = {'order':or_data,'campaign':campaign,'years':years,}
-                subject = "[pledge Donation] %s %s" % (contact.first_name,contact.last_name)
-                email = contact.email
+                subject = "Thank you, %s %s, for your donation to Carthage" % (contact.first_name,contact.last_name)
                 TO_LIST.append(email)
-                send_mail(request, TO_LIST, subject, email, 'giving/%s_email.html' % transaction, data, BCC)
+                send_mail(
+                    request, TO_LIST, subject, email,
+                    'giving/%s_email.html' % transaction, data, BCC
+                )
                 # redirect
                 slug = ""
                 if campaign:
                     slug = campaign.slug
-                url = 'http://www.carthage.edu/forms/giving/pledge/success/%s' % slug
+                url = 'http://www.carthage.edu/forms/giving/%s/success/%s' % (transaction, slug)
                 return HttpResponseRedirect(url)
             else:
                 r = cc_form.processor_response
@@ -75,8 +81,19 @@ def giving_form(request, transaction, campaign=None):
                     or_data.status = r.status
                 else:
                     or_data.status = "Blocked"
+                or_data.cc_name = cc_form.name
+                if cc_form.card:
+                    or_data.cc_4_digits = cc_form.card[-4:]
                 status = or_data.status
                 or_data.save()
+                if settings.DEBUG:
+                    or_data.contact = contact
+                    data = {'order':or_data,'campaign':campaign,'years':years,}
+                    subject = "Thank you, %s %s, for your donation to Carthage" % (contact.first_name,contact.last_name)
+                    send_mail(
+                        request, TO_LIST, subject, email,
+                        'giving/%s_email.html' % transaction, data, BCC
+                    )
         else:
             cc_form = CreditCardForm(None, request.POST, prefix="cc")
             cc_form.is_valid()
