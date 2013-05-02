@@ -15,6 +15,10 @@ class OrderAdmin(admin.ModelAdmin):
     contact_name.allow_tags = True
     contact_name.short_description = 'First name (contact info)'
 
+def invoice_url(self, obj):
+    return '<a href="%s">%s</a>' % (obj.firm_url, obj.firm_url)
+invoice_url.allow_tags = True
+
 
 class ContactAdmin(admin.ModelAdmin):
     model = Contact
