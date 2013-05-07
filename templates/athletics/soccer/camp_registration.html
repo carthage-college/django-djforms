@@ -58,11 +58,12 @@
 {% if form_reg.data.payment_method == "Credit Card" %}#payment-details { display:inherit; }{% else %}#payment-details { display:none; }{% endif %}
 #session-info > ol li {display:block;margin-bottom:5px;}
 #first img { display: inline; }
-#id_security_code, #id_reg_fee{width:35px;}
+#id_security_code, #id_reg_fee {width:35px;}
 #id_card_number {width:150px;}
 #id_postal_code, #id_home_phone, #id_work_phone, #id_dob, #id_age {width:100px;}
-.help { padding-left: 0px; }
-#security { color: #000099; float: right; padding: 5px; }
+#security {color:#000099;float:right;padding:5px;}
+li.ctrlHolder div ul li {display:inline; padding-right:3px;}
+.form .blockLabels label {display: inherit;}
 </style>
 {% endblock %}
 {% block banner %}{% endblock %}
@@ -95,73 +96,75 @@
     {% endif %}
     <p class="help"><img src="https://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> denotes a required field.</p>
     <form method="post" action="." class="form" id="profile">{% csrf_token %}
+        <h2>Contact Information</h2>
         <fieldset class="blockLabels">
-            <h2>Contact Information</h2>
             <ol>
             {% for field in form_con %}
-                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                <li class="ctrlHolder">
+                <h3>{{ field.label_tag }}</h3>
                 {% if field.errors %}
-                <div class="warning">
+                <div class="required warning">
                 <span class="error-message">{{ field.errors|join:", "}}</span>
                 {% else %}
-                <div>
+                <div{% if field.field.required %} class="required"{% endif %}>
                 {% endif %}
+                {{field}}
                 {% if field.help_text %}
                 <p class="help">{{field.help_text}}</p>
                 {% endif %}
-                {{field}}
                 </div>
+                </li>
             {% endfor %}
             </ol>
         </fieldset>
         {% for field in form_reg %}
             {% if field.name == "gender" %}
-                <fieldset class="blockLabels">
                 <h2>Personal Information</h2>
+                <fieldset class="blockLabels">
                 <ol>
             {% endif %}
             {% if field.name == "roommate" %}
                 </ol>
                 </fieldset>
-                <fieldset class="blockLabels">
                 <h2>Housing Information</h2>
+                <fieldset class="blockLabels">
                 <ol>
             {% endif %}
             {% if field.name == "session" %}
                 </ol>
                 </fieldset>
-                <fieldset class="blockLabels" id="session-info">
                 <h2>Session Information</h2>
+                <fieldset class="blockLabels" id="session-info">
                 <ol>
             {% endif %}
             {% if field.name == "reg_fee" %}
                 </ol>
                 </fieldset>
-                <fieldset class="blockLabels">
                 <h2>Method of Payment</h2>
+                <fieldset class="blockLabels">
                 <ol>
             {% endif %}
             <li class="ctrlHolder">
                 {% if field.name != "address2" %}
-                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                <h3>{{ field.label_tag }}</h3>
                 {% endif %}
                 {% if field.errors %}
-                    <div class="warning">
+                    <div class="required warning">
                     <span class="error-message">{{ field.errors|join:", "}}</span>
                 {% else %}
-                    <div>
+                    <div{% if field.field.required %} class="required"{% endif %}>
                 {% endif %}
+                {{field}}
                 {% if field.help_text %}
                     <p class="help">{{field.help_text}}</p>
                 {% endif %}
-                {{field}}
                 </div>
             </li>
         {% endfor %}
         </ol>
         </fieldset>
+        <h2>Credit Card Details</h2>
         <fieldset class="blockLabels" id="payment-details">
-            <h2>Credit Card Details</h2>
             {% if form_proc.errors and status %}
                 <div style="padding-left:4px;">
                 <p class="notice">The transaction failed.{% if status == "baddata" or status == "decline" %}Error: <strong>{{status}}</strong>{% endif %}</p>
@@ -170,17 +173,17 @@
             <ol>
         {% for field in form_proc %}
             <li class="ctrlHolder">
-                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                <h3>{{ field.label_tag }}</h3>
                 {% if field.errors %}
-                <div class="warning">
+                <div class="required warning">
                 <span class="error-message">{{ field.errors|join:", "}}</span>
                 {% else %}
-                <div>
+                <div{% if field.field.required %} class="required"{% endif %}>
                 {% endif %}
+                {{field}}
                 {% if field.help_text %}
                 <p class="help">{{field.help_text}}</p>
                 {% endif %}
-                {{field}}
                 </div>
             </li>
         {% endfor %}
@@ -200,10 +203,12 @@
                     <label for="id_submit">&nbsp;&nbsp;</label>
                     <input type="submit" value="Register" class="button" />
                     <p>
-                    <h2>Questions?</h2>
-                    <strong>Call Steve Domin at (262) 551-5930</strong></p>
                 </li>
             </ol>
+        </fieldset>
+        <h2>Questions?</h2>
+        <fieldset class="blockLabels">
+            <strong>Call Steve Domin at (262) 551-5930</strong></p>
         </fieldset>
     </form>
     </div>

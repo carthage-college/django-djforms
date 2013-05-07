@@ -100,7 +100,7 @@
         <h3 class="fright"><a href="mailto:{{presentation.user.email}}">Email</a></h3>
     {% endif %}
     <h1>Presentation Submission</h1>
-    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    <p><span id="required">Highlighted fields</span> are required.</p>
     {% if form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}

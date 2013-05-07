@@ -36,7 +36,6 @@
     <h1>Event Request Form: Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</h1>
     {% if wizard.steps.step1 == 1 %}<p><strong>Note</strong>: Allow for 3 business days before the day of the event. All bar service requests should go through Michael Michaud in the Todd Wehr Center. Please email him at <a href="mailto:mmichaud@carthage.edu">mmichaud@carthage.edu</a></p>{% endif %}
     {% if wizard.steps.step1 == 5 %}<p>Include the quantity for each item you require.</p>{% endif %}
-    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
     {% include "includes/generic_form_wizard_multi.html" %}
 </div>
 {% endblock %}

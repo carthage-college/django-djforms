@@ -77,7 +77,10 @@
     <p>The WAC Committee will accept late proposals through February 28, 2013.
     However, submitting a late proposal may not allow time for the negotiation
     that is sometimes necessary to secure approval.</p>
-    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    <p><span id="required">Highlighted fields</span> are required.</p>
+    {% if form.errors %}
+        <p class="error">There were errors with the data submitted, see below.</p>
+    {% endif %}
     <form method="POST" action="." class="form" id="profile" enctype="multipart/form-data">{% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
@@ -100,20 +103,7 @@
                 <li><input type="hidden" name="profile-phone" value="{{user.get_profile.phone}}" /></li>
                 {% endif %}
                 {% for field in form %}
-                    <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div>
-                    {% endif %}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    {{field}}
-                    </div>
-                    </li>
+                    {% include "form_field.inc.html" %}
                     {% if field.name == "syllabus" %}
                         <li class="ctrlHolder"><h3><label>Criteria</label></h3></li>
                         <li>To request a Writing Intensive designation, please complete the chart below.

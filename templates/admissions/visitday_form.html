@@ -4,7 +4,7 @@
 <script src="http://www.carthage.edu/assets/js/jquery/plugins/validation/jquery.validationEngine-en.js" type="text/javascript"></script>
 <script src="http://www.carthage.edu/assets/js/jquery/plugins/validation/jquery.validationEngine.js" type="text/javascript"></script>
 <script type="text/javascript">
-$(document).ready(function() {
+$(function() {
     $("#visit_day_form").validationEngine()
     $("#id_date").focus();
 });
@@ -18,12 +18,11 @@ function ValidateTransfer(){
 </script>
 {% endblock %}
 {% block extra_style %}
-    <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.core.css" rel="stylesheet" type="text/css" />
-    <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.theme.css" rel="stylesheet" type="text/css" />
+
     <link href="http://www.carthage.edu/assets/css/jquery/plugins/validation/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
     #visit_day_form textarea {width:460px;height:150px;}
-    #visit_day_form h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}
+    #visit_day_form h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;width:94%;}
     #second ol {margin:0;}
     </style>
 {% endblock %}
@@ -35,7 +34,10 @@ function ValidateTransfer(){
 <div class="buffer">
     <h1>{{visit_day.title}}</h1>
     {{visit_day.description|safe}}
-    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    <p><span id="required">Highlighted fields</span> are required.</p>
+    {% if cc_form.errors or or_form.errors or ct_form.errors %}
+        <p class="error">There were errors with the data submitted, see below.</p>
+    {% endif %}
     <form method="POST" action="." class="form" id="visit_day_form">{% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
@@ -46,15 +48,15 @@ function ValidateTransfer(){
                     <li class="ctrlHolder">
                     <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
                     {% if field.errors %}
-                        <div class="warning">
+                        <div class="required warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>
                     {% else %}
-                        <div>
+                        <div{% if field.field.required %} class="required"{% endif %}>
                     {% endif %}
+                    {{field}}
                     {% if field.help_text %}
                         <p class="help">{{field.help_text}}</p>
                     {% endif %}
-                    {{field}}
                     </div>
                     </li>
                 {% endfor %}

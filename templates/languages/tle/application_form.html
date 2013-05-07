@@ -29,10 +29,11 @@
 {% block content %}
 <div class="buffer">
     <h1>Target Language Expert{% if type == "application" %} Program Application {% else %}: Master of Education or Advanced Certification Programs{% endif %}</h1>
+    {% block required_fields %}<p><span id="required">Highlighted fields</span> are required.</p>{% endblock %}
     {% if form.errors %}
     <h2 style="color: red;">Please correct the error{{ form.errors|pluralize }} below.</h2>
     {% endif %}
-    <form method="POST" action="." class="form" id="tle_form">{% csrf_token %}
+    <form method="post" action="." class="form" id="tle_form">{% csrf_token %}
         <input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
         <fieldset class="blockLabels">
             <legend>Personal Information</legend>
@@ -51,17 +52,17 @@
                     </ol></fieldset><fieldset class="blockLabels"><legend>Enrollment</legend><ol>
                     {% endif %}
                     <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    <h3>{{ field.label_tag }}</h3>
                     {% if field.errors %}
-                        <div class="warning">
+                        <div class="required warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>
                     {% else %}
-                        <div>
+                        <div{% if field.field.required %} class="required"{% endif %}>
                     {% endif %}
+                    {{field}}
                     {% if field.help_text %}
                         <p class="help">{{field.help_text}}</p>
                     {% endif %}
-                    {{field}}
                     </div>
                 </li>
                 {% endfor %}

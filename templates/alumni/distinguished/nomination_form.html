@@ -7,8 +7,6 @@
 <script src="http://www.carthage.edu/assets/js/xinha/job-apps.js" type="text/javascript"></script>
 {% endblock %}
 {% block extra_style %}
-    <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.core.css" rel="stylesheet" type="text/css" />
-    <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.theme.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
     #second h4 {padding:20px;}
     </style>
@@ -46,23 +44,27 @@
     programs, advisory committees, or other efforts that advance the College. The award also will
     consider those whose church or community leadership or other volunteer service has benefited
     society significantly and reflected favorably on Carthage. </p>
-    <form method="POST" action="." class="form" id="distinguished_alumni">{% csrf_token %}
+    <p><span id="required">Highlighted fields</span> are required.</p>
+    {% if nominee_form.errors %}
+        <p class="error">There were errors with the data submitted, see below.</p>
+    {% endif %}
+    <form method="POST" action="." class="form" id="profile">{% csrf_token %}
         <fieldset class="blockLabels">
             <label><h4>Nominee Information</h4></label>
             <ol>
                 {% for field in nominee_form %}
                     <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    <h3>{{ field.label_tag }}</h3>
                     {% if field.errors %}
-                        <div class="warning">
+                        <div class="required warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>
                     {% else %}
-                        <div>
+                        <div{% if field.field.required %} class="required"{% endif %}>
                     {% endif %}
+                    {{field}}
                     {% if field.help_text %}
                         <p class="help">{{field.help_text}}</p>
                     {% endif %}
-                    {{field}}
                     </div>
                 </li>
                 {% endfor %}
@@ -73,12 +75,12 @@
             <ol>
                 {% for field in nominator_form %}
                     <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    <h3{>{{ field.label_tag }}</h3>
                     {% if field.errors %}
-                        <div class="warning">
+                        <div class="required warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>
                     {% else %}
-                        <div>
+                        <div{% if field.field.required %} class="required"{% endif %}>
                     {% endif %}
                     {% if field.help_text %}
                         <p class="help">{{field.help_text}}</p>

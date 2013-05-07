@@ -7,7 +7,6 @@ urlpatterns = patterns('djforms.lis',
     url(r'^secure/reference/articles', TemplateView.as_view(template_name='lis/secure/reference/articles.html')),
     url(r'^equipment-reserve/$', 'equipmentform.views.equipment_reserve'),
     url(r'^print-request/$', 'printjobs.views.print_request'),
-    url(r'^room-reserve/$', 'roomform.views.room_reserve'),
     url(r'^success', TemplateView.as_view(template_name='lis/data_entered.html')),
     # lis ito
     url(r'^ito/profile/success', TemplateView.as_view(template_name='lis/ito/profile_done.html')),

@@ -63,6 +63,16 @@ $(function() {
 });
 </script>
 {% endifusergroup %}
+<script type="text/javascript">
+$(function() {
+    $(".required > input").addClass("required");
+    $(".required > select").addClass("required");
+    $(".required > textarea").addClass("required");
+    $(".warning > input").addClass("error");
+    $(".warning > select").addClass("error");
+    $(".warning > textarea").addClass("error");
+});
+</script>
 {% endblock %}
 {% block extra_style %}
 {% ifusergroup Staff Faculty %}
@@ -123,10 +133,10 @@ div.growlUI h1, div.growlUI h2 {
                                 <li class="ctrlHolder">
                                 <h3>{{ field.label_tag }}</h3>
                                 {% if field.errors %}
-                                <div class="warning">
+                                <div class="required warning">
                                 <span class="error-message">*** {{ field.errors|join:", "}}</span>
                                 {% else %}
-                                <div>
+                                <div{% if field.field.required %} class="required"{% endif %}>
                                 {% endif %}
                                 {{field}}
                                 {% if field.help_text %}
@@ -218,12 +228,12 @@ div.growlUI h1, div.growlUI h2 {
                     <ol>
                         {% for field in form %}
                         <li class="ctrlHolder">
-                        <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                        <h3>{{ field.label_tag }}</h3>
                         {% if field.errors %}
-                        <div class="warning">
+                        <div class="required warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>
                         {% else %}
-                        <div>
+                        <div{% if field.field.required %} class="required"{% endif %}>
                         {% endif %}
                         {{field}}
                         {% if field.help_text %}

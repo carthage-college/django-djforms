@@ -12,32 +12,7 @@
         Please take the time to ensure that all the required fields are filled
         out completely and accurately.
     </p>
-    <form action="." class="form" id="profile" method="post">{% csrf_token %}
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in form %}
-                <li class="ctrlHolder">
-                <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                {% if field.errors %}
-                <div class="warning">
-                <span class="error-message">{{ field.errors|join:", "}}</span>
-                {% else %}
-                <div>
-                {% endif %}
-                {% if field.help_text %}
-                <p class="help">{{field.help_text}}</p>
-                {% endif %}
-                {{field}}
-                </div>
-                </li>
-                {% endfor %}
-                <li class="btnHolder">
-                <label for="id_submit">&nbsp;&nbsp;</label>
-                <input type="submit" value="Submit" class="button" />
-                </li>
-            </ol>
-        </fieldset>
-    </form>
+    {% include "includes/generic_form.html" %}
 </div>
 {% endblock %}
 {% block sidebar %}

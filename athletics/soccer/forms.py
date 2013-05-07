@@ -61,7 +61,7 @@ class SoccerCampRegistrationForm(forms.Form):
     roommate            = forms.CharField(max_length=100, label="Roommate request", help_text="Only one roommate per room", required=False)
     dorm                = forms.CharField(max_length=100, label="Reside in dorm", help_text="Near teammates and/or friends&mdash;please be specific (player's names &amp; team name)", required=False)
     # session
-    session             = forms.TypedChoiceField(choices=SESSIONS, widget=forms.RadioSelect(), help_text="<strong>Note</strong>: enrollment is limited.</p>")
+    session             = forms.TypedChoiceField(choices=SESSIONS, widget=forms.RadioSelect(), help_text="<strong>Note</strong>: enrollment is limited.")
     football            = forms.ChoiceField(choices=BINARY_CHOICES, widget=forms.RadioSelect(), label="Soccer ball", help_text="<strong>Resident campers</strong>, please check here if you would like to purchase an official camp soccer ball for $30.00. Payment for ball and deposit must accompany application.")
     # payment
     reg_fee             = forms.CharField(max_length=7, label="Registration Fee Total")

@@ -4,20 +4,8 @@
 {% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
     <style type="text/css">
-    #profile h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}
     #second ol {margin:0;}
-    #second li { margin: 0 0 0.5em 0;
-}
-    .criteria ul.bullets li{list-style:disc outside;margin-left:30px;}
-    .criteria p {margin-bottom:20px;}
-    #doop_master {display: none;}
-    .criterion {width:250px;float:right;}
-    .ctrlcx {width:36px;float:right;}
-    #duplicates .wac-description {width:294px;height:150px;}
-    div.growlUI { background: url(/media/img/ico/information.png) no-repeat 10px 10px; height:90px; }
-    div.growlUI h1, div.growlUI h2 {
-        font-size: 1.4em; color: white; padding: 5px 5px 5px 75px; text-align: left
-    }
+    #second li {margin: 0 0 0.5em 0;}
     .form input {width: 350px !important; }
     </style>
 {% endblock %}
@@ -29,7 +17,7 @@
 {{header}}
 <div class="buffer">
     <h1>Registration Form</h1>
-    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    {% block required_fields %}<p><span id="required">Highlighted fields</span> are required.</p>{% endblock %}
     {% if form.errors %}
     <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
@@ -39,18 +27,18 @@
                 {% for field in form %}
                     <li class="ctrlHolder">
                     {% if field.name != "school_address2" %}
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    <h3>{{ field.label_tag }}</h3>
                     {% endif %}
                     {% if field.errors %}
-                        <div class="warning">
+                        <div class="required warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>
                     {% else %}
-                        <div>
+                        <div{% if field.field.required %} class="required"{% endif %}>
                     {% endif %}
+                    {{field}}
                     {% if field.help_text %}
                         <p class="help">{{field.help_text}}</p>
                     {% endif %}
-                    {{field}}
                     </div>
                     </li>
                     {% if field.name == "number_of_stu" %}

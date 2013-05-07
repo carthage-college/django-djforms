@@ -29,7 +29,7 @@ class ModelUnitedNationsRegistrationForm(forms.Form):
     email               = forms.EmailField()
     number_of_del       = forms.TypedChoiceField(choices=DELEGATIONS, label="Number of delegations")
     number_of_stu       = forms.CharField(max_length=3, label="Number of students")
-    comments            = forms.CharField(label="Questions/Comments", help_text="Feel free to list alternate countries in the space below (include your choice and delegation number)", widget=forms.Textarea, required=False)
+    comments            = forms.CharField(label="Questions/Comments", help_text="Feel free to list alternate countries in the space above (include your choice and delegation number)", widget=forms.Textarea, required=False)
 
 COUNTRIES = (
 ("","Choose a country..."),

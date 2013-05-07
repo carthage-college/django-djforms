@@ -2,7 +2,7 @@
 {% block title %}Post Departments{% endblock %}
 {% block content %}
 <div class="buffer">
-    <h2 class="page_title">Posting Departments</h2>
+    <h2 class="page_title clear">Posting Departments</h2>
     <ul class="link_list">
       {% for department in object_list %}
       <li><a href="{{ department.get_absolute_url }}">{{ department }}</a></li>

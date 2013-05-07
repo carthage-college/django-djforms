@@ -30,13 +30,9 @@ $(function(){
 {% endblock %}
 {% block extra_style %}
 <style>
-#alumemory textarea {
-    width:600px;
-    height:150px;
-}
 #photo-captions textarea {
     height:60px;
-    width: 300px;
+    width: 200px;
 }
 .MultiFile-label {
     padding-bottom:60px;
@@ -49,13 +45,13 @@ $(function(){
 {% block content %}
 <div class="buffer">
     <h1>Alumni Memory Questionnaire Form</h1>
-    <p>
-        Complete the form below to submit your Alumni Memory.
-    </p>
-    <p>
-        You may include up to 10 photos. Please identify anyone who appears in the photos in the caption area provided.
-    </p>
-    <form action="." class="form" id="alumemory" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <p>Complete the form below to submit your Alumni Memory.</p>
+    <p>You may include up to 10 photos. Please identify anyone who appears in the photos in the caption area provided.</p>
+    <p><span id="required">Highlighted fields</span> are required.</p>
+    {% if form.errors %}
+        <p class="error">There were errors with the data submitted, see below.</p>
+    {% endif %}
+    <form action="." class="form" id="profile" method="post" enctype="multipart/form-data">{% csrf_token %}
         <input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
         <fieldset class="blockLabels">
             <ol>
@@ -63,10 +59,10 @@ $(function(){
                 <li class="ctrlHolder">
                 <h3>{{ field.label_tag }}</h3>
                 {% if field.errors %}
-                <div class="warning">
+                <div class="required warning">
                 <span class="error-message">{{ field.errors|join:", "}}</span>
                 {% else %}
-                <div>
+                <div{% if field.field.required %} class="required"{% endif %}>
                 {% endif %}
                 {{field}}
                 {% if field.help_text %}

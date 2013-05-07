@@ -22,7 +22,7 @@
 {{header}}
 <div class="buffer">
     <div id="security"><div style="margin-left:30px;">
-    <a href="https://www.securitymetrics.com/site_certificate.adp?s=72%2e47%2e217%2e18&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics" border="0"></a>
+    <a href="https://www.securitymetrics.com/site_certificate.adp?s=carthage.edu&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics" border="0"></a>
     </div></div>
     <h1>Conference Registration</h1>
     {% if form_proc.errors or form_ord.errors or form_con.errors %}
@@ -38,17 +38,17 @@
             <ol>
                 {% for field in form_con.visible_fields %}
                     <li class="ctrlHolder">
-                    {% if field.label %}<h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>{% endif %}
+                    {% if field.label %}<h3>{{ field.label_tag }}</h3>{% endif %}
                     {% if field.errors %}
-                        <div class="warning">
+                        <div class="required warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>
                     {% else %}
-                        <div>
+                        <div{% if field.field.required %} class="required"{% endif %}>
                     {% endif %}
+                    {{field}}
                     {% if field.help_text %}
                         <p class="help">{{field.help_text}}</p>
                     {% endif %}
-                    {{field}}
                     </div>
                     </li>
                 {% endfor %}
@@ -58,17 +58,17 @@
             <ol>
                 {% for field in form_ord.visible_fields %}
                     <li class="ctrlHolder">
-                        <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                        <h3>{{ field.label_tag }}</h3>
                         {% if field.errors %}
-                            <div class="warning">
+                            <div class="required warning">
                             <span class="error-message">{{ field.errors|join:", "}}</span>
                         {% else %}
-                            <div>
+                            <div{% if field.field.required %} class="required"{% endif %}>
                         {% endif %}
+                        {{field}}
                         {% if field.help_text %}
                             <p class="help">{{field.help_text}}</p>
                         {% endif %}
-                        {{field}}
                         </div>
                     </li>
                 {% endfor %}
@@ -85,22 +85,22 @@
                 {% for field in form_proc %}
                     {% if field.name == "expiration_month" %}
                     <li class="ctrlHolder">
-                    <h3 class="required">Expiration Date</h3>
-                    <div>{{field}}
+                    <h3>Expiration Date</h3>
+                    <div class="required">{{field}}
                     {% else %}{% if field.name == "expiration_year" %}&mdash;&nbsp;{{field}}</div></li>
                     {% else %}
                     <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    <h3>{{ field.label_tag }}</h3>
                     {% if field.errors %}
-                        <div class="warning">
+                        <div class="required warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>
                     {% else %}
-                        <div>
+                        <div{% if field.field.required %} class="required"{% endif %}>
                     {% endif %}
+                    {{field}}
                     {% if field.help_text %}
                         <p class="help">{{field.help_text}}</p>
                     {% endif %}
-                    {{field}}
                     </div>
                     </li>
                     {% endif %}{% endif %}

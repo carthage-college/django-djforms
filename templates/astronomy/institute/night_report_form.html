@@ -11,9 +11,6 @@
 {% endblock %}
 {% block extra_style %}
     <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-    .form input[type=text] {width: 350px !important; }
-    </style>
 {% endblock %}
 {% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
@@ -24,7 +21,6 @@
 {{header}}
 <div class="buffer">
     <h1>Griffin Observatory Night Report Form</h1>
-    <p class="help">Fields marked with <img src="http://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
     {% include "includes/generic_form.html" %}
 </div>
 {% endblock %}

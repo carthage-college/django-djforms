@@ -48,7 +48,7 @@ class ApplicationForm(BaseForm):
 
 class MastersForm(BaseForm):
 
-    marital_status      = forms.TypedChoiceField(required=False, choices=MARITAL_CHOICES, widget=forms.RadioSelect(), help_text="The following is for statistical purposes only and is not used in admissions decisions.")
+    marital_status      = forms.TypedChoiceField(required=False, choices=MARITAL_CHOICES, widget=forms.RadioSelect(), help_text="This for statistical purposes only and is not used in admissions decisions.")
     entry_semester      = forms.TypedChoiceField(choices=SEMESTER_CHOICES, widget=forms.RadioSelect())
     entry_year          = forms.TypedChoiceField(choices=ENTRY_YEAR_CHOICES, widget=forms.RadioSelect())
     degree              = forms.TypedChoiceField(choices=DEGREE_CHOICES, widget=forms.RadioSelect(), label="Are you")

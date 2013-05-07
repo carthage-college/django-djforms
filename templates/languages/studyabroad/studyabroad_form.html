@@ -5,7 +5,7 @@
 <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.core.css" rel="stylesheet" type="text/css" />
 <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.theme.css" rel="stylesheet" type="text/css" />
 <style>
-#studyabroad textarea {
+#profile textarea {
     width:600px;
     height:125px;
 }
@@ -17,34 +17,6 @@
 {% block content %}
 <div class="buffer">
     <h1>Student Information Form for Study Abroad</h1>
-    {% if form.errors %}
-    <h2 style="color: red;">Please correct the error{{ form.errors|pluralize }} below.</h2>
-    {% endif %}
-    <form method="POST" action="." class="form" id="studyabroad">{% csrf_token %}
-        <input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in form %}
-                    <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div>
-                    {% endif %}
-                    {{field}}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    </div>
-                </li>
-                {% endfor %}
-                <li class="btnHolder">
-                    <input type="submit" value="Submit Request" class="button" />
-                </li>
-            </ol>
-        </fieldset>
-    </form>
+    {% include "includes/generic_form.html" %}
 </div>
 {% endblock %}

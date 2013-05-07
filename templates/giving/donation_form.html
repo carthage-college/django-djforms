@@ -12,12 +12,11 @@
 {% endblock %}
 {% block extra_style %}
     <link href="https://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://www.carthage.edu/static/satchmo/css/donations.css" type="text/css" />
     <style type="text/css">
     #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;padding:3px 0 3px 5px;width:99%;}
-    li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
     #id_cc-security_code{width:35px;}
     #id_or-start_date, #id_ct-postal_code, #id_or-total {width:100px;}
+    li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
     </style>
 {% endblock %}
 {% block columns %}<link href="https://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
@@ -52,37 +51,37 @@
             </p>
         {% endif %}
     </div>
+    <p><span id="required">Highlighted fields</span> are required.</p>
     {% if cc_form.errors or or_form.errors or ct_form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
-    <p class="help">Fields marked with <img src="https://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
     <form method="post" action="." class="form" id="profile"{% block extra_form_tag %}{% endblock%}>{% csrf_token %}
         {% for hidden in or_form.hidden_fields %}
         {{ hidden }}
         {% endfor %}
+        <h2>Donation Information</h2>
         <fieldset class="blockLabels">
-            <h2>Donation Information</h2>
             <ol>
                 {% for field in or_form.visible_fields %}
                     <li class="ctrlHolder">
-                    {% if field.label %}<h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>{% endif %}
+                    {% if field.label %}<h3>{{ field.label_tag }}</h3>{% endif %}
                     {% if field.errors %}
-                        <div class="warning">
+                        <div class="required warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>
                     {% else %}
-                        <div>
+                        <div{% if field.field.required %} class="required"{% endif %}>
                     {% endif %}
+                    {{field}}
                     {% if field.help_text %}
                         <p class="help">{{field.help_text}}</p>
                     {% endif %}
-                    {{field}}
                     </div>
                     </li>
                 {% endfor %}
             </ol>
         </fieldset>
+        <h2>Contact Information</h2>
         <fieldset class="blockLabels">
-            <h2>Contact Information</h2>
             <ol>
                 {% for field in ct_form %}
                     <li class="ctrlHolder">
@@ -90,18 +89,18 @@
                     {{field}} {{field.label}}<br />
                     {% else %}
                         {% if field.name != "address2" %}
-                        <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                        <h3>{{ field.label_tag }}</h3>
                         {% endif %}
                         {% if field.errors %}
-                            <div class="warning">
+                            <div class="required warning">
                             <span class="error-message">{{ field.errors|join:", "}}</span>
                         {% else %}
-                            <div>
+                            <div{% if field.field.required %} class="required"{% endif %}>
                         {% endif %}
+                        {{field}}
                         {% if field.help_text %}
                             <p class="help">{{field.help_text}}</p>
                         {% endif %}
-                        {{field}}
                         </div>
                         {% if field.name == "postal_code" %}
                         <h3 style="margin-top:9px;">Matching Funds</h3>
@@ -111,8 +110,8 @@
                 {% endfor %}
             </ol>
         </fieldset>
+        <h2>Billing Information</h2>
         <fieldset class="blockLabels">
-            <h2>Billing Information</h2>
             {% if cc_form.errors and status %}
                 <div style="padding-left:4px;">
                 <p class="error">The transaction failed. Error: <strong>{{status}}</strong></p>
@@ -122,26 +121,30 @@
                 {% for field in cc_form %}
                     {% if field.name == "expiration_month" %}
                     <li class="ctrlHolder">
-                    <h3 class="required">Expiration Date</h3>
-                    <div>{{field}}
+                    <h3>Expiration Date</h3>
+                    <div class="required">{{field}}
                     {% else %}{% if field.name == "expiration_year" %}&mdash;&nbsp;{{field}}</div></li>
                     {% else %}
                     <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
+                    <h3>{{ field.label_tag }}</h3>
                     {% if field.errors %}
-                        <div class="warning">
+                        <div class="required warning">
                         <span class="error-message">{{ field.errors|join:", "}}</span>
                     {% else %}
-                        <div>
+                        <div{% if field.field.required %} class="required"{% endif %}>
                     {% endif %}
+                    {{field}}
                     {% if field.help_text %}
                         <p class="help">{{field.help_text}}</p>
                     {% endif %}
-                    {{field}}
                     </div>
                     </li>
                     {% endif %}{% endif %}
                 {% endfor %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <ol>
                 <li class="btnHolder">
                     <label for="id_submit">&nbsp;&nbsp;</label>
                     <input type="submit" value="Submit" class="button" />

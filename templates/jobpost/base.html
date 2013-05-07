@@ -60,6 +60,12 @@
         }
         , buttonPlacement: 'right', button: 'none', defaultText: ''
         });
+        $(".required > input").addClass("required");
+        $(".required > select").addClass("required");
+        $(".required > textarea").addClass("required");
+        $(".warning > input").addClass("error");
+        $(".warning > select").addClass("error");
+        $(".warning > textarea").addClass("error");
     });
     </script>
     {% endifusergroup %}
