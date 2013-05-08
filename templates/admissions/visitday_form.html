@@ -22,7 +22,7 @@ function ValidateTransfer(){
     <link href="http://www.carthage.edu/assets/css/jquery/plugins/validation/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
     #visit_day_form textarea {width:460px;height:150px;}
-    #visit_day_form h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;width:94%;}
+    #visit_day_form h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:4px;width:94%;font-size:1.4em;}
     #second ol {margin:0;}
     </style>
 {% endblock %}
@@ -45,20 +45,7 @@ function ValidateTransfer(){
                     {% if field.name == "date" %}<li class="ctrlHolder"><h2 class="fheader">Yes, I plan to attend on:</h2></li>{% endif %}
                     {% if field.name == "first_name" %}<li class="ctrlHolder"><h2 class="fheader">Personal Information</h2></li>{% endif %}
                     {% if field.name == "high_school" %}<li class="ctrlHolder"><h2 class="fheader">Educational Background and Plans</h2></li>{% endif %}
-                    <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="required warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div{% if field.field.required %} class="required"{% endif %}>
-                    {% endif %}
-                    {{field}}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    </div>
-                    </li>
+                    {% include "form_field.inc.html" %}
                 {% endfor %}
             </ol>
         </fieldset>
