@@ -5,7 +5,13 @@
             <div class="person">
                 <p>
                     {% if o.mugshot %}<img class="mugshot" src="http://{{server_url}}{{media_url}}{{o.mugshot}}" />{% endif %}
-                    <strong>Name</strong>: {{o.first_name}} {{o.last_name}}, {{o.year}}<br />
+                    <strong>Name</strong>:
+                    {% if not user.is_anonymous and o.leader %}
+                    <a href="mailto:{{o.user.email}}">{{o.first_name}} {{o.last_name}}</a></td>
+                    {% else %}
+                    {{o.first_name}} {{o.last_name}}
+                    {% endif %}
+                    <br />
                     <strong>Major</strong>: {{o.major}}<br />
                     <strong>Hometown</strong>: {{o.hometown}}<br />
                     <strong>Faculty Sponsor</strong>: {{o.sponsor}}<br />
@@ -17,7 +23,13 @@
             <div class="person">
                 <p>
                     {% if o.mugshot %}<img class="mugshot" src="http://{{server_url}}{{media_url}}{{o.mugshot}}" />{% endif %}
-                    <strong>Name</strong>: {{o.first_name}} {{o.last_name}}<br />
+                    <strong>Name</strong>:
+                    {% if not user.is_anonymous and o.leader %}
+                    <a href="mailto:{{o.user.email}}">{{o.first_name}} {{o.last_name}}</a></td>
+                    {% else %}
+                    {{o.first_name}} {{o.last_name}}
+                    {% endif %}
+                    <br />
                     <strong>Department</strong>: {{o.department}}<br />
                 </p>
                 <div style="clear:both;"></div>

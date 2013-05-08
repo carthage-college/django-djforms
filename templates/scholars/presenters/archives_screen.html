@@ -34,7 +34,11 @@ table.tablesorter tbody tr.odd td { background-color: #efefef; }
         <tbody>
         {% for p in prez %}
         <tr class="{% cycle 'odd' 'even' %}">
+            {% if user.is_anonymous %}
             <td>{{p.last_name}}, {{p.first_name}}</td>
+            {% else %}
+            <td><a href="mailto:{{p.user.email}}">{{p.last_name}}, {{p.first_name}}</a></td>
+            {% endif %}
             <td>{{p.prez_type}}</td>
         </tr>
         {% endfor %}
