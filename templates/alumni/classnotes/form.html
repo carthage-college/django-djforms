@@ -35,7 +35,10 @@ $(function() {
 <div id="sitetitle">Alumni Class Notes</div>
 <div class="buffer">
     <h1>Submit your Class Note</h1>
-    <p><span id="required">Highlighted fields</span> are required.</p>
+    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
+    {% if form.errors %}
+    <h2 style="color: red;">Please correct the error{{ form.errors|pluralize }} below.</h2>
+    {% endif %}
     <form method="post" action="." class="form" id="profile" enctype="multipart/form-data">{% csrf_token %}
         <fieldset class="blockLabels">
             <ul class="inline">

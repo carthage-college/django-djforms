@@ -44,7 +44,7 @@
     programs, advisory committees, or other efforts that advance the College. The award also will
     consider those whose church or community leadership or other volunteer service has benefited
     society significantly and reflected favorably on Carthage. </p>
-    <p><span id="required">Highlighted fields</span> are required.</p>
+    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
     {% if nominee_form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
@@ -53,20 +53,7 @@
             <label><h4>Nominee Information</h4></label>
             <ol>
                 {% for field in nominee_form %}
-                    <li class="ctrlHolder">
-                    <h3>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="required warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div{% if field.field.required %} class="required"{% endif %}>
-                    {% endif %}
-                    {{field}}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    </div>
-                </li>
+                    {% include "form_field.inc.html" %}
                 {% endfor %}
             </ol>
         </fieldset>
@@ -74,20 +61,7 @@
             <label><h4>Nominated By</h4></label>
             <ol>
                 {% for field in nominator_form %}
-                    <li class="ctrlHolder">
-                    <h3{>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="required warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div{% if field.field.required %} class="required"{% endif %}>
-                    {% endif %}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    {{field}}
-                    </div>
-                </li>
+                    {% include "form_field.inc.html" %}
                 {% endfor %}
             </ol>
         </fieldset>

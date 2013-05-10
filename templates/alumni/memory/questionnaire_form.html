@@ -47,7 +47,7 @@ $(function(){
     <h1>Alumni Memory Questionnaire Form</h1>
     <p>Complete the form below to submit your Alumni Memory.</p>
     <p>You may include up to 10 photos. Please identify anyone who appears in the photos in the caption area provided.</p>
-    <p><span id="required">Highlighted fields</span> are required.</p>
+    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
     {% if form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
@@ -56,20 +56,7 @@ $(function(){
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}
-                <li class="ctrlHolder">
-                <h3>{{ field.label_tag }}</h3>
-                {% if field.errors %}
-                <div class="required warning">
-                <span class="error-message">{{ field.errors|join:", "}}</span>
-                {% else %}
-                <div{% if field.field.required %} class="required"{% endif %}>
-                {% endif %}
-                {{field}}
-                {% if field.help_text %}
-                <p class="help">{{field.help_text}}</p>
-                {% endif %}
-                </div>
-                </li>
+                    {% include "form_field.inc.html" %}
                 {% endfor %}
                 <li class="ctrlHolder">
                 <h3>Photos</h3>

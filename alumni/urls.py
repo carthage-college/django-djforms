@@ -24,6 +24,6 @@ urlpatterns = patterns('',
     url(r'^msw/reunion/(?P<cid>\d+)/detail/$', 'djforms.alumni.msw.views.reunion_contact_detail', name="reunion_contact_detail"),
     url(r'^msw/reunion/$', 'djforms.alumni.msw.views.reunion_contact_form', name='reunion_contact_form'),
     # distinguised alumni nomination
-    url(r'^distinguished-alumni/nomination/success/$', direct_to_template, {'template': 'alumni/data_entered.html'}),
-    url(r'^distinguished-alumni/nomination/$', 'djforms.alumni.distinguished.views.nomination_form', name='nomination_form'),
+    url(r'^distinguished/nomination/success/$', direct_to_template, {'template': 'alumni/data_entered.html'}),
+    url(r'^distinguished/nomination/$', 'djforms.alumni.distinguished.views.nomination_form', name='nomination_form'),
 )

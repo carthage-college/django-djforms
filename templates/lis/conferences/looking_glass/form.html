@@ -25,10 +25,10 @@
     <a href="https://www.securitymetrics.com/site_certificate.adp?s=carthage.edu&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics" border="0"></a>
     </div></div>
     <h1>Conference Registration</h1>
+    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
     {% if form_proc.errors or form_ord.errors or form_con.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
-    <p class="help">Fields marked with <img src="https://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
     <form method="post" action="." class="form" id="profile">{% csrf_token %}
         {% for hidden in form_ord.hidden_fields %}
         {{ hidden }}
@@ -37,40 +37,14 @@
             <h2>Contact Information</h2>
             <ol>
                 {% for field in form_con.visible_fields %}
-                    <li class="ctrlHolder">
-                    {% if field.label %}<h3>{{ field.label_tag }}</h3>{% endif %}
-                    {% if field.errors %}
-                        <div class="required warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div{% if field.field.required %} class="required"{% endif %}>
-                    {% endif %}
-                    {{field}}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    </div>
-                    </li>
+                    {% include "form_field.inc.html" %}
                 {% endfor %}
             </ol>
         </fieldset>
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form_ord.visible_fields %}
-                    <li class="ctrlHolder">
-                        <h3>{{ field.label_tag }}</h3>
-                        {% if field.errors %}
-                            <div class="required warning">
-                            <span class="error-message">{{ field.errors|join:", "}}</span>
-                        {% else %}
-                            <div{% if field.field.required %} class="required"{% endif %}>
-                        {% endif %}
-                        {{field}}
-                        {% if field.help_text %}
-                            <p class="help">{{field.help_text}}</p>
-                        {% endif %}
-                        </div>
-                    </li>
+                    {% include "form_field.inc.html" %}
                 {% endfor %}
             </ol>
         </fieldset>
@@ -82,29 +56,7 @@
                 </div>
             {% endif %}
             <ol>
-                {% for field in form_proc %}
-                    {% if field.name == "expiration_month" %}
-                    <li class="ctrlHolder">
-                    <h3>Expiration Date</h3>
-                    <div class="required">{{field}}
-                    {% else %}{% if field.name == "expiration_year" %}&mdash;&nbsp;{{field}}</div></li>
-                    {% else %}
-                    <li class="ctrlHolder">
-                    <h3>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="required warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div{% if field.field.required %} class="required"{% endif %}>
-                    {% endif %}
-                    {{field}}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    </div>
-                    </li>
-                    {% endif %}{% endif %}
-                {% endfor %}
+                {% include "form_field_credit_card.inc.html" %}
                 <li class="btnHolder">
                     <h3>Conference Cancellation Policy</h3>
                     <p>A cancellation must be received by April 16, 2013 by emailing

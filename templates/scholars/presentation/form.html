@@ -100,7 +100,7 @@
         <h3 class="fright"><a href="mailto:{{presentation.user.email}}">Email</a></h3>
     {% endif %}
     <h1>Presentation Submission</h1>
-    <p><span id="required">Highlighted fields</span> are required.</p>
+    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
     {% if form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
@@ -113,10 +113,10 @@
                 {% for field in form.visible_fields %}
                     {% if field.name == "poster_file" %}
                         {% if presentation.status %}
-                            {% include "scholars/presentation/form_multi.inc.html" %}
+                            {% include "form_field.inc.html" %}
                         {% endif %}
                     {% else %}
-                        {% include "scholars/presentation/form_multi.inc.html" %}
+                        {% include "form_field.inc.html" %}
                     {% endif %}
                 {% endfor %}
                 {% if manager %}

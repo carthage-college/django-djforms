@@ -59,7 +59,7 @@
     {% if cc_form.errors or or_form.errors or ct_form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
-    <p class="help">Fields marked with <img src="https://www.carthage.edu/assets/img/ico/silk/icons/asterisk_orange.png" /> are required.</p>
+    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
     <form method="post" action="." class="form" id="profile"{% block extra_form_tag %}{% endblock%}>{% csrf_token %}
         {% for hidden in or_form.hidden_fields %}
         {{ hidden }}
@@ -68,20 +68,7 @@
             <ol>
             <h2>Pledge Information</h2>
                 {% for field in or_form.visible_fields %}
-                    <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div>
-                    {% endif %}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    {{field}}
-                    </div>
-                    </li>
+                    {% include "form_field.inc.html" %}
                 {% endfor %}
             </ol>
         </fieldset>
@@ -93,20 +80,7 @@
                     {% if field.name == "matching_company" or field.name == "thrivent_financial" or field.name == "opt_in" %}
                     {{field}} {{field.label}}<br />
                     {% else %}
-                        {% if field.name != "address2" %}
-                        <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                        {% endif %}
-                        {% if field.errors %}
-                            <div class="warning">
-                            <span class="error-message">{{ field.errors|join:", "}}</span>
-                        {% else %}
-                            <div>
-                        {% endif %}
-                        {% if field.help_text %}
-                            <p class="help">{{field.help_text}}</p>
-                        {% endif %}
-                        {{field}}
-                        </div>
+                        {% include "form_field.inc.html" %}
                         {% if field.name == "postal_code" %}
                         <h3 style="margin-top:9px;">Matching Funds</h3>
                         {% endif %}
@@ -123,29 +97,7 @@
                 </div>
             {% endif %}
             <ol>
-                {% for field in cc_form %}
-                    {% if field.name == "expiration_month" %}
-                    <li class="ctrlHolder">
-                    <h3 class="required">Expiration Date</h3>
-                    <div>{{field}}
-                    {% else %}{% if field.name == "expiration_year" %}&mdash;&nbsp;{{field}}</div></li>
-                    {% else %}
-                    <li class="ctrlHolder">
-                    <h3{% if field.field.required %} class="required"{% endif %}>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div>
-                    {% endif %}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    {{field}}
-                    </div>
-                    </li>
-                    {% endif %}{% endif %}
-                {% endfor %}
+                {% include "form_field_credit_card.inc.html" %}
                 <li class="btnHolder">
                     <label for="id_submit">&nbsp;&nbsp;</label>
                     <input type="submit" value="Submit" class="button" />

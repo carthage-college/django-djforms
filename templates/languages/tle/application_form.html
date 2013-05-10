@@ -29,7 +29,7 @@
 {% block content %}
 <div class="buffer">
     <h1>Target Language Expert{% if type == "application" %} Program Application {% else %}: Master of Education or Advanced Certification Programs{% endif %}</h1>
-    {% block required_fields %}<p><span id="required">Highlighted fields</span> are required.</p>{% endblock %}
+    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
     {% if form.errors %}
     <h2 style="color: red;">Please correct the error{{ form.errors|pluralize }} below.</h2>
     {% endif %}
@@ -51,20 +51,7 @@
                     {% if field.name == "entry_semester" %}
                     </ol></fieldset><fieldset class="blockLabels"><legend>Enrollment</legend><ol>
                     {% endif %}
-                    <li class="ctrlHolder">
-                    <h3>{{ field.label_tag }}</h3>
-                    {% if field.errors %}
-                        <div class="required warning">
-                        <span class="error-message">{{ field.errors|join:", "}}</span>
-                    {% else %}
-                        <div{% if field.field.required %} class="required"{% endif %}>
-                    {% endif %}
-                    {{field}}
-                    {% if field.help_text %}
-                        <p class="help">{{field.help_text}}</p>
-                    {% endif %}
-                    </div>
-                </li>
+                    {% include "form_field.inc.html" %}
                 {% endfor %}
                 {% if type == "masters" %}
                 <li class="ctrlHolder">

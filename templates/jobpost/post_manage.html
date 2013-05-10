@@ -39,20 +39,7 @@
                 <ol>
                     {% for field in form %}
                         {% if not field.is_hidden %}
-                            <li class="ctrlHolder">
-                            <h3>{{ field.label_tag }}</h3>
-                            {% if field.errors %}
-                            <div class="required warning">
-                            <span class="error-message">*** {{ field.errors|join:", "}}</span>
-                            {% else %}
-                            <div{% if field.field.required %} class="required"{% endif %}>
-                            {% endif %}
-                            {{field}}
-                            {% if field.help_text %}
-                            <p class="help">{{field.help_text}}</p>
-                            {% endif %}
-                            </div>
-                            </li>
+                            {% include "form_field.inc.html" %}
                         {% endif %}
                     {% endfor %}
                     <li class="btnHolder">
