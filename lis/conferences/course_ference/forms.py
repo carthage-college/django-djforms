@@ -4,9 +4,8 @@ from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeFie
 
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm, TrustCommerceForm, EXP_MONTH, EXP_YEAR
-
 from djforms.lis.conferences.course_ference.models import CourseFerenceAttender, CourseFerenceVendor, SECTOR_CHOICES
-from djforms.core.models import BINARY_CHOICES, STATE_CHOICES
+from djforms.core.models import BINARY_CHOICES, STATE_CHOICES, REQ
 
 from tagging.models import Tag, TaggedItem
 
@@ -14,24 +13,6 @@ FEE_CHOICES = (
     ("150","For profit: $150 vendor fee"),
     ("50","Not for profit: $50 vendor fee"),
 )
-
-if settings.DEBUG:
-    REQ = {'class': 'required'}
-else:
-    REQ = {'class': 'required','required': 'required'}
-
-class ProcessorForm(TrustCommerceForm):
-    """
-    Override generic form to add required attributes
-    """
-    billing_name        = forms.CharField(max_length=128, widget=forms.TextInput(attrs=REQ), label="Name on card")
-    card_number         = forms.CharField(label="Card number", max_length=16, widget=forms.TextInput(attrs=REQ))
-    expiration_month    = forms.CharField(max_length=2, widget=forms.Select(choices=EXP_MONTH,attrs={'class': 'required input-mini','required': 'required'}))
-    expiration_year     = forms.CharField(max_length=4, widget=forms.Select(choices=EXP_YEAR,attrs={'class': 'required input-small','required': 'required'}))
-    security_code       = forms.CharField(max_length=4, widget=forms.TextInput(attrs={'class': 'required input-mini','required': 'required'}), required=True, help_text="The three or four digit security code on the back of your credit card.")
-
-
-
 
 class AttenderContactForm(ContactForm):
     """

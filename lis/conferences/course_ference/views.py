@@ -4,7 +4,9 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 
+from djforms.processors.forms import TrustCommerceForm as ProcessorForm
 from djforms.lis.conferences.course_ference.forms import *
+
 from djtools.utils.mail import send_mail
 
 import os

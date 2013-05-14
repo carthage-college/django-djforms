@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.localflavor.us.models import USStateField
@@ -66,6 +67,10 @@ SALUTATION_TITLES = (
     ("Prof.","Prof."),
     ("Dr.","Dr."),
 )
+if settings.DEBUG:
+    REQ = {'class': 'required'}
+else:
+    REQ = {'class': 'required','required': 'required'}
 
 YEARS1 =  [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +1))]
 YEARS3 =  [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +3))]
