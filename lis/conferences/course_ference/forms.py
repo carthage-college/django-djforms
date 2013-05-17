@@ -14,7 +14,7 @@ FEE_CHOICES = (
     ("50","Not for profit: $50 vendor fee"),
 )
 
-class AttenderContactForm(ContactForm):
+class AttenderContactForm(forms.ModelForm):
     """
     LIS course-ference attender registration contact form, extends
     base ContactForm in processors app
@@ -22,18 +22,11 @@ class AttenderContactForm(ContactForm):
     first_name      = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
     last_name       = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
     email           = forms.CharField(max_length=75,widget=forms.TextInput(attrs=REQ))
-    address1        = forms.CharField(max_length=255,widget=forms.TextInput(attrs=REQ))
-    city            = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
-    state           = forms.CharField(widget=forms.Select(choices=STATE_CHOICES, attrs=REQ))
-    postal_code     = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs={'class': 'required input-small','required': 'required','maxlength':'10'}))
-    phone           = USPhoneNumberField(widget=forms.TextInput(attrs=REQ))
     job_title       = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
     affiliation     = forms.CharField(label="Institution/Organization", max_length=256,widget=forms.TextInput(attrs=REQ))
 
     class Meta:
         model       = CourseFerenceAttender
-        fields      = ('first_name','last_name','email','address1','address2','city','state','postal_code','phone','job_title','affiliation')
-
 
 class AttenderOrderForm(OrderForm):
     """

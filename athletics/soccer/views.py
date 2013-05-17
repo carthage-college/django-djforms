@@ -4,9 +4,9 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
+from djforms.athletics.soccer.forms import SoccerCampContactForm, SoccerCampRegistrationForm
 from djforms.processors.models import Contact, Order
-from djforms.processors.forms import ContactForm, TrustCommerceForm
+from djforms.processors.forms import TrustCommerceForm
 from djtools.utils.mail import send_mail
 
 if settings.DEBUG:
@@ -19,7 +19,7 @@ def camp_registration(request):
     status = None
     if request.POST:
         form_reg = SoccerCampRegistrationForm(request.POST)
-        form_con = ContactForm(request.POST)
+        form_con = SoccerCampContactForm(request.POST)
         if form_reg.is_valid() and form_con.is_valid():
             reg_data = form_reg.cleaned_data
             con_data = form_con.cleaned_data
@@ -60,6 +60,7 @@ def camp_registration(request):
                     order.save()
                     contact.order.add(order)
                     status = order.status
+                    send_mail(request, TO_LIST, "[%s] Soccer camp registration" % order.status, contact.email, "athletics/soccer/camp_registration_email.html", order, BCC)
             else:
                 order = Order(total=total,status="Pay later")
                 order.reg = reg_data
@@ -74,7 +75,7 @@ def camp_registration(request):
                 form_proc = TrustCommerceForm()
     else:
         form_reg = SoccerCampRegistrationForm()
-        form_con = ContactForm()
+        form_con = SoccerCampContactForm()
         form_proc = TrustCommerceForm()
     return render_to_response('athletics/soccer/camp_registration.html',
                               {'form_reg': form_reg, 'form_con':form_con, 'form_proc':form_proc,'status':status,},

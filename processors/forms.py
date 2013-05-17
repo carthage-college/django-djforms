@@ -14,9 +14,9 @@ class ContactForm(forms.ModelForm):
     """
     A generic form to collect contact info
     """
-    phone               = USPhoneNumberField(label="Phone number", max_length=12, help_text="Format: XXX-XXX-XXXX")
-    state               = forms.CharField(widget=forms.Select(choices=STATE_CHOICES), required=True)
-    postal_code         = USZipCodeField()
+    phone               = USPhoneNumberField(label="Phone number", max_length=12, help_text="Format: XXX-XXX-XXXX", required=False)
+    state               = forms.CharField(widget=forms.Select(choices=STATE_CHOICES), required=False)
+    postal_code         = USZipCodeField(required=False)
 
     class Meta:
         model = Contact
