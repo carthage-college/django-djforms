@@ -2,7 +2,8 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
-from djforms.core.models import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
+from djforms.core.models import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES, STATE_CHOICES, REQ
+from djforms.processors.models import Contact
 
 YEAR_CHOICES = (
     ('1', '1'),
@@ -43,6 +44,21 @@ AMOUNT_CHOICES = (
     ('Deposit', 'Deposit'),
     ('Full amount', 'Full amount'),
 )
+
+class SoccerCampContactForm(forms.ModelForm):
+
+    first_name      = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    last_name       = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    email           = forms.CharField(max_length=75,widget=forms.TextInput(attrs=REQ))
+    address1        = forms.CharField(max_length=255,widget=forms.TextInput(attrs=REQ))
+    city            = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    state           = forms.CharField(widget=forms.Select(choices=STATE_CHOICES, attrs=REQ))
+    postal_code     = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs={'class': 'required input-small','required': 'required','maxlength':'10'}))
+    phone           = USPhoneNumberField(widget=forms.TextInput(attrs=REQ))
+
+    class Meta:
+        model       = Contact
+        exclude     = ('country','order','second_name','previous_name','salutation')
 
 class SoccerCampRegistrationForm(forms.Form):
     """
