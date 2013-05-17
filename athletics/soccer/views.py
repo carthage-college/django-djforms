@@ -60,7 +60,8 @@ def camp_registration(request):
                     order.save()
                     contact.order.add(order)
                     status = order.status
-                    send_mail(request, TO_LIST, "[%s] Soccer camp registration" % order.status, contact.email, "athletics/soccer/camp_registration_email.html", order, BCC)
+                    order.reg = reg_data
+                    send_mail(request, TO_LIST, "[%s] Soccer camp registration" % status, contact.email, "athletics/soccer/camp_registration_email.html", order, BCC)
             else:
                 order = Order(total=total,status="Pay later")
                 order.reg = reg_data
