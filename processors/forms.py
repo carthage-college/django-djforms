@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
-from djforms.core.models import STATE_CHOICES, REQ
+from djforms.core.models import STATE_CHOICES
 from models import Contact, Order
 from trust_commerce import PaymentProcessor
 
@@ -9,6 +9,7 @@ from datetime import date
 
 EXP_MONTH = [(x, x) for x in xrange(1, 13)]
 EXP_YEAR = [(x, x) for x in xrange(date.today().year, date.today().year + 15)]
+REQ = {'class': 'required'}
 
 class ContactForm(forms.ModelForm):
     """
@@ -39,11 +40,11 @@ class CreditCardForm(forms.Form):
     """
     A generic form to collect credit card information and then charge the credit card.
     """
-    billing_name        = forms.CharField(max_length=128, widget=forms.TextInput(attrs=REQ), label="Name on card")
+    billing_name        = forms.CharField(max_length=128, label="Name on card")
     card_number         = forms.CharField(label="Card number", max_length=16, widget=forms.TextInput(attrs=REQ))
-    expiration_month    = forms.CharField(max_length=2, widget=forms.Select(choices=EXP_MONTH,attrs={'class': 'required input-mini','required': 'required'}))
-    expiration_year     = forms.CharField(max_length=4, widget=forms.Select(choices=EXP_YEAR,attrs={'class': 'required input-small','required': 'required'}))
-    security_code       = forms.CharField(max_length=4, widget=forms.TextInput(attrs=REQ), required=True, help_text="The three or four digit security code on the back of your credit card.")
+    expiration_month    = forms.CharField(max_length=2, widget=forms.Select(choices=EXP_MONTH,attrs={'class': 'required input-mini'}))
+    expiration_year     = forms.CharField(max_length=4, widget=forms.Select(choices=EXP_YEAR,attrs={'class': 'required input-small'}))
+    security_code       = forms.CharField(max_length=4, help_text="The three or four digit security code on the back of your credit card.",widget=forms.TextInput(attrs=REQ))
 
 
 class TrustCommerceForm(CreditCardForm):

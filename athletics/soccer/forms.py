@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
-from djforms.core.models import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES, STATE_CHOICES, REQ
+from djforms.core.models import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES, STATE_CHOICES
 from djforms.processors.models import Contact
 
 YEAR_CHOICES = (
@@ -45,6 +45,8 @@ AMOUNT_CHOICES = (
     ('Full amount', 'Full amount'),
 )
 
+REQ = {'class': 'required'}
+
 class SoccerCampContactForm(forms.ModelForm):
 
     first_name      = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
@@ -53,7 +55,7 @@ class SoccerCampContactForm(forms.ModelForm):
     address1        = forms.CharField(max_length=255,widget=forms.TextInput(attrs=REQ))
     city            = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
     state           = forms.CharField(widget=forms.Select(choices=STATE_CHOICES, attrs=REQ))
-    postal_code     = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs={'class': 'required input-small','required': 'required','maxlength':'10'}))
+    postal_code     = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs={'class': 'required input-small','maxlength':'10'}))
     phone           = USPhoneNumberField(widget=forms.TextInput(attrs=REQ))
 
     class Meta:
