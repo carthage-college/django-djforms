@@ -40,7 +40,7 @@ class CreditCardForm(forms.Form):
     """
     A generic form to collect credit card information and then charge the credit card.
     """
-    billing_name        = forms.CharField(max_length=128, label="Name on card")
+    billing_name        = forms.CharField(max_length=128, label="Name on card", widget=forms.TextInput(attrs=REQ))
     card_number         = forms.CharField(label="Card number", max_length=16, widget=forms.TextInput(attrs=REQ))
     expiration_month    = forms.CharField(max_length=2, widget=forms.Select(choices=EXP_MONTH,attrs={'class': 'required input-mini'}))
     expiration_year     = forms.CharField(max_length=4, widget=forms.Select(choices=EXP_YEAR,attrs={'class': 'required input-small'}))

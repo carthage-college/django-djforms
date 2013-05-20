@@ -27,6 +27,7 @@ class AttenderContactForm(forms.ModelForm):
 
     class Meta:
         model       = CourseFerenceAttender
+        fields      = ('first_name','last_name','email','job_title','affiliation')
 
 class AttenderOrderForm(OrderForm):
     """
