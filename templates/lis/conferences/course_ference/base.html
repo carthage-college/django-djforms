@@ -17,6 +17,14 @@
     <!--[if lt IE 9]><script src="https://static.squarespace.com/universal/scripts-thirdparty/html5/html5-shiv.js"></script><link rel="stylesheet" type="text/css" href="https://www.carthage.edu/static/vendor/squarspace/css/site.css?tid=500589fc84aed5ec11c2b672&r=294&t=1364334491038&noMedia=true"/><![endif]-->
     <script src="https://www.carthage.edu/static/vendor/squarspace/js/shrink.js"></script>
     <script type="text/javascript" src="https://www.carthage.edu/static/vendor/squarspace/js/site.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            // disable submit button after users clicks it
+            $('form#profile').submit(function(){
+                $(this).children('input[type=submit]').attr('disabled', 'disabled');
+            });
+        });
+    </script>
     <!-- OJO: move to ecommerce.css file except for squarespace specific styles -->
     <style type="text/css">
     /* bootstrap overrides */

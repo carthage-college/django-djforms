@@ -49,6 +49,10 @@
                 $('label[for="id_amount_0"]:odd').html('<input type="radio" id="id_amount_0" value="Deposit" name="amount" /> Deposit: $' + deposit);
                 $('label[for="id_amount_1"]').html('<input type="radio" id="id_amount_1" value="Full amount" name="amount" /> Full amount: $' + reg_fee);
             });
+            // disable submit button after users clicks it
+            $('form#profile').submit(function(){
+                $(this).children('input[type=submit]').attr('disabled', 'disabled');
+            });
         });
     </script>
 {% endblock %}
