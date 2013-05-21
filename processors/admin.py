@@ -26,7 +26,7 @@ class ContactAdmin(admin.ModelAdmin):
     list_display  = ('last_name', 'first_name', 'email', 'phone', 'address1', 'address2', 'city', 'state', 'postal_code')
     ordering      = ['last_name', 'city', 'state', 'postal_code']
     list_filter   = ('state',)
-    search_fields = ('email,', 'last_name', 'phone', 'city', 'state', 'postal_code')
+    search_fields = ('last_name', 'phone', 'city', 'state', 'postal_code')
 
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Contact, ContactAdmin)

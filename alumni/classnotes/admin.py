@@ -48,12 +48,12 @@ class ContactAdmin(admin.ModelAdmin):
     actions = ['set_carthiginian_status']
 
     def save_model(self, request, obj, form, change):
+        obj.save()
         if "alumnistatus" in form.changed_data:
             if obj.alumnistatus:
                 email = settings.DEFAULT_FROM_EMAIL
                 subject = "[Alumni Class Notes] Alumni Office has approved the following note"
                 send_mail(request,TO_LIST,subject,email,"alumni/classnotes/email.html",obj,BCC)
-        obj.save()
 
     def set_carthiginian_status(self, request, queryset):
         """
