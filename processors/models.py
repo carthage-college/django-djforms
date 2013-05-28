@@ -52,9 +52,11 @@ class Order(models.Model):
           return self.contact().email
 
     def __unicode__(self):
-        c = Contact.objects.get(order=self)
-        return u'%s %s' % (c.last_name, c.first_name)
-
+        try:
+            c = Contact.objects.get(order=self)
+            return u'%s %s' % (c.last_name, c.first_name)
+        except:
+            return ""
 
 class Contact(GenericContact):
     """
