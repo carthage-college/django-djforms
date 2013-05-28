@@ -14,11 +14,19 @@ class CourseFerenceAdmin(admin.ModelAdmin):
     list_per_page       = 500
 
     def order_status(self, obj):
-        return '%s'%(obj.order.all()[0].status)
+        try:
+            stat = obj.order.all()[0].status
+        except:
+            stat = None
+        return stat
     order_status.short_description = 'Transaction status'
 
     def order_transid(self, obj):
-        return '%s'%(obj.order.all()[0].transid)
+        try:
+            tid = obj.order.all()[0].transid
+        except:
+            tid = None
+        return tid
     order_transid.short_description = 'Transaction ID'
 
     def save_model(self, request, obj, form, change):
