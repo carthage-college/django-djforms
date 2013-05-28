@@ -73,7 +73,7 @@
         {% endif %}
         </strong>
         &mdash;
-        {% if n.hometown %}{{n.hometown}}&nbsp;,{% endif %}{{n.classnote}}&nbsp;<br /><em style="color:#6e6e6e;">Submitted: {{n.created_at|date:"F j, Y"}}</em>
+        {% if n.hometown %}{{n.hometown}},&nbsp;{% endif %}{{n.classnote}}&nbsp;<br /><em style="color:#6e6e6e;">Submitted: {{n.created_at|date:"F j, Y"}}</em>
         {% if manager %}
         &nbsp;
         <a class="jqmodal" href="{{n.get_edit_url}}?width=800&height=600&jqmRefresh=true">
