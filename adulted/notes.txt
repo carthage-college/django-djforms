@@ -1,0 +1,8 @@
+apptmp_rec is the talbe and app_source is the column.
+
+AEA is the code for adult ed application
+
+select app_source count(app_source) from apptmp_rec group by app_source;
+
+
+

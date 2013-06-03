@@ -28,7 +28,7 @@ urlpatterns = patterns('',
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     # admissions
     (r'^admissions/', include('djforms.admissions.urls')),
-    # admissions
+    # adult education
     (r'^adult/', include('djforms.adulted.urls')),
     # alumni
     (r'^alumni/', include('djforms.alumni.urls')),
