@@ -34,11 +34,11 @@ class AttenderContactForm2(forms.ModelForm):
     LIS course-ference attender registration contact form, extends
     base ContactForm in processors app
     """
-    first_name      = forms.CharField(max_length=128,required=False)
-    last_name       = forms.CharField(max_length=128,required=False)
-    email           = forms.CharField(max_length=75,required=False)
-    job_title       = forms.CharField(max_length=128,required=False)
-    affiliation     = forms.CharField(label="Institution/Organization", max_length=256,required=False)
+    first_name      = forms.CharField(max_length=128)
+    last_name       = forms.CharField(max_length=128)
+    email           = forms.CharField(max_length=75)
+    job_title       = forms.CharField(max_length=128)
+    affiliation     = forms.CharField(label="Institution/Organization", max_length=256)
 
     class Meta:
         model       = CourseFerenceAttender

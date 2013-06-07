@@ -30,7 +30,7 @@ def registration_form(request, reg_type):
     # second contact form for attender guest
     guest = False
     if reg_type == "attender":
-        form_con2 = AttenderContactForm(prefix="guest")
+        form_con2 = AttenderContactForm2(prefix="guest")
     else:
         form_con2 = None
 
@@ -39,7 +39,7 @@ def registration_form(request, reg_type):
         form_ord = eval(reg_type.capitalize() + "OrderForm")(request.POST)
         # guest form for attenders
         if form_con2:
-            form_con2 = AttenderContactForm(request.POST, prefix="guest")
+            form_con2 = AttenderContactForm2(request.POST, prefix="guest")
             if form_con2.is_valid():
                 guest = True
         if form_con.is_valid() and form_ord.is_valid():
