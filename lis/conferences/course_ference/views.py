@@ -27,10 +27,21 @@ def registration_form(request, reg_type):
         form_proc = ProcessorForm()
     except:
         raise Http404
+    # second contact form for attender guest
+    guest = False
+    if reg_type == "attender":
+        form_con2 = AttenderContactForm(prefix="guest")
+    else:
+        form_con2 = None
 
     if request.POST:
         form_con = eval(reg_type.capitalize() + "ContactForm")(request.POST)
         form_ord = eval(reg_type.capitalize() + "OrderForm")(request.POST)
+        # guest form for attenders
+        if form_con2:
+            form_con2 = AttenderContactForm(request.POST, prefix="guest")
+            if form_con2.is_valid():
+                guest = True
         if form_con.is_valid() and form_ord.is_valid():
             contact = form_con.save()
             order = form_ord.save()
@@ -44,8 +55,15 @@ def registration_form(request, reg_type):
                 order.cc_name = form_proc.name
                 order.cc_4_digits = form_proc.card[-4:]
                 order.save()
+                # save guest object if attender form & guest form is valid
+                if guest:
+                    guest = form_con2.save()
+                    guest.order.add(order)
+                    guest.save()
                 order.contact = contact
                 TO_LIST.append(contact.email)
+                # save guest to order object for email data
+                order.guest = guest
                 send_mail(
                     request, TO_LIST,
                     "[LIS] Course-Ference registration: %s" % reg_type,
@@ -58,7 +76,6 @@ def registration_form(request, reg_type):
                         },
                     )
                 )
-
             else:
                 r = form_proc.processor_response
                 if r:
@@ -91,8 +108,8 @@ def registration_form(request, reg_type):
     return render_to_response(
         'lis/conferences/course_ference/%s/form.html' % reg_type,
         {
-            'form_con': form_con, 'form_ord':form_ord, 'form_proc':form_proc,
-            'reg_type':reg_type,
+            'form_con':form_con,'form_con2':form_con2,'form_ord':form_ord,
+            'form_proc':form_proc,'reg_type':reg_type,'guest':guest
         },
         context_instance=RequestContext(request)
     )

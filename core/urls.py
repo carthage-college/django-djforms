@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     # CSV
     (r'^admin/(?P<app_label>[\d\w]+)/(?P<model_name>[\d\w]+)/csv/', 'djforms.core.util.admin_list_export'),
     # admin
-    (r'^admin/', admin.site.urls),
+    (r'^admin/', include(admin.site.urls) ),
     # admin/docs
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     # admissions

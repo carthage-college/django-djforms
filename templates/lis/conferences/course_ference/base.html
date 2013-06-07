@@ -10,6 +10,7 @@
     <meta property="og:title" content="Registration">
     <meta itemprop="name" content="Registration">
     <meta property="og:type" content="article">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <link href="https://www.carthage.edu/static/vendor/bootstrap/current/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://www.carthage.edu/static/vendor/squarspace/css/css.css">
@@ -22,6 +23,13 @@
             // disable submit button after users clicks it
             $('form#profile').submit(function(){
                 $(this).children('input[type=submit]').attr('disabled', 'disabled');
+            });
+            // click to reveal guest fields
+            {% if not guest %}
+            $("#guest-toggle").hide();
+            {% endif %}
+            $('#id_attender-guest').bind("change", function() {
+                $('#guest-toggle').toggle();
             });
         });
     </script>

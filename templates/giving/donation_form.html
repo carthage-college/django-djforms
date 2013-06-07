@@ -7,6 +7,14 @@
     <script type="text/javascript">
         $(function() {
             $("#id_or-start_date").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "https://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+            $('#id_or-total').blur(function() {
+                $(this).val($(this).val().replace(/,/g,''));
+                $(this).val($(this).val().replace(/\$/g,''));
+            });
+            // disable submit button after users clicks it
+            $('form#profile').submit(function(){
+                $(this).children('input[type=submit]').attr('disabled', 'disabled');
+            });
         });
     </script>
 {% endblock %}

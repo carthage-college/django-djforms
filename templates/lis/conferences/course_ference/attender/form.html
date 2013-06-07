@@ -29,6 +29,28 @@
                     </div>
                 </div>
             {% endfor %}
+            <div class="control-group">
+                <label for="id_attender-guest">Guest</label>
+                <div class="controls">
+                    <input type="checkbox" name="attender-guest" id="id_attender-guest" {% if guest %}checked="checked" {% endif %}/>
+                    <span class="help-block">Check this box to sign up a second attender for free</span>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset id="guest-toggle">
+            <h2>Guest Information</h2>
+            {% for field in form_con2.visible_fields %}
+                <div class="control-group{% if field.errors %} error{% endif %}">
+                    {% if field.label %}{{ field.label_tag }}{% endif %}
+                    <div class="controls">
+                        {{field}}
+                        {% if field.errors %}<span class="help-inline">{{ field.errors|join:", "}}</span>{% endif %}
+                        {% if field.help_text %}
+                        <span class="help-block">{{field.help_text}}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
         </fieldset>
         <fieldset>
             <h2>Credit Card Information</h2>
