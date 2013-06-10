@@ -1,6 +1,9 @@
 from django.db import models
-from djforms.core.models import Promotion, GenericContact
+from django.core import urlresolvers
+from django.utils.safestring import mark_safe
+
 from django_countries import CountryField
+from djforms.core.models import Promotion, GenericContact
 
 ORDER_STATUS = (
     ('Blocked', 'Blocked'),
@@ -37,7 +40,11 @@ class Order(models.Model):
     transid             = models.CharField(max_length=100, null=True, blank=True)
 
     def contact(self):
-        return Contact.objects.get(order=self)
+        try:
+            cs = Contact.objects.filter(order=self).order_by('id')[0]
+        except:
+            cs = None
+        return cs
 
     def cid(self):
         return self.contact().id
