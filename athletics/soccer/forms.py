@@ -49,8 +49,8 @@ REQ = {'class': 'required'}
 
 class SoccerCampContactForm(forms.ModelForm):
 
-    first_name      = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
-    last_name       = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    first_name      = forms.CharField(label="Camper's First Name", max_length=128,widget=forms.TextInput(attrs=REQ))
+    last_name       = forms.CharField(label="Camper's Last Name", max_length=128,widget=forms.TextInput(attrs=REQ))
     email           = forms.CharField(max_length=75,widget=forms.TextInput(attrs=REQ))
     address1        = forms.CharField(max_length=255,widget=forms.TextInput(attrs=REQ))
     city            = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
