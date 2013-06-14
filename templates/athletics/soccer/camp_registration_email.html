@@ -1,9 +1,7 @@
 {% load humanize %}
-<dl style="margin-bottom:30px;">
-    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">First name</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.first_name}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">Last name</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.last_name}}</dd>
+<dl style="margin-bottom:5px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">Camper's name</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.first_name}} {{data.contact.last_name}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">Address</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.contact.address1}} {{data.contact.address2|default:"&nbsp;"}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">City</dt>
