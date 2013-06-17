@@ -1,0 +1,13 @@
+<h3>{{data.first_name}} wants to know if s/he will be admitted.</h3>
+<pre style="font-size:1.5em;">
+First name.................. {{data.first_name}}
+Email....................... {{data.email}}
+Status...................... {{data.status}}
+ACT or SAT.................. {{data.act_sat}}
+GPA......................... {{data.gpa}}
+GPA Scale................... {{data.gpa_scale}}
+Adjusted GPA................ {{data.adjusted_gpa}}
+{% if data.prospect_status %}T........................... {{data.prospect_status}}{% endif %}
+</pre>
+<h4>Aditional Information</h4>
+<p>{{data.information}}</p>

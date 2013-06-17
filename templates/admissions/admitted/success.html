@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Will I be admitted to Carthage? &mdash; Admissions &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "admissions/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as header cms snippet 342 code %}
+{{header}}
+{% get_api_object as title cms snippet 1153 code %}
+{{title}}
+<div class="buffer">
+    <h1>Will I be admitted to Carthage?</h1>
+    <p>Thanks for asking! Your inquiry was successfully submitted.</p>
+    <p>A Carthage admissions representative will personally respond to your inquiry within five days, likely sooner.</p>
+    <p>Check out this <a href="/admissions/overview/">Carthage overview</a> to learn more about Carthage.</p>
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "admissions/side_bar.html" %}
+{% endblock %}
+
