@@ -27,7 +27,7 @@ def chance_of_form(request):
             else:
                 data["adjusted_gpa"] = (float(data["gpa"]) * 4) / float(data["gpa_scale"])
             email = data['email']
-            subject = "[Will I be admitted?] %s" % (data["first_name"])
+            subject = "Carthage, will I be admitted? (%s)" % (data["first_name"])
             send_mail(
                 request, TO_LIST, subject, email,
                 "admissions/admitted/email.html", data, BCC

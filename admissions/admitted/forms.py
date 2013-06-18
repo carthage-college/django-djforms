@@ -22,7 +22,7 @@ class ChanceOfForm(forms.Form):
     first_name      = forms.CharField()
     email           = forms.EmailField()
     confirm_email   = forms.EmailField()
-    status          = forms.TypedChoiceField(choices=STATUS, widget=forms.RadioSelect())
+    status          = forms.TypedChoiceField(choices=STATUS, widget=forms.RadioSelect(), initial="Freshman")
     act_sat         = forms.CharField(label="ACT or SAT", help_text="(SAT=Critical Reading + Math)")
     gpa             = forms.CharField(label="GPA", max_length=4)
     gpa_scale       = forms.TypedChoiceField(label="GPA Scale", choices=GPA_SCALE, widget=forms.Select())
