@@ -1,24 +1,7 @@
 from django import forms
+from djforms.admissions.admitted.models import *
 
-STATUS = (
-    ("Freshman","Freshman"),
-    ("Transfer","Transfer"),
-)
-
-GPA_SCALE = (
-    ("4.0","4.0"),
-    ("5.0","5.0"),
-    ("6.0","6.0"),
-    ("7.0","7.0"),
-    ("8.0","8.0"),
-    ("9.0","9.0"),
-    ("10.0","10.0"),
-    ("11.0","11.0"),
-    ("12.0","12.0"),
-    ("100","100"),
-)
-
-class ChanceOfForm(forms.Form):
+class ChanceOfForm(forms.ModelForm):
     first_name      = forms.CharField()
     email           = forms.EmailField()
     confirm_email   = forms.EmailField()
@@ -29,6 +12,10 @@ class ChanceOfForm(forms.Form):
     information     = forms.CharField(label="Aditional Information", help_text="i.e. extracurriculars, AP, etc.", widget=forms.Textarea, required=False)
     prospect_status = forms.CharField(widget=forms.HiddenInput(), required=False)
 
+    class Meta:
+        model       = Candidate
+        fields      = ('first_name','email','confirm_email','status','act_sat','gpa','gpa_scale','information')
+
     def clean_confirm_email(self):
         cleaned_data = self.cleaned_data
         email1 = cleaned_data.get("email")
@@ -38,5 +25,3 @@ class ChanceOfForm(forms.Form):
 
         return cleaned_data["confirm_email"]
 
-    def __init__(self, *args, **kwargs):
-        super(ChanceOfForm, self).__init__(*args, **kwargs)

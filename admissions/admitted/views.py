@@ -21,15 +21,15 @@ def chance_of_form(request):
     if request.method=='POST':
         form = ChanceOfForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
-            if data["gpa_scale"] == "100":
-                data["adjusted_gpa"] = (float(data["gpa"]) - 60)/10
+            data = form.save()
+            if data.gpa_scale == "100":
+                data.adjusted_gpa = (float(data.gpa) - 60)/10
             else:
-                data["adjusted_gpa"] = (float(data["gpa"]) * 4) / float(data["gpa_scale"])
-            email = data['email']
-            subject = "Carthage, will I be admitted? (%s)" % (data["first_name"])
+                data.adjusted_gpa = (float(data.gpa) * 4) / float(data.gpa_scale)
+            data.save()
+            subject = "Carthage, will I be admitted? (%s)" % (data.first_name)
             send_mail(
-                request, TO_LIST, subject, email,
+                request, TO_LIST, subject, data.email,
                 "admissions/admitted/email.html", data, BCC
             )
             return HttpResponseRedirect('/forms/admissions/admitted/success/')

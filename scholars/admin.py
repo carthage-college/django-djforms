@@ -6,7 +6,7 @@ from django.utils.encoding import smart_unicode, smart_str
 
 import csv
 
-def export_evs_requests(modeladmin, request, queryset):
+def export_scholars(modeladmin, request, queryset):
 
     response = HttpResponse(mimetype='text/csv')
     response['Content-Disposition'] = 'attachment; filename=celebration_of_scholars.csv'
@@ -25,11 +25,11 @@ def export_evs_requests(modeladmin, request, queryset):
             work_type = smart_str(p.work_type, encoding='utf-8', strings_only=False, errors='strict')
         writer.writerow([title, leader, p.user.email, p.leader.sponsor, presenters[:-1], funding, work_type, p.permission, p.shared, p.need_table, p.need_electricity, link,poster,p.date_created])
     return response
-export_evs_requests.short_description = "Export the selected Celebration of Scholars Submissions"
+export_scholars.short_description = "Export the selected Celebration of Scholars Submissions"
 
 class PresentationAdmin(admin.ModelAdmin):
     model               = Presentation
-    actions             = [export_evs_requests]
+    actions             = [export_scholars]
     raw_id_fields       = ("user","updated_by",)
     list_max_show_all   = 500
     list_per_page       = 500

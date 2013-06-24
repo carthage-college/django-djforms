@@ -17,6 +17,7 @@ BCC = settings.MANAGERS
 
 def camp_registration(request):
     status = None
+    msg = None
     if request.POST:
         form_reg = SoccerCampRegistrationForm(request.POST)
         form_con = SoccerCampContactForm(request.POST)
@@ -46,7 +47,10 @@ def camp_registration(request):
                     order.save()
                     contact.order.add(order)
                     order.reg = reg_data
-                    send_mail(request, TO_LIST, "Soccer camp registration", contact.email, "athletics/soccer/camp_registration_email.html", order, BCC)
+                    send_mail(
+                        request, TO_LIST, "Soccer camp registration", contact.email,
+                        "athletics/soccer/camp_registration_email.html", order, BCC
+                    )
                     return HttpResponseRedirect(reverse('soccer_camp_success'))
                 else:
                     r = form_proc.processor_response
@@ -61,12 +65,19 @@ def camp_registration(request):
                     contact.order.add(order)
                     status = order.status
                     order.reg = reg_data
-                    send_mail(request, TO_LIST, "[%s] Soccer camp registration" % status, contact.email, "athletics/soccer/camp_registration_email.html", order, BCC)
+                    send_mail(
+                        request, TO_LIST, "[%s] Soccer camp registration" % status,
+                        contact.email, "athletics/soccer/camp_registration_email.html",
+                        order, BCC
+                    )
             else:
                 order = Order(total=total,status="Pay later")
                 order.reg = reg_data
                 order.contact = contact
-                send_mail(request, TO_LIST, "Soccer camp registration", contact.email, "athletics/soccer/camp_registration_email.html", order, BCC)
+                send_mail(
+                    request, TO_LIST, "Soccer camp registration", contact.email,
+                    "athletics/soccer/camp_registration_email.html", order, BCC
+                )
                 return HttpResponseRedirect(reverse('soccer_camp_success'))
         else:
             if request.POST.get('payment_method') == "Credit Card":
@@ -78,7 +89,11 @@ def camp_registration(request):
         form_reg = SoccerCampRegistrationForm()
         form_con = SoccerCampContactForm()
         form_proc = TrustCommerceForm()
-    return render_to_response('athletics/soccer/camp_registration.html',
-                              {'form_reg': form_reg, 'form_con':form_con, 'form_proc':form_proc,'status':status,},
-                              context_instance=RequestContext(request))
+    return render_to_response(
+        'athletics/soccer/camp_registration.html',
+        {
+            'form_reg': form_reg,'form_con':form_con,
+            'form_proc':form_proc,'status':status,'msg':msg,
+        }, context_instance=RequestContext(request)
+    )
 

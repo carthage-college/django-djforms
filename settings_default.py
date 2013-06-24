@@ -78,8 +78,7 @@ INSTALLED_APPS = (
     'tagging',
     'userprofile',
     # djforms stuff
-
-    'djforms.admissions',
+    'djforms.admissions.admitted',
     'djforms.admissions.visitdays',
     'djforms.adulted',
     'djforms.alumni.classnotes',
