@@ -1,13 +1,16 @@
 from django.conf import settings
 from django.template import RequestContext
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
+
 from django.core.urlresolvers import reverse
 
 from djforms.processors.forms import TrustCommerceForm as ProcessorForm
 from djforms.lis.conferences.course_ference.forms import *
+from djforms.lis.conferences.course_ference.models import CourseFerenceAttender
 
 from djtools.utils.mail import send_mail
+from json import dumps
 
 import os
 
@@ -124,4 +127,17 @@ def registration_success(request, reg_type):
     return render_to_response(
         template, context_instance=RequestContext(request)
     )
+
+
+def json_map_data(request):
+    cfa = CourseFerenceAttender.objects.filter(postal_code__isnull=False)
+    jay = '{"markers":['
+    for c in cfa:
+        if c.postal_code:
+            # json encode
+            jay += '{"id":"%s","lat":"","long":"","creator":"Carthage College","created":1310499032,' % c.id
+            jay += '"name":"%s",' % c.affiliation
+            jay += '"address":"%s, %s, %s %s, USA"},' % (c.address1, c.city, c.state, c.postal_code)
+    jay = jay[:-1] + "]}"
+    return HttpResponse(jay, mimetype="text/plain; charset=utf-8")
 

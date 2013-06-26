@@ -33,6 +33,7 @@
             });
         });
     </script>
+    {% block extra_javascript %}{% endblock %}
     <!-- OJO: move to ecommerce.css file except for squarespace specific styles -->
     <style type="text/css">
     /* bootstrap overrides */
@@ -58,8 +59,9 @@
     .notice {background: #FFF6BF; color: #514721; border-color: #FFD324;}
     .success {background: #E6EFC2; color: #264409; border-color: #C6D880;}
     </style>
+    {% block extra_style %}{% endblock %}
 </head>
-<body>
+<body{% block body_tag %}{% endblock %}>
     <div id="mobileNav">
         <div class="wrapper">
             <div id="topNav">

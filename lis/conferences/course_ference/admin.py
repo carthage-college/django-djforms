@@ -5,7 +5,8 @@ from djforms.lis.conferences.course_ference.models import CourseFerenceAttender,
 class CourseFerenceAdmin(admin.ModelAdmin):
     model = CourseFerenceAttender
 
-    list_display  = ('last_name','first_name','email','postal_code','job_title','affiliation','order_status','order_transid')
+    list_display  = ('last_name','first_name','email','address1','address2','city','state','postal_code','phone','affiliation','order_status','order_transid')
+    #list_display  = ('last_name','first_name','email','postal_code','job_title','affiliation','order_status','order_transid')
     ordering      = ['last_name','affiliation']
     search_fields = ('email,','last_name','affiliation','order_transid')
 

@@ -14,7 +14,7 @@ class ChanceOfForm(forms.ModelForm):
 
     class Meta:
         model       = Candidate
-        fields      = ('first_name','email','confirm_email','status','act_sat','gpa','gpa_scale','information')
+        fields      = ('first_name','email','confirm_email','status','act_sat','gpa','gpa_scale','information','prospect_status')
 
     def clean_confirm_email(self):
         cleaned_data = self.cleaned_data
