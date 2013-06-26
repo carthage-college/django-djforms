@@ -8,7 +8,7 @@ class CourseFerenceAdmin(admin.ModelAdmin):
     list_display  = ('last_name','first_name','email','address1','address2','city','state','postal_code','phone','affiliation','order_status','order_transid')
     #list_display  = ('last_name','first_name','email','postal_code','job_title','affiliation','order_status','order_transid')
     ordering      = ['last_name','affiliation']
-    search_fields = ('email,','last_name','affiliation','order_transid')
+    search_fields = ('last_name','affiliation')
 
     list_max_show_all   = 500
     list_per_page       = 500
