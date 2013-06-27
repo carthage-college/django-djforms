@@ -133,11 +133,10 @@ def json_map_data(request):
     cfa = CourseFerenceAttender.objects.filter(postal_code__isnull=False)
     jay = '{"markers":['
     for c in cfa:
-        if c.postal_code:
+        if c.longitude and c.latitude:
             # json encode
-            jay += '{"id":"%s","lat":"","long":"","creator":"Carthage College","created":1310499032,' % c.id
-            jay += '"name":"%s",' % c.affiliation
-            jay += '"address":"%s, %s, %s %s, USA"},' % (c.address1, c.city, c.state, c.postal_code)
+            jay += '{"id":"%s","lat":"%s","long":"%s","creator":"Carthage College","created":1310499032,' % (c.id,c.longitude,c.latitude)
+            jay += '"name":"%s"},' % c.affiliation
     jay = jay[:-1] + "]}"
     return HttpResponse(jay, mimetype="text/plain; charset=utf-8")
 
