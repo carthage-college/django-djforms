@@ -130,7 +130,7 @@ def registration_success(request, reg_type):
 
 
 def json_map_data(request):
-    cfa = CourseFerenceAttender.objects.filter(postal_code__isnull=False)
+    cfa = CourseFerenceAttender.objects.filter(longitude__isnull=False)
     jay = '{"markers":['
     for c in cfa:
         if c.longitude and c.latitude:

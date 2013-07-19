@@ -28,7 +28,7 @@ def questionnaire_form(request):
                 counter = counter + 1
             memory.save()
             bcc = settings.MANAGERS
-            recipient_list = ["mfisher@carthage.edu"]
+            recipient_list = ["lhansen@carthage.edu"]
             t = loader.get_template('alumni/memory/questionnaire_email.txt')
             c = RequestContext(request, {'data':memory,})
             email = EmailMessage(("Alumni Memory Questionnaire Detail: %s, %s" % (memory.last_name, memory.first_name)), t.render(c),  memory.email, recipient_list, bcc, headers = {'Reply-To': memory.email,'From': memory.email})

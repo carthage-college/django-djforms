@@ -151,7 +151,7 @@ post_save.connect(create_profile, sender=User)
 
 class Photo(ImageModel):
     title = models.CharField(max_length=256)
-    original_image = models.ImageField(upload_to='photos/alumemory', max_length="256")
+    original_image = models.ImageField(upload_to='photos', max_length="256")
     caption = models.TextField('Caption')
     num_views = models.PositiveIntegerField(editable=False, default=0)
 

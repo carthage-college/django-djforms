@@ -1,13 +1,14 @@
-{% extends "lis/conferences/course_ference/attender/form.html" %}
+{% extends "blank.html" %}
 {% block body_tag %} onload="loadMap()"{% endblock %}
 {% block extra_javascript %}
 <!-- Include google map lib -->
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyAaLGu4USn43Rh_2crRvRwvnte3wH8Ihww&sensor=false"></script>
 <script type="text/javascript">
     // data file with markers (could also be a PHP file for dynamic markers)
-    var markerFile = 'http://icv.carthage.edu/forms/lis/conferences/course-ference/map/json/';
+    var markerFile = 'http://www.carthage.edu/forms/lis/conferences/course-ference/map/json/';
     // set default map properties
-    var defaultLatlng = new google.maps.LatLng(49.00,10.00);
+    //var defaultLatlng = new google.maps.LatLng(49.00,10.00);
+    var defaultLatlng = new google.maps.LatLng(6.911,-158.718);
     // zoom level of the map
     var defaultZoom = 2;
     // variable for map
@@ -118,7 +119,7 @@
     /* Some basic happy style */
     body{margin:50px 0px; padding:0px;text-align:center;}
     input {font-size:18px;}
-    #myMap{width: 650px; height: 400px;margin:auto;margin-top:20px;}
+    #myMap{width: 800px; height: 600px;margin:auto;margin-top:20px;}
 </style>
 {% endblock %}
 {% block content %}
