@@ -1,24 +1,19 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.auth.models import User
 
-from djforms.core.models import GenericContact
+from djforms.alumni.directory.models import Contact
 
 """
-Model Contact
+Model: Note to your classmates
 """
 
-class Contact(GenericContact):
-    second_name         = models.CharField("Middle name", max_length=128, null=True, blank=True)
-    previous_name       = models.CharField("Previous name", max_length=128, help_text="e.g. Maiden name", null=True, blank=True)
-    salutation          = models.CharField(max_length=16, null=True, blank=True,help_text="e.g. Ms., Mr. Dr.")
-    suffix              = models.CharField(max_length=16, null=True, blank=True,help_text="e.g. PhD., Esquire, Jr., Sr., III")
-    # core
-    classyear           = models.CharField("Class",max_length=4)
-    spousename          = models.CharField("Spouse's name", max_length=128,blank=True,null=True)
-    spousepreviousname  = models.CharField("Spouse's previous name",help_text="e.g. maiden name",max_length=32,blank=True,null=True)
-    spouseyear          = models.CharField("Spouse's class",max_length=4,blank=True,null=True)
-    hometown            = models.CharField(max_length=128)
-    classnote           = models.TextField("Note")
+class Note(models.Model):
+    contact             = models.ForeignKey(Contact,verbose_name="Alumna",related_name="note_created_by")
+    updated_by          = models.ForeignKey(User,verbose_name="Updated by",related_name="note_updated_by",editable=False,null=True,blank=True)
+    created_at          = models.DateTimeField("Date Created",auto_now_add=True)
+    updated_at          = models.DateTimeField("Date Updated",auto_now=True)
+    content             = models.TextField()
     alumnistatus        = models.BooleanField("Almuni office status",default=False,help_text="Approved by Alumni Office")
     alumnicomments      = models.TextField("Alumni office comments",blank=True,null=True)
     pubstatus           = models.BooleanField("Publication status",default=False,help_text="Approved for publication on web and in Carthaginian")
@@ -28,12 +23,13 @@ class Contact(GenericContact):
     caption             = models.CharField("Caption for the photo",max_length=255,blank=True,null=True)
 
     class Meta:
-        db_table = 'alumni_classnotes_contact'
+        db_table = 'alumni_classnote'
         ordering  = ['-created_at']
         get_latest_by = 'created_at'
 
     def __unicode__(self):
-        return "%s, %s (%s)" % (self.last_name, self.first_name, self.classyear)
+        return "%s, %s (%s)" % (self.contact.last_name, self.contact.first_name, self.contact.classyear)
 
     def get_edit_url(self):
-        return "http://%s/forms/admin/classnotes/contact/%s/" % (settings.SERVER_URL, self.id)
+        #return reverse(change_stage, args=["classnotes", "note", self.id] )
+        return "http://%s/forms/admin/classnotes/note/%s/" % (settings.SERVER_URL, self.id)
