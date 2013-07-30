@@ -10,6 +10,8 @@ def sitevars(request):
     context['media_root'] = settings.MEDIA_ROOT
     context['media_url'] = settings.MEDIA_URL
     context['server_url'] = settings.SERVER_URL
+    context['root_url'] = settings.ROOT_URL
+    context['login_url'] = settings.LOGIN_URL
     context['django_debug'] = settings.DEBUG
     context['template_debug'] = settings.TEMPLATE_DEBUG
     return context
