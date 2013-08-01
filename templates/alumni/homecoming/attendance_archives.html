@@ -3,7 +3,7 @@
 {% block title %}Homecoming Attendance &mdash; Alumni &mdash; Carthage College{% endblock %}
 {% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
-    {% include "alumni/left_nav.html" %}
+    {% include "alumni/homecoming_nav.html" %}
 {% endblock %}
 {% block content %}
 {% get_api_object as header cms snippet 702 code %}
@@ -31,5 +31,5 @@
 </div>
 {% endblock %}
 {% block sidebar %}
-    {% include "alumni/side_bar.html" %}
+    {% include "alumni/homecoming_side_bar.html" %}
 {% endblock %}

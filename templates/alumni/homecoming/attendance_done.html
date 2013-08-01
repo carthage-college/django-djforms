@@ -2,7 +2,7 @@
 {% load get_api %}
 {% block title %}Homecoming &mdash; Alumni &mdash; Carthage College{% endblock %}
 {% block left_nav %}
-    {% include "alumni/left_nav.html" %}
+    {% include "alumni/homecoming_nav.html" %}
 {% endblock %}
 {% block content %}
 {% get_api_object as header cms snippet 702 code %}
@@ -16,5 +16,5 @@
 </div>
 {% endblock %}
 {% block sidebar %}
-    {% include "alumni/side_bar.html" %}
+    {% include "alumni/homecoming_side_bar.html" %}
 {% endblock %}

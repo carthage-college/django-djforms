@@ -40,7 +40,7 @@ $(function(){
 </style>
 {% endblock %}
 {% block left_nav %}
-    {% include "alumni/left_nav.html" %}
+    {% include "alumni/homecoming_nav.html" %}
 {% endblock %}
 {% block content %}
 <div class="buffer">
@@ -84,4 +84,7 @@ $(function(){
         </fieldset>
     </form>
 </div>
+{% endblock %}
+{% block sidebar %}
+    {% include "alumni/homecoming_side_bar.html" %}
 {% endblock %}
