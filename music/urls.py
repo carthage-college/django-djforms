@@ -5,6 +5,16 @@ from djforms.music.ensembles.choral.views import candidate
 from djforms.music.ensembles.choral.forms import CandidateForm
 
 urlpatterns = patterns('djforms.music.ensembles.choral.views',
-    url(r'^ensembles/choral/tryout/success/$', direct_to_template, {'template': 'music/ensembles/choral/tryout_done.html'}),
-    url(r'^ensembles/choral/tryout/$', 'candidate', name="choral_ensemble_candidate"),
+    url(
+        r'^ensembles/choral/tryout/success/$', direct_to_template,
+        {'template': 'music/ensembles/choral/tryout_done.html'}
+    ),
+    url(
+        r'^ensembles/choral/tryout/manager/$', 'manager',
+        name="choral_ensemble_manager"
+    ),
+    url(
+        r'^ensembles/choral/tryout/$', 'candidate',
+        name="choral_ensemble_candidate"
+    ),
 )

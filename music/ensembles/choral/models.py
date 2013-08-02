@@ -4,15 +4,6 @@ from django.contrib.auth.models import User
 
 from djforms.core.models import YEAR_CHOICES
 
-CHORAL_CHOICES = (
-    ("A.F. Siebert Chapel Choir","A.F. Siebert Chapel Choir"),
-    ("Carthage Choir","Carthage Choir"),
-    ("Kenosha Choral Arts Society","Kenosha Choral Arts Society"),
-    ("Gospel Messengers","Gospel Messengers"),
-    ("Lincoln Chamber Singers","Lincoln Chamber Singers"),
-    ("Carthage Women's Ensemble","Carthage Women's Ensemble"),
-)
-
 class TimeSlot(models.Model):
     date_time       = models.CharField("Time slot", max_length="128")
     active          = models.BooleanField(default=True)
@@ -32,7 +23,6 @@ class Candidate(models.Model):
     time_slot       = models.ForeignKey(TimeSlot, related_name='music_ensemble_choral_timeslot')
     majors          = models.CharField(max_length=255)
     grad_year       = models.CharField("Current Year at Carthage", max_length=1, choices=YEAR_CHOICES)
-    ensemble        = models.CharField("Which ensemble are you interested in?", max_length=128, null=True, blank=True, choices=CHORAL_CHOICES)
     experience      = models.TextField("Describe your previous choral experience", null=True, blank=True)
 
     class Meta:
