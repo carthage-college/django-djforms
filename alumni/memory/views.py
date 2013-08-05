@@ -42,7 +42,7 @@ def questionnaire_form(request):
                 memory, settings.MANAGERS
             )
 
-            return HttpResponseRedirect('/forms/alumni/success')
+            return HttpResponseRedirect('/forms/alumni/success/')
     else:
         form = QuestionnaireForm()
 
