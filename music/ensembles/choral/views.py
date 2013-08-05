@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 
+from djtools.utils.mail import send_mail
 from djforms.music.ensembles.choral.forms import CandidateForm, ManagerForm
 
 import datetime

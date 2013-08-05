@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.core.files.base import ContentFile
 
+from djtools.utils.mail import send_mail
 from djforms.alumni.memory.forms import QuestionnaireForm
 from djforms.alumni.memory.models import Questionnaire
 from djforms.core.models import Photo
@@ -27,12 +28,19 @@ def questionnaire_form(request):
                 memory.photos.add(p)
                 counter = counter + 1
             memory.save()
-            bcc = settings.MANAGERS
-            recipient_list = ["lhansen@carthage.edu"]
-            t = loader.get_template('alumni/memory/questionnaire_email.txt')
-            c = RequestContext(request, {'data':memory,})
-            email = EmailMessage(("Alumni Memory Questionnaire Detail: %s, %s" % (memory.last_name, memory.first_name)), t.render(c),  memory.email, recipient_list, bcc, headers = {'Reply-To': memory.email,'From': memory.email})
-            email.send(fail_silently=True)
+
+            if settings.DEBUG:
+                TO_LIST = [settings.SERVER_EMAIL,]
+            else:
+                TO_LIST = ["lhansen@carthage.edu",]
+            send_mail(
+                request, TO_LIST,
+                "[Alumni Questionnaire Detail] %s %s" %
+                (memory.first_name,memory.last_name),
+                memory.email,
+                "alumni/memory/questionnaire_email.html",
+                memory, settings.MANAGERS
+            )
 
             return HttpResponseRedirect('/forms/alumni/success')
     else:

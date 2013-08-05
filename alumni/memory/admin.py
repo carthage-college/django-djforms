@@ -8,8 +8,8 @@ class PhotoInline(admin.TabularInline):
 
 class QuestionnaireAdmin(admin.ModelAdmin):
     model = Questionnaire
-    list_display  = ('first_name', 'last_name', 'email', 'phone', 'city', 'state')
-    search_fields = ('last_name', 'email', 'city', 'state')
+    list_display  = ('first_name', 'last_name', 'email', 'phone', 'city', 'state','postal_code')
+    search_fields = ('last_name', 'email', 'city', 'state','postal_code')
 
     inlines = [PhotoInline,]
     exclude = ('photos',)

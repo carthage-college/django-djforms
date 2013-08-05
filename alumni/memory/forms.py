@@ -6,7 +6,7 @@ from djforms.alumni.memory.models import Questionnaire
 
 class QuestionnaireForm(forms.ModelForm):
     phone = USPhoneNumberField()
-    zip = USZipCodeField()
+    postal_code = USZipCodeField()
 
     class Meta:
         model = Questionnaire
