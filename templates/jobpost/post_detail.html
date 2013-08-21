@@ -83,6 +83,7 @@ div.growlUI h1, div.growlUI h2 {
     font-size:1.4em;
 }
 </style>
+<link href="http://www.carthage.edu/static/forms/css/djforms.css" rel="stylesheet" type="text/css" />
 <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
 {% endifusergroup %}
 {% endblock %}
@@ -204,8 +205,15 @@ div.growlUI h1, div.growlUI h2 {
                 <dt class="job-header">Supervisor phone:</dt><dd class="job-data">{{ post.supervisor_phone }}</dd><dd class="clear"></dd>
                 <dt class="job-header">Supervisor email:</dt><dd class="job-data"><a href="mailto:{{ post.supervisor_email }}">{{ post.supervisor_email }}</a></dd><dd class="clear"></dd>
                 <dt class="job-header">Description of the job:</dt><dd class="clear"></dd>
+                <dd class="description">{{ post.description }}</dd>
+                <dt class="job-header">Purpose of the job:</dt><dd class="clear"></dd>
+                <dd class="description">{{ post.purpose_of_job }}</dd>
+                <dt class="job-header">Duties and Responsibilities:</dt><dd class="clear"></dd>
+                <dd class="description">{{ post.duties_resp }}</dd>
+                <dt class="job-header">Qualifications:</dt><dd class="clear"></dd>
+                <dd class="description">{{ post.qualifications }}</dd>
             </dl>
-            <p>{{ post.description }}</p>
+
             <hr />
             <h3 style="color: green;">
                 Complete the form below to apply for this job.
