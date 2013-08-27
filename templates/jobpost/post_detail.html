@@ -11,17 +11,17 @@ $(function() {
 });
 </script>
 {% ifusergroup Staff Faculty %}
-<script src="http://www.carthage.edu/assets/js/xinha/init.js" type="text/javascript"></script>
-<script src="http://www.carthage.edu/assets/js/xinha/XinhaCore.js" type="text/javascript"></script>
-<script src="http://www.carthage.edu/assets/js/xinha/job-apps.js" type="text/javascript"></script>
-<script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript"></script>
-<script src="http://www.carthage.edu/assets/js/jquery/ui/ui-1.7.2.custom.min.js" type="text/javascript"></script>
-<script src="http://www.carthage.edu/assets/js/jquery/ui/ui.dialog.js" type="text/javascript"></script>
-<script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript"></script>
+<script src="//www.carthage.edu/assets/js/xinha/init.js" type="text/javascript"></script>
+<script src="//www.carthage.edu/assets/js/xinha/XinhaCore.js" type="text/javascript"></script>
+<script src="//www.carthage.edu/assets/js/xinha/job-apps.js" type="text/javascript"></script>
+<script src="//www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript"></script>
+<script src="//www.carthage.edu/assets/js/jquery/ui/ui-1.7.2.custom.min.js" type="text/javascript"></script>
+<script src="//www.carthage.edu/assets/js/jquery/ui/ui.dialog.js" type="text/javascript"></script>
+<script src="//www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript"></script>
 <script type="text/javascript">
 $.ui.dialog.defaults.bgiframe = true;
 $(function() {
-    $("#id_publish, #id_expire_date").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",changeFirstDay:false,dateFormat:"mm/dd/yy",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+    $("#id_publish, #id_expire_date").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",changeFirstDay:false,dateFormat:"mm/dd/yy",showOn:"both",buttonImage: "//www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
     $('#print-link h2').append('<a href="#" id="print">Print</a>');
     $('#print').click(function() {
         window.print();
@@ -77,15 +77,15 @@ $(function() {
 {% block extra_style %}
 {% ifusergroup Staff Faculty %}
 <style type="text/css">
-div.growlUI { background: url(http://www.carthage.edu/assets/img/ico/check48.png) no-repeat 10px 10px }
+div.growlUI { background: url(//www.carthage.edu/assets/img/ico/check48.png) no-repeat 10px 10px }
 div.growlUI h1, div.growlUI h2 {
     color: white; padding: 5px 5px 5px 75px; text-align: left;
     font-size:1.4em;
 }
 </style>
-<link href="http://www.carthage.edu/static/forms/css/djforms.css" rel="stylesheet" type="text/css" />
-<link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+<link href="//www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
 {% endifusergroup %}
+<link href="//www.carthage.edu/static/forms/css/djforms.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
     <div class="span-18 prepend-1 buffer-top">
@@ -102,10 +102,10 @@ div.growlUI h1, div.growlUI h2 {
             <dt class="job-header">Job posted on:</dt><dd class="job-data">{{ post.publish|date:"F j, Y" }}</dd>
             <dt class="job-header">Job is for:</dt><dd class="job-data">{{ post.period }}</dd>
             <dt class="job-header">Number of positions to be filled:</dt><dd class="job-data">{{ post.num_positions }}</dd>
-            <dt class="job-header">Average amount of hours per week:</dt><dd class="job-data">{{ post.hours }}</dd>
+            <dt class="job-header">Ave. amount of hrs per week:</dt><dd class="job-data">{{ post.hours }}</dd>
             <dt class="job-header">Expected pay range:</dt><dd class="job-data">{{ post.pay_grade }}</dd>
-            <dt class="job-header">Applicant should be available to work:</dt><dd class="job-data">{% for k in post.work_days.all %}{{k.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</dd>
-            <dt class="job-header">Department in charge of position:</dt><dd class="job-data">{{ post.hiring_department }}</dd>
+            <dt class="job-header">Applicant must be available:</dt><dd class="job-data">{% for k in post.work_days.all %}{{k.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</dd>
+            <dt class="job-header">Dept. in charge of position:</dt><dd class="job-data">{{ post.hiring_department }}</dd>
             <dt class="job-header">Supervisor name:</dt><dd class="job-data">{{ post.supervisor_name }}</dd>
             <dt class="job-header">Supervisor phone:</dt><dd class="job-data">{{ post.supervisor_phone }}</dd>
             <dt class="job-header">Supervisor email:</dt><dd class="job-data"><a href="mailto:{{ post.supervisor_email }}">{{ post.supervisor_email }}</a></dd>

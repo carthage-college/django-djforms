@@ -29,6 +29,7 @@
                     {% include "form_field.inc.html" %}
                     {% if field.name == "number_of_stu" %}
                     <li class="ctrlHolder buffer-top">
+                        {#http://www.carthage.edu/dashboard/crud/cms/snippet/1409/update/#}
                         {% get_api_object as ga_mem cms snippet 1409 code %}
                         {{ga_mem}}
                         <div id="delegation1" class="fleft">
@@ -81,7 +82,9 @@
                         <li>{{c_form.d5c5}}</li>
                         </ol>
                         </div>
-                        <p class="clear"><strong>NOTE</strong>: *Designates Security Council membership.</p>
+                        {#http://www.carthage.edu/dashboard/crud/cms/snippet/1567/update/#}
+                        {% get_api_object as mun_note cms snippet 1567 code %}
+                        {{mun_note}}
                     </li>
                     {% endif %}
                 {% endfor %}
@@ -90,6 +93,7 @@
         <fieldset class="blockLabels">
             <ol>
                 <li>
+                    {#http://www.carthage.edu/dashboard/crud/cms/snippet/1410/update/#}
                     {% get_api_object as ga_fees cms snippet 1410 code %}
                     {{ga_fees}}
                 </li>

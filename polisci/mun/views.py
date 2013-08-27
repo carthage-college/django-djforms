@@ -10,7 +10,7 @@ from djforms.polisci.mun.forms import ModelUnitedNationsRegistrationForm, ModelU
 if settings.DEBUG:
     TO_LIST = ["larry@carthage.edu",]
 else:
-    TO_LIST = ["vmartinez1@carthage.edu",]
+    TO_LIST = ["kvega@carthage.edu",]
 BCC = settings.MANAGERS
 
 def registration_form(request):
