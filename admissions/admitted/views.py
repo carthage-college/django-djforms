@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.template import RequestContext, loader
+from django.template import RequestContext
 
 from djforms.admissions.admitted.forms import ChanceOfForm
 from djtools.utils.mail import send_mail
