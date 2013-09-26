@@ -24,7 +24,7 @@ def proposal_form(request, pid=None):
     if pid:
         proposal = get_object_or_404(CourseProposal,id=pid)
         # check perms
-        if proposal.user != request.user:
+        if proposal.user != request.user and not request.user.is_superuser:
             raise Http404
         # create list for GET requests to populate criteria field
         criteria = []
@@ -126,7 +126,7 @@ def proposal_form(request, pid=None):
     else:
         if not proposal:
             criteria = [""]
-            copies = len(criteria)-1
+            copies = len(criteria)
         form = ProposalForm(prefix="wac", instance=proposal)
         profile_form = UserProfileForm(prefix="profile")
     return render_to_response("writingcurriculum/proposal_form.html", {"form": form,"profile_form": profile_form, "criteria": criteria, "copies":copies}, context_instance=RequestContext(request))

@@ -42,7 +42,7 @@ def archives(request, year=None):
     else:
         year = 2010
 
-    ns = Contact.objects.exclude(pubstatus=False).exclude(classnote__exact='None')
+    ns = Contact.objects.exclude(pubstatus=False).exclude(category='Death Announcement').exclude(classnote__exact='None')
     notes = ns.filter(classyear__range=[year,year+9]).order_by("-classyear", "last_name")
     manager = request.user.has_perm('classnotes.change_contact')
 

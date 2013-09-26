@@ -24,6 +24,7 @@ class Contact(GenericContact):
     pubstatus           = models.BooleanField("Publication status",default=False,help_text="Approved for publication on web and in Carthaginian")
     pubstatusdate       = models.DateTimeField("Web Publication Date",blank=True,null=True)
     carthaginianstatus  = models.BooleanField("Carthiginian status",default=False,help_text="Published in the Carthaginian")
+    category            = models.CharField("Category",max_length=32)
     picture             = models.ImageField("Photo",max_length=255,upload_to="files/alumni/classnotes/photos",help_text="75 dpi and .jpg only",blank=True,null=True)
     caption             = models.CharField("Caption for the photo",max_length=255,blank=True,null=True)
 

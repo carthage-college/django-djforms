@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Writing Intensive Course Proposal Form &mdash; Carthage College{% endblock %}
 {% block extra_javascript %}
-    <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.core.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.bgiframe.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.dialog.js" type="text/javascript" charset="utf-8"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+    <script src="//www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
+    <script src="//www.carthage.edu/assets/js/jquery/plugins/jquery.bgiframe.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
         $(function() {
             function initialise () {
@@ -20,8 +18,8 @@
             }
             var copies = {{copies}};
             initialise();
-            $("#id_wac-when_approved_wi").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
-            $("#id_wac-when_workshop").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+            $("#id_wac-when_approved_wi").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "//www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+            $("#id_wac-when_workshop").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "//www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
             $("#clone").click(function () {
                 if (copies <= 4) {
                     copies++;
@@ -34,7 +32,7 @@
                 initialise();
             });
             $("#destroy").click(function () {
-                if (copies > 0) {
+                if (copies > 1) {
                     delid = "doop_" + copies;
                     $("#doop_" + copies ).remove();
                     copies--;
@@ -46,9 +44,9 @@
         });
     </script>
 {% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block columns %}<link href="//www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
-    <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" />
     <style type="text/css">
     #profile h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}
     #second ol {margin:0;}
@@ -58,7 +56,7 @@
     .criterion {width:250px;float:right;}
     .ctrlcx {width:36px;float:right;}
     #duplicates .wac-description {width:350px;height:150px;}
-    div.growlUI { background: url(/media/img/ico/information.png) no-repeat 10px 10px; height:90px; }
+    div.growlUI { background: url(/assets/img/ico/information.png) no-repeat 10px 10px; height:90px; }
     div.growlUI h1, div.growlUI h2 {
         font-size: 1.4em; color: white; padding: 5px 5px 5px 75px; text-align: left
     }
@@ -113,8 +111,8 @@
                         <li>Click on the "plus" symbol to add more fields, and use the
                             "minus" symbol to remove fields.
                             <div class="ctrlcx">
-                                <img id="clone" src="http://www.carthage.edu/assets/img/ico/silk/icons/add.png" />
-                                <img id="destroy" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" />
+                                <img id="clone" src="//www.carthage.edu/assets/img/ico/silk/icons/add.png" />
+                                <img id="destroy" src="//www.carthage.edu/assets/img/ico/silk/icons/delete.png" />
                             </div>
                         </li>
                         <li class="ctrlHolder" id="duplicates">

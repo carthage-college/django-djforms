@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 
 from djforms.admissions.visitdays.models import VisitDay, VisitDayEvent
-from djforms.admissions.visitdays.forms import VisitDayBaseForm, WeekdayForm, SaturdayForm, TransferForm, CaptureForm
+from djforms.admissions.visitdays.forms import VisitDayBaseForm, WeekdayForm, SaturdayForm, TransferForm, CaptureForm, BusinessForm
 
 def VisitDayForm(request, event_type):
     visit_day = get_object_or_404(VisitDay, slug=event_type)

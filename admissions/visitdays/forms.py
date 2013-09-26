@@ -92,6 +92,10 @@ class VisitDayForm(forms.ModelForm):
             raise forms.ValidationError("Please include the school you attended and the location (city & state).")
         return self.cleaned_data['transfer']
 
+class BusinessForm(VisitDayForm):
+    class Meta:
+        model = VisitDayProfile
+
 class CaptureForm(VisitDayForm):
     class Meta:
         model = VisitDayProfile

@@ -2,7 +2,7 @@ from django.conf import settings
 from django import forms
 from django.contrib import admin
 from djforms.alumni.classnotes.models import Contact
-from djforms.alumni.classnotes.forms import CLASSYEARS, SPOUSEYEARS
+from djforms.alumni.classnotes.forms import CLASSYEARS, SPOUSEYEARS, CATEGORIES
 
 from djtools.utils.mail import send_mail
 
@@ -19,16 +19,17 @@ class ContactAdminForm(forms.ModelForm):
     classyear       = forms.CharField(label="Class", max_length=4, widget=forms.Select(choices=CLASSYEARS))
     spouseyear      = forms.CharField(label="Spouse's class", max_length=4, widget=forms.Select(choices=SPOUSEYEARS), required=False)
     email           = forms.EmailField(label="Email", required=False)
+    category        = forms.CharField(label="Category", widget=forms.Select(choices=CATEGORIES), required=True)
 
     class Meta(object):
         model = Contact
 
 class ContactAdmin(admin.ModelAdmin):
     form            = ContactAdminForm
-    ordering        = ('-created_at', 'last_name','classyear','alumnistatus','pubstatus','carthaginianstatus')
-    list_display    = ('last_name','first_name','classyear','created_at','alumnistatus','pubstatus','carthaginianstatus')
+    ordering        = ('-created_at', 'last_name','classyear','alumnistatus','pubstatus','carthaginianstatus','category')
+    list_display    = ('last_name','first_name','classyear','created_at','alumnistatus','pubstatus','carthaginianstatus','category')
     search_fields   = ('last_name','first_name','previous_name','classyear')
-    list_filter     = ('alumnistatus','pubstatus','carthaginianstatus')
+    list_filter     = ('alumnistatus','pubstatus','carthaginianstatus','category')
 
     fieldsets = (
         ('Name, Class, Email', {
@@ -41,7 +42,7 @@ class ContactAdmin(admin.ModelAdmin):
             'fields': ('classnote', 'picture', 'caption', 'alumnicomments')
         }),
         ('Publication Information', {
-            'fields': ('alumnistatus', 'pubstatus', 'pubstatusdate', 'carthaginianstatus')
+            'fields': ('category','alumnistatus', 'pubstatus', 'pubstatusdate', 'carthaginianstatus')
         }),
     )
 

@@ -110,6 +110,11 @@ $(function() {
                     <textarea class="required" id="id_classnote" rows="10" cols="40" name="classnote">{{form.data.classnote}}</textarea>
                 </li>
                 <li>
+                    <h3><label for="id_category">Category</label></h3>
+                    {% if form.category.errors %}<div class="error" style="margin-right:13px;">Please select a category.</div>{% endif %}
+                    {{form.category}}
+                </li>
+                <li>
                     <label for="id_picture"><strong>Photo</strong></label>
                     <input type="text" class="file" name="file_info" id="faux_picture" placeholder="Photo" />
                     <div class="file_upload">
