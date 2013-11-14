@@ -17,7 +17,8 @@
         <br />
         <ul>
             <li><a href="{% url classnotes_form %}">Submit your class note</a></li>
-            <li><a href="/forms/alumni/classnotes/archives/">Class Notes Archive</a></li>
+            <li><a href="{% url classnotes_archives %}">Class Notes Archive</a></li>
+            <li><a href="{% url classnotes_obits %}">Obituaries</a></li>
             {% if manager %}
             <li><a href="/forms/admin/classnotes/contact/">Manage class notes</a></li>
             {% else %}{% if user.is_anonymous %}
