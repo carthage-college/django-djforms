@@ -38,3 +38,9 @@ class Contact(GenericContact):
 
     def get_edit_url(self):
         return "http://%s/forms/admin/classnotes/contact/%s/" % (settings.SERVER_URL, self.id)
+    def admin_image(self):
+        if self.picture:
+            return '<a href="%s%s">Photo</a>' % (settings.MEDIA_URL,self.picture)
+        else:
+            return None
+    admin_image.allow_tags = True

@@ -26,6 +26,7 @@ class MaintenanceRequestAdmin(admin.ModelAdmin):
     search_fields = ('building__name', 'room_number', 'type_of_request__name')
     actions       = [export_evs_requests]
     raw_id_fields = ("user","updated_by",)
+    list_per_page = 500
 
     def save_model(self, request, obj, form, change):
         if change:

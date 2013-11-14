@@ -19,8 +19,8 @@ export_candidates.short_description = "Export the selected Candidates for admiss
 class CandidateAdmin(admin.ModelAdmin):
     model = Candidate
 
-    list_display  = ('first_name','email','status','act_sat','gpa','gpa_scale','adjusted_gpa','prospect_status')
-    ordering      = ['first_name','email','status','prospect_status']
+    list_display  = ('first_name','email','status','act_sat','gpa','gpa_scale','adjusted_gpa','prospect_status','created_on')
+    ordering      = ['created_on','first_name','email','status','prospect_status']
     search_fields = ('first_name','email,','prospect_status')
 
     list_max_show_all   = 500

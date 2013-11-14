@@ -136,6 +136,8 @@ EMAIL_FAIL_SILENTLY = True
 DEFAULT_FROM_EMAIL = 'confirmation@carthage.edu'
 SERVER_EMAIL = 'confirmation@carthage.edu'
 SERVER_MAIL="confirmation@carthage.edu"
+# email addresses
+MAINTENANCE_MANAGER = "nwinkler@carthage.edu"
 # Authorize.net
 GATEWAY_API_LOGIN = ""
 GATEWAY_TRANS_KEY = ""

@@ -40,7 +40,7 @@ def maintenance_request_form(request):
                 profile.phone = p["phone"]
                 profile.save()
             bcc = settings.MANAGERS
-            recipient_list = ["jramirez@carthage.edu"]
+            recipient_list = [settings.MAINTENANCE_MANAGER]
 
             managers = User.objects.filter(groups__id__in=[2,3])
             for m in managers:
