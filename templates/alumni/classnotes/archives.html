@@ -17,7 +17,7 @@
             width: 800,
             videoIframe: false
         });
-        {% include "includes/javascript/jqmodal.html" %}
+        {% include "javascript/jqmodal.html" %}
     });
 </script>
 {% endblock %}
@@ -30,7 +30,7 @@
 <div id="sitetitle">Alumni Class Notes</div>
 <div class="buffer">
 {% spaceless %}
-    <h1>Class Notes Archive &mdash; {{year}}'s</h1>
+    <h1>Class Notes Archive &mdash; {{year}}</h1>
     <p><a href="{% url classnotes_form %}">Click here to submit your class note</a></p>
     <p>
     {% for n in notes %}
@@ -91,6 +91,6 @@
 {% endblock %}
 {% block modalform %}
     {% if user.is_staff %}
-        {% include "includes/modal_form.html" %}
+        {% include "modal_form.html" %}
     {% endif %}
 {%endblock%}

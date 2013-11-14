@@ -58,3 +58,13 @@ def screenscrape(request):
     return render_to_response("alumni/classnotes/archives.html", {
         "notes": notes,"year":"Carthaginian","manager":manager,
     }, context_instance=RequestContext(request))
+
+def obits(request):
+    obs = Contact.objects.filter(category="Death Announcement")
+    obits = obs.order_by("classyear", "last_name")
+
+    return render_to_response("alumni/classnotes/archives.html", {
+        "obits": obits,"year":"Obituaries",
+    }, context_instance=RequestContext(request))
+
+
