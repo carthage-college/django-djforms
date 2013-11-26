@@ -15,7 +15,7 @@ urlpatterns = patterns('djforms.alumni',
     url(r'^classnotes/success/$', TemplateView.as_view(template_name='alumni/classnotes/done.html')),
     url(r'^classnotes/archives/(?P<year>\d+)/$', 'classnotes.views.archives', name="classnotes_archives_year"),
     url(r'^classnotes/archives/$', 'classnotes.views.archives', name="classnotes_archives"),
-    url(r'^classnotes/obits/$', 'classnotes.views.obits', name="classnotes_obits"),
+    url(r'^classnotes/inmemoriam/$', 'classnotes.views.obits', name="classnotes_obits"),
     url(r'^classnotes/$', 'classnotes.views.contact', name='classnotes_form'),
     # alumni directory
     url(r'^directory/$', TemplateView.as_view(template_name='alumni/directory/home.html')),

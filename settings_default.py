@@ -108,19 +108,20 @@ INSTALLED_APPS = (
     'djtools',
 )
 # LDAP Constants
-LDAP_SERVER = 'hendrix.carthage.edu'
+LDAP_SERVER = ''
 LDAP_PORT = '636'
 LDAP_PROTOCOL = "ldaps"
-LDAP_BASE = "o=CARTHAGE"
-LDAP_USER = "cn=webldap, o=CARTHAGE"
-LDAP_PASS = "w3Bs1t3"
-LDAP_EMAIL_DOMAIN = "carthage.edu"
+LDAP_BASE = ""
+LDAP_USER = ""
+LDAP_PASS = ""
+LDAP_EMAIL_DOMAIN = ""
 # auth backends
 AUTHENTICATION_BACKENDS = (
     'djauth.ldapBackend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 LOGIN_URL = '/forms/accounts/login/'
+LOGOUT_URL = '/forms/accounts/logout/'
 LOGIN_REDIRECT_URL = '/forms/'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # logggin stuff
@@ -128,16 +129,16 @@ LOG_FILEPATH = os.path.join(os.path.dirname(__file__), "logs/")
 LOG_FILENAME = LOG_FILEPATH + "debug.log"
 # SMTP settings
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'confirmation@carthage.edu'
-EMAIL_HOST_PASSWORD = 'djangoforms'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_FAIL_SILENTLY = True
-DEFAULT_FROM_EMAIL = 'confirmation@carthage.edu'
-SERVER_EMAIL = 'confirmation@carthage.edu'
-SERVER_MAIL="confirmation@carthage.edu"
+DEFAULT_FROM_EMAIL = ''
+SERVER_EMAIL = ''
+SERVER_MAIL=""
 # email addresses
-MAINTENANCE_MANAGER = "nwinkler@carthage.edu"
+MAINTENANCE_MANAGER = ""
 # Authorize.net
 GATEWAY_API_LOGIN = ""
 GATEWAY_TRANS_KEY = ""

@@ -64,7 +64,7 @@ def obits(request):
     notes = obs.order_by("classyear", "last_name")
 
     return render_to_response("alumni/classnotes/archives.html", {
-        "notes": notes,"title":"Obituaries",
+        "notes": notes,"title":"In Memoriam",
     }, context_instance=RequestContext(request))
 
 
