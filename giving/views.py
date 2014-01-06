@@ -107,7 +107,7 @@ def giving_form(request, transaction, campaign=None):
         cc_form = CreditCardForm(prefix="cc")
 
     return render_to_response('giving/%s_form.html' % transaction,
-                              {'ct_form': ct_form, 'or_form': or_form, 'cc_form': cc_form, 'status': status, 'campaign': campaign,},
+                              {'ct_form': ct_form, 'or_form': or_form, 'form_proc': cc_form, 'status': status, 'campaign': campaign,},
                               context_instance=RequestContext(request))
 
 def giving_success(request, transaction, campaign=None):

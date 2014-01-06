@@ -1,4 +1,4 @@
-<pre style="font-size:1.3em;">
+<pre style="font-size:1.1em;">
 Date........................ {{data.date}}
 Number Attending............ {{data.number_attend}}
 First Name.................. {{data.first_name}}
