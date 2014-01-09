@@ -10,7 +10,7 @@ from djforms.processors.forms import TrustCommerceForm
 from djtools.utils.mail import send_mail
 
 if settings.DEBUG:
-    TO_LIST = [settings.SERVER_MAIL,]
+    TO_LIST = [settings.SERVER_EMAIL,]
 else:
     TO_LIST = ["sdomin@carthage.edu","kjabeck@carthage.edu"]
 BCC = settings.MANAGERS
