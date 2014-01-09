@@ -1,71 +1,23 @@
 from django import forms
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 from djforms.core.models import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES, STATE_CHOICES
 from djforms.processors.models import Contact
+from djforms.athletics.soccer.models import SoccerCampAttender, YEAR_CHOICES, SHIRT_SIZES, SESSIONS, AMOUNT_CHOICES, REQ
 
-YEAR_CHOICES = (
-    ('1', '1'),
-    ('2', '2'),
-    ('3', '3'),
-    ('4', '4'),
-    ('5', '5'),
-    ('6', '6'),
-    ('7', '7'),
-    ('8', '8'),
-    ('9', '9'),
-    ('10', '10 or more'),
-)
-
-SHIRT_SIZES = (
-    ('', '---------'),
-    ('Adult S', 'Adult S'),
-    ('Adult M', 'Adult M'),
-    ('Adult L', 'Adult L'),
-    ('Adult XL', 'Adult XL'),
-    ('Youth M', 'Youth M'),
-    ('Youth L', 'Youth L'),
-    ('Youth XL', 'Youth XL'),
-)
-
-SESSIONS = (
-    ('Girls resident|445', 'Girls Resident $445.00 (Goalkeepers check here too--no additional fee)'),
-    ('Girls commuter|295', 'Girls Commuter $295.00'),
-    ('Boys & Girls Jr. Kickers Session I|100', 'Boys & Girls Jr. Kickers Session I $100.00'),
-    ('Boys resident|445', 'Boys Resident $445.00 (Goalkeepers check here too--no additional fee)'),
-    ('Boys commuter|295', 'Boys Commuter $295.00'),
-    ('Boys & Girls day camp|195', 'Boys & Girls Day camp $195.00'),
-    ('Boys & Girls Jr. Kickers Session II|100', 'Boys & Girls. Jr. Kickers Session II $100.00'),
-    ('Soccer mom camp|245', 'Soccer Mom Camp $245'),
-)
-
-AMOUNT_CHOICES = (
-    ('Deposit', 'Deposit'),
-    ('Full amount', 'Full amount'),
-)
-
-REQ = {'class': 'required'}
-
-class SoccerCampContactForm(forms.ModelForm):
-
-    first_name      = forms.CharField(label="Camper's First Name", max_length=128,widget=forms.TextInput(attrs=REQ))
-    last_name       = forms.CharField(label="Camper's Last Name", max_length=128,widget=forms.TextInput(attrs=REQ))
-    email           = forms.CharField(max_length=75,widget=forms.TextInput(attrs=REQ))
-    address1        = forms.CharField(max_length=255,widget=forms.TextInput(attrs=REQ))
-    city            = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
-    state           = forms.CharField(widget=forms.Select(choices=STATE_CHOICES, attrs=REQ))
-    postal_code     = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs={'class': 'required input-small','maxlength':'10'}))
-    phone           = USPhoneNumberField(widget=forms.TextInput(attrs=REQ))
-
-    class Meta:
-        model       = Contact
-        exclude     = ('country','order','second_name','previous_name','salutation')
-
-class SoccerCampRegistrationForm(forms.Form):
+class SoccerCampRegistrationForm(forms.ModelForm):
     """
     A form to collect registration data for the summer soccer camp
     """
+    # contact info
+    first_name          = forms.CharField(label="Camper's First Name", max_length=128,widget=forms.TextInput(attrs=REQ))
+    last_name           = forms.CharField(label="Camper's Last Name", max_length=128,widget=forms.TextInput(attrs=REQ))
+    email               = forms.CharField(max_length=75,widget=forms.TextInput(attrs=REQ))
+    address1            = forms.CharField(max_length=255,widget=forms.TextInput(attrs=REQ))
+    city                = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    state               = forms.CharField(widget=forms.Select(choices=STATE_CHOICES, attrs=REQ))
+    postal_code         = USZipCodeField(label="Zip code", widget=forms.TextInput(attrs={'class': 'required input-small','maxlength':'10'}))
+    phone               = USPhoneNumberField(widget=forms.TextInput(attrs=REQ))
     # personal info
     gender              = forms.TypedChoiceField(choices=GENDER_CHOICES, widget=forms.RadioSelect())
     dob                 = forms.DateField(label = "Date of birth", help_text="Format: mm/dd/yyyy")
@@ -85,3 +37,7 @@ class SoccerCampRegistrationForm(forms.Form):
     reg_fee             = forms.CharField(max_length=7, label="Registration Fee Total")
     payment_method      = forms.TypedChoiceField(choices=PAYMENT_CHOICES, widget=forms.RadioSelect())
     amount              = forms.TypedChoiceField(choices=AMOUNT_CHOICES, widget=forms.RadioSelect(),help_text="NOTE: NO CREDIT CARDS ACCEPTED AT CHECK-INS")
+
+    class Meta:
+        model           = SoccerCampAttender
+        exclude         = ('country','order','second_name','previous_name','salutation')

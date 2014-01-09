@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from djforms.athletics.soccer.forms import SoccerCampContactForm, SoccerCampRegistrationForm
+from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
 from djforms.processors.models import Contact, Order
 from djforms.processors.forms import TrustCommerceForm
 from djtools.utils.mail import send_mail
@@ -12,7 +12,8 @@ from djtools.utils.mail import send_mail
 if settings.DEBUG:
     TO_LIST = [settings.SERVER_EMAIL,]
 else:
-    TO_LIST = ["sdomin@carthage.edu","kjabeck@carthage.edu"]
+    #TO_LIST = ["sdomin@carthage.edu","kjabeck@carthage.edu"]
+    TO_LIST = ["skirk@carthage.edu"]
 BCC = settings.MANAGERS
 
 def camp_registration(request):
@@ -20,22 +21,18 @@ def camp_registration(request):
     msg = None
     if request.POST:
         form_reg = SoccerCampRegistrationForm(request.POST)
-        form_con = SoccerCampContactForm(request.POST)
-        if form_reg.is_valid() and form_con.is_valid():
-            reg_data = form_reg.cleaned_data
-            con_data = form_con.cleaned_data
-            # we might have a record for 'contact' so we use get_or_create() method
-            contact, created = Contact.objects.get_or_create(first_name=con_data['first_name'],last_name=con_data['last_name'],email=con_data['email'],phone=con_data['phone'],address1=con_data['address1'],address2=con_data['address2'],city=con_data['city'],state=con_data['state'],postal_code=con_data['postal_code'],country="US")
+        if form_reg.is_valid():
+            contact = form_reg.save()
             # calc amount
-            if reg_data["amount"] == "Full amount":
-                total = reg_data['reg_fee']
+            if contact.amount == "Full amount":
+                total = contact.reg_fee
             else:
-                if int(float(reg_data['reg_fee'])) <= 225:
+                if int(float(contact.reg_fee)) <= 225:
                     total = 50
                 else:
                     total = 200
             # credit card payment
-            if reg_data['payment_method'] == "Credit Card":
+            if contact.payment_method == "Credit Card":
                 order = Order(total=total,auth="sale",status="In Process",operator="Soccer Camp")
                 form_proc = TrustCommerceForm(order, contact, request.POST)
                 if form_proc.is_valid():
@@ -46,7 +43,7 @@ def camp_registration(request):
                     order.cc_4_digits = form_proc.card[-4:]
                     order.save()
                     contact.order.add(order)
-                    order.reg = reg_data
+                    order.reg = contact
                     send_mail(
                         request, TO_LIST, "Soccer camp registration", contact.email,
                         "athletics/soccer/camp_registration_email.html", order, BCC
@@ -64,16 +61,17 @@ def camp_registration(request):
                     order.save()
                     contact.order.add(order)
                     status = order.status
-                    order.reg = reg_data
+                    order.reg = contact
                     send_mail(
                         request, TO_LIST, "[%s] Soccer camp registration" % status,
                         contact.email, "athletics/soccer/camp_registration_email.html",
                         order, BCC
                     )
             else:
-                order = Order(total=total,status="Pay later")
-                order.reg = reg_data
-                order.contact = contact
+                order = Order(total=total,auth="COD",status="Pay later",operator="Soccer Camp")
+                order.save()
+                contact.order.add(order)
+                order.reg = contact
                 send_mail(
                     request, TO_LIST, "Soccer camp registration", contact.email,
                     "athletics/soccer/camp_registration_email.html", order, BCC
@@ -87,13 +85,12 @@ def camp_registration(request):
                 form_proc = TrustCommerceForm()
     else:
         form_reg = SoccerCampRegistrationForm()
-        form_con = SoccerCampContactForm()
         form_proc = TrustCommerceForm()
     return render_to_response(
         'athletics/soccer/camp_registration.html',
         {
-            'form_reg': form_reg,'form_con':form_con,
-            'form_proc':form_proc,'status':status,'msg':msg,
+            'form_reg': form_reg,'form_proc':form_proc,
+            'status':status,'msg':msg,
         }, context_instance=RequestContext(request)
     )
 
