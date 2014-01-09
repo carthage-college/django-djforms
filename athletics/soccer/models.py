@@ -68,7 +68,7 @@ class SoccerCampAttender(Contact):
     # payment
     reg_fee             = models.CharField("Registration Fee Total", max_length=7)
     payment_method      = models.CharField(choices=PAYMENT_CHOICES, max_length=24)
-    amount              = models.CharField(choices=AMOUNT_CHOICES, max_length=24, help_text="NOTE: NO CREDIT CARDS ACCEPTED AT CHECK-INS")
+    amount              = models.CharField("Amount to pay", choices=AMOUNT_CHOICES, max_length=24, help_text="NOTE: NO CREDIT CARDS ACCEPTED AT CHECK-INS")
 
     class Meta:
         verbose_name_plural = 'Soccer Camp Attenders'

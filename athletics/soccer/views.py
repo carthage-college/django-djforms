@@ -15,6 +15,9 @@ else:
     TO_LIST = ["sdomin@carthage.edu","kjabeck@carthage.edu"]
 BCC = settings.MANAGERS
 
+import logging
+logger = logging.getLogger(__name__)
+
 def camp_registration(request):
     status = None
     msg = None

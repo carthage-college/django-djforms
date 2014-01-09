@@ -11,7 +11,7 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         'last_name','first_name','created_at','dob','age','football',
         'gender','address1','address2','city','state','postal_code','phone',
         'email','order_transid','order_status','parent_guard','roommate',
-        'dorm','years_attend','shirt_size','session','amount','reg_fee',
+        'dorm','years_attend','shirt_size','session','reg_fee','amount','order_total',
         'payment_method'
     )
     ordering      = ('last_name','postal_code','email','city','state')
@@ -35,6 +35,14 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
             tid = None
         return tid
     order_transid.short_description = 'Transaction ID'
+
+    def order_total(self, obj):
+        try:
+            tid = obj.order.all()[0].total
+        except:
+            tid = None
+        return tid
+    order_total.short_description = 'Amount Paid'
 
     def save_model(self, request, obj, form, change):
         if change:
