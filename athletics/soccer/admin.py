@@ -14,7 +14,8 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         'dorm','years_attend','shirt_size','session','reg_fee','amount','order_total',
         'payment_method'
     )
-    ordering      = ('last_name','postal_code','email','city','state')
+    ordering      = ('-created_at',)
+    #ordering      = ('created_at','last_name','postal_code','email','city','state')
     search_fields = ('last_name','email','postal_code')
 
     list_max_show_all   = 500

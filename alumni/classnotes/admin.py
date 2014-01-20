@@ -12,7 +12,7 @@ logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG)
 if settings.DEBUG:
     TO_LIST = ["larry@carthage.edu",]
 else:
-    TO_LIST = ["eyoung@carthage.edu",]
+    TO_LIST = ["tapplegarth@carthage.edu",]
 BCC = settings.MANAGERS
 
 class ContactAdminForm(forms.ModelForm):
