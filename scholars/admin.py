@@ -37,12 +37,5 @@ class PresentationAdmin(admin.ModelAdmin):
     ordering            = ['title','work_type','permission','shared','need_table','need_electricity','status','date_created']
     search_fields       = ('title','user__last_name','user__email','funding')
 
-    def save_model(self, request, obj, form, change):
-        if change:
-            obj.updated_by = request.user
-        else:
-            obj.updated_by = obj.user
-        obj.save()
-
 admin.site.register(Presenter)
 admin.site.register(Presentation, PresentationAdmin)

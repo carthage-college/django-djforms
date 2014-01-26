@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
 from djforms.core.models import Department, GenericChoice, YEAR_CHOICES, BINARY_CHOICES
+from djtools.utils.mail import send_mail
 
 from tagging import fields, managers
 
@@ -34,6 +35,7 @@ class Presenter(models.Model):
     major               = models.CharField(max_length=128, null=True, blank=True)
     hometown            = models.CharField(max_length=128, null=True, blank=True)
     sponsor             = models.CharField(max_length=128, null=True, blank=True)
+    sponsor_email       = models.CharField(max_length=128, null=True, blank=True)
     department          = models.ForeignKey(Department, null=True, blank=True)
     mugshot             = models.ImageField(max_length=255, upload_to="files/scholars/mugshots", help_text="75 dpi and .jpg only")
     ranking             = models.IntegerField(null=True, blank=True, default=0)
@@ -85,6 +87,21 @@ class Presentation(models.Model):
         ordering        = ('date_created',)
         get_latest_by   = 'date_created'
         permissions     = ( ("manage_presentation", "manage presentation"), )
+
+    def save(self, *args, **kwargs):
+        # send email if approved
+        if self.pk is not None:
+            prez = Presentation.objects.get(pk=self.pk)
+            if (prez.status != self.status) and self.status:
+                if settings.DEBUG:
+                    TO_LIST = ["larry@carthage.edu",]
+                else:
+                    TO_LIST = self.email
+                BCC = settings.MANAGERS
+                email = settings.DEFAULT_FROM_EMAIL
+                subject = "[Celebration of Scholars] Presentation has been approved"
+                send_mail(None,TO_LIST,subject,email,"scholars/presentation/approved_mail.html",self,BCC)
+        super(Presentation, self).save()
 
     def __unicode__(self):
         return self.title

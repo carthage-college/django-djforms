@@ -32,6 +32,7 @@ def _update_presenters(presenter, presenters):
     presenter.major        = presenters.major
     presenter.hometown     = presenters.hometown
     presenter.sponsor      = presenters.sponsor
+    presenter.sponsor_email= presenters.sponsor_email
     if presenters.mugshot:
         presenter.mugshot  = presenters.mugshot
     if presenters.department:
@@ -78,6 +79,7 @@ def form(request, pid=None):
         major        = request.POST.getlist('major[]')
         hometown     = request.POST.getlist('hometown[]')
         sponsor      = request.POST.getlist('sponsor[]')
+        sponsor_email= request.POST.getlist('sponsor_email[]')
         department   = request.POST.getlist('department[]')
         mugshoth     = request.POST.getlist('mugshoth[]')
         mugshot      = request.FILES.getlist('mugshot[]')
@@ -107,7 +109,7 @@ def form(request, pid=None):
                 prez_type=prez_type[i],leader=leader[i],
                 college_year=college_year[i],major=major[i],
                 hometown=hometown[i],sponsor=sponsor[i],
-                department=dept,mugshot=mug))
+                sponsor_email=sponsor_email[i],department=dept,mugshot=mug))
 
         if form.is_valid():
             if presentation:
