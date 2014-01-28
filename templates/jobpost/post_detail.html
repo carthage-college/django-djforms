@@ -97,11 +97,12 @@ div.growlUI h1, div.growlUI h2 {
         You are about to remove all applicants for this job post. Are you certain?
         </p>
         </div>
+        <br /><br />
         <h1 class="page_title">{{ post.title }}</h1>
         <dl class="job-detail">
             <dt class="job-header">Job posted on:</dt><dd class="job-data">{{ post.publish|date:"F j, Y" }}</dd>
             <dt class="job-header">Job is for:</dt><dd class="job-data">{{ post.period }}</dd>
-            <dt class="job-header">Number of positions to be filled:</dt><dd class="job-data">{{ post.num_positions }}</dd>
+            <dt class="job-header">Num. of positions to be filled:</dt><dd class="job-data">{{ post.num_positions }}</dd>
             <dt class="job-header">Ave. amount of hrs per week:</dt><dd class="job-data">{{ post.hours }}</dd>
             <dt class="job-header">Expected pay range:</dt><dd class="job-data">{{ post.pay_grade }}</dd>
             <dt class="job-header">Applicant must be available:</dt><dd class="job-data">{% for k in post.work_days.all %}{{k.name}}{% if not forloop.last%}, {% endif %}{% endfor %}</dd>
