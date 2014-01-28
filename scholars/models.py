@@ -35,7 +35,6 @@ class Presenter(models.Model):
     major               = models.CharField(max_length=128, null=True, blank=True)
     hometown            = models.CharField(max_length=128, null=True, blank=True)
     sponsor             = models.CharField(max_length=128, null=True, blank=True)
-    sponsor_email       = models.CharField(max_length=128, null=True, blank=True)
     department          = models.ForeignKey(Department, null=True, blank=True)
     mugshot             = models.ImageField(max_length=255, upload_to="files/scholars/mugshots", help_text="75 dpi and .jpg only")
     ranking             = models.IntegerField(null=True, blank=True, default=0)
@@ -52,9 +51,6 @@ class Presenter(models.Model):
 
     def presenter_type(self):
         return PRESENTOR_TYPES[self.prez_type][1]
-
-    #def shirt_size(self):
-    #    return SHIRT_SIZES[self.shirt][1]
 
 class Presentation(models.Model):
     # meta

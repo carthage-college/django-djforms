@@ -16,7 +16,7 @@
             {% if p.mugshot and pid %}<p style="margin-top:5px;"><a href="{{media_url}}{{p.mugshot}}">Current photo</a></p>{% endif %}
         </dd>
     </dl>
-    <strong>Type</strong>
+    <p><strong>Type</strong></p>
     <select name="prez_type[]">
     {% for n,v in types %}
         <option value="{{n}}"{% if p.prez_type == n %} selected="selected"{% endif %}>{{v}}</option>
@@ -53,9 +53,15 @@
         <p><input type="text" value="{{p.hometown}}" name="hometown[]" class="medium" maxlength="128" /></p>
     </div>
     <div class="mtop span-5">
-        <p><strong>Sponsor</strong></p>
-        <select id="sponsorList" name="sponsor[]">
+        <p><strong>Primary Sponsor</strong></p>
+        <select name="sponsor[]">
+            <option value="">---select---</option>
+            {% for f in faculty %}
+            <option value="{{f.email}}"{% if p.sponsor == f.email %} selected="selected"{% endif %}>{{f.last_name}}, {{f.first_name}}</option>
+            {% endfor %}
         </select>
+        <p><strong>Other sponsor(s)</strong></p>
+        <p><input type="text" value="{{p.sponsor_other}}" name="sponsor_other[]" class="medium" maxlength="128" /></p>
     </div>
 </div>
 <div class="clear"></div>

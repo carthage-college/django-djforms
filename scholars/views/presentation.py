@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
 from django.http import HttpResponseRedirect, Http404
@@ -11,6 +12,7 @@ from djtools.utils.mail import send_mail
 from djforms.core.models import Department, YEAR_CHOICES
 
 import datetime, os
+import urllib, json
 
 NOW  = datetime.datetime.now()
 YEAR = int(NOW.year)
@@ -40,12 +42,22 @@ def _update_presenters(presenter, presenters):
     presenter.save()
     return presenter
 
+def _get_faculty():
+    faculty = cache.get('faculty_json')
+    if faculty is None:
+        # read the json data from URL
+        response =  urllib.urlopen("http://www.carthage.edu/jenzabar/api/faculty/")
+        data = response.read()
+        faculty = json.loads(data)
+        cache.set('faculty_json', faculty)
+    return faculty
+
 @login_required
 def form(request, pid=None):
     presenters = []
     presentation = None
     manager = request.user.has_perm('scholars.manage_presentation')
-
+    faculty = _get_faculty()
     if pid:
         presentation = get_object_or_404(Presentation,id=pid)
         # check perms
@@ -181,7 +193,7 @@ def form(request, pid=None):
             copies = 1
 
     context = {"presentation":presentation,"form":form,"presenters":presenters,"copies":copies,
-               "cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,
+               "faculty":faculty,"cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,
                "pid":pid,"manager":manager,}
     return render_to_response (
         "scholars/presentation/form.html",

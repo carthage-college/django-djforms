@@ -19,7 +19,6 @@ class PresentationForm(forms.ModelForm):
     shared              = forms.ChoiceField(label="Faculty sponsor approval", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text='Has your faculty sponsor approved your proposal? Note: Faculty and staff presenters should choose "yes".')
     need_table          = forms.ChoiceField(label="", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text="Do you need a table for display purposes?")
     need_electricity    = forms.ChoiceField(label="", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text="Do you need electricity for computer or other device?")
-    sponsor_email       = forms.EmailField()
 
     class Meta:
         model = Presentation

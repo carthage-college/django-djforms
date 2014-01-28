@@ -53,15 +53,6 @@
                     $("select[name='department[]']").val("Academic support");
                 }
             });
-            $.getJSON("http://www.carthage.edu/jenzabar/api/faculty/", function(jsonResult) {
-                $('#sponsorList').attr('enabled', 'true');
-                $.each(jsonResult, function() {
-                    $('#sponsorList').append(
-                        $("<option></option>").text(this.name).val(this.email)
-                    );
-                });
-            });
-
         });
     </script>
 {% endblock %}
