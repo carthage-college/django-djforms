@@ -3,11 +3,6 @@
 {% load get_api %}
 {% block title %}Presentation Form &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
 {% block extra_javascript %}
-    <!--
-    <script src="http://www.carthage.edu/assets/js/xinha/init.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://www.carthage.edu/assets/js/xinha/XinhaCore.js" type="text/javascript" charset="utf-8"></script>
-    <script src="http://www.carthage.edu/assets/js/xinha/celebration.js" type="text/javascript" charset="utf-8"></script>
-    -->
     <script type="text/javascript" src="/static/forms/js/jHtmlArea-0.7.5.min.js"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.core.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
@@ -21,7 +16,7 @@
             $("#clone").click(function () {
                 copies++;
                 newId = "doop_" + copies;
-                $("#doop_master").clone().attr("id",newId).appendTo("#duplicates");
+                $("#doopmaster").clone().attr("id",newId).appendTo("#duplicates");
                 $.growlUI('Number of Presenters: ', copies);
             });
             // flag presenters that have a mugshot for upload.
@@ -53,6 +48,62 @@
                     $("select[name='department[]']").val("Academic support");
                 }
             });
+            $( "#profile" ).live('submit', function( event ) {
+                var error = false;
+                $("div[id^='doop_']").each(function() {
+                    var prez_type_obj = $(this).find('select[name="prez_type[]"]');
+                    var prez_type = prez_type_obj.val();
+                    if (prez_type) {
+                        prez_type_obj.removeClass("error");
+                    }
+                    if ( prez_type == "Student" ) {
+                        // Students
+                        $(this).find(":input").each(function () {
+                            if (this.name != "department[]" && this.name != "sponsor_other[]" && this.name != "leader[]" && this.name != "mugshot[]") {
+                                if (this.name == "mugshoth[]") {
+                                    if ( this.value == '') {
+                                        $(this).prev().addClass("error");
+                                        error = true;
+                                    }else{
+                                        $(this).prev().removeClass("error");
+                                    }
+                                }else if (!this.value) {
+                                    $(this).addClass("error");
+                                    error = true;
+                                }else{
+                                    $(this).removeClass("error");
+                                }
+                            }
+                        });
+                    } else if ( prez_type == "Faculty" || prez_type == "Staff" ) {
+                        // Faculty or Staff
+                        $(this).find(":input").each(function () {
+                            //console.log(this.name, this.value);
+                            if (this.name == "department[]" || this.name == "first_name[]" || this.name == "last_name[]" || this.name == "prez_type[]" || this.name == "mugshoth[]") {
+                                if (this.name == "mugshoth[]") {
+                                    if ( this.value == '') {
+                                        $(this).prev().addClass("error");
+                                        error = true;
+                                    }else{
+                                        $(this).prev().removeClass("error");
+                                    }
+                                }else if (!this.value) {
+                                    $(this).addClass("error");
+                                    error = true;
+                                }else{
+                                    $(this).removeClass("error");
+                                }
+                            }
+                        });
+                    } else {
+                        prez_type_obj.addClass("error");
+                        error = true;
+                    }
+                });
+                if (error) {
+                    return false;
+                }
+            });
         });
     </script>
 {% endblock %}
@@ -70,7 +121,7 @@
     #second ul, #second ol { margin: 0; }
     #second li {margin-left:0;}
     #second p {line-height: 1.1;margin-bottom: .5em;}
-    #doop_master {display: none;}
+    #doopmaster {display: none;}
     div.growlUI {background: url(/media/img/ico/information.png) no-repeat 10px 10px; height:90px;}
     div.growlUI h1, div.growlUI h2 {font-size: 1.4em; color: white; padding: 5px 5px 5px 75px; text-align: left;}
     .form input[type=text] {width: 350px;}
@@ -98,9 +149,9 @@
 {{title}}
 <div class="buffer">
     {% if manager and presentation %}
-        <h3 class="fright"><a href="mailto:{{presentation.user.email}}">Email</a></h3>
+        {% include "scholars/presentation/action_form.inc.html" %}
     {% endif %}
-    <h1>Presentation Submission</h1>
+    <h1>Presentation Form</h1>
     <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
     {% if form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
@@ -130,7 +181,7 @@
                 </li>
                 {% endif %}
                 <li class="ctrlHolder">
-                    <div id="doop_master" class="presenter">
+                    <div id="doopmaster" class="presenter">
                         <img class="destroy_school fright" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" title="Remove Presenter" alt="Remove Presenter" />
                         {% include "scholars/presentation/presenters.inc.html" %}
                     </div>

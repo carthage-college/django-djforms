@@ -24,10 +24,6 @@ table.tablesorter {
 {% get_api_object as title cms snippet 1014 code %}
 {{title}}
 <div class="buffer">
-    <div>
-        <select></select>
-        <input type="submit" class="button" value="Go" />
-    </div>
     <form class="form" id="manager" action=".">
     <table id="presentation_list_table" class="tablesorter">
         <thead>
@@ -42,7 +38,7 @@ table.tablesorter {
         <tbody>
         {% for p in presentations %}
         <tr class="{% cycle 'odd' 'even' %}">
-            <td><input type="checkbox" name="manager" value="{{p.id}}" /></td>
+            <td>{{forloop.counter}}</td>
             <td><a href="{{p.get_absolute_url}}" title="{{forloop.counter}}">{{p.title}}</a></td>
             <td><a href="mailto:{{p.user.email}}">{{p.leader.first_name}} {{p.leader.last_name}}</a></td>
             <td>{{p.status}}</td>

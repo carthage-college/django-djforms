@@ -35,6 +35,7 @@ class Presenter(models.Model):
     major               = models.CharField(max_length=128, null=True, blank=True)
     hometown            = models.CharField(max_length=128, null=True, blank=True)
     sponsor             = models.CharField(max_length=128, null=True, blank=True)
+    sponsor_other       = models.CharField(max_length=255, null=True, blank=True)
     department          = models.ForeignKey(Department, null=True, blank=True)
     mugshot             = models.ImageField(max_length=255, upload_to="files/scholars/mugshots", help_text="75 dpi and .jpg only")
     ranking             = models.IntegerField(null=True, blank=True, default=0)
@@ -132,6 +133,9 @@ class Presentation(models.Model):
 
     def sponsor(self):
         return self.leader.sponsor
+
+    def sponsor_other(self):
+        return self.leader.sponsor_other
 
     def poster(self):
         p = False

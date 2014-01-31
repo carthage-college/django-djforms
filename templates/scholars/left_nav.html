@@ -4,7 +4,6 @@
         {% if perms.scholars.manage_presentation %}
         <li><a href="{% url scholars.views.presentation.manager %}">Manage Presentations</a></li>
         <li><a href="{% url scholars.views.presentation.archives 'presenters' 'screen' %}">List Presenters</a></li>
-        <li><a href="{% url scholars.views.presentation.email_presenters %}">Email Presenters</a></li>
         {% endif %}
         {% if user.is_superuser %}
             <li><a href="/forms/admin/scholars/presentation/">Administration</a></li>

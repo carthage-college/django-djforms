@@ -17,8 +17,8 @@ class PresentationForm(forms.ModelForm):
 
     permission          = forms.ChoiceField(label="Permission to reproduce", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text="Do you grant Carthage permission to reproduce your presentation?")
     shared              = forms.ChoiceField(label="Faculty sponsor approval", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text='Has your faculty sponsor approved your proposal? Note: Faculty and staff presenters should choose "yes".')
-    need_table          = forms.ChoiceField(label="", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text="Do you need a table for display purposes?")
-    need_electricity    = forms.ChoiceField(label="", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text="Do you need electricity for computer or other device?")
+    need_table          = forms.ChoiceField(label="Do you need a table for display purposes?", choices=BINARY_CHOICES, widget=forms.RadioSelect())
+    need_electricity    = forms.ChoiceField(label="Do you need electricity for computer or other device?", choices=BINARY_CHOICES, widget=forms.RadioSelect())
 
     class Meta:
         model = Presentation

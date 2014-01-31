@@ -5,8 +5,8 @@
 {% block extra_javascript %}
 <script type="text/javascript">
 $(function() {
-    $('#print-link h2').prepend('<a href="#print">Print</a>');
-    $('#print-link h2 a').click(function() {
+    $('#print h2').prepend('<a href="#print">Print</a>');
+    $('#print h2 a').click(function() {
         window.print();
         return false;
     });
@@ -25,7 +25,9 @@ $(function() {
 {% get_api_object as title cms snippet 1014 code %}
 {{title}}
 <div class="buffer">
-    <div id="print-link"><h2></h2></div><div class="clear"></div>
+    {% if manager %}
+        {% include "scholars/presentation/action_form.inc.html" %}
+    {% endif %}
     {% include "scholars/presentation/detail_data.inc.html" %}
 </div>
 {% endblock %}

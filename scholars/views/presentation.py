@@ -34,7 +34,7 @@ def _update_presenters(presenter, presenters):
     presenter.major        = presenters.major
     presenter.hometown     = presenters.hometown
     presenter.sponsor      = presenters.sponsor
-    presenter.sponsor_email= presenters.sponsor_email
+    presenter.sponsor_other= presenters.sponsor_other
     if presenters.mugshot:
         presenter.mugshot  = presenters.mugshot
     if presenters.department:
@@ -91,7 +91,7 @@ def form(request, pid=None):
         major        = request.POST.getlist('major[]')
         hometown     = request.POST.getlist('hometown[]')
         sponsor      = request.POST.getlist('sponsor[]')
-        sponsor_email= request.POST.getlist('sponsor_email[]')
+        sponsor_other= request.POST.getlist('sponsor_other[]')
         department   = request.POST.getlist('department[]')
         mugshoth     = request.POST.getlist('mugshoth[]')
         mugshot      = request.FILES.getlist('mugshot[]')
@@ -121,7 +121,7 @@ def form(request, pid=None):
                 prez_type=prez_type[i],leader=leader[i],
                 college_year=college_year[i],major=major[i],
                 hometown=hometown[i],sponsor=sponsor[i],
-                sponsor_email=sponsor_email[i],department=dept,mugshot=mug))
+                sponsor_other=sponsor_other[i],department=dept,mugshot=mug))
 
         if form.is_valid():
             if presentation:
@@ -203,9 +203,8 @@ def form(request, pid=None):
 
 @permission_required('scholars.manage_presentation', login_url="/forms/accounts/login/")
 def manager(request):
-    #presentations = Presentation.objects.filter(date_updated__year=YEAR)
-    presentations = Presentation.objects.all().order_by("-date_created")
-
+    presentations = Presentation.objects.filter(date_updated__year=YEAR).order_by("-date_created")
+    #presentations = Presentation.objects.all().order_by("-date_created")
     return render_to_response (
         "scholars/presentation/manager.html",
         {"presentations":presentations,},
@@ -283,8 +282,9 @@ def archives(request, ptype, medium, year=None):
 
 def detail(request, pid):
     presentation = get_object_or_404(Presentation,id=pid)
+    manager = request.user.has_perm('scholars.manage_presentation')
     return render_to_response (
         "scholars/presentation/detail.html",
-        {"p": presentation,}, context_instance=RequestContext(request)
+        {"p": presentation,"manager":manager}, context_instance=RequestContext(request)
     )
 
