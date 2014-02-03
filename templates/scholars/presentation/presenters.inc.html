@@ -12,8 +12,8 @@
         <dt>Photo</dt>
         <dd>
             <input type="file" name="mugshot[]" class="mugshot">
-            {% if p.mugshot and pid %}
-                <input type="hidden" name="mugshoth[]" class="mugshoth" value="{{pid}}" />
+            {% if p.mugshot %}
+                <input type="hidden" name="mugshoth[]" class="mugshoth" value="{{p.mugshot}}" />
                 <p style="margin-top:5px;">
                     <a href="{{media_url}}{{p.mugshot}}">Current photo</a>
                 </p>

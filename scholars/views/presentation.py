@@ -110,6 +110,8 @@ def form(request, pid=None):
                     mug = None
                     logging.exception("Celebration of Scholars mugshot error.")
                 h -= 1
+            elif mugshoth[i]:
+                mug = mugshoth[i]
             else:
                 mug = None
             dept = None
@@ -132,11 +134,10 @@ def form(request, pid=None):
             presentation = form.save(commit=False)
             presentation.user = user
             presentation.updated_by = request.user
-            if request.POST.get('status'):
-                if request.POST.get('status') == "on":
-                    presentation.status = True
-                else:
-                    presentation.status = False
+            if request.POST.get('status') == "on":
+                presentation.status = True
+            else:
+                presentation.status = False
             presentation.save()
 
             # CRUD
