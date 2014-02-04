@@ -1,7 +1,9 @@
+{% load get_prof %}
 <div class="presentation">
     <p class="title">{{p.title}}</p>
     {% for o in p.get_presenters %}
         {% if o.prez_type == "Student" %}
+            {% get_prof as prof o.sponsor %}
             <div class="person">
                 <p>
                     {% if o.mugshot %}<img class="mugshot" src="http://{{server_url}}{{media_url}}{{o.mugshot}}" />{% endif %}
@@ -14,7 +16,7 @@
                     <br />
                     <strong>Major</strong>: {{o.major}}<br />
                     <strong>Hometown</strong>: {{o.hometown}}<br />
-                    <strong>Faculty Sponsor</strong>: {{o.sponsor}}<br />
+                    <strong>Faculty Sponsor</strong>: <a href="{{prof.url}}">{{prof.firstname}} {{prof.lastname}}</a><br />
                     <strong>Other Sponsors</strong>: {{o.sponsor_other}}<br />
                 </p>
                 <div style="clear:both;"></div>
