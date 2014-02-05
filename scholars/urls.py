@@ -12,6 +12,7 @@ urlpatterns = patterns('djforms.scholars.views',
     # presentation crud
     url(r'^presentation/success/$', direct_to_template, {'template': 'scholars/presentation/done.html'}, name="presentation_form_done"),
     url(r'^presentation/manager/$', 'presentation.manager', name="presentation_manager"),
+    url(r'^presentation/action/$', 'presentation.action', name="presentation_action"),
     url(r'^presentation/(?P<pid>\d+)/update/$', 'presentation.form', name="presentation_update"),
     url(r'^presentation/(?P<pid>\d+)/detail/$', 'presentation.detail', name="presentation_detail"),
     url(r'^presentation/$', 'presentation.form', name="presentation_form"),

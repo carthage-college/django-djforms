@@ -289,3 +289,25 @@ def detail(request, pid):
         {"p": presentation,"manager":manager}, context_instance=RequestContext(request)
     )
 
+
+@login_required
+def action(request):
+    manager = request.user.has_perm('scholars.manage_presentation')
+    if request.method=='POST' and manager:
+        pid = int(request.POST["pid"])
+        presentation = get_object_or_404(Presentation,id=pid)
+        if request.POST["action"] == "update":
+            return HttpResponseRedirect(reverse('presentation_update', args=[pid]))
+        elif request.POST["action"] == "email":
+            template = "scholars/presentation/email_all.html",
+        elif request.POST["action"] == "reject":
+            template = "scholars/presentation/rejection.html",
+        else:
+            raise Http404, "Page not found"
+        return render_to_response (template,
+                {"p": presentation,"manager":manager},
+                context_instance=RequestContext(request)
+        )
+    else:
+        raise Http404, "Page not found"
+

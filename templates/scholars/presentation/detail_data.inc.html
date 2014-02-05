@@ -16,7 +16,7 @@
                     <br />
                     <strong>Major</strong>: {{o.major}}<br />
                     <strong>Hometown</strong>: {{o.hometown}}<br />
-                    <strong>Faculty Sponsor</strong>: <a href="{{prof.url}}">{{prof.firstname}} {{prof.lastname}}</a><br />
+                    <strong>Faculty Sponsor</strong>: {% if prof %}<a href="{{prof.url}}">{{prof.firstname}} {{prof.lastname}}</a>{% else %}{{o.sponsor}}{% endif %}<br />
                     <strong>Other Sponsors</strong>: {{o.sponsor_other}}<br />
                 </p>
                 <div style="clear:both;"></div>
