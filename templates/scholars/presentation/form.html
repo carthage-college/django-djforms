@@ -9,7 +9,7 @@
     <script type="text/javascript">
         $(function() {
             $("#id_abstract_text").htmlarea({
-                toolbar: ["html","bold", "italic", "underline", "superscript", "subscript", "|", "h1", "h2", "h3", "h4", "h5", "h6", "|", "indent", "outdent", "horizontalrule", "link", "unlink", "|", "orderedList", "unorderedList"]
+                toolbar: ["html","bold", "italic", "underline", "superscript", "subscript", "|", "h1", "h2", "h3", "h4", "|", "indent", "outdent", "horizontalrule", "link", "unlink", "|", "orderedList", "unorderedList"]
             });
             var copies = {{copies}};
             // copy duplicate master for new presenter
@@ -43,9 +43,6 @@
                 } else {
                     $(this).parent().nextAll('.facstaff:first').addClass("shown");
                     $(this).parent().nextAll('.student:first').removeClass("shown");
-                }
-                if ( $(this).val()=="Staff" ) {
-                    $("select[name='department[]']").val("Academic support");
                 }
             });
             $( "#profile" ).live('submit', function( event ) {
@@ -111,6 +108,8 @@
     <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
     <link rel="Stylesheet" type="text/css" href="/static/forms/css/jHtmlArea.css" />
     <style type="text/css">
+
+    div.jHtmlArea .ToolBar {width: 470px !important; }
     div.jHtmlArea .ToolBar ul li a.custom_disk_button
     {
         background: url(/static/forms/css/disk.png) no-repeat;

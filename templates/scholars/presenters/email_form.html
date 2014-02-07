@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% load get_api %}
+{% load get_prof get_api %}
 {% block title %}Email Presenters Form &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
 {% block extra_javascript %}
     <script type="text/javascript" src="/static/forms/js/jHtmlArea-0.7.5.min.js"></script>
     <script type="text/javascript">
         $(function() {
             $("#id_content").htmlarea({
-                toolbar: ["html","bold", "italic", "underline", "superscript", "subscript", "|", "h1", "h2", "h3", "h4", "h5", "h6", "|", "indent", "outdent", "horizontalrule", "link", "unlink", "|", "orderedList", "unorderedList"]
+                toolbar: ["html","bold", "italic", "underline", "superscript", "subscript", "|", "h1", "h2", "h3", "h4", "|", "indent", "outdent", "horizontalrule", "link", "unlink", "|", "orderedList", "unorderedList"]
             });
         });
     </script>
@@ -14,15 +14,14 @@
 {% block extra_style %}
     <link rel="stylesheet" type="text/css" href="/static/forms/css/jHtmlArea.css" />
     <style type="text/css">
+    div.jHtmlArea .ToolBar {width: 470px !important; }
     div.jHtmlArea .ToolBar ul li a.custom_disk_button
     {
         background: url(/static/forms/css/disk.png) no-repeat;
         background-position: 0 0;
     }
-    div.jHtmlArea { width:500px !important;border: solid 1px #ccc; background: #efefef; }
-    iframe {width:500px !important;height:300px !important;background: #fff;border: solid 1px #ccc;}
-    #second ul, #second ol { margin: 0; }
-    #second li {margin-left:0;}
+    div.jHtmlArea { width:480px !important;border: solid 1px #ccc; background: #efefef; }
+    iframe {width:480px !important;height:300px !important;background: #fff;border: solid 1px #ccc;}
     #second p {line-height: 1.1;margin-bottom: .5em;}
     </style>
 {% endblock %}
@@ -33,10 +32,25 @@
 {% get_api_object as title cms snippet 1014 code %}
 {{title}}
 <div class="buffer">
-    <h1>Email Presenters Form</h1>
-
+    <h1>Email Presenters</h1>
+    <p>
+        Compose an email to send to the lead presenter and faculty sponsor of the following presentation:
+    </p>
+    <h2>{{p.title}}</h2>
+    <p><u>Email Recipients</u></p>
+    <div class="buffer-left">
+        <ol>
+        {% for o in p.get_presenters %}
+            <li style="font-weight:bold;">{{o.first_name}} {{o.last_name}} [{{o.prez_type}}]</li>
+            {% if o.leader %}
+                {% get_prof as prof o.sponsor %}
+                <li style="font-weight:bold;">{{prof.firstname}} {{prof.lastname}} [Faculty Sponsor]</li>
+            {% endif %}
+        {% endfor %}
+        </ol>
+    </div>
     {% if data %}
-        <h4>If you are satisfied with the content below, click on the "execute" button, and your email will be sent to the presentation leaders.</h4>
+        <h4>If you are satisfied with the content below, click on the "execute" button, and your email will be sent.</h4>
         <h4>If you would like to update the content, click on the "edit" button.</h4>
         <div class="buffer" style="background-color:#efefef;">
         {{data.content}}
@@ -47,14 +61,35 @@
         {{form}}
         </table>
         </div>
-        <p><br /><input type="button" name="update" value="Edit" class="button fleft" onclick="javascript:history.go(-1)" />&nbsp;<input type="submit" name="execute" value="Execute" class="button fright" /></p>
+        <p>
+            <br />
+            <input type="button" name="update" value="Edit" class="button fleft" onclick="javascript:history.go(-1)" />
+            &nbsp;
+            <input type="submit" name="execute" value="Execute" class="button fright" />
+        </p>
         </form>
     {% else %}
-        <p>
-        Compose an email to send to those celebration of scholars lead presenters
-        whose presentation is <strong>complete</strong>.
-        </p>
-        {% include "scholars/presenters/email_form.inc.html" %}
+        <form method="post" action="." class="form" id="profile">{% csrf_token %}
+            <fieldset class="blockLabels">
+            <ol>
+                <li class="ctrlHolder">
+                    <div class="span-12">
+                    <textarea id="id_content" rows="10" cols="40" name="content">
+                    {% if content == "email" %}
+                        {% include "scholars/presenters/email.inc.html" %}
+                    {% elif content == "reject" %}
+                        {% include "scholars/presenters/rejection.inc.html" %}
+                    {% else %}{% endif %}
+                    </textarea>
+                    </div>
+                </li>
+                <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" name="confirm" value="Confirm Content" class="button" />
+                </li>
+            </ol>
+            </fieldset>
+        </form>
     {% endif %}
 </div>
 {% endblock %}

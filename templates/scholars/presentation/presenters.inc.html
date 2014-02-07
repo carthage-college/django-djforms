@@ -63,7 +63,7 @@
         <select name="sponsor[]">
             <option value="">---select---</option>
             {% for f in faculty %}
-            <option value="{{f.email}}"{% if p.sponsor == f.email %} selected="selected"{% endif %}>{{f.last_name}}, {{f.first_name}}</option>
+            <option value="{{f.email}}"{% if p.sponsor == f.email %} selected="selected"{% endif %}>{{f.lastname}}, {{f.firstname}}</option>
             {% endfor %}
         </select>
         <p><strong>Other sponsor(s)</strong></p>

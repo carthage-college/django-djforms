@@ -42,22 +42,22 @@ def _update_presenters(presenter, presenters):
     presenter.save()
     return presenter
 
-def _get_faculty():
-    faculty = cache.get('faculty_json')
-    if faculty is None:
+def _get_json(yuri):
+    jason = cache.get('%s_json' % yuri)
+    if jason is None:
         # read the json data from URL
-        response =  urllib.urlopen("http://www.carthage.edu/jenzabar/api/faculty/")
+        response =  urllib.urlopen("https://www.carthage.edu/jenzabar/api/people/%s/" % yuri)
         data = response.read()
-        faculty = json.loads(data)
-        cache.set('faculty_json', faculty)
-    return faculty
+        jason = json.loads(data)
+        cache.set('%s_json' % yuri, jason)
+    return jason
 
 @login_required
 def form(request, pid=None):
     presenters = []
     presentation = None
     manager = request.user.has_perm('scholars.manage_presentation')
-    faculty = _get_faculty()
+    faculty = _get_json("faculty")
     if pid:
         presentation = get_object_or_404(Presentation,id=pid)
         # check perms
@@ -214,11 +214,12 @@ def manager(request):
 
 
 @permission_required('scholars.manage_presentation', login_url="/forms/accounts/login/")
-def email_presenters(request):
+def email_presenters(request,pid,action):
     """
-    method to send an email to each presentation leader
+    method to send an email to the presenters and faculty sponsor
     """
     form_data = None
+    presentation = get_object_or_404(Presentation,id=pid)
     if request.method=='POST':
         form = EmailPresentersForm(request.POST)
         if form.is_valid():
@@ -229,15 +230,12 @@ def email_presenters(request):
                     "scholars/presenters/email_form.html",
                     context,context_instance=RequestContext(request))
             elif "execute" in request.POST:
-                presentations = Presentation.objects.filter(date_updated__year=YEAR).filter(status=True)
                 if settings.DEBUG:
                     EMAIL = settings.SERVER_EMAIL
-                    BCC = ( ('larry@carthage.edu'),)
                 else:
-                    EMAIL = "dmunk@carthage.edu"
-                    BCC = ( ('dmunk@carthage.edu'),('larry@carthage.edu'), )
-                for p in presentations:
-                    BCC += (p.user.email,)
+                    EMAIL = request.user.email
+                    BCC = ( ('larry@carthage.edu'), )
+                TO_LIST = []
                 data = {"content":form_data["content"]}
                 send_mail (
                     request, [EMAIL,],
@@ -249,9 +247,11 @@ def email_presenters(request):
                 return HttpResponseRedirect(reverse("email_presenters_form"))
     else:
         form = EmailPresentersForm()
+
     return render_to_response (
         "scholars/presenters/email_form.html",
-        {"form": form,"data":form_data,}, context_instance=RequestContext(request)
+        {"form": form,"data":form_data,"p":presentation},
+        context_instance=RequestContext(request)
     )
 
 
@@ -286,28 +286,22 @@ def detail(request, pid):
     manager = request.user.has_perm('scholars.manage_presentation')
     return render_to_response (
         "scholars/presentation/detail.html",
-        {"p": presentation,"manager":manager}, context_instance=RequestContext(request)
+        {"p": presentation,"manager":manager},
+        context_instance=RequestContext(request)
     )
 
 
-@login_required
+@permission_required('scholars.manage_presentation', login_url="/forms/accounts/login/")
 def action(request):
     manager = request.user.has_perm('scholars.manage_presentation')
     if request.method=='POST' and manager:
         pid = int(request.POST["pid"])
+        action = request.POST["action"]
         presentation = get_object_or_404(Presentation,id=pid)
-        if request.POST["action"] == "update":
+        if action == "update":
             return HttpResponseRedirect(reverse('presentation_update', args=[pid]))
-        elif request.POST["action"] == "email":
-            template = "scholars/presentation/email_all.html",
-        elif request.POST["action"] == "reject":
-            template = "scholars/presentation/rejection.html",
         else:
-            raise Http404, "Page not found"
-        return render_to_response (template,
-                {"p": presentation,"manager":manager},
-                context_instance=RequestContext(request)
-        )
+            return HttpResponseRedirect(reverse('email_presenters', args=[pid,action]))
     else:
         raise Http404, "Page not found"
 
