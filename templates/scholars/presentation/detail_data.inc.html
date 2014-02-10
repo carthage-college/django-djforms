@@ -3,7 +3,7 @@
     <p class="title">{{p.title}}</p>
     {% for o in p.get_presenters %}
         {% if o.prez_type == "Student" %}
-            {% get_prof as prof o.sponsor %}
+            {% get_prof as prof o.sponsor_email %}
             <div class="person">
                 <p>
                     {% if o.mugshot %}<img class="mugshot" src="http://{{server_url}}{{media_url}}{{o.mugshot}}" />{% endif %}

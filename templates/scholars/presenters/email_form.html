@@ -43,7 +43,7 @@
         {% for o in p.get_presenters %}
             <li style="font-weight:bold;">{{o.first_name}} {{o.last_name}} [{{o.prez_type}}]</li>
             {% if o.leader %}
-                {% get_prof as prof o.sponsor %}
+                {% get_prof as prof o.sponsor_email %}
                 <li style="font-weight:bold;">{{prof.firstname}} {{prof.lastname}} [Faculty Sponsor]</li>
             {% endif %}
         {% endfor %}
