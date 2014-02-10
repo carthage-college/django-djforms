@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
 from django.http import HttpResponseRedirect, Http404
@@ -7,12 +6,12 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 
 from djforms.scholars.views.forms import EmailPresentersForm, PresentationForm, DEPTS
-from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES
-from djtools.utils.mail import send_mail
+from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES, get_people, get_json
 from djforms.core.models import Department, YEAR_CHOICES
 
+from djtools.utils.mail import send_mail
+
 import datetime, os
-import urllib, json
 
 NOW  = datetime.datetime.now()
 YEAR = int(NOW.year)
@@ -42,22 +41,17 @@ def _update_presenters(presenter, presenters):
     presenter.save()
     return presenter
 
-def _get_json(yuri):
-    jason = cache.get('%s_json' % yuri)
-    if jason is None:
-        # read the json data from URL
-        response =  urllib.urlopen("https://www.carthage.edu/jenzabar/api/people/%s/" % yuri)
-        data = response.read()
-        jason = json.loads(data)
-        cache.set('%s_json' % yuri, jason)
-    return jason
-
 @login_required
 def form(request, pid=None):
     presenters = []
     presentation = None
     manager = request.user.has_perm('scholars.manage_presentation')
-    faculty = _get_json("faculty")
+    # get people for select field
+    jason  = get_json("faculty")
+    faculty = []
+    for j in jason:
+        faculty.append(j[j.keys()[0]])
+
     if pid:
         presentation = get_object_or_404(Presentation,id=pid)
         # check perms

@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.cache import cache
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
@@ -7,6 +8,8 @@ from djforms.core.models import Department, GenericChoice, YEAR_CHOICES, BINARY_
 from djtools.utils.mail import send_mail
 
 from tagging import fields, managers
+
+import urllib, json
 
 WORK_TYPES = (
     #('','----select----'),
@@ -24,17 +27,60 @@ PRESENTER_TYPES = (
     ('Staff','Staff'),
 )
 
+class Person(object):
+    """
+    Dynamic 'person' object
+    Usage:
+
+    data = {"name":"larry","email":"larry@carthage.edu"}
+    p = Person(**data)
+    p.id = 90125
+    etc
+    """
+    def __init__(self, **entries):
+        self.__dict__.update(entries)
+
+def get_json(yuri):
+    jason = cache.get('%s_api_json' % yuri)
+    if jason is None:
+        # read the json data from URL
+        earl = "%s/%s/?api_key=%s" % (settings.API_PEOPLE_URL,yuri,settings.API_KEY)
+        response =  urllib.urlopen(earl)
+        data = response.read()
+        # json doesn't like trailing commas, so...
+        data = data.replace(',]',']')
+        jason = json.loads(data)
+        cache.set('%s_api_json' % yuri, jason)
+    return jason
+
+def get_people(yuri):
+    people = cache.get('%s_api_objects' % yuri)
+    if people is None:
+        jason = get_json(yuri)
+        people = {}
+        for j in jason:
+            p = Person(**j[j.keys()[0]])
+            p.id = j.keys()[0]
+            people[j.keys()[0]] = p
+
+        cache.set('%s_api_objects' % yuri, people)
+    return people
+
 class Presenter(models.Model):
     date_created        = models.DateTimeField("Date Created", auto_now_add=True)
     date_updated        = models.DateTimeField("Date Updated", auto_now=True)
+    college_id          = models.CharField(max_length=8, null=True, blank=True)
     first_name          = models.CharField(max_length=128, null=True, blank=True)
     last_name           = models.CharField(max_length=128, null=True, blank=True)
+    email               = models.CharField(max_length=128, null=True, blank=True)
     leader              = models.BooleanField("Presentation leader", default=False)
     prez_type           = models.CharField("Presenter type", max_length="16", choices=PRESENTER_TYPES, null=True, blank=True)
     college_year        = models.CharField("Current year at Carthage", max_length="1", choices=YEAR_CHOICES, null=True, blank=True)
     major               = models.CharField(max_length=128, null=True, blank=True)
     hometown            = models.CharField(max_length=128, null=True, blank=True)
     sponsor             = models.CharField(max_length=128, null=True, blank=True)
+    sponsor_name        = models.CharField(max_length=128, null=True, blank=True)
+    sponsor_email       = models.CharField(max_length=128, null=True, blank=True)
     sponsor_other       = models.CharField(max_length=255, null=True, blank=True)
     department          = models.ForeignKey(Department, null=True, blank=True)
     mugshot             = models.ImageField(max_length=255, upload_to="files/scholars/mugshots", help_text="75 dpi and .jpg only")
@@ -42,6 +88,13 @@ class Presenter(models.Model):
 
     def __unicode__(self):
         return u"%s %s" % (self.first_name, self.last_name)
+
+    def save(self, *args, **kwargs):
+        if self.sponsor:
+            faculty = get_people("faculty")
+            self.sponsor_name = "%s %s" % (faculty[self.sponsor].firstname, faculty[self.sponsor].lastname)
+            self.sponsor_email = faculty[self.sponsor].email
+        super(Presenter, self).save()
 
     def year(self):
         if self.college_year:

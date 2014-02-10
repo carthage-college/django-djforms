@@ -6,6 +6,32 @@ from django.utils.encoding import smart_unicode, smart_str
 
 import csv
 
+def get_json(yuri):
+    jason = cache.get('%s_api_json' % yuri)
+    if jason is None:
+        # read the json data from URL
+        earl = "%s/%s/?api_key=%s" % (settings.API_PEOPLE_URL,yuri,settings.API_KEY)
+        response =  urllib.urlopen(earl)
+        data = response.read()
+        # json doesn't like trailing commas, so...
+        data = data.replace(',]',']')
+        jason = json.loads(data)
+        cache.set('%s_api_json' % yuri, jason)
+    return jason
+
+def get_people(yuri):
+    people = cache.get('%s_api_objects' % yuri)
+    if people is None:
+        jason = get_json(yuri)
+        people = {}
+        for j in jason:
+            p = Person(**j[j.keys()[0]])
+            p.id = j.keys()[0]
+            people[j.keys()[0]] = p
+
+        cache.set('%s_api_objects' % yuri, people)
+    return people
+
 def export_scholars(modeladmin, request, queryset):
 
     response = HttpResponse(mimetype='text/csv')
