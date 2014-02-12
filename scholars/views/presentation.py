@@ -128,10 +128,6 @@ def form(request, pid=None):
             presentation = form.save(commit=False)
             presentation.user = user
             presentation.updated_by = request.user
-            if request.POST.get('status') == "on":
-                presentation.status = True
-            else:
-                presentation.status = False
             presentation.save()
 
             # CRUD
@@ -164,6 +160,11 @@ def form(request, pid=None):
                 if p.leader:
                     presentation.leader = p
             # save the presentation object
+            if manager:
+                if request.POST.get('status') == "on":
+                    presentation.status = True
+                else:
+                    presentation.status = False
             presentation.save()
             if not manager:
                 data = {"presentation":presentation,"pid":pid,}

@@ -146,7 +146,7 @@ class Presentation(models.Model):
                 if settings.DEBUG:
                     TO_LIST = ["larry@carthage.edu",]
                 else:
-                    TO_LIST = [self.email,]
+                    TO_LIST = [self.user.email,]
                 BCC = settings.MANAGERS
                 email = settings.DEFAULT_FROM_EMAIL
                 subject = "[Celebration of Scholars] Presentation has been approved"
