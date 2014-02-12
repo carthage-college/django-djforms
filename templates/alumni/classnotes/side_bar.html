@@ -1,4 +1,3 @@
-{% load get_api %}
 <div id="third">
     <div class="buffer">
         <h1 style="font-size:18px;">Class Notes by Decade</h1>
@@ -26,12 +25,5 @@
             {% endif %}{% endif %}
         </ul>
     </div>
-    {% get_api_object as contact cms snippet 608 code %}
-    {{contact}}
-    {% get_api_object as vid cms videopageblock 248 code %}
-    {{vid}}
-    <div class="buffer">
-    {% get_api_object as news cms newspageblock 433 code %}
-    {{news}}
-    </div>
+    {% include "alumni/side_bar.html" %}
 </div>
