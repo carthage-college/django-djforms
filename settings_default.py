@@ -34,6 +34,8 @@ ROOT_URL = "/forms/"
 STATIC_URL = '/djmedia/'
 SERVER_URL = "www.carthage.edu"
 API_URL = "%s/%s" % (SERVER_URL, "api")
+API_KEY = ""
+API_PEOPLE_URL=""
 AUTH_PROFILE_MODULE = 'core.UserProfile'
 SECRET_KEY = ''
 

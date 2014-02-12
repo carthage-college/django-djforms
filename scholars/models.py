@@ -129,7 +129,7 @@ class Presentation(models.Model):
     abstract_text       = models.TextField("Abstract", help_text='Copy and paste your abstract text or start typing.')
     need_table          = models.CharField(max_length=3, choices=BINARY_CHOICES)
     need_electricity    = models.CharField(max_length=3, choices=BINARY_CHOICES)
-    poster_file         = models.FileField(upload_to='files/scholars/posters', max_length="256", help_text='Upload a poster file', null=True, blank=True)
+    poster_file         = models.FileField(upload_to='files/scholars/posters/2014', max_length="256", help_text='Upload a poster file', null=True, blank=True)
     status              = models.BooleanField(default=False)
 
     class Meta:
@@ -151,6 +151,8 @@ class Presentation(models.Model):
                 email = settings.DEFAULT_FROM_EMAIL
                 subject = "[Celebration of Scholars] Presentation has been approved"
                 send_mail(None,TO_LIST,subject,email,"scholars/presentation/approved_mail.html",self,BCC)
+        else:
+            self.updated_by = self.user
         super(Presentation, self).save()
 
     def __unicode__(self):

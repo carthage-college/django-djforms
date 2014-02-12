@@ -4,9 +4,11 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response
 from django.template import RequestContext, loader
 from djforms.lis.printjobs.forms import PrintRequestForm
+from django.contrib.auth.decorators import login_required
 
 import datetime
 
+@login_required
 def print_request(request):
     if request.method=='POST':
         form = PrintRequestForm(request.POST, request.FILES)

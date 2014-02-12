@@ -1,13 +1,15 @@
 from django.conf import settings
 from django.core.mail import EmailMessage
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.shortcuts import render_to_response
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 from djforms.lis.equipmentform.forms import EquipmentReserveForm
 
 from datetime import date
 
+@login_required
 def equipment_reserve(request):
     if request.method == 'POST':
         form = EquipmentReserveForm(request.POST)

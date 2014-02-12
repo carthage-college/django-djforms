@@ -53,13 +53,13 @@ def form(request, pid=None):
         faculty.append(j[j.keys()[0]])
 
     if pid:
-        presentation = get_object_or_404(Presentation,id=pid)
+        presentation = get_object_or_404(Presentation,id=pid,date_updated__year=YEAR)
         # check perms
         if presentation.user != request.user and not manager:
             raise Http404
     else:
         try:
-            presentation = Presentation.objects.get(user=request.user)
+            presentation = Presentation.objects.get(user=request.user,date_updated__year=YEAR)
             pid = presentation.id
         except:
             pass
