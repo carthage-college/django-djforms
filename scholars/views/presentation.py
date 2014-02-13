@@ -175,8 +175,8 @@ def form(request, pid=None):
                     presentation.title,status,request.user.first_name,request.user.last_name
                 )
                 send_mail (
-                            request, TO_LIST, subject, request.user.email,
-                            "scholars/presentation/email.html", data, BCC
+                    request, TO_LIST, subject, request.user.email,
+                    "scholars/presentation/email.html", data, BCC
                 )
             return HttpResponseRedirect(reverse("presentation_form_done"))
         else:
@@ -220,22 +220,24 @@ def email_presenters(request,pid,action):
         if form.is_valid():
             form_data = form.cleaned_data
             if "confirm" in request.POST:
-                context = {"form":form,"data":form_data,}
+                context = {"form":form,"data":form_data,"p":presentation}
                 return render_to_response (
                     "scholars/presenters/email_form.html",
                     context,context_instance=RequestContext(request))
             elif "execute" in request.POST:
-                if settings.DEBUG:
-                    EMAIL = settings.SERVER_EMAIL
-                else:
-                    EMAIL = request.user.email
-                    BCC = ( ('larry@carthage.edu'), )
-                TO_LIST = []
+                FEMAIL = request.user.email
+                BCC = ( ('larry@carthage.edu'), )
+                TO_LIST = [presentation.user.email,]
+                if presentation.leader.sponsor_email:
+                    if settings.DEBUG:
+                        TO_LIST.append("bridge@carthage.edu")
+                    else:
+                        TO_LIST.append(presentation.leader.sponsor_email)
                 data = {"content":form_data["content"]}
                 send_mail (
-                    request, [EMAIL,],
-                    "[Celebration of Scholars] Next Steps for your presentation",
-                    EMAIL, "scholars/presenters/email_data.html", data, BCC
+                    request, TO_LIST,
+                    "[Celebration of Scholars] Information regarding your presentation",
+                    FEMAIL, "scholars/presenters/email_data.html", data, BCC
                 )
                 return HttpResponseRedirect(reverse("email_presenters_done"))
             else:
@@ -245,7 +247,7 @@ def email_presenters(request,pid,action):
 
     return render_to_response (
         "scholars/presenters/email_form.html",
-        {"form": form,"data":form_data,"p":presentation},
+        {"form": form,"data":form_data,"p":presentation,"action":action},
         context_instance=RequestContext(request)
     )
 

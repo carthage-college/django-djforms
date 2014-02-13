@@ -34,24 +34,25 @@
 <div class="buffer">
     <h1>Email Presenters</h1>
     <p>
-        Compose an email to send to the lead presenter and faculty sponsor of the following presentation:
+        Compose an email to send to the leaders of the following presentation:
     </p>
     <h2>{{p.title}}</h2>
-    <p><u>Email Recipients</u></p>
+    <p><u>Recipients</u></p>
+    {% get_prof as prof p.leader.sponsor_email %}
     <div class="buffer-left">
         <ol>
-        {% for o in p.get_presenters %}
-            <li style="font-weight:bold;">{{o.first_name}} {{o.last_name}} [{{o.prez_type}}]</li>
-            {% if o.leader %}
-                {% get_prof as prof o.sponsor_email %}
-                <li style="font-weight:bold;">{{prof.firstname}} {{prof.lastname}} [Faculty Sponsor]</li>
+            <li style="font-weight:bold;">{{p.user.first_name}} {{p.user.last_name}} [{{p.leader.prez_type}}]</li>
+            {% if p.leader.sponsor_email %}
+            {% get_prof as prof p.leader.sponsor_email %}
+            <li style="font-weight:bold;">{{prof.firstname}} {{prof.lastname}} [Faculty Sponsor]</li>
             {% endif %}
-        {% endfor %}
         </ol>
     </div>
     {% if data %}
-        <h4>If you are satisfied with the content below, click on the "execute" button, and your email will be sent.</h4>
-        <h4>If you would like to update the content, click on the "edit" button.</h4>
+        <div class="notice">
+        <p>If you are satisfied with the content below, click on the "execute" button, and your email will be sent.</p>
+        <p>If you would like to update the content, click on the "edit" button.</p>
+        </div>
         <div class="buffer" style="background-color:#efefef;">
         {{data.content}}
         </div>
@@ -75,9 +76,9 @@
                 <li class="ctrlHolder">
                     <div class="span-12">
                     <textarea id="id_content" rows="10" cols="40" name="content">
-                    {% if content == "email" %}
+                    {% if action == "email" %}
                         {% include "scholars/presenters/email.inc.html" %}
-                    {% elif content == "reject" %}
+                    {% elif action == "reject" %}
                         {% include "scholars/presenters/rejection.inc.html" %}
                     {% else %}{% endif %}
                     </textarea>
