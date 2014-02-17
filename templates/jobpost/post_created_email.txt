@@ -1,1 +1,0 @@
-A new job post has been created and can be managed <a href="http://www.carthage.edu/forms/job/managepost/{{data.id}}/">here</a>

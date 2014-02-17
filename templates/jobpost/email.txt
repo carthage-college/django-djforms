@@ -1,7 +1,0 @@
-{% autoescape off %}
-Data from job submission at:
-
-http://www.carthage.edu/forms/job/{{post.slug}}
-
-<pre style="fontsize:1.5em;">{{data.render_email|safe}}</pre>
-{% endautoescape %}
