@@ -35,14 +35,13 @@ class DonationContactForm(ContactForm):
     """
     class_of            = forms.ChoiceField(required=False, label='Class of', choices=CLASS)
     matching_company    = forms.BooleanField(required=False, label='I/we are employed by a matching gift company.')
-    thrivent_financial  = forms.BooleanField(required=False, label='I/we are eligible for the Thrivent Financial for Lutherans matching gift program.')
     opt_in              = forms.BooleanField(required=False, label='I would like more information about planned gifts such as charitable trusts, charitable gifts annuities, life insurance, or will inclusions.')
     spouse              = forms.CharField(required=False, label='Spouse', max_length=100)
     relation            = forms.ChoiceField(choices=RELATION_CHOICES, label='Relation to Carthage')
 
     class Meta:
         model = DonationContact
-        fields = ('first_name','last_name','spouse','relation','class_of','email','phone','address1','address2','city','state','postal_code','matching_company','thrivent_financial','opt_in')
+        fields = ('first_name','last_name','spouse','relation','class_of','email','phone','address1','address2','city','state','postal_code','matching_company','opt_in')
 
 class DonationOrderForm(OrderForm):
     """
