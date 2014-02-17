@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}My Proposals &mdash; Writing Intensive Course Proposal Form &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "writingcurriculum/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as banner cms snippet 252 code %}
+{{banner}}
+{% get_api_object as title cms snippet 223 code %}
+{{title}}
+<div class="buffer">
+<h2>My Proposals</h2>
+<ol class="numbers">
+{% for obj in objects %}
+    <li><a href="{% url proposal_update obj.id %}">{{obj.course_title}}</a></li>
+{% endfor %}
+</ol>
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "writingcurriculum/side_bar.html" %}
+{% endblock %}
+

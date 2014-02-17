@@ -1,0 +1,57 @@
+{% extends "jobpost/base.html" %}
+{% block title %}Manage Job Posts{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block extra_javascript %}
+<script type="text/javascript" src="http://www.carthage.edu/assets/js/xinha/init.js"></script>
+<script type="text/javascript" src="http://www.carthage.edu/assets/js/xinha/XinhaCore.js"></script>
+<script type="text/javascript" src="http://www.carthage.edu/assets/js/xinha/job-apps.js"></script>
+<script type="text/javascript" src="http://www.carthage.edu/djmedia/js/urlify.js"></script>
+<script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#id_publish, #id_expire_date").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",changeFirstDay:false,dateFormat:"mm/dd/yy",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+    });
+</script>
+<script type="text/javascript" src="http://www.carthage.edu/djmedia/js/getElementsBySelector.js"></script>
+{% endblock %}
+{% block extra_style %}
+<link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="http://www.carthage.edu/assets/current/css/core/grid-960.css" type="text/css" />
+{% endblock %}
+{% block content %}
+    <div class="buffer">
+        <h2 class="page_title">Manage Post &nbsp;&nbsp;&nbsp;<a href="http://www.carthage.edu/forms/job/{{original.id}}/"><img src="http://www.carthage.edu/assets/img/ico/silk/icons/printer.png" /></a></h2>
+        <p><u>Department Information</u></p>
+        <p>Department Name: {{original.hiring_department.name}}<br />
+        Department Number: {{original.hiring_department.number}}<br />
+        Contact Name: {{original.hiring_department.contact_name}}<br />
+        Contact phone: {{original.hiring_department.contact_phone}}</p>
+        <form method="POST" action="." class="form">{% csrf_token %}
+            <h3 style="color: green;"> 
+                Complete the form below to change the data for this job.
+            </h3>
+            {% if form.errors %}
+                <h2 style="color: red;">
+                    Please correct the error{{ form.errors|pluralize }} below.
+                </h2>
+            {% endif %}
+            <fieldset class="blockLabels">
+                <ol>
+                    {% for field in form %}
+                        {% if not field.is_hidden %}
+                            {% include "form_field.inc.html" %}
+                        {% endif %}
+                    {% endfor %}
+                    <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Save application" class="button" />
+                    </li>
+                </ol>
+            </fieldset>
+            <script type="text/javascript">document.getElementById("id_title").focus();</script>
+            <script type="text/javascript">
+                document.getElementById("id_slug").onchange = function() { this._changed = true; };document.getElementById("id_title").onkeyup = function() { var e = document.getElementById("id_slug"); if(!e._changed) { e.value = URLify(document.getElementById("id_title").value, 50);} };
+            </script>
+        </form>
+    </div>
+{% endblock %}

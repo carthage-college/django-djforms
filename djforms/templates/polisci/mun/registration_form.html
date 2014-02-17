@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Registration &mdash; Model United Nations &mdash; Political Science &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block extra_style %}
+    <style type="text/css">
+    #second ol {margin:0;}
+    #second li {margin: 0 0 0.5em 0;}
+    .form input {width: 350px !important; }
+    </style>
+{% endblock %}
+{% block left_nav %}
+    {% include "polisci/mun/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as header cms snippet 161 code %}
+{{header}}
+<div class="buffer">
+    <h1>Registration Form</h1>
+    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
+    {% if form.errors %}
+    <p class="error">There were errors with the data submitted, see below.</p>
+    {% endif %}
+</div>
+    <form method="post" action="." class="form" id="profile">{% csrf_token %}
+        <fieldset class="blockLabels">
+            <ol>
+                {% for field in form %}
+                    {% include "form_field.inc.html" %}
+                    {% if field.name == "number_of_stu" %}
+                    <li class="ctrlHolder buffer-top">
+                        {#http://www.carthage.edu/dashboard/crud/cms/snippet/1409/update/#}
+                        {% get_api_object as ga_mem cms snippet 1409 code %}
+                        {{ga_mem}}
+                        <div id="delegation1" class="fleft">
+                        <h5 style="text-align:center;">Delegation 1</h5>
+                        <ol>
+                        <li>{{c_form.d1c1}}</li>
+                        <li>{{c_form.d1c2}}</li>
+                        <li>{{c_form.d1c3}}</li>
+                        <li>{{c_form.d1c4}}</li>
+                        <li>{{c_form.d1c5}}</li>
+                        </ol>
+                        </div>
+                        <div id="delegation2" class="fleft" style="margin-left:5px;">
+                        <h5 style="text-align:center;">Delegation 2</h5>
+                        <ol>
+                        <li>{{c_form.d2c1}}</li>
+                        <li>{{c_form.d2c2}}</li>
+                        <li>{{c_form.d2c3}}</li>
+                        <li>{{c_form.d2c4}}</li>
+                        <li>{{c_form.d2c5}}</li>
+                        </ol>
+                        </div>
+                        <div id="delegation3" class="fleft" style="margin-left:5px;">
+                        <h5 style="text-align:center;">Delegation 3</h5>
+                        <ol>
+                        <li>{{c_form.d3c1}}</li>
+                        <li>{{c_form.d3c2}}</li>
+                        <li>{{c_form.d3c3}}</li>
+                        <li>{{c_form.d3c4}}</li>
+                        <li>{{c_form.d3c5}}</li>
+                        </ol>
+                        </div>
+                        <div id="delegation4" class="fleft" style="margin-left:5px;">
+                        <h5 style="text-align:center;">Delegation 4</h5>
+                        <ol>
+                        <li>{{c_form.d4c1}}</li>
+                        <li>{{c_form.d4c2}}</li>
+                        <li>{{c_form.d4c3}}</li>
+                        <li>{{c_form.d4c4}}</li>
+                        <li>{{c_form.d4c5}}</li>
+                        </ol>
+                        </div>
+                        <div id="delegation5" class="fleft" style="margin-left:5px;">
+                        <h5 style="text-align:center;">Delegation 5</h5>
+                        <ol>
+                        <li>{{c_form.d5c1}}</li>
+                        <li>{{c_form.d5c2}}</li>
+                        <li>{{c_form.d5c3}}</li>
+                        <li>{{c_form.d5c4}}</li>
+                        <li>{{c_form.d5c5}}</li>
+                        </ol>
+                        </div>
+                        {#http://www.carthage.edu/dashboard/crud/cms/snippet/1567/update/#}
+                        {% get_api_object as mun_note cms snippet 1567 code %}
+                        {{mun_note}}
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <ol>
+                <li>
+                    {#http://www.carthage.edu/dashboard/crud/cms/snippet/1410/update/#}
+                    {% get_api_object as ga_fees cms snippet 1410 code %}
+                    {{ga_fees}}
+                </li>
+                <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Submit" class="button" />
+                </li>
+                <li class="btnHolder">
+                    <p>If you have further questions please contact:</p>
+                    <blockquote>
+                        <p><strong>Dr. Jeffrey L. Roberg<br>
+                                   Carthage College<br>
+                                   2001 Alford Park Drive<br>
+                                   Kenosha, WI 53140</strong></p>
+                        <p>Email: <a href="mailto:jroberg@carthage.edu">jroberg@carthage.edu</a></p>
+                    </blockquote>
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

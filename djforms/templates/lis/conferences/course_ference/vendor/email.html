@@ -1,0 +1,46 @@
+<p>Thank you registering as a vendor for the <em>Forecasting Next Generation Libraries</em> virtual course-ference.</p>
+<p>This email is your registration confirmation and may be used as a receipt for expense purposes.</p>
+<p>
+    If you have any questions, please do not hesitate to
+    <a href="mailto:nextgenlibraries@carthage.edu">contact us</a>.
+</p>
+<dl style="margin-bottom:30px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">First name</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.first_name}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Last name</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.last_name}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Address</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.address1}}{% if data.contact.address2 %}, {{data.contact.address2}}{% endif %}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">City</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.city}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">State</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.state}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Zip</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.postal_code}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Email</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.email}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Organization</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.affiliation|default:"&nbsp;"}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Phone</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.phone}}</dd>
+</dl>
+<dl style="margin-bottom:30px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Sector</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.sector}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Swag</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.swag}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Discussion</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.discussion}}</dd>
+</dl>
+<h3>Description of the resources/materials you provide to libraries</h3>
+<p>{{data.contact.description}}</p>
+<dl style="margin-bottom:30px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Conference fee</dt>
+    <dd style="margin:2px 0; padding:5px 0;">${{data.total}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Name on Card</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.cc_name}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Card ending with</dt>
+    <dd style="margin:2px 0; padding:5px 0;">x{{data.cc_4_digits}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Transaction ID</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.transid}}</dd>
+</dl>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Forms Home{% endblock %}
+{% block left_nav %}
+<div id="first">
+    <ul id="about">
+        {% if not user.is_anonymous %}
+            <li><a href="/forms/accounts/logout/?next={{request.path}}">Logout</a></li>
+        {% else %}
+            <li>
+                <a href="/forms/accounts/login/?next={{request.path}}">Login</a>
+            </li>
+        {% endif %}
+        {% if user.is_superuser %}
+            <li><a href="/forms/admin/">Administration</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}
+{% block content %}
+<div id="second">
+    <div id="sitetitle">Forms</div>
+    <div class="span-18 prepend-1 buffer-top">
+        <h1>Choose from the follow options</h1>
+    <ul class="bullets">
+        <li><a href="/forms/job/">Jobs Application</a></li>
+        <li><a href="/forms/maintenance/">Maintenance Request</a></li>
+    </ul>
+    </div>
+</div>
+{% endblock %}

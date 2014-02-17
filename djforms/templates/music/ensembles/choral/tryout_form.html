@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Choral Ensemble Auditions &mdash; Music &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "music/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as header cms snippet 834 code %}
+{{header}}
+{% get_api_object as title cms snippet 706 code %}
+{{title}}
+<div class="buffer">
+    <h1>Choral Ensemble Auditions</h1>
+    <p>Please complete the form below to sign up for a Choral audition session.</p>
+    <h2>Time Slots</h2>
+    <p>There are two audition sessions from which to choose a 10 minute slot:</p>
+    <ul class="bullets">
+        <li>Monday, September 2: 4:00pm&mdash;8:00pm</li>
+        <li>Tuesday, September 3: 9:00am&mdash;8:00pm</li>
+    </ul>
+    <h3>Freshman and Transfer Students</h3>
+    <p>Make certain that you check your orientation schedule.</p>
+    <h3>Returning Students</h3>
+    <p>You are encouraged to sign up <strong>Monday 2-4pm</strong> or <strong>Tuesday 9-12pm</strong>.</p>
+    <h2>Choral Auditions consist of:</h2>
+    <ol>
+    <li>Vocalizations</li>
+    <li>Tonal Memory Exercises</li>
+    <li>Sigh Reading</li>
+    <li>Singing "My Country 'Tis of Thee" in different keys</li>
+    </ol>
+    <h3>A prepared song is not required, but you are welcome to perform it.</h3>
+    {% include "includes/generic_form.html" %}
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "music/ensembles/side_bar.html" %}
+{% endblock %}
+

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Presentation Form &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
+{% block left_nav %}
+    {% include "scholars/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as title cms snippet 1014 code %}
+{{title}}
+<div class="buffer">
+<h1>Success</h1>
+<p>We have received your Celebration of Scholars presentation.</p>
+<p>You can access it at any time by going to <a href="/forms/scholars/presentation/">the submission page</a>.
+If you are not logged in at the time, you will be asked to do so.</p>
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "scholars/side_bar.html" %}
+{% endblock %}

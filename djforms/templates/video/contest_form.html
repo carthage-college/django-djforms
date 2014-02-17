@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Student Video Contest Entry Form &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block left_nav %}
+    {% include "video/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>Student Video Contest Entry Form</h1>
+    <h3>How to enter:</h3>
+    <ol>
+    <li>Create a one to five minute video about an aspect of student life at Carthage.</li>
+    <li>Upload your video to YouTube and submit this entry form by Wednesday, May 4, 2011.</li>
+    </ol>
+    <p>Deadline: May 4, 2011.</p>
+    {% include "includes/generic_form.html" %}
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "video/side_bar.html" %}
+{% endblock %}

@@ -1,0 +1,11 @@
+<pre style="font-size:1.5em;">
+Name: {{data.first_name}}
+E-mail: {{data.email}}
+Status: {{data.status}}
+ACT or SAT: {{data.act_sat}}
+GPA: {{data.gpa}}
+GPA Scale: {{data.gpa_scale}}
+Adjusted GPA: {{data.adjusted_gpa}}
+Comments: {{data.information}}
+</pre>
+{% if data.prospect_status %}<pre style="font-size:1.5em;">T: {{data.prospect_status}}</pre>{% endif %}

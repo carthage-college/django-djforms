@@ -1,0 +1,53 @@
+<p>Dear {{data.first_name}} {{data.last_name}}:</p>
+
+<p>Thank you for your interest in Carthage. We will respond to your inquiry within 5-7 days.</p>
+
+<p>For undergraduate applicants: if you are interested in scheduling an admissions and scholarship interview, please note that you must complete the online application and certificate of finances at least two weeks before your interview date.</p>
+
+<ul>
+    <li><a href="https://www.carthage.edu/admissions/">Online application</a></li>
+    <li><a href="http://www.carthage.edu/assets/mediaman/admissions/certificationoffinances1415.pdf">Certificate of finances</a></li>
+</ul>
+
+<p>Graduate applicants may schedule an interview without completing the application.</p>
+
+<p>The following admission items are also required for all applicants:</p>
+<ul>
+    <li>Official transcripts</li>
+    <li>TOEFL</li>
+    <li>Certificate of finances</li>
+    <li>Application fee</li>
+</ul>
+
+<p>Please contact my office if you have any questions. I look forward to getting to know you during this admissions season.</p>
+
+<p>Sincerely,</p>
+<p>
+    Dean Clark<br />
+    Vice President for Enrollment<br />
+    Carthage College<br />
+    262-552-5514/800-351-4058<br />
+    Fax 262-551-5762<br />
+    <a href="mailto:admissions@carthage.edu">admissions@carthage.edu</a><br />
+</p>
+
+<h3>Data submitted</h3>
+<pre style="font-size:1.5em;">
+Name.....................{{data.last_name}} {{data.first_name}}
+Email....................{{data.email}}
+Birthday.................{{data.dob}}
+Gender...................{{data.gender}}
+Address..................{{data.address}}
+City.....................{{data.city}}
+Postal code..............{{data.postal_code}}
+Country..................{{data.country}}
+Phone....................{{data.phone}}
+Mobile...................{{data.mobile}}
+Level....................{{data.level}}
+</pre>
+<h3>How may we help you?</h3>
+<ul>{% for h in data.how_help %}<li>{{h}}</li>{% endfor %}</ul>
+<h3>Undergraduate degree interest</h3>
+<ul>{% for u in data.undergrad %}<li>{{u}}</li>{% endfor %}</ul>
+<h3>Graduate degree interest</h3>
+<ul>{% for g in data.graduate %}<li>{{g}}</li>{% endfor %}</ul>

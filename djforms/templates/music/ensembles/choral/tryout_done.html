@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Choral Ensemble Tryout &mdash; Music &mdash; Carthage College{% endblock %}
+{% block left_nav %}
+    {% include "music/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as header cms snippet 834 code %}
+{{header}}
+{% get_api_object as title cms snippet 706 code %}
+{{title}}
+<div class="buffer">
+<h1>Success</h1>
+<p>We have received your Choral Ensemble tryout submission.</p>
+</div>
+{% endblock %}
+{% block sidebar %}
+    {% include "music/ensembles/side_bar.html" %}
+{% endblock %}

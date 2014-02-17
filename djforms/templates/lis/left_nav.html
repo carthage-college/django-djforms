@@ -1,0 +1,7 @@
+{% load get_api %}
+<div id="first">
+{% get_api_object as menu menutree menu 144 code %}
+{{menu}}
+{% get_api_object as about_lis cms snippet 800 code %}
+{{about_lis}}
+</div>

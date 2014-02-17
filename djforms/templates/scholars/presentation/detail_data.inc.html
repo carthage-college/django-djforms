@@ -1,0 +1,67 @@
+{% load get_prof %}
+<div class="presentation">
+    <p class="title">{{p.title}}</p>
+    {% for o in p.get_presenters %}
+        {% if o.prez_type == "Student" %}
+            {% get_prof as prof o.sponsor_email %}
+            <div class="person">
+                <p>
+                    {% if o.mugshot %}<img class="mugshot" src="http://{{server_url}}{{media_url}}{{o.mugshot}}" />{% endif %}
+                    <strong>Name</strong>:
+                    {% if not user.is_anonymous and o.leader %}
+                    <a href="mailto:{{o.user.email}}">{{o.first_name}} {{o.last_name}}</a></td>
+                    {% else %}
+                    {{o.first_name}} {{o.last_name}}
+                    {% endif %}
+                    <br />
+                    <strong>Major</strong>: {{o.major}}<br />
+                    <strong>Hometown</strong>: {{o.hometown}}<br />
+                    <strong>Faculty Sponsor</strong>: {% if prof %}<a href="{{prof.url}}">{{prof.firstname}} {{prof.lastname}}</a>{% else %}{{o.sponsor}}{% endif %}<br />
+                    <strong>Other Sponsors</strong>: {{o.sponsor_other}}<br />
+                </p>
+                <div style="clear:both;"></div>
+            </div>
+        {% endif %}
+        {% if o.prez_type == "Faculty" or o.prez_type == "Staff" %}
+            <div class="person">
+                <p>
+                    {% if o.mugshot %}<img class="mugshot" src="http://{{server_url}}{{media_url}}{{o.mugshot}}" />{% endif %}
+                    <strong>Name</strong>:
+                    {% if not user.is_anonymous and o.leader %}
+                    <a href="mailto:{{o.user.email}}">{{o.first_name}} {{o.last_name}}</a></td>
+                    {% else %}
+                    {{o.first_name}} {{o.last_name}}
+                    {% endif %}
+                    <br />
+                    <strong>Department</strong>: {{o.department}}<br />
+                </p>
+                <div style="clear:both;"></div>
+            </div>
+        {% endif %}
+    {% endfor %}
+    <div class="work-type">
+        <p>Type of research: <span>{{p.work_type}}</span></p>
+    </div>
+    <div class="abstract">
+        <span>Abstract</span>
+        {{p.abstract_text|safe}}
+    </div>
+    {% if p.requirements %}
+    <div class="requirements">
+        <span>Requirements</span>
+        {{p.requirements}}
+    </div>
+    {% endif %}
+    {% if p.funding %}
+    <div class="funding">
+        <span>Funding</span>
+        {{p.funding}}
+    </div>
+    {% endif %}
+    {% if p.abstract_file %}
+    <p class="abstract-file"><a href="http://{{server_url}}{{media_url}}{{p.abstract_file}}">Abstract file</a></p>
+    {% endif %}
+    {% if p.poster_file %}
+    <p class="poster-file"><a href="http://{{server_url}}{{media_url}}{{p.poster_file}}">Poster file</a></p>
+    {% endif %}
+</div>

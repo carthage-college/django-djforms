@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Maintenance Request Detail{% endblock %}
+{% block left_nav %}
+    {% include "maintenance/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>Maintenance Request Detail</h1>
+    {% if auth %}
+    <dl class="job-detail">
+        <dt class="job-header">Date created:</dt><dd class="job-data">{{ mr.date_created|date:"F j, Y" }}</dd>
+        <dt class="job-header">Status:</dt><dd class="job-data">{{ mr.status }}</dd>
+        <dt class="job-header">Date completed:</dt><dd class="job-data">{{ mr.date_completed|date:"F j, Y" }}</dd>
+        <dt class="job-header">Damage charge:</dt><dd class="job-data">{{ mr.damage_charge }}</dd>
+        <dt class="job-header">Building name:</dt><dd class="job-data">{{ mr.building.name }}</dd>
+        <dt class="job-header">Room number:</dt><dd class="job-data">{{ mr.room_number }}</dd>
+        <dt class="job-header">Type of request:</dt><dd class="job-data">{{ mr.type_of_request }}</dd>
+        <dt class="job-header">First name:</dt><dd class="job-data">{{ mr.user.first_name }}</dd>
+        <dt class="job-header">Last name:</dt><dd class="job-data">{{ mr.user.last_name }}</dd>
+        <dt class="job-header">Phone:</dt><dd class="job-data">{{ mr.user.get_profile.phone }}</dd>
+        <dt class="job-header">Email:</dt><dd class="job-data"><a href="mailto:{{ mr.user.email }}">{{ mr.user.email }}</a></dd>
+        <dt class="job-header">Description:</dt><dd class="clear"></dd>
+        <dd class="description">{{ mr.description }}</dd>
+    </dl>
+    {% else %}
+    <p>You do not have permission to view this maintenance request.</p>
+    {% endif %}
+</div>
+{% endblock %}

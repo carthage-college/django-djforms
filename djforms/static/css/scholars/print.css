@@ -1,0 +1,132 @@
+@page { size: 8.5in 10.875in;margin: .6in 0; padding: 0 .5in;}
+@page :left {
+    @top-left {
+        font: 14pt "Arial", sans-serif;
+        font-weight:normal;
+        font-style:italic;
+        vertical-align: bottom;
+        margin: 0 .5in .1in .5in;
+        padding-bottom: .02in;
+        padding-left: .02in;
+        content: string('Celebration of Scholars');
+    }
+    @bottom-left {
+        font: 7pt "Arial", sans-serif;
+        padding-left:50px;
+        content: counter(page);
+    }
+    @bottom-right {
+        font: 7pt "Arial", sans-serif;
+        text-align:right;
+        padding-right:30px;
+        content: "Carthage Celebration of Scholars";
+    }
+}
+@page :right {
+    @top-right {
+        font: 14pt "Arial", sans-serif;
+        font-weight:normal;
+        font-style:italic;
+        vertical-align: bottom;
+        text-align:right;
+        margin: 0 .5in .1in .5in;
+        padding-bottom: .02in;
+        padding-right: .02in;
+        content: string('Celebration of Scholars');
+    }
+    @bottom-right {
+        font: 7pt "Arial", sans-serif;
+        text-align:right;
+        padding-right:30px;
+        content: counter(page);
+    }
+    @bottom-left {
+        font: 7pt "Arial", sans-serif;
+        padding-left:50px;
+        content: "Carthage Celebration of Scholars";
+    }
+}
+body {
+    display:block;
+    text-align: left;
+    z-index: 1;
+    column-count: 1;
+    column-type: auto;
+    column-gap: 0;
+}
+.layout3col {
+    column-count: 3;
+    column-type: auto;
+    column-fill:auto;
+    column-gap: 2em;
+}
+.layout2col {
+    column-count: 2;
+    column-type: auto;
+    column-gap: 0;
+}
+.layout1col {
+    column-count: 1;
+    column-type: auto;
+    column-gap: 0;
+}
+
+body {font-size:10pt;}
+p {margin:0 0 5px 0;padding:0;}
+em {font-style:italic;}
+ol {margin:0 0 0 10pt;padding:0;}
+ul {list-style-type:none;margin:0 0 0 10pt;padding:0;}
+ul.bullets {list-style-type:disc;}
+li {margin-left:5pt;margin-bottom:3px;}
+ol ul {padding-left:10px;list-style-type:disc;}
+td {vertical-align:top;}
+a {text-decoration:none;}
+table {page-break-inside:avoid;column-break-inside:avoid;width:100%}
+
+
+/*.presentation>.title {string-set: chaptertitle content();}*/
+.toc ul {padding-left:5pt;margin-left:0;margin-top:10pt;margin-bottom:0;}
+.toc li {list-style-type:none;padding-left:0;margin:4pt 0 4pt 10pt;font-family:arial, sans-serif;text-indent: -10pt;} /* margin-left and negative text-indent are for hanging indents for TOC entries that wrap to more than one line */
+.id {display:none;}
+.title{font-weight:bold;font-size:16pt;font-family:arial, sans-serif;column-break-after:avoid;page-break-after:avoid;margin-top:0;margin-bottom:5px;padding:0;}
+
+/* PDF bookmarks */
+.presentation>.title {prince-bookmark-level:1;}
+.presentation>.narrative>.title {prince-bookmark-level:2}
+.presentation>.narrative>.narrative>.title {prince-bookmark-level:3}
+
+a {color:black; text-decoration:none;}
+a:link {color:black; text-decoration:none;}
+a:visited {color:black; text-decoration:none;}
+a:hover {color:black; text-decoration:none;}
+a:active {color:black; text-decoration:none;}
+
+.presentation {padding-bottom:30px;page-break-after:always;}
+.presentation .title {border-top:1px solid #000; }
+.presentation .text {display:block;}
+h2 {font-size:13pt;}
+.presentation .text {page-break-before:avoid;}
+.presentation .title{font-size:13pt;margin-bottom:0;margin-top:0;}
+.presentation ol{margin-left:0;padding-left:15px;}
+.presentation .text ul {padding-left:10pt;margin-left:0;}
+.title {column-break-after:avoid;page-break-after:avoid;}
+.nb {white-space: nowrap;}
+.inlineblock {display:inline-block; margin:0;}
+.manualbreak {page-break-after:always;}
+.namedscholarships li {margin-bottom:7px;}
+
+.person {display: block;font-size: 10pt;margin-bottom:10pt;page-break-inside: avoid;page-break-before: auto;page-break-after: auto;}
+.personmain {page-break-inside:avoid;column-break-after:avoid;}
+.mugshot {display:block; float:left;margin-right:7px;margin-left:7px;margin-bottom:7px; width:100px;
+page-break-before: auto; /* 'always,' 'avoid,' 'left,' 'inherit,' or 'right' */
+page-break-after: auto; /* 'always,' 'avoid,' 'left,' 'inherit,' or 'right' */
+page-break-inside: avoid; /* or 'auto' */
+}
+.name {font-weight:bold;font-size: 10pt;}
+.jobtitle {font-style:italic;}
+.description p {margin-top:0;}
+.education {font-style:italic;}
+.photo {display:none;}
+.abstract, .funding { padding-left:7px;}
+.tableline hr {color:black;height:1px;background-color:black;border:0;}  /* on Registration Summary page */
+span.leader {content:leader('. ');}  /* on index */

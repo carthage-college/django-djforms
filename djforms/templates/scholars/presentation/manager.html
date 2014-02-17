@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}Presentation Manager &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block extra_style %}
+<style>
+table.tablesorter {
+    width: 100%;
+}
+</style>
+{% endblock %}
+{% block extra_javascript %}
+<script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#presentation_list_table").tablesorter({widgets: ['zebra'],headers:{3:{sorter:false}}});
+    });
+</script>
+{% endblock %}
+{% block left_nav %}
+    {% include "scholars/left_nav.html" %}
+{% endblock %}
+{% block content %}
+{% get_api_object as title cms snippet 1014 code %}
+{{title}}
+<div class="buffer">
+    <form class="form" id="manager" action=".">
+    <table id="presentation_list_table" class="tablesorter">
+        <thead>
+        <tr>
+            <th style="width:20px;">&nbsp;</th>
+            <th style="width:365px;">Title</th>
+            <th style="width:200px;">Presenter</th>
+            <th style="width:100px;">Complete</th>
+            <th style="width:80px;">Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for p in presentations %}
+        <tr class="{% cycle 'odd' 'even' %}">
+            <td>{{forloop.counter}}</td>
+            <td><a href="{{p.get_absolute_url}}" title="{{forloop.counter}}">{{p.title}}</a></td>
+            <td><a href="mailto:{{p.user.email}}">{{p.leader.first_name}} {{p.leader.last_name}}</a></td>
+            <td>{{p.status}}</td>
+            <td class="edit center"><a title="Update this presentation" href="{% url djforms.scholars.views.presentation.form p.id %}">&nbsp;</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </form>
+</div>
+{% endblock %}

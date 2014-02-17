@@ -1,0 +1,104 @@
+{% extends "djsuki/base.html" %}
+{% load get_api %}
+{% block title %}Directory &mdash; Alumni &mdash; Carthage College{% endblock %}
+{% block content %}
+<div class="row-fluid">
+    <!-- Begin image slider -->
+    <div class="flexslider image-slider span6">
+        {% get_api_object as gallery photologue gallery 125 code %}
+        {{gallery}}
+    </div>
+    <!-- end  .flexslider. image-slider span6 -->
+    <div class="span6">
+        <h2 class="short_headline"><span>Carthage Alumni Directory</span></h2>
+        <p>The Alumni Directory is offered as a way for graduates to stay in touch.
+        Graduates of the College are given access to the database via an individual
+        ID number. If you do not have an Alumni Association card with your ID number,
+        please contact the Alumni Office:</p>
+        <ul>
+            <li>Email: <a href="mailto:alumnioffice@carthage.edu">alumnioffice@carthage.edu</a></li>
+            <li>Phone: <a href="tel:8005511518" class="tele">800.551.1518</a><br></li>
+            <li>Mail:<ul><li>Office of Alumni Relations</li><li>2001 Alford Park Drive</li><li>Kenosha, WI 53140</li></ul></li>
+            <li>Or stop by to see us in Lentz Hall 414.</li>
+        </ul>
+    </div>
+    <!--close span6--> 
+</div>
+<!--close row-fluid-->
+<div class="row-fluid sidebar-left"> 
+    <!--begin row-fluid--> 
+    <!--******add class "sidebar-left" to the row-fluid class ***-->
+    <div class="span9 primary-column">
+        <div class="content-tabs"> 
+            <!-- wrapper required -->
+            <ul class="tabs">
+                <li class="tab"> <a href="#t1a">Alphabetical</a> </li>
+                <li class="tab"> <a href="#t2a">Search</a> </li>
+                <li class="tab"> <a href="#t3a">Class Notes</a> </li>
+                <li class="tab"> <a href="#t4a">Manager</a> </li>
+            </ul>
+            <div class="panels">
+                <div class="pane" id="t1a">
+                    <h3>List of Alumni A to Z</h3>
+                    <p></p>
+                </div>
+                <!--close #t1a -->
+                <div class="pane" id="t2a">
+                    <h3>Search for alumni</h3>
+                </div>
+                <!--close #t2a -->
+                <div class="pane" id="t3a">
+                    <h3>Manage your personal data</h3>
+                </div>
+                <!--close #t3a -->
+            </div>
+            <!--close panels-->
+        </div>
+        <!-- /.content-tabs-->
+    </div>
+    <!--close span9 primary-column-->
+{% endblock %}
+{% block left_column %}
+<section class="span3 sidebar secondary-column" id="secondary-nav">
+    <aside class="widget">
+        <h5 class="short_headline"><span>Menu</span></h5>
+        <ul class="navigation">
+            <li><a href="/alumni/">Alumni Home</a></li>
+            <li><a href="http://www.carthage.edu/alumni/apps/">Alumni Directory</a></li>
+            <li><a href="/alumni/alumni-survey/">Career Services and Alumni Survey</a></li>
+            <li><a href="/alumni/social/">Stay Connected</a></li>
+            <li class="last-featured"><a href="/alumni/calendar/">Upcoming Events</a></li>
+            <li><a href="http://www.carthage.edu/alumni/110/">1-10 Club</a></li>
+            <li><a href="/alumni/mission/">Alumni Association</a>
+                <ul>
+                    <li><a href="/alumni/mission/">Mission</a></li>
+                    <li><a href="/alumni/alumnicouncil/">Alumni Council</a></li>
+                    <li><a href="/alumni/bylaws/">Bylaws</a></li>
+                </ul>
+            </li>
+            <li><a href="/celebrate/">Celebrating Carthage</a></li>
+            <li><a href="/character-quest">Character Quest</a></li>
+            <li><a href="http://www.carthage.edu/forms/alumni/classnotes/">Class Notes</a></li>
+            <li><a href="/alumni/alumni-news/">Alumni News</a></li>
+            <li><a href="/alumni/distinguished-alumni/">Distinguished Alumni Awards</a></li>
+            <li><a href="/give/">Gifts to Carthage</a></li>
+            <li><a href="http://www.alumnilabels.com/session.php?sel_univ=00008">Order Alumni Address Labels</a></li>
+            <li><a href="/alumni/galleries/">Photo Galleries</a></li>
+            <li><a href="/academics/registrar/transcripts/">Transcripts</a></li>
+            <li><a href="/alumni/travel/">Travel</a></li>
+            <li><a href="/alumni/yearbooks-online/">Yearbooks</a></li>
+        </ul>
+    </aside>
+</section>
+<!--close section sidebar span3-->
+{% endblock %}
+{% block news %}
+<h4>Alumni News</h4>
+{% get_api_object as news cms newspageblock 433 code %}
+{{news}}
+{% endblock %}
+{% block events %}
+<h4>Upcoming Events</h4>
+{% get_api_object as events cms calendarpageblock 11 code %}
+{{events}}
+{% endblock %}

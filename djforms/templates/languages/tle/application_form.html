@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}Target Language Expert {{type|capfirst}}{% endblock %}
+{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block extra_javascript %}
+    <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript"></script>
+    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery-dynamic-form/jquery-dynamic-form.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#id_dob").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",yearRange:"-64:-17",changeFirstDay:false,dateFormat:"mm/dd/yy",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+            $("#universities").dynamicForm("#plus", "#minus", {limit:5, createColor: 'yellow',removeColor: 'red'});
+        });
+    </script>
+{% endblock %}
+{% block extra_style %}
+    <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+    <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.core.css" rel="stylesheet" type="text/css" />
+    <link href="http://www.carthage.edu/assets/css/jquery/ui/ui.theme.css" rel="stylesheet" type="text/css" />
+    <style>
+    #tle_form div ul li { margin: 0; display: inline; }
+    #tle_form div label { display: inline; }
+    #tle_form textarea { width:600px; height:150px; }
+    #tle_form fieldset { border:0 none; padding: 10px 0 10px 10px; }
+    #tle_form legend { font-size:14px;background-color:#CC0000; border:1px solid #888888; color:#FFFFFF; font-weight:bold; padding:8px; margin:10px 0 10px 20px; }
+    </style>
+{% endblock %}
+{% block left_nav %}
+    {% include "languages/tle/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="buffer">
+    <h1>Target Language Expert{% if type == "application" %} Program Application {% else %}: Master of Education or Advanced Certification Programs{% endif %}</h1>
+    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
+    {% if form.errors %}
+    <h2 style="color: red;">Please correct the error{{ form.errors|pluralize }} below.</h2>
+    {% endif %}
+    <form method="post" action="." class="form" id="tle_form">{% csrf_token %}
+        <input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
+        <fieldset class="blockLabels">
+            <legend>Personal Information</legend>
+            <ol>
+                {% for field in form %}
+                    {% if field.name == "birth_city" %}
+                    </ol></fieldset><fieldset class="blockLabels"><legend>Place of Birth</legend><ol>
+                    {% endif %}
+                    {% if field.name == "education" %}
+                    </ol></fieldset><fieldset class="blockLabels"><legend>Experience &amp; Aptitude</legend><ol>
+                    {% endif %}
+                    {% if field.name == "marital_status" %}
+                    </ol></fieldset><fieldset class="blockLabels"><legend>Optional</legend><ol>
+                    {% endif %}
+                    {% if field.name == "entry_semester" %}
+                    </ol></fieldset><fieldset class="blockLabels"><legend>Enrollment</legend><ol>
+                    {% endif %}
+                    {% include "form_field.inc.html" %}
+                {% endfor %}
+                {% if type == "masters" %}
+                <li class="ctrlHolder">
+                <h2>List all colleges or universities attended, beginning with the most recent:</h2>
+                {% if not education and length == 1 %}
+                <p style="help padding-left">Click on the "plus" sign below to add another college. Use the "minus" sign to remove one.</p>
+                {% endif %}
+                </li>
+                </ol>
+                <ol id="universities">
+                {% if not education %}
+                <li class="ctrlHolder">
+                    <h3>University Name</h3>
+                    <input type="text" name="university[]" />
+                </li>
+                <li class="ctrlHolder">
+                    <h3>Country</h3>
+                    <input type="text" name="country[]" />
+                </li>
+                <li class="ctrlHolder">
+                    <h3>From</h3>
+                    <select name="from_month[]">
+                    {% for v,m in months.items %}
+                    <option value="{{m}}">{{m}}</option>
+                    {% endfor %}
+                    </select>
+                    Year <input type="text" name="from_year[]" class="small" />
+                </li>
+                <li class="ctrlHolder">
+                    <h3>To</h3>
+                    <select name="to_month[]">
+                    {% for v,m in months.items %}
+                    <option value="{{m}}">{{m}}</option>
+                    {% endfor %}
+                    </select>
+                    Year <input type="text" name="to_year[]" class="small" />
+                </li>
+                <li class="ctrlHolder">
+                    <h3>Diploma/Degree</h3>
+                    <input type="text" name="degree[]" />
+                </li>
+                <li class="ctrlHolder">
+                    <hr />
+                </li>
+                <li class="ctrlHolder">
+                <p>
+                    <div>
+                        <a id="minus" href=""><img src="http://www.carthage.edu/assets/img/ico/minus.gif" /></a>
+                        <a id="plus" href=""><img src="http://www.carthage.edu/assets/img/ico/plus.gif" /></a>
+                    </div>
+                </p>
+                </li>
+                {% else %}{{length}}
+                    {{education}}
+                {% endif %}
+                </ol>
+                <ol>
+                {% endif %}
+                <li class="btnHolder">
+                    <p>By sending this form, you are certifying that the above information is true and complete to the best of your knowledge.</p>
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Submit Request" class="button" />
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

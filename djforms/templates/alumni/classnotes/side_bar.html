@@ -1,0 +1,29 @@
+<div id="third">
+    <div class="buffer">
+        <h1 style="font-size:18px;">Class Notes by Decade</h1>
+        <ul>
+            <li><a href="{% url classnotes_archives_year '2010' %}">2010's</a></li>
+            <li><a href="{% url classnotes_archives_year '2000' %}">2000's</a></li>
+            <li><a href="{% url classnotes_archives_year '1990' %}">1990's</a></li>
+            <li><a href="{% url classnotes_archives_year '1980' %}">1980's</a></li>
+            <li><a href="{% url classnotes_archives_year '1970' %}">1970's</a></li>
+            <li><a href="{% url classnotes_archives_year '1960' %}">1960's</a></li>
+            <li><a href="{% url classnotes_archives_year '1950' %}">1950's</a></li>
+            <li><a href="{% url classnotes_archives_year '1940' %}">1940's</a></li>
+            <li><a href="{% url classnotes_archives_year '1930' %}">1930's</a></li>
+            <li><a href="{% url classnotes_archives_year '1920' %}">1920's</a></li>
+        </ul>
+        <br />
+        <ul>
+            <li><a href="{% url classnotes_form %}">Submit your class note</a></li>
+            <li><a href="{% url classnotes_archives %}">Class Notes Archive</a></li>
+            <li><a href="{% url classnotes_obits %}">In Memoriam</a></li>
+            {% if manager %}
+            <li><a href="/forms/admin/classnotes/contact/">Manage class notes</a></li>
+            {% else %}{% if user.is_anonymous %}
+            <li><a href="/forms/accounts/login/?next=/forms/alumni/classnotes/archives/">Manage class notes</a></li>
+            {% endif %}{% endif %}
+        </ul>
+    </div>
+    {% include "alumni/side_bar.html" %}
+</div>
