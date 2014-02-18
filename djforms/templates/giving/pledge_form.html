@@ -77,7 +77,7 @@
             <ol>
                 {% for field in ct_form %}
                     <li class="ctrlHolder">
-                    {% if field.name == "matching_company" or field.name == "thrivent_financial" or field.name == "opt_in" %}
+                    {% if field.name == "matching_company" or field.name == "opt_in" %}
                     {{field}} {{field.label}}<br />
                     {% else %}
                         {% include "form_field.inc.html" %}
@@ -87,6 +87,10 @@
                     {% endif %}
                     </li>
                 {% endfor %}
+                <li>
+                    <h4>Thrivent Choice</h4>
+                    <p>Thrivent members may allocate their Thrivent Choice dollars to Carthage. Please contact Thrivent or visit <a href="https://www.thrivent.com/thriventchoice/program/dollars_details/index.html">the website</a> for more information.</p>
+                </li>
             </ol>
         </fieldset>
         <fieldset class="blockLabels">
