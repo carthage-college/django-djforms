@@ -41,6 +41,15 @@
     <a href="https://www.securitymetrics.com/site_certificate.adp?s=carthage.edu&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics for PCI Compliance" border="0"></a>
     </div></div>
     <h1>{{campaign.title|default:"Your Giving Matters"}}</h1>
+    <!--
+    <p>Would you rather make a recurring pledge donation?
+    {% if not campaign.description %}
+        <a href="{% url giving_form_generic 'pledge' %}">Use the pledge form</a>.
+    {% else %}
+        <a href="{% url giving_form_campaign 'pledge' campaign.slug %}">Use the pledge form</a>.
+    {% endif %}
+    </p>
+    -->
     <div class="content clear">
         {% if campaign.description %}
             {{campaign.description}}
@@ -118,7 +127,7 @@
                 {% endfor %}
                 <li>
                     <h3>Thrivent Choice</h3>
-                    <p>Thrivent members may allocate their Thrivent Choice dollars to Carthage. Please contact Thrivent or visit <a href="https://www.thrivent.com/thriventchoice/program/dollars_details/index.html">the website</a> for more information.</p>
+                    <p>Thrivent members may allocate their Thrivent Choice dollars to Carthage. Please contact Thrivent or visit <a href="https://www.thrivent.com/thriventchoice/program/dollars_details/index.html" target="_blank">the website</a> for more information.</p>
                 </li>
             </ol>
         </fieldset>

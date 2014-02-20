@@ -9,44 +9,44 @@
     <p>This email is your confirmation and may be used as a receipt for tax purposes.</p>
     <p>
     If you have any questions, please do not hesitate to
-    <a href="mailto:lhansen@carthage.edu">contact us</a>.
+    <a href="mailto:alumnioffice@carthage.edu">contact us</a>.
     </p>
 {% endif %}
 <h3>Subscription Donation Information</h3>
 <dl style="margin-bottom:30px;">
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Amount</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Amount</dt>
     <dd style="margin:2px 0; padding:5px 0;">${{data.order.total}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Name on Card</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Name on Card</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.cc_name}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Card ending with:</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Card ending with:</dt>
     <dd style="margin:2px 0; padding:5px 0;">x{{data.order.cc_4_digits}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Transaction ID</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Transaction ID</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.transid}}</dd>
 </dl>
 <hr />
 <h3>Contact Information</h3>
 <dl style="margin-bottom:30px;">
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">First name</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">First name</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.first_name}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Last name</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Last name</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.last_name}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Email</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Email</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.email}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Address</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Address</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.address1}}{% if data.order.contact.address2 %}, {{data.order.contact.address2}}{% endif %}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">City</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">City</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.city}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">State</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">State</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.state}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Zip</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Zip</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.postal_code}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Phone</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Phone</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.phone}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Spouse</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Spouse</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.spouse|default:"&nbsp;"}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Relation to Carthage</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Relation to Carthage</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.relation}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Class</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Class</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.class_of|default:"&nbsp;"}}</dd>
 </dl>
 <h3>Matching Funds</h3>
