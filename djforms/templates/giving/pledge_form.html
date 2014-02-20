@@ -42,10 +42,13 @@
     <a href="https://www.securitymetrics.com/site_certificate.adp?s=72%2e47%2e217%2e18&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics for PCI Compliance, QSA, IDS, Penetration Testing, Forensics, and Vulnerability Assessment" border="0"></a>
     </div></div>
     <h1>{{campaign.title|default:"Pledge Subscription"}}</h1>
-    {% if not campaign.description %}
     <p>Would you rather make a one-time gift?
-    <a href="https://www.carthage.edu/giving/donations/">Click here</a>.</p>
+    {% if not campaign.description %}
+        <a href="{% url giving_form_generic 'donation' %}">Use the donation form</a>.
+    {% else %}
+        <a href="{% url giving_form_campaign 'donation' campaign.slug %}">Use the donation form</a>.
     {% endif %}
+    </p>
     <div class="content clear">
         {% if campaign.description %}
             {{campaign.description}}
@@ -97,7 +100,7 @@
                 {% endfor %}
                 <li>
                     <h4>Thrivent Choice</h4>
-                    <p>Thrivent members may allocate their Thrivent Choice dollars to Carthage. Please contact Thrivent or visit <a href="https://www.thrivent.com/thriventchoice/program/dollars_details/index.html">the website</a> for more information.</p>
+                    <p>Thrivent members may allocate their Thrivent Choice dollars to Carthage. Please contact Thrivent or visit <a href="https://www.thrivent.com/thriventchoice/program/dollars_details/index.html" target="_blank">the website</a> for more information.</p>
                 </li>
             </ol>
         </fieldset>

@@ -1,41 +1,56 @@
 <h1>{{data.campaign|default:"Subscription Donation"}}</h1>
+{% if campaign.slug %}
 <p><strong>Campaign ID</strong>: {{campaign.slug}}</p>
-<p>{{data.campaign.email_info}}</p>
+{% endif %}
+{% if campaign.email_info %}
+    <p>{{campaign.email_info}}</p>
+{% else %}
+    <p>Thank your support and for your donation.</p>
+    <p>This email is your confirmation and may be used as a receipt for tax purposes.</p>
+    <p>
+    If you have any questions, please do not hesitate to
+    <a href="mailto:alumnioffice@carthage.edu">contact us</a>.
+    </p>
+{% endif %}
 <h3>Subscription Donation Information</h3>
 <dl style="margin-bottom:30px;">
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Donation</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Donation</dt>
     <dd style="margin:2px 0; padding:5px 0;">${{data.order.total}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Time interval</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Time interval</dt>
     <dd style="margin:2px 0; padding:5px 0;">{% if data.order.cycle == "1m" %}Monthly{% endif %}{% if data.order.cycle == "3m" %}Quarterly{% endif %}{% if data.order.cycle == "12m" %}Yearly{% endif %}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Payments</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Payments</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.payments}} over {{data.years}} years.</dd>
     {% if data.order.start_date %}
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Start date</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Start date</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.start_date}}</dd>
     {% endif %}
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Transaction ID</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Name on Card</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.cc_name}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Card ending with:</dt>
+    <dd style="margin:2px 0; padding:5px 0;">x{{data.order.cc_4_digits}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Transaction ID</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.transid}}</dd>
 </dl>
 <hr />
 <h3>Contact Information</h3>
 <dl style="margin-bottom:30px;">
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">First name</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">First name</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.first_name}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Last name</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Last name</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.last_name}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Email</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Email</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.email}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Phone</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Phone</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.phone}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Address</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Address</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.address1}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">&nbsp;</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">&nbsp;</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.address2|default:"&nbsp;"}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">City</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">City</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.city}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">State</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">State</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.state}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Zip</dt>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Zip</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.postal_code}}</dd>
 </dl>
 {% if data.order.contact.matching_company %}
