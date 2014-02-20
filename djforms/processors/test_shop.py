@@ -24,22 +24,22 @@ if __name__ == "__main__":
 
     o = Order()
     o.contact=c
-    o.total=420
+    o.total=10
     #o.auth="sale"
     o.auth="store"
     #o.cycle=""
     o.cycle="3m"
     #o.payments=""
     o.payments="48"
-    o.start_date="2012-05-01"
+    o.start_date="2014-05-01"
     o.avs=False
-    o.bill_street = "1234 Main St."
+    o.bill_street = "1313 Mockingbird Lane"
     o.bill_city = "Springfield"
     o.bill_state = "MA"
     o.bill_postal_code = "08003"
     o.bill_country = "United States"
     o.operator = "DJ Forms"
-    cc = {'billing_name':"%s %s" % (c.first_name, c.last_name), 'card_number':"4111111111111111",'expiration_month':"02",'expiration_year':"2013", 'security_code':"123"}
+    cc = {'billing_name':"%s %s" % (c.first_name, c.last_name), 'card_number':"4111111111111111",'expiration_month':"02",'expiration_year':"2015", 'security_code':"123"}
 
     exp = "%.2d%.2d" % (int(cc['expiration_month']), (int(cc['expiration_year']) % 100))
     print exp

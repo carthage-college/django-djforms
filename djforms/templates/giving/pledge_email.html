@@ -38,9 +38,15 @@
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:155px;">Zip</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.postal_code}}</dd>
 </dl>
+{% if data.order.contact.matching_company %}
 <h3>Matching Funds</h3>
 <ul>
     <li>I/we are employed by a matching gift company.</li>
-    <li>I/we are eligible for the Thrivent Financial for Lutherans matching gift program.</li>
+</ul>
+{% endif %}
+{% if data.order.contact.opt_in %}
+<h3>More Information</h3>
+<ul>
     <li>I would like more information about planned gifts such as charitable trusts, charitable gifts annuities, life insurance, or will inclusions.</li>
 </ul>
+{% endif %}

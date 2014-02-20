@@ -7,6 +7,14 @@
     <script type="text/javascript">
         $(function() {
             $("#id_or-start_date").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "https://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+            $('#id_or-total').blur(function() {
+                $(this).val($(this).val().replace(/,/g,''));
+                $(this).val($(this).val().replace(/\$/g,''));
+            });
+            // disable submit button after users clicks it
+            $('form#profile').submit(function(){
+                $(this).children('input[type=submit]').attr('disabled', 'disabled');
+            });
         });
     </script>
 {% endblock %}
@@ -56,7 +64,7 @@
             </p>
         {% endif %}
     </div>
-    {% if cc_form.errors or or_form.errors or ct_form.errors %}
+    {% if form_proc.errors or or_form.errors or ct_form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
     <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
@@ -95,7 +103,7 @@
         </fieldset>
         <fieldset class="blockLabels">
             <h2>Billing Information</h2>
-            {% if cc_form.errors %}
+            {% if form_proc.errors %}
                 <div style="padding-left:4px;">
                 <p class="error">The transaction was declined for the following reason:{% if status == "baddata" or status == "decline" %} <strong>{{status}}</strong>{% endif %}</p>
                 </div>

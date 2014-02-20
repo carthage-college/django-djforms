@@ -116,6 +116,7 @@ class PaymentProcessor():
                     msg = result['declinetype']
                 elif status == 'baddata':
                     msg = result['offenders']
+                    #msg = result
                 elif status == 'error':
                     msg == result['errortype']
                 else:
