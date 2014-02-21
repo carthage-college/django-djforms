@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.conf.urls.defaults import *
 from django.contrib.auth import views as auth_views
-from django.views.generic.simple import direct_to_template, redirect_to
+from django.views.generic import TemplateView, RedirectView
 
 from djauth.views import loggedout
 
@@ -12,14 +12,14 @@ handler500 = 'djtools.views.errors.server_error'
 
 urlpatterns = patterns('',
     # home
-    (r'^$', direct_to_template, {'template': 'forms_home.html'}),
+    (r'^$', TemplateView.as_view(template_name="forms_home.html")),
     # academics
     (r'^academics/', include('djforms.academics.urls')),
     # auth
     url(r'^accounts/login',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),
     url(r'^accounts/logout/$',auth_views.logout,{'next_page': '/forms/accounts/loggedout/'}),
     url(r'^accounts/loggedout',loggedout,{'template_name': 'accounts/logged_out.html'}),
-    url(r'^accounts/$', redirect_to, {'url': '/forms/', 'permanent': True}),
+    url(r'^accounts/$', RedirectView.as_view(url='/forms/')),
     # CSV
     (r'^admin/(?P<app_label>[\d\w]+)/(?P<model_name>[\d\w]+)/csv/', 'djforms.core.util.admin_list_export'),
     # admin

@@ -4,7 +4,7 @@
 <div class="buffer">
     <h2 class="page_title clear">Posting Departments</h2>
     <ul class="link_list">
-      {% for department in object_list %}
+      {% for department in dept_list %}
       <li><a href="{{ department.get_absolute_url }}">{{ department }}</a></li>
       {% endfor %}
     </ul>

@@ -3,7 +3,7 @@ from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.http import Http404, HttpResponseRedirect, HttpResponse
-from django.views.generic import date_based, list_detail
+from django.views.generic import ListView
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
 from django.contrib.auth.models import User
@@ -17,6 +17,15 @@ from djtools.utils.mail import send_mail
 from dateutil import parser
 import datetime
 import re
+
+from django.views.generic import ListView
+
+class SubListView(ListView):
+    extra_context = {}
+    def get_context_data(self, **kwargs):
+        context = super(SubListView, self).get_context_data(**kwargs)
+        context.update(self.extra_context)
+        return context
 
 @csrf_exempt
 @login_required
@@ -75,12 +84,13 @@ def post_list(request, page=0):
         page_range:
             A list of the page numbers (1-indexed).
     """
-    return list_detail.object_list(
-        request,
-        queryset = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1).order_by("-publish"),
-        paginate_by = 25,
-        page = page,
+    qs = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1).order_by("-publish")
+    callable = SubListView.as_view(
+        template_name="jobpost/post_list.html",
+        queryset=qs,
+        paginate_by=25,
     )
+    return callable(request)
 
 @login_required
 @user_passes_test(not_in_group, login_url='/forms/accounts/login/')
@@ -119,14 +129,13 @@ def user_post_list(request, page=0):
         page_range:
             A list of the page numbers (1-indexed).
     """
-    current_user = request.user
-    return list_detail.object_list(
-        request,
-        queryset = Post.objects.filter(creator = current_user),
+    qs = Post.objects.filter(creator = current_user)
+    callable = SubListView.as_view(
+        queryset=qs,
         template_name = 'jobpost/user_post_list.html',
-        paginate_by = 25,
-        page = page,
+        paginate_by=25,
     )
+    return callable(request)
 
 def post_detail(request, pid, page=0):
     """
@@ -150,23 +159,24 @@ def post_detail(request, pid, page=0):
                     return HttpResponseRedirect('/forms/job/success')
             else:
                 form = PostFormWithoutHidden(instance=post)
-            return list_detail.object_list(
-                request,
-                queryset = JobApplyForm.objects.filter(job=post),
+
+            qs = JobApplyForm.objects.filter(job=post)
+            callable = SubListView.as_view(
+                queryset=qs,
                 template_name = 'jobpost/post_detail.html',
-                paginate_by = 25,
-                page = page,
+                paginate_by=25,
                 extra_context = {'post':post, "form": form},
             )
+            return callable(request)
         else:
-            return list_detail.object_list(
-                request,
-                queryset = JobApplyForm.objects.filter(job=post).order_by('-id'),
+            qs = JobApplyForm.objects.filter(job=post).order_by('-id')
+            callable = SubListView.as_view(
+                queryset=qs,
                 template_name = 'jobpost/post_detail.html',
-                paginate_by = 5,
-                page = page,
+                paginate_by=5,
                 extra_context = {'post':post},
             )
+            return callable(request)
     else:
         if request.method == 'POST':
             form = JobApplyForms(request.POST, request.FILES)
@@ -237,14 +247,15 @@ def post_manage_list(request, page=0):
         page_range:
             A list of the page numbers (1-indexed).
     """
-    return list_detail.object_list(
-        request,
-        #queryset = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now()),
-        queryset = Post.objects.all().order_by("-publish"),
-        paginate_by = 25,
+    #qs = Post.objects.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now())
+    qs = Post.objects.all().order_by("-publish")
+    callable = SubListView.as_view(
+        queryset=qs,
         template_name = 'jobpost/post_manage_list.html',
-        page = page,
+        paginate_by=25,
     )
+    return callable(request)
+
 
 @login_required
 @user_passes_test(not_in_group, login_url='/forms/accounts/login/')
@@ -274,48 +285,18 @@ def post_create(request):
         form = PostFormWithHidden()
     return render_to_response("jobpost/add_form.html", {'form':form}, context_instance=RequestContext(request))
 
-def department_list(request, page=0):
+def department_list(request):
     """
-    Department list
-
-    Template: ``blog/department_list.html``
-    Context:
-        object_list
-            List of departments.
-        is_paginated
-            are the results paginated?
-        results_per_page
-            number of objects per page (if paginated)
-        has_next
-            is there a next page?
-        has_previous
-            is there a prev page?
-        page
-            the current page
-        next
-            the next page
-        previous
-            the previous page
-        pages
-            number of pages, total
-        hits
-            number of objects, total
-        last_on_page
-            the result number of the last of object in the
-            object_list (1-indexed)
-        first_on_page
-            the result number of the first object in the
-            object_list (1-indexed)
-        page_range:
-            A list of the page numbers (1-indexed).
-        """
-    return list_detail.object_list(
-        request,
-        queryset = Department.objects.all(),
+    List of Departments
+    """
+    qs = Department.objects.all()
+    callable = SubListView.as_view(
+        queryset=qs,
+        context_object_name = "dept_list",
         template_name = 'jobpost/department_list.html',
-        paginate_by = 50,
-        page = page,
+        paginate_by=50,
     )
+    return callable(request)
 
 def department_detail(request, slug, page=0):
     """
@@ -359,14 +340,14 @@ def department_detail(request, slug, page=0):
     except Department.DoesNotExist:
         raise Http404
 
-    return list_detail.object_list(
-        request,
-        queryset = department.post_set.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1),
-        extra_context = { 'department': department },
+    qs = department.post_set.filter(publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1)
+    callable = SubListView.as_view(
+        queryset=qs,
         template_name = 'jobpost/department_detail.html',
-        paginate_by = 25,
-        page = page,
+        extra_context = { 'department': department },
+        paginate_by=25,
     )
+    return callable(request)
 
 # Stop Words courtesy of http://www.dcs.gla.ac.uk/idom/ir_resources/linguistic_utils/stop_words
 STOP_WORDS = r"""\b(a|about|above|across|after|afterwards|again|against|all|almost|alone|along|already|also|
@@ -409,14 +390,14 @@ def search(request, page=0):
         cleaned_search_term = stop_word_list.sub('', search_term)
         cleaned_search_term = cleaned_search_term.strip()
         if len(cleaned_search_term) != 0:
-            return list_detail.object_list(
-                request,
-                queryset = Post.objects.filter(description__icontains=cleaned_search_term, publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1),
+            qs = Post.objects.filter(description__icontains=cleaned_search_term, publish__lte=datetime.datetime.now(), expire_date__gte=datetime.datetime.now(), active=1)
+            callable = SubListView.as_view(
+                queryset=qs,
                 #extra_context = {'search_term':search_term},
-                template_name="jobpost/post_search.html", 
+                template_name="jobpost/post_search.html",
                 paginate_by=25,
-                page = page,
             )
+            return callable(request)
         else:
             message = 'Search term was too vague. Please try again.'
             context = { 'message':message }
