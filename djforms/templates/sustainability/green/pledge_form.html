@@ -8,7 +8,7 @@
 <div class="buffer">
     <h1 style="color:green;">The Green Pledge</h1>
     {% if pledge %}
-        <p class="notice">Thank you for your commitment to the Green Pledge. <a href="{% url pledge_archives %}">View others who have made the pledge as well</a>.</p>
+        <p class="notice">Thank you for your commitment to the Green Pledge. <a href="{% url 'pledge_archives' %}">View others who have made the pledge as well</a>.</p>
     {% endif %}
     {% if anon %}
         <p><a href="/forms/accounts/login/?next={{request.path}}">Please login</a> so that you can show your support by completing our form.</p>

@@ -31,7 +31,7 @@
 <div class="buffer">
 {% spaceless %}
     <h1>Class Notes Archive &mdash; {% if year %}{{year}}'s{% endif %}{% if title %}{{title}}{% endif %}</h1>
-    <p><a href="{% url classnotes_form %}">Click here to submit your class note</a></p>
+    <p><a href="{% url 'classnotes_form' %}">Click here to submit your class note</a></p>
     <p>
     {% for n in notes %}
         {% ifchanged n.classyear %}

@@ -14,7 +14,7 @@
 <h2>My Proposals</h2>
 <ol class="numbers">
 {% for obj in objects %}
-    <li><a href="{% url proposal_update obj.id %}">{{obj.course_title}}</a></li>
+    <li><a href="{% url 'proposal_update' obj.id %}">{{obj.course_title}}</a></li>
 {% endfor %}
 </ol>
 </div>

@@ -42,7 +42,7 @@ table.tablesorter {
             <td><a href="{{p.get_absolute_url}}" title="{{forloop.counter}}">{{p.title}}</a></td>
             <td><a href="mailto:{{p.user.email}}">{{p.leader.first_name}} {{p.leader.last_name}}</a></td>
             <td>{{p.status}}</td>
-            <td class="edit center"><a title="Update this presentation" href="{% url djforms.scholars.views.presentation.form p.id %}">&nbsp;</a></td>
+            <td class="edit center"><a title="Update this presentation" href="{% url 'djforms.scholars.views.presentation.form' p.id %}">&nbsp;</a></td>
         </tr>
         {% endfor %}
         </tbody>

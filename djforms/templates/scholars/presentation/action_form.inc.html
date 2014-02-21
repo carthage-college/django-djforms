@@ -1,5 +1,5 @@
 <div class="fright">
-    <form action="{% url presentation_action %}" method="post" class="form">{% csrf_token %}
+    <form action="{% url 'presentation_action' %}" method="post" class="form">{% csrf_token %}
     <input type="hidden" name="pid" value="{% if p.id %}{{p.id}}{% else %}{{pid}}{% endif %}" />
     <select name="action">
         <option value="">---Select an action---</option>

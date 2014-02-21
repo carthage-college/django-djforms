@@ -20,7 +20,7 @@ body {font-size:1.1em;font-family:verdana, arial, sans-serif;}
 <p>Your Celebration of Scholars presentation:</p>
 <p class="title">{{data.title}}</p>
 <p>has been approved.</p>
-<p><a href="http://www.carthage.edu{% url presentation_detail data.id %}">View Presentation</a></p>
+<p><a href="http://www.carthage.edu{% url 'presentation_detail' data.id %}">View Presentation</a></p>
 <h2>Next Step</h2>
 <p>Create and upload your poster file.</p>
 </body>

@@ -4,7 +4,8 @@ from django.views.generic import TemplateView
 urlpatterns = patterns('djforms.athletics',
     url(
         r'^soccer/camp/success/$',
-        TemplateView.as_view(template_name="athletics/soccer/camp_registration_done.html")
+        TemplateView.as_view(template_name="athletics/soccer/camp_registration_done.html"),
+        name="soccer_camp_success"
     ),
     url(r'^soccer/camp/$', 'soccer.views.camp_registration', name='soccer_camp_registration'),
 )
