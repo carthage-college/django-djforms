@@ -44,9 +44,9 @@
     <!--
     <p>Would you rather make a recurring pledge donation?
     {% if not campaign.description %}
-        <a href="{% url giving_form_generic 'pledge' %}">Use the pledge form</a>.
+        <a href="{% url 'giving_form_generic' 'pledge' %}">Use the pledge form</a>.
     {% else %}
-        <a href="{% url giving_form_campaign 'pledge' campaign.slug %}">Use the pledge form</a>.
+        <a href="{% url 'giving_form_campaign' 'pledge' campaign.slug %}">Use the pledge form</a>.
     {% endif %}
     </p>
     -->

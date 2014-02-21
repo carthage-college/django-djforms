@@ -1,8 +1,8 @@
 from django.conf.urls.defaults import *
-from django.views.generic.simple import direct_to_template, redirect_to
+from django.views.generic import TemplateView, RedirectView
 
 urlpatterns = patterns('djforms.characterquest.views',
-    url(r'^$', redirect_to, {'url': '/forms/character-quest/application/', 'permanent': True}),
-    url(r'^success/$', direct_to_template, {'template': 'characterquest/data_entered.html'}),
+    url(r'^$', RedirectView.as_view(url='/forms/character-quest/application/')),
+    url(r'^success/$', TemplateView.as_view(template_name="characterquest/data_entered.html")),
     url(r'^application/$', 'application_profile_form', name='application_profile_form'),
 )
