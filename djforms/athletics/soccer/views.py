@@ -35,7 +35,7 @@ def camp_registration(request):
                     total = 200
             # credit card payment
             if contact.payment_method == "Credit Card":
-                order = Order(total=total,auth="sale",status="In Process",operator="Soccer Camp")
+                order = Order(total=total,auth="sale",status="In Process",operator="DJSoccerCamp")
                 form_proc = TrustCommerceForm(order, contact, request.POST)
                 if form_proc.is_valid():
                     r = form_proc.processor_response
@@ -70,7 +70,7 @@ def camp_registration(request):
                         order, BCC
                     )
             else:
-                order = Order(total=total,auth="COD",status="Pay later",operator="Soccer Camp")
+                order = Order(total=total,auth="COD",status="Pay later",operator="DJSoccerCamp")
                 order.save()
                 contact.order.add(order)
                 order.reg = contact
