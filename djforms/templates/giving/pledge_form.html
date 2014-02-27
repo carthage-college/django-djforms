@@ -42,13 +42,6 @@
     <a href="https://www.securitymetrics.com/site_certificate.adp?s=72%2e47%2e217%2e18&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics for PCI Compliance, QSA, IDS, Penetration Testing, Forensics, and Vulnerability Assessment" border="0"></a>
     </div></div>
     <h1>{{campaign.title|default:"Pledge Subscription"}}</h1>
-    <p>Would you rather make a one-time gift?
-    {% if not campaign.description %}
-        <a href="{% url giving_form_generic 'donation' %}">Use the donation form</a>.
-    {% else %}
-        <a href="{% url giving_form_campaign 'donation' campaign.slug %}">Use the donation form</a>.
-    {% endif %}
-    </p>
     <div class="content clear">
         {% if campaign.description %}
             {{campaign.description}}
@@ -67,6 +60,14 @@
             </p>
         {% endif %}
     </div>
+    <p style="font-weight:bold;color:#800;">
+    Would you rather make a one-time gift?
+    {% if not campaign.description %}
+        <a href="{% url 'giving_form_generic' 'donation' %}" style="color:#00f;">Use the donation form</a>.
+    {% else %}
+        <a href="{% url 'giving_form_campaign' 'donation' campaign.slug %}" style="color:#00f;">Use the donation form</a>.
+    {% endif %}
+    </p>
     {% if form_proc.errors or or_form.errors or ct_form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}

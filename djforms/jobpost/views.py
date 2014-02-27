@@ -129,7 +129,7 @@ def user_post_list(request, page=0):
         page_range:
             A list of the page numbers (1-indexed).
     """
-    qs = Post.objects.filter(creator = current_user)
+    qs = Post.objects.filter(creator = request.user)
     callable = SubListView.as_view(
         queryset=qs,
         template_name = 'jobpost/user_post_list.html',

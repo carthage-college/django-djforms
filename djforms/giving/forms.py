@@ -23,8 +23,10 @@ CYCLES = (
 RELATION_CHOICES = (
     ('', '--Select--'),
     ('Alumni', 'Alumni'),
-    ('Family', 'Family'),
+    ('Employee', 'Employee'),
     ('Friend', 'Friend'),
+    ('Parent', 'Parent'),
+    ('Student', 'Student'),
 )
 CLASS = [(x, x) for x in reversed(xrange(1926,date.today().year + 1))]
 CLASS.insert(0, ("","-----"))
