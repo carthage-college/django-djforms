@@ -28,7 +28,7 @@ RELATION_CHOICES = (
     ('Parent', 'Parent'),
     ('Student', 'Student'),
 )
-CLASS = [(x, x) for x in reversed(xrange(1926,date.today().year + 1))]
+CLASS = [(x, x) for x in reversed(xrange(1926,date.today().year + 4))]
 CLASS.insert(0, ("","-----"))
 
 class DonationContactForm(ContactForm):
@@ -50,22 +50,24 @@ class DonationOrderForm(OrderForm):
     A donation form
     """
 
-    total               = forms.CharField(label="Amount",)
-    #comments            = forms.CharField(widget=forms.Textarea, label="", help_text='You may provide specific instructions about how you would like Carthage to use your gift. Leave the field blank to donate to the Annual Fund.', required=False)
+    total               = forms.CharField(label="Amount")
+    comments            = forms.CharField(label="Designation", help_text='Please indicate if you would like your gift to be directed to a specific area. If this space is left blank, gifts will be directed to the <a href="http://www.carthage.edu/give/carthage-fund">Carthage Fund</a>.', required=False)
 
     class Meta:
         model = Order
-        #fields = ('total','comments','avs','auth')
-        fields = ('total','avs','auth')
+        fields = ('total','comments','avs','auth')
+        #fields = ('total','avs','auth')
 
 class PledgeOrderForm(OrderForm):
     """
     A subscrition form for recurring billing
     """
+    total               = forms.CharField(label="Amount")
+    comments            = forms.CharField(label="Designation", help_text='Please indicate if you would like your gift to be directed to a specific area. If this space is left blank, gifts will be directed to the <a href="http://www.carthage.edu/give/carthage-fund">Carthage Fund</a>.', required=False)
     payments            = forms.IntegerField(widget=forms.Select(choices=PAYMENT), max_value=60, min_value=12, label="Duration", help_text="Choose the number of years during which you want to donate the set amount above.")
     cycle               = forms.CharField(widget=forms.Select(choices=CYCLES), required=True, label="Interval", help_text="Choose how often the donation should be sent during the term of the pledge.")
 
     class Meta:
         model = Order
-        fields = ('total', 'cycle', 'payments', 'avs', 'start_date', 'auth')
+        fields = ('total', 'comments', 'cycle', 'payments', 'avs', 'start_date', 'auth')
 
