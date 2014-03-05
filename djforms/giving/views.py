@@ -12,7 +12,7 @@ from djtools.utils.mail import send_mail
 if settings.DEBUG:
     TO_LIST = [settings.SERVER_EMAIL,]
 else:
-    TO_LIST = ["lpieta@carthage.edu","lhansen@carthage.edu","bnelson3@carthage.edu"]
+    TO_LIST = ["lpiela@carthage.edu","lhansen@carthage.edu","hkeller@carthage.edu"]
 BCC = settings.MANAGERS
 
 def giving_form(request, transaction, campaign=None):
