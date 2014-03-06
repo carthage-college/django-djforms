@@ -53,6 +53,10 @@
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Zip</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.postal_code}}</dd>
 </dl>
+{% if data.order.comments %}
+<h3>Designation</h3>
+<p>{{data.order.comments}}</p>
+{% endif %}
 {% if data.order.contact.matching_company %}
 <h3>Matching Funds</h3>
 <ul>
