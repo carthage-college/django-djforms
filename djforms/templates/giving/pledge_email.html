@@ -40,18 +40,22 @@
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.last_name}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Email</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.email}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Phone</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.phone}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Address</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.address1}}</dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">&nbsp;</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.address2|default:"&nbsp;"}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.address1}}{% if data.order.contact.address2 %}, {{data.order.contact.address2}}{% endif %}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">City</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.city}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">State</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.state}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Zip</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.postal_code}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Phone</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.phone}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Spouse</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.spouse|default:"&nbsp;"}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Relation to Carthage</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.relation}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Class</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.class_of|default:"&nbsp;"}}</dd>
 </dl>
 {% if data.order.comments %}
 <h3>Designation</h3>
