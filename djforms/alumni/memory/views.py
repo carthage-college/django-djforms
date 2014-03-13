@@ -8,7 +8,7 @@ from django.core.files.base import ContentFile
 from djtools.utils.mail import send_mail
 from djforms.alumni.memory.forms import QuestionnaireForm
 from djforms.alumni.memory.models import Questionnaire
-from djforms.core.models import Photo
+#from djforms.core.models import Photo
 
 import datetime
 
@@ -17,9 +17,10 @@ def questionnaire_form(request):
         form = QuestionnaireForm(request.POST)
         if form.is_valid():
             memory = form.save()
-            photos = request.FILES.getlist('photos[]')
+            #photos = request.FILES.getlist('photos[]')
             captions = request.POST.getlist('captions[]')
             counter=0
+            """
             for photo in photos:
                 filename = photo.name
                 photo.name = photo.name.replace(' ', '')
@@ -27,6 +28,7 @@ def questionnaire_form(request):
                 p.original_image.save(photo.name, ContentFile(photo.read()))
                 memory.photos.add(p)
                 counter = counter + 1
+            """
             memory.save()
 
             if settings.DEBUG:

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from djforms.alumni.memory.models import Questionnaire
-from djforms.core.models import Photo
+#from djforms.core.models import Photo
 
 class PhotoInline(admin.TabularInline):
     model = Questionnaire.photos.through
@@ -11,7 +11,7 @@ class QuestionnaireAdmin(admin.ModelAdmin):
     list_display  = ('first_name', 'last_name', 'email', 'phone', 'city', 'state','postal_code')
     search_fields = ('last_name', 'email', 'city', 'state','postal_code')
 
-    inlines = [PhotoInline,]
-    exclude = ('photos',)
+    #inlines = [PhotoInline,]
+    #exclude = ('photos',)
 
 admin.site.register(Questionnaire, QuestionnaireAdmin)

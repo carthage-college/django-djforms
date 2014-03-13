@@ -1,9 +1,16 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.localflavor.us.models import USStateField
-from djforms.core.models import Photo, GenericContact
+#from djforms.core.models import Photo
+from djforms.core.models import GenericContact
 
 class Questionnaire(GenericContact):
+    """
+    removed photos for now, since no one uses that feature
+    and we need to upgrade to the more recent project on github:
+
+    git@github.com:matthewwithanm/django-imagekit.git
+    """
     address         = models.CharField(max_length=255, verbose_name = 'Address')
     city            = models.CharField(max_length=128, verbose_name = 'City')
     state           = USStateField()
@@ -17,7 +24,7 @@ class Questionnaire(GenericContact):
     special         = models.TextField('What makes the class of 1963 special?', null=True, blank=True)
     relive          = models.TextField('If you had the chance to relive a single Carthage moment or event, which one would you choose?', null=True, blank=True)
     message         = models.TextField('Personal message', help_text="You may want to include family, hobbies, travel experiences and fond rememberances.", null=True, blank=True)
-    photos          = models.ManyToManyField(Photo, verbose_name="Photos", related_name="alumni_memory_questionaire_photos", null=True, blank=True)
+    #photos          = models.ManyToManyField(Photo, verbose_name="Photos", related_name="alumni_memory_questionaire_photos", null=True, blank=True)
 
     class Meta:
         db_table = 'alumni_memory_questionnaire'

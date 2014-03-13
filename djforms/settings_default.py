@@ -76,8 +76,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     # third party projects
     'authority',
-    'imagekit',
-    'oembed',
+    #'imagekit',
     'tagging',
     'userprofile',
     # djforms stuff
@@ -95,8 +94,8 @@ INSTALLED_APPS = (
     'djforms.giving',
     'djforms.jobpost',
     'djforms.lis',
-    'djforms.lis.conferences.course_ference',
-    'djforms.lis.conferences.looking_glass',
+    #'djforms.lis.conferences.course_ference',
+    #'djforms.lis.conferences.looking_glass',
     'djforms.languages',
     'djforms.maintenance',
     'djforms.music.ensembles.choral',
