@@ -43,7 +43,7 @@ def giving_form(request, transaction, campaign=None):
             email = contact.email
             or_data = or_form.save(commit=False)
             or_data.status = "In Process"
-            or_data.operator = ("DJ%s%s" % (trans_cap,campaign.capitalize()))[:20]
+            or_data.operator = ("DJ%s%s" % (trans_cap,campaign.slug.capitalize()))[:20]
             or_data.save()
             contact.order.add(or_data)
             cc_form = CreditCardForm(or_data, contact, request.POST, prefix="cc")

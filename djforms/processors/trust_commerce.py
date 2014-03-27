@@ -114,7 +114,7 @@ class PaymentProcessor():
                     msg = result['offenders']
                     #msg = result
                 elif status == 'error':
-                    msg == result['errortype']
+                    msg = result['errortype']
                 else:
                     status = "error"
                     msg = 'An error occurred: %s' % result

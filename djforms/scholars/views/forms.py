@@ -14,11 +14,26 @@ except:
 
 
 class PresentationForm(forms.ModelForm):
-
-    permission          = forms.ChoiceField(label="Permission to reproduce", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text="Do you grant Carthage permission to reproduce your presentation?")
-    shared              = forms.ChoiceField(label="Faculty sponsor approval", choices=BINARY_CHOICES, widget=forms.RadioSelect(), help_text='Has your faculty sponsor approved your proposal? Note: Faculty and staff presenters should choose "yes".')
-    need_table          = forms.ChoiceField(label="Do you need a table for display purposes?", choices=BINARY_CHOICES, widget=forms.RadioSelect())
-    need_electricity    = forms.ChoiceField(label="Do you need electricity for computer or other device?", choices=BINARY_CHOICES, widget=forms.RadioSelect())
+    permission          = forms.ChoiceField(
+        label="Permission to reproduce", choices=BINARY_CHOICES,
+        widget=forms.RadioSelect(),
+        help_text="""Do you grant Carthage permission to reproduce
+            your presentation?"""
+    )
+    shared              = forms.ChoiceField(
+        label="Faculty sponsor approval", choices=BINARY_CHOICES,
+        widget=forms.RadioSelect(),
+        help_text="""Has your faculty sponsor approved your proposal?
+            Note: Faculty and staff presenters should choose 'yes'."""
+    )
+    need_table          = forms.ChoiceField(
+        label="Do you need a table for display purposes?",
+        choices=BINARY_CHOICES, widget=forms.RadioSelect()
+    )
+    need_electricity    = forms.ChoiceField(
+        label="Do you need electricity for computer or other device?",
+        choices=BINARY_CHOICES, widget=forms.RadioSelect()
+    )
 
     class Meta:
         model = Presentation
@@ -31,8 +46,10 @@ class PresentationForm(forms.ModelForm):
             self.obj = Presentation.objects.get(pk=self.instance.pk)
         except:
             self.obj = None
-        self.fields.keyOrder = ['title','funding','work_type','permission','shared',
-        'abstract_text','need_table', 'need_electricity','poster_file']
+        self.fields.keyOrder = [
+            'title','funding','work_type','permission','shared',
+            'abstract_text','need_table', 'need_electricity','poster_file'
+        ]
 
     def clean_poster_file(self):
         if self.obj:

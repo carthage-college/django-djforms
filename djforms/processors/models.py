@@ -47,16 +47,32 @@ class Order(models.Model):
         return cs
 
     def cid(self):
-        return self.contact().id
+        try:
+            cid = self.contact().id
+        except:
+            cid = None
+        return cid
 
     def first_name(self):
-        return self.contact().first_name
+        try:
+            fn = self.contact().first_name
+        except:
+            fn = None
+        return fn
 
     def last_name(self):
-        return self.contact().last_name
+        try:
+            ln = self.contact().last_name
+        except:
+            ln = None
+        return ln
 
     def email(self):
-          return self.contact().email
+        try:
+            e = self.contact().email
+        except:
+            e = None
+        return e
 
     def __unicode__(self):
         try:
