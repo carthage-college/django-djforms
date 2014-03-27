@@ -156,4 +156,4 @@ TC_AVS = 'n'
 #TC_AUTH_TYPE = "store"
 TC_AUTH_TYPE = "sale"
 TC_CYCLE = "1m"
-TC_OPERATOR = "DJ Forms"
+TC_OPERATOR = "DJForms"
