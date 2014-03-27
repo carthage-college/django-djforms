@@ -51,7 +51,9 @@ urlpatterns = patterns('djforms.scholars.views',
     # sendmail to presenters
     url(
         r'^presenters/email/success/$',
-        TemplateView.as_view(template_name='scholars/presenters/email_done.html'),
+        TemplateView.as_view(
+            template_name='scholars/presenters/email_done.html'
+        ),
         name="email_presenters_done"),
     url(
         r'^presenters/email/(?P<pid>\d+)/(?P<action>[-\w]+)/$',

@@ -62,6 +62,7 @@ class PresentationAdmin(admin.ModelAdmin):
     list_display        = ('title','last_name','first_name','email','sponsor','sponsor_other','get_presenters','funding','work_type','permission','shared','need_table','need_electricity','status','poster','date_created')
     ordering            = ['title','work_type','permission','shared','need_table','need_electricity','status','date_created']
     search_fields       = ('title','user__last_name','user__email','funding')
+    list_filter         = ('status','date_created')
 
     def save_model(self, request, obj, form, change):
         if change:

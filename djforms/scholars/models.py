@@ -4,7 +4,8 @@ from django.core.cache import cache
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
-from djforms.core.models import Department, GenericChoice, YEAR_CHOICES, BINARY_CHOICES
+from djforms.core.models import Department, GenericChoice
+from djforms.core.models import YEAR_CHOICES, BINARY_CHOICES
 from djtools.utils.mail import send_mail
 
 from tagging import fields, managers
@@ -44,7 +45,9 @@ def get_json(yuri):
     jason = cache.get('%s_api_json' % yuri)
     if jason is None:
         # read the json data from URL
-        earl = "%s/%s/?api_key=%s" % (settings.API_PEOPLE_URL,yuri,settings.API_KEY)
+        earl = "%s/%s/?api_key=%s" % (
+            settings.API_PEOPLE_URL,yuri,settings.API_KEY
+        )
         response =  urllib.urlopen(earl)
         data = response.read()
         # json doesn't like trailing commas, so...
@@ -92,8 +95,12 @@ class Presenter(models.Model):
     def save(self, *args, **kwargs):
         if self.sponsor:
             faculty = get_people("faculty")
-            self.sponsor_name = "%s %s" % (faculty[self.sponsor].firstname, faculty[self.sponsor].lastname)
-            self.sponsor_email = faculty[self.sponsor].email
+            try:
+                self.sponsor_name = "%s %s" % (faculty[self.sponsor].firstname, faculty[self.sponsor].lastname)
+                self.sponsor_email = faculty[self.sponsor].email
+            except:
+                self.sponsor_name = settings.COS_DEFAULT_NAME
+                self.sponsor_email = settings.COS_DEFAULT_EMAIL
         super(Presenter, self).save()
 
     def year(self):

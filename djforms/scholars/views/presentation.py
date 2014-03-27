@@ -5,8 +5,10 @@ from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 
-from djforms.scholars.views.forms import EmailPresentersForm, PresentationForm, DEPTS
-from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES, get_people, get_json
+from djforms.scholars.views.forms import EmailPresentersForm, PresentationForm
+from djforms.scholars.views.forms import DEPTS
+from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES
+from djforms.scholars.models import get_json
 from djforms.core.models import Department, YEAR_CHOICES
 
 from djtools.utils.mail import send_mail
@@ -48,18 +50,22 @@ def form(request, pid=None):
     manager = request.user.has_perm('scholars.manage_presentation')
     # get people for select field
     jason  = get_json("faculty")
-    faculty = []
+    faculty = [{u'city': u'Racine', u'priv_code': u'', u'zip': u'53408-5748', u'firstname': u'Cynthia', u'office_phone': u'262-551-6671', u'lastname': u'Allen', u'id': u'699105', u'email': u'callen1@carthage.edu', u'title_rank': u'1', u'phone': u'262-945-8517', u'job_title': u'Program Director of Physical Education/Health', u'alt_name': u'None', u'st': u'WI', u'descr': u'Prog Dir of PE', u'birth_date': u'July 1, 1971', u'spouse': u'', u'addr_line1': u'PO Box 085748', u'addr_line2': u'', u'office_location': u'TARC 2055'}]
     for j in jason:
         faculty.append(j[j.keys()[0]])
 
     if pid:
-        presentation = get_object_or_404(Presentation,id=pid,date_updated__year=YEAR)
+        presentation = get_object_or_404(
+            Presentation,id=pid,date_updated__year=YEAR
+        )
         # check perms
         if presentation.user != request.user and not manager:
             raise Http404
     else:
         try:
-            presentation = Presentation.objects.get(user=request.user,date_updated__year=YEAR)
+            presentation = Presentation.objects.get(
+                user=request.user,date_updated__year=YEAR
+            )
             pid = presentation.id
         except:
             pass
@@ -75,7 +81,7 @@ def form(request, pid=None):
 
 
     if request.method=='POST':
-        form = PresentationForm(request.POST, request.FILES, instance=presentation)
+        form=PresentationForm(request.POST,request.FILES,instance=presentation)
 
         first_name   = request.POST.getlist('first_name[]')
         last_name    = request.POST.getlist('last_name[]')
@@ -171,8 +177,9 @@ def form(request, pid=None):
                 status = ""
                 if pid:
                     status = " (updated)"
-                subject = """[Celebration of Scholars Presentation] %s%s: by %s %s""" % (
-                    presentation.title,status,request.user.first_name,request.user.last_name
+                subject = """[CoS Presentation] %s%s: by %s %s""" % (
+                    presentation.title,status,request.user.first_name,
+                    request.user.last_name
                 )
                 send_mail (
                     request, TO_LIST, subject, request.user.email,
