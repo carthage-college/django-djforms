@@ -2,9 +2,6 @@ from django.conf import settings
 
 import tclink
 
-import logging
-logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.INFO)
-
 class PaymentProcessor():
     """
     TrustCommerce payment processing module.
@@ -107,7 +104,6 @@ class PaymentProcessor():
             status = result['status']
             success = False
 
-            logging.info("tdata = %s" % self.transactionData)
             if status == 'approved' or status == 'accepted':
                 success = True
                 msg = result
