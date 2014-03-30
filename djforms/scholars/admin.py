@@ -49,7 +49,7 @@ def export_scholars(modeladmin, request, queryset):
             title = smart_str(p.title, encoding='utf-8', strings_only=False, errors='strict')
             funding = smart_str(p.funding, encoding='utf-8', strings_only=False, errors='strict')
             work_type = smart_str(p.work_type, encoding='utf-8', strings_only=False, errors='strict')
-        writer.writerow([title, leader, p.user.email, p.leader.sponsor, p.leader.sponsor_other, presenters[:-1], funding, work_type, p.permission, p.shared, p.need_table, p.need_electricity, link,poster,p.date_created])
+        writer.writerow([title, leader, p.user.email, p.leader.sponsor_email, p.leader.sponsor_other, presenters[:-1], funding, work_type, p.permission, p.shared, p.need_table, p.need_electricity, link,poster,p.date_created])
     return response
 export_scholars.short_description = "Export the selected Celebration of Scholars Submissions"
 
