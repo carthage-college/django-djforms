@@ -8,6 +8,8 @@ from djforms.alumni.classnotes.forms import ContactForm
 from djforms.alumni.classnotes.models import Contact
 from djtools.utils.mail import send_mail
 
+from honeypot.decorators import check_honeypot
+
 import datetime
 
 if settings.DEBUG:
@@ -16,6 +18,7 @@ else:
     TO_LIST = ["dmoore2@carthage.edu",]
 BCC = settings.MANAGERS
 
+@check_honeypot
 def contact(request):
     if request.method=='POST':
         form = ContactForm(request.POST, request.FILES)

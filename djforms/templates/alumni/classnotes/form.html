@@ -40,6 +40,7 @@ $(function() {
     <h2 style="color: red;">Please correct the error{{ form.errors|pluralize }} below.</h2>
     {% endif %}
     <form method="post" action="." class="form" id="profile" enctype="multipart/form-data">{% csrf_token %}
+        {% render_honeypot_field %}
         <fieldset class="blockLabels">
             <ul class="inline">
                 <li><h3 class="buffer-left">Contact Information</h3></li>
