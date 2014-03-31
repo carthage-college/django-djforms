@@ -194,7 +194,7 @@ class Presentation(models.Model):
         return self.user.email
 
     def sponsor(self):
-        return self.leader.sponsor
+        return self.leader.sponsor_email
 
     def sponsor_other(self):
         return self.leader.sponsor_other
