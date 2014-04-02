@@ -38,12 +38,18 @@ API_KEY = ""
 API_PEOPLE_URL=""
 AUTH_PROFILE_MODULE = 'core.UserProfile'
 SECRET_KEY = ''
-
+HONEYPOT_FIELD_NAME=""
+HONEYPOT_VALUE=""
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.word_challenge'
+#CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+CAPTCHA_NOISE_FUNCTIONS = ''
+CAPTCHA_DICTIONARY_MAX_LENGTH = 9
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'honeypot.middleware.HoneypotMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 TEMPLATE_LOADERS = (
@@ -76,6 +82,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     # third party projects
     'authority',
+    'honeypot',
     #'imagekit',
     'tagging',
     'userprofile',

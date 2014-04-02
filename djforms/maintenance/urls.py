@@ -4,7 +4,8 @@ from django.views.generic import TemplateView
 urlpatterns = patterns('djforms.maintenance.views',
     url(
         r'^success',
-        TemplateView.as_view(template_name="maintenance/data_entered.html")
+        TemplateView.as_view(template_name="maintenance/data_entered.html"),
+        name="maintenance_request_success"
     ),
     url(
         r'^request/(?P<req_id>\d+)/$',

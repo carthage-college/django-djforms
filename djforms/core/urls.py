@@ -36,6 +36,8 @@ urlpatterns = patterns('',
     (r'^athletics/', include('djforms.athletics.urls')),
     # biology
     (r'^biology/', include('djforms.biology.urls')),
+    # captcha
+    (r'^captcha/', include('captcha.urls')),
     # catering
     (r'^catering/', include('djforms.catering.urls')),
     # CharacterQuest

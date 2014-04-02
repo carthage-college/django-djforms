@@ -128,6 +128,11 @@ $(function() {
                     <label for="id_caption"><strong>Caption for your photo</strong></label>
                     <input id="id_caption" type="text" name="caption" maxlength="255" />
                 </li>
+                <li>
+                    <label for="id_captcha_1" class="buffer-bottom"><strong>Input the text you see in the image on the left</strong></label>
+                    {% if form.captcha.errors %}<div class="error" style="margin-right:13px;">Wrong answer. Try again.</div>{% endif %}
+                    {{form.captcha}}
+                </li>
             </ul>
         </fieldset>
         <br />

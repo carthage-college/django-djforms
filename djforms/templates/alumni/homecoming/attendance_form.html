@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load honeypot %}
 {% block title %}Homecoming &mdash; Alumni &mdash; Carthage College{% endblock %}
 {% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
@@ -7,6 +8,7 @@
 {% block content %}
 <div class="buffer">
     <h1>Yes! I'll be at Homecoming and the Reunion</h1>
+        {% render_honeypot_field %}
     {% include "includes/generic_form.html" %}
 </div>
 {% endblock %}
