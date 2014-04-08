@@ -4,7 +4,7 @@
 First Name:         {{data.first_name}}
 Last Name:          {{data.last_name}}
 Birthday            {{data.profile.dob}}
-Sex                 {{data.sex}}
+Gender              {{data.gender}}
 
 Email:              {{data.email}}
 Phone:              {{data.phone}}
@@ -15,7 +15,6 @@ Zip                 {{data.zip}}
 
 Campus Address      {{data.profile.campus_address}}
 Campus Box          {{data.profile.campus_box}}
-Access Code         {{data.profile.college_access_code}}
 Carthage ID         {{data.profile.college_id}}
 Year                {{data.profile.college_year}}
 </pre>

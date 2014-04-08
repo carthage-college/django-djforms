@@ -41,7 +41,7 @@
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Zip</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.postal_code}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Phone</dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.phone}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.phone|default:"&nbsp;"}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Spouse</dt>
     <dd style="margin:2px 0; padding:5px 0;">{{data.order.contact.spouse|default:"&nbsp;"}}</dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Relation to Carthage</dt>
