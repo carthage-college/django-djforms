@@ -28,12 +28,14 @@ table.tablesorter tbody tr.odd td { background-color: #efefef; }
     <table id="presentation_list_table" class="tablesorter">
     <thead>
     <tr>
+        <th style="width:20px;">&nbsp;</th>
         <th width="350">Title</th>
         <th width="150">Lead Presenter</th>
     </tr>
     </thead>
     {% for p in prez %}
         <tr class="{% cycle 'odd' 'even' %}">
+            <td>{{forloop.counter}}</td>
             <td><a href="{{p.get_absolute_url}}">{{p.title}}</a></td>
             <td>{{p.leader.last_name}}, {{p.leader.first_name}}</td>
         </tr>

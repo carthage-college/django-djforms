@@ -19,9 +19,6 @@ urlpatterns = patterns('djforms.scholars.views',
         r'^presentation/alpha/','print.alpha',
         {'template':'scholars/print/alpha.html'}
     ),
-    url(
-        r'^presenters/print','print.presenters'
-    ),
     # presentation crud
     url(
         r'^presentation/success/$',

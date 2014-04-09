@@ -195,18 +195,26 @@ def form(request, pid=None):
             presenters = [""]
             copies = 1
 
-    context = {"presentation":presentation,"form":form,"presenters":presenters,"copies":copies,
-               "faculty":faculty,"cyears":YEAR_CHOICES,"depts":DEPTS,"types":PRESENTER_TYPES,
-               "pid":pid,"manager":manager,}
+    context = {
+        "presentation":presentation,"form":form,
+        "presenters":presenters,"copies":copies,
+        "faculty":faculty,"cyears":YEAR_CHOICES,
+        "depts":DEPTS,"types":PRESENTER_TYPES,
+        "pid":pid,"manager":manager
+    }
     return render_to_response (
         "scholars/presentation/form.html",
         context, context_instance=RequestContext(request)
     )
 
 
-@permission_required('scholars.manage_presentation', login_url="/forms/accounts/login/")
+@permission_required(
+    'scholars.manage_presentation',
+    login_url="/forms/accounts/login/"
+)
 def manager(request):
-    presentations = Presentation.objects.filter(date_updated__year=YEAR).order_by("-date_created")
+    p = Presentation.objects.filter(date_updated__year=YEAR)
+    presentations = p.order_by("-date_created")
     #presentations = Presentation.objects.all().order_by("-date_created")
     return render_to_response (
         "scholars/presentation/manager.html",
@@ -215,7 +223,10 @@ def manager(request):
     )
 
 
-@permission_required('scholars.manage_presentation', login_url="/forms/accounts/login/")
+@permission_required(
+    'scholars.manage_presentation',
+    login_url="/forms/accounts/login/"
+)
 def email_presenters(request,pid,action):
     """
     method to send an email to the presenters and faculty sponsor
@@ -241,9 +252,9 @@ def email_presenters(request,pid,action):
                     else:
                         TO_LIST.append(presentation.leader.sponsor_email)
                 data = {"content":form_data["content"]}
+                sub = "[Celebration of Scholars] Info about your presentation",
                 send_mail (
-                    request, TO_LIST,
-                    "[Celebration of Scholars] Information regarding your presentation",
+                    request, TO_LIST, sub,
                     FEMAIL, "scholars/presenters/email_data.html", data, BCC
                 )
                 return HttpResponseRedirect(reverse("email_presenters_done"))
@@ -275,7 +286,8 @@ def archives(request, ptype, medium, year=None):
             p = Presentation.objects.filter(date_updated__year=year)
             p.filter(status=True).order_by("user__last_name")
         else:
-            p = Presenter.objects.filter(date_updated__year=year).order_by("last_name")
+            prez = Presenter.objects.filter(date_updated__year=year)
+            p = prez.order_by("last_name")
 
         return render_to_response (
             template, {"prez": p,"year":year,},

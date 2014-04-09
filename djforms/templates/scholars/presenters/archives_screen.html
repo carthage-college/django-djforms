@@ -37,7 +37,7 @@ table.tablesorter tbody tr.odd td { background-color: #efefef; }
             {% if user.is_anonymous %}
             <td>{{p.last_name}}, {{p.first_name}}</td>
             {% else %}
-            <td><a href="mailto:{{p.user.email}}">{{p.last_name}}, {{p.first_name}}</a></td>
+            <td>{{p.last_name}}, {{p.first_name}}</td>
             {% endif %}
             <td>{{p.prez_type}}</td>
         </tr>

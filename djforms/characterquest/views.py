@@ -16,7 +16,8 @@ from datetime import date
 if settings.DEBUG:
     TO_LIST = ["larry@carthage.edu",]
 else:
-    TO_LIST = ["nwinkler@carthage.edu",request.user.email]
+    TO_LIST = ["nwinkler@carthage.edu",]
+
 BCC = settings.MANAGERS
 
 @login_required
@@ -47,7 +48,8 @@ def application_profile_form(request):
             applicant = form.save(commit=False)
             applicant.profile = profile
             applicant.save()
-
+            if not settings.DEBUG:
+                TO_LIST.append(request.user.email)
             subject = "CharacterQuest Application: %s %s" % \
                 (
                     applicant.profile.user.first_name,
