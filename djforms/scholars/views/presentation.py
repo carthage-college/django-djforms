@@ -321,3 +321,15 @@ def action(request):
     else:
         raise Http404, "Page not found"
 
+def email_all_presenters(request):
+    """
+    Send an email to all presenters
+    """
+    template = "scholars/presenters/email_all_presenters.html"
+
+    p = Presentation.objects.filter(date_updated__year=year)
+
+    return render_to_response (
+        template, {"prez": p,},
+        context_instance=RequestContext(request)
+    )

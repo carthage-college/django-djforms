@@ -45,13 +45,20 @@ urlpatterns = patterns('djforms.scholars.views',
         r'^presentation/$',
         'presentation.form',name="presentation_form"
     ),
-    # sendmail to presenters
+    # send email to all presentation leaders
+    # 10 Apr 2014: currently not completed but needed for 2015
+    #url(
+    #    r'^presenters/email/leaders/$',
+    #    'presentation.email_leaders',name="email_leaders"
+    #),
+    # send email to a presentation's leader and sponsor
     url(
         r'^presenters/email/success/$',
         TemplateView.as_view(
             template_name='scholars/presenters/email_done.html'
         ),
-        name="email_presenters_done"),
+        name="email_presenters_done"
+    ),
     url(
         r'^presenters/email/(?P<pid>\d+)/(?P<action>[-\w]+)/$',
         'presentation.email_presenters',name="email_presenters"
