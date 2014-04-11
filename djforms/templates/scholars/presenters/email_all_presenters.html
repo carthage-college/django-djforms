@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+{% autoescape off %}
+<html>
+<head>
+<style type="text/css">
+body {font-size:1.1em;font-family:verdana, arial, sans-serif;}
+</style>
+</head>
+<body>
+{% for p in prez %}
+    {{p.user.email}},<br />
+{% endfor %}
+</body>
+</html>
+{% endautoescape %}

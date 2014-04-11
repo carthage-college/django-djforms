@@ -1,9 +1,6 @@
 from django.db import models
 from djforms.core.models import GenericContact, GenericChoice
 
-from tagging.fields import TagField
-from tagging.models import Tag
-
 class ParkingTicketAppeal(GenericContact):
     carthage_id        = models.CharField("Carthage ID#", max_length=10)
     residency_status   = models.ForeignKey(GenericChoice, related_name="parking_ticket_appeal_residency_status")
