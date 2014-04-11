@@ -50,7 +50,7 @@ def form(request, pid=None):
     manager = request.user.has_perm('scholars.manage_presentation')
     # get people for select field
     jason  = get_json("faculty")
-    faculty = [{u'city': u'Racine', u'priv_code': u'', u'zip': u'53408-5748', u'firstname': u'Cynthia', u'office_phone': u'262-551-6671', u'lastname': u'Allen', u'id': u'699105', u'email': u'callen1@carthage.edu', u'title_rank': u'1', u'phone': u'262-945-8517', u'job_title': u'Program Director of Physical Education/Health', u'alt_name': u'None', u'st': u'WI', u'descr': u'Prog Dir of PE', u'birth_date': u'July 1, 1971', u'spouse': u'', u'addr_line1': u'PO Box 085748', u'addr_line2': u'', u'office_location': u'TARC 2055'}]
+    faculty = []
     for j in jason:
         faculty.append(j[j.keys()[0]])
 
