@@ -27,14 +27,21 @@ def contact(request):
             email = settings.DEFAULT_FROM_EMAIL
             if contact.email:
                 email = contact.email
-            subject = "[Alumni Class Notes] %s %s" % (contact.first_name,contact.last_name)
-            send_mail(request,TO_LIST, subject, email,"alumni/classnotes/email.html", contact, BCC)
+            subject = "[Alumni Class Notes] %s %s" % \
+                (contact.first_name,contact.last_name)
+            send_mail(
+                request,TO_LIST, subject, email,
+                "alumni/classnotes/email.html", contact, BCC
+            )
             return HttpResponseRedirect('/forms/alumni/classnotes/success/')
     else:
         form = ContactForm()
     manager = request.user.has_perm('classnotes.change_contact')
-    return render_to_response("alumni/classnotes/form.html",
-        {"form": form,"manager":manager,}, context_instance=RequestContext(request))
+    return render_to_response(
+        "alumni/classnotes/form.html",
+        {"form": form,"manager":manager,},
+        context_instance=RequestContext(request)
+    )
 
 def archives(request, year=None):
     """

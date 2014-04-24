@@ -3,11 +3,20 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext, loader
 from django.contrib.auth.decorators import login_required
 
 from djforms.sustainability.green.forms import PledgeForm
 from djforms.sustainability.green.models import Pledge
+
+from djtools.utils.mail import send_mail
+
+if settings.DEBUG:
+    TO_LIST = ["larry@carthage.edu",]
+else:
+    TO_LIST = ["csabar@carthage.edu","lhuaracha@carthage.edu",]
+BCC = settings.MANAGERS
 
 def pledge_form(request):
     '''
@@ -31,21 +40,29 @@ def pledge_form(request):
             data = form.save(commit=False)
             data.user = request.user
             data.save()
-            bcc = settings.MANAGERS
-            frm = user.email
-            to = ["csabar@carthage.edu","lhuaracha@carthage.edu",]
-            t = loader.get_template('sustainability/green/pledge_email.html')
-            c = RequestContext(request, {'data':data,})
-            email = EmailMessage(("[Sustainability Pledge] %s %s" % (user.first_name,user.last_name)), t.render(c), frm, to, bcc, headers = {'Reply-To': frm,'From': frm})
-            email.content_subtype = "html"
-            email.send()
-            ret = '/forms/sustainability/green/pledge/success/'
-            return HttpResponseRedirect(ret)
+            subject = "[Sustainability Pledge] %s %s" % \
+                 (user.first_name,user.last_name)
+            send_mail(
+                request,TO_LIST,subject,user.email,
+                "sustainability/green/pledge_email.html", data, BCC
+            )
+            return HttpResponseRedirect(
+                reverse_lazy("pledge_form_success")
+            )
+
     else:
         form = PledgeForm(initial={'user':user})
 
-    return render_to_response("sustainability/green/pledge_form.html", {"form": form, "anon": anon, "pledge":pledge,}, context_instance=RequestContext(request))
+    return render_to_response(
+        "sustainability/green/pledge_form.html",
+        {"form": form, "anon": anon, "pledge":pledge,},
+        context_instance=RequestContext(request)
+    )
 
 def pledge_archives(request):
     pledges = Pledge.objects.all().order_by("id")
-    return render_to_response("sustainability/green/pledge_archives.html", {"pledges": pledges,}, context_instance=RequestContext(request))
+    return render_to_response(
+        "sustainability/green/pledge_archives.html",
+        {"pledges": pledges,},
+        context_instance=RequestContext(request)
+    )

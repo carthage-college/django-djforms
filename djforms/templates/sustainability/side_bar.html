@@ -1,5 +1,7 @@
-{% load get_api %}
+{% load livewhale_api %}
+{% get_lw_content as sidebar blurbs 1365 %}
 <div id="third">
-{% get_api_object as sidebar cms snippet 25 code %}
-{{sidebar}}
+    <div class="buffer">
+    {{sidebar.body}}
+    </div>
 </div>
