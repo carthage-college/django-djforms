@@ -33,7 +33,7 @@ def pledge_form(request):
             data.save()
             bcc = settings.MANAGERS
             frm = user.email
-            to = ["lhuaracha@carthage.edu",]
+            to = ["csabar@carthage.edu","lhuaracha@carthage.edu",]
             t = loader.get_template('sustainability/green/pledge_email.html')
             c = RequestContext(request, {'data':data,})
             email = EmailMessage(("[Sustainability Pledge] %s %s" % (user.first_name,user.last_name)), t.render(c), frm, to, bcc, headers = {'Reply-To': frm,'From': frm})

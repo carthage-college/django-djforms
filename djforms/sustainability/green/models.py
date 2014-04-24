@@ -5,8 +5,6 @@ from djforms.core.models import BINARY_CHOICES
 class Pledge(models.Model):
     # user data
     user                = models.ForeignKey(User, verbose_name="Created by", related_name="pledge_user",editable=False)
-    #core
-    comments            = models.TextField("Comments (optional)", help_text="Please use this space for your thoughts on sustainability that you would like to share with the Carthage community.", null=True, blank=True)
 
     class Meta:
         ordering  = ('-id',)
