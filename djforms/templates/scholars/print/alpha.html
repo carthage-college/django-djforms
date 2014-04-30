@@ -7,7 +7,15 @@
 </head>
 <body>
     {% for p in presentations %}
-        <span style="width:500px;">{{p.pres.title}}</span>|<span style="width:25px;">{% if p.stu %}{% for s in p.stu %}{{s.name}}{% if not forloop.last %}; {% endif %}{% endfor %}{% endif %}{% if p.fac %}{% for f in p.fac %}{{f.name}}{% if not forloop.last %}; {% endif %}{% endfor %}{% endif %}</span><br />
+        <span style="width:20px;text-alight:right;">
+        {{forloop.counter}})
+        </span>
+        <span style="width:50px;left-margin:7px;">
+        {% for s in p.get_presenters_print %}
+        {{s.last_name}}, {{s.first_name}};&nbsp;
+        {% endfor %}
+        </span>
+        <br />
     {% endfor %}
 </body>
 </html>

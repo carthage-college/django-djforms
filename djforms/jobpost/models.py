@@ -73,7 +73,7 @@ class JobApplyForm(models.Model):
     major        = models.CharField(max_length=255)
     hours        = models.TextField(verbose_name = 'Hours Available', help_text="What hours are you available to work Sunday through Saturday?")
     app_details  = models.TextField(verbose_name = 'What qualifications do you have for this job?')
-    cv           = models.FileField(u'Résumé', upload_to='files/jobs/cvs/', max_length="256", help_text=u'Many employers are requiring a résumé for consideration for their job postings. Please include this in your application. If you do not have one, please contact the Writing Center or the Career Center to help you create or update it.', null=True, blank=True)
+    cv           = models.FileField(u'Résumé', upload_to='files/jobs/cvs/', max_length="256", help_text=u'Many employers are requiring a résumé for consideration for their job postings. Please include this in your application.', null=True, blank=True)
     job          = models.ForeignKey(Post, null=True, blank=True)
 
     def render_email(self):

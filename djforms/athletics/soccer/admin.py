@@ -11,11 +11,10 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         'last_name','first_name','created_at','dob','age','football',
         'gender','address1','address2','city','state','postal_code','phone',
         'email','order_transid','order_status','parent_guard','roommate',
-        'dorm','years_attend','shirt_size','session','reg_fee','amount','order_total',
-        'payment_method'
+        'dorm','years_attend','goalkeeper','shirt_size','session','reg_fee',
+        'amount','order_total', 'payment_method'
     )
     ordering      = ('-created_at',)
-    #ordering      = ('created_at','last_name','postal_code','email','city','state')
     search_fields = ('last_name','email','postal_code')
 
     list_max_show_all   = 500

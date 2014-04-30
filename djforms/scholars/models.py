@@ -176,6 +176,9 @@ class Presentation(models.Model):
     def get_presenters(self):
         return self.presenters.order_by('-leader','last_name')
 
+    def get_presenters_print(self):
+        return self.presenters.order_by('last_name')
+
     def mugshot_status(self):
         status = True
         for p in self.presenters.all():
