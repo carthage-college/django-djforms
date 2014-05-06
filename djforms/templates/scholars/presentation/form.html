@@ -150,7 +150,7 @@
     {% if manager and presentation %}
         {% include "scholars/presentation/action_form.inc.html" %}
     {% endif %}
-    {# if pid #}
+    {% if manager %}
     <h1>Presentation Form</h1>
     <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
     {% if form.errors %}
@@ -216,12 +216,10 @@
             </ol>
         </fieldset>
     </form>
-    {# else #}
-    <!--
+    {% else %}
     <h1>Submssion Process is Closed</h1>
     <p>We are no longer accepting proposals.</p>
-    -->
-    {# endif #}
+    {% endif %}
 </div>
 {% endblock %}
 {% block sidebar %}

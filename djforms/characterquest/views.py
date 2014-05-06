@@ -23,7 +23,7 @@ BCC = settings.MANAGERS
 @login_required
 def application_profile_form(request):
     today = date.today()
-    x_date = date(today.year, 5, 6)
+    x_date = date(today.year, 5, 5)
     s_date = date(today.year, 4, 1)
     expired = False
     if x_date < today or s_date > today:
