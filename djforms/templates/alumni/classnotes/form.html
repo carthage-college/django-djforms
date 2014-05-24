@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% load honeypot %}
 {% block title %}Class Notes &mdash; Alumni &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block jquery %}<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>{% endblock %}
 {% block extra_style %}
 <style type="text/css">
-    #second ul, #second ol { margin: 0 0 1em .5em; }
+    #id_classyear, #id_spouseyear {width:150px;}
 </style>
 {% endblock %}
 {% block extra_javascript %}
@@ -30,11 +28,18 @@ $(function() {
 </script>
 {% endblock %}
 {% block left_nav %}
+    <h4>Alumni</h4>
+    {% include "alumni/classnotes/side_bar.html" %}
+    <h4>&nbsp;</h4>
     {% include "alumni/left_nav.html" %}
 {% endblock %}
+{% block sidebar %}
+{% endblock %}
+{% block content_head %}
+<h1 id="page_title">Class Notes<span id="secondary-dropdown"></span></h1>
+{% endblock %}
 {% block content %}
-<div id="sitetitle">Alumni Class Notes</div>
-<div class="buffer">
+<div class="forms-container">
     <h1>Submit your Class Note</h1>
     <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
     {% if form.errors %}
@@ -75,7 +80,7 @@ $(function() {
             <ul class="inline">
                 <li>
                     <label for="id_email" class="placeholder">Email</label><br />
-                    <input class="large required{% if form.email.errors %} error{% endif %}" id="id_email" type="email" name="email" placeholder="Email" maxlength="75" value="{{form.data.email}}" {% if not template_debug %}required {% endif %}/>
+                    <input class="large{% if form.email.errors %} error{% endif %}" id="id_email" type="email" name="email" placeholder="Email" maxlength="75" value="{{form.data.email}}" {% if not template_debug %}required {% endif %}/>
                 </li>
                 <li>
                     {{form.classyear}}
@@ -145,7 +150,4 @@ $(function() {
         </fieldset>
     </form>
 </div>
-{% endblock %}
-{% block sidebar %}
-    {% include "alumni/classnotes/side_bar.html" %}
 {% endblock %}

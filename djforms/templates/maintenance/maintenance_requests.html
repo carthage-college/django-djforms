@@ -1,12 +1,10 @@
-{% extends "base.html" %}
+{% extends "djkorra/base.html" %}
 {% block title %}My Maintenance Requests{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block left_nav %}
-    {% include "maintenance/left_nav.html" %}
+{% block content_head %}
+    <h1 id="page_title">My Maintenance Requests</h1>
 {% endblock %}
 {% block content %}
 <div class="buffer">
-    <h1>My Maintenance Requests</h1>
     {% if request.user.is_staff %}
     <p>
         Click on the date created, building, or type to edit. Click on the "more"

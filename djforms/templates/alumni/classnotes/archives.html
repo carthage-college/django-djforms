@@ -1,7 +1,5 @@
 {% extends "base.html" %}
-{% load get_api %}
 {% block title %}Class Notes Archives &mdash; Alumni &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
 <link rel="stylesheet" href="{{media_url}}css/jquery/plugins/wowwindow.css" type="text/css" />
 <link rel="stylesheet" href="{{media_url}}css/jquery/plugins/jqModal.css" type="text/css" media="screen" />
@@ -22,13 +20,17 @@
 </script>
 {% endblock %}
 {% block left_nav %}
+    <h4>Alumni</h4>
+    {% include "alumni/classnotes/side_bar.html" %}
+    <h4>&nbsp;</h4>
     {% include "alumni/left_nav.html" %}
 {% endblock %}
+{% block sidebar %}
+{% endblock %}
+{% block content_head %}
+<h1 id="page_title">Class Notes<span id="secondary-dropdown"></span></h1>
+{% endblock %}
 {% block content %}
-{% get_api_object as header cms snippet 702 code %}
-{{header}}
-<div id="sitetitle">Alumni Class Notes</div>
-<div class="buffer">
 {% spaceless %}
     <h1>Class Notes Archive &mdash; {% if year %}{{year}}'s{% endif %}{% if title %}{{title}}{% endif %}</h1>
     <p><a href="{% url 'classnotes_form' %}">Click here to submit your class note</a></p>
@@ -43,7 +45,9 @@
     <hr />
     {% for n in notes %}
         {% ifchanged %}
-            <h2 style="color:#880;"><a name="{{ n.classyear }}">{{ n.classyear }}</a></h2>
+            <h2 style="color:#880;">
+                <a name="{{ n.classyear }}">{{ n.classyear }}</a>
+            </h2>
         {% endifchanged %}
         {% if n.picture %}
         <div style="float:right;padding-left:7px;padding-bottom:7px;">
@@ -51,7 +55,9 @@
             <img src="/assets/{{n.picture}}" width="100" />
         </a>
         {% if n.caption %}
-        <div style="margin-top:2px;font-size:.8em;color:#6e6e6e;width:100px;">{{n.caption}}</div>
+        <div style="margin-top:2px;font-size:.8em;color:#6e6e6e;width:100px;">
+            {{n.caption}}
+        </div>
         {% endif %}
         </div>
         {% endif %}
@@ -73,11 +79,16 @@
         {% endif %}
         </strong>
         &mdash;
-        {% if n.hometown %}{{n.hometown}},&nbsp;{% endif %}{{n.classnote}}&nbsp;<br /><em style="color:#6e6e6e;">Submitted: {{n.created_at|date:"F j, Y"}}</em>
+        {% if n.hometown %}{{n.hometown}},&nbsp;{% endif %}
+        {{n.classnote}}&nbsp;<br />
+        <em style="color:#6e6e6e;">
+            Submitted: {{n.created_at|date:"F j, Y"}}
+        </em>
         {% if manager %}
         &nbsp;
-        <a class="jqmodal" href="{{n.get_edit_url}}?width=800&height=600&jqmRefresh=true">
-            <img src="http://www.carthage.edu/assets/img/ico/silk/icons/pencil.png" alt="edit this note" />
+        <a class="jqmodal" title="edit this note"
+            href="{{n.get_edit_url}}?width=800&height=600&jqmRefresh=true">
+            <i class="fa fa-pencil"></i>
         </a>
         {% endif %}
         </p>
@@ -85,9 +96,6 @@
     {% endfor %}
 {% endspaceless %}
 </div>
-{% endblock %}
-{% block sidebar %}
-    {% include "alumni/classnotes/side_bar.html" %}
 {% endblock %}
 {% block modalform %}
     {% if user.is_staff %}

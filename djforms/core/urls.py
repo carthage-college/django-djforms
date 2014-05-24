@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     # home
     (r'^$', TemplateView.as_view(template_name="forms_home.html")),
     # academics
-    (r'^academics/', include('djforms.academics.urls')),
+    #(r'^academics/', include('djforms.academics.urls')),
     # auth
     url(r'^accounts/login',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),
     url(r'^accounts/logout/$',auth_views.logout,{'next_page': '/forms/accounts/loggedout/'}),

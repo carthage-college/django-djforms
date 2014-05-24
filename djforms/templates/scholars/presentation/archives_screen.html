@@ -6,7 +6,7 @@
     {% include "scholars/left_nav.html" %}
 {% endblock %}
 {% block extra_javascript %}
-<script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="//www.carthage.edu/static/vendor/jquery/plugins/tablesorter/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     $(function() {
         $("#presentation_list_table").tablesorter({widgets: ['zebra'],headers:{3:{sorter:false}}});
@@ -14,6 +14,7 @@
 </script>
 {% endblock %}
 {% block extra_style %}
+<link href="//www.carthage.edu/static/vendor/jquery/plugins/tablesorter/style.css" type="text/css" rel="stylesheet" />
 <style>
 table.tablesorter { width: 100%; }
 td, th {padding:5px;vertical-align:top;}

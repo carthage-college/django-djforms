@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Maintenance Request Form{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
     {% include "maintenance/left_nav.html" %}
 {% endblock %}
+{% block content_head %}
+    <h1 id="page_title">Maintenance Request Form</h1>
+{% endblock %}
+{% block sidebar %}{% endblock %}
 {% block content %}
 <div class="buffer">
-    <h1>Maintenance Request Form</h1>
     <p>
         Complete the form below to submit a maintenance request to the EVS department.
         Please allow a minimum of 48 hours to address the situation.
@@ -14,7 +16,7 @@
     <p>
         For emergencies, please contact the Dean of Students Office at: <strong>551-5800</strong>
     </p>
-    <form method="POST" action="." class="form" id="profile">{% csrf_token %}
+    <form method="post" action="." class="form" id="profile">{% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}
@@ -52,7 +54,6 @@
                 <li><input type="hidden" name="profile-phone" value="{{request.user.get_profile.phone}}" /></li>
                 {% endif %}
                 <li class="btnHolder">
-                <label for="id_submit">&nbsp;&nbsp;</label>
                 <input type="submit" value="Submit Request" class="button" />
                 </li>
             </ol>
