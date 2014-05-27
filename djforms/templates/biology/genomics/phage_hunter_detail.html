@@ -1,5 +1,4 @@
-{% extends "base.html" %}
-{% block title %}Phage Hunters Application &mdash; Genomics &mdash; Biology &mdash; Carthage College{% endblock %}
+{% extends "biology/genomics/phage_hunter_form.html" %}
 {% block extra_javascript %}
 <script type="text/javascript">
 $(document).ready(function() {
@@ -11,11 +10,13 @@ $(document).ready(function() {
 });
 </script>
 {% endblock %}
-{% block left_nav %}
-    {% include "biology/left_nav.html" %}
+{% block content_head %}
+<h1 id="page_title">
+    Vital Stats
+    <span id="secondary-dropdown"></span>
+</h1>
 {% endblock %}
 {% block content %}
-<div class="buffer">
 <div id="print-link"><h2></h2></div>
 <pre style="font-size:1.5em;">
 First Name.................. {{applicant.first_name}}
@@ -55,6 +56,4 @@ SAT Critical Reading........ {{applicant.sat_read}}
 
 <h4>Lab work?</h4>
 <p>{{applicant.lab_work}}</p>
-
-</div>
 {% endblock %}

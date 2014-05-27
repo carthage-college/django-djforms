@@ -1,17 +1,24 @@
 {% extends "base.html" %}
 {% load honeypot %}
-{% block title %}Homecoming &mdash; Alumni &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block left_nav %}
-    {% include "alumni/homecoming_nav.html" %}
+{% block title %}
+    Homecoming &mdash; Alumni &mdash; Carthage College
 {% endblock %}
-{% block content %}
-<div class="buffer">
-    <h1>Yes! I'll be at Homecoming and the Reunion</h1>
-        {% render_honeypot_field %}
-    {% include "includes/generic_form.html" %}
-</div>
+{% block left_nav %}
+    <h4>Alumni</h4>
+    {% include "alumni/homecoming_nav.html" %}
 {% endblock %}
 {% block sidebar %}
     {% include "alumni/homecoming_side_bar.html" %}
+{% endblock %}
+{% block content_head %}
+<h1 id="page_title">
+    Yes! I'll be at Homecoming and the Reunion
+    <span id="secondary-dropdown"></span>
+</h1>
+{% endblock %}
+{% block content %}
+<div class="forms-container">
+    {% render_honeypot_field %}
+    {% include "includes/generic_form.html" %}
+</div>
 {% endblock %}

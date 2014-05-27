@@ -1,16 +1,17 @@
-{% extends "base.html" %}
-{% block title %}Event Request Form &mdash; Catering &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block left_nav %}
-    {% include "catering/left_nav.html" %}
+{% extends "catering/event_base.html" %}
+{% block title %}
+    Event Request Form &mdash; Catering &mdash; Carthage College
+{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Event Request Form: Success
+        <span id="secondary-dropdown"></span>
+    </h1>
 {% endblock %}
 {% block content %}
-<div class="buffer">
-<h1>Success</h1>
-<p>Thank you for submitting your event request. This request will not be
-confirmed until someone from Catering Services has contacted you.</p>
-</div>
-{% endblock %}
-{% block sidebar %}
-    {% include "catering/side_bar.html" %}
+    <p>
+        Thank you for submitting your event request.
+        This request will not be confirmed until someone
+        from Catering Services has contacted you.
+    </p>
 {% endblock %}

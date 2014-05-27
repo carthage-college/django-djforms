@@ -1,22 +1,40 @@
 {% extends "base.html" %}
-{% block title %}Nomination &mdash; Distinguished Alumni Awards &mdash; Alumni &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block extra_javascript %}
-<script src="http://www.carthage.edu/assets/js/xinha/init.js" type="text/javascript"></script>
-<script src="http://www.carthage.edu/assets/js/xinha/XinhaCore.js" type="text/javascript"></script>
-<script src="http://www.carthage.edu/assets/js/xinha/job-apps.js" type="text/javascript"></script>
+{% block title %}
+    Nomination &mdash; Distinguished Alumni Awards &mdash;
+    Alumni &mdash; Carthage College
 {% endblock %}
 {% block extra_style %}
-    <style type="text/css">
-    #second h4 {padding:20px;}
-    </style>
+    <link href="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea.css" rel="stylesheet" />
+{% endblock %}
+{% block extra_javascript %}
+    <script type="text/javascript" src="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea-0.8.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#id_nominee-description").htmlarea({
+                toolbar: [
+                    "html","bold", "italic", "underline", "superscript",
+                    "subscript", "|", "h1", "h2", "h3", "h4", "|", "indent",
+                    "outdent", "horizontalrule", "link", "unlink", "|",
+                    "orderedList", "unorderedList"
+                ]
+            });
+        });
+    </script>
 {% endblock %}
 {% block left_nav %}
+    <h4>Alumni</h4>
     {% include "alumni/left_nav.html" %}
 {% endblock %}
+{% block sidebar %}
+{% endblock %}
+{% block content_head %}
+<h1 id="page_title">
+    Distinguished Alumni Awards
+    <span id="secondary-dropdown"></span>
+</h1>
+{% endblock %}
 {% block content %}
-<div class="buffer">
-    <h1>Distinguished Alumni Awards</h1>
+<div class="forms-container">
     <h2>Nomination Form</h2>
     <p>We encourage and invite members of the Carthage community to nominate individuals for
     Distinguished Alumni Awards. Please do not inform candidates that they are being considered.
@@ -33,22 +51,22 @@
     mater, or society.</p>
     <p>Nominations remain confidential.</p>
     <h2>Award Criteria</h2>
-    <h5>Distinguished Alumni Achievement Award &#8212; Recognition of Career Achievement</h5>
+    <h4>Distinguished Alumni Achievement Award &#8212; Recognition of Career Achievement</h4>
     <p>Presented to individuals who have achieved and maintained extremely high stations in their
     chosen  profession. This criterion includes offering a service or product of meaningful value;
     significant professional publication or artistic achievement; or advancements in scientific
     research, discovery and exploration.</p>
-    <h5>Distinguished Alumni Service Award &#8212; Recognition of outstanding Volunteer Service</h5>
+    <h4>Distinguished Alumni Service Award &#8212; Recognition of outstanding Volunteer Service</h4>
     <p>Presented to individuals who have made valuable contributions to Carthage, their
     communities or church. This award recognizes alumni working on behalf of Carthage through alumni
     programs, advisory committees, or other efforts that advance the College. The award also will
     consider those whose church or community leadership or other volunteer service has benefited
     society significantly and reflected favorably on Carthage. </p>
-    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
+    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />are required.</p>
     {% if nominee_form.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}
-    <form method="POST" action="." class="form" id="profile">{% csrf_token %}
+    <form method="post" action="." class="form" id="profile">{% csrf_token %}
         <fieldset class="blockLabels">
             <label><h4>Nominee Information</h4></label>
             <ol>

@@ -1,13 +1,18 @@
-{% extends "base.html" %}
+{% extends "characterquest/application_form.html" %}
 {% block title %}Success{% endblock %}
-{% block left_nav %}
-    {% include "alumni/left_nav.html" %}
+{% block extra_javascript %}{% endblock %}
+{% block extra_style %}{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Character Quest Application Form: Data submitted!
+        <span id="secondary-dropdown"></span>
+    </h1>
 {% endblock %}
 {% block content %}
-<div id="second">
-    <div class="buffer">
-    <h2 class="page_title">Data submitted!</h2>
-    <p>The Dean of Students Office will review your application and follow up with your candidacy.  Should you have any questions, please feel free to contact the Dean of Students Office at (262) 551-5800.</p>
-    </div>
-</div>
+    <p>
+        The Dean of Students Office will review your application
+        and follow up with your candidacy.  Should you have any
+        questions, please feel free to contact the Dean of Students
+        Office at (262) 551-5800.
+    </p>
 {% endblock %}

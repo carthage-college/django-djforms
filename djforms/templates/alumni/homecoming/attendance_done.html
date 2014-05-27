@@ -1,20 +1,14 @@
-{% extends "base.html" %}
-{% load get_api %}
-{% block title %}Homecoming &mdash; Alumni &mdash; Carthage College{% endblock %}
-{% block left_nav %}
-    {% include "alumni/homecoming_nav.html" %}
+{% extends "alumni/homecoming/attendance_form.html" %}
+{% block content_head %}
+<h1 id="page_title">
+    Success
+    <span id="secondary-dropdown"></span>
+</h1>
 {% endblock %}
 {% block content %}
-{% get_api_object as header cms snippet 702 code %}
-{{header}}
-{% get_api_object as title cms snippet 606 code %}
-{{title}}
-<div class="buffer">
-<h1>Success</h1>
 <p>We have received your attendance confirmation for Homecoming.</p>
-<p><a href="/forms/alumni/homecoming/attendees/">Click here</a> to see others who have confirmed as well.</p>
-</div>
-{% endblock %}
-{% block sidebar %}
-    {% include "alumni/homecoming_side_bar.html" %}
+<p>
+    <a href="{% url 'homecoming_attendees' %}">Click here</a>
+    to see others who have confirmed as well.
+</p>
 {% endblock %}

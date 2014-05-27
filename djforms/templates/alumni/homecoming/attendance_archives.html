@@ -1,17 +1,12 @@
-{% extends "base.html" %}
-{% load get_api %}
-{% block title %}Homecoming Attendance &mdash; Alumni &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block left_nav %}
-    {% include "alumni/homecoming_nav.html" %}
+{% extends "alumni/homecoming/attendance_form.html" %}
+{% block content_head %}
+<h1 id="page_title">
+    Homecoming Reunion {{year}} Attendees
+    <span id="secondary-dropdown"></span>
+</h1>
 {% endblock %}
 {% block content %}
-{% get_api_object as header cms snippet 702 code %}
-{{header}}
-{% get_api_object as title cms snippet 606 code %}
-{{title}}
-<div class="buffer">
-    <h1>Homecoming Reunion {{year}} Attendees</h1>
+    {{title}}
     <table width="100%" border="0" cellspacing="3" cellpadding="3">
     <tr>
         <th>Name</th>
@@ -21,15 +16,16 @@
     </tr>
     {% for attendee in attendees %}
         <tr>
-            <td>{{attendee.first_name}} {{attendee.last_name}} {% if attendee.maiden_name %}(née {{attendee.maiden_name}}){% endif %}</td>
+            <td>
+                {{attendee.first_name}} {{attendee.last_name}}
+                {% if attendee.maiden_name %}
+                    (née {{attendee.maiden_name}})
+                {% endif %}
+            </td>
             <td>{{attendee.city}}</td>
             <td>{{attendee.state}}</td>
             <td>{{attendee.grad_class}}</td>
         </tr>
     {% endfor %}
     </table>
-</div>
-{% endblock %}
-{% block sidebar %}
-    {% include "alumni/homecoming_side_bar.html" %}
 {% endblock %}

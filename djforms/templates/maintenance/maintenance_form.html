@@ -3,20 +3,26 @@
 {% block left_nav %}
     {% include "maintenance/left_nav.html" %}
 {% endblock %}
-{% block content_head %}
-    <h1 id="page_title">Maintenance Request Form</h1>
-{% endblock %}
 {% block sidebar %}{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Maintenance Request Form
+        <span id="secondary-dropdown"></span>
+    </h1>
+{% endblock %}
 {% block content %}
-<div class="buffer">
+<div class="forms-container">
     <p>
-        Complete the form below to submit a maintenance request to the EVS department.
-        Please allow a minimum of 48 hours to address the situation.
+        Complete the form below to submit a maintenance request to the
+        EVS department. Please allow a minimum of 48 hours to address
+        the situation.
     </p>
     <p>
-        For emergencies, please contact the Dean of Students Office at: <strong>551-5800</strong>
+        For emergencies, please contact the Dean of Students Office at:
+        <strong>551-5800</strong>
     </p>
-    <form method="post" action="." class="form" id="profile">{% csrf_token %}
+    <form method="post" action="." class="form" id="profile">
+        {% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}

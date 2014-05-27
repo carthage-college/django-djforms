@@ -1,16 +1,18 @@
-{% extends "base.html" %}
-{% block title %}Phage Hunters Application &mdash; Genomics &mdash; Biology &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block left_nav %}
-    {% include "biology/left_nav.html" %}
+{% extends "biology/genomics/phage_hunter_form.html" %}
+{% block content_head %}
+    <h1 id="page_title">
+        Success
+        <span id="secondary-dropdown"></span>
+    </h1>
 {% endblock %}
 {% block content %}
-<div class="buffer">
-<h1>Success</h1>
-<p>Thank you for your interest in the Phage Hunters course at Carthage. You will receive an email with the information you have provided to us.</p>
-<p>Students will be notified by July 15 regarding their placement in the course.</p>
-</div>
-{% endblock %}
-{% block sidebar %}
-    {% include "biology/side_bar.html" %}
+    <p>
+        Thank you for your interest in the Phage Hunters
+        course at Carthage. You will receive an email with
+        the information you have provided to us.
+    </p>
+    <p>
+        Students will be notified by July 15 regarding their
+        placement in the course.
+    </p>
 {% endblock %}

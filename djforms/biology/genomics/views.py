@@ -33,6 +33,6 @@ def phage_hunter_detail(request, pid):
 
 @staff_member_required
 def phage_hunter_archives(request):
-    applicants = PhageHunter.objects.all().order_by("-created_on")
+    applicants = PhageHunter.objects.all().order_by("-created_at")
     return render_to_response("biology/genomics/phage_hunter_archives.html", {"applicants": applicants,}, context_instance=RequestContext(request))
 

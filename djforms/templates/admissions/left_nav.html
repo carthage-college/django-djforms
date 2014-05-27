@@ -1,5 +1,3 @@
 {% load get_api %}
-<div id="first">
-    {% get_api_object as menu menutree menu 200 code %}
-    {{menu}}
-</div>
+{% get_api_object as menu menutree menu 200 code %}
+{{menu}}

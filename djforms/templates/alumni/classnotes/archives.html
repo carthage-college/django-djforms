@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Class Notes Archives &mdash; Alumni &mdash; Carthage College{% endblock %}
 {% block extra_style %}
-<link rel="stylesheet" href="{{media_url}}css/jquery/plugins/wowwindow.css" type="text/css" />
-<link rel="stylesheet" href="{{media_url}}css/jquery/plugins/jqModal.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="//www.carthage.edu/static/vendor/jquery/plugins/wowwindow/wowwindow.css" type="text/css" />
+<style>
+.jqmClose{ background:#FFDD00; border:1px solid #FFDD00; color:#000; clear:right; float:right; padding:0 5px; cursor:pointer; }
+.jqmClose:hover{ background:#FFF; }
+#jqmContent{ width:99%; height:99%; display: block; clear:both; margin:auto; margin-top:10px; background:#111; border:1px dotted #444; }
+</style>
 {% endblock %}
 {% block extra_javascript %}
-<script src="{{media_url}}js/jquery/plugins/jqModal.js" type="text/javascript" charset="utf-8"></script>
-<script src="{{media_url}}js/jquery/plugins/jquery.wowwindow.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="//www.carthage.edu/static/vendor/jquery/plugins/wowwindow/jquery.wowwindow.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     $(function() {
         $('a[rel=popupfoto]').wowwindow({
@@ -15,7 +18,12 @@
             width: 800,
             videoIframe: false
         });
-        {% include "javascript/jqmodal.html" %}
+        $('.jqmodal').wowwindow({
+            draggable: true,
+            height: 600,
+            width: 800,
+            videoIframe: false
+        });
     });
 </script>
 {% endblock %}
@@ -28,11 +36,14 @@
 {% block sidebar %}
 {% endblock %}
 {% block content_head %}
-<h1 id="page_title">Class Notes<span id="secondary-dropdown"></span></h1>
+<h1 id="page_title">
+Class Notes Archive &mdash;
+{% if year %}{{year}}'s{% endif %}{% if title %}{{title}}{% endif %}
+<span id="secondary-dropdown"></span>
+</h1>
 {% endblock %}
 {% block content %}
 {% spaceless %}
-    <h1>Class Notes Archive &mdash; {% if year %}{{year}}'s{% endif %}{% if title %}{{title}}{% endif %}</h1>
     <p><a href="{% url 'classnotes_form' %}">Click here to submit your class note</a></p>
     <p>
     {% for n in notes %}
@@ -95,7 +106,6 @@
         <div class="clear"></div>
     {% endfor %}
 {% endspaceless %}
-</div>
 {% endblock %}
 {% block modalform %}
     {% if user.is_staff %}

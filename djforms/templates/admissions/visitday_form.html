@@ -1,8 +1,11 @@
 {% extends "base.html" %}
-{% block title %}{{visit_day.title}} &mdash; Admissions &mdash; Carthage College{% endblock %}
+{% block title %}
+    {{visit_day.title}} &mdash; Admissions &mdash;
+    Carthage College
+{% endblock %}
 {% block extra_javascript %}
-<script src="http://www.carthage.edu/assets/js/jquery/plugins/validation/jquery.validationEngine-en.js" type="text/javascript"></script>
-<script src="http://www.carthage.edu/assets/js/jquery/plugins/validation/jquery.validationEngine.js" type="text/javascript"></script>
+<script src="//www.carthage.edu/assets/js/jquery/plugins/validation/jquery.validationEngine-en.js" type="text/javascript"></script>
+<script src="//www.carthage.edu/assets/js/jquery/plugins/validation/jquery.validationEngine.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(function() {
     $("#visit_day_form").validationEngine()
@@ -18,39 +21,76 @@ function ValidateTransfer(){
 </script>
 {% endblock %}
 {% block extra_style %}
-    <link href="http://www.carthage.edu/assets/css/jquery/plugins/validation/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/assets/css/jquery/plugins/validation/validationEngine.jquery.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
     #visit_day_form textarea {width:460px;height:150px;}
-    #visit_day_form h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:4px;width:94%;font-size:1.4em;}
+    #visit_day_form h2.fheader {
+        background-color:#CCCCCC;border:1px solid #888888;color:#880000;
+        padding:4px;width:94%;font-size:1.4em;
+    }
     #second ol {margin:0;}
     </style>
 {% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
+    <h4>Admissions</h4>
     {% include "admissions/left_nav.html" %}
 {% endblock %}
+{% block sidebar %}
+    {% include "admissions/side_bar.html" %}
+    {{block.super}}
+{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        {{visit_day.title}}
+        <span id="secondary-dropdown"></span>
+    </h1>
+{% endblock %}
 {% block content %}
-<div class="buffer">
-    <h1>{{visit_day.title}}</h1>
+<div class="forms-container large-8 medium-10 small-12">
     {{visit_day.description|safe}}
-    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
+    <p>
+        Fields marked with an asterisk
+        <img src="/static/forms/img/icons/red_asterisk.png"
+            alt="asterisk" style="margin-bottom:-3px;" />are required.
+    </p>
     {% if cc_form.errors or or_form.errors or ct_form.errors %}
-        <p class="error">There were errors with the data submitted, see below.</p>
+        <p class="error">
+            There were errors with the data submitted, see below.
+        </p>
     {% endif %}
-    <form method="POST" action="." class="form" id="visit_day_form">{% csrf_token %}
+    <form method="post" action="." class="form" id="visit_day_form">
+        {% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}
-                    {% if field.name == "date" %}<li class="ctrlHolder"><h2 class="fheader">Yes, I plan to attend on:</h2></li>{% endif %}
-                    {% if field.name == "first_name" %}<li class="ctrlHolder"><h2 class="fheader">Personal Information</h2></li>{% endif %}
-                    {% if field.name == "high_school" %}<li class="ctrlHolder"><h2 class="fheader">Educational Background and Plans</h2></li>{% endif %}
+                    {% if field.name == "date" %}
+                        <li class="ctrlHolder">
+                            <h2 class="fheader">Yes, I plan to attend on:</h2>
+                        </li>
+                    {% endif %}
+                    {% if field.name == "first_name" %}
+                        <li class="ctrlHolder">
+                            <h2 class="fheader">Personal Information</h2>
+                        </li>
+                    {% endif %}
+                    {% if field.name == "high_school" %}
+                        <li class="ctrlHolder">
+                            <h2 class="fheader">
+                                Educational Background and Plans
+                            </h2>
+                        </li>
+                    {% endif %}
                     {% include "form_field.inc.html" %}
                 {% endfor %}
             </ol>
         </fieldset>
         <fieldset class="blockLabels">
             <ol>
-                <li><strong>Note:</strong> If you are coming with a friend who is also considering Carthage, please sign them up separately.</li>
+                <li>
+                    <strong>Note:</strong>
+                    If you are coming with a friend who is also considering
+                    Carthage, please sign them up separately.
+                </li>
                 <li class="btnHolder">
                     <label for="id_submit">&nbsp;&nbsp;</label>
                     <input type="submit" value="Submit Request" class="button" />
@@ -59,11 +99,7 @@ function ValidateTransfer(){
         </fieldset>
     </form>
 </div>
-{% endblock %}
-{% block sidebar %}
-<div id="third">
-    <div class="buffer">
-        {{visit_day.about|safe}}
-    </div>
+<div class="forms-sidebar large-4 medium-6 small-12">
+    {{visit_day.about|safe}}
 </div>
 {% endblock %}

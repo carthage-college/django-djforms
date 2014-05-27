@@ -1,6 +1,8 @@
 {% extends "base.html" %}
-{% load get_api %}
-{% block title %}Night Report Form &mdash; Griffin Observatory &mdash; Carthage Institute of Astronomy &mdash; Carthage College{% endblock %}
+{% block title %}
+    Night Report Form &mdash; Griffin Observatory &mdash;
+    Carthage Institute of Astronomy &mdash; Carthage College
+{% endblock %}
 {% block extra_javascript %}
     <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
@@ -12,18 +14,21 @@
 {% block extra_style %}
     <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
 {% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block left_nav %}
+    <h4>Astronomy</h4>
     {% include "astronomy/left_nav.html" %}
-{% endblock %}
-{% block content %}
-{% get_api_object as header cms snippet 1239 code %}
-{{header}}
-<div class="buffer">
-    <h1>Griffin Observatory Night Report Form</h1>
-    {% include "includes/generic_form.html" %}
-</div>
 {% endblock %}
 {% block sidebar %}
     {% include "astronomy/side_bar.html" %}
+{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Griffin Observatory Night Report Form
+        <span id="secondary-dropdown"></span>
+    </h1>
+{% endblock %}
+{% block content %}
+<div class="forms-container">
+    {% include "includes/generic_form.html" %}
+</div>
 {% endblock %}

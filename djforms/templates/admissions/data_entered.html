@@ -1,22 +1,30 @@
-{% extends "base.html" %}
-{% block title %}Success{% endblock %}
-{% block left_nav %}
-    {% include "admissions/left_nav.html" %}
+{% extends "admissions/visitday_form.html" %}
+{% block title %}Visit Day Success &mdash; Admissions &mdash; Carthage College{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Data submitted
+        <span id="secondary-dropdown"></span>
+    </h1>
 {% endblock %}
+{% block extra_javascript %}{% endblock %}
+{% block extra_style %}{% endblock %}
 {% block content %}
-<div id="second">
-    <div class="buffer">
-    <h2 class="page_title">Data submitted!</h2>
     <p>
-    <p>Thank you for signing up to attend a Carthage visit day event. You will receive
-    an email with the information you just submitted, along with information about the
-    event and instructions for attending.</p>
-    <p>
-    If there is sufficient time before the event, we will send
-    you a confirmation letter with a Carthage visitor's guide.  <a href="http://www.carthage.edu/about/directions/">Directions</a> and
-    <a href="http://www.carthage.edu/admissions/visit/lodging.cfm">lodging information</a> are also available on our Web site.</p>
-    <p>We look forward to seeing you on campus!</p>
+        Thank you for signing up to attend a Carthage visit day event.
+        You will receive an email with the information you just submitted,
+        along with information about the event and instructions for
+        attending.
     </p>
-    </div>
-</div>
+    <p>
+        If there is sufficient time before the event, we will send
+        you a confirmation letter with a Carthage visitor's guide.
+        <a href="http://www.carthage.edu/about/directions/">Directions</a>
+        and
+        <a href="http://www.carthage.edu/admissions/visit/lodging.cfm">
+        lodging information</a>
+        are also available on our Web site.
+    </p>
+    <p>
+        We look forward to seeing you on campus!
+    </p>
 {% endblock %}

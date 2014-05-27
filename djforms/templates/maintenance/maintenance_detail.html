@@ -1,28 +1,40 @@
-{% extends "base.html" %}
+{% extends "maintenance/maintenance_form.html" %}
 {% block title %}Maintenance Request Detail{% endblock %}
-{% block left_nav %}
-    {% include "maintenance/left_nav.html" %}
-{% endblock %}
-{% block sidebar %}{% endblock %}
 {% block content_head %}
-    <h1 id="page_title">Maintenance Request Form</h1>
+    <h1 id="page_title">
+        Maintenance Request Detail
+        <span id="secondary-dropdown"></span>
+    </h1>
 {% endblock %}
 {% block content %}
-    <h1>Maintenance Request Detail</h1>
     {% if auth %}
-        <dl class="job-detail">
-            <dt class="job-header">Date created:</dt><dd class="job-data">{{ mr.date_created|date:"F j, Y" }}</dd>
-            <dt class="job-header">Status:</dt><dd class="job-data">{{ mr.status }}</dd>
-            <dt class="job-header">Date completed:</dt><dd class="job-data">{{ mr.date_completed|date:"F j, Y" }}</dd>
-            <dt class="job-header">Damage charge:</dt><dd class="job-data">{{ mr.damage_charge }}</dd>
-            <dt class="job-header">Building name:</dt><dd class="job-data">{{ mr.building.name }}</dd>
-            <dt class="job-header">Room number:</dt><dd class="job-data">{{ mr.room_number }}</dd>
-            <dt class="job-header">Type of request:</dt><dd class="job-data">{{ mr.type_of_request }}</dd>
-            <dt class="job-header">First name:</dt><dd class="job-data">{{ mr.user.first_name }}</dd>
-            <dt class="job-header">Last name:</dt><dd class="job-data">{{ mr.user.last_name }}</dd>
-            <dt class="job-header">Phone:</dt><dd class="job-data">{{ mr.user.get_profile.phone }}</dd>
-            <dt class="job-header">Email:</dt><dd class="job-data"><a href="mailto:{{ mr.user.email }}">{{ mr.user.email }}</a></dd>
-            <dt class="job-header">Description:</dt><dd class="clear"></dd>
+        <dl class="data-detail">
+            <dt>Date created:</dt>
+            <dd>{{ mr.date_created|date:"F j, Y" }}</dd>
+            <dt>Status:</dt>
+            <dd>{{ mr.status }}</dd>
+            <dt>Date completed:</dt>
+            <dd>{{ mr.date_completed|date:"F j, Y"|default:"&nbsp;" }}</dd>
+            <dt>Damage charge:</dt>
+            <dd>{{ mr.damage_charge }}</dd>
+            <dt>Building name:</dt>
+            <dd>{{ mr.building.name }}</dd>
+            <dt>Room number:</dt>
+            <dd>{{ mr.room_number }}</dd>
+            <dt>Type of request:</dt>
+            <dd>{{ mr.type_of_request }}</dd>
+            <dt>First name:</dt>
+            <dd>{{ mr.user.first_name }}</dd>
+            <dt>Last name:</dt>
+            <dd>{{ mr.user.last_name }}</dd>
+            <dt>Phone:</dt>
+            <dd>{{ mr.user.get_profile.phone }}</dd>
+            <dt>Email:</dt>
+            <dd>
+                <a href="mailto:{{ mr.user.email }}">{{ mr.user.email }}</a>
+            </dd>
+            <dt>Description:</dt>
+            <dd class="clear"></dd>
             <dd class="description">{{ mr.description }}</dd>
         </dl>
     {% else %}

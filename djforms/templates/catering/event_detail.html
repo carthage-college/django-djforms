@@ -10,9 +10,11 @@ $(function() {
 });
 </script>
 {% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block left_nav %}
-    {% include "catering/left_nav.html" %}
+{% block content_head %}
+    <h1 id="page_title">
+        Catering Event Request Detail
+        <span id="secondary-dropdown"></span>
+    </h1>
 {% endblock %}
 {% block content %}
 <div class="buffer">
@@ -20,4 +22,3 @@ $(function() {
     {% include "catering/event_email.html" %}
 </div>
 {% endblock %}
-{% block sidebar %}{% endblock %}

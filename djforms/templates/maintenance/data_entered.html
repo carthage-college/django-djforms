@@ -3,11 +3,15 @@
 {% block left_nav %}
     {% include "maintenance/left_nav.html" %}
 {% endblock %}
+{% block sidebar %}{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Data submitted
+        <span id="secondary-dropdown"></span>
+    </h1>
+{% endblock %}
 {% block content %}
-<div id="second">
-    <div class="buffer">
-    <h2 class="page_title">Data submitted!</h2>
-    <p class="description" style="color: green">Your maintenance request has been submited successfully!</p>
-    </div>
-</div>
+    <p class="description" style="color: green">
+        Your maintenance request has been submited successfully.
+    </p>
 {% endblock %}

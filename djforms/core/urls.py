@@ -62,8 +62,6 @@ urlpatterns = patterns('',
     (r'^scholars/', include('djforms.scholars.urls')),
     # sustainability
     (r'^sustainability/', include('djforms.sustainability.urls')),
-    # video
-    (r'^video/', include('djforms.video.urls')),
     # writing across curriculum
     (r'^writingcurriculum/', include('djforms.writingcurriculum.urls')),
 )

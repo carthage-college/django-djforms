@@ -1,17 +1,26 @@
 {% extends "catering/event_base.html" %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block left_nav %}
-    {% include "catering/left_nav.html" %}
+{% block content_head %}
+    <h1 id="page_title">
+        Catering Event Request Archives
+        <span id="secondary-dropdown"></span>
+    </h1>
 {% endblock %}
 {% block content %}
-<div class="buffer">
-    <h1>Catering Event Request Archives</h1>
     {% for event in events %}
-        <div style="float:right;"><h3><a href="{{event.get_absolute_url}}">View Event</a></h3></div>
+        <div style="float:right;">
+            <h3>
+                <a href="{{event.get_absolute_url}}">View Event</a>
+            </h3>
+        </div>
         <div style="padding-bottom:10px;margin-bottom:10px; border-bottom: 1px #000 solid;">
             <dl>
                 <dt>Contact name</dt>
-                <dd><a href="mailto:{{event.user.email}}">{{event.user.first_name}} {{event.user.last_name}}</a> &mdash; Extension: x{{event.extension}}</dd>
+                <dd>
+                    <a href="mailto:{{event.user.email}}">
+                        {{event.user.first_name}}
+                        {{event.user.last_name}}
+                    </a> &mdash; Phone: {{event.extension}}
+                </dd>
                 <dt>Event name</dt>
                 <dd>{{event.event_name}}</dd>
                 <dt>Date</dt>
@@ -19,6 +28,4 @@
             </dl>
         </div>
     {% endfor %}
-</div>
 {% endblock %}
-{% block sidebar %}{% endblock %}

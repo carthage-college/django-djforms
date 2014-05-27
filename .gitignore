@@ -1,10 +1,5 @@
-*.py[co]
-*.log
-*.pot
-
-#settings files
-wsgi.py
-settings.py
+# C extensions
+*.so
 
 # Packages
 *.egg
@@ -17,6 +12,8 @@ var
 sdist
 develop-eggs
 .installed.cfg
+lib
+lib64
 
 # Installer logs
 pip-log.txt
@@ -24,9 +21,20 @@ pip-log.txt
 # Unit test / coverage reports
 .coverage
 .tox
+nosetests.xml
 
-#Translations
+# Translations
 *.mo
 
-#Mr Developer
+# Mr Developer
 .mr.developer.cfg
+.project
+.pydevproject
+
+# misc
+*.py[cod]
+*.log
+*.pot
+*.swp
+settings.py
+wsgi.py

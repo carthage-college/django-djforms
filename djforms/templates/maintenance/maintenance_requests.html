@@ -1,32 +1,57 @@
-{% extends "djkorra/base.html" %}
+{% extends "maintenance/maintenance_form.html" %}
 {% block title %}My Maintenance Requests{% endblock %}
 {% block content_head %}
-    <h1 id="page_title">My Maintenance Requests</h1>
+    <h1 id="page_title">
+        My Maintenance Requests
+        <span id="secondary-dropdown"></span>
+    </h1>
 {% endblock %}
 {% block content %}
-<div class="buffer">
     {% if request.user.is_staff %}
     <p>
-        Click on the date created, building, or type to edit. Click on the "more"
-        link in the Description column to view the complete maintenance request.
-        Those requests with the <span style="background-color:goldenrod;">goldenrod background color</span> are new.
+        Click on the date created, building, or type to edit. Click on the
+        "more" link in the Description column to view the complete maintenance
+        request. Those requests with the
+        <span style="background-color:goldenrod;">
+            goldenrod background color
+        </span> are new.
     </p>
     {% endif %}
     <table width="780" class="display">
         <thead>
-            <th>Created</th><th>Building</th><th>Type</th><th>Description</th><th>Status</th>
+            <th>Created</th>
+            <th>Building</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Status</th>
         </thead>
         <tbody>
         {% for req in my_reqs %}
-            <tr class="{% cycle odd,even %}{% if user.is_staff %}{% ifequal req.status "New" %} new-request{% endifequal %}{% endif %}">
-                <td width="75"><a href="{{req.get_update_url}}">{{req.date_created|date:"m"}}/{{req.date_created|date:"d"}}/{{req.date_created|date:"Y"}}</a></td>
-                <td width="130"><a href="{{req.get_update_url}}">{{req.building}}</a><br />Room {{req.room_number}}</td>
-                <td width="150"><a href="{{req.get_update_url}}">{{req.type_of_request}}</a></td>
-                <td width="350">{{req.description|truncatewords:25}} <a href="{{req.get_absolute_url}}">more</a>&nbsp;&raquo;</td>
-                <td width="75">{{req.status}}</td>
+            <tr class="{% cycle odd,even %}
+                {% if user.is_staff %}
+                    {% ifequal req.status "New" %}
+                        new-request
+                    {% endifequal %}
+                {% endif %}" valign="top">
+                <td width="75" valign="top">
+                    <a href="{{req.get_update_url}}">
+                        {{req.date_created|date:"m"}}/{{req.date_created|date:"d"}}/{{req.date_created|date:"Y"}}
+                    </a>
+                </td>
+                <td width="130" valign="top">
+                    <a href="{{req.get_update_url}}">{{req.building}}</a><br />
+                    Room {{req.room_number}}
+                </td>
+                <td width="150" valign="top">
+                    <a href="{{req.get_update_url}}">{{req.type_of_request}}</a>
+                </td>
+                <td width="350" valign="top">
+                    {{req.description|truncatewords:25}}
+                    <a href="{{req.get_absolute_url}}">more</a>&nbsp;&raquo;
+                </td>
+                <td width="75" valign="top">{{req.status}}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-</div>
 {% endblock %}
