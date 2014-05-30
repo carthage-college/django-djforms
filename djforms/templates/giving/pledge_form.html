@@ -1,47 +1,9 @@
-{% extends "base.html" %}
-{% load get_api %}
-{% block title %}{{campaign.title|default:"Pledge Subscription"}} Form &mdash; Giving &mdash; Carthage College{% endblock %}
-{% block extra_javascript %}
-    <script src="https://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="https://www.carthage.edu/assets/js/jquery/plugins/jquery.bgiframe.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(function() {
-            $("#id_or-start_date").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "https://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
-            $('#id_or-total').blur(function() {
-                $(this).val($(this).val().replace(/,/g,''));
-                $(this).val($(this).val().replace(/\$/g,''));
-            });
-            // disable submit button after users clicks it
-            $('form#profile').submit(function(){
-                $(this).children('input[type=submit]').attr('disabled', 'disabled');
-            });
-        });
-    </script>
-{% endblock %}
-{% block extra_style %}
-    <link href="https://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://www.carthage.edu/static/satchmo/css/donations.css" type="text/css" />
-    <style type="text/css">
-    #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;padding:3px 0 3px 5px;width:99%;}
-    li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
-    #id_cc-security_code{width:35px;}
-    #id_or-start_date, #id_ct-postal_code, #id_or-total {width:100px;}
-    </style>
-{% endblock %}
-{% block columns %}<link href="https://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block left_nav %}
-    {% include "giving/left_nav.html" %}
-{% endblock %}
+{% extends "giving/donation_form.html" %}
 {% block content %}
-{% get_api_object as banner cms snippet 252 code %}
-{{banner}}
-{% get_api_object as header cms snippet 283 code %}
-{{header}}
-<div class="buffer">
-    <div id="security"><div style="margin-left:30px;">
-    <a href="https://www.securitymetrics.com/site_certificate.adp?s=72%2e47%2e217%2e18&amp;i=131614" target="_blank" ><img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif" alt="SecurityMetrics for PCI Compliance, QSA, IDS, Penetration Testing, Forensics, and Vulnerability Assessment" border="0"></a>
-    </div></div>
-    <h1>{{campaign.title|default:"Pledge Subscription"}}</h1>
+<div class="forms-container{% if campaign.about %}
+    large-8 medium-10 small-12"{% endif %}>
+    {% include "includes/security_metrics.html" %}
+    <br />
     <div class="content clear">
         {% if campaign.description %}
             {{campaign.description}}
@@ -56,23 +18,42 @@
                 </span></em>
             </h2>
             <p>
-                Embracing these objectives is made possible in part by the financial support of alumni and friends of the College.  Because of your generosity, we enjoy superb professors, modern facilities, and learning opportunities beyond the classroom. When we look in the mirror, and see what your support has helped us become, we are reminded of the importance of each gift, and of our responsibility to continue the tradition. Please join us in again supporting Carthage College.
+                Embracing these objectives is made possible in part by the
+                financial support of alumni and friends of the College.
+                Because of your generosity, we enjoy superb professors,
+                modern facilities, and learning opportunities beyond the
+                classroom. When we look in the mirror, and see what your
+                support has helped us become, we are reminded of the
+                importance of each gift, and of our responsibility to
+                continue the tradition. Please join us in again
+                supporting Carthage College.
             </p>
         {% endif %}
     </div>
-    <p style="font-weight:bold;color:#800;">
+    <p style="font-weight:bold;color:#800;clear:both;">
     Would you rather make a one-time gift?
     {% if not campaign.description %}
-        <a href="{% url 'giving_form_generic' 'donation' %}" style="color:#00f;">Use the donation form</a>.
+        <a href="{% url 'giving_form_generic' 'donation' %}">
+            Use the donation form
+        </a>.
     {% else %}
-        <a href="{% url 'giving_form_campaign' 'donation' campaign.slug %}" style="color:#00f;">Use the donation form</a>.
+        <a href="{% url 'giving_form_campaign' 'donation' campaign.slug %}">
+            Use the donation form
+        </a>.
     {% endif %}
     </p>
     {% if form_proc.errors or or_form.errors or ct_form.errors %}
-        <p class="error">There were errors with the data submitted, see below.</p>
+        <p class="error">
+            There were errors with the data submitted, see below.
+        </p>
     {% endif %}
-    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
-    <form method="post" action="." class="form" id="profile"{% block extra_form_tag %}{% endblock%}>{% csrf_token %}
+    <p>
+        Fields marked with an asterisk
+        <img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />
+        are required.
+    </p>
+    <form method="post" action="." class="form" id="profile">
+        {% csrf_token %}
         {% for hidden in or_form.hidden_fields %}
         {{ hidden }}
         {% endfor %}
@@ -101,7 +82,13 @@
                 {% endfor %}
                 <li>
                     <h4>Thrivent Choice</h4>
-                    <p>Thrivent members may allocate their Thrivent Choice dollars to Carthage. Please contact Thrivent or visit <a href="https://www.thrivent.com/thriventchoice/program/dollars_details/index.html" target="_blank">the website</a> for more information.</p>
+                    <p>
+                        Thrivent members may allocate their Thrivent Choice
+                        dollars to Carthage. Please contact Thrivent or visit
+                        <a href="https://www.thrivent.com/thriventchoice/program/dollars_details/index.html"
+                            target="_blank">the website</a>
+                        for more information.
+                    </p>
                 </li>
             </ol>
         </fieldset>
@@ -109,7 +96,12 @@
             <h2>Billing Information</h2>
             {% if form_proc.errors %}
                 <div style="padding-left:4px;">
-                <p class="error">The transaction was declined for the following reason:{% if status == "baddata" or status == "decline" %} <strong>{{status}}</strong>{% endif %}</p>
+                    <p class="error">
+                        The transaction was declined for the following reason:
+                        {% if status == "baddata" or status == "decline" %}
+                            <strong>{{status}}</strong>
+                        {% endif %}
+                    </p>
                 </div>
             {% endif %}
             <ol>
@@ -122,7 +114,9 @@
         </fieldset>
     </form>
 </div>
-{% endblock %}
-{% block sidebar %}
-    {% include "giving/side_bar.html" %}
+{% if campaign.about %}
+<div class="forms-sidebar large-4 medium-6 small-12">
+    {{campaign.about}}
+</div>
+{% endif %}
 {% endblock %}

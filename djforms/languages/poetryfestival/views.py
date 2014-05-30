@@ -3,6 +3,8 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.core.urlresolvers import reverse_lazy
+
 from djforms.languages.poetryfestival.forms import SignupForm
 
 def signup_form(request):
@@ -20,9 +22,18 @@ def signup_form(request):
                     'Time slot preference: \n\n' + cd['time_slot'] + '\n\n' +\
                     'Questions or Comments:  \n\n' + cd['comments'] + '\n'
 
-            email = EmailMessage("Poetry Festival Signup Form: %s %s" % (cd['first_name'],cd['last_name']), body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
+            email = EmailMessage(
+                "Poetry Festival Signup Form: %s %s" % (cd['first_name'],cd['last_name']),
+                body, cd['email'], to, bcc,
+                headers = {'Reply-To': cd['email'],'From': cd['email']}
+            )
             email.send(fail_silently=True)
-            return HttpResponseRedirect('http://www.carthage.edu/forms/languages/poetry-festival/success/')
+            return HttpResponseRedirect(
+                reverse_lazy("poetry_festival_success")
+            )
     else:
         form = SignupForm()
-    return render_to_response('languages/poetryfestival/signup_form.html', {'form': form}, context_instance=RequestContext(request))
+    return render_to_response(
+        'languages/poetryfestival/form.html',
+        {'form': form}, context_instance=RequestContext(request)
+    )

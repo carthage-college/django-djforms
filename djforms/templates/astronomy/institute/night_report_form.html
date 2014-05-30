@@ -4,15 +4,23 @@
     Carthage Institute of Astronomy &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
-    <script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
+        type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
         $(function() {
-            $("#id_date").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "http://www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+            $("#id_date").datepicker({
+                firstDay:0,appendText:"(format yyyy-mm-dd)",
+                changeFirstDay:false,dateFormat:"yy-mm-dd",
+                showOn:"both",
+                buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
+                buttonImageOnly:true
+            });
         });
     </script>
 {% endblock %}
 {% block extra_style %}
-    <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
+        rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block left_nav %}
     <h4>Astronomy</h4>
@@ -23,7 +31,7 @@
 {% endblock %}
 {% block content_head %}
     <h1 id="page_title">
-        Griffin Observatory Night Report Form
+        Griffin Observatory Night Report
         <span id="secondary-dropdown"></span>
     </h1>
 {% endblock %}

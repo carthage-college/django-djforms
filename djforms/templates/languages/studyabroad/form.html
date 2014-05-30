@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Student Information Form for Study Abroad{% endblock %}
+{% block extra_style %}
+<style>
+.form textarea { width:600px; height:125px; }
+</style>
+{% endblock %}
+{% block left_nav %}
+    {% include "languages/studyabroad/left_nav.html" %}
+{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Student Information Form for Study Abroad
+        <span id="secondary-dropdown"></span>
+    </h1>
+{% endblock %}
+{% block content %}
+<div class="forms-container">
+    {% include "includes/generic_form.html" %}
+</div>
+{% endblock %}

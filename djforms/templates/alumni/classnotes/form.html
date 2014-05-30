@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% load honeypot %}
-{% block title %}Class Notes &mdash; Alumni &mdash; Carthage College{% endblock %}
+{% block title %}
+    Class Notes &mdash; Alumni &mdash; Carthage College
+{% endblock %}
 {% block extra_style %}
 <style type="text/css">
     #id_classyear, #id_spouseyear {width:150px;}
 </style>
 {% endblock %}
 {% block extra_javascript %}
-<script src="/static/forms/apps/InFieldLabels/jquery.infieldlabel.min.js" type="text/javascript"></script>
+<script src="/static/forms/apps/InFieldLabels/jquery.infieldlabel.min.js"
+    type="text/javascript"></script>
 <script type="text/javascript">
 $(function() {
     /* simulate html5 placeholder feature for broken-ass browsers */
@@ -40,19 +43,27 @@ $(function() {
 {% endblock %}
 {% block content %}
 <div class="forms-container">
-    <h1>Submit your Class Note</h1>
-    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
+    <h2>Submit your Class Note</h2>
+    <p>
+        Fields marked with an asterisk
+        <img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />
+        are required.
+    </p>
     {% if form.errors %}
-    <h2 style="color: red;">Please correct the error{{ form.errors|pluralize }} below.</h2>
+    <h2 style="color: red;">
+        Please correct the error{{ form.errors|pluralize }} below.
+    </h2>
     {% endif %}
-    <form method="post" action="." class="form" id="profile" enctype="multipart/form-data">{% csrf_token %}
+    <form method="post" action="." class="form"
+        id="profile" enctype="multipart/form-data">
+        {% csrf_token %}
         {% render_honeypot_field %}
         <fieldset class="blockLabels">
             <ul class="inline">
-                <li><h3 class="buffer-left">Contact Information</h3></li>
+                <li><h3>Contact Information</h3></li>
                 <li>
                     <label for="id_salutation" class="placeholder">Salutation</label><br />
-                    <input class="small" id="id_salutation" type="text" name="salutation" placeholder="Ms, Mr, Dr" maxlength="16" value="{{form.data.salutation}}" />
+                    <input class="medium" id="id_salutation" type="text" name="salutation" placeholder="Ms, Mr, Dr" maxlength="16" value="{{form.data.salutation}}" />
                 </li>
                 <li>
                     <label for="id_first_name" class="placeholder">First name</label><br />
@@ -74,7 +85,7 @@ $(function() {
                 </li>
                 <li>
                     <label for="id_suffix" class="placeholder">Suffix</label><br />
-                    <input class="small" id="id_suffix" type="text" name="suffix" placeholder="Ph.D, MD, Jr, Sr" maxlength="16" value="{{form.data.suffix}}" />
+                    <input class="medium" id="id_suffix" type="text" name="suffix" placeholder="Ph.D, MD, Jr, Sr" maxlength="16" value="{{form.data.suffix}}" />
                 </li>
             </ul>
             <ul class="inline">
@@ -102,9 +113,13 @@ $(function() {
             </ul>
             <ul class="inline">
                 <li>
-                    <label for="id_hometown" class="placeholder">Home Town</label><br />
+                    <label for="id_hometown" class="placeholder">
+                        Home Town
+                    </label><br />
                     <input class="xlarge required{% if form.hometown.errors %} error{% endif%}" id="id_hometown" type="text" name="hometown" placeholder="Hometown" maxlength="128" value="{{form.data.hometown}}" {% if not template_debug %}required {% endif %}/>
-                    <div class="help">City and state. Include country, if outside the US.</div>
+                    <div class="help">
+                        City and state. Include country, if outside the US.
+                    </div>
                 </li>
             </ul>
         </fieldset>
@@ -112,17 +127,31 @@ $(function() {
         <fieldset class="blockLabels">
             <ul>
                 <li>
-                    <h3><label for="id_classnote">Your message to the Carthage community</label></h3>
-                    {% if form.classnote.errors %}<div class="error" style="margin-right:13px;">Please provide a brief bit of text.</div>{% endif %}
-                    <textarea class="required" id="id_classnote" rows="10" cols="40" name="classnote">{{form.data.classnote}}</textarea>
+                    <h3>
+                        <label for="id_classnote">
+                            Your message to the Carthage community
+                        </label>
+                        </h3>
+                    {% if form.classnote.errors %}
+                        <div class="error" style="margin-right:13px;">
+                            Please provide a brief bit of text.
+                        </div>
+                    {% endif %}
+                    <textarea class="required" id="id_classnote" rows="10" cols="40" name="classnote">
+                        {{form.data.classnote}}
+                    </textarea>
                 </li>
                 <li>
                     <h3><label for="id_category">Category</label></h3>
-                    {% if form.category.errors %}<div class="error" style="margin-right:13px;">Please select a category.</div>{% endif %}
+                    {% if form.category.errors %}
+                        <div class="error" style="margin-right:13px;">
+                            Please select a category.
+                        </div>
+                    {% endif %}
                     {{form.category}}
                 </li>
                 <li>
-                    <label for="id_picture"><strong>Photo</strong></label>
+                    <h3><label for="id_picture">Photo</label></h3>
                     <input type="text" class="file" name="file_info" id="faux_picture" placeholder="Photo" />
                     <div class="file_upload">
                         <input type="file" name="picture" id="id_picture" placeholder="Photo" />
@@ -130,12 +159,22 @@ $(function() {
                     <div class="help clear">75 dpi and .jpg only</div>
                 </li>
                 <li>
-                    <label for="id_caption"><strong>Caption for your photo</strong></label>
+                    <h3>
+                        <label for="id_caption">Caption for your photo</label>
+                    </h3>
                     <input id="id_caption" type="text" name="caption" maxlength="255" />
                 </li>
                 <li>
-                    <label for="id_captcha_1" class="buffer-bottom"><strong>Input the text you see in the image on the left</strong></label>
-                    {% if form.captcha.errors %}<div class="error" style="margin-right:13px;">Wrong answer. Try again.</div>{% endif %}
+                    <h3>
+                        <label for="id_captcha_1">
+                        Input the text you see in the image on the left
+                        </label>
+                    </h3>
+                    {% if form.captcha.errors %}
+                        <div class="error" style="margin-right:13px;">
+                            Wrong answer. Try again.
+                        </div>
+                    {% endif %}
                     {{form.captcha}}
                 </li>
             </ul>

@@ -1,12 +1,11 @@
 from django.conf import settings
 from django.core.mail import EmailMessage
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.core.urlresolvers import reverse_lazy
 
 from djforms.languages.studyabroad.forms import StudyAbroadForm
-
-from datetime import date
 
 def study_abroad(request):
     if request.method == 'POST':
@@ -37,9 +36,17 @@ def study_abroad(request):
                     'Has Current Passport: ' + str(cd['passport']) + '\n' + \
                     'Expiration Date: ' + cd['passport_expiration'] + '\n' + \
                     'Housing Preferred: ' + cd['housing'] + '\n'
-            email = EmailMessage("Student Information for Study Abroad", body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
+            email = EmailMessage(
+                "Student Information for Study Abroad", body, cd['email'], to,
+                bcc, headers = {'Reply-To': cd['email'],'From': cd['email']}
+            )
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/languages/study-abroad/success')
+            return HttpResponseRedirect(
+                reverse_lazy("study_abroad_success")
+            )
     else:
         form = StudyAbroadForm()
-    return render_to_response('languages/studyabroad/studyabroad_form.html', {'form': form}, context_instance=RequestContext(request))
+    return render_to_response(
+        'languages/studyabroad/form.html',
+        {'form': form}, context_instance=RequestContext(request)
+    )

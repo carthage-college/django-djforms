@@ -1,3 +1,3 @@
-{% load get_api %}
-{% get_api_object as menu menutree menu 200 code %}
-{{menu}}
+{% load livewhale_api %}
+{% get_lw_content as nav blurbs 1501 %}
+{{nav.body}}

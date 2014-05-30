@@ -1,20 +1,31 @@
 from django.conf.urls.defaults import *
 from django.views.generic import TemplateView
 
-urlpatterns = patterns('',
+urlpatterns = patterns('djforms.languages',
     url(
-        r'^study-abroad/$', 'djforms.languages.studyabroad.views.study_abroad'
+        r'^study-abroad/$',
+        'studyabroad.views.study_abroad'
     ),
     url(
-        r'^study-abroad/success$',
-        TemplateView.as_view(template_name="languages/studyabroad/data_entered.html")
+        r'^study-abroad/success/$',
+        TemplateView.as_view(
+            template_name="languages/studyabroad/data_entered.html"
+        ),
+        name="study_abroad_success"
     ),
     url(
-        r'^tle/(?P<type>[\d\w]+)/$', 'djforms.languages.tle.views.application_form'
+        r'^tle/(?P<stype>[\d\w]+)/$',
+        'tle.views.application_form'
     ),
     url(
         r'^tle/success$',
-        TemplateView.as_view(template_name="languages/tle/data_entered.html")
+        TemplateView.as_view(
+            template_name="languages/tle/data_entered.html"
+        ),
+        name="tle_success"
     ),
-    url(r'^poetry-festival/', include('djforms.languages.poetryfestival.urls')),
+    url(
+        r'^poetry-festival/',
+        include('djforms.languages.poetryfestival.urls')
+    ),
 )

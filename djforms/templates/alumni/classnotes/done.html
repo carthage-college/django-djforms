@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Class Notes &mdash; Alumni &mdash; Carthage College{% endblock %}
+{% block extra_javascript %}{% endblock %}
+{% block extra_style %}{% endblock %}
 {% block left_nav %}
     <h4>Alumni</h4>
     {% include "alumni/classnotes/side_bar.html" %}
@@ -12,7 +14,7 @@
 <h1 id="page_title">Class Notes<span id="secondary-dropdown"></span></h1>
 {% endblock %}
 {% block content %}
-<h1>Success</h1>
+<h2>Success</h2>
 <p>We have received your class notes submission.</p>
 <p>
     <a href="{% url 'classnotes_archives' %}">Click here</a>

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.core.urlresolvers import reverse_lazy
 
 from djforms.admissions.admitted.forms import ChanceOfForm
 from djtools.utils.mail import send_mail
@@ -32,7 +33,9 @@ def chance_of_form(request):
                 request, TO_LIST, subject, data.email,
                 "admissions/admitted/email.html", data, BCC
             )
-            return HttpResponseRedirect('/forms/admissions/admitted/success/')
+            return HttpResponseRedirect(
+                reverse_lazy("study_abroad_success")
+            )
         else:
             prospect_status = request.POST.get("prospect_status")
     else:
