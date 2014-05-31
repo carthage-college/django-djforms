@@ -4,10 +4,11 @@
 {% endblock %}
 {% block extra_javascript %}
     <script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
-    <script src="http://www.carthage.edu/assets/js/jquery/plugins/jquery-dynamic-form/jquery-dynamic-form.js"
+        type="text/javascript" charset="utf-8"></script>
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/jquery-dynamic-form/jquery-dynamic-form.js"
         type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(function() {
             $("#id_dob").datepicker({
                 firstDay:0,appendText:"(format yyyy-mm-dd)",
                 changeFirstDay:false,dateFormat:"yy-mm-dd",
@@ -15,10 +16,12 @@
                 buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
                 buttonImageOnly:true
             });
+            {% if type == "masters" %}
             $("#universities").dynamicForm(
                 "#plus", "#minus", {
                 limit:5, createColor: 'yellow',removeColor: 'red'
             });
+            {% endif %}
         });
     </script>
 {% endblock %}
@@ -41,15 +44,11 @@
         {% if type == "application" %}
             Program Application
         {% else %}
-            &mdash; Master of Education or Advanced Certification Programs
+            Master of Education or Advanced Certification Programs
         {% endif %}
     </h2>
     {% include "includes/required_text.html" %}
-    {% if form.errors %}
-        <p class="error">
-            Please correct the error{{ form.errors|pluralize }} below.
-        </p>
-    {% endif %}
+    {% include "includes/errors_text.html" %}
     <form method="post" action="." class="form" id="tle_form">
         {% csrf_token %}
         <input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
@@ -136,10 +135,10 @@
                 <p>
                     <div>
                         <a id="minus" href="#">
-                            <img src="//www.carthage.edu/assets/img/ico/minus.gif" />
+                            <i class="fa fa-minus"></i>
                         </a>
                         <a id="plus" href="#">
-                            <img src="//www.carthage.edu/assets/img/ico/plus.gif" />
+                            <i class="fa fa-plus"></i>
                         </a>
                     </div>
                 </p>
@@ -156,11 +155,10 @@
                         above information is true and complete to the best of
                         your knowledge.
                     </p>
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Submit Request" class="button" />
                 </li>
-            </ol>
+                </ol>
         </fieldset>
+        {% include "form_submit.inc.html" %}
     </form>
 </div>
 {% endblock %}

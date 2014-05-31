@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -23,7 +24,6 @@ def equipment_reserve(request):
                 equip_list += i.__str__() + ', '
             equip_list = equip_list[:-2] + '"'
             to = ['av@carthage.edu', cd['email']]
-            #to = ['larry@carthage.edu']
             bcc = settings.MANAGERS
             body =  "email: " + cd['email'] + '\n' + \
                     "phone: " + cd['local_phone'] + '\n' + \
@@ -39,9 +39,19 @@ def equipment_reserve(request):
                     '\t' + \
                     cd['department'] + '\t' + \
                     cd['course_number']
-            email = EmailMessage("Equipment Reservation Request", body, cd['email'], to, bcc, headers = {'Reply-To': cd['email'],'From': cd['email']})
+            email = EmailMessage(
+                "Equipment Reservation Request",
+                body, cd['email'], to, bcc,
+                headers = {'Reply-To': cd['email'],'From': cd['email']}
+            )
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/lis/success')
+            return HttpResponseRedirect(
+                reverse('lis_success')
+            )
     else:
         form = EquipmentReserveForm()
-    return render_to_response('lis/equipmentform/equipment_form.html', {'form': form}, context_instance=RequestContext(request))
+    return render_to_response(
+        'lis/equipmentform/form.html',
+        {'form': form},
+        context_instance=RequestContext(request)
+    )

@@ -3,7 +3,8 @@
 <style type="text/css" media="screen, projection">
 /*DL, DT, DD TAGS LIST DATA*/
 dl { margin-bottom:20px; }
-dl dt { background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px; }
+dl dt { background:#5f9be3; color:#fff; float:left; font-weight:bold;
+margin-right:10px; padding:5px; width:200px; }
 dl dd { margin:2px 0; padding:5px 0; }
 </style>
 {% endblock %}
@@ -15,8 +16,9 @@ dl dd { margin:2px 0; padding:5px 0; }
 {% endblock %}
 {% block content %}
     {% for applicant in applicants %}
-    <div style="float:right;"><h2><a href="{{applicant.get_absolute_url}}">View Profile</a></h2></div>
-    <div style="padding-bottom:10px;margin-bottom:10px; border-bottom: 1px #000 solid;">
+    <div class="fright">
+        <h2><a href="{{applicant.get_absolute_url}}">View Profile</a></h2>
+    </div>
     <dl>
         <dt>Name</dt>
         <dd>{{applicant.first_name}} {{applicant.last_name}}</dd>
@@ -49,6 +51,5 @@ dl dd { margin:2px 0; padding:5px 0; }
         <dt>SAT Critical Reading</dt>
         <dd>{{applicant.sat_read|default:"&nbsp;"}}</dd>
     </dl>
-    </div>
     {% endfor %}
 {% endblock %}

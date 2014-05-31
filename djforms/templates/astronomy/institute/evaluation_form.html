@@ -10,7 +10,6 @@ li.ctrlHolder div ul li {display:inline;padding-right:3px;}
 </style>
 {% endblock %}
 {% block left_nav %}
-    <h4>Astronomy</h4>
     {% include "astronomy/left_nav.html" %}
 {% endblock %}
 {% block sidebar %}
@@ -24,17 +23,8 @@ li.ctrlHolder div ul li {display:inline;padding-right:3px;}
 {% endblock %}
 {% block content %}
 <div class="forms-container">
-    <p>
-        Fields marked with an asterisk
-        <img src="/static/forms/img/icons/red_asterisk.png"
-            alt="asterisk" style="margin-bottom:-3px;" />
-        are required.
-    </p>
-    {% if form.errors %}
-        <p class="error">
-            There were errors with the data submitted, see below.
-        </p>
-    {% endif %}
+    {% include "includes/required_text.html" %}
+    {% include "includes/errors_text.html" %}
     <form method="post" action="." class="form"
         id="profile"{% block extra_form_tag %}{% endblock%}>
     {% csrf_token %}
@@ -73,12 +63,9 @@ li.ctrlHolder div ul li {display:inline;padding-right:3px;}
                 </div>
                 </li>
             {% endfor %}
-            <li class="btnHolder">
-                <label for="id_submit">&nbsp;&nbsp;</label>
-                <input type="submit" value="Submit" class="button" />
-            </li>
         </ol>
     </fieldset>
+    {% include "form_submit.inc.html" %}
     </form>
 </div>
 {% endblock %}

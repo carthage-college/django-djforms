@@ -14,15 +14,15 @@ urlpatterns = patterns('djforms.languages',
         name="study_abroad_success"
     ),
     url(
-        r'^tle/(?P<stype>[\d\w]+)/$',
-        'tle.views.application_form'
-    ),
-    url(
-        r'^tle/success$',
+        r'^tle/success/$',
         TemplateView.as_view(
             template_name="languages/tle/data_entered.html"
         ),
         name="tle_success"
+    ),
+    url(
+        r'^tle/(?P<stype>[\d\w]+)/$',
+        'tle.views.application_form'
     ),
     url(
         r'^poetry-festival/',

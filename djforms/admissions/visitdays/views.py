@@ -1,11 +1,12 @@
 from django.conf import settings
-from django.http import HttpResponseRedirect
 from django.core.mail import EmailMessage
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 
 from djforms.admissions.visitdays.models import VisitDay, VisitDayEvent
-from djforms.admissions.visitdays.forms import VisitDayBaseForm, WeekdayForm, SaturdayForm, TransferForm, CaptureForm, BusinessForm
+from djforms.admissions.visitdays.forms import *
 
 def VisitDayForm(request, event_type):
     visit_day = get_object_or_404(VisitDay, slug=event_type)
@@ -24,30 +25,49 @@ def VisitDayForm(request, event_type):
             if event.cur_attendees == event.max_attendees:
                 event.active=False
                 # send admissions email to notify them that the event is full
-                email = EmailMessage(("[Event FULL] %s on %s" % (visit_day.title,profile.date)), "event is full.", "admissions@carthage.edu", ["admissions@carthage.edu"], bcc)
+                email = EmailMessage(
+                    ("[Event FULL] %s on %s" % (visit_day.title,profile.date)),
+                    "event is full.", "admissions@carthage.edu",u
+                    ["admissions@carthage.edu"], bcc
+                )
                 email.send(fail_silently=True)
             event.save()
             # send HTML email to attendee
             to = [profile.email]
             #to = ["larry@carthage.edu"]
-            t = loader.get_template('admissions/visitday_email.html')
-            c = RequestContext(request, {'data':profile,'visit_day':visit_day,'short':short})
-            email = EmailMessage(("%s on %s" % (visit_day.title,profile.date)), t.render(c), "admissions@carthage.edu", to, bcc)
+            t = loader.get_template('admissions/visitday/email.html')
+            c = RequestContext(
+                request, {'data':profile,'visit_day':visit_day,'short':short}
+            )
+            email = EmailMessage(
+                ("%s on %s" % (visit_day.title,profile.date)),
+                t.render(c), "admissions@carthage.edu", to, bcc
+            )
             email.content_subtype = "html"
             email.send(fail_silently=True)
             # send text mail to admissions folks
             to = ["admissions@carthage.edu"]
             #to = ["larry@carthage.edu"]
-            t = loader.get_template('admissions/visitday_email.txt')
+            t = loader.get_template('admissions/visitday/email.txt')
             c = RequestContext(request, {'data':profile,'visit_day':visit_day,'short':short})
-            email = EmailMessage(("%s on %s for %s, %s" % (visit_day.title,profile.date,profile.last_name,profile.first_name)), t.render(c), 'admissions@carthage.edu', to, bcc, headers = {'Reply-To': profile.email,})
+            email = EmailMessage(
+                ("%s on %s for %s, %s" % (visit_day.title,profile.date,profile.last_name,profile.first_name)),
+                t.render(c), 'admissions@carthage.edu', to, bcc,
+                headers = {'Reply-To': profile.email,}
+            )
             email.content_subtype = "html"
             email.send(fail_silently=True)
 
-            return HttpResponseRedirect('/admissions/success/')
+            return HttpResponseRedirect(
+                reverse_lazy("visitday_success")
+            )
     else:
         try:
             form = eval(event_type.capitalize()+"Form")(event_type)
         except:
             form = VisitDayBaseForm(event_type)
-    return render_to_response("admissions/visitday_form.html", {"form": form,"event_type":event_type,"visit_day":visit_day}, context_instance=RequestContext(request))
+    return render_to_response(
+        "admissions/visitday/form.html",
+        {"form": form,"event_type":event_type,"visit_day":visit_day},
+        context_instance=RequestContext(request)
+    )

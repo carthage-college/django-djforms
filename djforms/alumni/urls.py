@@ -6,15 +6,13 @@ urlpatterns = patterns('djforms.alumni',
         r'^success/$',
         TemplateView.as_view(template_name='alumni/data_entered.html')
     ),
-    # retired: now a livewhale form
-    #url(r'^memory/(?P<quid>\d+)/detail/$', 'memory.views.questionnaire_detail', name="memory_questionnaire_detail"),
-    #url(r'^memory/$', 'memory.views.questionnaire_form', name='memory_questionnaire_form'),
     # homecoming attendance
     url(
         r'^homecoming/success/$',
         TemplateView.as_view(
             template_name='alumni/homecoming/attendance_done.html'
-        )
+        ),
+        name="homecoming_attendance_success"
     ),
     url(
         r'^homecoming/attendees/(?P<year>\d+)/$',
@@ -61,21 +59,17 @@ urlpatterns = patterns('djforms.alumni',
         'classnotes.views.contact',
         name='classnotes_form'
     ),
-    # alumni directory
+    # alumni directory UI maquette
     #url(r'^directory/$', TemplateView.as_view(template_name='alumni/directory/home.html')),
-    # mws reunion: RETIRED
-    #url(r'^msw/reunion/success/$', TemplateView.as_view(template_name='alumni/msw/reunion_contact_done.html')),
-    #url(r'^msw/reunion/archives/$', 'msw.views.reunion_contact_archives', name="reunion_contact_archives"),
-    #url(r'^msw/reunion/(?P<cid>\d+)/detail/$', 'msw.views.reunion_contact_detail', name="reunion_contact_detail"),
-    #url(r'^msw/reunion/$', 'msw.views.reunion_contact_form', name='reunion_contact_form'),
     # distinguised alumni nomination
     url(
         r'^distinguished/nomination/success/$',
-        TemplateView.as_view(template_name='alumni/data_entered.html')
+        TemplateView.as_view(template_name='alumni/data_entered.html'),
+        name="distinguished_nomination_success"
     ),
     url(
         r'^distinguished/nomination/$',
         'distinguished.views.nomination_form',
-        name='nomination_form'
+        name='distinguished_nomination_form'
     )
 )

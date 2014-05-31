@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}LIS Equipment Reservations{% endblock %}
+{% block extra_javascript %}
+    <script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
+        type="text/javascript" charset="utf-8"></script>
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/ptTimeSelect/src/jquery.ptTimeSelect.js"
+        type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#id_date").datepicker({
+                firstDay:0,appendText:"(format yyyy-mm-dd)",
+                changeFirstDay:false,dateFormat:"yy-mm-dd",
+                showOn:"both",
+                buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
+                buttonImageOnly:true
+            });
+            $('#id_start_time').ptTimeSelect();
+            $('#id_end_time').ptTimeSelect();
+        });
+    </script>
+{% endblock %}
+{% block extra_style %}
+    <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
+        rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/static/vendor/jquery/plugins/ptTimeSelect/src/jquery.ptTimeSelect.css"
+        rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block left_nav %}
+    {% include "lis/left_nav.html" %}
+{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Equipment Reservations
+        <span id="secondary-dropdown"></span>
+    </h1>
+{% endblock %}
+{% block content %}
+<div class="forms-container">
+    {% include "includes/errors_text.html" %}
+    <form method="post" action="." class="form">
+        {% csrf_token %}
+        <input type="hidden" id="id_next" name="next" value="{{ redirect }}" />
+        <fieldset class="blockLabels">
+            <ol>
+                {% for field in form %}
+                    {% include "form_field.inc.html" %}
+                {% endfor %}
+                <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <p>
+                        Submission of a request does NOT GUARANTEE your
+                        reservation. You will receive a confirmation by
+                        email when your reservation has been entered. Requests
+                        submitted with less than two full working days'
+                        advance notice may not be honored.
+                    </p>
+                    <p>
+                        If this form is inadequate to meet your reservation
+                        needs, please contact Media Services directly at
+                        <a href="mailto:av@carthage.edu">av@carthage.edu</a>
+                        or (262)551-5950.
+                    </p>
+                    <p>
+                        * For use only by authorized CDM faculty and students.
+                    </p>
+                </li>
+            </ol>
+        </fieldset>
+        {% include "form_submit.inc.html" %}
+    </form>
+</div>
+{% endblock %}

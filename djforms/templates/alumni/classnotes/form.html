@@ -44,16 +44,8 @@ $(function() {
 {% block content %}
 <div class="forms-container">
     <h2>Submit your Class Note</h2>
-    <p>
-        Fields marked with an asterisk
-        <img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />
-        are required.
-    </p>
-    {% if form.errors %}
-    <h2 style="color: red;">
-        Please correct the error{{ form.errors|pluralize }} below.
-    </h2>
-    {% endif %}
+    {% include "includes/required_text.html" %}
+    {% include "includes/errors_text.html" %}
     <form method="post" action="." class="form"
         id="profile" enctype="multipart/form-data">
         {% csrf_token %}
@@ -179,14 +171,7 @@ $(function() {
                 </li>
             </ul>
         </fieldset>
-        <br />
-        <fieldset class="blockLabels">
-            <ul class="inline">
-                <li class="btnHolder">
-                    <input type="submit" value="Submit" class="button" />
-                </li>
-            </ul>
-        </fieldset>
+        {% include "form_submit.inc.html" %}
     </form>
 </div>
 {% endblock %}

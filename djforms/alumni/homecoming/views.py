@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext, loader
 
 from djforms.alumni.homecoming.forms import AttendeeForm
@@ -24,11 +25,19 @@ def attendance(request):
             if attendee.email:
                 email = attendee.email
             subject = "[Homecoming Attendee] %s %s" % (attendee.first_name,attendee.last_name)
-            send_mail(request, TO_LIST, subject, email, "alumni/homecoming/attendance_email.html", attendee, BCC)
-            return HttpResponseRedirect('/forms/alumni/homecoming/success/')
+            send_mail(
+                request, TO_LIST, subject, email,
+                "alumni/homecoming/attendance/email.html", attendee, BCC
+            )
+            return HttpResponseRedirect(
+                reverse_lazy("homecoming_attendance_success")
+            )
     else:
         form = AttendeeForm()
-    return render_to_response("alumni/homecoming/attendance_form.html", {"form": form,}, context_instance=RequestContext(request))
+    return render_to_response(
+        "alumni/homecoming/attendance/form.html",
+        {"form": form,}, context_instance=RequestContext(request)
+    )
 
 def attendees(request, year=None):
     if year:
@@ -36,4 +45,8 @@ def attendees(request, year=None):
     else:
         year = int(datetime.date.today().year)
     attendees = Attendee.objects.filter(created_at__year=year).order_by("-grad_class", "last_name")
-    return render_to_response("alumni/homecoming/attendance_archives.html", {"attendees": attendees,"year":year,}, context_instance=RequestContext(request))
+    return render_to_response(
+        "alumni/homecoming/attendance/archives.html",
+        {"attendees": attendees,"year":year,},
+        context_instance=RequestContext(request)
+    )

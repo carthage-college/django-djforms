@@ -1,15 +1,23 @@
 {% extends "base.html" %}
-{% block title %}Class Notes Archives &mdash; Alumni &mdash; Carthage College{% endblock %}
+{% block title %}
+    Class Notes Archives &mdash; Alumni &mdash; Carthage College
+{% endblock %}
 {% block extra_style %}
-<link rel="stylesheet" href="//www.carthage.edu/static/vendor/jquery/plugins/wowwindow/wowwindow.css" type="text/css" />
+<link rel="stylesheet" href="//www.carthage.edu/static/vendor/jquery/plugins/wowwindow/wowwindow.css"
+    type="text/css" />
 <style>
-.jqmClose{ background:#FFDD00; border:1px solid #FFDD00; color:#000; clear:right; float:right; padding:0 5px; cursor:pointer; }
+.jqmClose{
+    background:#FFDD00; border:1px solid #FFDD00; color:#000; clear:right;
+    float:right; padding:0 5px; cursor:pointer; }
 .jqmClose:hover{ background:#FFF; }
-#jqmContent{ width:99%; height:99%; display: block; clear:both; margin:auto; margin-top:10px; background:#111; border:1px dotted #444; }
+#jqmContent{
+    width:99%; height:99%; display: block; clear:both; margin:auto;
+    margin-top:10px; background:#111; border:1px dotted #444; }
 </style>
 {% endblock %}
 {% block extra_javascript %}
-<script src="//www.carthage.edu/static/vendor/jquery/plugins/wowwindow/jquery.wowwindow.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="//www.carthage.edu/static/vendor/jquery/plugins/wowwindow/jquery.wowwindow.min.js"
+    type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     $(function() {
         $('a[rel=popupfoto]').wowwindow({
@@ -44,7 +52,11 @@ Class Notes Archive &mdash;
 {% endblock %}
 {% block content %}
 {% spaceless %}
-    <p><a href="{% url 'classnotes_form' %}">Click here to submit your class note</a></p>
+    <p>
+        <a href="{% url 'classnotes_form' %}">
+            Click here to submit your class note
+        </a>
+    </p>
     <p>
     {% for n in notes %}
         {% ifchanged n.classyear %}
@@ -97,8 +109,7 @@ Class Notes Archive &mdash;
         </em>
         {% if manager %}
         &nbsp;
-        <a class="jqmodal" title="edit this note"
-            href="{{n.get_edit_url}}?width=800&height=600&jqmRefresh=true">
+        <a class="jqmodal" title="edit this note" href="{{n.get_edit_url}}">
             <i class="fa fa-pencil"></i>
         </a>
         {% endif %}
@@ -107,8 +118,3 @@ Class Notes Archive &mdash;
     {% endfor %}
 {% endspaceless %}
 {% endblock %}
-{% block modalform %}
-    {% if user.is_staff %}
-        {% include "modal_form.html" %}
-    {% endif %}
-{%endblock%}

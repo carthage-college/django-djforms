@@ -34,7 +34,7 @@ def chance_of_form(request):
                 "admissions/admitted/email.html", data, BCC
             )
             return HttpResponseRedirect(
-                reverse_lazy("study_abroad_success")
+                reverse_lazy("admitted_success")
             )
         else:
             prospect_status = request.POST.get("prospect_status")
