@@ -24,7 +24,9 @@ def attendance(request):
             email = settings.DEFAULT_FROM_EMAIL
             if attendee.email:
                 email = attendee.email
-            subject = "[Homecoming Attendee] %s %s" % (attendee.first_name,attendee.last_name)
+            subject = "[Homecoming Attendee] %s %s" % (
+                attendee.first_name,attendee.last_name
+            )
             send_mail(
                 request, TO_LIST, subject, email,
                 "alumni/homecoming/attendance/email.html", attendee, BCC

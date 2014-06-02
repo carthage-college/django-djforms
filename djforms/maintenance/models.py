@@ -14,18 +14,53 @@ STATUS_CHOICES = (
 
 class MaintenanceRequest(models.Model):
 
-    user                = models.ForeignKey(User, verbose_name="Created by", related_name="maintenance_request_user")
-    updated_by          = models.ForeignKey(User, verbose_name="Updated by", related_name="maintenance_request_updated_by", null=True, blank=True, editable=False)
-    date_created        = models.DateTimeField("Date Created", auto_now_add=True)
-    date_completed      = models.DateTimeField("Date Completed", null=True, blank=True, help_text="Format: yyyy-mm-dd")
-    type_of_request     = models.ForeignKey(GenericChoice, related_name="maintenance_request_type_of_request")
-    status              = models.CharField("Status of request", max_length=100, choices=STATUS_CHOICES)
-    building            = models.ForeignKey(GenericChoice, verbose_name="Building Name", help_text="Name of the building on campus", related_name="maintenance_request_building")
-    room_number         = models.CharField("Room Number or Location", max_length=50, help_text="If location, use: Lounge, restrooms, common area, lobby, hallway, foyer, etc. ")
-    floor               = models.CharField("Floor Number", max_length=2, help_text='Use "0" for "basement"' )
-    description         = models.TextField("Description", help_text="Please explain the nature of the problem.")
-    notes               = models.TextField("Notes", help_text="Staff can provide further information here.", null=True, blank=True)
-    damage_charge       = models.CharField("Damage Charge", max_length=16, null=True, blank=True)
+    user = models.ForeignKey(
+        User, verbose_name="Created by",
+        related_name="maintenance_request_user"
+    )
+    updated_by = models.ForeignKey(
+        User, verbose_name="Updated by",
+        related_name="maintenance_request_updated_by",
+        null=True, blank=True, editable=False
+    )
+    date_created = models.DateTimeField(
+        "Date Created", auto_now_add=True
+    )
+    date_completed = models.DateTimeField(
+        "Date Completed", null=True, blank=True,
+        help_text="Format: yyyy-mm-dd"
+    )
+    type_of_request = models.ForeignKey(
+        GenericChoice, related_name="maintenance_request_type_of_request"
+    )
+    status = models.CharField(
+        "Status of request", max_length=100, choices=STATUS_CHOICES
+    )
+    building = models.ForeignKey(
+        GenericChoice, verbose_name="Building Name",
+        help_text="Name of the building on campus",
+        related_name="maintenance_request_building"
+    )
+    room_number = models.CharField(
+        "Room Number or Location", max_length=50,
+        help_text="""
+            If location, use: Lounge, restrooms, common area, lobby,
+            hallway, foyer, etc.
+        """
+    )
+    floor = models.CharField(
+        "Floor Number", max_length=2, help_text='Use "0" for "basement"'
+    )
+    description = models.TextField(
+        "Description", help_text="Please explain the nature of the problem."
+    )
+    notes = models.TextField(
+        "Notes", help_text="Staff can provide further information here.",
+        null=True, blank=True
+    )
+    damage_charge = models.CharField(
+        "Damage Charge", max_length=16, null=True, blank=True
+    )
 
     class Meta:
         permissions = ( ("can_manage", "Manage"),("can_view","View"), )

@@ -95,7 +95,9 @@ def giving_form(request, transaction, campaign=None):
                 if settings.DEBUG:
                     or_data.contact = contact
                     data = {'order':or_data,'campaign':campaign,'years':years,}
-                    subject = "Thank you, %s %s, for your donation to Carthage" % (contact.first_name,contact.last_name)
+                    subject = "Thank you, %s %s, for your donation to Carthage" % (
+                        contact.first_name,contact.last_name
+                    )
                     send_mail(
                         request, TO_LIST, subject, email,
                         'giving/%s_email.html' % transaction, data, BCC
@@ -112,9 +114,14 @@ def giving_form(request, transaction, campaign=None):
         or_form = eval(or_form_name)(prefix="or", initial=initial)
         cc_form = CreditCardForm(prefix="cc")
 
-    return render_to_response('giving/%s_form.html' % transaction,
-                              {'ct_form': ct_form, 'or_form': or_form, 'form_proc': cc_form, 'status': status, 'campaign': campaign,},
-                              context_instance=RequestContext(request))
+    return render_to_response(
+        'giving/%s_form.html' % transaction,
+        {
+            'ct_form': ct_form, 'or_form': or_form, 'form_proc': cc_form,
+            'status': status, 'campaign': campaign,
+        },
+        context_instance=RequestContext(request)
+    )
 
 def giving_success(request, transaction, campaign=None):
     # giving campaigns

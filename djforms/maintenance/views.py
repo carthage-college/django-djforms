@@ -65,7 +65,20 @@ def maintenance_request_form(request):
 
             t = loader.get_template('maintenance/email.txt')
             c = Context({'data':maintenance_request,})
-            email = EmailMessage(("[Maintenance ID: %s] %s Floor %s Room %s: %s" % (str(maintenance_request.id), maintenance_request.building.name, maintenance_request.floor, maintenance_request.room_number, maintenance_request.type_of_request.name)), t.render(c), request.user.email, recipient_list, bcc, headers = {'Reply-To': request.user.email,'From': request.user.email})
+            email = EmailMessage(
+                ("[Maintenance ID: %s] %s Floor %s Room %s: %s" % (
+                        str(maintenance_request.id),
+                        maintenance_request.building.name,
+                        maintenance_request.floor,
+                        maintenance_request.room_number,
+                        maintenance_request.type_of_request.name
+                    )
+                ), t.render(c), request.user.email, recipient_list, bcc,
+                headers = {
+                    'Reply-To': request.user.email,
+                    'From': request.user.email
+                }
+            )
             email.send(fail_silently=True)
 
             return HttpResponseRedirect(reverse("maintenance_request_success"))

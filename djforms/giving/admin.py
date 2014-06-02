@@ -9,10 +9,10 @@ class OrderInline(admin.TabularInline):
 
 class DonationContactAdmin(admin.ModelAdmin):
     model = DonationContact
-    exclude       = ('country','second_name','previous_name','salutation')
+    exclude = ('country','second_name','previous_name','salutation')
     raw_id_fields = ('order',)
 
-    ordering      = ['last_name', 'city', 'state', 'postal_code']
+    ordering = ['last_name', 'city', 'state', 'postal_code']
     search_fields = ('last_name', 'phone', 'city', 'state', 'postal_code')
     #inlines = [OrderInline,]
 

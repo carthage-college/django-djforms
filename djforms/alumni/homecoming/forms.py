@@ -12,10 +12,18 @@ GUESTS.insert(0,("","---"))
 YEARS1.insert(0,("","---"))
 
 class AttendeeForm(forms.ModelForm):
-    email           = forms.EmailField(required=False)
-    state           = forms.CharField(widget=forms.Select(choices=STATE_CHOICES), required=False)
-    grad_class      = forms.CharField(max_length=4, widget=forms.Select(choices=YEARS1))
-    guests          = forms.CharField(widget=forms.Select(choices=GUESTS))
+    email = forms.EmailField(required=False)
+    state = forms.CharField(
+        widget=forms.Select(choices=STATE_CHOICES),
+        required=False
+    )
+    grad_class = forms.CharField(
+        max_length=4,
+        widget=forms.Select(choices=YEARS1)
+    )
+    guests = forms.CharField(
+        widget=forms.Select(choices=GUESTS)
+    )
 
     class Meta:
         model = Attendee
@@ -23,5 +31,7 @@ class AttendeeForm(forms.ModelForm):
 
     def __init__(self,*args,**kwargs):
         super(AttendeeForm,self).__init__(*args,**kwargs)
-        self.fields.keyOrder = ['first_name','last_name','maiden_name',
-                                'email','city','state','grad_class','guests']
+        self.fields.keyOrder = [
+            'first_name','last_name','maiden_name',
+            'email','city','state','grad_class','guests'
+        ]

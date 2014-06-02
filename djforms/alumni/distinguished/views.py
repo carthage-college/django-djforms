@@ -19,7 +19,6 @@ def nomination_form(request):
             nominator = nominator_form.cleaned_data
             bcc = settings.MANAGERS
             to = ["alumnioffice@carthage.edu"]
-            #to = ["larry@carthage.edu"]
             t = loader.get_template('alumni/distinguished/email.html')
             c = RequestContext(
                 request, {'nominee':nominee,'nominator':nominator,}

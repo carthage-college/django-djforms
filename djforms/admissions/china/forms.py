@@ -88,19 +88,57 @@ GRADUATE_DEGREES = (
 )
 
 class InterestForm(forms.Form):
-    last_name       = forms.CharField(label="Last name (姓)")
-    first_name      = forms.CharField(label="First name (名)")
-    dob             = forms.DateField(label="Birthday (出生日)",help_text="(MM/DD/YYYY) (月月／日日／年年年年)")
-    gender          = forms.TypedChoiceField(choices=GENDER_CHOICES,widget=forms.RadioSelect())
-    address         = forms.CharField(label='Home address (家庭地址)',max_length=255,widget=forms.TextInput())
-    city            = forms.CharField(label='City (城市)',max_length=128,widget=forms.TextInput())
-    postal_code     = forms.CharField(label='Postal code (邮政编码)', max_length='6')
-    country         = forms.CharField(label='Country (国家)',max_length=128)
-    email           = forms.EmailField(label='Email address (电子邮件信箱)')
-    phone           = forms.CharField(label='Telephone number (电话)',max_length=18)
-    mobile          = forms.CharField(label='Cell phone number (手机号码)',max_length=18,required=False)
-    level           = forms.TypedChoiceField(label="Entering level",choices=LEVEL_CHOICES,widget=forms.RadioSelect())
-    how_help        = forms.MultipleChoiceField(label="How may we help you? Check all that apply.",choices=HELP_CHOICES,widget=forms.CheckboxSelectMultiple())
-    undergrad       = forms.MultipleChoiceField(label="Undergraduate degree interest 本科学位课程. Check all that apply.",choices=UNDERGRADUATE_DEGREES,widget=forms.CheckboxSelectMultiple())
-    graduate        = forms.MultipleChoiceField(label="Graduate degrees 研究生学位课程. Check all that apply.",choices=GRADUATE_DEGREES,widget=forms.CheckboxSelectMultiple())
-
+    last_name = forms.CharField(
+        label="Last name (姓)"
+    )
+    first_name = forms.CharField(
+        label="First name (名)"
+    )
+    dob = forms.DateField(
+        label="Birthday (出生日)",
+        help_text="(MM/DD/YYYY) (月月／日日／年年年年)"
+    )
+    gender = forms.TypedChoiceField(
+        choices=GENDER_CHOICES,widget=forms.RadioSelect()
+    )
+    address = forms.CharField(
+        label='Home address (家庭地址)',
+        max_length=255,widget=forms.TextInput()
+    )
+    city = forms.CharField(
+        label='City (城市)',max_length=128,
+        widget=forms.TextInput()
+    )
+    postal_code = forms.CharField(
+        label='Postal code (邮政编码)', max_length='6'
+    )
+    country = forms.CharField(
+        label='Country (国家)',max_length=128
+    )
+    email = forms.EmailField(
+        label='Email address (电子邮件信箱)'
+    )
+    phone = forms.CharField(
+        label='Telephone number (电话)',max_length=18
+    )
+    mobile = forms.CharField(
+        label='Cell phone number (手机号码)',max_length=18,required=False
+    )
+    level = forms.TypedChoiceField(
+        label="Entering level",choices=LEVEL_CHOICES,
+        widget=forms.RadioSelect()
+    )
+    how_help = forms.MultipleChoiceField(
+        label="How may we help you? Check all that apply.",
+        choices=HELP_CHOICES,widget=forms.CheckboxSelectMultiple()
+    )
+    undergrad = forms.MultipleChoiceField(
+        label="Undergraduate degree interest 本科学位课程. Check all that apply.",
+        choices=UNDERGRADUATE_DEGREES,
+        widget=forms.CheckboxSelectMultiple()
+    )
+    graduate = forms.MultipleChoiceField(
+        label="Graduate degrees 研究生学位课程. Check all that apply.",
+        choices=GRADUATE_DEGREES,
+        widget=forms.CheckboxSelectMultiple()
+    )

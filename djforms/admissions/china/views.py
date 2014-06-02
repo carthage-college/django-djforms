@@ -20,7 +20,7 @@ def interest_form(request):
         form = InterestForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            subject = """[Admissions][China] Prospective Student (%s %s)""" % (
+            subject = "[Admissions][China] Prospective Student (%s %s)" % (
                 data['last_name'],data['first_name']
             )
             send_mail(

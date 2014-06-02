@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext, loader
 
 from djforms.alumni.classnotes.forms import ContactForm
@@ -33,7 +33,9 @@ def contact(request):
                 request,TO_LIST, subject, email,
                 "alumni/classnotes/email.html", contact, BCC
             )
-            return HttpResponseRedirect('/forms/alumni/classnotes/success/')
+            return HttpResponseRedirect(
+                reverse_lazy("classnotes_success")
+            )
     else:
         form = ContactForm()
     manager = request.user.has_perm('classnotes.change_contact')
