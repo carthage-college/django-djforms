@@ -27,8 +27,9 @@ def contact(request):
             email = settings.DEFAULT_FROM_EMAIL
             if contact.email:
                 email = contact.email
-            subject = "[Alumni Class Notes] %s %s" % \
-                (contact.first_name,contact.last_name)
+            subject = "[Alumni Class Notes] %s %s" % (
+                contact.first_name,contact.last_name
+            )
             send_mail(
                 request,TO_LIST, subject, email,
                 "alumni/classnotes/email.html", contact, BCC
@@ -58,9 +59,12 @@ def archives(request, year=None):
     notes = ns.filter(classyear__range=[year,year+9]).order_by("-classyear", "last_name")
     manager = request.user.has_perm('classnotes.change_contact')
 
-    return render_to_response("alumni/classnotes/archives.html", {
-        "notes": notes,"year":year,"manager":manager,
-    }, context_instance=RequestContext(request))
+    return render_to_response(
+        "alumni/classnotes/archives.html", {
+            "notes": notes,"year":year,"manager":manager,
+        },
+        context_instance=RequestContext(request)
+    )
 
 def screenscrape(request):
     ns = Contact.objects.exclude(carthaginianstatus=True)

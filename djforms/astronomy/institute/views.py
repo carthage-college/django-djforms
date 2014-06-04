@@ -18,8 +18,9 @@ def night_report(request):
         form = NightReportForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            subject = "[CIA Night Report] Submitted by: %s of %s" %
-                (data['name'],data['organization'])
+            subject = "[CIA Night Report] Submitted by: %s of %s" % (
+                data['name'],data['organization']
+            )
             send_mail(
                 request, TO_LIST, subject, data['email'],
                 "astronomy/institute/night_report_email.html", data, BCC
