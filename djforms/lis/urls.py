@@ -4,19 +4,15 @@ from django.views.generic import TemplateView
 urlpatterns = patterns('djforms.lis',
     # For room and equipment reserve environment
     url(
-        r'^secure/reference/articles',
-        TemplateView.as_view(
-            template_name='lis/secure/reference/articles.html'
-        )
-    ),
-    url(
         r'^equipment-reserve/$',
         'equipmentform.views.equipment_reserve'
     ),
+    # print requests
     url(
         r'^print-request/$',
         'printjobs.views.print_request'
     ),
+    # generic success view
     url(
         r'^success',
         TemplateView.as_view(template_name='lis/data_entered.html'),

@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
-from djforms.core.models import STATE_CHOICES, YEARS1, REQ
+from djtools.fields import STATE_CHOICES, YEARS1, REQ_CSS
 from djforms.alumni.classnotes.models import Contact
 
 from captcha.fields import CaptchaField
@@ -14,7 +14,7 @@ SPOUSEYEARS = list(YEARS1)
 
 CLASSYEARS.insert(0,("","Your class"))
 SPOUSEYEARS.insert(0,("","Spouse's class"))
-
+REQ=REQ_CSS
 CATEGORIES = (
     ('','-------------'),
     ('Marriage Announcement','Marriage Announcement'),
@@ -26,8 +26,7 @@ CATEGORIES = (
 class ContactForm(forms.ModelForm):
     classyear = forms.CharField(
         label="Class", max_length=4,
-        widget=forms.Select(choices=CLASSYEARS,
-        attrs=REQ),
+        widget=forms.Select(choices=CLASSYEARS, attrs=REQ),
         required=True
     )
     spouseyear = forms.CharField(
@@ -46,8 +45,7 @@ class ContactForm(forms.ModelForm):
     )
     category = forms.CharField(
         label="Category",
-        widget=forms.Select(choices=CATEGORIES,
-        attrs=REQ),
+        widget=forms.Select(choices=CATEGORIES, attrs=REQ),
         required=True
     )
     captcha = CaptchaField(required=True)

@@ -86,7 +86,7 @@ def maintenance_request_form(request):
         form = EVSForm(prefix="evs")
         profile_form = UserProfileForm(prefix="profile")
     return render_to_response(
-        "maintenance/maintenance_form.html",
+        "maintenance/form.html",
         {"form": form,"profile_form": profile_form},
         context_instance=RequestContext(request)
     )
@@ -138,7 +138,7 @@ def maintenance_requests(request):
     else:
         my_reqs = MaintenanceRequest.objects.filter(user__username=request.user.username).order_by("-date_created")
     return render_to_response(
-        "maintenance/maintenance_requests.html",
+        "maintenance/requests.html",
         {"my_reqs": my_reqs,}, context_instance=RequestContext(request)
     )
 
@@ -158,7 +158,7 @@ def maintenance_request_detail(request, req_id):
         if mr.user.id == request.user.id:
             auth = True
 
-    template_name = "maintenance/maintenance_detail.html"
+    template_name = "maintenance/detail.html"
     return render_to_response(template_name, {
         'mr': mr,
         'auth': auth,
@@ -184,6 +184,6 @@ def maintenance_request_update(request, req_id):
         form = EVSFormUpdate(instance=mr)
 
     return render_to_response(
-        "maintenance/maintenance_update_form.html",
+        "maintenance/update_form.html",
         {"form": form,'mr': mr,}, context_instance=RequestContext(request)
     )
