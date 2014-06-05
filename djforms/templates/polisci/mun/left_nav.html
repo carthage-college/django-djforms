@@ -1,5 +1,6 @@
-{% load get_api %}
-<div id="first">
-    {% get_api_object as menu menutree menu 90 code %}
-    {{menu}}
-</div>
+{% load livewhale_api %}
+<h4>Model United Nations</h4>
+{% get_lw_content as nav blurbs 1790 %}
+{{nav.body}}
+
+

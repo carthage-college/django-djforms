@@ -46,7 +46,9 @@
                 <h3>{{profile_form.phone.label_tag}}</h3>
                 {% if profile_form.phone.errors %}
                 <div class="warning">
-                <span class="error-message">{{ profile_form.phone.errors|join:", "}}</span>
+                <span class="error-message">
+                    {{ profile_form.phone.errors|join:", "}}
+                </span>
                 {% else %}
                 <div>
                 {% endif %}
@@ -57,7 +59,10 @@
                 </div>
                 </li>
                 {% else %}
-                <li><input type="hidden" name="profile-phone" value="{{request.user.get_profile.phone}}" /></li>
+                <li>
+                    <input type="hidden" name="profile-phone"
+                        value="{{request.user.get_profile.phone}}" />
+                </li>
                 {% endif %}
                 <li class="btnHolder">
                 <input type="submit" value="Submit Request" class="button" />

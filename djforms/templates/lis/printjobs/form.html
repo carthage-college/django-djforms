@@ -5,12 +5,15 @@
         type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
         $(function() {
-            $("#id_date").datepicker({
+            $("#id_date_needed").datepicker({
                 firstDay:0,appendText:"(format yyyy-mm-dd)",
                 changeFirstDay:false,dateFormat:"yy-mm-dd",
                 showOn:"both",
                 buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
                 buttonImageOnly:true
+            });
+            $('[id^=id_file]').change(function(){
+                $('#faux_' + $(this).attr("name")).val($(this).val());
             });
         });
     </script>
@@ -30,6 +33,29 @@
 {% endblock %}
 {% block content %}
 <div class="forms-container">
-    {% include "includes/generic_form_multi.html" %}
+    {% include "includes/required_text.html" %}
+    {% include "includes/errors_text.html" %}
+    <form method="post" action="." class="form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="blockLabels">
+            <ol>
+                {% for field in form.visible_fields %}
+                    {% if field.name == "file1" or field.name == "file2" or field.name == "file3" %}
+                    <li class="ctrlHolder">
+                    <h3>{{field.label}}</h3>
+                    <input type="text" class="file" name="file_info"
+                        id="faux_{{field.name}}" placeholder="Photo" />
+                    <div class="file_upload">
+                        {{field}}
+                    </div>
+                    </li>
+                    {% else %}
+                    {% include "form_field.inc.html" %}
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </fieldset>
+        {% include "form_submit.inc.html" %}
+    </form>
 </div>
 {% endblock %}

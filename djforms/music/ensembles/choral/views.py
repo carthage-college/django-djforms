@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
@@ -31,16 +32,16 @@ def candidate(request):
                 "[Choral Tryout Reservation] %s %s" %
                 (candidate.user.first_name,candidate.user.last_name),
                 "dshapovalov@carthage.edu",
-                "music/ensembles/choral/tryout_email.html",
+                "music/ensembles/choral/email.html",
                 candidate, settings.MANAGERS
             )
             return HttpResponseRedirect(
-                '/forms/music/ensembles/choral/tryout/success/'
+                reverse_lazy("choral_tryout_success")
             )
     else:
         form = CandidateForm()
     return render_to_response(
-        "music/ensembles/choral/tryout_form.html",
+        "music/ensembles/choral/form.html",
         {"form": form,}, context_instance=RequestContext(request)
     )
 
@@ -51,7 +52,9 @@ def manager(request):
         if form.is_valid():
             candidate = form.save(commit=False)
             try:
-                user = User.objects.get(username=form.cleaned_data["email"].split('@')[0])
+                user = User.objects.get(
+                    username=form.cleaned_data["email"].split('@')[0]
+                )
             except:
                 from random import choice
                 import string
@@ -81,7 +84,7 @@ def manager(request):
     else:
         form = ManagerForm()
     return render_to_response(
-        "music/ensembles/choral/manager_form.html",
+        "music/ensembles/choral/manager.html",
         {"form": form,}, context_instance=RequestContext(request)
     )
 

@@ -14,7 +14,7 @@ urlpatterns = patterns('djforms.lis',
     ),
     # generic success view
     url(
-        r'^success',
+        r'^success/',
         TemplateView.as_view(template_name='lis/data_entered.html'),
         name="lis_success"
     ),

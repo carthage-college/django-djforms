@@ -1,34 +1,4 @@
-<div id="first">
-  <ul id="nav" class="sf-vertical">
-    <li>
-      <a href="/campus-security/" title="Campus Security">Campus Security</a>
-    </li>
-    <li class="last-featured">
-      <a href="/campus-security/staff/" title="Security Staff">Security Staff</a>
-    </li>
-    <li>
-      <a href="/campus-security/blue-light-telephones/" title="Blue Light Telephones">Blue Light Telephones</a>
-    </li>
-    <li>
-      <a href="/campus-security/building-hours/" title="Building Hours">Building Hours</a>
-    </li>
-    <li>
-      <a href="/campus-security/shuttle/" title="Shuttle Service">Shuttle Service</a>
-    </li>
-    <li>
-      <a href="/campus-security/parking-policies/" title="Parking Policies">Parking Policies</a>
-    </li>
-    <li>
-      <a href="http://www.carthage.edu/forms/security/parking-appeal/" title="Parking Ticket Appeal Form" class="lw_external_url">Parking Ticket Appeal Form</a>
-    </li>
-    <li>
-      <a href="/campus-security/title-ii-report/" title="Title II Report">Title II Report</a>
-    </li>
-    <li>
-      <a href="/campus-security/links/" title="Links">Links</a>
-    </li>
-    <li>
-      <a href="/campus-security/snow-removal-policies/" title="Snow Removal Policies">Snow Removal Policies</a>
-    </li>
-  </ul>
-</div>
+{% load livewhale_api %}
+<h4>Campus Security</h4>
+{% get_lw_content as nav blurbs 1795 %}
+{{nav.body}}

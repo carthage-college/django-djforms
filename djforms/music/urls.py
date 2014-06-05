@@ -7,7 +7,10 @@ from djforms.music.ensembles.choral.forms import CandidateForm
 urlpatterns = patterns('djforms.music.ensembles.choral.views',
     url(
         r'^ensembles/choral/tryout/success/$',
-        TemplateView.as_view(template_name="music/ensembles/choral/tryout_done.html")
+        TemplateView.as_view(
+            template_name="music/ensembles/choral/done.html"
+        ),
+        name="choral_tryout_success"
     ),
     url(
         r'^ensembles/choral/tryout/manager/$', 'manager',

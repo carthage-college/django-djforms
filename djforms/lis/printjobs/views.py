@@ -1,12 +1,19 @@
 from django.conf import settings
-from django.http import HttpResponseRedirect
 from django.core.mail import EmailMessage
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext, loader
 from djforms.lis.printjobs.forms import PrintRequestForm
 from django.contrib.auth.decorators import login_required
 
 import datetime
+
+if settings.DEBUG:
+    TO_LIST = [settings.SERVER_EMAIL,]
+else:
+    TO_LIST = ["mrprintreqs@carthage.edu",cd['email']]
+BCC = settings.MANAGERS
 
 @login_required
 def print_request(request):
@@ -14,8 +21,6 @@ def print_request(request):
         form = PrintRequestForm(request.POST, request.FILES)
         if form.is_valid():
             cd = form.cleaned_data
-            bcc = settings.MANAGERS
-            to = ["mrprintreqs@carthage.edu",cd['email']]
             t = loader.get_template('lis/printjobs/email.html')
             c = RequestContext(
                 request, {
@@ -25,7 +30,7 @@ def print_request(request):
             email = EmailMessage(
                 "[LIS Print Request]: %s from the %s Department" % (
                     cd['name'],cd['department']
-                ), t.render(c), cd['email'], to, bcc,
+                ), t.render(c), cd['email'], TO_LIST, BCC,
                 headers = {'Reply-To': cd['email'],'From': cd['email']}
             )
             email.content_subtype = "html"
