@@ -32,10 +32,6 @@ function ValidateTransfer(){
 {% block left_nav %}
     {% include "admissions/left_nav.html" %}
 {% endblock %}
-{% block sidebar %}
-    {% include "admissions/side_bar.html" %}
-    {{block.super}}
-{% endblock %}
 {% block content_head %}
     <h1 id="page_title">
         {{visit_day.title}}
@@ -92,7 +88,7 @@ function ValidateTransfer(){
         </fieldset>
     </form>
 </div>
-<div class="forms-sidebar large-4 medium-6 small-12">
+<div class="column2 large-4 medium-6 small-12">
     {{visit_day.about|safe}}
 </div>
 {% endblock %}

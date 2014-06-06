@@ -45,17 +45,17 @@ def pledge_form(request):
             )
             send_mail(
                 request,TO_LIST,subject,user.email,
-                "sustainability/green/pledge_email.html", data, BCC
+                "sustainability/green/email.html", data, BCC
             )
             return HttpResponseRedirect(
-                reverse_lazy("pledge_form_success")
+                reverse_lazy("green_pledge_success")
             )
 
     else:
         form = PledgeForm(initial={'user':user})
 
     return render_to_response(
-        "sustainability/green/pledge_form.html",
+        "sustainability/green/form.html",
         {"form": form, "anon": anon, "pledge":pledge,},
         context_instance=RequestContext(request)
     )
@@ -63,7 +63,7 @@ def pledge_form(request):
 def pledge_archives(request):
     pledges = Pledge.objects.all().order_by("id")
     return render_to_response(
-        "sustainability/green/pledge_archives.html",
+        "sustainability/green/archives.html",
         {"pledges": pledges,},
         context_instance=RequestContext(request)
     )

@@ -115,7 +115,7 @@ def proposal_form(request, pid=None):
             proposal.save()
 
             bcc = settings.MANAGERS
-            t = loader.get_template('writingcurriculum/proposal_email.txt')
+            t = loader.get_template('writingcurriculum/email.html')
             c = RequestContext(request, {'data':proposal,'user':request.user,'criteria':criteria})
             email = EmailMessage(("[WAC Proposal] %s: by %s %s" % (proposal.course_title,request.user.first_name,request.user.last_name)), t.render(c), request.user.email, TO_LIST, BCC, headers = {'Reply-To': request.user.email,'From': request.user.email})
             email.content_subtype = "html"
@@ -129,7 +129,7 @@ def proposal_form(request, pid=None):
             copies = len(criteria)
         form = ProposalForm(prefix="wac", instance=proposal)
         profile_form = UserProfileForm(prefix="profile")
-    return render_to_response("writingcurriculum/proposal_form.html", {"form": form,"profile_form": profile_form, "criteria": criteria, "copies":copies}, context_instance=RequestContext(request))
+    return render_to_response("writingcurriculum/form.html", {"form": form,"profile_form": profile_form, "criteria": criteria, "copies":copies}, context_instance=RequestContext(request))
 
 @login_required
 def my_proposals(request):
