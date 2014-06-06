@@ -1,8 +1,8 @@
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.core.mail import EmailMessage
+from django.shortcuts import render_to_response
+from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponse, HttpResponseRedirect
 
 from djforms.security.forms import ParkingTicketAppealForm
 from djtools.utils.mail import send_mail
@@ -20,8 +20,17 @@ def parking_ticket_appeal_form(request):
             data = form.cleaned_data
             form.save()
             subject = "Parking Violation Appeal Request"
-            send_mail(request, TO_LIST, subject, data['email'], "security/parking_ticket_appeal_email.html", data, BCC)
-            return HttpResponseRedirect('/forms/security/success/')
+            send_mail(
+                request, TO_LIST, subject, data['email'],
+                "security/parking_ticket_appeal/email.html", data, BCC
+            )
+            return HttpResponseRedirect(
+                reverse_lazy("parking_ticket_appeal_success")
+            )
     else:
         form = ParkingTicketAppealForm()
-    return render_to_response('security/parking_ticket_appeal_form.html', {'form': form}, context_instance=RequestContext(request))
+    return render_to_response(
+        'security/parking_ticket_appeal/form.html',
+        {'form': form},
+        context_instance=RequestContext(request)
+    )

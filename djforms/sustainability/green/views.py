@@ -40,8 +40,9 @@ def pledge_form(request):
             data = form.save(commit=False)
             data.user = request.user
             data.save()
-            subject = "[Sustainability Pledge] %s %s" % \
-                 (user.first_name,user.last_name)
+            subject = "[Sustainability Pledge] %s %s" % (
+                user.first_name,user.last_name
+            )
             send_mail(
                 request,TO_LIST,subject,user.email,
                 "sustainability/green/pledge_email.html", data, BCC

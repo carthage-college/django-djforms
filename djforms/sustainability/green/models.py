@@ -4,7 +4,10 @@ from djforms.core.models import BINARY_CHOICES
 
 class Pledge(models.Model):
     # user data
-    user                = models.ForeignKey(User, verbose_name="Created by", related_name="pledge_user",editable=False)
+    user = models.ForeignKey(
+        User, verbose_name="Created by",
+        related_name="pledge_user",editable=False
+    )
 
     class Meta:
         ordering  = ('-id',)
@@ -13,7 +16,9 @@ class Pledge(models.Model):
         return u'%s %s' % (self.user.last_name, self.user.first_name)
 
     def get_absolute_url(self):
-        return "https://www.carthage.edu/directory/%s/modal/" % self.user.email.split('@')[0]
+        return "https://www.carthage.edu/directory/%s/modal/" % (
+            self.user.email.split('@')[0]
+        )
 
     def first_name(self):
         return self.user.first_name
