@@ -9,10 +9,6 @@ from django.contrib.auth.decorators import login_required
 
 import datetime
 
-if settings.DEBUG:
-    TO_LIST = [settings.SERVER_EMAIL,]
-else:
-    TO_LIST = ["mrprintreqs@carthage.edu",cd['email']]
 BCC = settings.MANAGERS
 
 @login_required
@@ -27,6 +23,8 @@ def print_request(request):
                     'data':cd,'date':datetime.date.today()
                 }
             )
+            #TO_LIST = [settings.SERVER_EMAIL,]
+            TO_LIST = ["mrprintreqs@carthage.edu",cd['email']]
             email = EmailMessage(
                 "[LIS Print Request]: %s from the %s Department" % (
                     cd['name'],cd['department']

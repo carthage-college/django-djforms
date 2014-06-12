@@ -13,7 +13,9 @@ if settings.DEBUG:
     TO_LIST = ["larry@carthage.edu",]
 else:
     TO_LIST = ["rob@carthage.edu",]
-BCC = settings.MANAGERS
+BCC = (
+    ('Confirmation', 'confirmation@carthage.edu'),
+)
 
 def chance_of_form(request):
     prospect_status = None

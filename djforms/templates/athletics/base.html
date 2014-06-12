@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "djdfir/base.html" %}
 {% block title %}Carthage Athletics{% endblock %}
 {% block metatags %}
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -11,7 +11,8 @@
 {% block css %}
     <!-- CSS -->
     <link id="ctl00_lnkStyleSheet" rel="stylesheet" type="text/css" href="https://www.carthage.edu/media/css/athletics/sidearm/site.ssl.css" />
-    {% include "includes/extra_form_style.html" %}
+    <link rel="stylesheet" href="//www.carthage.edu/assets/current/css/plugins/forms.css" type="text/css" />
+    <link rel="stylesheet" href="//www.carthage.edu/current/css/overrides/forms.css" type="text/css" />
     <style type="text/css">
         body{background-color:#000 !important;}
         h1 { display: inherit; left:0; margin: 0; padding: 0; position: inherit;font-size:1.6em;font-weight:normal;color:#000;}
@@ -54,15 +55,7 @@
     </div>
 </div>
 {% block urchin %}
-    <script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
-    try {
-    var pageTracker = _gat._getTracker("UA-23482792-1");
-    pageTracker._trackPageview();
-    } catch(err) {}</script>
+    {% include "urchin.html" %}
 {% endblock %}
 {% block finaljs %}{% endblock %}
 </body>

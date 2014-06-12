@@ -34,4 +34,7 @@ class PhageHunter(GenericContact):
         return u'%s %s' % (self.last_name, self.first_name)
 
     def get_absolute_url(self):
-        return "http://%s%s" % (settings.SERVER_URL, reverse("phage_hunter_detail", args=[self.pk]))
+        return "http://%s%s" % (
+            settings.SERVER_URL,
+            reverse("phage_hunters_detail", args=[self.pk])
+    )
