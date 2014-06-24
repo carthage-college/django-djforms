@@ -10,7 +10,7 @@ urlpatterns = patterns('djforms.alumni',
     url(
         r'^homecoming/success/$',
         TemplateView.as_view(
-            template_name='alumni/homecoming/attendance_done.html'
+            template_name='alumni/homecoming/attendance/done.html'
         ),
         name="homecoming_attendance_success"
     ),
