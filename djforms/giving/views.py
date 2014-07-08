@@ -9,19 +9,23 @@ from djforms.giving.forms import *
 from djforms.core.models import Promotion
 from djtools.utils.mail import send_mail
 
-if settings.DEBUG:
-    TO_LIST = [settings.SERVER_EMAIL,]
-else:
-    TO_LIST = [
-        "lpiela@carthage.edu","lhansen@carthage.edu",
-        "hkeller@carthage.edu","arobillard@carthage.edu"
-    ]
-BCC = settings.MANAGERS
+import logging
+logger = logging.getLogger(__name__)
 
 def giving_form(request, transaction, campaign=None):
     """
     multipurpose method to handle various types of donations
     """
+    # recipients
+    TO_LIST = []
+    if settings.DEBUG:
+        BCC = settings.MANAGERS
+    else:
+        BCC = [settings.SERVER_EMAIL,
+            "lpiela@carthage.edu","lhansen@carthage.edu",
+            "hkeller@carthage.edu","arobillard@carthage.edu"
+        ]
+
     trans_cap = transaction.capitalize()
     or_form_name = trans_cap + "OrderForm"
     try:
@@ -41,6 +45,7 @@ def giving_form(request, transaction, campaign=None):
         if ct_form.is_valid() and or_form.is_valid():
             contact = ct_form.save()
             email = contact.email
+            logger.debug("contact email = %s" % email)
             or_data = or_form.save(commit=False)
             or_data.status = "In Process"
             if campaign:
