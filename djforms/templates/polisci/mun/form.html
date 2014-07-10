@@ -6,6 +6,17 @@
     Political Science &mdash;
     Carthage College
 {% endblock %}
+{% block extra_style %}
+<style>
+.form select.small {
+    width: 130px;
+    margin-bottom:5px;
+}
+#id_proc-security_code, #id_proc-expiration_month,
+#id_proc-expiration_year, #id_cont-number_of_del,
+#id_cont-number_of_stu {width:70px;}
+</style>
+{% endblock %}
 {% block left_nav %}
     {% include "polisci/mun/left_nav.html" %}
 {% endblock %}
@@ -23,7 +34,7 @@
         {% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
-                {% for field in form %}
+                {% for field in form_cont %}
                     {% include "form_field.inc.html" %}
                     {% if field.name == "number_of_stu" %}
                     <li class="ctrlHolder buffer-top">
@@ -32,51 +43,51 @@
                         <div id="delegation1" class="fleft">
                         <h4 style="text-align:center;">Delegation 1</h4>
                         <ol>
-                        <li>{{c_form.d1c1}}</li>
-                        <li>{{c_form.d1c2}}</li>
-                        <li>{{c_form.d1c3}}</li>
-                        <li>{{c_form.d1c4}}</li>
-                        <li>{{c_form.d1c5}}</li>
+                        <li>{{form_pais.d1c1}}</li>
+                        <li>{{form_pais.d1c2}}</li>
+                        <li>{{form_pais.d1c3}}</li>
+                        <li>{{form_pais.d1c4}}</li>
+                        <li>{{form_pais.d1c5}}</li>
                         </ol>
                         </div>
                         <div id="delegation2" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 2</h4>
                         <ol>
-                        <li>{{c_form.d2c1}}</li>
-                        <li>{{c_form.d2c2}}</li>
-                        <li>{{c_form.d2c3}}</li>
-                        <li>{{c_form.d2c4}}</li>
-                        <li>{{c_form.d2c5}}</li>
+                        <li>{{form_pais.d2c1}}</li>
+                        <li>{{form_pais.d2c2}}</li>
+                        <li>{{form_pais.d2c3}}</li>
+                        <li>{{form_pais.d2c4}}</li>
+                        <li>{{form_pais.d2c5}}</li>
                         </ol>
                         </div>
                         <div id="delegation3" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 3</h4>
                         <ol>
-                        <li>{{c_form.d3c1}}</li>
-                        <li>{{c_form.d3c2}}</li>
-                        <li>{{c_form.d3c3}}</li>
-                        <li>{{c_form.d3c4}}</li>
-                        <li>{{c_form.d3c5}}</li>
+                        <li>{{form_pais.d3c1}}</li>
+                        <li>{{form_pais.d3c2}}</li>
+                        <li>{{form_pais.d3c3}}</li>
+                        <li>{{form_pais.d3c4}}</li>
+                        <li>{{form_pais.d3c5}}</li>
                         </ol>
                         </div>
                         <div id="delegation4" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 4</h4>
                         <ol>
-                        <li>{{c_form.d4c1}}</li>
-                        <li>{{c_form.d4c2}}</li>
-                        <li>{{c_form.d4c3}}</li>
-                        <li>{{c_form.d4c4}}</li>
-                        <li>{{c_form.d4c5}}</li>
+                        <li>{{form_pais.d4c1}}</li>
+                        <li>{{form_pais.d4c2}}</li>
+                        <li>{{form_pais.d4c3}}</li>
+                        <li>{{form_pais.d4c4}}</li>
+                        <li>{{form_pais.d4c5}}</li>
                         </ol>
                         </div>
                         <div id="delegation5" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 5</h4>
                         <ol>
-                        <li>{{c_form.d5c1}}</li>
-                        <li>{{c_form.d5c2}}</li>
-                        <li>{{c_form.d5c3}}</li>
-                        <li>{{c_form.d5c4}}</li>
-                        <li>{{c_form.d5c5}}</li>
+                        <li>{{form_pais.d5c1}}</li>
+                        <li>{{form_pais.d5c2}}</li>
+                        <li>{{form_pais.d5c3}}</li>
+                        <li>{{form_pais.d5c4}}</li>
+                        <li>{{form_pais.d5c5}}</li>
                         </ol>
                         </div>
                         <div class="cf">
@@ -94,6 +105,17 @@
                     {% get_lw_content as ga_fees blurbs 1789 %}
                     {{ga_fees.body}}
                 </li>
+            </ol>
+        </fieldset>
+        <h2>Billing Information</h2>
+        <fieldset class="blockLabels">
+            {% if form_proc.errors %}
+                <div style="padding-left:4px;">
+                <p class="error">The transaction failed. Error: <strong>{{status}}</strong></p>
+                </div>
+            {% endif %}
+            <ol>
+                {% include "form_field_credit_card.inc.html" %}
             </ol>
         </fieldset>
         {% include "form_submit.inc.html" %}

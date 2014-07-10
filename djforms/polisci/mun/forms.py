@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
-from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from django.contrib.localflavor.us.forms import USPhoneNumberField
+from django.contrib.localflavor.us.forms import USZipCodeField
+
+from djforms.polisci.mun.models import MunAttender
 from djforms.core.models import STATE_CHOICES
 
 DELEGATIONS = (
@@ -13,40 +15,28 @@ DELEGATIONS = (
     ('5', '5'),
 )
 
-class ModelUnitedNationsRegistrationForm(forms.Form):
+class MunAttenderForm(forms.ModelForm):
     """
     A form to collect registration data for the Model United Nations
     """
-    school_name = forms.CharField(
-        max_length=100, label="School name"
+    first_name = forms.CharField(
+        max_length=128, label="Faculty advisor first name"
     )
-    faculty_advisor = forms.CharField(
-        max_length=100, label="Faculty advisor"
+    last_name = forms.CharField(
+        max_length=128
     )
-    school_address1 = forms.CharField(
-        max_length=100, label="School address"
-    )
-    school_address2 = forms.CharField(
-        max_length=100, label="", required=False
-    )
-    city = forms.CharField(max_length=100)
     state = forms.CharField(
         widget=forms.Select(choices=STATE_CHOICES), required=True
     )
     postal_code = USZipCodeField(label="Zip Code")
-    office = forms.CharField(max_length=100)
-    work_phone = USPhoneNumberField(
+    phone = USPhoneNumberField(
         help_text="Format: XXX-XXX-XXXX"
     )
-    home_phone = USPhoneNumberField(
-        help_text="Format: XXX-XXX-XXXX", required=False
-    )
-    email = forms.EmailField()
+    #home_phone = USPhoneNumberField(
+    #    help_text="Format: XXX-XXX-XXXX", required=False
+    #)
     number_of_del = forms.TypedChoiceField(
         choices=DELEGATIONS, label="Number of delegations"
-    )
-    number_of_stu = forms.CharField(
-        max_length=3, label="Number of students"
     )
     comments = forms.CharField(
         label="Questions/Comments",
@@ -56,6 +46,12 @@ class ModelUnitedNationsRegistrationForm(forms.Form):
         """,
         widget=forms.Textarea, required=False
     )
+
+    class Meta:
+        model = MunAttender
+        exclude = (
+            'country','order','second_name','previous_name','salutation'
+        )
 
 COUNTRIES = (
 ("","-Select-"),
@@ -254,7 +250,7 @@ COUNTRIES = (
 ("Zimbabwe","Zimbabwe"),
 )
 
-class ModelUnitedNationsCountriesForm(forms.Form):
+class MunCountries(forms.Form):
     # delegation 1
     d1c1  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
     d1c2  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)

@@ -35,7 +35,10 @@ def camp_registration(request):
                     total = 200
             # credit card payment
             if contact.payment_method == "Credit Card":
-                order = Order(total=total,auth="sale",status="In Process",operator="DJSoccerCamp")
+                order = Order(
+                    total=total,auth="sale",status="In Process",
+                    operator="DJSoccerCamp"
+                )
                 form_proc = TrustCommerceForm(order, contact, request.POST)
                 if form_proc.is_valid():
                     r = form_proc.processor_response
@@ -47,8 +50,10 @@ def camp_registration(request):
                     contact.order.add(order)
                     order.reg = contact
                     send_mail(
-                        request, TO_LIST, "Soccer camp registration", contact.email,
-                        "athletics/soccer/camp_registration_email.html", order, BCC
+                        request, TO_LIST, "Soccer camp registration",
+                        contact.email,
+                        "athletics/soccer/camp_registration_email.html",
+                        order, BCC
                     )
                     return HttpResponseRedirect(reverse('soccer_camp_success'))
                 else:
@@ -65,17 +70,23 @@ def camp_registration(request):
                     status = order.status
                     order.reg = contact
                     send_mail(
-                        request, TO_LIST, "[%s] Soccer camp registration" % status,
-                        contact.email, "athletics/soccer/camp_registration_email.html",
+                        request, TO_LIST,
+                        "[%s] Soccer camp registration" % status,
+                        contact.email,
+                        "athletics/soccer/camp_registration_email.html",
                         order, BCC
                     )
             else:
-                order = Order(total=total,auth="COD",status="Pay later",operator="DJSoccerCamp")
+                order = Order(
+                    total=total,auth="COD",status="Pay later",
+                    operator="DJSoccerCamp"
+                )
                 order.save()
                 contact.order.add(order)
                 order.reg = contact
                 send_mail(
-                    request, TO_LIST, "Soccer camp registration", contact.email,
+                    request, TO_LIST, "Soccer camp registration",
+                    contact.email,
                     "athletics/soccer/camp_registration_email.html", order, BCC
                 )
                 return HttpResponseRedirect(reverse('soccer_camp_success'))
