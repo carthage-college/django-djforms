@@ -1,7 +1,7 @@
 from django.db import models
 from djforms.processors.models import Contact
 
-class MunAttender(Contact):
+class Attender(Contact):
     """
     Model United Nations attender contact
     """
@@ -26,3 +26,11 @@ class MunAttender(Contact):
         "Questions/Comments",
         null=True, blank=True
     )
+
+class Countries(models.Model):
+    name = models.CharField(
+        "Country name",
+        max_length=128
+    )
+    status = models.BooleanField(default=True)
+

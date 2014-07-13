@@ -4,10 +4,14 @@ from django.conf import settings
 from django.contrib.localflavor.us.forms import USPhoneNumberField
 from django.contrib.localflavor.us.forms import USZipCodeField
 
-from djforms.polisci.mun.models import MunAttender
-from djforms.core.models import STATE_CHOICES
+from djforms.polisci.mun.models import Attender
+from djforms.polisci.mun.models import Countries
+#from djforms.polisci.mun import COUNTRIES
+from djforms.core.models import STATE_CHOICES, PAYMENT_CHOICES
+from djforms.processors.models import Order
 
 DELEGATIONS = (
+    ('', '----'),
     ('1', '1'),
     ('2', '2'),
     ('3', '3'),
@@ -15,7 +19,9 @@ DELEGATIONS = (
     ('5', '5'),
 )
 
-class MunAttenderForm(forms.ModelForm):
+COUNTRIES = Countries.objects.filter(status=True).order_by("name")
+
+class AttenderForm(forms.ModelForm):
     """
     A form to collect registration data for the Model United Nations
     """
@@ -32,11 +38,28 @@ class MunAttenderForm(forms.ModelForm):
     phone = USPhoneNumberField(
         help_text="Format: XXX-XXX-XXXX"
     )
-    #home_phone = USPhoneNumberField(
-    #    help_text="Format: XXX-XXX-XXXX", required=False
-    #)
     number_of_del = forms.TypedChoiceField(
         choices=DELEGATIONS, label="Number of delegations"
+    )
+    delegation_1 = forms.ModelChoiceField(
+        queryset=COUNTRIES,
+        required=False
+    )
+    delegation_2 = forms.ModelChoiceField(
+        queryset=COUNTRIES,
+        required=False
+    )
+    delegation_3 = forms.ModelChoiceField(
+        queryset=COUNTRIES,
+        required=False
+    )
+    delegation_4 = forms.ModelChoiceField(
+        queryset=COUNTRIES,
+        required=False
+    )
+    delegation_5 = forms.ModelChoiceField(
+        queryset=COUNTRIES,
+        required=False
     )
     comments = forms.CharField(
         label="Questions/Comments",
@@ -48,10 +71,27 @@ class MunAttenderForm(forms.ModelForm):
     )
 
     class Meta:
-        model = MunAttender
+        model = Attender
         exclude = (
             'country','order','second_name','previous_name','salutation'
         )
+
+class OrderForm(forms.ModelForm):
+    """
+    Payment choices and total
+    """
+    payment_method = forms.TypedChoiceField(
+        choices=PAYMENT_CHOICES,
+        widget=forms.RadioSelect()
+    )
+    total = forms.CharField(
+        max_length=7,
+        label="Registration Fee"
+    )
+
+    class Meta:
+        model = Order
+        fields = ('total',)
 
 COUNTRIES = (
 ("","-Select-"),
@@ -249,36 +289,3 @@ COUNTRIES = (
 ("Zambia","Zambia"),
 ("Zimbabwe","Zimbabwe"),
 )
-
-class MunCountries(forms.Form):
-    # delegation 1
-    d1c1  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d1c2  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d1c3  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d1c4  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d1c5  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    # delegation 2
-    d2c1  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d2c2  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d2c3  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d2c4  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d2c5  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    # delegation 3
-    d3c1  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d3c2  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d3c3  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d3c4  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d3c5  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    # delegation 4
-    d4c1  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d4c2  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d4c3  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d4c4  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d4c5  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    # delegation 5
-    d5c1  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d5c2  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d5c3  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d5c4  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-    d5c5  = forms.CharField(widget=forms.Select(choices=COUNTRIES, attrs={'class':'small'}), required=False)
-

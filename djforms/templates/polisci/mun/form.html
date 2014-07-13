@@ -6,6 +6,33 @@
     Political Science &mdash;
     Carthage College
 {% endblock %}
+{% block extra_javascript %}
+    <script type="text/javascript">
+        $(function() {
+            function setTotal(del,stu) {
+                $('#id_ordr-total').val(parseInt((del*25)+(stu*7)));
+            }
+
+            $('#id_ordr-total').attr('readonly', true);
+            $('#id_cont-number_of_del').on('change', function(){
+                $this = $(this).val();
+                $stu = $('#id_cont-number_of_stu').val();
+                if ($stu < 1) {
+                    $stu = 1;
+                }
+                setTotal($this,$stu);
+            });
+            $('#id_cont-number_of_stu').on('change', function(){
+                $this = $(this).val();
+                $del = $('#id_cont-number_of_del').val();
+                if ($del < 1) {
+                    $del = 1;
+                }
+                setTotal($del,$this);
+            });
+        });
+    </script>
+{% endblock %}
 {% block extra_style %}
 <style>
 .form select.small {
@@ -14,7 +41,7 @@
 }
 #id_proc-security_code, #id_proc-expiration_month,
 #id_proc-expiration_year, #id_cont-number_of_del,
-#id_cont-number_of_stu {width:70px;}
+#id_cont-number_of_stu, #id_ordr-total {width:70px;}
 </style>
 {% endblock %}
 {% block left_nav %}
@@ -40,55 +67,25 @@
                     <li class="ctrlHolder buffer-top">
                         {% get_lw_content as ga_mem blurbs 1788 %}
                         {{ga_mem.body}}
-                        <div id="delegation1" class="fleft">
+                        <div id="delegation_1" class="fleft">
                         <h4 style="text-align:center;">Delegation 1</h4>
-                        <ol>
-                        <li>{{form_pais.d1c1}}</li>
-                        <li>{{form_pais.d1c2}}</li>
-                        <li>{{form_pais.d1c3}}</li>
-                        <li>{{form_pais.d1c4}}</li>
-                        <li>{{form_pais.d1c5}}</li>
-                        </ol>
+                        {{form_cont.delegation_1}}
                         </div>
-                        <div id="delegation2" class="fleft" style="margin-left:5px;">
+                        <div id="delegation_2" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 2</h4>
-                        <ol>
-                        <li>{{form_pais.d2c1}}</li>
-                        <li>{{form_pais.d2c2}}</li>
-                        <li>{{form_pais.d2c3}}</li>
-                        <li>{{form_pais.d2c4}}</li>
-                        <li>{{form_pais.d2c5}}</li>
-                        </ol>
+                        {{form_cont.delegation_2}}
                         </div>
-                        <div id="delegation3" class="fleft" style="margin-left:5px;">
+                        <div id="delegation_3" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 3</h4>
-                        <ol>
-                        <li>{{form_pais.d3c1}}</li>
-                        <li>{{form_pais.d3c2}}</li>
-                        <li>{{form_pais.d3c3}}</li>
-                        <li>{{form_pais.d3c4}}</li>
-                        <li>{{form_pais.d3c5}}</li>
-                        </ol>
+                        {{form_cont.delegation_3}}
                         </div>
-                        <div id="delegation4" class="fleft" style="margin-left:5px;">
+                        <div id="delegation_4" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 4</h4>
-                        <ol>
-                        <li>{{form_pais.d4c1}}</li>
-                        <li>{{form_pais.d4c2}}</li>
-                        <li>{{form_pais.d4c3}}</li>
-                        <li>{{form_pais.d4c4}}</li>
-                        <li>{{form_pais.d4c5}}</li>
-                        </ol>
+                        {{form_cont.delegation_4}}
                         </div>
-                        <div id="delegation5" class="fleft" style="margin-left:5px;">
+                        <div id="delegation_5" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 5</h4>
-                        <ol>
-                        <li>{{form_pais.d5c1}}</li>
-                        <li>{{form_pais.d5c2}}</li>
-                        <li>{{form_pais.d5c3}}</li>
-                        <li>{{form_pais.d5c4}}</li>
-                        <li>{{form_pais.d5c5}}</li>
-                        </ol>
+                        {{form_cont.delegation_5}}
                         </div>
                         <div class="cf">
                         {% get_lw_content as mun_note blurbs 1787 %}
@@ -115,6 +112,9 @@
                 </div>
             {% endif %}
             <ol>
+                {% for field in form_ordr %}
+                    {% include "form_field.inc.html" %}
+                {% endfor %}
                 {% include "form_field_credit_card.inc.html" %}
             </ol>
         </fieldset>
