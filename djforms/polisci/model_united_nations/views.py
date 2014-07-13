@@ -9,7 +9,7 @@ from djforms.processors.forms import TrustCommerceForm as CreditCardForm
 
 from djtools.utils.mail import send_mail
 
-def registration_form(request):
+def registration(request):
     if settings.DEBUG:
         TO_LIST = ["larry@carthage.edu",]
     else:
@@ -30,7 +30,7 @@ def registration_form(request):
                 "polisci/mun/email.html", data, BCC
             )
             return HttpResponseRedirect(
-                reverse_lazy("model_un_registration_success")
+                reverse_lazy("model_united_nations_success")
             )
         else:
             if request.POST.get('payment_method') == "Credit Card":

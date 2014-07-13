@@ -8,13 +8,13 @@ urlpatterns = patterns('djforms.polisci',
     url(
         r'^model-united-nations/success/$',
         TemplateView.as_view(
-            template_name="polisci/mun/done.html"
+            template_name="polisci/model_united_nations/done.html"
         ),
-        name="model_un_registration_success"
+        name="model_united_nations_success"
     ),
     url(
         r'^model-united-nations/registration/$',
-        'mun.views.registration_form',
-        name='mun_registration_form'
+        'model_united_nations.views.registration',
+        name='model_united_nations_registration'
     ),
 )
