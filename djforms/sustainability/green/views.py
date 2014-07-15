@@ -1,7 +1,6 @@
 from django import forms
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext, loader
@@ -12,16 +11,15 @@ from djforms.sustainability.green.models import Pledge
 
 from djtools.utils.mail import send_mail
 
-if settings.DEBUG:
-    TO_LIST = ["larry@carthage.edu",]
-else:
-    TO_LIST = ["csabar@carthage.edu","lhuaracha@carthage.edu",]
-BCC = settings.MANAGERS
-
 def pledge_form(request):
     '''
     simple form to submitting a pledge of fealty.
     '''
+    if settings.DEBUG:
+        TO_LIST = ["larry@carthage.edu",]
+    else:
+        TO_LIST = ["csabar@carthage.edu","lhuaracha@carthage.edu",]
+    BCC = settings.MANAGERS
 
     user = request.user
     anon = True

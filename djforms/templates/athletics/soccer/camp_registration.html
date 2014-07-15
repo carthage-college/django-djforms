@@ -93,9 +93,14 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
     <p>
     Credit Cards are only accepted through online registration,
     not at check-ins. If you have a balance coming or did not pay
-    in full at time of registration, cash or check are the only methods of payment.</p>
-    <p>After you complete the registration form, we will send confirmation via email.</p>
-    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
+    in full at time of registration, cash or check are the only methods
+    of payment.
+    </p>
+    <p>
+        After you complete the registration form, we will send confirmation
+        via email.
+    </p>
+    {% include "includes/required_text.html" %}
     {% if form_proc.errors or form_reg.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>
     {% endif %}

@@ -186,14 +186,7 @@
                 {% include "form_field_credit_card.inc.html" %}
             </ol>
         </fieldset>
-        <fieldset class="blockLabels">
-            <ol>
-                <li class="btnHolder">
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Submit" class="button" />
-                </li>
-            </ol>
-        </fieldset>
+        {% include "form_submit.inc.html" %}
     </form>
 </div>
 {% if campaign.about %}
