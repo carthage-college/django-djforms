@@ -9,31 +9,16 @@
 {% block extra_javascript %}
     <script type="text/javascript">
         $(function() {
-            function setTotal(del,stu) {
-                $('#id_ordr-total').val(parseInt((del*25)+(stu*7)));
-            }
-
-            $('#id_ordr-total').attr('readonly', true);
             $('#id_cont-number_of_del').on('change', function(){
                 $this = $(this).val();
                 $stu = $('#id_cont-number_of_stu').val();
                 if (!$stu) {
                     $stu = 3 * $this;
                 }
-                setTotal($this,$stu);
                 $('#id_cont-number_of_stu').val($stu);
-            });
-            $('#id_cont-number_of_stu').on('change', function(){
-                $this = $(this).val();
-                $del = $('#id_cont-number_of_del').val();
-                if ($del < 1) {
-                    $del = 1;
-                }
-                setTotal($del,$this);
             });
             $("select[id^='id_pais-delegation']").on('change', function(){
                 $this = $(this).find(":selected").text();
-                //  $10/student
                 if ($this.match(/\*$/)) {
                     alert($this);
                 }
@@ -47,9 +32,9 @@
     width: 130px;
     margin-bottom:5px;
 }
-#id_proc-security_code, #id_proc-expiration_month,
-#id_proc-expiration_year, #id_cont-number_of_del,
-#id_cont-number_of_stu, #id_ordr-total {width:70px;}
+.delegation {margin-left:5px;margin-bottom:10px;}
+#id_cont-number_of_del,
+#id_cont-number_of_stu {width:70px;}
 </style>
 {% endblock %}
 {% block left_nav %}
@@ -79,19 +64,19 @@
                         <h4 style="text-align:center;">Delegation 1</h4>
                         {{form_pais.delegation_1}}
                         </div>
-                        <div id="delegation_2" class="fleft delegation" style="margin-left:5px;">
+                        <div id="delegation_2" class="fleft delegation">
                         <h4 style="text-align:center;">Delegation 2</h4>
                         {{form_pais.delegation_2}}
                         </div>
-                        <div id="delegation_3" class="fleft delegation" style="margin-left:5px;">
+                        <div id="delegation_3" class="fleft delegation">
                         <h4 style="text-align:center;">Delegation 3</h4>
                         {{form_pais.delegation_3}}
                         </div>
-                        <div id="delegation_4" class="fleft delegation" style="margin-left:5px;">
+                        <div id="delegation_4" class="fleft delegation">
                         <h4 style="text-align:center;">Delegation 4</h4>
                         {{form_pais.delegation_4}}
                         </div>
-                        <div id="delegation_5" class="fleft delegation" style="margin-left:5px;">
+                        <div id="delegation_5" class="fleft delegation">
                         <h4 style="text-align:center;">Delegation 5</h4>
                         {{form_pais.delegation_5}}
                         </div>
@@ -110,20 +95,6 @@
                     {% get_lw_content as ga_fees blurbs 1789 %}
                     {{ga_fees.body}}
                 </li>
-            </ol>
-        </fieldset>
-        <h2>Billing Information</h2>
-        <fieldset class="blockLabels">
-            {% if form_proc.errors %}
-                <div style="padding-left:4px;">
-                <p class="error">The transaction failed. Error: <strong>{{status}}</strong></p>
-                </div>
-            {% endif %}
-            <ol>
-                {% for field in form_ordr %}
-                    {% include "form_field.inc.html" %}
-                {% endfor %}
-                {% include "form_field_credit_card.inc.html" %}
             </ol>
         </fieldset>
         {% include "form_submit.inc.html" %}
