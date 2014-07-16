@@ -34,8 +34,9 @@ class AttenderForm(forms.ModelForm):
         max_length=128,
         required=True
     )
-    address = forms.CharField(
+    address1 = forms.CharField(
         max_length=128,
+        label = "Address",
         required=True
     )
     state = forms.CharField(
