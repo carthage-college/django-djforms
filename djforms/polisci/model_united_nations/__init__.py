@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 COUNTRIES = (
-("","-Select-"),
 ("Afghanistan","Afghanistan"),
 ("Albania","Albania"),
 ("Algeria*","Algeria*"),

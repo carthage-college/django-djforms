@@ -17,10 +17,11 @@
             $('#id_cont-number_of_del').on('change', function(){
                 $this = $(this).val();
                 $stu = $('#id_cont-number_of_stu').val();
-                if ($stu < 1) {
-                    $stu = 1;
+                if (!$stu) {
+                    $stu = 3 * $this;
                 }
                 setTotal($this,$stu);
+                $('#id_cont-number_of_stu').val($stu);
             });
             $('#id_cont-number_of_stu').on('change', function(){
                 $this = $(this).val();
@@ -30,12 +31,19 @@
                 }
                 setTotal($del,$this);
             });
+            $("select[id^='id_pais-delegation']").on('change', function(){
+                $this = $(this).find(":selected").text();
+                //  $10/student
+                if ($this.match(/\*$/)) {
+                    alert($this);
+                }
+            });
         });
     </script>
 {% endblock %}
 {% block extra_style %}
 <style>
-.form select.small {
+.form .delegation select {
     width: 130px;
     margin-bottom:5px;
 }
@@ -45,7 +53,7 @@
 </style>
 {% endblock %}
 {% block left_nav %}
-    {% include "polisci/mun/left_nav.html" %}
+    {% include "polisci/model_united_nations/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
     <h1 id="page_title">
@@ -67,25 +75,25 @@
                     <li class="ctrlHolder buffer-top">
                         {% get_lw_content as ga_mem blurbs 1788 %}
                         {{ga_mem.body}}
-                        <div id="delegation_1" class="fleft">
+                        <div id="delegation_1" class="fleft delegation">
                         <h4 style="text-align:center;">Delegation 1</h4>
-                        {{form_cont.delegation_1}}
+                        {{form_pais.delegation_1}}
                         </div>
-                        <div id="delegation_2" class="fleft" style="margin-left:5px;">
+                        <div id="delegation_2" class="fleft delegation" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 2</h4>
-                        {{form_cont.delegation_2}}
+                        {{form_pais.delegation_2}}
                         </div>
-                        <div id="delegation_3" class="fleft" style="margin-left:5px;">
+                        <div id="delegation_3" class="fleft delegation" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 3</h4>
-                        {{form_cont.delegation_3}}
+                        {{form_pais.delegation_3}}
                         </div>
-                        <div id="delegation_4" class="fleft" style="margin-left:5px;">
+                        <div id="delegation_4" class="fleft delegation" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 4</h4>
-                        {{form_cont.delegation_4}}
+                        {{form_pais.delegation_4}}
                         </div>
-                        <div id="delegation_5" class="fleft" style="margin-left:5px;">
+                        <div id="delegation_5" class="fleft delegation" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 5</h4>
-                        {{form_cont.delegation_5}}
+                        {{form_pais.delegation_5}}
                         </div>
                         <div class="cf">
                         {% get_lw_content as mun_note blurbs 1787 %}
