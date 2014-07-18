@@ -23,7 +23,7 @@ class ChanceOfForm(forms.ModelForm):
         choices=GPA_SCALE,
         widget=forms.Select())
     information = forms.CharField(
-        label="Aditional Information",
+        label="Additional Information",
         help_text="i.e. extracurriculars, AP, etc.",
         widget=forms.Textarea,
         required=False
