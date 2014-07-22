@@ -17,12 +17,14 @@
                 }
                 $('#id_cont-number_of_stu').val($stu);
             });
+            /*
             $("select[id^='id_pais-delegation']").on('change', function(){
                 $this = $(this).find(":selected").text();
                 if ($this.match(/\*$/)) {
                     alert($this);
                 }
             });
+            */
         });
     </script>
 {% endblock %}
@@ -60,6 +62,12 @@
                     <li class="ctrlHolder buffer-top">
                         {% get_lw_content as ga_mem blurbs 1788 %}
                         {{ga_mem.body}}
+                        {% if form_pais.errors %}
+                            <p class="error">
+                                You have choosen the same country in more
+                                than one delegation.
+                            </p>
+                        {% endif %}
                         <div id="delegation_1" class="fleft delegation">
                         <h4 style="text-align:center;">Delegation 1</h4>
                         {{form_pais.delegation_1}}

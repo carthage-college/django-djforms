@@ -4,9 +4,8 @@ from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext, loader, Context
 from django.shortcuts import render_to_response, get_object_or_404
 
-from djforms.polisci.model_united_nations.forms import AttenderForm, OrderForm
+from djforms.polisci.model_united_nations.forms import AttenderForm
 from djforms.polisci.model_united_nations.forms import CountryForm
-from djforms.processors.forms import TrustCommerceForm as CreditCardForm
 
 from djtools.utils.mail import send_mail
 
@@ -14,19 +13,26 @@ def registration(request):
     if settings.DEBUG:
         TO_LIST = ["larry@carthage.edu",]
     else:
-        TO_LIST = ["kvega@carthage.edu",]
+        TO_LIST = ["vdillinger@carthage.edu",]
     BCC = settings.MANAGERS
     if request.method=='POST':
         form_cont = AttenderForm(request.POST, prefix="cont")
         form_pais = CountryForm(request.POST, prefix="pais")
         if form_cont.is_valid() and form_pais.is_valid():
-            obj = form.cleaned_data
-            data = {'object':obj,'dele':c_form.cleaned_data,}
-            subject = "[Model United Nations Registration] %s of %s" % (
-                obj['faculty_advisor'],obj['school_name']
+            contact = form_cont.save()
+            paises = form_pais.cleaned_data
+            contact.delegation_1 = paises["delegation_1"]
+            contact.delegation_2 = paises["delegation_2"]
+            contact.delegation_3 = paises["delegation_3"]
+            contact.delegation_4 = paises["delegation_4"]
+            contact.delegation_5 = paises["delegation_5"]
+            contact.save()
+            data = {'object':contact}
+            subject = "[Model United Nations Registration] %s %s of %s" % (
+                contact.first_name, contact.last_name, contact.school_name
             )
             send_mail(
-                request, TO_LIST, subject, obj['email'],
+                request, TO_LIST, subject, contact.email,
                 "polisci/model_united_nations/email.html", data, BCC
             )
             return HttpResponseRedirect(

@@ -1,6 +1,23 @@
 from django.db import models
 from djforms.processors.models import Contact
 
+def disengage_country(sender, instance, **kwargs):
+    if instance.delegation_1:
+        instance.delegation_1.status = False
+        instance.delegation_1.save()
+    if instance.delegation_2:
+        instance.delegation_2.status = False
+        instance.delegation_2.save()
+    if instance.delegation_3:
+        instance.delegation_3.status = False
+        instance.delegation_3.save()
+    if instance.delegation_4:
+        instance.delegation_4.status = False
+        instance.delegation_4.save()
+    if instance.delegation_5:
+        instance.delegation_5.status = False
+        instance.delegation_5.save()
+
 class Country(models.Model):
     name = models.CharField(
         "Country name",
@@ -63,3 +80,4 @@ class Attender(Contact):
         null=True, blank=True
     )
 
+models.signals.post_save.connect(disengage_country, sender=Attender)

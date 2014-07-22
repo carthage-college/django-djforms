@@ -20,6 +20,9 @@ DELEGATIONS = (
 
 COUNTRIES = Country.objects.filter(status=True).order_by("name")
 
+import logging
+logger = logging.getLogger(__name__)
+
 class AttenderForm(forms.ModelForm):
     """
     A form to collect registration data for the Model United Nations
@@ -91,7 +94,39 @@ class CountryForm(forms.Form):
         required=False
     )
 
+    def clean(self):
+        """
+        stackoverflow.com/questions/9835762/find-and-list-duplicates-in-python-list
+        """
+        super(CountryForm, self).clean()
+        cd = self.cleaned_data
+
+        seen = set()
+        seen_add = seen.add
+        paises = [
+                cd.get("delegation_1"),cd.get("delegation_2"),
+                cd.get("delegation_3"),cd.get("delegation_4"),
+                cd.get("delegation_5")
+        ]
+        # adds all elements it doesn't know yet to seen
+        # and all other to seen_twice
+        seen_twice = set( x for x in paises if x is not None and x in seen or seen_add(x) )
+        # turn the set into a list (as requested)
+        dupes = list( seen_twice )
+        logger.debug("dupes = %s" % dupes)
+        if len(dupes) > 0:
+            raise forms.ValidationError(
+                "You have choosen the same country in more than one delegation."
+            )
+        clist = list(set(paises))
+        if len(clist) == 1 and clist[0] == None:
+            raise forms.ValidationError(
+                "You must assign a country to at least one delegation."
+            )
+        return self.cleaned_data
+
     '''
+    # requires python 2.7
     def clean(self):
         from collections import Counter
         mylist = [20, 30, 25, 20]
@@ -103,15 +138,6 @@ class CountryForm(forms.Form):
         # for python 2.6
         l = [1,2,3,4,4,5,5,6,1]
         list(set([x for x in l if l.count(x) > 1]))
-
-    #https://stackoverflow.com/questions/9835762/find-and-list-duplicates-in-python-list
-    def moooeeeep(l):
-        seen = set()
-        seen_add = seen.add
-        # adds all elements it doesn't know yet to seen and all other to seen_twice
-        seen_twice = set( x for x in l if x in seen or seen_add(x) )
-        # turn the set into a list (as requested)
-        return list( seen_twice )
     '''
 
 class OrderForm(forms.ModelForm):

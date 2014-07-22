@@ -9,16 +9,13 @@ from djforms.processors.models import Contact, Order
 from djforms.processors.forms import TrustCommerceForm
 from djtools.utils.mail import send_mail
 
-if settings.DEBUG:
-    TO_LIST = [settings.SERVER_EMAIL,]
-else:
-    TO_LIST = ["sdomin@carthage.edu","kjabeck@carthage.edu"]
-BCC = settings.MANAGERS
-
-import logging
-logger = logging.getLogger(__name__)
-
 def camp_registration(request):
+    if settings.DEBUG:
+        TO_LIST = [settings.SERVER_EMAIL,]
+    else:
+        TO_LIST = ["sdomin@carthage.edu","kjabeck@carthage.edu"]
+    BCC = settings.MANAGERS
+
     status = None
     msg = None
     if request.POST:
