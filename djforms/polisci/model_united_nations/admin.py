@@ -20,6 +20,17 @@ class AttenderAdmin(admin.ModelAdmin):
     list_max_show_all = 500
     list_per_page = 500
 
+
+class CountryAdmin(admin.ModelAdmin):
+    model = Country
+    ordering = ('name',)
+    list_display  = (
+        'name','status'
+    )
+
+    list_max_show_all = 250
+    list_per_page = 250
+
 admin.site.register(Attender, AttenderAdmin)
-admin.site.register(Country)
+admin.site.register(Country, CountryAdmin)
 
