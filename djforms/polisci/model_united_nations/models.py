@@ -25,6 +25,9 @@ class Country(models.Model):
     )
     status = models.BooleanField(default=True)
 
+    class Meta:
+        verbose_name_plural = "Countries"
+
     def __unicode__(self):
         return self.name
 
