@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load get_api %}
+{% block title %}
+    WIPCS &mdash; Political Science &mdash; Carthage College
+{% endblock %}
+{% block extra_style %}
+    <link href="//www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css"
+        rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    #profile h2 {
+        margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;
+        padding:3px 0 3px 5px;width:99%;
+    }
+    li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
+    #id_security_code{width:35px;}
+    #id_postal_code, #id_total {width:100px;}
+    </style>
+{% endblock %}
+{% block left_nav %}
+    {% include "polisci/left_nav.html" %}
+{% endblock %}
+{% block content %}
+<div class="forms-container">
+    <div id="security">
+        <div style="margin-left:30px;">
+            <a href="https://www.securitymetrics.com/site_certificate.adp?s=carthage.edu&amp;i=131614"
+                target="_blank" >
+                <img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif"
+                    alt="SecurityMetrics" border="0">
+            </a>
+        </div>
+    </div>
+    <h1>Conference Registration</h1>
+    {% include "includes/errors_text.html" %}
+    {% if form_proc.errors or form_ord.errors or form_con.errors %}
+        <p class="error">There were errors with the data submitted, see below.</p>
+    {% endif %}
+    <form method="post" action="." class="form" id="profile">{% csrf_token %}
+        {% for hidden in form_ord.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+        <fieldset class="blockLabels">
+            <h2>Contact Information</h2>
+            <ol>
+                {% for field in form_con.visible_fields %}
+                    {% include "form_field.inc.html" %}
+                {% endfor %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <ol>
+                {% for field in form_ord.visible_fields %}
+                    {% include "form_field.inc.html" %}
+                {% endfor %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <h2>Billing Information</h2>
+            {% if form_proc.errors %}
+                <div style="padding-left:4px;">
+                    <p class="notice">
+                        The transaction failed.
+                        {% if status == "baddata" or status == "decline" %}
+                            Error: <strong>{{status}}</strong>
+                        {% endif %}
+                    </p>
+                </div>
+            {% endif %}
+            <ol>
+                {% include "form_field_credit_card.inc.html" %}
+            </ol>
+        </fieldset>
+        {% include "form_submit.inc.html " %}
+    </form>
+</div>
+{% endblock %}
