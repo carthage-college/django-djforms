@@ -9,7 +9,7 @@ from djforms.polisci.wipcs.forms import RegistrationOrderForm
 from djforms.processors.forms import TrustCommerceForm
 from djtools.utils.mail import send_mail
 
-def registration_form(request):
+def registration(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL,]
     else:
