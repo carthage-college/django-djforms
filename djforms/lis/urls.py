@@ -18,19 +18,6 @@ urlpatterns = patterns('djforms.lis',
         TemplateView.as_view(template_name='lis/data_entered.html'),
         name="lis_success"
     ),
-    # e-looking glass conference registration
-    url(
-        r'^conferences/looking-glass/success/$',
-        TemplateView.as_view(
-            template_name='lis/conferences/looking_glass/done.html'
-        ),
-        name="looking_glass_registration_success"
-    ),
-    url(
-        r'^conferences/looking-glass/$',
-        'conferences.looking_glass.views.registration_form',
-        name='looking_glass_registration_form'
-    ),
     # course-ference
     url(
         r'^conferences/course-ference/map/json/$',
