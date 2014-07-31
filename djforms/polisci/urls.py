@@ -17,9 +17,9 @@ urlpatterns = patterns('djforms.polisci',
         'model_united_nations.views.registration',
         name='model_united_nations_registration'
     ),
-    #url(
-    #    r'^wipcs/registration/$',
-    #    'wipcs.views.registration',
-    #    name='wipcs_registration'
-    #),
+    url(
+        r'^wipcs/registration/$',
+        'wipcs.views.registration',
+        name='wipcs_registration'
+    ),
 )
