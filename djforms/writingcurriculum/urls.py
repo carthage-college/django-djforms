@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 
 urlpatterns = patterns('djforms.writingcurriculum.views',
     url(
-        r'^success/$', TemplateView.as_view(template_name="writingcurriculum/data_entered.html")
+        r'^success/$', TemplateView.as_view(template_name="writingcurriculum/done.html")
     ),
     url(
         r'^proposal/(?P<pid>\d+)/update/$', 'proposal_form', name="proposal_update"
