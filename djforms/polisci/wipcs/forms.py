@@ -2,7 +2,7 @@ from django import forms
 
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
-from djforms.lis.conferences.looking_glass.models import RegistrationContact
+from djforms.polisci.wipcs.models import RegistrationContact
 
 from tagging.models import Tag, TaggedItem
 

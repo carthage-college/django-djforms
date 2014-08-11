@@ -1,94 +1,106 @@
-{% extends "jobpost/base.html" %}
+{% extends "jobpost/add_form.html" %}
 {% load ifusergroup %}
 {% block title %}{{ post.title }}{% endblock %}
-{% block columns %}{% ifusergroup Staff Faculty %}<link href="http://www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endifusergroup %}{% endblock %}
 {% block extra_javascript %}
-<script type="text/javascript">
-$(function() {
-    $('#apply-form').submit(function(){
-        $('input[type=submit]', this).attr('disabled', 'disabled');
-    });
-});
-</script>
 {% ifusergroup Staff Faculty %}
-<script src="//www.carthage.edu/assets/js/xinha/init.js" type="text/javascript"></script>
-<script src="//www.carthage.edu/assets/js/xinha/XinhaCore.js" type="text/javascript"></script>
-<script src="//www.carthage.edu/assets/js/xinha/job-apps.js" type="text/javascript"></script>
-<script src="//www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js" type="text/javascript"></script>
-<script src="//www.carthage.edu/assets/js/jquery/ui/ui-1.7.2.custom.min.js" type="text/javascript"></script>
-<script src="//www.carthage.edu/assets/js/jquery/ui/ui.dialog.js" type="text/javascript"></script>
-<script src="//www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript"></script>
-<script type="text/javascript">
-$.ui.dialog.defaults.bgiframe = true;
-$(function() {
-    $("#id_publish, #id_expire_date").datepicker({firstDay:0,appendText:"(format mm/dd/yyyy)",changeFirstDay:false,dateFormat:"mm/dd/yy",showOn:"both",buttonImage: "//www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
-    $('#print-link h2').append('<a href="#" id="print">Print</a>');
-    $('#print').click(function() {
-        window.print();
-        return false;
-    });
-    $( "#dialog-confirm" ).dialog({
-        autoOpen: false,
-        resizable: false,
-        height:140,
-        modal: true,
-        buttons: {
-            "Delete all applicants": function() {
-                $.ajax ({
-                    type: "POST",
-                    url: "/forms/job/applicants/delete/",
-                    data: {pid:{{post.id}},},
-                    cache: false,
-                    error:function(xhr, ajaxOptions, thrownError) {
-                        $("#dialog-confirm").dialog( "close" );
-                        $.blockUI({  message: "<h1>ERROR: "+ thrownError +"</h1>" });
-                        $.unblockUI({ fadeOut: 2000 });
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea-0.8.min.js" type="text/javascript"></script>
+    <script src="//www.carthage.edu/static/vendor/jquery/ui/1.11.0/jquery-ui.min.js"
+        type="text/javascript" charset="utf-8"></script>
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/jquery.blockUI.js"
+        type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function() {
+            $("#id_publish, #id_expire_date").datepicker({
+                firstDay:0,appendText:"(format yyyy-mm-dd)",
+                changeFirstDay:false,dateFormat:"yy-mm-dd",
+                showOn:"both",
+                buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
+                buttonImageOnly:true
+            });
+            $("textarea").htmlarea({
+                toolbar: [
+                    "html","bold", "italic", "underline", "superscript",
+                    "subscript", "|", "h1", "h2", "h3", "h4", "|", "indent",
+                    "outdent", "horizontalrule", "link", "unlink", "|",
+                    "orderedList", "unorderedList"
+                ]
+            });
+            $('#apply-form').submit(function(){
+                $('input[type=submit]', this).attr('disabled', 'disabled');
+            });
+            $('#print-link h2').append('<a href="#" id="print">Print</a>');
+            $('#print').click(function() {
+                window.print();
+                return false;
+            });
+            $( "#dialog-confirm" ).dialog({
+                autoOpen: false,
+                resizable: false,
+                height:200,
+                width:400,
+                modal: true,
+                buttons: {
+                    "Delete all applicants": function() {
+                        $.ajax ({
+                            type: "POST",
+                            url: "/forms/job/applicants/delete/",
+                            data: {pid:{{post.id}},},
+                            cache: false,
+                            error:function(xhr, ajaxOptions, thrownError) {
+                                $("#dialog-confirm").dialog( "close" );
+                                $.blockUI({  message: "<h1>ERROR: "+ thrownError +"</h1>" });
+                                $.unblockUI({ fadeOut: 2000 });
+                            },
+                            success: function() {
+                                $("#dialog-confirm").dialog( "close" );
+                                $.blockUI({ message: "<h1>Applicants deleted</h1>" });
+                                $.unblockUI({ fadeOut: 2000 });
+                            }
+                        });
                     },
-                    success: function() {
-                        $("#dialog-confirm").dialog( "close" );
-                        $.blockUI({ message: "<h1>Applicants deleted</h1>" });
-                        $.unblockUI({ fadeOut: 2000 });
+                    Cancel: function() {
+                        $( this ).dialog( "close" );
                     }
-                });
-            },
-            Cancel: function() {
-                $( this ).dialog( "close" );
-            }
-        }
-    });
-    $('#dialog-click').click(function() {
-        $('#dialog-confirm').dialog('open');
-    });
-
-});
-</script>
+                }
+            });
+            $('#dialog-click').click(function() {
+                $('#dialog-confirm').dialog('open');
+            });
+        });
+    </script>
 {% endifusergroup %}
-<script type="text/javascript">
-$(function() {
-    $(".required > input").addClass("required");
-    $(".required > select").addClass("required");
-    $(".required > textarea").addClass("required");
-    $(".warning > input").addClass("error");
-    $(".warning > select").addClass("error");
-    $(".warning > textarea").addClass("error");
-});
-</script>
 {% endblock %}
 {% block extra_style %}
 {% ifusergroup Staff Faculty %}
-<style type="text/css">
-div.growlUI { background: url(//www.carthage.edu/assets/img/ico/check48.png) no-repeat 10px 10px }
-div.growlUI h1, div.growlUI h2 {
+    <link href="//www.carthage.edu/static/vendor/jquery/ui/1.11.0/jquery-ui.min.css"
+        rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/static/vendor/jquery/ui/1.11.0/jquery-ui.theme.min.css"
+        rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/static/vendor/jquery/ui/1.11.0/jquery-ui.structure.min.css"
+        rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea.css"
+        rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    div.growlUI { background: url(//www.carthage.edu/assets/img/ico/check48.png) no-repeat 10px 10px }
+    div.growlUI h1, div.growlUI h2 {
     color: white; padding: 5px 5px 5px 75px; text-align: left;
-    font-size:1.4em;
-}
+    font-size:1.4em;}
+    div.jHtmlArea .ToolBar {width: 470px !important;height:20px;}
+    div.jHtmlArea .ToolBar ul li a.custom_disk_button
+    {
+        background: url(/static/forms/css/disk.png) no-repeat;
+        background-position: 0 0;
+    }
+    div.jHtmlArea { width:500px !important;
+        border: solid 1px #ccc; background: #efefef;}
+    iframe {width:500px !important;height:300px !important;
+        background: #fff;border: solid 1px #ccc;}
 </style>
-<link href="//www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
 {% endifusergroup %}
 <link href="//www.carthage.edu/static/forms/css/djforms.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block content %}
-    <div class="span-18 prepend-1 buffer-top">
+<div class="forms-container">
     {% ifusergroup Staff Faculty %}
         <div id="print-link"><h2><a href="#" id="dialog-click" title="You are about to remove all applicants for this job post.">Remove all applicants</a> | </h2></div>
         <div id="dialog-confirm" title="Remove all applicants?">
@@ -121,12 +133,9 @@ div.growlUI h1, div.growlUI h2 {
         </dl>
         <hr />
         {% ifequal user.username post.creator.username %}
-            <form method="POST" action="." class="form">{% csrf_token %}
-                {% if form.errors %}
-                    <h2 style="color: red;">
-                        Please correct the error{{ form.errors|pluralize }} below.
-                    </h2>
-                {% endif %}
+            {% include "includes/required_text.html" %}
+            {% include "includes/errors_text.html" %}
+            <form method="post" action="." class="form">{% csrf_token %}
                 <fieldset class="blockLabels">
                     <ol>
                         {% for field in form %}
@@ -137,16 +146,13 @@ div.growlUI h1, div.growlUI h2 {
                                 <li style="display:none;">{{field}}</li>
                             {% endif %}
                         {% endfor %}
-                        <li class="btnHolder">
-                        <label for="id_submit">&nbsp;&nbsp;</label>
-                        <input type="submit" value="Save Changes" class="button" />
-                        </li>
                     </ol>
                 </fieldset>
+                {% include "form_submit.inc.html" %}
             </form>
             <br />
             <hr />
-            <h1>List of applications </h1>
+            <h2>List of applications </h2>
             {% for jobapplyform in object_list %}
                 <div>
                 <dl class="job-detail">
@@ -214,23 +220,22 @@ div.growlUI h1, div.growlUI h2 {
                 <dt class="job-header">Qualifications:</dt><dd class="clear"></dd>
                 <dd class="description">{{ post.qualifications }}</dd>
             </dl>
-
             <hr />
             <h3 style="color: green;">
                 Complete the form below to apply for this job.
             </h3>
-            <form id="apply-form" method="POST" action="." class="form" enctype="multipart/form-data">{% csrf_token %}
+            {% include "includes/required_text.html" %}
+            {% include "includes/errors_text.html" %}
+            <form id="apply-form" method="post" action="." class="form"
+                enctype="multipart/form-data">{% csrf_token %}
                 <fieldset class="blockLabels">
                     <ol>
                         {% for field in form %}
                             {% include "form_field.inc.html" %}
                         {% endfor %}
-                        <li class="btnHolder">
-                        <label for="id_submit">&nbsp;&nbsp;</label>
-                        <input type="submit" value="Submit" class="button" id="apply-submit" />
-                        </li>
                     </ol>
                 </fieldset>
+                {% include "form_submit.inc.html" %}
             </form>
         {% else %}
             <h1>THIS POST IS NOT CURRENTLY AVAILABLE</h1>
@@ -247,5 +252,5 @@ div.growlUI h1, div.growlUI h2 {
     {% endif %}
     </p>
     {% endif %}
-    </div>
+</div>
 {% endblock %}

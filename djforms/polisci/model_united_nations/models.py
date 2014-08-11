@@ -83,4 +83,4 @@ class Attender(Contact):
         null=True, blank=True
     )
 
-models.signals.post_save.connect(disengage_country, sender=Attender)
+#models.signals.post_save.connect(disengage_country, sender=Attender)

@@ -1,25 +1,26 @@
 {% extends "base.html" %}
-{% block title %}Writing Intensive Course Proposal Form &mdash; Carthage College{% endblock %}
+{% block title %}
+Writing Intensive Course Proposal Form &mdash;
+Carthage College
+{% endblock %}
 {% block extra_javascript %}
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
-    <script src="//www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
-    <script src="//www.carthage.edu/assets/js/jquery/plugins/jquery.bgiframe.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
+        type="text/javascript" charset="utf-8"></script>
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/ptTimeSelect/src/jquery.ptTimeSelect.js"
+        type="text/javascript"></script>
+    <script src="https://malsup.github.io/min/jquery.blockUI.min.js"
+        type="text/javascript"></script>
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/fancybox/jquery.fancybox.pack.js"></script>
     <script type="text/javascript">
         $(function() {
-            function initialise () {
-                $("#crita_help").dialog({modal: true,bgiframe: true,width: 600,autoOpen: false});
-                $(".crita").click(function() {$("#crita_help").dialog("open");});
-                $("#critb_help").dialog({modal: true,bgiframe: true,width: 600,autoOpen: false});
-                $(".critb").click(function() {$("#critb_help").dialog("open");});
-                $("#critc_help").dialog({modal: true,bgiframe: true,width: 600,autoOpen: false});
-                $(".critc").click(function() {$("#critc_help").dialog("open");});
-                $("#critd_help").dialog({modal: true,bgiframe: true,width: 600,autoOpen: false});
-                $(".critd").click(function() {$("#critd_help").dialog("open");});
-            }
             var copies = {{copies}};
-            initialise();
-            $("#id_wac-when_approved_wi").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "//www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
-            $("#id_wac-when_workshop").datepicker({firstDay:0,appendText:"(format yyyy-mm-dd)",changeFirstDay:false,dateFormat:"yy-mm-dd",showOn:"both",buttonImage: "//www.carthage.edu/assets/img/ico/calendar.gif",buttonImageOnly:true});
+            $("input[id^=id_wac-when]").datepicker({
+                firstDay:0,appendText:"(format yyyy-mm-dd)",
+                changeFirstDay:false,dateFormat:"yy-mm-dd",
+                showOn:"both",
+                buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
+                buttonImageOnly:true
+            });
             $("#clone").click(function () {
                 if (copies <= 4) {
                     copies++;
@@ -29,7 +30,6 @@
                 }else{
                     $.growlUI('Warning', 'Criteria Limit: 5');
                 }
-                initialise();
             });
             $("#destroy").click(function () {
                 if (copies > 1) {
@@ -41,45 +41,69 @@
                     $.growlUI('Warning', 'No criterion to delete');
                 }
             });
+            $("a[class^=crit]").on("focusin", function() {
+                $(".fancybox").fancybox({
+                    maxWidth    : 400,
+                    maxHeight   : 600,
+                    fitToView   : false,
+                    width       : '50%',
+                    height      : '50%',
+                    autoSize    : false,
+                    closeClick  : false,
+                    openEffect  : 'none',
+                    closeEffect : 'none'
+                });
+                did = '#' + $(this).attr("class") + "_help";
+                console.log(did);
+                $.fancybox.open([{
+                    href : did
+                }]);
+            });
         });
     </script>
 {% endblock %}
-{% block columns %}<link href="//www.carthage.edu/media/css/douglasfir/2_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css" type="text/css" />
+    <link href="//www.carthage.edu/static/vendor/jquery/plugins/fancybox/jquery.fancybox.css"
+        rel="stylesheet" type="text/css" media="screen" />
+    <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
+        rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/static/vendor/jquery/plugins/ptTimeSelect/src/jquery.ptTimeSelect.css"
+        rel="stylesheet" type="text/css" />
     <style type="text/css">
-    #profile h2.fheader {background-color:#CCCCCC;border:1px solid #888888;color:#880000;padding:8px;}
-    #second ol {margin:0;}
     .criteria ul.bullets li{list-style:disc outside;margin-left:30px;}
-    .criteria p {margin-bottom:20px;}
     #doop_master {display: none;}
-    .criterion {width:250px;float:right;}
+    .criterion {width:250px;float:right; line-height:18px;margin-top:3px;}
     .ctrlcx {width:36px;float:right;}
     #duplicates .wac-description {width:350px;height:150px;}
-    div.growlUI { background: url(/assets/img/ico/information.png) no-repeat 10px 10px; height:90px; }
-    div.growlUI h1, div.growlUI h2 {
-        font-size: 1.4em; color: white; padding: 5px 5px 5px 75px; text-align: left
+    div.growlUI {
+        background: url(/assets/img/ico/information.png) no-repeat 10px 10px;
+        height:90px;
     }
-    .form input {width: 350px !important; }
-    .form input[type='radio'] {width:auto !important;}
-    .form input[type='submit'] {width:150px !important;}
+    div.growlUI h1, div.growlUI h2 {
+        font-size: 1.4em; color: white;
+        padding: 5px 5px 5px 75px; text-align: left
+    }
     </style>
 {% endblock %}
 {% block left_nav %}
     {% include "writingcurriculum/left_nav.html" %}
 {% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Writing Intensive Course Proposal
+        <span id="secondary-dropdown"></span>
+    </h1>
+{% endblock %}
 {% block content %}
-<div class="buffer">
-    <h1>Writing Intensive Course Proposal Form</h1>
-    <p>Deadline for the 2012-2013 School Year: January 31, 2013.</p>
-    <p>The WAC Committee will accept late proposals through February 28, 2013.
+<div class="forms-container">
+    <p>Deadline for the 2014-2014 School Year: January 31, 2015.</p>
+    <p>The WAC Committee will accept late proposals through February 28, 2015.
     However, submitting a late proposal may not allow time for the negotiation
     that is sometimes necessary to secure approval.</p>
-    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
-    {% if form.errors %}
-        <p class="error">There were errors with the data submitted, see below.</p>
-    {% endif %}
-    <form method="POST" action="." class="form" id="profile" enctype="multipart/form-data">{% csrf_token %}
+    {% include "includes/errors_text.html" %}
+    {% include "includes/required_text.html" %}
+    <form method="post" action="." class="form"
+        id="profile" enctype="multipart/form-data">{% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
                 {% if not user.get_profile.phone %}
@@ -87,7 +111,9 @@
                 <h3>{{profile_form.phone.label_tag}}</h3>
                 {% if profile_form.phone.errors %}
                 <div class="warning">
-                <span class="error-message">{{ profile_form.phone.errors|join:", "}}</span>
+                <span class="error-message">
+                    {{ profile_form.phone.errors|join:", "}}
+                </span>
                 {% else %}
                 <div>
                 {% endif %}
@@ -98,61 +124,143 @@
                 </div>
                 </li>
                 {% else %}
-                <li><input type="hidden" name="profile-phone" value="{{user.get_profile.phone}}" /></li>
+                <li>
+                    <input type="hidden" name="profile-phone"
+                        value="{{user.get_profile.phone}}" />
+                </li>
                 {% endif %}
                 {% for field in form %}
                     {% include "form_field.inc.html" %}
                     {% if field.name == "syllabus" %}
-                        <li class="ctrlHolder"><h3><label>Criteria</label></h3></li>
-                        <li>To request a Writing Intensive designation, please complete the chart below.
-                        The information will allow the WAC Committee to determine whether
-                        your class meets the Writing Intensive Criteria. You will be contacted if clarification
-                        is needed.</li>
-                        <li>Click on the "plus" symbol to add more fields, and use the
-                            "minus" symbol to remove fields.
+                        <li class="ctrlHolder">
+                            <h3><label>Criteria</label></h3>
+                        </li>
+                        <li>
+                            To request a Writing Intensive designation, please
+                            complete the chart below. The information will
+                            allow the WAC Committee to determine whether your
+                            class meets the Writing Intensive Criteria. You
+                            will be contacted if clarification is needed.
+                        </li>
+                        <li>
+                            Click on the "plus" symbol to add more fields, and
+                            use the "minus" symbol to remove fields.
                             <div class="ctrlcx">
-                                <img id="clone" src="//www.carthage.edu/assets/img/ico/silk/icons/add.png" />
-                                <img id="destroy" src="//www.carthage.edu/assets/img/ico/silk/icons/delete.png" />
+                                <img id="clone"
+                                    src="//www.carthage.edu/assets/img/ico/silk/icons/add.png" />
+                                <img id="destroy"
+                                    src="//www.carthage.edu/assets/img/ico/silk/icons/delete.png" />
                             </div>
                         </li>
                         <li class="ctrlHolder" id="duplicates">
                             <ul id="doop_master">
-                                <li><input type="text" maxlength="255" name="wac-type_assignment[]" />
-                                    &nbsp;[<a href="javascript:;" class="crita">Criterion A</a>]<div class="criterion"> Writing Assignment Type (Do not include in-class exams)</div>
-                                </li>
-                                <li><input type="text" maxlength="3" name="wac-number_pages[]" />
-                                    &nbsp;[<a href="javascript:;" class="critd">Criterion D</a>]<div class="criterion">Number of Pages Required</div>
-                                </li>
-                                <li><input type="text" maxlength="3" name="wac-percent_grade[]" />
-                                    &nbsp;[<a href="javascript:;" class="critc">Criterion C</a>]<div class="criterion">Percent of student's grade based on this assignment</div>
-                                </li>
-                                <li><textarea name="wac-description[]" class="wac-description"></textarea>
-                                    &nbsp;[<a href="javascript:;" class="critb">Criterion B</a>]
+                                <li>
+                                    <input type="text" maxlength="255"
+                                        name="wac-type_assignment[]" />
                                     <div class="criterion">
-                                        Describe how you will help students successfully complete the assignment, and when during the semester this assignment will be addressed.
+                                        Writing Assignment Type
+                                        (Do not include in-class exams)
                                     </div>
                                 </li>
-                                <li><hr /><input type="hidden" name="wac-id[]" /></li>
+                                <li style="clear:both;">
+                                    <input type="text" maxlength="3"
+                                        name="wac-number_pages[]" />
+                                    <div class="criterion">
+                                        Number of Pages Required
+                                    </div>
+                                </li>
+                                <li style="clear:both;">
+                                    <input type="text" maxlength="3"
+                                        name="wac-percent_grade[]" />
+                                    <div class="criterion">
+                                        Percent of student's grade based on
+                                        this assignment
+                                    </div>
+                                </li>
+                                <li style="clear:both;">
+                                    <textarea name="wac-description[]"
+                                        class="wac-description"></textarea>
+                                    <div class="criterion">
+                                        Describe how you will help students
+                                        successfully complete the assignment,
+                                        and when during the semester this
+                                        assignment will be addressed.
+                                    </div>
+                                </li>
+                                <li>
+                                    <hr />
+                                    <input type="hidden" name="wac-id[]" />
+                                </li>
                             </ul>
                             {# for criterion_id, criterion in criteria.items #}
                             {% for criterion in criteria %}
                             <ul id="doop_{{forloop.counter}}">
-                                <li><input type="text" maxlength="255" name="wac-type_assignment[]" value="{{criterion.type_assignment}}" />
-                                    &nbsp;[<a href="javascript:;" class="crita">Criterion A</a>]<div class="criterion"> Writing Assignment Type (Do not include in-class exams)</div>
-                                </li>
-                                <li><input type="text" maxlength="3" name="wac-number_pages[]" value="{{criterion.number_pages}}" />
-                                    &nbsp;[<a href="javascript:;" class="critd">Criterion D</a>]<div class="criterion">Number of Pages Required</div>
-                                </li>
-                                <li><input type="text" maxlength="3" name="wac-percent_grade[]" value="{{criterion.percent_grade}}" />
-                                    &nbsp;[<a href="javascript:;" class="critc">Criterion C</a>]<div class="criterion">Percent of student's grade based on this assignment</div>
-                                </li>
-                                <li><textarea name="wac-description[]" class="wac-description">{{criterion.description}}</textarea>
-                                    &nbsp;[<a href="javascript:;" class="critb">Criterion B</a>]
+                                <li>
+                                    <input type="text" maxlength="255"
+                                        name="wac-type_assignment[]"
+                                        value="{{criterion.type_assignment}}">
+                                    {% if forloop.first %}
+                                    &nbsp;
+                                    [<a href="#" class="crita" tabindex="1">
+                                        Criterion A
+                                    </a>]
+                                    {% endif %}
                                     <div class="criterion">
-                                        Describe how you will help students successfully complete the assignment, and when during the semester this assignment will be addressed.
+                                        Writing Assignment Type
+                                        (Do not include in-class exams)
                                     </div>
                                 </li>
-                                <li><hr /><input type="hidden" name="wac-id[]" value="{{criterion.id}}" /></li>
+                                <li style="clear:both;">
+                                    <input type="text" maxlength="3"
+                                        name="wac-number_pages[]"
+                                        value="{{criterion.number_pages}}">
+                                    {% if forloop.first %}
+                                    &nbsp;
+                                    [<a href="#" class="critd" tabindex="1">
+                                        Criterion D
+                                    </a>]
+                                    {% endif %}
+                                    <div class="criterion">
+                                        Number of Pages Required
+                                    </div>
+                                </li>
+                                <li style="clear:both;">
+                                    <input type="text" maxlength="3"
+                                        name="wac-percent_grade[]"
+                                        value="{{criterion.percent_grade}}">
+                                    {% if forloop.first %}
+                                    &nbsp;
+                                    [<a href="#" class="critc" tabindex="1">
+                                        Criterion C
+                                    </a>]
+                                    {% endif %}
+                                    <div class="criterion">
+                                        Percent of student's grade based on
+                                        this assignment
+                                    </div>
+                                </li>
+                                <li style="clear:both;">
+                                    <textarea name="wac-description[]"
+                                        class="wac-description">
+                                        {{criterion.description}}</textarea>
+                                    {% if forloop.first %}
+                                    &nbsp;
+                                    [<a href="#" class="critb" tabindex="1">
+                                        Criterion B
+                                    </a>]
+                                    {% endif %}
+                                    <div class="criterion">
+                                        Describe how you will help students
+                                        successfully complete the assignment,
+                                        and when during the semester this
+                                        assignment will be addressed.
+                                    </div>
+                                </li>
+                                <li>
+                                    <hr />
+                                    <input type="hidden" name="wac-id[]"
+                                        value="{{criterion.id}}" />
+                                </li>
                             </ul>
                             {% endfor %}
                         </li>
@@ -162,43 +270,50 @@
         </fieldset>
         <fieldset class="blockLabels">
             <ol>
-                <li>This information will allow the WAC Committee to determine whether your class meets the Writing Intensive Criteria. You will be contacted if consultation is needed.</li>
-                <li>Your proposal is not complete until you hit Submit button below.</li>
-                <li class="btnHolder">
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Submit Request" class="button" />
+                <li>
+                    This information will allow the WAC Committee to determine
+                    whether your class meets the Writing Intensive Criteria.
+                    You will be contacted if consultation is needed.
+                </li>
+                <li>
+                    Your proposal is not complete until you hit
+                    Submit button below.
                 </li>
             </ol>
         </fieldset>
+        {% include "form_submit.inc.html" %}
     </form>
     <div id="crita_help" class="criteria" title="Criterion A">
         <p>
             <strong>
-            The course must use writing to promote the learning of course materials.
-            Instructors assign formal and informal writing, both in class and out,
-            to increase students' understanding of course material as well as
-            improve writing skills.
+            The course must use writing to promote the learning of course
+            materials. Instructors assign formal and informal writing, both
+            in class and out, to increase students' understanding of course
+            material as well as improve writing skills.
             </strong>
         </p>
         <p>
             The Carthage Writing Across the Curriculum Committee is looking for
-        classes that use writing as a vehicle for learning, classes that require
-        students to express, reformulate, or apply the concepts of an academic
-        discipline.  The emphasis on writing is not intended primarily to give
-        students additional practice in basic composition skills but to encourage
-        students to think more clearly and express their thoughts more precisely.
-        The WAC Committee certifies as Writing Intensive courses that take a
-        two-pronged approach to learning, with the students addressing the subject
-        matter via written assignments and the professor attempting to improve the
-        quality of students' performance by giving feedback and requiring revision.
+            classes that use writing as a vehicle for learning, classes that
+            require students to express, reformulate, or apply the concepts of
+            an academic discipline. The emphasis on writing is not intended
+            primarily to give students additional practice in basic composition
+            skills but to encourage students to think more clearly and express
+            their thoughts more precisely. The WAC Committee certifies as
+            Writing Intensive courses that take a two-pronged approach to
+            learning, with the students addressing the subject matter via
+            written assignments and the professor attempting to improve the
+            quality of students' performance by giving feedback and requiring
+            revision.
         </p>
         <p>
-            The success of a Writing Intensive course depends far more on the p
-        rofessor's professional commitment to this style of teaching than it does
-        on adherence to any particular formula.  Because of the importance of this
-        commitment, the WAC Committee prefers to certify courses that are
-        voluntarily proposed by faculty participants, rather than courses that
-        are selected for Writing Intensive status by departments and then assigned to instructors.
+            The success of a Writing Intensive course depends far more on the
+            professor's professional commitment to this style of teaching than
+            it does on adherence to any particular formula. Because of the
+            importance of this commitment, the WAC Committee prefers to certify
+            courses that are voluntarily proposed by faculty participants,
+            rather than courses that are selected for Writing Intensive status
+            by departments and then assigned to instructors.
         </p>
     </div>
     <div id="critb_help" class="criteria" title="Criterion B">
@@ -221,57 +336,63 @@
         <p>
             Each course should include multiple assignments that are complex
             enough to require substantive revision for most students.  Students
-            should submit a draft or other preliminary writing, consider responses
-            from the professor (and, whenever possible, from other students),
-            revise, and finally edit. The final versions of these assignments
-            and significant drafts should total at least 16 pages. Writing
-            Intensive courses usually include some assignments so demanding that
-            only a few students will do a completely satisfactory job in a single
-            draft. The first draft or preliminary writing then becomes a testing
-            ground for the student's ideas and reasoning, and the professor's or
-            peers' responses to the writing are an integral part of the instruction
-            in the course. Clearly, the sort of revision the Committee has in mind
-            involves rethinking and rewriting, not merely the correcting of
+            should submit a draft or other preliminary writing, consider
+            responses from the professor (and, whenever possible, from other
+            students), revise, and finally edit. The final versions of these
+            assignments and significant drafts should total at least 16 pages.
+            Writing Intensive courses usually include some assignments so
+            demanding that only a few students will do a completely
+            satisfactory job in a single draft. The first draft or preliminary
+            writing then becomes a testing ground for the student's ideas and
+            reasoning, and the professor's or peers' responses to the writing
+            are an integral part of the instruction in the course. Clearly,
+            the sort of revision the Committee has in mind involves rethinking
+            and rewriting, not merely the correcting of
             grammatical and stylistic errors.
         </p>
         <p>
-            Writing for the course should be distributed through the semester rather
-            than concentrated at the end. If writing is being used as a mode of
-            instruction, then it is clearly not appropriate to have written
-            assignments concentrated at the end of the semester. Some of the best Writing Intensive
-            courses tend to contain a series of short papers distributed through the
-            semester rather than one or two major projects. Other successful courses
-            use only two papers but take these papers through a multistage revision
-            process.
+            Writing for the course should be distributed through the semester
+            rather than concentrated at the end. If writing is being used as a
+            mode of instruction, then it is clearly not appropriate to have
+            written assignments concentrated at the end of the semester. Some
+            of the best Writing Intensive courses tend to contain a series of
+            short papers distributed through the semester rather than one or
+            two major projects. Other successful courses use only two papers
+            but take these papers through a multistage revision process.
         </p>
     </div>
     <div id="critc_help" class="criteria" title="Criterion C">
         <p>
             <strong>
-                Writing contributes significantly to each student's course grade.
-                Writing assignments must make up at least 30% of each student's
-                course grade.
+                Writing contributes significantly to each student's course
+                grade. Writing assignments must make up at least 30% of each
+                student's course grade.
             </strong>
         </p>
         <p>
-            Written assignments should be a major component of the course grade.
+            Written assignments should be a major component of the
+            course grade.
         </p>
         <p>
-            In many Writing Intensive courses, papers account for 70% or more of the semester
-            grade.  Papers must count at least 30% of the course grade.
+            In many Writing Intensive courses, papers account for 70% or more
+            of the semester grade. Papers must count at least 30% of the
+            course grade.
         </p>
     </div>
     <div id="critd_help" class="criteria" title="Criterion D">
         <p>
             <strong>
-                The course requires students to do a substantial amount of writing&mdash;
-                minimum of 4,000 words or about 16 pages.  This may include informal
-                writing.  Depending on the course content, students may write analytic
-                essays, critical reviews, journals, lab reports, research reports or
-                reaction papers, etc; drafts of papers may count toward the 16-page
-                total if they:
+            The course requires students to do a substantial amount of
+            writing&mdash; minimum of 4,000 words or about 16 pages. This may
+            include informal writing. Depending on the course content, students
+            may write analytic essays, critical reviews, journals, lab reports,
+            research reports or reaction papers, etc; drafts of papers may
+            count toward the 16-page total if they:
                 <ul class="bullets">
-                    <li>receive serious feedback from the professor (or peer feedback guided by the professor) and</li>
+                    <li>
+                        receive serious feedback from the professor
+                        (or peer feedback guided by the professor) and
+                    </li>
                     <li>are subject to significant revision.</li>
                 </ul>
             </strong>
@@ -279,16 +400,16 @@
         <p>
             Writing for the entire course should total at least 16 pages.  This
             writing may take many forms and includes the drafts or preliminary
-            writing and final versions of the assignments. (See guidelines after
-            Criterion B.)
+            writing and final versions of the assignments. (See guidelines
+            after Criterion B.)
         </p>
         <p>
-            In allowing preliminary drafts to count toward the 16-page total, the
-            Committee assumes that revision of these drafts will mean substantial
-            rewriting for most students.  When the professor's expectation is that
-            the final draft will be merely a "cleaned-up" version of the preliminary
-            draft, we ask that the pages in the preliminary draft not be counted as
-            part of the 16-page total.
+            In allowing preliminary drafts to count toward the 16-page total,
+            the Committee assumes that revision of these drafts will mean
+            substantial rewriting for most students. When the professor's
+            expectation is that the final draft will be merely a "cleaned-up"
+            version of the preliminary draft, we ask that the pages in the
+            preliminary draft not be counted as part of the 16-page total.
         </p>
     </div>
 </div>

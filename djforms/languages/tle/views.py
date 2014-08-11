@@ -53,7 +53,7 @@ def application_form(request, stype):
                     education += '</dl>'
             cd = form.cleaned_data
             bcc = settings.MANAGERS
-            to = ["sgrover@carthage.edu","emontanaro@carthage.edu",cd['email']]
+            to = ["sgrover@carthage.edu","scyganiak@carthage.edu","emontanaro@carthage.edu",cd['email']]
             t = loader.get_template('languages/tle/email.txt')
             c = RequestContext(
                 request, {'data':cd,'education':education,'type':stype}
