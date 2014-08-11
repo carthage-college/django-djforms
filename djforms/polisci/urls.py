@@ -27,5 +27,5 @@ urlpatterns = patterns('djforms.polisci',
         r'^wipcs/registration/$',
         'wipcs.views.registration',
         name='wipcs_registration'
-    ),
+    )
 )

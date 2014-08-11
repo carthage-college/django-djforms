@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 from djforms.core.models import STATE_CHOICES
 from djforms.polisci.mun import COUNTRIES
@@ -27,10 +26,6 @@ class AttenderForm(forms.Form):
     last_name = forms.CharField(
         max_length=128
     )
-    city = forms.CharField(
-        max_length=128,
-        required=True
-    )
     address1 = forms.CharField(
         max_length=128,
         label = "Address",
@@ -40,6 +35,10 @@ class AttenderForm(forms.Form):
         max_length=128,
         label = "",
         required=False
+    )
+    city = forms.CharField(
+        max_length=128,
+        required=True
     )
     state = forms.CharField(
         widget=forms.Select(choices=STATE_CHOICES), required=True

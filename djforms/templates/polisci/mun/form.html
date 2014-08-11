@@ -37,11 +37,11 @@
                 {% for field in form_cont %}
                     {% include "form_field.inc.html" %}
                     {% if field.name == "number_of_stu" %}
-                    <li class="ctrlHolder buffer-top">
+                    <li class="ctrlHolder delegation">
                         {% get_lw_content as ga_mem blurbs 1788 %}
                         {{ga_mem.body}}
                         <div id="delegation1" class="fleft">
-                        <h5 style="text-align:center;">Delegation 1</h5>
+                        <h4 style="text-align:center;">Delegation 1</h4>
                         <ol>
                         <li>{{form_pais.d1c1}}</li>
                         <li>{{form_pais.d1c2}}</li>
@@ -51,7 +51,7 @@
                         </ol>
                         </div>
                         <div id="delegation2" class="fleft" style="margin-left:5px;">
-                        <h5 style="text-align:center;">Delegation 2</h5>
+                        <h4 style="text-align:center;">Delegation 2</h4>
                         <ol>
                         <li>{{form_pais.d2c1}}</li>
                         <li>{{form_pais.d2c2}}</li>
@@ -61,7 +61,7 @@
                         </ol>
                         </div>
                         <div id="delegation3" class="fleft" style="margin-left:5px;">
-                        <h5 style="text-align:center;">Delegation 3</h5>
+                        <h4 style="text-align:center;">Delegation 3</h4>
                         <ol>
                         <li>{{form_pais.d3c1}}</li>
                         <li>{{form_pais.d3c2}}</li>
@@ -71,7 +71,7 @@
                         </ol>
                         </div>
                         <div id="delegation4" class="fleft" style="margin-left:5px;">
-                        <h5 style="text-align:center;">Delegation 4</h5>
+                        <h4 style="text-align:center;">Delegation 4</h4>
                         <ol>
                         <li>{{form_pais.d4c1}}</li>
                         <li>{{form_pais.d4c2}}</li>
@@ -81,7 +81,7 @@
                         </ol>
                         </div>
                         <div id="delegation5" class="fleft" style="margin-left:5px;">
-                        <h5 style="text-align:center;">Delegation 5</h5>
+                        <h4 style="text-align:center;">Delegation 5</h4>
                         <ol>
                         <li>{{form_pais.d5c1}}</li>
                         <li>{{form_pais.d5c2}}</li>
