@@ -1,13 +1,14 @@
 {% extends "jobpost/base.html" %}
 {% block title %}Available On-Campus Employment{% endblock %}
 {% block content %}
-    <div id="sitetitle" class="clear">Available On-Campus Employment</div>
-    <div class="buffer">
+    <h2>Available On-Campus Employment</h2>
     {% if object_list %}
     <div class="post_list">
         {% for post in object_list %}
             <div>
-            <h3 class="title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+            <h3 class="title">
+                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            </h3>
             <p class="date">Job posted on {{ post.publish|date:"F j, Y" }}</p>
             <div class="description">{{ post.description }}</div>
             <hr />
@@ -26,5 +27,4 @@
     {% endif %}
     </p>
     {% endif %}
-    </div>
 {% endblock %}
