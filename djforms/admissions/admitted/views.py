@@ -9,15 +9,15 @@ from djtools.utils.mail import send_mail
 
 import datetime
 
-if settings.DEBUG:
-    TO_LIST = ["larry@carthage.edu",]
-else:
-    TO_LIST = ["rob@carthage.edu",]
-BCC = (
-    ('Confirmation', 'confirmation@carthage.edu'),
-)
-
 def chance_of_form(request):
+    if settings.DEBUG:
+        TO_LIST = ["larry@carthage.edu",]
+    else:
+        TO_LIST = ["rob@carthage.edu",]
+    BCC = (
+        ('Confirmation', 'confirmation@carthage.edu'),
+    )
+
     prospect_status = None
     if request.GET.keys():
         prospect_status = request.GET.keys()[0]

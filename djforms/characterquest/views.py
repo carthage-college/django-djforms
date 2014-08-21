@@ -13,15 +13,14 @@ from djtools.utils.mail import send_mail
 
 from datetime import date
 
-if settings.DEBUG:
-    TO_LIST = ["larry@carthage.edu",]
-else:
-    TO_LIST = ["nwinkler@carthage.edu",]
-
-BCC = settings.MANAGERS
-
 @login_required
 def application_profile_form(request):
+    if settings.DEBUG:
+        TO_LIST = ["larry@carthage.edu",]
+    else:
+        TO_LIST = ["nwinkler@carthage.edu",]
+    BCC = settings.MANAGERS
+
     today = date.today()
     x_date = date(today.year, 5, 5)
     s_date = date(today.year, 4, 1)

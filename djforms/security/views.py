@@ -7,13 +7,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from djforms.security.forms import ParkingTicketAppealForm
 from djtools.utils.mail import send_mail
 
-if settings.DEBUG:
-    TO_LIST = ["larry@carthage.edu",]
-else:
-    TO_LIST = ["parking@carthage.edu",]
-BCC = settings.MANAGERS
-
 def parking_ticket_appeal_form(request):
+    if settings.DEBUG:
+        TO_LIST = ["larry@carthage.edu",]
+    else:
+        TO_LIST = ["parking@carthage.edu",]
+    BCC = settings.MANAGERS
+
     if request.method == 'POST':
         form = ParkingTicketAppealForm(request.POST)
         if form.is_valid():

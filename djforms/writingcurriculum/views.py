@@ -11,14 +11,14 @@ from djforms.core.models import UserProfile
 from djforms.writingcurriculum.forms import ProposalForm
 from djforms.writingcurriculum.models import CourseCriteria, CourseProposal
 
-if settings.DEBUG:
-    TO_LIST = [settings.SERVER_EMAIL,]
-else:
-    TO_LIST = ["msnavely@carthage.edu"]
-BCC = settings.MANAGERS
-
 @login_required
 def proposal_form(request, pid=None):
+    if settings.DEBUG:
+        TO_LIST = [settings.SERVER_EMAIL,]
+    else:
+        TO_LIST = ["msnavely@carthage.edu"]
+    BCC = settings.MANAGERS
+
     copies=1
     proposal = None
     if pid:
@@ -108,7 +108,12 @@ def proposal_form(request, pid=None):
                         criteria_orig[i].description = criteria[i]['description']
                         criteria_orig[i].save()
                     else:
-                        c = CourseCriteria(type_assignment=criteria[i]['type_assignment'],number_pages=criteria[i]['number_pages'],percent_grade=criteria[i]['percent_grade'],description=criteria[i]['description'])
+                        c = CourseCriteria(
+                            type_assignment=criteria[i]['type_assignment'],
+                            number_pages=criteria[i]['number_pages'],
+                            percent_grade=criteria[i]['percent_grade'],
+                            description=criteria[i]['description']
+                        )
                         c.save()
                         proposal.criteria.add(c)
             # save the proposal object
@@ -116,8 +121,19 @@ def proposal_form(request, pid=None):
 
             bcc = settings.MANAGERS
             t = loader.get_template('writingcurriculum/email.html')
-            c = RequestContext(request, {'data':proposal,'user':request.user,'criteria':criteria})
-            email = EmailMessage(("[WAC Proposal] %s: by %s %s" % (proposal.course_title,request.user.first_name,request.user.last_name)), t.render(c), request.user.email, TO_LIST, BCC, headers = {'Reply-To': request.user.email,'From': request.user.email})
+            c = RequestContext(
+                request,
+                {'data':proposal,'user':request.user,'criteria':criteria}
+            )
+            email = EmailMessage(
+                ("[WAC Proposal] %s: by %s %s" % (
+                    proposal.course_title,request.user.first_name,
+                    request.user.last_name)
+                ), t.render(c), request.user.email, TO_LIST, BCC,
+                headers = {
+                    'Reply-To': request.user.email,'From': request.user.email
+                }
+            )
             email.content_subtype = "html"
             #if proposal.syllabus:
             #    email.attach(proposal.syllabus.name.split('/')[2],proposal.syllabus)
@@ -129,10 +145,18 @@ def proposal_form(request, pid=None):
             copies = len(criteria)
         form = ProposalForm(prefix="wac", instance=proposal)
         profile_form = UserProfileForm(prefix="profile")
-    return render_to_response("writingcurriculum/form.html", {"form": form,"profile_form": profile_form, "criteria": criteria, "copies":copies}, context_instance=RequestContext(request))
+    return render_to_response(
+        "writingcurriculum/form.html",{
+            "form": form,"profile_form": profile_form,
+            "criteria": criteria, "copies":copies
+        }, context_instance=RequestContext(request)
+    )
 
 @login_required
 def my_proposals(request):
-    objects = CourseProposal.objects.filter(user=request.user).order_by("-date_created")
-    return render_to_response("writingcurriculum/my_proposals.html", {"objects": objects,}, context_instance=RequestContext(request))
-
+    objects = CourseProposal.objects.filter(
+        user=request.user).order_by("-date_created")
+    return render_to_response(
+        "writingcurriculum/my_proposals.html",
+        {"objects": objects,}, context_instance=RequestContext(request)
+    )

@@ -1,4 +1,3 @@
-from django.conf import settings
 from djtools.utils.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -6,12 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext, loader
 
 from djforms.astronomy.institute.forms import NightReportForm, EvaluationForm
-
-if settings.DEBUG:
-    TO_LIST = ["larry@carthage.edu",]
-else:
-    TO_LIST = ["darion@carthage.edu",]
-BCC = settings.MANAGERS
+from djforms.astronomy.institute import TO_LIST, BCC
 
 def night_report(request):
     if request.method=='POST':

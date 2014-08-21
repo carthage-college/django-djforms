@@ -12,14 +12,14 @@ from honeypot.decorators import check_honeypot
 
 import datetime
 
-if settings.DEBUG:
-    TO_LIST = ["larry@carthage.edu",]
-else:
-    TO_LIST = ["dmoore2@carthage.edu",]
-BCC = settings.MANAGERS
-
 @check_honeypot
 def contact(request):
+    if settings.DEBUG:
+        TO_LIST = ["larry@carthage.edu",]
+    else:
+        TO_LIST = ["dmoore2@carthage.edu",]
+    BCC = settings.MANAGERS
+
     if request.method=='POST':
         form = ContactForm(request.POST, request.FILES)
         if form.is_valid():

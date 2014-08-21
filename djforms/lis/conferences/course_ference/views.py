@@ -14,13 +14,13 @@ from json import dumps
 
 import os
 
-if settings.DEBUG:
-    TO_LIST = [settings.SERVER_EMAIL,]
-else:
-    TO_LIST = ["nextgenlibraries@carthage.edu",]
-BCC = settings.MANAGERS
-
 def registration_form(request, reg_type):
+    if settings.DEBUG:
+        TO_LIST = [settings.SERVER_EMAIL,]
+    else:
+        TO_LIST = ["nextgenlibraries@carthage.edu",]
+    BCC = settings.MANAGERS
+
     # try/catch works as 404 detector and GET initialization for forms
     try:
         form_con = eval(reg_type.capitalize() + "ContactForm")()
