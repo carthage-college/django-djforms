@@ -1,13 +1,14 @@
 {% extends "jobpost/base.html" %}
 {% block title %}Post Manager Archive{% endblock %}
 {% block content %}
-    <div class="buffer">
     <h2 class="page_title">Post Manager Archive</h2>
-    {% if object_list %}  
+    {% if object_list %}
     <div class="post_list">
         {% for post in object_list %}
             <div>
-            <h3 class="title"><a href="{{ post.get_edit_url }}">{{ post.title }}</a></h3>
+            <h3 class="title">
+                <a href="{{ post.get_edit_url }}">{{ post.title }}</a>
+            </h3>
             <p class="date">Job posted on {{ post.publish|date:"F j, Y" }}</p>
             <p class="description">{{ post.description }}</p>
             {% if post.active %}
@@ -31,5 +32,4 @@
     {% endif %}
     </p>
     {% endif %}
-    </div>
 {% endblock %}

@@ -17,14 +17,6 @@ import os.path
 storage_location = os.path.join(settings.MEDIA_ROOT, "files/catering/temp/")
 storage = FileSystemStorage(location=storage_location)
 
-if settings.DEBUG:
-    TO_LIST = ["larry@carthage.edu",]
-else:
-    TO_LIST = [
-        "dhoffman1@carthage.edu","jchilson@carthage.edu,",
-        "mmichaud@carthage.edu", "jklabechek@carthage.edu"
-    ]
-
 class CateringEventWizard(SessionWizardView):
     """
     Form wizard view for processing the event steps
@@ -33,6 +25,14 @@ class CateringEventWizard(SessionWizardView):
     template_name = "catering/event_form_wizard.html"
 
     def done(self, form_list, **kwargs):
+        if settings.DEBUG:
+            TO_LIST = ["larry@carthage.edu",]
+        else:
+            TO_LIST = [
+                "dhoffman1@carthage.edu","jchilson@carthage.edu,",
+                "mmichaud@carthage.edu", "jklabechek@carthage.edu"
+            ]
+
         event = Event()
         xfields = {'open_to':"", 'room_set_up':"", 'beverages':""}
         for form in form_list:

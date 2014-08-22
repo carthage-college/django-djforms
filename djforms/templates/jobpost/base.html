@@ -1,147 +1,65 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{% autoescape off %}
+{% extends "base.html" %}
 {% load ifusergroup %}
-<html lang="en-US">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>{% block title %}{% endblock %}</title>
-    {% block metatags %}
-    <meta http-equiv="Content-Language" content="en-us" />
-    <meta name="description" content="" />
-    <meta name="keywords" content="Home Page" />
-    <meta name="MSSmartTagsPreventParsing" content="true" />
-    {% endblock %}
-    {% block css %}
+{% block css %}
     {% ifusergroup Staff Faculty %}
-    <style type="text/css" media="screen, projection">
-    /* <![CDATA[ */
-        @import url("https://www.carthage.edu/media/css/douglasfir/global.css");
-        @import url("https://www.carthage.edu/assets/current/css/core/grid-960.css");
-        @import url("http://www.carthage.edu/assets/current/css/plugins/icons.css");
-    /* ]]> */
-        #about {margin-top:70px;}
-    </style>
-    <!--[if IE]>
-        <style type="text/css">#footer {zoom: 1;} #first li {font-size:.9em;}</style>
-    <![endif]-->
-    <!--[if IE 6]>
-        <style type="text/css">div#first {width:150px;margin-left:7px;}     div#fourth {margin-right:-1px;}</style>
-    <![endif]-->
-    <link rel="stylesheet" href="/assets/current/css/print.css" type="text/css" media="print" />
-    <link href="/assets/css/jquery/plugins/searchmeme/searchMeme.css" rel="stylesheet" type="text/css" />
+        {{block.super}}
     {% else %}
-    <style type="text/css" media="screen, projection">
-    body {background-color:#E5DCC1 !important;font-family:verdana,arial,sans-serif; font-size:.9em;}
-    #nav, #about {float: left; list-style: none outside none; padding-right:5px;  }
-    #nav li, #about li { display: inline; list-style-type: none; overflow: hidden; }
-    #about {border-right:1px solid #800;}
-    #nav {padding-left:5px;}
-    </style>
+        <style type="text/css" media="screen, projection">
+        body {
+            background-color:#fff !important;
+            font-family:verdana,arial,sans-serif; font-size:.9em;}
+        #nav, #about {float: left; list-style: none outside none;
+            padding-right:5px;}
+        #nav li, #about li { display: inline; list-style-type: none;
+            overflow: hidden;}
+        #about {border-right:1px solid #800;}
+        #nav {padding-left:5px;}
+        </style>
     {% endifusergroup %}
-    {% include "includes/extra_form_style.html" %}
-    {% endblock %}
-    {% block extra_style %}{% endblock %}
-    {% block javascript %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-    {% ifusergroup Staff Faculty %}
-    <script src="https://www.carthage.edu/media/js/douglasfir/globalnav.js" type="text/javascript"></script>
-    <script src="https://www.carthage.edu/media/js/douglasfir/superfish/superfish.js" type="text/javascript"></script>
-    <script src="/assets/js/jquery/plugins/jquery.searchMeme.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    $(function() {
-        $('ul.sf-vertical').superfish({autoArrows:false});
-        var search = $('#search-text').searchMeme({ onSearch: function (searchText) {
-            setTimeout(function () {
-                search.searchMeme({ searchComplete: true });
-                    $('#search-form').submit();
-            }, 0);
-        }
-        , buttonPlacement: 'right', button: 'none', defaultText: ''
-        });
-        $(".required > input").addClass("required");
-        $(".required > select").addClass("required");
-        $(".required > textarea").addClass("required");
-        $(".warning > input").addClass("error");
-        $(".warning > select").addClass("error");
-        $(".warning > textarea").addClass("error");
-    });
-    </script>
-    {% endifusergroup %}
-    {% endblock %}
-    {% block extra_javascript %}{% endblock %}
-    {% block columns %}{% endblock %}
-</head>
-{% block body %}
-<body>
-    <div id="wrapper" class="container">
-    <div class="stone">
-        {% ifusergroup Staff Faculty %}
-        <div id="Header">
-            <div id="topnav">
-                <h1><a href="http://www.carthage.edu/?ext"><img src="/assets/current/img/ui/3flame_top_sm.gif" alt="Carthage" /></a></h1>
-                {% block globalnavinclude %}{% include "includes/globalnav.html" %}{% endblock %}
-            </div>
-        </div>
-        {% endifusergroup %}
-        {% block left_nav %}
-        <div id="first">
-            <ul id="about">
-                <li><a href="/forms/job/">Available Jobs</a></li>
-                <!-- <li><a href="/forms/job/search/">Search for Jobs</a></li> -->
-                <li><a href="/forms/job/departments/">Jobs by Department</a></li>
-                {% ifusergroup Staff Faculty %}
-                <li><a href="/forms/job/createpost/">Create a Job Post</a></li>
-                <li><a href="/forms/job/user-post-list/">Your Posts</a></li>
-                {% endifusergroup %}
-                {% if perms.jobpost.can_manage %}
-                <li><a href="/forms/job/post-manage-list/">Manage Job Posts</a></li>
-                {% endif %}
-            </ul>
-            <ul id="nav">
-                <li><a href="http://www.carthage.edu/finaid/" target="_blank">Financial Aid Home</a></li>
-                {% if not user.is_anonymous %}
-                    <li><a href="/forms/accounts/logout/?next=/forms/job/">Logout</a></li>
-                {% endif %}
-                {% if user.is_superuser %}
-                    <li><a href="/forms/admin/">Administration</a></li>
-                {% endif %}
-            </ul>
-            <div style="clear:both;"></div>
-        </div>
-        {% endblock %}
-        <div id="second">
-        {% block content %}{% endblock %}
-        </div>
-        {% block sidebar %}
-        {% endblock %}
-        {% ifusergroup Staff Faculty %}
-        <div id="footer">
-            <p>Carthage College<br />
-            2001 Alford Park Drive<br />
-            Kenosha, WI 53140</p>
-            <p>262-551-8500<br />
-            <a href="mailto:webmaster@carthage.edu">webmaster@carthage.edu</a><br />
-            <a href="http://www.carthage.edu/about/campus-map/">Maps</a> and <a href="http://www.carthage.edu/about/directions">directions</a>
-            </p>
-            <p class="last">
-                <br />
-                Users:
-                <br />
-                {% if not user.is_anonymous %}
-                    <a href="/forms/accounts/logout/?next=/forms/job/">Logout</a>
-                {% else %}
-                    <a href="/forms/accounts/login/?next={{request.path}}">Login</a>
-                {% endif %}
-            </p>
-            <div style="clear:both;"></div>
-            <div id="tagline"><img alt="Truth, Strength, Service. Together." src="/assets/img/ui/tagline.gif" border="0" /></div>
-        </div><!-- end footer -->
-        {% endifusergroup %}
-    </div><!-- end stone -->
-    </div><!-- end wrapper -->
-</body>
 {% endblock %}
-</html>
-{% endautoescape %}
+{% block header %}
+    {% ifusergroup Staff Faculty %}
+        {{block.super}}
+    {% endifusergroup %}
+{% endblock %}
+{% block hero %}
+    {% ifusergroup Staff Faculty %}
+        {{block.super}}
+    {% endifusergroup %}
+{% endblock %}
+{% block left_nav %}
+    <ul>
+        <li><a href="/forms/job/">Available Jobs</a></li>
+        <!-- <li><a href="/forms/job/search/">Search for Jobs</a></li> -->
+        <li><a href="/forms/job/departments/">Jobs by Department</a></li>
+        {% ifusergroup Staff Faculty %}
+        <li><a href="/forms/job/createpost/">Create a Job Post</a></li>
+        <li><a href="/forms/job/user-post-list/">Your Posts</a></li>
+        {% endifusergroup %}
+        {% if perms.jobpost.can_manage %}
+        <li><a href="/forms/job/post-manage-list/">Manage Job Posts</a></li>
+        {% endif %}
+        <li><a href="http://www.carthage.edu/finaid/" target="_blank">Financial Aid Home</a></li>
+        {% if not user.is_anonymous %}
+            <li><a href="/forms/accounts/logout/?next=/forms/job/">Logout</a></li>
+        {% endif %}
+        {% if user.is_superuser %}
+            <li><a href="/forms/admin/">Administration</a></li>
+        {% endif %}
+    </ul>
+{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block content_head %}
+    {% ifusergroup Staff Faculty %}
+    <h1 id="page_title">
+        Carthage College Jobs
+        <span id="secondary-dropdown"></span>
+    </h1>
+    {% endifusergroup %}
+{% endblock %}
+{% block content %}{% endblock %}
+{% block footer %}
+    {% ifusergroup Staff Faculty %}
+        {{block.super}}
+    {% endifusergroup %}
+{% endblock %}

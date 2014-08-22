@@ -10,6 +10,7 @@ class TimeSlot(models.Model):
 
     class Meta:
         db_table = 'music_ensembles_choral_timeslot'
+        ordering = ['date_time']
 
     def __unicode__(self):
         return self.date_time
