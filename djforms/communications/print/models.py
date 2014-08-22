@@ -1,4 +1,12 @@
+'''
+Notes for steve:
+
+ 1. Do we have a phone field?
+'''
+
 from django.db import models
+
+from djtools.fields import BINARY_CHOICES
 
 FORMATS = (
     ('booklet event','Booklet / Event program'),
@@ -65,7 +73,7 @@ class Request(Models.model):
         "Briefly describe the purpose of your request",
         max_length=128
     )
-    audience = models.CharField(
+    target_audience = models.CharField(
         "Who is/are your target audience/audiences? (For example: Alumni, prospective students, community.)",
         max_length=128
     )
@@ -73,6 +81,10 @@ class Request(Models.model):
         "Are there secondary target audiences",
         max_length=128
     )
+	format = models.CharField(
+		"What is the format of your finished piece",
+		choices=FORMATS
+	)
     format_quantity = models.CharField(
         "What is the quantity for each format",
         max_length=128
@@ -96,6 +108,10 @@ class Request(Models.model):
     consent = models.CharField(
         choices=CONSENT
     )
+	is_mailing = models.CharField(
+		"Is this project being mailed",
+		choices=BINARY_CHOICES
+	)
     who_mailing = models.CharField(
         "Who is mailing",
         choices=WHO_MAILING,
