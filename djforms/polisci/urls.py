@@ -18,6 +18,13 @@ urlpatterns = patterns('djforms.polisci',
         name='model_united_nations_registration'
     ),
     url(
+        r'^wipcs/registration/success/$',
+        TemplateView.as_view(
+            template_name="polisci/wipcs/done.html"
+        ),
+        name="wipcs_registration_success"
+    ),
+    url(
         r'^wipcs/registration/$',
         'wipcs.views.registration',
         name='wipcs_registration'

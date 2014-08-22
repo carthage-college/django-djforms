@@ -1,23 +1,24 @@
 {% extends "base.html" %}
 {% load get_api %}
 {% block title %}
-    WIPCS &mdash; Political Science &mdash; Carthage College
+    WIPCS Conference Registration &mdash; Political Science &mdash; Carthage College
 {% endblock %}
 {% block extra_style %}
     <link href="//www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css"
         rel="stylesheet" type="text/css" />
     <style type="text/css">
-    #profile h2 {
-        margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;
-        padding:3px 0 3px 5px;width:99%;
-    }
-    li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
-    #id_security_code{width:35px;}
-    #id_postal_code, #id_total {width:100px;}
+    #id_postal_code, #id_total, #id_security_code,
+    #id_expiration_month,#id_expiration_year {width:100px;}
     </style>
 {% endblock %}
 {% block left_nav %}
     {% include "polisci/wipcs/left_nav.html" %}
+{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        WIPCS Conference Registration
+        <span id="secondary-dropdown"></span>
+    </h1>
 {% endblock %}
 {% block content %}
 <div class="forms-container">
@@ -30,7 +31,6 @@
             </a>
         </div>
     </div>
-    <h1>Conference Registration</h1>
     {% include "includes/errors_text.html" %}
     {% if form_proc.errors or form_ord.errors or form_con.errors %}
         <p class="error">There were errors with the data submitted, see below.</p>

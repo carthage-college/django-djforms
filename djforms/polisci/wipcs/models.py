@@ -4,10 +4,25 @@ from djforms.core.models import GenericChoice
 from djforms.processors.models import Contact
 from tagging import fields, managers
 
+SUBMITTING =(
+    ("Paper for presentation", "Paper for presentation"),
+    ("Poster for presentation", "Poster for presentation"),
+    ("Roundtable proposal", "Roundtable proposal")
+)
+
 class RegistrationContact(Contact):
 
-    name_tag            = models.CharField("Name tag name", help_text="Name as you'd like it to appear on your name tag.", max_length="128", null=True, blank=True)
-    affiliation         = models.CharField("Institution/Organization", max_length="256", null=True, blank=True)
-    dietary_needs       = models.TextField(null=True, blank=True, help_text="Morning coffee, lunch, and snacks provided.")
-    other_needs         = models.CharField(max_length="256", null=True, blank=True)
+    how_hear = models.CharField(
+        "How did you hear about this conference?",
+         max_length="128"
+    )
+    abstract = models.TextField()
+    cv = models.FileField(
+        'CV', upload_to='files/polisci/conferences/cvs/',
+        max_length="256"
+    )
+    submitting = models.CharField(
+        "Are you submitting:",
+        max_length="128", choices=SUBMITTING
+    )
 
