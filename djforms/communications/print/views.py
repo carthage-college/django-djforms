@@ -17,7 +17,7 @@ def form(request):
             subject = "Carthage, will I be admitted? (%s)" % (data.first_name)
             send_mail(
                 request, TO_LIST, subject, data.email,
-                "admissions/admitted/email.html", data, BCC
+                "communications/print/email.html", data, BCC
             )
             return HttpResponseRedirect(
                 reverse_lazy("admitted_success")
@@ -27,7 +27,7 @@ def form(request):
     else:
         form = ChanceOfForm()
     return render_to_response(
-        "admissions/admitted/form.html",
+        "communications/print/form.html",
         {
             "form": form            
         }, context_instance=RequestContext(request))
