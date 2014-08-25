@@ -1,6 +1,6 @@
 from django import forms
 
-from djforms.communications.print.models import *
+from djforms.communications.printrequest.models import *
 
 class RequestForm(forms.ModelForm):
     

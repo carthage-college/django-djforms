@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse_lazy
 
-from djforms.communications.print.forms import RequestForm
+from djforms.communications.printrequest.forms import RequestForm
 from djtools.utils.mail import send_mail
 
 def form(request):
@@ -25,7 +25,7 @@ def form(request):
         else:
             prospect_status = request.POST.get("prospect_status")
     else:
-        form = ChanceOfForm()
+        form = RequestForm()
     return render_to_response(
         "communications/print/form.html",
         {
