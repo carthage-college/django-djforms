@@ -81,10 +81,10 @@ class Request(Models.model):
         "Are there secondary target audiences",
         max_length=128
     )
-	format = models.CharField(
-		"What is the format of your finished piece",
-		choices=FORMATS
-	)
+    print_format = models.CharField(
+	"What is the format of your finished piece",
+	choices=FORMATS
+    )
     format_quantity = models.CharField(
         "What is the quantity for each format",
         max_length=128
