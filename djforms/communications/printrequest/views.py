@@ -8,7 +8,7 @@ from djtools.utils.mail import send_mail
 from djforms.communications.printrequest.forms import PrintRequestForm
 
 
-def printrequest(request):
+def home(request):
     if request.method == 'POST':
         form = PrintRequestForm(request.POST)
         if form.is_valid():

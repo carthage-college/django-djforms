@@ -18,11 +18,12 @@
     <form method="post" action="." class="form" id="profile">
         {% csrf_token %}
         <text>test</text>
+        {{ form }}
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}
                     a
-                    {% include "form_field.inc.html" %}
+                    {{ field.label }} {{ field }}
                 {% endfor %}
             </ol>
         </fieldset>
