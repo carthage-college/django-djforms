@@ -17,10 +17,12 @@
     {% include "includes/errors_text.html" %}
     <form method="post" action="." class="form" id="profile">
         {% csrf_token %}
+        <text>test</text>
         <fieldset class="blockLabels">
             <ol>
-                {% for field in form.visible_fields %}
-                    {% include "form_field.inc.html" %}
+                {% for field in form %}
+                    
+                    {{ field.label_tag }} {{ field }}
                 {% endfor %}
             </ol>
         </fieldset>
