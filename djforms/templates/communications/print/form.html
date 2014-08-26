@@ -21,8 +21,8 @@
         <fieldset class="blockLabels">
             <ol>
                 {% for field in form %}
-                    
-                    {{ field.label_tag }} {{ field }}
+                    a
+                    {% include "form_field.inc.html" %}
                 {% endfor %}
             </ol>
         </fieldset>

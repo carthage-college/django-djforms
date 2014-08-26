@@ -3,6 +3,7 @@ from django import forms
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
 from djforms.polisci.wipcs.models import RegistrationContact
+from djforms.core.models import PAYMENT_CHOICES
 
 from tagging.models import Tag, TaggedItem
 
@@ -23,7 +24,7 @@ class RegistrationContactForm(ContactForm):
         fields = (
             'first_name','last_name','email','address1','address2',
             'city','state','postal_code','phone','how_hear','abstract',
-            'cv','submitting'
+            'cv','submitting','payment_method'
         )
 
 class RegistrationOrderForm(OrderForm):

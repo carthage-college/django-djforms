@@ -25,4 +25,8 @@ class RegistrationContact(Contact):
         "Are you submitting:",
         max_length="128", choices=SUBMITTING
     )
+    payment_method = models.CharField(
+        max_length="128",
+        choices=PAYMENT_CHOICES
+    )
 

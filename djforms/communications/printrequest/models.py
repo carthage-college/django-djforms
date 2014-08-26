@@ -5,6 +5,7 @@ Notes for steve:
 '''
 
 from django.db import models
+from django.conf import settings
 
 from djtools.fields import BINARY_CHOICES
 
@@ -42,8 +43,8 @@ SPEED_MAILING = (
     ('none','None')
 )
 
-class Request(Models.model):
-    
+class PrintRequest(models.Model):
+
     name = models.CharField(
         "Name",
         max_length=128
@@ -63,7 +64,10 @@ class Request(Models.model):
         "Account number"
     )
     estimate = models.BooleanField(
-        "Do you require an estimate for this project before we begin? (Please allow an additional 48-72 hours to deliver quotes.)"
+        """
+        Do you require an estimate for this project before we begin?
+        (Please allow an additional 48-72 hours to deliver quotes.)
+        """
     )
     project_name = models.CharField(
         "What is the name of your project",
@@ -74,7 +78,10 @@ class Request(Models.model):
         max_length=128
     )
     target_audience = models.CharField(
-        "Who is/are your target audience/audiences? (For example: Alumni, prospective students, community.)",
+        """
+        Who is/are your target audience/audiences?
+        (For example: Alumni, prospective students, community.)
+        """,
         max_length=128
     )
     secondary_audience = models.CharField(
@@ -82,15 +89,19 @@ class Request(Models.model):
         max_length=128
     )
     print_format = models.CharField(
-	"What is the format of your finished piece",
-	choices=FORMATS
+        "What is the format of your finished piece",
+        choices=FORMATS
     )
     format_quantity = models.CharField(
         "What is the quantity for each format",
         max_length=128
     )
     special_instructions = models.CharField(
-        "Please provide a short description - including special instructions - needed for each item you selected above.",
+        """
+        Please provide a short description -
+        including special instructions -
+        needed for each item you selected above.
+        """,
         max_length=128
     )
     delivery_date = models.DateField(
@@ -98,7 +109,11 @@ class Request(Models.model):
         auto_now=False
     )
     delivery_location = models.CharField(
-        "Final requested delivery location: (Please include the full name of your office, office room number, and name of recipient.)",
+        """
+        Final requested delivery location:
+        (Please include the full name of your office,
+        office room number, and name of recipient.)
+        """,
         max_length=128
     )
     delivery_instructions = models.CharField(
@@ -108,10 +123,10 @@ class Request(Models.model):
     consent = models.CharField(
         choices=CONSENT
     )
-	is_mailing = models.CharField(
-		"Is this project being mailed",
-		choices=BINARY_CHOICES
-	)
+    is_mailing = models.CharField(
+        "Is this project being mailed",
+        choices=BINARY_CHOICES
+    )
     who_mailing = models.CharField(
         "Who is mailing",
         choices=WHO_MAILING,

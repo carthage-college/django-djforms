@@ -1,33 +1,26 @@
 from django.conf import settings
-from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.core.urlresolvers import reverse_lazy
-
-from djforms.communications.printrequest.forms import RequestForm
+from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from djtools.utils.mail import send_mail
 
-def form(request):
-    
+from djforms.communications.printrequest.forms import PrintRequestForm
+
+
+def printrequest(request):
     if request.method == 'POST':
-        form = RequestForm(request.POST)
+        form = PrintRequestForm(request.POST)
         if form.is_valid():
             data = form.save()
-            
-            subject = "Carthage, will I be admitted? (%s)" % (data.first_name)
-            send_mail(
-                request, TO_LIST, subject, data.email,
-                "communications/print/email.html", data, BCC
-            )
-            return HttpResponseRedirect(
-                reverse_lazy("admitted_success")
-            )
+            return HttpResponseRedirect(reverse('done'))
         else:
-            prospect_status = request.POST.get("prospect_status")
+            pass
     else:
-        form = RequestForm()
+        form = PrintRequestForm()
     return render_to_response(
         "communications/print/form.html",
         {
-            "form": form            
-        }, context_instance=RequestContext(request))
+            "form": form,
+        }, context_instance=RequestContext(request)
+    )

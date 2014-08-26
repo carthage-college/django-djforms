@@ -9,6 +9,11 @@
     <style type="text/css">
     #id_postal_code, #id_total, #id_security_code,
     #id_expiration_month,#id_expiration_year {width:100px;}
+    {% if form_reg.data.payment_method == "Credit Card" %}
+    #payment-details { display:inherit; }
+    {% else %}
+    #payment-details { display:none; }
+    {% endif %}
     </style>
 {% endblock %}
 {% block left_nav %}
@@ -54,7 +59,7 @@
                 {% endfor %}
             </ol>
         </fieldset>
-        <fieldset class="blockLabels">
+        <fieldset class="blockLabels" id="creditcard-details">
             <h2>Billing Information</h2>
             {% if form_proc.errors %}
                 <div style="padding-left:4px;">
@@ -68,6 +73,23 @@
             {% endif %}
             <ol>
                 {% include "form_field_credit_card.inc.html" %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels" id="check-details">
+            <ol>
+                <li class="btnHolder">
+                    <p>
+                        Make all checks payable to:
+                        <strong>Carthage College</strong>, and mail to:
+                    </p>
+                    <blockquote>
+                        Dr. Jeffrey L. Roberg<br />
+                        Carthage College<br />
+                        Office of Political Science<br />
+                        2001 Alford Park Drive<br />
+                        Kenosha, WI 53140
+                    </blockquote>
+                </li>
             </ol>
         </fieldset>
         {% include "form_submit.inc.html" %}

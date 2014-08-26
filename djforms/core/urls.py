@@ -42,6 +42,8 @@ urlpatterns = patterns('',
     (r'^catering/', include('djforms.catering.urls')),
     # CharacterQuest
     (r'^character-quest/', include('djforms.characterquest.urls')),
+    # communications
+    (r'^communications/', include('djforms.communications.urls')),
     # giving
     (r'^giving/', include('djforms.giving.urls')),
     # LIS
