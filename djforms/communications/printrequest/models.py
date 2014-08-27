@@ -86,7 +86,8 @@ class PrintRequest(models.Model):
     )
     secondary_audience = models.CharField(
         "Are there secondary target audiences",
-        max_length=128
+        max_length=128,
+        blank=True
     )
     print_format = models.CharField(
         "What is the format of your finished piece",
@@ -104,9 +105,9 @@ class PrintRequest(models.Model):
         """,
         max_length=128
     )
-    delivery_date = models.DateField(
+    delivery_date = models.CharField(
         "Final requested delivery date of project",
-        auto_now=False
+        max_length=20
     )
     delivery_location = models.CharField(
         """
@@ -121,6 +122,12 @@ class PrintRequest(models.Model):
         max_length=128
     )
     consent = models.CharField(
+        "If the Office of Communications coordinates \
+        your mailing with a mail house, we need your \
+        mailing list at least one week before the mail \
+        date. It is your responsibility to coordinate \
+        the request from Institutional Advancement within \
+        their established guidelines and procedures",
         choices=CONSENT
     )
     is_mailing = models.CharField(
@@ -130,24 +137,31 @@ class PrintRequest(models.Model):
     who_mailing = models.CharField(
         "Who is mailing",
         choices=WHO_MAILING,
+        blank=True
     )
     how_mailing = models.CharField(
         "How is it being mailed",
-        choices=HOW_MAILING
+        choices=HOW_MAILING,
+        blank=True
     )
     speed_mailing = models.CharField(
         "Please indicate how your piece is to be mailed",
-        choices=SPEED_MAILING
+        choices=SPEED_MAILING,
+        blank=True
     )
     file_1 = models.FileField(
-        "File 1"
+        "File 1",
+        blank=True
     )
     file_2 = models.FileField(
-        "File 2"
+        "File 2",
+        blank=True
     )
     file_3 = models.FileField(
-        "File 3"
+        "File 3",
+        blank=True
     )
     file_4 = models.FileField(
-        "File 4"
+        "File 4",
+        blank=True
     )
