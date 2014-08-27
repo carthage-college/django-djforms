@@ -3,20 +3,14 @@ from django.views.generic import TemplateView, RedirectView
 
 urlpatterns = patterns('djforms.communications.printrequest.views',
     url(
-        r'^printrequest/$', TemplateView.as_view(
-            template_name='communications/print/form.html'
-        ),
-        name='home'
-    ),
-    url(
-        r'^printrequest/success/$', TemplateView.as_view(
-            template_name='communications/print/form_success.html'
+        r'^print-request/success/$', TemplateView.as_view(
+            template_name='communications/printrequest/form_success.html'
         ),
         name='success'
     ),
     url(
         r'^print-request/$',
-        'form',
-        name='print_request_form'
+        'print_request',
+        name='print_request'
     ),
 )

@@ -2,8 +2,7 @@ from django import forms
 
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
-from djforms.polisci.wipcs.models import RegistrationContact
-from djforms.core.models import PAYMENT_CHOICES
+from djforms.polisci.wipcs.models import RegistrationContact, PAYMENT_CHOICES
 
 from tagging.models import Tag, TaggedItem
 
@@ -18,6 +17,10 @@ class RegistrationContactForm(ContactForm):
     WIPCS conference registration contact form, extends
     base ContactForm in processors app
     """
+
+    payment_method = forms.TypedChoiceField(
+        choices=PAYMENT_CHOICES, widget=forms.RadioSelect()
+    )
 
     class Meta:
         model = RegistrationContact

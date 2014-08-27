@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import ugettext, ugettext_lazy as _
 from djforms.core.models import *
 
 class GenericChoiceAdmin(admin.ModelAdmin):
@@ -15,6 +16,7 @@ class PromotionAdmin(admin.ModelAdmin):
     model = Promotion
     prepopulated_fields = {"slug": ("title",)}
 
+# core models
 admin.site.register(Department)
 admin.site.register(GenericContactForm)
 admin.site.register(GenericChoice, GenericChoiceAdmin)

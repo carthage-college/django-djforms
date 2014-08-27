@@ -24,6 +24,8 @@ urlpatterns = patterns('',
     (r'^admin/(?P<app_label>[\d\w]+)/(?P<model_name>[\d\w]+)/csv/', 'djforms.core.util.admin_list_export'),
     # admin
     (r'^admin/', include(admin.site.urls) ),
+    # override user creation
+    #(r'^admin/auth/user/add/', 'djauth.views.user_add'),
     # admin/docs
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     # admissions

@@ -7,20 +7,18 @@ from djtools.utils.mail import send_mail
 
 from djforms.communications.printrequest.forms import PrintRequestForm
 
-
-def home(request):
+def print_request(request):
     if request.method == 'POST':
         form = PrintRequestForm(request.POST)
         if form.is_valid():
             data = form.save()
-            return HttpResponseRedirect(reverse('done'))
-        else:
-            pass
+            return HttpResponseRedirect(reverse('success'))
     else:
         form = PrintRequestForm()
     return render_to_response(
-        "communications/print/form.html",
+        'communications/printrequest/form.html',
         {
-            "form": form,
-        }, context_instance=RequestContext(request)
+            'form': form,
+        },
+        context_instance=RequestContext(request)
     )

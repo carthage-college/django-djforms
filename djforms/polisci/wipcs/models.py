@@ -2,8 +2,13 @@ from django.db import models
 
 from djforms.core.models import GenericChoice
 from djforms.processors.models import Contact
+
 from tagging import fields, managers
 
+PAYMENT_CHOICES = (
+    ('Credit Card', 'Credit Card'),
+    ('Check', 'Check'),
+)
 SUBMITTING =(
     ("Paper for presentation", "Paper for presentation"),
     ("Poster for presentation", "Poster for presentation"),
