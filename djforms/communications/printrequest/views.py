@@ -16,21 +16,20 @@ def print_request(request):
     if request.method == 'POST':
         form = PrintRequestForm(request.POST)
         if form.is_valid():
-            data = form.save()
-            
-            file1 = request.FILES['file1']
-            file2 = request.FILES['file2']
-            file3 = request.FILES['file3']
-            file4 = request.FILES['file4']
-            
+            #data = form.save()
+
+            #file1 = request.FILES['file_1']
+            #file2 = request.FILES['file_2']
+            #file3 = request.FILES['file_3']
+            #file4 = request.FILES['file_4']
+
             try:
-                mail = EmailMessage("test", "testing form submission", TO_LIST, "test@test.com")
-                mail.attach(file1.name, attach.read(), file1.content_type)
-                mail.attach(file2.name, attach.read(), file2.content_type)
-                mail.attach(file3.name, attach.read(), file3.content_type)
-                mail.attach(file4.name, attach.read(), file4.content_type)
+                mail = EmailMessage("test", "testing form submission", "zwenta@carthage.edu", "test@test.com")
+                #mail.attach(file1.name, attach.read(), file1.content_type)
+                #mail.attach(file2.name, attach.read(), file2.content_type)
+                #mail.attach(file3.name, attach.read(), file3.content_type)
+                #mail.attach(file4.name, attach.read(), file4.content_type)
                 mail.send()
-                
             except:
                 return "Attachment error"
             return HttpResponseRedirect(reverse('success'))

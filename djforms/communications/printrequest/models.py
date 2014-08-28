@@ -61,7 +61,8 @@ class PrintRequest(models.Model):
         "Email"
     )
     account = models.IntegerField(
-        "Account number"
+        "Account number",
+        max_length=18
     )
     estimate = models.BooleanField(
         """
@@ -91,7 +92,8 @@ class PrintRequest(models.Model):
     )
     print_format = models.CharField(
         "What is the format of your finished piece",
-        choices=FORMATS
+        choices=FORMATS,
+        max_length=128
     )
     format_quantity = models.CharField(
         "What is the quantity for each format",
@@ -105,9 +107,9 @@ class PrintRequest(models.Model):
         """,
         max_length=128
     )
-    delivery_date = models.CharField(
+    delivery_date = models.DateField(
         "Final requested delivery date of project",
-        max_length=20
+        auto_now=False
     )
     delivery_location = models.CharField(
         """
@@ -128,26 +130,31 @@ class PrintRequest(models.Model):
         date. It is your responsibility to coordinate \
         the request from Institutional Advancement within \
         their established guidelines and procedures",
-        choices=CONSENT
+        choices=CONSENT,
+        max_length=128
     )
     is_mailing = models.CharField(
         "Is this project being mailed",
-        choices=BINARY_CHOICES
+        choices=BINARY_CHOICES,
+        max_length=4
     )
     who_mailing = models.CharField(
         "Who is mailing",
         choices=WHO_MAILING,
-        blank=True
+        blank=True,
+        max_length=128
     )
     how_mailing = models.CharField(
         "How is it being mailed",
         choices=HOW_MAILING,
-        blank=True
+        blank=True,
+        max_length=128
     )
     speed_mailing = models.CharField(
         "Please indicate how your piece is to be mailed",
         choices=SPEED_MAILING,
-        blank=True
+        blank=True,
+        max_length=128
     )
     file_1 = models.FileField(
         "File 1",
