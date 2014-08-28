@@ -1,9 +1,18 @@
 from django import forms
 from django.conf import settings
+from localflavor.us.forms import USPhoneNumberField
 
 from djforms.communications.printrequest.models import PrintRequest
 
 class PrintRequestForm(forms.ModelForm):
+
+    phone = USPhoneNumberField(
+        label = "Phone number",
+        max_length=12,
+        #help_text="eg. 123-456-7890",
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'required phoneUS'})
+    )
 
     def clean(self):
         cleaned_data = super(PrintRequestForm, self).clean()
@@ -26,6 +35,6 @@ class PrintRequestForm(forms.ModelForm):
     class Meta:
         model = PrintRequest
         widgets = {
-            'phone': forms.TextInput(attrs={'placeholder': 'eg. 123-456-7890'}),
-            'delivery_date': forms.TextInput(attrs={'placeholder': 'eg. MM/DD/YYYY'})
+            'phone': forms.TextInput(attrs={'placeholder': 'eg. 123-456-7890', 'class': 'phoneUS'}),
+            'delivery_date': forms.TextInput(attrs={'placeholder': 'eg. MM/DD/YYYY'}),
         }

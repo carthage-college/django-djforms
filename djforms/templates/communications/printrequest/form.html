@@ -18,9 +18,12 @@
     <script type="text/javascript">
         $(document).ready(function(){
             
+            if ($("#id_is_mailing").val() == 'Yes')
+            {
+                $("#toggle-hide").removeClass("hidden");                
+            }
            $("#id_is_mailing").change(function(){
                 var value = this.value;
-                
                 value == "Yes" ? $("#toggle-hide").removeClass("hidden") : $("#toggle-hide").addClass("hidden");
            });
         });

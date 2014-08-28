@@ -53,10 +53,10 @@ class PrintRequest(models.Model):
         "Department",
         max_length=128
     )
-    phone = models.CharField(
+    '''phone = models.CharField(
         "Phone number",
-        max_length=16
-    )
+        max_length=12
+    )'''
     email = models.EmailField(
         "Email"
     )
