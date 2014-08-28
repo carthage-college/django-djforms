@@ -76,14 +76,15 @@
             </ol>
         </fieldset>
         <hr>
-        <fieldset class="blockLabels">
+        <fieldset>
             <h2>File Uploads</h2>
             These files related to this request
             will be sent to communications@carthage.edu
             <ol>
                 {% for field in form.visible_fields %}
                     {% if field.name == 'file_1' or field.name == 'file_2' or field.name == 'file_3' or field.name == 'file_4'%}
-                        {% include "form_field.inc.html" %}
+                        {{ field.label }}
+                        {{ field }}<br />
                     {% endif %}
                 {% endfor %}
             </ol>
