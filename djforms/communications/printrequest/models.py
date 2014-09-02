@@ -158,17 +158,21 @@ class PrintRequest(models.Model):
     )
     file_1 = models.FileField(
         "File 1",
+        upload_to="files/communications/printrequest/",
         blank=True
     )
     file_2 = models.FileField(
         "File 2",
+        upload_to="files/communications/printrequest/",
         blank=True
     )
     file_3 = models.FileField(
         "File 3",
+        upload_to="files/communications/printrequest/",
         blank=True
     )
     file_4 = models.FileField(
         "File 4",
+        upload_to="files/communications/printrequest/",
         blank=True
     )

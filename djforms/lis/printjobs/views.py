@@ -30,7 +30,6 @@ def print_request(request):
                 headers = {'Reply-To': cd['email'],'From': cd['email']}
             )
             email.content_subtype = "html"
-            attachments = request.FILES
             for field, value in request.FILES.items():
                 email.attach(value.name, value.read(), value.content_type)
             email.send(fail_silently=False)

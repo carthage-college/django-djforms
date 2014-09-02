@@ -17,51 +17,70 @@ def registration(request):
     BCC = settings.MANAGERS
 
     if request.POST:
-        form_con = RegistrationContactForm(request.POST)
+        form_con = RegistrationContactForm(request.POST,request.FILES)
         form_ord = RegistrationOrderForm(request.POST)
         if form_con.is_valid() and form_ord.is_valid():
             contact = form_con.save()
             order = form_ord.save()
             order.operator = "DJ PoliSci: WIPCS"
-            contact.order.add(order)
-            form_proc = TrustCommerceForm(order, contact, request.POST)
-            if form_proc.is_valid():
-                r = form_proc.processor_response
-                order.status = r.msg['status']
-                order.transid = r.msg['transid']
-                order.save()
-                order.contact = contact
-                send_mail(
-                    request, TO_LIST, 
-                    "[WIPCS] Conference Registration",
-                    contact.email, "polisci/wipcs/email.html", order, BCC
-                )
-                return HttpResponseRedirect(
-                    reverse('wipcs_registration_success')
-                )
-            else:
-                r = form_proc.processor_response
-                if r:
-                    order.status = r.status
-                else:
-                    order.status = "Blocked"
-                order.save()
-                if settings.DEBUG:
+            if contact.payment_method == "Credit Card":
+                form_proc = TrustCommerceForm(order, contact, request.POST)
+                if form_proc.is_valid():
+                    r = form_proc.processor_response
+                    order.status = r.msg['status']
+                    order.transid = r.msg['transid']
+                    order.cc_name = form_proc.name
+                    order.cc_4_digits = form_proc.card[-4:]
+                    order.save()
+                    contact.order.add(order)
+                    order.reg = contact
                     order.contact = contact
                     send_mail(
                         request, TO_LIST,
-                        "[WIPCS] Conference Registration", contact.email,
-                        "polisci/wipcs/email.html", order, BCC
+                        "[WIPCS] Conference Registration",
+                        contact.email, "polisci/wipcs/email.html", order, BCC,
+                        attach=True
                     )
                     return HttpResponseRedirect(
                         reverse('wipcs_registration_success')
                     )
+                else:
+                    r = form_proc.processor_response
+                    if r:
+                        order.status = r.status
+                    else:
+                        order.status = "Blocked"
+                    order.cc_name = form_proc.name
+                    if form_proc.card:
+                        order.cc_4_digits = form_proc.card[-4:]
+                    order.save()
+                    contact.order.add(order)
+            else:
+                order.auth="COD"
+                order.status="Pay later"
+                order.save()
+                contact.order.add(order)
+                order.reg = contact
+                send_mail(
+                    request, TO_LIST,
+                    "[WIPCS] Conference Registration",
+                    contact.email, "polisci/wipcs/email.html", order, BCC,
+                    attach=True
+                )
+                return HttpResponseRedirect(
+                    reverse('wipcs_registration_success')
+                )
         else:
-            form_proc = TrustCommerceForm(None, request.POST)
-            form_proc.is_valid()
+            if request.POST.get('payment_method') == "Credit Card":
+                form_proc = TrustCommerceForm(None, request.POST)
+                form_proc.is_valid()
+            else:
+                form_proc = TrustCommerceForm()
     else:
         form_con = RegistrationContactForm()
-        form_ord = RegistrationOrderForm(initial={'avs':False,'auth':'sale',})
+        form_ord = RegistrationOrderForm(
+            initial={'avs':False,'auth':'sale'}
+        )
         form_proc = TrustCommerceForm()
     return render_to_response(
         'polisci/wipcs/form.html', {

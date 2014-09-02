@@ -23,7 +23,7 @@ class RegistrationContact(Contact):
     )
     abstract = models.TextField()
     cv = models.FileField(
-        'CV', upload_to='files/polisci/conferences/cvs/',
+        'CV', upload_to='files/polisci/wipcs/cv/',
         max_length="256"
     )
     submitting = models.CharField(
