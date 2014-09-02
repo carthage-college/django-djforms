@@ -61,6 +61,7 @@ def registration(request):
                 order.save()
                 contact.order.add(order)
                 order.reg = contact
+                order.contact = contact
                 send_mail(
                     request, TO_LIST,
                     "[WIPCS] Conference Registration",

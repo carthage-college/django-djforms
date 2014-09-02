@@ -5,6 +5,7 @@
 {% endblock %}
 {% block extra_javascript %}
     {{ block.super }}
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea-0.8.min.js"></script>
     <script type="text/javascript">
         $(function() {
             $('#id_payment_method_0').click(function() {
@@ -15,12 +16,20 @@
                 $('#creditcard-details').slideUp(200);
                 $('#check-details').slideDown(200);
             });
+            $("#id_abstract").htmlarea({
+                toolbar: [
+                    "html","bold", "italic", "underline", "superscript",
+                    "subscript", "|", "h1", "h2", "h3", "h4", "|", "indent",
+                    "outdent", "horizontalrule", "link", "unlink", "|",
+                    "orderedList", "unorderedList"
+                ]
+            });
         });
     </script>
 {% endblock %}
 {% block extra_style %}
-    <link href="//www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css"
-        rel="stylesheet" type="text/css" />
+    <link href="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea.css"
+        rel="stylesheet" />
     <style type="text/css">
     #id_postal_code, #id_total, #id_security_code,
     #id_expiration_month,#id_expiration_year {width:100px;}

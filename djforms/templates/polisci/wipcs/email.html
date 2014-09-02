@@ -97,6 +97,7 @@
     <dd style="margin:2px 0; padding:5px 0;">
         {{data.transid}}
     </dd>
+    {% endif %}
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
         margin-right:10px; padding:5px; width:200px;">
         How did you hear about this conference?
@@ -104,9 +105,8 @@
     <dd style="margin:2px 0; padding:5px 0;">
         {{data.contact.how_hear}}
     </dd>
-    {% endif %}
-    <h3>Abstract</h3>
-    <div>
-        {{data.contact.abstract}}
-    </div>
 </dl>
+<h3 style="clear:both;">Abstract</h3>
+<div>
+    {{data.contact.abstract|safe}}
+</div>
