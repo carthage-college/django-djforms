@@ -5,6 +5,7 @@ from djforms.core.models import GenericContact
 from tagging import fields, managers
 
 SUBMITTING =(
+    ("Creative Presentation", "Creative Presentation"),
     ("Paper for presentation", "Paper for presentation"),
     ("Poster for presentation", "Poster for presentation"),
     ("Roundtable proposal", "Roundtable proposal")
