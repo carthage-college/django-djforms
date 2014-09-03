@@ -57,5 +57,5 @@ class ProposalContact(GenericContact):
     )
 
     class Meta:
-        db_table = 'wipcs_proposal'
+        db_table = 'wipcs_proposal_contact'
 

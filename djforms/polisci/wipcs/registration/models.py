@@ -21,5 +21,5 @@ class RegistrationContact(Contact):
     )
 
     class Meta:
-        db_table = 'wipcs_registration'
+        db_table = 'wipcs_registration_contact'
 
