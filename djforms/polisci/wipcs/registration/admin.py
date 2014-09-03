@@ -1,12 +1,12 @@
 from django.contrib import admin
 
-from djforms.polisci.wipcs.models import RegistrationContact
+from djforms.polisci.wipcs.registration.models import RegistrationContact
 
 class RegistrationContactAdmin(admin.ModelAdmin):
     model = RegistrationContact
     list_display = (
         'last_name', 'first_name', 'email', 'address1', 'address2', 'city',
-        'state', 'postal_code', 'phone', 'submitting', 'payment_method',
+        'state', 'postal_code', 'phone', 'payment_method',
         'order_status', 'order_transid', 'order_total'
     )
     exclude = (

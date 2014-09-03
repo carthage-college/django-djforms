@@ -1,0 +1,88 @@
+<p>
+    Thank you for participating in the <em>WIPCS Conference</em>.
+</p>
+<p>
+    We have received your proposal for the conference.
+    We will respond to your proposal shortly.
+</p>
+<p>
+    If you have any questions, please do not hesitate to
+    <a href="mailto:dusinger@carthage.edu">contact us</a>.
+</p>
+<dl style="margin-bottom:30px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        First name
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.first_name}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        Last name
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.last_name}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        Email
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.email}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        Address
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.address1}}
+        {% if data.address2 %}, {{data.address2}}{% endif %}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        City
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.city}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        State
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.state}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        Postal code
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.postal_code}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
+        padding:5px; width:200px;">
+        Phone
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.phone}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        You are submitting a&hellip;;
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.submitting}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        How did you hear about this conference?
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.how_hear}}
+    </dd>
+</dl>
+<h3 style="clear:both;">Abstract</h3>
+<div>
+    {{data.abstract|safe}}
+</div>

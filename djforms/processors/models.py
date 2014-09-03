@@ -85,17 +85,56 @@ class Contact(GenericContact):
     """
     Contact details for an order
     """
-    second_name         = models.CharField(max_length=128, verbose_name="Middle name", null=True, blank=True)
-    previous_name       = models.CharField(max_length=128, verbose_name="Previous name", null=True, blank=True)
-    salutation          = models.CharField(max_length=16, null=True, blank=True)
-    phone               = models.CharField(max_length=12, verbose_name='Phone number', help_text="Format: XXX-XXX-XXXX")
-    address1            = models.CharField(max_length=255, verbose_name="Address", null=True, blank=True)
-    address2            = models.CharField(max_length=255, verbose_name="", null=True, blank=True)
-    city                = models.CharField(max_length=128, verbose_name="City", null=True, blank=True)
-    state               = models.CharField(max_length=2, verbose_name="State", null=True, blank=True)
-    postal_code         = models.CharField(max_length=10, verbose_name="Zip", null=True, blank=True)
-    country             = CountryField(null=True, blank=True)
-    order               = models.ManyToManyField(Order, related_name="contact_orders", null=True, blank=True)
-    #longitude           = models.DecimalField(max_digits=9, decimal_places=6, null=True,blank=True)
-    #latitude            = models.DecimalField(max_digits=9, decimal_places=6, null=True,blank=True)
+    second_name = models.CharField(
+        verbose_name="Middle name",
+        max_length=128,
+        null=True, blank=True
+    )
+    previous_name = models.CharField(
+        verbose_name="Previous name",
+        max_length=128,
+        null=True, blank=True
+    )
+    salutation = models.CharField(
+        max_length=16,
+        null=True, blank=True
+    )
+    phone = models.CharField(
+        verbose_name='Phone number',
+        max_length=12,
+        help_text="Format: XXX-XXX-XXXX"
+    )
+    address1 = models.CharField(
+        max_length=255,
+        verbose_name="Address",
+        null=True, blank=True
+    )
+    address2 = models.CharField(
+        verbose_name="",
+        max_length=255,
+        null=True, blank=True
+    )
+    city = models.CharField(
+        verbose_name="City",
+        max_length=128,
+        null=True, blank=True
+    )
+    state = models.CharField(
+        verbose_name="State",
+        max_length=2,
+        null=True, blank=True
+    )
+    postal_code = models.CharField(
+        max_length=10,
+        verbose_name="Zip",
+        null=True, blank=True
+    )
+    country = CountryField(
+        null=True, blank=True
+    )
+    order = models.ManyToManyField(
+        Order,
+        related_name="contact_orders",
+        null=True, blank=True
+    )
 

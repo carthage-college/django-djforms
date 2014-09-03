@@ -2,7 +2,8 @@ from django import forms
 
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
-from djforms.polisci.wipcs.models import RegistrationContact, PAYMENT_CHOICES
+from djforms.polisci.wipcs.registration.models import RegistrationContact
+from djforms.polisci.wipcs.registration.models import PAYMENT_CHOICES
 from djforms.core.models import REQ, STATE_CHOICES
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
@@ -10,8 +11,8 @@ from tagging.models import Tag, TaggedItem
 
 FEE_CHOICES = (
     ("55","Faculty/Graduate student $55"),
-    ("40","WIPCS member $40"),
-    ("10","Undergraduate student $40")
+    ("45","WIPCS member $45"),
+    ("10","Undergraduate student $10")
 )
 
 class RegistrationContactForm(ContactForm):
@@ -38,9 +39,6 @@ class RegistrationContactForm(ContactForm):
     phone = USPhoneNumberField(
         widget=forms.TextInput(attrs=REQ)
     )
-    cv = forms.FileField(
-        label="CV", max_length="256"
-    )
     payment_method = forms.TypedChoiceField(
         choices=PAYMENT_CHOICES, widget=forms.RadioSelect()
     )
@@ -49,8 +47,8 @@ class RegistrationContactForm(ContactForm):
         model = RegistrationContact
         fields = (
             'first_name','last_name','email','address1','address2',
-            'city','state','postal_code','phone','how_hear','abstract',
-            'cv','submitting','payment_method'
+            'city','state','postal_code','phone','how_hear',
+            'payment_method'
         )
 
 class RegistrationOrderForm(OrderForm):
