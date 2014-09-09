@@ -9,6 +9,9 @@
     rel="stylesheet" type="text/css" />
 <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
     rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .hidden { display:none; }
+</style>
 {% endblock %}
 {% block extra_javascript %}
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
@@ -27,6 +30,20 @@ $(function() {
         buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
         buttonImageOnly:true
     });
+    {% if form.data.is_mailing == "Yes" %}
+            $("#toggle-hide").removeClass("hidden")
+    {% else %}
+            $("#toggle-hide").addClass("hidden");
+    {% endif %}
+    $("input[id^=id_is_mailing]").change(function(){
+        $this = $(this).val();
+        if ($this == "Yes") {
+            $("#toggle-hide").removeClass("hidden")
+        }
+        else if ($this == "No") {
+            $("#toggle-hide").addClass("hidden");
+        }
+    });
 });
 </script>
 {% endblock %}
@@ -38,23 +55,6 @@ $(function() {
         Print request form
         <span id="secondary-dropdown"></span>
     </h1>
-    <style type="text/css">
-        .hidden {
-            display:none;
-        }
-    </style>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            if ($("#id_is_mailing").val() == 'Yes')
-            {
-                $("#toggle-hide").removeClass("hidden");
-            }
-           $("#id_is_mailing").change(function(){
-                var value = this.value;
-                value == "Yes" ? $("#toggle-hide").removeClass("hidden") : $("#toggle-hide").addClass("hidden");
-           });
-        });
-    </script>
 {% endblock %}
 {% block content %}
 <div class="forms-container large-8 medium-10 small-12">
@@ -72,16 +72,11 @@ $(function() {
         <fieldset class="blockLabels">
             <h2>Account Information</h2>
             <ol>
-                <li>
-                    &nbsp;<strong>Your name:</strong>
-                    {{request.user.first_name}} {{request.user.last_name}}
-                </li>
                 {% for field in form.visible_fields %}
                     {% if field.name == 'name' or field.name == 'department' or field.name == 'phone' or field.name == 'email' or field.name == 'account' %}
                         {% include "form_field.inc.html" %}
                     {% endif %}
                 {% endfor %}
-            </ol>
         </fieldset>
         <hr>
         <fieldset class="blockLabels">
@@ -99,7 +94,7 @@ $(function() {
             <h2>Expediting Information</h2>
             <ol>
                 {% for field in form.visible_fields %}
-                    {% if field.name == 'print_format' or field.name == 'format_quantity' or field.name == 'special_instructions' or field.name == 'delivery_date' or field.name == 'delivery_location' or field.name == 'delivery_instructions' or field.name == 'consent' or field.name == 'is_mailing'%}
+                    {% if field.name == 'print_format' or field.name == 'print_format_other' or field.name == 'format_quantity' or field.name == 'special_instructions' or field.name == 'delivery_date' or field.name == 'delivery_location' or field.name == 'delivery_instructions' or field.name == 'consent' or field.name == 'is_mailing'%}
                         {% include "form_field.inc.html" %}
                     {% endif %}
                 {% endfor %}
@@ -124,7 +119,7 @@ $(function() {
             </p>
             <ol>
                 {% for field in form.visible_fields %}
-                    {% if field.name == 'file_1' or field.name == 'file_2' or field.name == 'file_3' or field.name == 'file_4'%}
+                    {% if field.name == 'attachments' or field.name == 'file_1' or field.name == 'file_2' or field.name == 'file_3' or field.name == 'file_4'%}
                         {{ field.label }}
                         {{ field }}<br />
                     {% endif %}

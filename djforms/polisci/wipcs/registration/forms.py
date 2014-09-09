@@ -11,7 +11,6 @@ from tagging.models import Tag, TaggedItem
 
 FEE_CHOICES = (
     ("55","Faculty/Graduate student $55"),
-    ("45","WIPCS member $45"),
     ("10","Undergraduate student $10")
 )
 

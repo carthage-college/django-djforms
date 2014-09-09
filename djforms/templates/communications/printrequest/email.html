@@ -172,6 +172,14 @@ textarea.input-lg {
         {{request.user.first_name}} {{request.user.last_name}}
         </a>
     </p>
+    <label>Groups</label>
+    <p>
+        {% for group in user.groups.all %}
+            {% if group.name == "Staff" or group.name == "Faculty" or group.name == "Students" %}
+                {{ group.name}}{% if not forloop.last %}, {% endif %}
+            {% endif %}
+        {% endfor %}
+    </p>
 </div>
 <div style="width:500px;">
 <form role="form">

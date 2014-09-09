@@ -12,7 +12,8 @@ FORMATS = (
     ('Invitations','Invitations'),
     ('Multi-page book','Multi-page book'),
     ('Advertisement','Advertisement'),
-    ('Postcard','Postcard')
+    ('Postcard','Postcard'),
+    ('Other','Other')
 )
 
 CONSENT = (
@@ -66,7 +67,8 @@ class PrintRequest(models.Model):
     )
     account = models.CharField(
         "Account number",
-        max_length=18
+        max_length=18,
+        null=True, blank=True
     )
     estimate = models.BooleanField(
         "Do you require an estimate for this project before we begin?",
@@ -95,6 +97,11 @@ class PrintRequest(models.Model):
         max_length=128,
         help_text="Check all that apply"
     )
+    print_format_other = models.CharField(
+        'If "Other" please describe',
+        max_length=255,
+        null = True, blank = True
+    )
     format_quantity = models.CharField(
         "What is the quantity for each format?",
         max_length=128
@@ -111,18 +118,6 @@ class PrintRequest(models.Model):
         "Final requested delivery date of project",
         auto_now=False
     )
-    delivery_location = models.CharField(
-        "Final requested delivery location",
-        help_text="""
-        Please include the full name of your office,
-        office room number, and name of recipient.)
-        """,
-        max_length=128
-    )
-    delivery_instructions = models.CharField(
-        "Delivery instructions",
-        max_length=128
-    )
     consent = models.CharField(
         """
         If the Office of Communications coordinates
@@ -132,12 +127,10 @@ class PrintRequest(models.Model):
         the request from Institutional Advancement within
         their established guidelines and procedures
         """,
-        choices=CONSENT,
         max_length=128
     )
     is_mailing = models.CharField(
         "Is this project being mailed?",
-        choices=BINARY_CHOICES,
         max_length=4
     )
     who_mailing = models.CharField(
@@ -157,6 +150,10 @@ class PrintRequest(models.Model):
         choices=SPEED_MAILING,
         blank=True,
         max_length=128
+    )
+    attachments = models.CharField(
+        "Are you including attachments?",
+        max_length=4
     )
     file_1 = models.FileField(
         "",

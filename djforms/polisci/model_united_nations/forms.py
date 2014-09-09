@@ -20,9 +20,6 @@ DELEGATIONS = (
 
 COUNTRIES = Country.objects.filter(status=True).order_by("name")
 
-import logging
-logger = logging.getLogger(__name__)
-
 class AttenderForm(forms.ModelForm):
     """
     A form to collect registration data for the Model United Nations
@@ -113,7 +110,6 @@ class CountryForm(forms.Form):
         seen_twice = set( x for x in paises if x is not None and x in seen or seen_add(x) )
         # turn the set into a list (as requested)
         dupes = list( seen_twice )
-        logger.debug("dupes = %s" % dupes)
         if len(dupes) > 0:
             raise forms.ValidationError(
                 "You have choosen the same country in more than one delegation."
