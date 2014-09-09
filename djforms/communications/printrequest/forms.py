@@ -26,6 +26,9 @@ class PrintRequestForm(forms.ModelForm):
         who_mailing = cleaned_data.get("who_mailing")
         how_mailing = cleaned_data.get("how_mailing")
         speed_mailing = cleaned_data.get("speed_mailing")
+        
+        print_format = cleaned_data.get("print_format")
+        print_format_other = cleaned_data.get("print_format_other")
 
         if is_mailing == "Yes":
             msg = "Required"
@@ -36,6 +39,10 @@ class PrintRequestForm(forms.ModelForm):
             if speed_mailing == "":
                 self._errors["speed_mailing"] = self.error_class(["Required field."])
 
+        if print_format == "Other":
+            if print_format_other == "":
+                self._errors["print_format_other"] = self.error_class(["Required field."])
+                
         return cleaned_data
 
     class Meta:
