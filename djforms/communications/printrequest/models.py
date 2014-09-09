@@ -151,6 +151,11 @@ class PrintRequest(models.Model):
         blank=True,
         max_length=128
     )
+    using_attachments = models.CharField(
+        "Are you including attachments?",
+        choices=BINARY_CHOICES,
+        max_length=4
+    )
     file_1 = models.FileField(
         "",
         upload_to="files/communications/printrequest/",
