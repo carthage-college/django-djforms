@@ -26,26 +26,11 @@ def print_request(request):
             data.save()
             data.form = form
             if not settings.DEBUG:
-                t = loader.get_template('communications/printrequest/email.html')
-                c = RequestContext( request, { 'data':data, } )
-                frum = data.user.email
-                email = EmailMessage(
-                    "[COMMS] Print request form", t.render(c),
-                    frum, TO_LIST, BCC,
-                    headers = {'Reply-To': frum,'From': frum}
-                )
-                email.content_subtype = "html"
-                for field, value in request.FILES.items():
-                    email.attach(value.name, value.read(), value.content_type)
-                email.send(fail_silently=False)
-                """
                 send_mail(
                     request, TO_LIST,
                     "[COMMS] Print request form", data.user.email,
                     "communications/printrequest/email.html", data, BCC,
-                    attachments=philes
                 )
-                """
                 return HttpResponseRedirect(reverse('print_request_success'))
             else:
                 return render_to_response(
