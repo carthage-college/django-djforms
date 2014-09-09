@@ -59,7 +59,13 @@ $(function() {
 {% block content %}
 <div class="forms-container large-8 medium-10 small-12">
     {% include "includes/required_text.html" %}
-    {% include "includes/errors_text.html" %}
+    {% if form.errors %}
+        <p class="error">
+            Please correct the error{{ form.errors|pluralize }} below.
+            <br /><strong>NOTE:</strong> If you
+            have files to upload, you will have to choose your files again.
+        </p>
+    {% endif %}
     <form method="post" action="." class="form"
         id="profile" enctype="multipart/form-data">
         {% csrf_token %}

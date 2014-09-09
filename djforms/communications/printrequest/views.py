@@ -26,6 +26,7 @@ def print_request(request):
             data.save()
             data.form = form
             if not settings.DEBUG:
+                TO_LIST.append(data.user.email)
                 send_mail(
                     request, TO_LIST,
                     "[COMMS] Print request form", data.user.email,

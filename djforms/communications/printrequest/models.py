@@ -64,7 +64,7 @@ class PrintRequest(models.Model):
         "Phone number",
         max_length=12
     )
-    account = models.IntegerField(
+    account = models.CharField(
         "Account number",
         max_length=18
     )
