@@ -96,6 +96,10 @@ class PrintRequest(models.Model):
         max_length=128,
         help_text="Check all that apply"
     )
+    print_format_other = models.CharField(
+        "If 'Other' please describe",
+        max_length=128
+    )
     format_quantity = models.CharField(
         "What is the quantity for each format?",
         max_length=128
