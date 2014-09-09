@@ -99,7 +99,8 @@ class PrintRequest(models.Model):
     )
     print_format_other = models.CharField(
         "If 'Other' please describe",
-        max_length=128
+        max_length=128,
+        blank=True
     )
     format_quantity = models.CharField(
         "What is the quantity for each format?",
