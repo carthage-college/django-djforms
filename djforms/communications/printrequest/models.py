@@ -12,7 +12,8 @@ FORMATS = (
     ('Invitations','Invitations'),
     ('Multi-page book','Multi-page book'),
     ('Advertisement','Advertisement'),
-    ('Postcard','Postcard')
+    ('Postcard','Postcard'),
+    ('Other','Other')
 )
 
 CONSENT = (
