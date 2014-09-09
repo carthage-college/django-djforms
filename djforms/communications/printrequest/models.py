@@ -67,7 +67,8 @@ class PrintRequest(models.Model):
     )
     account = models.CharField(
         "Account number",
-        max_length=18
+        max_length=18,
+        blank=True
     )
     estimate = models.BooleanField(
         "Do you require an estimate for this project before we begin?",
