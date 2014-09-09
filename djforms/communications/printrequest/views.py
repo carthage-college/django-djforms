@@ -1,38 +1,60 @@
 from django.conf import settings
-from django.template import RequestContext
-from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
+from django.core.mail import EmailMessage
+from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
-from djtools.utils.mail import send_mail, EmailMessage
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.contrib.auth.decorators import login_required
 
 from djforms.communications.printrequest.forms import PrintRequestForm
+from djtools.utils.mail import send_mail
 
+@login_required
 def print_request(request):
     if settings.DEBUG:
-        TO_LIST = ["zwenta@carthage.edu",]
+        TO_LIST = ["larry@carthage.edu",]
     else:
-        TO_LIST = ["zwenta@carthage.edu",]
-        
+        TO_LIST = ["communications@carthage.edu",]
+    BCC = settings.MANAGERS
+
     if request.method == 'POST':
-        form = PrintRequestForm(request.POST)
+        form = PrintRequestForm(request.POST, request.FILES)
         if form.is_valid():
-            #data = form.save()
-
-            #file1 = request.FILES['file_1']
-            #file2 = request.FILES['file_2']
-            #file3 = request.FILES['file_3']
-            #file4 = request.FILES['file_4']
-
-            try:
-                mail = EmailMessage("test", "testing form submission", "zwenta@carthage.edu", "test@test.com")
-                #mail.attach(file1.name, attach.read(), file1.content_type)
-                #mail.attach(file2.name, attach.read(), file2.content_type)
-                #mail.attach(file3.name, attach.read(), file3.content_type)
-                #mail.attach(file4.name, attach.read(), file4.content_type)
-                mail.send()
-            except:
-                return "Attachment error"
-            return HttpResponseRedirect(reverse('success'))
+            data = form.save(commit=False)
+            data.user = request.user
+            data.updated_by = request.user
+            data.save()
+            data.form = form
+            if not settings.DEBUG:
+                t = loader.get_template('communications/printrequest/email.html')
+                c = RequestContext( request, { 'data':data, } )
+                frum = data.user.email
+                email = EmailMessage(
+                    "[COMMS] Print request form", t.render(c),
+                    frum, TO_LIST, BCC,
+                    headers = {'Reply-To': frum,'From': frum}
+                )
+                email.content_subtype = "html"
+                for field, value in request.FILES.items():
+                    email.attach(value.name, value.read(), value.content_type)
+                email.send(fail_silently=False)
+                """
+                send_mail(
+                    request, TO_LIST,
+                    "[COMMS] Print request form", data.user.email,
+                    "communications/printrequest/email.html", data, BCC,
+                    attachments=philes
+                )
+                """
+                return HttpResponseRedirect(reverse('print_request_success'))
+            else:
+                return render_to_response(
+                    'communications/printrequest/email.html',
+                    {
+                        'data': data,
+                    },
+                    context_instance=RequestContext(request)
+                )
     else:
         form = PrintRequestForm()
     return render_to_response(

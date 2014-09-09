@@ -1,0 +1,201 @@
+{% extends "blank.html" %}
+{% load bootstrap %}
+{% block extra_style %}
+<style>
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  background-image: none;
+  border: 0;
+}
+
+.form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.form-control:-moz-placeholder {
+  color: #999999;
+}
+
+.form-control::-moz-placeholder {
+  color: #999999;
+  opacity: 1;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #999999;
+}
+
+.form-control::-webkit-input-placeholder {
+  color: #999999;
+}
+
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+}
+
+textarea.form-control {
+  height: auto;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight:bold;
+  font-size:1.2em;
+}
+
+.radio,
+.checkbox {
+  display: block;
+  min-height: 20px;
+  padding-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  vertical-align: middle;
+}
+
+.radio label,
+.checkbox label {
+  display: inline;
+  margin-bottom: 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.radio input[type="radio"],
+.radio-inline input[type="radio"],
+.checkbox input[type="checkbox"],
+.checkbox-inline input[type="checkbox"] {
+  float: left;
+  margin-left: -20px;
+}
+
+.radio + .radio,
+.checkbox + .checkbox {
+  margin-top: -5px;
+}
+
+.radio-inline,
+.checkbox-inline {
+  display: inline-block;
+  padding-left: 20px;
+  margin-bottom: 0;
+  font-weight: normal;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.radio-inline + .radio-inline,
+.checkbox-inline + .checkbox-inline {
+  margin-top: 0;
+  margin-left: 10px;
+}
+
+input[type="radio"][disabled],
+input[type="checkbox"][disabled],
+.radio[disabled],
+.radio-inline[disabled],
+.checkbox[disabled],
+.checkbox-inline[disabled],
+fieldset[disabled] input[type="radio"],
+fieldset[disabled] input[type="checkbox"],
+fieldset[disabled] .radio,
+fieldset[disabled] .radio-inline,
+fieldset[disabled] .checkbox,
+fieldset[disabled] .checkbox-inline {
+  cursor: not-allowed;
+}
+
+.input-sm {
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+select.input-sm {
+  height: 30px;
+  line-height: 30px;
+}
+
+textarea.input-sm {
+  height: auto;
+}
+
+.input-lg {
+  height: 46px;
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 6px;
+}
+
+select.input-lg {
+  height: 46px;
+  line-height: 46px;
+}
+
+textarea.input-lg {
+  height: auto;
+}
+#id_file_1{display:none;}
+#id_file_2{display:none;}
+#id_file_3{display:none;}
+#id_file_4{display:none;}
+#id_print_format{height:150px;}
+</style>
+{% endblock %}
+{% block jquery %}{% endblock %}
+{% block urchin %}{% endblock %}
+{% block content %}
+<div>
+    <label>Name</label>
+    <p>
+        <a href="mailto:{{request.user.email}}">
+        {{request.user.first_name}} {{request.user.last_name}}
+        </a>
+    </p>
+</div>
+<div style="width:500px;">
+<form role="form">
+{{data.form|bootstrap}}
+</form>
+</div>
+{% if data.file_1 %}
+<h3 style="clear:both;">
+    <a href="//www.carthage.edu/assets/{{data.file_1}}">File 1</a>
+</h3>
+{% endif %}
+{% if data.file_2 %}
+<h3 style="clear:both;">
+    <a href="//www.carthage.edu/assets/{{data.file_2}}">File 2</a>
+</h3>
+{% endif %}
+{% if data.file_3 %}
+<h3 style="clear:both;">
+    <a href="//www.carthage.edu/assets/{{data.file_3}}">File 3</a>
+</h3>
+{% endif %}
+{% if data.file_4 %}
+<h3 style="clear:both;">
+    <a href="//www.carthage.edu/assets/{{data.file_4}}">File 4</a>
+</h3>
+{% endif %}
+{% endblock %}

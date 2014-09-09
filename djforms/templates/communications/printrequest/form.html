@@ -2,8 +2,36 @@
 {% block title %}
     Print Request Form
 {% endblock %}
+{% block extra_style %}
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+    rel="stylesheet">
+<link href="//www.carthage.edu/static/vendor/bootstrap-select/bootstrap-select.min.css"
+    rel="stylesheet" type="text/css" />
+<link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
+    rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block extra_javascript %}
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
+    type="text/javascript" charset="utf-8"></script>
+<script src="//www.carthage.edu/static/vendor/bootstrap-select/bootstrap-select.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    // multiple select picker
+    $('#id_print_format').selectpicker();
+    // date picker
+    $("#id_delivery_date").datepicker({
+        firstDay:1,
+        changeFirstDay:false,dateFormat:"yy-mm-dd",
+        showOn:"both",
+        buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
+        buttonImageOnly:true
+    });
+});
+</script>
+{% endblock %}
 {% block left_nav %}
-    {% include "admissions/left_nav.html" %}
+    {% include "communications/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
     <h1 id="page_title">
@@ -17,10 +45,9 @@
     </style>
     <script type="text/javascript">
         $(document).ready(function(){
-            
             if ($("#id_is_mailing").val() == 'Yes')
             {
-                $("#toggle-hide").removeClass("hidden");                
+                $("#toggle-hide").removeClass("hidden");
             }
            $("#id_is_mailing").change(function(){
                 var value = this.value;
@@ -37,8 +64,12 @@
         id="profile" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="blockLabels">
-            <h2>Personal Information</h2>
+            <h2>Account Information</h2>
             <ol>
+                <li>
+                    &nbsp;<strong>Your name:</strong>
+                    {{request.user.first_name}} {{request.user.last_name}}
+                </li>
                 {% for field in form.visible_fields %}
                     {% if field.name == 'name' or field.name == 'department' or field.name == 'phone' or field.name == 'email' or field.name == 'account' %}
                         {% include "form_field.inc.html" %}
@@ -78,8 +109,13 @@
         <hr>
         <fieldset>
             <h2>File Uploads</h2>
-            These files related to this request
-            will be sent to communications@carthage.edu
+            <p>
+                You may upload up to four files. If you have more than four,
+                please send them to
+                <a href="mailto:communications@carthage.edu">
+                    the communications office.
+                </a>
+            </p>
             <ol>
                 {% for field in form.visible_fields %}
                     {% if field.name == 'file_1' or field.name == 'file_2' or field.name == 'file_3' or field.name == 'file_4'%}
@@ -98,6 +134,6 @@
     </form>
 </div>
 <div class="column2 large-4 medium-6 small-12">
-    {% include "admissions/side_bar.html" %}
+    {% include "communications/side_bar.html" %}
 </div>
 {% endblock %}

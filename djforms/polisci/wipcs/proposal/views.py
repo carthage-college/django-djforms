@@ -18,8 +18,7 @@ def form(request):
             send_mail(
                 request, TO_LIST,
                 "[WIPCS] Conference Proposal", contact.email,
-                "polisci/wipcs/proposal/email.html", contact, BCC,
-                attach=True
+                "polisci/wipcs/proposal/email.html", contact, BCC
             )
             return HttpResponseRedirect(
                 reverse('wipcs_proposal_success')
