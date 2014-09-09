@@ -99,7 +99,7 @@ $(function() {
             <h2>Expediting Information</h2>
             <ol>
                 {% for field in form.visible_fields %}
-                    {% if field.name == 'print_format' or field.name == 'format_quantity' or field.name == 'special_instructions' or field.name == 'delivery_date' or field.name == 'delivery_location' or field.name == 'delivery_instructions' or field.name == 'consent' or field.name == 'is_mailing'%}
+                    {% if field.name == 'print_format' or field.name == 'format_quantity' or field.name == 'special_instructions' or field.name == 'delivery_date' or field.name == 'consent' or field.name == 'is_mailing'%}
                         {% include "form_field.inc.html" %}
                     {% endif %}
                 {% endfor %}
