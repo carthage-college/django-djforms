@@ -53,6 +53,15 @@ $(function() {
                 var value = this.value;
                 value == "Yes" ? $("#toggle-hide").removeClass("hidden") : $("#toggle-hide").addClass("hidden");
            });
+           
+           
+           $("#id_print_format").val() != "Other" ? $("#id_print_format_other").addClass("hidden") : $("#id_print_format_other").removeClass("hidden");
+           
+           
+           $("#id_print_format").change(function(){
+               var value = this.value;
+               value == "Other" ? $("#id_print_format_other").removeClass("hidden") : $("#id_print_format_other").addClass("hidden");
+           })
         });
     </script>
 {% endblock %}
@@ -99,7 +108,7 @@ $(function() {
             <h2>Expediting Information</h2>
             <ol>
                 {% for field in form.visible_fields %}
-                    {% if field.name == 'print_format' or field.name == 'format_quantity' or field.name == 'special_instructions' or field.name == 'delivery_date' or field.name == 'consent' or field.name == 'is_mailing'%}
+                    {% if field.name == 'print_format' or field.name == 'print_format_other' or field.name == 'format_quantity' or field.name == 'special_instructions' or field.name == 'delivery_date' or field.name == 'consent' or field.name == 'is_mailing'%}
                         {% include "form_field.inc.html" %}
                     {% endif %}
                 {% endfor %}
@@ -124,7 +133,7 @@ $(function() {
             </p>
             <ol>
                 {% for field in form.visible_fields %}
-                    {% if field.name == 'file_1' or field.name == 'file_2' or field.name == 'file_3' or field.name == 'file_4'%}
+                    {% if field.name == 'using_attachments' or field.name == 'file_1' or field.name == 'file_2' or field.name == 'file_3' or field.name == 'file_4'%}
                         {{ field.label }}
                         {{ field }}<br />
                     {% endif %}
