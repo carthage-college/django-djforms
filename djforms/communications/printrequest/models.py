@@ -111,18 +111,6 @@ class PrintRequest(models.Model):
         "Final requested delivery date of project",
         auto_now=False
     )
-    delivery_location = models.CharField(
-        "Final requested delivery location",
-        help_text="""
-        Please include the full name of your office,
-        office room number, and name of recipient.)
-        """,
-        max_length=128
-    )
-    delivery_instructions = models.CharField(
-        "Delivery instructions",
-        max_length=128
-    )
     consent = models.CharField(
         """
         If the Office of Communications coordinates
