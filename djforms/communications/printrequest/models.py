@@ -63,7 +63,7 @@ class PrintRequest(models.Model):
     )
     phone = models.CharField(
         "Phone number",
-        max_length=12
+        max_length=21
     )
     account = models.CharField(
         "Account number",

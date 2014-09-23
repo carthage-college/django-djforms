@@ -9,12 +9,12 @@ from djtools.fields import BINARY_CHOICES
 
 class PrintRequestForm(forms.ModelForm):
 
-    phone = USPhoneNumberField(
+    '''phone = USPhoneNumberField(
         label = "Phone number",
         max_length=12,
         required=True,
         widget=forms.TextInput(attrs={'class': 'required phoneUS'})
-    )
+    )'''
     print_format = forms.MultipleChoiceField(
         label = "What is the format of your finished piece",
         choices=FORMATS,

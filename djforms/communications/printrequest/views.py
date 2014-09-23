@@ -24,7 +24,6 @@ def print_request(request):
             data.user = request.user
             data.updated_by = request.user
             data.save()
-            data.form = form
             if not settings.DEBUG:
                 TO_LIST.append(data.user.email)
                 send_mail(
