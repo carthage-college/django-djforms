@@ -17,8 +17,8 @@ FORMATS = (
 )
 
 CONSENT = (
-    ('yes','I agree'),
-    ('na','Mailing is not required')
+    ('Yes','I agree'),
+    ('NA','Mailing is not required')
 )
 
 WHO_MAILING = (
