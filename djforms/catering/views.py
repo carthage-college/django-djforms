@@ -29,7 +29,7 @@ class CateringEventWizard(SessionWizardView):
             TO_LIST = ["larry@carthage.edu",]
         else:
             TO_LIST = [
-                "dhoffman1@carthage.edu","jchilson@carthage.edu,",
+                "dhoffman1@carthage.edu","svanags@carthage.edu",
                 "mmichaud@carthage.edu", "jklabechek@carthage.edu"
             ]
 

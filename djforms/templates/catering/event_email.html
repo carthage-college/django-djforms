@@ -1,12 +1,9 @@
-<h4>Contact Info</h4>
-<pre style="font-size:1em;">
+<h4>Contact Info</h4><pre style="font-size:.9em;">
 First Name.................. {{event.user.first_name}}
 Last Name................... {{event.user.last_name}}
 Email....................... {{event.user.email}}
 Extension................... {{event.extension}}
-</pre>
-<h4>Event Info</h4>
-<pre style="font-size:1em;">
+</pre><h4>Event Info</h4><pre style="font-size:.9em;">
 Name........................ {{event.event_name}}
 Date........................ {{event.event_date|date:"l"}}, {{event.event_date}}
 Start at.................... {{event.event_start}}
@@ -20,9 +17,7 @@ Dept. Acct. #............... {{event.account_number}}
 Open to..................... {% for item in event.open_to.all %}{{item}}{% if not forloop.last %}, {% endif %}{% endfor %}
 Facility attendance......... {{event.facility_att}}
 Housing attendance.......... {{event.housing_att}}
-</pre>
-<h4>Room Set Up</h4>
-<pre style="font-size:1em;">
+</pre><h4>Room Set Up</h4><pre style="font-size:.9em;">
 Room set-up................. {% for item in event.room_set_up.all %}{{item}}{% if not forloop.last %}, {% endif %}{% endfor %}
 Room set-up other........... {% if event.room_set_other %}<a href="http://www.carthage.edu/assets/{{event.room_set_other}}">Download file</a>{% endif %}
 Round tables................ {{event.rounds}}
@@ -34,9 +29,7 @@ Registration tables......... {{event.registration}}
 Table skirting.............. {{event.skirting}}
 Head tables................. {{event.head}}
 Other tables................ {{event.other_table}}
-</pre>
-<h4>Dining Requirements</h4>
-<pre style="font-size:1em;">
+</pre><h4>Dining Requirements</h4><pre style="font-size:.9em;">
 Dining attendance........... {{event.dining_att}}
 Service start time.......... {{event.service_start}}
 Service end time............ {{event.service_end}}
@@ -45,9 +38,7 @@ Program end time............ {{event.program_end}}
 Meal service................ {{event.meal_service}}
 Menu description............ {{event.menu_desc}}
 Other requirements.......... {{event.other_reqs}}
-</pre>
-<h4>Equipment</h4>
-<pre style="font-size:1em;">
+</pre><h4>Equipment</h4><pre style="font-size:.9em;">
 Slide projector............. {{event.slide}}
 Data projector.............. {{event.data_proj}}
 Overhead projector.......... {{event.overhead}}

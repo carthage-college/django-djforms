@@ -54,6 +54,10 @@ Delivery date............... {{data.delivery_date}}
 <h4>How is your piece to be mailed?</h4>
 <p>{{data.speed_mailing}}</p>
 {% endif %}
+
+<h4>Are you submitting any files with this print request?</h4>
+<p>{{data.attachments}}</p>
+
 {% if data.file_1 %}
 <h4 style="clear:both;">
     <a href="https://www.carthage.edu/assets/{{data.file_1}}">File 1</a>

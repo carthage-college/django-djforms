@@ -41,7 +41,7 @@ class CandidateAdmin(admin.ModelAdmin):
         'created_on','first_name','email','status','prospect_status'
     ]
     search_fields = (
-        'first_name','email,','prospect_status'
+        'email','first_name','prospect_status'
     )
 
     list_max_show_all   = 500
