@@ -1,4 +1,5 @@
 <pre style="font-size:1.1em;">
+Date........................ {{data.date_created}}
 Name........................ {{data.user.first_name}} {{data.user.last_name}}
 Groups...................... {% for group in data.user.groups.all %}{% if group.name == "Staff" or group.name == "Faculty" or group.name == "Students" %}{{ group.name}}{% if not forloop.last %}, {% endif %}{% endif %}{% endfor %}
 Email....................... {{data.user.email}}
