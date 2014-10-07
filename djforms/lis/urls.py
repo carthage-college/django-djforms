@@ -2,11 +2,6 @@ from django.conf.urls.defaults import *
 from django.views.generic import TemplateView
 
 urlpatterns = patterns('djforms.lis',
-    # For room and equipment reserve environment
-    url(
-        r'^equipment-reserve/$',
-        'equipmentform.views.equipment_reserve'
-    ),
     # print requests
     url(
         r'^print-request/$',
