@@ -13,6 +13,7 @@ FORMATS = (
     ('Multi-page book','Multi-page book'),
     ('Advertisement','Advertisement'),
     ('Postcard','Postcard'),
+    ('Envelopes','Envelopes'),
     ('Other','Other')
 )
 
@@ -24,6 +25,7 @@ CONSENT = (
 WHO_MAILING = (
     ('Mail house','Mail house'),
     ('Requesting department','Requesting department'),
+    ('Printer','Printer'),
     ('None','None')
 )
 

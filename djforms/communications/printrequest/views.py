@@ -26,9 +26,13 @@ def print_request(request):
             data.save()
             if not settings.DEBUG:
                 TO_LIST.append(data.user.email)
+                subject = "[Print request] %s %s: %s" % (
+                    data.user.first_name, data.user.last_name,
+                    data.date_created
+                )
                 send_mail(
                     request, TO_LIST,
-                    "[COMMS] Print request form", data.user.email,
+                    subject, data.user.email,
                     "communications/printrequest/email.html", data, BCC,
                 )
                 return HttpResponseRedirect(reverse('print_request_success'))
