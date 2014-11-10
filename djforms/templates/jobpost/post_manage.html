@@ -22,6 +22,7 @@
         </h3>
         {% include "includes/required_text.html" %}
         {% include "includes/errors_text.html" %}
+        <div class="forms-container">
         <form method="post" action="." class="form">{% csrf_token %}
             <fieldset class="blockLabels">
                 <ol>
@@ -34,5 +35,6 @@
             </fieldset>
             {% include "form_submit.inc.html" %}
         </form>
+        </div>
     </div>
 {% endblock %}

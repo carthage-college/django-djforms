@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load ifusergroup %}
 {% block css %}
-    {% ifusergroup Staff Faculty %}
+    {% ifusergroup carthageStaffStatus carthageFacultyStatus %}
         {{block.super}}
     {% else %}
         <style type="text/css" media="screen, projection">
         body {
             background-color:#fff !important;
-            font-family:verdana,arial,sans-serif; font-size:.9em;}
+            font-family:verdana,arial,sans-serif; }
         #nav, #about {float: left; list-style: none outside none;
             padding-right:5px;}
         #nav li, #about li { display: inline; list-style-type: none;
@@ -15,24 +15,26 @@
         #about {border-right:1px solid #800;}
         #nav {padding-left:5px;}
         </style>
+        <link href="//www.carthage.edu/themes/shared/css/forms.css"
+            rel="stylesheet" type="text/css" />
     {% endifusergroup %}
 {% endblock %}
 {% block header %}
-    {% ifusergroup Staff Faculty %}
+    {% ifusergroup carthageStaffStatus carthageFacultyStatus %}
         {{block.super}}
     {% endifusergroup %}
 {% endblock %}
 {% block hero %}
-    {% ifusergroup Staff Faculty %}
+    {% ifusergroup carthageStaffStatus carthageFacultyStatus %}
         {{block.super}}
     {% endifusergroup %}
 {% endblock %}
 {% block left_nav %}
     <ul>
-        <li><a href="/forms/job/">Available Jobs</a></li>
+        <li><a href="https://www.carthage.edu/forms/job/">Available Jobs</a></li>
         <!-- <li><a href="/forms/job/search/">Search for Jobs</a></li> -->
-        <li><a href="/forms/job/departments/">Jobs by Department</a></li>
-        {% ifusergroup Staff Faculty %}
+        <li><a href="https://www.carthage.edu/forms/job/departments/">Jobs by Department</a></li>
+        {% ifusergroup carthageStaffStatus carthageFacultyStatus %}
         <li><a href="/forms/job/createpost/">Create a Job Post</a></li>
         <li><a href="/forms/job/user-post-list/">Your Posts</a></li>
         {% endifusergroup %}
@@ -50,7 +52,7 @@
 {% endblock %}
 {% block sidebar %}{% endblock %}
 {% block content_head %}
-    {% ifusergroup Staff Faculty %}
+    {% ifusergroup carthageStaffStatus carthageFacultyStatus %}
     <h1 id="page_title">
         Carthage College Jobs
         <span id="secondary-dropdown"></span>
@@ -59,7 +61,7 @@
 {% endblock %}
 {% block content %}{% endblock %}
 {% block footer %}
-    {% ifusergroup Staff Faculty %}
+    {% ifusergroup carthageStaffStatus carthageFacultyStatus %}
         {{block.super}}
     {% endifusergroup %}
 {% endblock %}

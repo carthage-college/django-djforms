@@ -82,14 +82,14 @@
         {% endif %}
     </div>
     <p style="font-weight:bold;color:#800;clear:both;">
-    Would you rather make a recurring pledge donation?
+    Would you rather make a recurring gift?
     {% if not campaign.description %}
         <a href="{% url 'giving_form_generic' 'pledge' %}">
-            Use the pledge form
+            Use this form instead
         </a>.
     {% else %}
         <a href="{% url 'giving_form_campaign' 'pledge' campaign.slug %}">
-            Use the pledge form
+            Use this form instead
         </a>.
     {% endif %}
     </p>

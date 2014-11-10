@@ -170,7 +170,7 @@ def post_detail(request, pid, page=0):
                     post.num_positions = request.POST['num_positions']
                     post.expire_date = parser.parse(request.POST['expire_date'])
                     post.save()
-                    return HttpResponseRedirect('/forms/job/success')
+                    return HttpResponseRedirect('/forms/job/success/#djforms')
             else:
                 form = PostFormWithoutHidden(instance=post)
 
@@ -212,7 +212,7 @@ def post_detail(request, pid, page=0):
                 email.content_subtype = "html"
                 email.send(fail_silently=True)
                 #send_mail(request, TO_LIST, subject, contact['email'], "adulted/admissions_email.html", data, BCC)
-                return HttpResponseRedirect('/forms/job/success')
+                return HttpResponseRedirect('/forms/job/success/#djforms')
         else:
             form = JobApplyForms()
         return render_to_response(
@@ -227,7 +227,7 @@ def post_manage(request, pid):
         form = PostFormWithoutHidden(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/forms/job/success')
+            return HttpResponseRedirect('/forms/job/success/#djforms')
     else:
         form = PostFormWithoutHidden(instance=post)
     return render_to_response(
@@ -311,7 +311,7 @@ def post_create(request):
             )
             email.content_subtype = "html"
             email.send(fail_silently=True)
-            return HttpResponseRedirect('/forms/job/success')
+            return HttpResponseRedirect('/forms/job/success/#djforms')
     else:
         form = PostFormWithHidden()
     return render_to_response(
