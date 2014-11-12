@@ -65,13 +65,13 @@
 #payment-details { display:none; }
 {% endif %}
 #session-info > ol li {display:block;margin-bottom:5px;}
-#first img { display: inline; }
-#id_security_code, #id_reg_fee {width:35px;}
+#id_security_code, #id_reg_fee {width:100px;}
 #id_card_number {width:150px;}
-#id_postal_code, #id_home_phone, #id_work_phone, #id_dob, #id_age {width:100px;}
+#id_postal_code, #id_home_phone, #id_work_phone,
+#id_dob, #id_age, #id_expiration_month, #id_expiration_year {width:120px;}
 #security {color:#000099;float:right;padding:5px;}
 li.ctrlHolder div ul li {display:inline; padding-right:3px;}
-.form .blockLabels label {display: inherit;}
+.forms-container, .forms-container label {font-weight:bold;}
 </style>
 {% endblock %}
 {% block banner %}{% endblock %}
@@ -153,8 +153,8 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
         {% endfor %}
         </ol>
         </fieldset>
-        <h2>Credit Card Details</h2>
         <fieldset class="blockLabels" id="payment-details">
+            <h2>Credit Card Details</h2>
             {% if form_proc.errors and status %}
                 <div style="padding-left:4px;">
                     <p class="notice">

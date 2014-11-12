@@ -1,62 +1,15 @@
-{% extends "djdfir/base.html" %}
-{% block title %}Carthage Athletics{% endblock %}
-{% block metatags %}
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta http-equiv="Content-Language" content="en-us" />
-    <meta name="author" content="Carthage College Web Development"/>
-    <meta name="viewport" content="initial-scale=.5" />
-    <link rel="icon" href="{{media_url}}img/ico/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="{{media_url}}img/ico/favicon.ico" type="image/x-icon" />
+{% extends "base.html" %}
+{% load livewhale_api %}
+{% block content_head %}
+<h1 id="page_title">
+    Carthage College Soccer Camp
+    <span id="secondary-dropdown"></span>
+</h1>
 {% endblock %}
-{% block css %}
-    <!-- CSS -->
-    <link id="ctl00_lnkStyleSheet" rel="stylesheet" type="text/css" href="https://www.carthage.edu/media/css/athletics/sidearm/site.ssl.css" />
-    <link rel="stylesheet" href="//www.carthage.edu/assets/current/css/plugins/forms.css" type="text/css" />
-    <link rel="stylesheet" href="//www.carthage.edu/current/css/overrides/forms.css" type="text/css" />
-    <style type="text/css">
-        body{background-color:#000 !important;}
-        h1 { display: inherit; left:0; margin: 0; padding: 0; position: inherit;font-size:1.6em;font-weight:normal;color:#000;}
-        h2 {font-size:1.4em;}
-        h3 {font-size:1.2em;}
-        ul#nav {margin-left:25px; margin-top:25px;}
-        ul#nav li {font-size:1.5em;line-height:30px;}
-        .mainspace { color: #000; background: none; margin-top: 0; padding: 0; }
-    </style>
-{% endblock %}
-{% block extra_javascript %}{% endblock %}
-{% block body %}
-<body{%block bodytag %} id="Home" class="home"{% endblock %}>
-<div id="mainDiv">
-    <div class="skip"><a href="#content">Skip Navigation Links</a></div>
-    {% block banner %}<a href="http://athletics.carthage.edu/"><img src="http://athletics.carthage.edu/images/header.jpg" id="ctl00_imgHeader" /></a>{% endblock %}
-    <div style="clear:both"></div>
-    {% block topnav %}{% include "athletics/topnav.html" %}{% endblock %}
-    <div style="clear:both"></div>
-    <div class="mainspace">
-    {% block content %}{% endblock %}
-    </div>
-</div>
-<div class="no_print">
-    <div id="footer" style="width:980px; height:85px; margin-left:auto; margin-right:auto;">
-        <div id="footer_inside">
-            <div style="float:left; color:#fff; margin-left:20px; margin-top:20px;" class="footer">
-                <a href="http://www.carthage.edu" style="color:#fff;text-decoration:none; font-weight:bold" >Carthage Home</a> |
-                <a href="http://www.carthage.edu/about/" style="color:#fff;text-decoration:none">About Us</a> |
-                <a href="http://www.carthage.edu/admissions/" style="color:#fff;text-decoration:none">Admissions</a> |
-                <a href="http://www.carthage.edu/academics/" style="color:#fff;text-decoration:none">Academics</a> |
-                <a href="http://faculty.carthage.edu/" style="color:#fff;text-decoration:none">Faculty</a> |
-                <a href="http://www.carthage.edu/campus-life" style="color:#fff;text-decoration:none">Student Life</a> |
-                <a href="http://www.carthage.edu/alumni/" style="color:#fff;text-decoration:none">Alumni</a> | <br />
-                <a href="http://www.carthage.edu/directions/" style="color:#fff;text-decoration:none">Directions</a> |
-                2001 Alford Park Drive, Kenosha, Wisconsin 53140 | <br />
-                262-551-5930 | <a href="mailto:webmaster@carthage.edu" style="color:#fff;text-decoration:none">webmaster@carthage.edu</a>
-            </div>
-        </div>
-    </div>
-</div>
-{% block urchin %}
-    {% include "urchin.html" %}
-{% endblock %}
-{% block finaljs %}{% endblock %}
-</body>
+{% block left_nav %}
+<h4>
+    Carthage College Soccer Camp
+</h4>
+{% get_lw_content as nav blurbs 1920 %}
+{{nav.body}}
 {% endblock %}
