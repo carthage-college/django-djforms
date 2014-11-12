@@ -72,3 +72,12 @@ class Event(models.Model):
     def get_absolute_url(self):
         return "http://%s%s" % (settings.SERVER_URL, reverse("catering_event_detail", args=[self.pk]))
 
+    def first_name(self):
+        return self.user.first_name
+
+    def last_name(self):
+        return self.user.last_name
+
+    def email(self):
+        return self.user.email
+

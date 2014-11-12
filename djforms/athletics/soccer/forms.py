@@ -1,9 +1,12 @@
 from django import forms
 from django.conf import settings
-from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
-from djforms.core.models import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES, STATE_CHOICES
+from django.contrib.localflavor.us.forms import USPhoneNumberField
+from django.contrib.localflavor.us.forms import USZipCodeField
+from djforms.core.models import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
+from djforms.core.models import STATE_CHOICES
 from djforms.processors.models import Contact
-from djforms.athletics.soccer.models import SoccerCampAttender, YEAR_CHOICES, SHIRT_SIZES, SESSIONS, AMOUNT_CHOICES, REQ
+from djforms.athletics.soccer.models import SoccerCampAttender, YEAR_CHOICES, REQ
+from djforms.athletics.soccer.models import SHIRT_SIZES, SESSIONS, AMOUNT_CHOICES
 
 class SoccerCampRegistrationForm(forms.ModelForm):
     """
