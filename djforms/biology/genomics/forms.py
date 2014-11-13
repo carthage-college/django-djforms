@@ -1,14 +1,18 @@
 from django import forms
-from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from djforms.core.models import STATE_CHOICES, BINARY_CHOICES
 from djforms.biology.genomics.models import PhageHunter
 
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+
 class PhageHunterForm(forms.ModelForm):
-    email           = forms.EmailField()
-    postal_code     = USZipCodeField(label="Zip Code")
-    phone           = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
-    lab_work        = forms.CharField(widget=forms.RadioSelect(choices=BINARY_CHOICES), help_text="Are you willing to spend extra time in the lab as needed?")
+    email = forms.EmailField()
+    postal_code = USZipCodeField(label="Zip Code")
+    phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
+    lab_work = forms.CharField(
+        widget=forms.RadioSelect(choices=BINARY_CHOICES),
+        help_text="Are you willing to spend extra time in the lab as needed?"
+    )
 
     class Meta:
         model = PhageHunter

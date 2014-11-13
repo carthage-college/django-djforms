@@ -1,9 +1,10 @@
 from django import forms
-from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from djforms.core.models import STATE_CHOICES
 from models import Contact, Order
 from trust_commerce import PaymentProcessor
+
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from datetime import date
 

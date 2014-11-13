@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from djforms.admissions.admitted.models import *
+
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 GENDER_CHOICES = (
     ('Female (女)','Female (女)'),

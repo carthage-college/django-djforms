@@ -1,12 +1,11 @@
 from django import forms
-from django.conf import settings
-from django.contrib.localflavor.us.forms import USPhoneNumberField
-from django.contrib.localflavor.us.forms import USZipCodeField
 from djforms.core.models import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
 from djforms.core.models import STATE_CHOICES
 from djforms.processors.models import Contact
 from djforms.athletics.soccer.models import SoccerCampAttender, YEAR_CHOICES, REQ
 from djforms.athletics.soccer.models import SHIRT_SIZES, SESSIONS, AMOUNT_CHOICES
+
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 class SoccerCampRegistrationForm(forms.ModelForm):
     """

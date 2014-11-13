@@ -1,8 +1,10 @@
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.contrib.localflavor.us.models import USStateField
+
 #from djforms.core.models import Photo
 from djforms.core.models import GenericContact
+
+from localflavor.us.models import USStateField
 
 class Questionnaire(GenericContact):
     """

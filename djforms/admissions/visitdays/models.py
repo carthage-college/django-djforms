@@ -1,7 +1,8 @@
 from django.db import models
-from django.contrib.localflavor.us.models import USStateField
 
-from djforms.core.models import GenericContact, GENDER_CHOICES, SEMESTER_CHOICES
+from djforms.core.models import GenericContact,GENDER_CHOICES,SEMESTER_CHOICES
+
+from localflavor.us.models import USStateField
 
 ENTRY_CHOICES = [
     ('Freshman','Freshman'),

@@ -1,5 +1,7 @@
 from django import forms
-from django.contrib.localflavor.us.forms import USZipCodeField
+
+from localflavor.us.forms import USZipCodeField
+
 from djforms.core.models import STATE_CHOICES, BINARY_CHOICES
 
 EDUCATION = (

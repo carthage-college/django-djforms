@@ -1,15 +1,12 @@
 from django import forms
-from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 from djforms.admissions.visitdays.models import VisitDayBaseProfile, VisitDayProfile, VisitDayEvent
 from djforms.core.models import STATE_CHOICES
 
-from tagging.models import TaggedItem
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 import datetime
 
 now = datetime.datetime.today()
-
-from django.conf import settings
 
 class VisitDayBaseForm(forms.ModelForm):
 

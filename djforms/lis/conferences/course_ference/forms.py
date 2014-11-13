@@ -1,13 +1,11 @@
 from django import forms
-from django.conf import settings
-from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm, TrustCommerceForm
 from djforms.lis.conferences.course_ference.models import CourseFerenceAttender, CourseFerenceVendor, SECTOR_CHOICES
 from djforms.core.models import BINARY_CHOICES, STATE_CHOICES, REQ
 
-from tagging.models import Tag, TaggedItem
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 FEE_CHOICES = (
     ("150","For profit: $150 vendor fee"),

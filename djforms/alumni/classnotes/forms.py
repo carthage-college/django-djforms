@@ -1,9 +1,9 @@
 from django import forms
-from django.forms import ModelForm
-from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from djtools.fields import STATE_CHOICES, YEARS1, REQ_CSS
 from djforms.alumni.classnotes.models import Contact
+
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from captcha.fields import CaptchaField
 

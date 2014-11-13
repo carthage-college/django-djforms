@@ -1,8 +1,9 @@
 from django import forms
 from django.forms import ModelForm
-from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from djforms.alumni.memory.models import Questionnaire
+
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 class QuestionnaireForm(forms.ModelForm):
     phone = USPhoneNumberField()

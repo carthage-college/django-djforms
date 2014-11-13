@@ -1,9 +1,10 @@
 from django import forms
 from django.forms import ModelForm
-from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from djforms.core.models import STATE_CHOICES, YEARS1
 from djforms.alumni.homecoming.models import Attendee
+
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 import datetime
 

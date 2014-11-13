@@ -1,10 +1,9 @@
 from django import forms
-from django.db import models
-from django.forms import ModelForm
-from django.contrib.localflavor.us.forms import USPhoneNumberField
 
 from djforms.jobpost.models import *
 from djforms.core.models import Department, GenericChoice, YEAR_CHOICES
+
+from localflavor.us.forms import USPhoneNumberField
 
 from tagging.models import Tag, TaggedItem
 

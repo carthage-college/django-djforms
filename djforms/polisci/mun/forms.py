@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.conf import settings
-from django.contrib.localflavor.us.forms import USPhoneNumberField, USZipCodeField
 from djforms.core.models import STATE_CHOICES
 from djforms.polisci.mun import COUNTRIES
+
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 DELEGATIONS = (
     ('1', '1'),

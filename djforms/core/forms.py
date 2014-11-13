@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
-from django.contrib.localflavor.us.forms import USPhoneNumberField
+
+from localflavor.us.forms import USPhoneNumberField
 
 from djforms.core.models import UserProfile
 

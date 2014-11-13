@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.conf import settings
-from django.contrib.localflavor.us.forms import USPhoneNumberField
-from django.contrib.localflavor.us.forms import USZipCodeField
 
 from djforms.polisci.model_united_nations.models import Attender
 from djforms.polisci.model_united_nations.models import Country
 from djforms.core.models import STATE_CHOICES, PAYMENT_CHOICES
 from djforms.processors.models import Order
+
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 DELEGATIONS = (
     ('', '----'),
