@@ -19,8 +19,11 @@
     </script>
 {% endblock %}
 {% block extra_style %}
-    <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
-        rel="stylesheet" type="text/css" />
+<link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
+    rel="stylesheet" type="text/css" />
+<style type="text/css" media="screen, projection">
+li.ctrlHolder div ul li {display:inline; padding-right:3px;}
+</style>
 {% endblock %}
 {% block left_nav %}
     {% include "lis/left_nav.html" %}
@@ -44,7 +47,7 @@
                     <li class="ctrlHolder">
                     <h3>{{field.label}}</h3>
                     <input type="text" class="file" name="file_info"
-                        id="faux_{{field.name}}" placeholder="Photo" />
+                        id="faux_{{field.name}}" placeholder="File" />
                     <div class="file_upload">
                         {{field}}
                     </div>

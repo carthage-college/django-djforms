@@ -5,22 +5,20 @@ from django.template import RequestContext, loader, Context
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import permission_required
 
 from djforms.jobpost.forms import JobApplyForms, PostFormWithHidden
 from djforms.jobpost.forms import PostFormWithoutHidden, PostFormMostHidden
 from djforms.jobpost.models import Post, JobApplyForm
 from djforms.core.models import Department
-from djforms.core.views import not_in_group
+
 from djtools.utils.mail import send_mail
+from djtools.decorators.auth import group_required
 
 from dateutil import parser
+
 import datetime
 import re
-
-from django.views.generic import ListView
 
 class SubListView(ListView):
     extra_context = {}
@@ -30,8 +28,7 @@ class SubListView(ListView):
         return context
 
 @csrf_exempt
-@login_required
-@user_passes_test(not_in_group, login_url='/forms/accounts/login/')
+@group_required('carthageStaffStatus','carthageFacultyStatus')
 def applicants_delete(request):
     """
     Accepts: POST request with variable 'data'
@@ -105,8 +102,7 @@ def post_list(request, page=0):
     )
     return callable(request)
 
-@login_required
-@user_passes_test(not_in_group, login_url='/forms/accounts/login/')
+@group_required('carthageStaffStatus','carthageFacultyStatus')
 def user_post_list(request, page=0):
     """
     Post list
@@ -281,8 +277,7 @@ def post_manage_list(request, page=0):
     return callable(request)
 
 
-@login_required
-@user_passes_test(not_in_group, login_url='/forms/accounts/login/')
+@group_required('carthageStaffStatus','carthageFacultyStatus')
 def post_create(request):
     """
     Post list
