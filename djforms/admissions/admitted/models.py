@@ -1,5 +1,7 @@
 from django.db import models
 
+from djtools.fields.validators import credit_gpa_validator
+
 STATUS = (
     ("Freshman","Freshman"),
     ("Transfer","Transfer"),
@@ -40,12 +42,15 @@ class Candidate(models.Model):
         help_text="(SAT=Critical Reading + Math)"
     )
     gpa = models.CharField(
-        "GPA", max_length=4
+        "GPA", max_length=4,
+        validators=[credit_gpa_validator]
+
     )
     gpa_scale = models.CharField(
         "GPA Scale",
         max_length=4,
-        choices=GPA_SCALE
+        choices=GPA_SCALE,
+        validators=[credit_gpa_validator]
     )
     adjusted_gpa = models.CharField(max_length=8)
     information = models.TextField(
