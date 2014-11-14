@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import ModelForm
 from djforms.maintenance.models import MaintenanceRequest
 from tagging.models import Tag, TaggedItem
 from djforms.core.models import GenericChoice

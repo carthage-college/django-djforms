@@ -44,8 +44,7 @@ def maintenance_request_form(request):
                 p = profile_form.cleaned_data
                 profile.phone = p["phone"]
                 profile.save()
-            bcc = settings.MANAGERS
-            recipient_list = [settings.MAINTENANCE_MANAGER]
+            TO_LIST = [settings.MAINTENANCE_MANAGER]
 
             managers = User.objects.filter(groups__id__in=[2,3])
             for m in managers:
@@ -53,7 +52,7 @@ def maintenance_request_form(request):
                     name=maintenance_request.type_of_request.name
                 )
                 if perms:
-                    recipient_list.append(m.email)
+                    TO_LIST.append(m.email)
 
             reviewers = User.objects.filter(groups__id=4)
             for r in reviewers:
@@ -61,19 +60,19 @@ def maintenance_request_form(request):
                     name=maintenance_request.building.name
                 )
                 if perms:
-                    recipient_list.append(r.email)
+                    TO_LIST.append(r.email)
 
             t = loader.get_template('maintenance/email.txt')
             c = Context({'data':maintenance_request,})
-            email = EmailMessage(
-                ("[Maintenance ID: %s] %s Floor %s Room %s: %s" % (
-                        str(maintenance_request.id),
-                        maintenance_request.building.name,
-                        maintenance_request.floor,
-                        maintenance_request.room_number,
-                        maintenance_request.type_of_request.name
-                    )
-                ), t.render(c), request.user.email, recipient_list, bcc,
+            subject = "[Maintenance ID: %s] %s Floor %s Room %s: %s" % (
+                str(maintenance_request.id),
+                maintenance_request.building.name,
+                maintenance_request.floor,
+                maintenance_request.room_number,
+                maintenance_request.type_of_request.name
+            )
+            email = EmailMessage(subject,
+                t.render(c), request.user.email, TO_LIST, settings.MANAGERS,
                 headers = {
                     'Reply-To': request.user.email,
                     'From': request.user.email
