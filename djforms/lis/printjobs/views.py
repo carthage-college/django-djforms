@@ -23,7 +23,7 @@ def print_request(request):
             if settings.DEBUG:
                 TO_LIST = [settings.SERVER_EMAIL]
             else:
-                TO_LIST = ["mrprintreqs@carthage.edu",cd['email']]
+                TO_LIST = ["mrprintreqs@carthage.edu",data['email']]
 
             subject = "[LIS Print Request]: %s from the %s Department" % (
                 data['name'],data['department']
