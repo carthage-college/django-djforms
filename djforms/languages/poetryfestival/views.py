@@ -1,33 +1,35 @@
 from django.conf import settings
-from django.core.mail import EmailMessage
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 from djforms.languages.poetryfestival.forms import SignupForm
 
+from djtools.utils.mail import send_mail
+
+@login_required
 def signup_form(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            to = ['scyganiak@carthage.edu',cd['email']]
-            bcc = settings.MANAGERS
-            body =  'Name: ' + cd['first_name'] + ' ' + cd['last_name'] + '\n' +\
-                    'Email: ' + cd['email'] + '\n' +\
-                    'Title of the Poem: ' + cd['poem_title'] + '\n' +\
-                    'Author of the Poem: ' + cd['poem_author'] + '\n' +\
-                    'Language of the Poem: ' + cd['poem_language'] + '\n' +\
-                    'Time slot preference: \n\n' + cd['time_slot'] + '\n\n' +\
-                    'Questions or Comments:  \n\n' + cd['comments'] + '\n'
 
-            email = EmailMessage(
-                "Poetry Festival Signup Form: %s %s" % (cd['first_name'],cd['last_name']),
-                body, cd['email'], to, bcc,
-                headers = {'Reply-To': cd['email'],'From': cd['email']}
+            if settings.DEBUG:
+                TO_LIST = [settings.SERVER_EMAIL]
+            else:
+                TO_LIST = ['scyganiak@carthage.edu', cd['email']]
+
+            subject = "Poetry Festival Signup Form: %s %s" % (
+                cd['first_name'], cd['last_name']
             )
-            email.send(fail_silently=True)
+
+            send_mail(
+                request, TO_LIST, subject, cd['email'],
+                "languages/poetryfestival/email.html", cd, settings.MANAGERS
+            )
+
             return HttpResponseRedirect(
                 reverse_lazy("poetry_festival_success")
             )

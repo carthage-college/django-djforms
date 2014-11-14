@@ -10,16 +10,17 @@ HOUSING_CHOICES=[('', '---------- select ----------'),
                 ('Dormitory/Apt', 'Dormitory/Apt'),]
 
 class StudyAbroadForm(forms.Form):
-    name = forms.CharField(max_length=50)
-    email = forms.EmailField(label='Your e-mail')
     phone = USPhoneNumberField()
     campus_box = forms.CharField(required=False, max_length=4)
     majors = forms.CharField(required=False, max_length=50)
     minors = forms.CharField(required=False, max_length=50)
     parent_name = forms.CharField(max_length=50)
     parent_phone = USPhoneNumberField()
-    parent_address = forms.CharField(max_length=100)
-    health_insurance = forms.CharField(max_length=50)
+    parent_address = forms.CharField(widget=forms.Textarea)
+    health_insurance = forms.CharField(
+        max_length=50,
+        help_text = "Name of provider and type of provider (e.g. PPO, HMO)"
+    )
     preferred_language = forms.CharField(
         max_length=10, label="Preferred Language of instruction while abroad"
     )

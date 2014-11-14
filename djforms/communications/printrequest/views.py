@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.core.mail import EmailMessage
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
