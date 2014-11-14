@@ -26,7 +26,7 @@ class CateringEventWizard(SessionWizardView):
 
     def done(self, form_list, **kwargs):
         if settings.DEBUG:
-            TO_LIST = ["larry@carthage.edu",]
+            TO_LIST = [settings.SERVER_EMAIL]
         else:
             TO_LIST = [
                 "dhoffman1@carthage.edu","svanags@carthage.edu",
@@ -47,7 +47,6 @@ class CateringEventWizard(SessionWizardView):
         event.room_set_up = xfields['room_set_up']
         event.beverages = xfields['beverages']
         event.save()
-        bcc = settings.MANAGERS
         t = loader.get_template('catering/event_email.html')
         c = RequestContext(self.request, {'event':event,})
         email = event.user.email
@@ -57,7 +56,7 @@ class CateringEventWizard(SessionWizardView):
                 (
                     event.department,event.user.first_name,event.user.last_name
                 )
-            ), t.render(c), email, TO_LIST, bcc,
+            ), t.render(c), email, TO_LIST, settings.MANAGERS,
             headers = {'Reply-To': email,'From': email}
         )
         email.content_subtype = "html"

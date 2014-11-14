@@ -9,7 +9,7 @@ from djforms.polisci.mun.forms import AttenderForm, CountryForm
 
 def registration(request):
     if settings.DEBUG:
-        TO_LIST = ["larry@carthage.edu"]
+        TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = ["vdillinger@carthage.edu"]
     BCC = settings.MANAGERS

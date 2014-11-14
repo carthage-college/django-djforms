@@ -16,7 +16,7 @@ def pledge_form(request):
     simple form to submitting a pledge of fealty.
     '''
     if settings.DEBUG:
-        TO_LIST = ["larry@carthage.edu",]
+        TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = ["csabar@carthage.edu","lhuaracha@carthage.edu",]
     BCC = settings.MANAGERS

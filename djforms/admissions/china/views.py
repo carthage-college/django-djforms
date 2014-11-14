@@ -9,16 +9,16 @@ from djtools.utils.mail import send_mail
 
 import datetime
 
-if settings.DEBUG:
-    TO_LIST = ["larry@carthage.edu",]
-else:
-    TO_LIST = ["admissions@carthage.edu","tkline@carthage.edu"]
-BCC = settings.MANAGERS
-
 def interest_form(request):
     if request.method=='POST':
         form = InterestForm(request.POST)
         if form.is_valid():
+            if settings.DEBUG:
+                TO_LIST = [settings.SERVER_EMAIL]
+            else:
+                TO_LIST = ["admissions@carthage.edu","tkline@carthage.edu"]
+            BCC = settings.MANAGERS
+
             data = form.cleaned_data
             subject = "[Admissions][China] Prospective Student (%s %s)" % (
                 data['last_name'],data['first_name']

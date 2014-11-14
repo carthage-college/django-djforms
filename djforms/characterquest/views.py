@@ -16,7 +16,7 @@ from datetime import date
 @login_required
 def application_profile_form(request):
     if settings.DEBUG:
-        TO_LIST = ["larry@carthage.edu",]
+        TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = ["nwinkler@carthage.edu",]
     BCC = settings.MANAGERS

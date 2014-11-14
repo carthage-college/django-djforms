@@ -9,10 +9,9 @@ from djtools.utils.mail import send_mail
 
 def parking_ticket_appeal_form(request):
     if settings.DEBUG:
-        TO_LIST = ["larry@carthage.edu",]
+        TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = ["parking@carthage.edu",]
-    BCC = settings.MANAGERS
 
     if request.method == 'POST':
         form = ParkingTicketAppealForm(request.POST)
@@ -22,7 +21,8 @@ def parking_ticket_appeal_form(request):
             subject = "Parking Violation Appeal Request"
             send_mail(
                 request, TO_LIST, subject, data['email'],
-                "security/parking_ticket_appeal/email.html", data, BCC
+                "security/parking_ticket_appeal/email.html",
+                data, settings.MANAGERS
             )
             return HttpResponseRedirect(
                 reverse_lazy("parking_ticket_appeal_success")

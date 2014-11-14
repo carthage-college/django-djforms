@@ -20,7 +20,6 @@ YEAR = int(NOW.year)
 if int(NOW.month) > 9 and not settings.DEBUG:
     YEAR += 1
 
-TO_LIST = ["larry@carthage.edu",]
 BCC = settings.MANAGERS
 
 import logging
@@ -182,7 +181,7 @@ def form(request, pid=None):
                     request.user.last_name
                 )
                 send_mail (
-                    request, TO_LIST, subject, request.user.email,
+                    request, [settings.SERVER_EMAIL], subject, request.user.email,
                     "scholars/presentation/email.html", data, BCC
                 )
             return HttpResponseRedirect(reverse("presentation_form_done"))
@@ -244,11 +243,10 @@ def email_presenters(request,pid,action):
                     context,context_instance=RequestContext(request))
             elif "execute" in request.POST:
                 FEMAIL = request.user.email
-                BCC = ( ('larry@carthage.edu'), )
                 TO_LIST = [presentation.user.email,]
                 if presentation.leader.sponsor_email:
                     if settings.DEBUG:
-                        TO_LIST.append("bridge@carthage.edu")
+                        TO_LIST.append(settings.SERVER_EMAIL)
                     else:
                         TO_LIST.append(presentation.leader.sponsor_email)
                 data = {"content":form_data["content"]}

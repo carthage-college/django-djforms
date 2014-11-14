@@ -12,7 +12,7 @@ from djtools.utils.mail import send_mail
 @login_required
 def print_request(request):
     if settings.DEBUG:
-        TO_LIST = ["larry@carthage.edu",]
+        TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = ["communications@carthage.edu",]
     BCC = settings.MANAGERS

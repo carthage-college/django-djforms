@@ -15,7 +15,7 @@ import datetime
 @check_honeypot
 def contact(request):
     if settings.DEBUG:
-        TO_LIST = ["larry@carthage.edu",]
+        TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = ["dmoore2@carthage.edu",]
     BCC = settings.MANAGERS

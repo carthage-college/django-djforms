@@ -11,7 +11,7 @@ from djtools.utils.mail import send_mail
 
 def registration(request):
     if settings.DEBUG:
-        TO_LIST = ["larry@carthage.edu",]
+        TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = ["vdillinger@carthage.edu",]
     BCC = settings.MANAGERS

@@ -10,12 +10,6 @@ from djtools.utils.mail import send_mail
 
 import datetime
 
-if settings.DEBUG:
-    TO_LIST = ["larry@carthage.edu",]
-else:
-    TO_LIST = ["alumnioffice@carthage.edu",]
-BCC = settings.MANAGERS
-
 def attendance(request):
     if request.method=='POST':
         form = AttendeeForm(request.POST)
@@ -27,9 +21,15 @@ def attendance(request):
             subject = "[Homecoming Attendee] %s %s" % (
                 attendee.first_name,attendee.last_name
             )
+
+            if settings.DEBUG:
+                TO_LIST = [settings.SERVER_EMAIL]
+            else:
+                TO_LIST = ["alumnioffice@carthage.edu",]
             send_mail(
                 request, TO_LIST, subject, email,
-                "alumni/homecoming/attendance/email.html", attendee, BCC
+                "alumni/homecoming/attendance/email.html",
+                attendee, settings.MANAGERS
             )
             return HttpResponseRedirect(
                 reverse_lazy("homecoming_attendance_success")

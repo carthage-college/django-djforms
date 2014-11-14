@@ -9,12 +9,6 @@ from djtools.utils.mail import send_mail
 import logging
 logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG)
 
-if settings.DEBUG:
-    TO_LIST = ["larry@carthage.edu",]
-else:
-    TO_LIST = ["tapplegarth@carthage.edu",]
-BCC = settings.MANAGERS
-
 class ContactAdminForm(forms.ModelForm):
     classyear       = forms.CharField(label="Class", max_length=4, widget=forms.Select(choices=CLASSYEARS))
     spouseyear      = forms.CharField(label="Spouse's class", max_length=4, widget=forms.Select(choices=SPOUSEYEARS), required=False)
@@ -52,9 +46,17 @@ class ContactAdmin(admin.ModelAdmin):
         obj.save()
         if "alumnistatus" in form.changed_data:
             if obj.alumnistatus:
+                if settings.DEBUG:
+                    TO_LIST = [settings.SERVER_EMAIL]
+                else:
+                    TO_LIST = ["tapplegarth@carthage.edu",]
                 email = settings.DEFAULT_FROM_EMAIL
-                subject = "[Alumni Class Notes] Alumni Office has approved the following note"
-                send_mail(request,TO_LIST,subject,email,"alumni/classnotes/email.html",obj,BCC)
+                subject = """
+                    [Alumni Class Notes] Alumni Office has approved this note
+                """
+                send_mail(
+                    request, TO_LIST, subject, email,
+                    "alumni/classnotes/email.html",obj,settings.MANAGERS)
 
     def set_carthiginian_status(self, request, queryset):
         """

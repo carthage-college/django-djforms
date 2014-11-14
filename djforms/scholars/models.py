@@ -151,7 +151,7 @@ class Presentation(models.Model):
             prez = Presentation.objects.get(pk=self.pk)
             if (prez.status != self.status) and self.status:
                 if settings.DEBUG:
-                    TO_LIST = ["larry@carthage.edu",]
+                    TO_LIST = [settings.SERVER_EMAIL]
                 else:
                     TO_LIST = [self.user.email,]
                 BCC = settings.MANAGERS

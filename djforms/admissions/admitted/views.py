@@ -11,7 +11,7 @@ import datetime
 
 def chance_of_form(request):
     if settings.DEBUG:
-        TO_LIST = ["larry@carthage.edu",]
+        TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = ["rob@carthage.edu",]
     BCC = (
