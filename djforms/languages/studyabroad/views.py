@@ -21,8 +21,7 @@ def study_abroad(request):
                 TO_LIST = [settings.SERVER_EMAIL]
             else:
                 TO_LIST = [
-                    "ekulke@carthage.edu", "mkishline@gmail.com",
-                    email
+                    "ekulke@carthage.edu", email
                 ]
             subject = "Student Information for Study Abroad"
             send_mail(

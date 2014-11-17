@@ -62,7 +62,7 @@ def maintenance_request_form(request):
                 if perms:
                     TO_LIST.append(r.email)
 
-            t = loader.get_template('maintenance/email.txt')
+            t = loader.get_template('maintenance/email.html')
             c = Context({'data':maintenance_request,})
             subject = "[Maintenance ID: %s] %s Floor %s Room %s: %s" % (
                 str(maintenance_request.id),
