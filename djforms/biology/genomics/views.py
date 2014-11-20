@@ -1,31 +1,35 @@
 from django.conf import settings
-from django.core.mail import EmailMessage
+from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
-from django.template import RequestContext, loader
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
 
 from djforms.biology.genomics.forms import PhageHunterForm
 from djforms.biology.genomics.models import PhageHunter
+from djtools.utils.mail import send_mail
 
 def phage_hunter_form(request):
     if request.method=='POST':
         form = PhageHunterForm(request.POST)
         if form.is_valid():
             data = form.save()
-            bcc = settings.MANAGERS
-            recipient_list = ["dtobiason@carthage.edu","ppfaffle@carthage.edu"]
-            t = loader.get_template('biology/genomics/phage_hunter_email.html')
-            c = RequestContext(request, {'applicant':data,})
-            email = EmailMessage(
-                ("[Phage Hunters Application] %s %s" %
-                    (data.first_name,data.last_name)
-                ), t.render(c), data.email, recipient_list, bcc,
-                headers = {'Reply-To': data.email,'From': data.email}
+
+            if settings.DEBUG:
+                TO_LIST = [settings.SERVER_EMAIL]
+            else:
+                TO_LIST = settings.BIOLOGY_GENOMICS
+
+            subject = "[Phage Hunters Application] {} {}".format(
+                data.first_name, data.last_name
             )
-            email.content_subtype = "html"
-            email.send(fail_silently=True)
+
+            send_mail(
+                request, TO_LIST, subject, data.email,
+                "biology/genomics/phage_hunter_email.html", data,
+                settings.MANAGERS
+            )
+
             return HttpResponseRedirect(
                 reverse_lazy("phage_hunters_success")
             )

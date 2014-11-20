@@ -17,7 +17,7 @@ padding:5px 0;
 <h1>Distinguished Alumni Nomination Form</h1>
 <h2>Nominee</h2>
 <dl>
-    {% for name,value in nominee.items %}
+    {% for name,value in data.nominee.items %}
     {% if name != "description" %}
         <dt>{{name}}:</dt>
         <dd>{{value}}</dd>
@@ -25,10 +25,10 @@ padding:5px 0;
     {% endfor %}
 </dl>
 <h3>Information Background on Nominee</h3>
-{{nominee.description|safe}}
+{{data.nominee.description|safe}}
 <h2>Nominator</h2>
 <dl>
-    {% for name,value in nominator.items %}
+    {% for name,value in data.nominator.items %}
         <dt>{{name}}:</dt>
         <dd>{{value}}</dd>
     {% endfor %}

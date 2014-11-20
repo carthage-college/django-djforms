@@ -14,7 +14,6 @@ def print_request(request):
         TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = ["communications@carthage.edu",]
-    BCC = settings.MANAGERS
 
     if request.method == 'POST':
         form = PrintRequestForm(request.POST, request.FILES)
@@ -25,13 +24,14 @@ def print_request(request):
             data.save()
             if not settings.DEBUG:
                 TO_LIST.append(data.user.email)
-                subject = "[Print request] %s: %s" % (
+                subject = "[Print request] {}: {}".format(
                     data.project_name, data.date_created
                 )
                 send_mail(
                     request, TO_LIST,
                     subject, data.user.email,
-                    "communications/printrequest/email.html", data, BCC,
+                    "communications/printrequest/email.html", data,
+                    settings.MANAGERS
                 )
                 return HttpResponseRedirect(reverse('print_request_success'))
             else:

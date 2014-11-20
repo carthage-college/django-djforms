@@ -1,12 +1,11 @@
 from django.conf import settings
-from django.core.mail import EmailMessage
+from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.core.files.base import ContentFile
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse_lazy
-from django.template import RequestContext, loader, Context
 
 from djforms.alumni.distinguished.forms import NomineeForm, NominatorForm
+from djtools.utils.mail import send_mail
 
 import datetime
 
@@ -15,23 +14,23 @@ def nomination_form(request):
         nominee_form = NomineeForm(request.POST,prefix="nominee")
         nominator_form = NominatorForm(request.POST,prefix="nominator")
         if nominee_form.is_valid() and nominator_form.is_valid():
-            nominee = nominee_form.cleaned_data
-            nominator = nominator_form.cleaned_data
-            bcc = settings.MANAGERS
-            to = ["alumnioffice@carthage.edu"]
-            t = loader.get_template('alumni/distinguished/email.html')
-            c = RequestContext(
-                request, {'nominee':nominee,'nominator':nominator,}
+            data = {
+                "nominee": nominee_form.cleaned_data,
+                "nominator": nominator_form.cleaned_data
+            }
+            if settings.DEBUG:
+                TO_LIST = [settings.SERVER_EMAIL]
+            else:
+                TO_LIST = [settings.ALUMNI_OFFICE_EMAIL]
+            subject = "Distinguished Alumni Award Nomination: {}".format(
+                data["nominee"]["name"]
             )
-            email = EmailMessage(
-                "Distinguished Alumni Award Nomination: %s" % nominee['name'],
-                t.render(c), nominator['email'], to, bcc,
-                headers = {
-                    'Reply-To': nominator['email'],'From': nominator[ 'email']
-                }
+            send_mail(
+                request, TO_LIST,
+                subject, data["nominator"]["email"],
+                "alumni/distinguished/email.html", data,
+                settings.MANAGERS
             )
-            email.content_subtype = "html"
-            email.send(fail_silently=False)
             return HttpResponseRedirect(
                 reverse_lazy("distinguished_nomination_success")
             )

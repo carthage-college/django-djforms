@@ -11,7 +11,7 @@ class PhageHunterForm(forms.ModelForm):
     phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
     lab_work = forms.CharField(
         widget=forms.RadioSelect(choices=BINARY_CHOICES),
-        help_text="Are you willing to spend extra time in the lab as needed?"
+        label="Are you willing to spend extra time in the lab as needed?"
     )
 
     class Meta:
@@ -19,11 +19,28 @@ class PhageHunterForm(forms.ModelForm):
         exclude = ('created_at','updated_at',)
 
     def clean(self):
-        if not self.cleaned_data.get('act_comp') and not self.cleaned_data.get('act_math') and not self.cleaned_data.get('act_science') and not self.cleaned_data.get('sat_comp') and not self.cleaned_data.get('sat_math') and not self.cleaned_data.get('sat_read'):
-            self._errors["act_comp"] = self.error_class(["Provide either ACT or SAT scores or both."])
-            self._errors["act_math"] = self.error_class(["Provide either ACT or SAT scores or both."])
-            self._errors["act_science"] = self.error_class(["Provide either ACT or SAT scores or both."])
-            self._errors["sat_comp"] = self.error_class(["Provide either ACT or SAT scores or both."])
-            self._errors["sat_math"] = self.error_class(["Provide either ACT or SAT scores or both."])
-            self._errors["sat_read"] = self.error_class(["Provide either ACT or SAT scores or both."])
+        if not self.cleaned_data.get('act_comp') \
+        and not self.cleaned_data.get('act_math') \
+        and not self.cleaned_data.get('act_science') \
+        and not self.cleaned_data.get('sat_comp') \
+        and not self.cleaned_data.get('sat_math') \
+        and not self.cleaned_data.get('sat_read'):
+            self._errors["act_comp"] = self.error_class(
+                ["Provide either ACT or SAT scores or both."]
+            )
+            self._errors["act_math"] = self.error_class(
+                ["Provide either ACT or SAT scores or both."]
+            )
+            self._errors["act_science"] = self.error_class(
+                ["Provide either ACT or SAT scores or both."]
+            )
+            self._errors["sat_comp"] = self.error_class(
+                ["Provide either ACT or SAT scores or both."]
+            )
+            self._errors["sat_math"] = self.error_class(
+                ["Provide either ACT or SAT scores or both."]
+            )
+            self._errors["sat_read"] = self.error_class(
+                ["Provide either ACT or SAT scores or both."]
+            )
         return self.cleaned_data

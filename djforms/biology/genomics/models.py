@@ -59,8 +59,8 @@ class PhageHunter(GenericContact):
         help_text='Please describe why you are interested in the program.'
     )
     lab_work = models.CharField(
-        max_length=3, choices=BINARY_CHOICES,
-        help_text="Are you willing to spend extra time in the lab as needed?"
+        "Are you willing to spend extra time in the lab as needed?",
+        max_length=3, choices=BINARY_CHOICES
     )
 
     def __unicode__(self):
