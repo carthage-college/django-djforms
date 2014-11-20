@@ -1,13 +1,13 @@
-from django.conf import settings
-from django.http import HttpResponseRedirect
-from django.core.mail import EmailMessage
-from django.shortcuts import render_to_response
-from django.template import RequestContext, loader
 from django.http import Http404
+from django.conf import settings
 from django.utils.dates import MONTHS
+from django.template import RequestContext
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse_lazy
 
 from djforms.languages.tle.forms import *
+from djtools.utils.mail import send_mail
 
 import datetime
 
@@ -23,18 +23,19 @@ def application_form(request, stype):
     ulength = 1
     if request.method=='POST':
         form = eval(form_name)(request.POST)
-        cd = request.POST.copy()
+        data = request.POST.copy()
         if form.is_valid():
-            education=''
+            cd = form.cleaned_data
             if stype=="masters":
+                education=''
                 # collect our university fields
-                university = cd.getlist('university[]')
-                country = cd.getlist('country[]')
-                from_month = cd.getlist('from_month[]')
-                to_month = cd.getlist('to_month[]')
-                from_year = cd.getlist('from_year[]')
-                to_year = cd.getlist('to_year[]')
-                degree = cd.getlist('degree[]')
+                university = data.getlist('university[]')
+                country = data.getlist('country[]')
+                from_month = data.getlist('from_month[]')
+                to_month = data.getlist('to_month[]')
+                from_year = data.getlist('from_year[]')
+                to_year = data.getlist('to_year[]')
+                degree = data.getlist('degree[]')
                 # establish the number of universities submitted
                 # and iterate over them to build education
                 for index in range(len(university)):
@@ -51,32 +52,37 @@ def application_form(request, stype):
                     ''' % (to_month[index],to_year[index])
                     education += '<dt>Degree</dt><dd>%s</dd>' % degree[index]
                     education += '</dl>'
-            cd = form.cleaned_data
-            bcc = settings.MANAGERS
-            to = ["sgrover@carthage.edu","scyganiak@carthage.edu","emontanaro@carthage.edu",cd['email']]
-            t = loader.get_template('languages/tle/email.txt')
-            c = RequestContext(
-                request, {'data':cd,'education':education,'type':stype}
+                cd["education"] = education
+            cd["type"] = stype
+
+            if settings.DEBUG:
+                TO_LIST = [settings.SERVER_EMAIL,]
+            else:
+                TO_LIST = settings.MODERN_LANGUAGES_TLE_APPLICATIONS
+                TO_LIST.append(cd['email'])
+
+            subject = "[Modern Languages] TLE {}: {} {}".format(
+                stype.capitalize(), cd['first_name'], cd['last_name']
             )
-            email = EmailMessage(
-                ("[Modern Languages] %s Application: %s %s" % (stype.capitalize(),cd['first_name'],cd['last_name'])),
-                t.render(c), cd['email'], to, bcc,
-                headers = {'Reply-To': cd['email'],'From': cd['email']}
+
+            send_mail(
+                request, TO_LIST,
+                subject, cd["email"],
+                "languages/tle/email.html", cd, settings.MANAGERS
             )
-            email.content_subtype = "html"
-            email.send(fail_silently=True)
+
             return HttpResponseRedirect(
                 reverse_lazy("tle_success")
             )
         elif stype=="masters":
             # collect our fields
-            university = cd.getlist('university[]')
-            country = cd.getlist('country[]')
-            from_month = cd.getlist('from_month[]')
-            to_month = cd.getlist('to_month[]')
-            from_year = cd.getlist('from_year[]')
-            to_year = cd.getlist('to_year[]')
-            degree = cd.getlist('degree[]')
+            university = data.getlist('university[]')
+            country = data.getlist('country[]')
+            from_month = data.getlist('from_month[]')
+            to_month = data.getlist('to_month[]')
+            from_year = data.getlist('from_year[]')
+            to_year = data.getlist('to_year[]')
+            degree = data.getlist('degree[]')
             # establish the number of universities submitted
             # and iterate over them to build our form parts
             ulength = len(university)
@@ -89,7 +95,7 @@ def application_form(request, stype):
                 education += '<li class="ctrlHolder"><h3>University Name</h3><input type="text" name="university[]" value="%s" />' % university[index]
                 education += '<li class="ctrlHolder"><h3>Country</h3><input type="text" name="country[]" value="%s" />' % country[index]
                 education += '<li class="ctrlHolder"><h3>From</h3>'
-                education += '<select name="from_month[]">'
+                education += '<select name="from_month[]" class="small">'
                 options_month = ''
                 for month in range(len(MONTHS)):
                     selected=''
@@ -98,10 +104,10 @@ def application_form(request, stype):
                     options_month += '<option value="%s"%s>%s</option>' % (unicode(MONTHS[month+1]),selected,unicode(MONTHS[month+1]))
                 education += options_month
                 education += '</select>'
-                education += 'Year <input type="text" name="from_year[]" value="%s" />' % from_year[index]
+                education += 'Year <input type="text" class="small" name="from_year[]" value="%s" />' % from_year[index]
                 education += '</li>'
                 education += '<li class="ctrlHolder"><h3>To</h3>'
-                education += '<select name="to_month[]">'
+                education += '<select name="to_month[]" class="small">'
                 options_month = ''
                 for month in range(len(MONTHS)):
                     selected=''
@@ -110,7 +116,7 @@ def application_form(request, stype):
                     options_month += '<option value="%s"%s>%s</option>' % (unicode(MONTHS[month+1]),selected,unicode(MONTHS[month+1]))
                 education += options_month
                 education += '</select>'
-                education += 'Year <input type="text" name="to_year[]" value="%s" />' % to_year[index]
+                education += 'Year <input type="text" class="small" name="to_year[]" value="%s" />' % to_year[index]
                 education += '</li>'
                 education += '<li class="ctrlHolder"><h3>Diploma/Degree</h3><input type="text" name="degree[]" value="%s" /></li>' % degree[index]
                 education += '<li class="ctrlHolder"><hr /></li>'

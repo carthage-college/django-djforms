@@ -10,7 +10,7 @@
     <script type="text/javascript">
         $(function() {
             $("#id_dob").datepicker({
-                firstDay:1,appendText:"(format yyyy-mm-dd)",
+                firstDay:1,appendText:"(format mm/dd/yyyy)",
                 changeFirstDay:false,dateFormat:"yy-mm-dd",
                 showOn:"both",
                 buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
@@ -108,7 +108,7 @@
                 </li>
                 <li class="ctrlHolder">
                     <h3>From</h3>
-                    <select name="from_month[]">
+                    <select name="from_month[]" class="small">
                     {% for v,m in months.items %}
                     <option value="{{m}}">{{m}}</option>
                     {% endfor %}
@@ -117,7 +117,7 @@
                 </li>
                 <li class="ctrlHolder">
                     <h3>To</h3>
-                    <select name="to_month[]">
+                    <select name="to_month[]" class="small">
                     {% for v,m in months.items %}
                     <option value="{{m}}">{{m}}</option>
                     {% endfor %}
