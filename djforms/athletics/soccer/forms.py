@@ -7,6 +7,27 @@ from djforms.athletics.soccer.models import SHIRT_SIZES, SESSIONS, AMOUNT_CHOICE
 
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
+class SoccerCampInsuranceCardForm(forms.Form):
+
+    first_name = forms.CharField(
+        label="Camper's First Name",
+        max_length=128,widget=forms.TextInput(attrs=REQ)
+    )
+    last_name = forms.CharField(
+        label="Camper's Last Name", max_length=128,
+        widget=forms.TextInput(attrs=REQ)
+    )
+    email = forms.CharField(
+        max_length=75,widget=forms.TextInput(attrs=REQ)
+    )
+    insurance_card_front = forms.FileField(
+        max_length="256"
+    )
+    insurance_card_back = forms.FileField(
+        max_length="256"
+    )
+
+
 class SoccerCampRegistrationForm(forms.ModelForm):
     """
     A form to collect registration data for the summer soccer camp
@@ -117,6 +138,7 @@ class SoccerCampRegistrationForm(forms.ModelForm):
     class Meta:
         model = SoccerCampAttender
         exclude = (
-            'country','order','second_name','previous_name','salutation'
+            'country','order','second_name','previous_name','salutation',
+            'insurance_card','medical_history','assumption_risk'
         )
 

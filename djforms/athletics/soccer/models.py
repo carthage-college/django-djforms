@@ -134,6 +134,10 @@ class SoccerCampAttender(Contact):
         "Amount to pay", choices=AMOUNT_CHOICES, max_length=24,
         help_text="NOTE: NO CREDIT CARDS ACCEPTED AT CHECK-INS"
     )
+    # ancillary data
+    insurance_card = models.BooleanField(default=False)
+    medical_history = models.BooleanField(default=False)
+    assumption_risk = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = 'Soccer Camp Attenders'

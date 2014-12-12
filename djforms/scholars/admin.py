@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from djforms.scholars.models import *
 from django.http import HttpResponse
-from django.utils.encoding import smart_unicode, smart_str
+from django.utils.encoding import smart_str
 
 import csv
 

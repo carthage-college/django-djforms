@@ -1,0 +1,22 @@
+{% extends "athletics/base.html" %}
+{% block title %}
+    Soccer Camp Insurance Card Form &mdash;
+    Athletics &mdash;
+    Carthage College
+{% endblock %}
+{% block extra_style %}
+<style type="text/css" media="screen, projection">
+li.ctrlHolder div ul li {display:inline; padding-right:3px;}
+.forms-container, .forms-container label {font-weight:bold;}
+</style>
+{% endblock %}
+{% block banner %}{% endblock %}
+{% block topnav %}{% endblock %}
+{% block content %}
+<div id="first">
+    <div class="buffer forms-container" style="background-color:#fff;">
+    <h1>Soccer Camp Insurance Card Form</h1>
+        {% include "includes/generic_form_multi.html" %}
+    </div>
+</div>
+{% endblock %}

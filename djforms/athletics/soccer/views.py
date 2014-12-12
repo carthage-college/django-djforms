@@ -1,20 +1,17 @@
-from django.conf import settings
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
+from djforms.athletics.soccer import BCC, TO_LIST
 from djforms.processors.models import Contact, Order
 from djforms.processors.forms import TrustCommerceForm
+from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
+from djforms.athletics.soccer.forms import SoccerCampInsuranceCardForm
+
 from djtools.utils.mail import send_mail
 
 def camp_registration(request):
-    if settings.DEBUG:
-        TO_LIST = [settings.SERVER_EMAIL,]
-    else:
-        TO_LIST = ["sdomin@carthage.edu","kjabeck@carthage.edu"]
-    BCC = settings.MANAGERS
 
     status = None
     msg = None
@@ -68,7 +65,7 @@ def camp_registration(request):
                     order.reg = contact
                     send_mail(
                         request, TO_LIST,
-                        "[%s] Soccer camp registration" % status,
+                        "[{}] Soccer camp registration".format(status),
                         contact.email,
                         "athletics/soccer/camp_registration_email.html",
                         order, BCC
@@ -102,5 +99,33 @@ def camp_registration(request):
             'form_reg': form_reg,'form_proc':form_proc,
             'status':status,'msg':msg,
         }, context_instance=RequestContext(request)
+    )
+
+def insurance_card(request):
+
+    if request.POST:
+        form = SoccerCampInsuranceCardForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.cleaned_data
+            subject = "[Insurance card]: {}, {}".format(
+                data['last_name'],
+                data['first_name']
+            )
+            send_mail(
+                request, TO_LIST,
+                subject, data['email'],
+                "athletics/soccer/camp_insurance_card_email.html",
+                data, BCC, attach=True
+            )
+            return HttpResponseRedirect(
+                reverse('soccer_camp_insurance_card_success')
+            )
+    else:
+        form = SoccerCampInsuranceCardForm()
+
+    return render_to_response(
+        'athletics/soccer/camp_insurance_card_form.html',
+        {'form': form,},
+        context_instance=RequestContext(request)
     )
 

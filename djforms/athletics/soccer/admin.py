@@ -14,13 +14,17 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         'gender','address1','address2','city','state','postal_code','phone',
         'email','order_transid','order_status','parent_guard','roommate',
         'dorm','years_attend','goalkeeper','shirt_size','session','reg_fee',
-        'amount','order_total', 'payment_method'
+        'amount','order_total', 'payment_method',
+        'insurance_card','medical_history','assumption_risk'
     )
     ordering      = ('-created_at',)
     search_fields = ('last_name','email','postal_code')
 
     list_max_show_all   = 500
     list_per_page       = 500
+    list_editable = [
+        'insurance_card','medical_history','assumption_risk'
+    ]
 
     def queryset(self, request):
         """
