@@ -16,12 +16,29 @@ urlpatterns = patterns('',
     # academics
     #(r'^academics/', include('djforms.academics.urls')),
     # auth
-    url(r'^accounts/login',auth_views.login,{'template_name': 'accounts/login.html'},name='auth_login'),
-    url(r'^accounts/logout/$',auth_views.logout,{'next_page': '/forms/accounts/loggedout/'}),
-    url(r'^accounts/loggedout',loggedout,{'template_name': 'accounts/logged_out.html'}),
-    url(r'^accounts/$', RedirectView.as_view(url='/forms/')),
+    url(
+        r'^accounts/login',
+        auth_views.login,{'template_name': 'accounts/login.html'},
+        name='auth_login'
+    ),
+    url(
+        r'^accounts/logout/$',
+        auth_views.logout,{'next_page': '/forms/accounts/loggedout/'},
+        name='auth_logout'
+    ),
+    url(
+        r'^accounts/loggedout',
+        loggedout,{'template_name': 'accounts/logged_out.html'},
+        name='auth_loggedout'
+    ),
+    url(
+        r'^accounts/$', RedirectView.as_view(url='/forms/')
+    ),
     # CSV
-    (r'^admin/(?P<app_label>[\d\w]+)/(?P<model_name>[\d\w]+)/csv/', 'djforms.core.util.admin_list_export'),
+    url(
+        r'^admin/(?P<app_label>[\d\w]+)/(?P<model_name>[\d\w]+)/csv/',
+        'djforms.core.util.admin_list_export'
+    ),
     # admin
     (r'^admin/', include(admin.site.urls) ),
     # override user creation

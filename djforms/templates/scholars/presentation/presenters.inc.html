@@ -47,7 +47,7 @@
     <div class="fleft mtop">
         <p><strong>College Year</strong></p>
         <p>
-            <select name="college_year[]">
+            <select name="college_year[]" class="small">
             {% for n,v in cyears %}
                 <option value="{{n}}"{% if p.college_year == n %} selected="selected"{% endif %}>{{v}}</option>
             {% endfor %}

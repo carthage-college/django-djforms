@@ -1,13 +1,23 @@
 {% extends "base.html" %}
-{% block title %}Presentation Form &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
+{% block title %}
+    Presentation Form &mdash;
+    Celebration of Scholars &mdash;
+    Carthage College
+{% endblock %}
 {% block extra_javascript %}
-    <script src="/static/forms/js/jHtmlArea-0.7.5.min.js" type="text/javascript"></script>
-    <script src="//www.carthage.edu/assets/js/jquery/ui/ui.core.js" type="text/javascript" charset="utf-8"></script>
-    <script src="//www.carthage.edu/assets/js/jquery/plugins/jquery.blockUI.js" type="text/javascript" charset="utf-8"></script>
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea-0.8.min.js"
+        type="text/javascript" charset="utf-8"></script>
+    <script src="https://malsup.github.io/min/jquery.blockUI.min.js"
+        type="text/javascript"></script>
     <script type="text/javascript">
         $(function() {
             $("#id_abstract_text").htmlarea({
-                toolbar: ["html","bold", "italic", "underline", "superscript", "subscript", "|", "h1", "h2", "h3", "h4", "|", "indent", "outdent", "horizontalrule", "link", "unlink", "|", "orderedList", "unorderedList"]
+                toolbar: [
+                    "html","bold", "italic", "underline", "superscript",
+                    "subscript", "|", "h1", "h2", "h3", "h4", "|", "indent",
+                    "outdent", "horizontalrule", "link", "unlink", "|",
+                    "orderedList", "unorderedList"
+                ]
             });
             var copies = {{copies}};
             // copy duplicate master for new presenter
@@ -20,11 +30,11 @@
             // flag presenters that have a mugshot for upload.
             // cgi on the backend does not include empty filefields in []
             // hidden field name = "mugshoth"
-            $(".mugshot").live('change', function() {
+            $(".mugshot").on('change', function() {
                 $(this).next(':hidden').val("True");
             });
             // remove presenter
-            $(".destroy_school").live('click', function() {
+            $('#duplicates').on("click", ".destroy_school", function() {
                 if (copies > 0) {
                     copies--;
                     $(this).parent().remove();
@@ -34,7 +44,7 @@
                 }
             });
             // switch for faculty/staff vs student
-            $("select[name='prez_type[]']").live('change', function () {
+            $("#duplicates").on('change', "select[name='prez_type[]']", function () {
                 if ( $(this).val()=="Student" ) {
                     $(this).parent().nextAll('.student:first').addClass("shown");
                     $(this).parent().nextAll('.facstaff:first').removeClass("shown");
@@ -43,7 +53,7 @@
                     $(this).parent().nextAll('.student:first').removeClass("shown");
                 }
             });
-            $( "#profile" ).live('submit', function( event ) {
+            $( "#profile" ).submit(function( event ) {
                 var error = false;
                 $("div[id^='doop_']").each(function() {
                     var prez_type_obj = $(this).find('select[name="prez_type[]"]');
@@ -103,24 +113,30 @@
     </script>
 {% endblock %}
 {% block extra_style %}
-    <link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
-    <link rel="Stylesheet" type="text/css" href="/static/forms/css/jHtmlArea.css" />
+    <link href="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea.css"
+        rel="stylesheet" type="text/css" />
     <style type="text/css">
-
     div.jHtmlArea .ToolBar {width: 470px !important; }
     div.jHtmlArea .ToolBar ul li a.custom_disk_button
     {
         background: url(/static/forms/css/disk.png) no-repeat;
         background-position: 0 0;
     }
-    div.jHtmlArea { width:500px !important;border: solid 1px #ccc; background: #efefef; }
-    iframe {width:500px !important;height:300px !important;background: #fff;border: solid 1px #ccc;}
-    #second ul, #second ol { margin: 0; }
-    #second li {margin-left:0;}
-    #second p {line-height: 1.1;margin-bottom: .5em;}
+    div.jHtmlArea {
+        width:500px !important;border: solid 1px #ccc; background: #efefef;
+    }
+    iframe {
+        width:500px !important;height:300px !important;background: #fff;
+        border: solid 1px #ccc;
+    }
     #doopmaster {display: none;}
-    div.growlUI {background: url(/media/img/ico/information.png) no-repeat 10px 10px; height:90px;}
-    div.growlUI h1, div.growlUI h2 {font-size: 1.4em; color: white; padding: 5px 5px 5px 75px; text-align: left;}
+    div.growlUI {
+        background: url(/assets/img/ico/information.png) no-repeat 10px 10px;
+    }
+    div.growlUI h1, div.growlUI h2 {
+        font-size: 1.4em; color: white; padding: 5px 5px 5px 75px;
+        text-align: left;
+    }
     .form input[type=text] {width: 350px;}
     .form input[type=file] {width: 200px;}
     .form input.tiny {margin:0;width:30px;vertical-align:middle;}
@@ -128,14 +144,20 @@
     .form input.medium {margin:0;width:150px;}
     .form input.large {margin:0;width:250px;}
     .form .blockLabels label {display: inline;}
+    .form p {margin-bottom:0 !important;}
     .ctrlcx {float:right;width:25px;}
-    .presenter {border: 1px solid #FFD324; border-radius: 3px 3px 3px 3px; box-shadow: 0 1px 0 #FFFFFF inset; margin: 0 auto 8px; padding: 6px 8px; background-color:#FFF6BF;}
+    .presenter {
+        border: 1px solid #FFD324; border-radius: 3px 3px 3px 3px;
+        box-shadow: 0 1px 0 #FFFFFF inset; margin: 0 auto 8px;
+        padding: 6px 8px; background-color:#FFF6BF;
+    }
     .hidden {display:none;}
     .facstaff {display:none;}
     .student {display:none;}
     .shown {display:block;}
     .mtop {margin-top:9px;}
     .fleft{width:265px;}
+    dl dt { background: none;padding:0;}
     </style>
 {% endblock %}
 {% block left_nav %}
@@ -148,10 +170,8 @@
     {% endif %}
     {% if manager %}
     <h1>Presentation Form</h1>
-    <p>Fields marked with an asterisk<img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" style="margin-bottom:-3px;" />are required.</p>
-    {% if form.errors %}
-        <p class="error">There were errors with the data submitted, see below.</p>
-    {% endif %}
+    {% include "includes/required_text.html" %}
+    {% include "includes/errors_text.html" %}
     <form method="post" action="." class="form" id="profile"
         enctype="multipart/form-data">
         {% csrf_token %}
@@ -173,33 +193,53 @@
                 <li class="ctrlHolder">
                     <h3><label>Status</label></h3>
                     <p class="help">
-                    <input type="checkbox" id="id_status" name="status"{% if presentation.status %} checked="checked"{% endif %} />
+                    <input type="checkbox" id="id_status" name="status"
+                        {% if presentation.status %} checked="checked"{% endif %} />
                     Is this presentation complete?
                     </p>
                 </li>
                 {% endif %}
                 <li class="ctrlHolder">
                     <div id="doopmaster" class="presenter">
-                        <img class="destroy_school fright" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" title="Remove Presenter" alt="Remove Presenter" />
+                        <img class="destroy_school fright"
+                            src="/assets/img/ico/silk/icons/delete.png"
+                            title="Remove Presenter" alt="Remove Presenter" />
                         {% include "scholars/presentation/presenters.inc.html" %}
                     </div>
                     <h3><label>Presenters</label></h3>
                 </li>
                 <li style="margin-top:10px;">
-                    <p>Click on the <img style="margin-bottom:-3px;" src="http://www.carthage.edu/assets/img/ico/silk/icons/add.png" /> symbol to add more presenters. Click on the <img style="margin-bottom:-3px;" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" /> icon to remove presenters.</p>
-                    <p><strong>NOTE</strong>: Photos must be JPEG format and must be high resolution&mdash;at least 300 DPI.</p>
-                    <p style="float:left;"><strong class="help">All fields are required.</strong></p>
+                    <p>
+                        Click on the
+                        <img style="margin-bottom:-3px;"
+                            src="/assets/img/ico/silk/icons/add.png" />
+                        symbol to add more presenters. Click on the
+                        <img style="margin-bottom:-3px;"
+                            src="/assets/img/ico/silk/icons/delete.png" />
+                        icon to remove presenters.</p>
+                    <p>
+                        <strong>NOTE</strong>:
+                        Photos must be JPEG format and must be high
+                        resolution&mdash;at least 300 DPI.
+                    </p>
+                    <p style="float:left;">
+                        <strong class="help">All fields are required.</strong>
+                    </p>
                     <div class="ctrlcx">
-                        <img id="clone" src="http://www.carthage.edu/assets/img/ico/silk/icons/add.png" />
+                        <img id="clone" src="/assets/img/ico/silk/icons/add.png" />
                     </div>
                 </li>
                 <li class="ctrlHolder" id="duplicates">
                     {% for p in presenters %}
                     <div id="doop_{{forloop.counter}}" class="presenter">
                         {% if forloop.counter != 1 %}
-                        <img class="destroy_school fright" src="http://www.carthage.edu/assets/img/ico/silk/icons/delete.png" title="Remove Presenter" alt="Remove Presenter" />
+                        <img class="destroy_school fright"
+                            src="/assets/img/ico/silk/icons/delete.png"
+                            title="Remove Presenter" alt="Remove Presenter" />
                         {% else %}
-                        <div style="height:15px;width:15px;float:right;">&nbsp;</div>
+                        <div style="height:15px;width:15px;float:right;">
+                            &nbsp;
+                        </div>
                         {% endif %}
                         {% include "scholars/presentation/presenters.inc.html" %}
                     </div>

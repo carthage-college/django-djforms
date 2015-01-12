@@ -1,21 +1,66 @@
-{% load get_api %}
-<div id="first">
-    <ul id="about" class="sf-vertical">
-        {% if perms.scholars.manage_presentation %}
-        <li><a href="{% url 'scholars.views.presentation.manager' %}">Manage Presentations</a></li>
-        <li><a href="{% url 'scholars.views.presentation.archives' 'presenters' 'screen' %}">List Presenters</a></li>
-        {% endif %}
-        {% if user.is_superuser %}
-            <li><a href="/forms/admin/scholars/presentation/">Administration</a></li>
-        {% endif %}
-        {% if not perms.scholars.manage_presentation %}<li><a href="{% url 'scholars.views.presentation.form' %}">My Presentation</a></li>{% endif %}
-        <li><a href="{% url 'scholars.views.presentation.archives' 'presentation' 'screen' %}">Archives</a></li>
-        {% if not user.is_anonymous %}
-        <li><a href="/forms/accounts/logout/?next={% url 'scholars.views.presentation.archives' 'presentation' 'screen' %}">Logout</a></li>
-        {% else %}
-        <li><a href="/forms/accounts/login/?next={{request.path}}">Login</a></li>
-        {% endif %}
+{% load livewhale_api %}
+{# get_lw_content as nav blurbs 1948 #}
+<h4>
+    Undergraduate Research
+</h4>
+{#nav.body#}
+<!-- <hr> -->
+<nav id="secondary-navigation">
+    <div class="lw_widget_navigation">
+    <ul>
+    {% if perms.scholars.manage_presentation %}
+    <li>
+        <a href="{% url 'scholars.views.presentation.manager' %}">
+            Manage Presentations
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'scholars.views.presentation.archives' 'presenters' 'screen' %}">
+            List Presenters
+        </a>
+    </li>
+    {% endif %}
+    {% if user.is_superuser %}
+        <li>
+            <a href="/forms/admin/scholars/presentation/">Administration</a>
+        </li>
+    {% endif %}
+    {% if not perms.scholars.manage_presentation %}
+        <li>
+            <a href="{% url 'scholars.views.presentation.form' %}">
+                My Presentation
+            </a>
+        </li>
+    {% endif %}
+    <li class="lw_has_subnav">
+        <a href="{% url 'scholars.views.presentation.archives' 'presentation' 'screen' %}"
+            class="lw_subnav_toggle">
+            <span class="lw_separator_title">Archives</span>
+        </a>
+        <ul class="lw_subnav">
+        <li>
+            <a href="{% url 'presentation_archives' 'presentation' 'screen' '2014' %}">
+                2014
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'presentation_archives' 'presentation' 'screen' '2013' %}">
+                2013
+            </a>
+        </li>
+        </ul>
+    </li>
+    {% if not user.is_anonymous %}
+        <li>
+            <a href="{% url 'auth_logout' %}?next={% url 'scholars.views.presentation.archives' 'presentation' 'screen' %}">
+                Logout
+            </a>
+        </li>
+    {% else %}
+        <li>
+            <a href="{% url 'auth_login' %}?next={{request.path}}">Login</a>
+        </li>
+    {% endif %}
     </ul>
-    {% get_api_object as menu menutree menu 81 code %}
-    {{menu}}
-</div>
+    </div>
+</nav>
