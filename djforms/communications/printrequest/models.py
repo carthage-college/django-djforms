@@ -114,7 +114,8 @@ class PrintRequest(models.Model):
         including special instructions -
         needed for each item you selected above.
         """,
-        max_length=128
+        max_length=128,
+        null = True, blank = True
     )
     delivery_date = models.DateField(
         "Final requested delivery date of project",
