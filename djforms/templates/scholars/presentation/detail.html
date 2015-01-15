@@ -1,7 +1,10 @@
 {% extends "base.html" %}
-{% load get_api %}
-{% block title %}Presentation Detail &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block title %}
+    {{p.title}} &mdash;
+    Presentation Detail &mdash;
+    Celebration of Scholars &mdash;
+    Carthage College
+{% endblock %}
 {% block extra_javascript %}
 <script type="text/javascript">
 $(function() {
@@ -14,22 +17,24 @@ $(function() {
 </script>
 {% endblock %}
 {% block extra_style %}
-<style type="text/css">
-{% include "scholars/presentation/screen.css" %}
-</style>
+    <style type="text/css">
+        {% include "scholars/presentation/screen.css" %}
+    </style>
 {% endblock %}
 {% block left_nav %}
     {% include "scholars/left_nav.html" %}
 {% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Celebration of Scholars
+        <span id="secondary-dropdown"></span>
+    </h1>
+{% endblock %}
 {% block content %}
-{% get_api_object as title cms snippet 1014 code %}
-{{title}}
-<div class="buffer">
     {% if manager %}
         {% include "scholars/presentation/action_form.inc.html" %}
     {% endif %}
     {% include "scholars/presentation/detail_data.inc.html" %}
-</div>
 {% endblock %}
 {% block sidebar %}
     {% include "scholars/side_bar.html" %}

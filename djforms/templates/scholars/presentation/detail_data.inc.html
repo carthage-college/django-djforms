@@ -8,8 +8,8 @@
                 <p>
                     {% if o.mugshot %}<img class="mugshot" src="http://{{server_url}}{{media_url}}{{o.mugshot}}" />{% endif %}
                     <strong>Name</strong>:
-                    {% if not user.is_anonymous and o.leader %}
-                    <a href="mailto:{{o.user.email}}">{{o.first_name}} {{o.last_name}}</a></td>
+                    {% if not user.is_anonymous and o.leader and o.user.email %}
+                    <a href="mailto:{{o.user.email}}">{{o.first_name}} {{o.last_name}}</a>
                     {% else %}
                     {{o.first_name}} {{o.last_name}}
                     {% endif %}

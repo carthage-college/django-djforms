@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load get_api %}
 {% block title %}Presenters Archives &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
 {% block extra_style %}
 <link href="//www.carthage.edu/static/vendor/jquery/plugins/tablesorter/style.css" type="text/css" rel="stylesheet" />
 <style>
@@ -20,10 +19,13 @@ table.tablesorter tbody tr.odd td { background-color: #efefef; }
 {% block left_nav %}
     {% include "scholars/left_nav.html" %}
 {% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Celebration of Scholars
+        <span id="secondary-dropdown"></span>
+    </h1>
+{% endblock %}
 {% block content %}
-{% get_api_object as title cms snippet 1014 code %}
-{{title}}
-<div class="buffer">
     <h1>Celebration of Scholars {{year}}</h1>
     <table id="presentation_list_table" class="tablesorter">
         <thead>
@@ -45,7 +47,6 @@ table.tablesorter tbody tr.odd td { background-color: #efefef; }
         {% endfor %}
         </tbody>
     </table>
-</div>
 {% endblock %}
 {% block sidebar %}
     {% include "scholars/side_bar.html" %}

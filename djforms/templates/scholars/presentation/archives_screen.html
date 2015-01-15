@@ -1,31 +1,40 @@
 {% extends "base.html" %}
-{% load get_api %}
-{% block title %}Presentation Archives {{year}} &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block title %}
+    Presentation Archives {{year}} &mdash;
+    Celebration of Scholars &mdash;
+    Carthage College
+{% endblock %}
 {% block left_nav %}
     {% include "scholars/left_nav.html" %}
 {% endblock %}
 {% block extra_javascript %}
-<script src="//www.carthage.edu/static/vendor/jquery/plugins/tablesorter/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="//www.carthage.edu/static/vendor/jquery/plugins/tablesorter/jquery.tablesorter.min.js"
+    type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     $(function() {
-        $("#presentation_list_table").tablesorter({widgets: ['zebra'],headers:{3:{sorter:false}}});
+        $("#presentation_list_table").tablesorter(
+            {widgets: ['zebra'],headers:{3:{sorter:false}}}
+        );
     });
 </script>
 {% endblock %}
 {% block extra_style %}
-<link href="//www.carthage.edu/static/vendor/jquery/plugins/tablesorter/style.css" type="text/css" rel="stylesheet" />
+<link href="//www.carthage.edu/static/vendor/jquery/plugins/tablesorter/style.css"
+    type="text/css" rel="stylesheet" />
 <style>
-table.tablesorter { width: 100%; }
-td, th {padding:5px;vertical-align:top;}
-table.tablesorter tbody tr.odd td { background-color: #efefef; }
+    table.tablesorter { width: 100%; }
+    td, th {padding:5px;vertical-align:top;}
+    table.tablesorter tbody tr.odd td { background-color: #efefef; }
 </style>
 {% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Celebration of Scholars
+        <span id="secondary-dropdown"></span>
+    </h1>
+{% endblock %}
 {% block content %}
-{% get_api_object as title cms snippet 1014 code %}
-{{title}}
-<div class="buffer">
-    <h1>Celebration of Scholars {{year}}</h1>
+    <h1>{{year}}</h1>
     <table id="presentation_list_table" class="tablesorter">
     <thead>
     <tr>
@@ -42,7 +51,6 @@ table.tablesorter tbody tr.odd td { background-color: #efefef; }
         </tr>
     {% endfor %}
     </table>
-</div>
 {% endblock %}
 {% block sidebar %}
     {% include "scholars/side_bar.html" %}

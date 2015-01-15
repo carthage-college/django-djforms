@@ -1,17 +1,21 @@
 {% extends "base.html" %}
-{% load get_api %}
-{% block title %}Email Presenters &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block title %}
+    Email Presenters &mdash;
+    Celebration of Scholars &mdash;
+    Carthage College
+{% endblock %}
 {% block left_nav %}
     {% include "scholars/left_nav.html" %}
 {% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Celebration of Scholars
+        <span id="secondary-dropdown"></span>
+    </h1>
+{% endblock %}
 {% block content %}
-{% get_api_object as title cms snippet 1014 code %}
-{{title}}
-<div class="buffer">
-<h1>Complete</h1>
-<p>Your email has been sent out to the presentation leaders.</p>
-</div>
+    <h1>Complete</h1>
+    <p>Your email has been sent out to the presentation leaders.</p>
 {% endblock %}
 {% block sidebar %}
     {% include "scholars/side_bar.html" %}

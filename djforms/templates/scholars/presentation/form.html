@@ -168,7 +168,7 @@
     {% if manager and presentation %}
         {% include "scholars/presentation/action_form.inc.html" %}
     {% endif %}
-    {% if manager %}
+    {# if manager #}
     <h1>Presentation Form</h1>
     {% include "includes/required_text.html" %}
     {% include "includes/errors_text.html" %}
@@ -254,10 +254,12 @@
             </ol>
         </fieldset>
     </form>
-    {% else %}
+    {# else #}
+    <!--
     <h1>Submssion Process is Closed</h1>
     <p>We are no longer accepting proposals.</p>
-    {% endif %}
+    -->
+    {# endif #}
 </div>
 {% endblock %}
 {% block sidebar %}
