@@ -30,7 +30,7 @@
             // flag presenters that have a mugshot for upload.
             // cgi on the backend does not include empty filefields in []
             // hidden field name = "mugshoth"
-            $(".mugshot").on('change', function() {
+            $("#duplicates").on('change', ".mugshot", function() {
                 $(this).next(':hidden').val("True");
             });
             // remove presenter
@@ -83,7 +83,7 @@
                     } else if ( prez_type == "Faculty" || prez_type == "Staff" ) {
                         // Faculty or Staff
                         $(this).find(":input").each(function () {
-                            //console.log(this.name, this.value);
+                            console.log(this.name, this.value);
                             if (this.name == "department[]" || this.name == "first_name[]" || this.name == "last_name[]" || this.name == "prez_type[]" || this.name == "mugshoth[]") {
                                 if (this.name == "mugshoth[]") {
                                     if ( this.value == '') {

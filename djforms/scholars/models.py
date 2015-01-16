@@ -70,24 +70,63 @@ def get_people(yuri):
     return people
 
 class Presenter(models.Model):
-    date_created    = models.DateTimeField("Date Created", auto_now_add=True)
-    date_updated    = models.DateTimeField("Date Updated", auto_now=True)
-    college_id      = models.CharField(max_length=8, null=True, blank=True)
-    first_name      = models.CharField(max_length=128, null=True, blank=True)
-    last_name       = models.CharField(max_length=128, null=True, blank=True)
-    email           = models.CharField(max_length=128, null=True, blank=True)
-    leader          = models.BooleanField("Presentation leader", default=False)
-    prez_type       = models.CharField("Presenter type", max_length="16", choices=PRESENTER_TYPES, null=True, blank=True)
-    college_year    = models.CharField("Current year at Carthage", max_length="1", choices=YEAR_CHOICES, null=True, blank=True)
-    major           = models.CharField(max_length=128, null=True, blank=True)
-    hometown        = models.CharField(max_length=128, null=True, blank=True)
-    sponsor         = models.CharField(max_length=128, null=True, blank=True)
-    sponsor_name    = models.CharField(max_length=128, null=True, blank=True)
-    sponsor_email   = models.CharField(max_length=128, null=True, blank=True)
-    sponsor_other   = models.CharField(max_length=255, null=True, blank=True)
-    department      = models.ForeignKey(Department, null=True, blank=True)
-    mugshot         = models.ImageField(max_length=255, upload_to="files/scholars/mugshots", help_text="75 dpi and .jpg only")
-    ranking         = models.IntegerField(null=True, blank=True, default=0)
+    date_created = models.DateTimeField(
+        "Date Created", auto_now_add=True
+    )
+    date_updated = models.DateTimeField(
+        "Date Updated", auto_now=True
+    )
+    college_id = models.CharField(
+        max_length=8, null=True, blank=True
+    )
+    first_name = models.CharField(
+        max_length=128, null=True, blank=True
+    )
+    last_name = models.CharField(
+        max_length=128, null=True, blank=True
+    )
+    email = models.CharField(
+        max_length=128, null=True, blank=True
+    )
+    leader = models.BooleanField(
+        "Presentation leader", default=False
+    )
+    prez_type = models.CharField(
+        "Presenter type", max_length="16",
+        choices=PRESENTER_TYPES, null=True, blank=True
+    )
+    college_year = models.CharField(
+        "Current year at Carthage", max_length="1",
+        choices=YEAR_CHOICES, null=True, blank=True
+    )
+    major = models.CharField(
+        max_length=128, null=True, blank=True
+    )
+    hometown = models.CharField(
+        max_length=128, null=True, blank=True
+    )
+    sponsor = models.CharField(
+        max_length=128, null=True, blank=True
+    )
+    sponsor_name = models.CharField(
+        max_length=128, null=True, blank=True
+    )
+    sponsor_email = models.CharField(
+        max_length=128, null=True, blank=True
+    )
+    sponsor_other = models.CharField(
+        max_length=255, null=True, blank=True
+    )
+    department = models.ForeignKey(
+        Department, null=True, blank=True
+    )
+    mugshot = models.ImageField(
+        max_length=255, upload_to="files/scholars/mugshots",
+        help_text="75 dpi and .jpg only"
+    )
+    ranking = models.IntegerField(
+        null=True, blank=True, default=0
+    )
 
     def __unicode__(self):
         return u"%s %s" % (self.first_name, self.last_name)
@@ -96,7 +135,10 @@ class Presenter(models.Model):
         if self.sponsor:
             faculty = get_people("faculty")
             try:
-                self.sponsor_name = "%s %s" % (faculty[self.sponsor].firstname, faculty[self.sponsor].lastname)
+                self.sponsor_name = "{} {}".format(
+                    faculty[self.sponsor].firstname,
+                    faculty[self.sponsor].lastname
+                )
                 self.sponsor_email = faculty[self.sponsor].email
             except:
                 self.sponsor_name = settings.COS_DEFAULT_NAME
@@ -113,26 +155,66 @@ class Presenter(models.Model):
     def presenter_type(self):
         return PRESENTOR_TYPES[self.prez_type][1]
 
+
 class Presentation(models.Model):
     # meta
-    user                = models.ForeignKey(User, verbose_name="Created by", related_name="presentation_created_by")
-    updated_by          = models.ForeignKey(User, verbose_name="Updated by", related_name="presentation_updated_by",editable=False)
-    date_created        = models.DateTimeField("Date Created", auto_now_add=True)
-    date_updated        = models.DateTimeField("Date Updated", auto_now=True)
-    tags                = fields.TagField(blank=True, null=True, default='', help_text="Seperate multiple tags with a space, or use comma if a tag contains more than one word.")
-    ranking             = models.IntegerField(null=True, blank=True, default=0)
+    user = models.ForeignKey(
+        User, verbose_name="Created by",
+        related_name="presentation_created_by"
+    )
+    updated_by = models.ForeignKey(
+        User, verbose_name="Updated by",
+        related_name="presentation_updated_by", editable=False
+    )
+    date_created = models.DateTimeField(
+        "Date Created", auto_now_add=True
+    )
+    date_updated = models.DateTimeField(
+        "Date Updated", auto_now=True
+    )
+    tags = fields.TagField(
+        blank=True, null=True, default='',
+        help_text = """
+            Seperate multiple tags with a space, or use comma
+            if a tag contains more than one word.
+        """
+    )
+    ranking = models.IntegerField(
+        null=True, blank=True, default=0
+    )
     # tag object manager
-    tag_objects         = managers.ModelTaggedItemManager()
+    tag_objects = managers.ModelTaggedItemManager()
     # Default object manager
-    objects             = models.Manager()
+    objects = models.Manager()
     # core
-    title               = models.CharField("Presentation title", max_length=256)
-    leader              = models.ForeignKey(Presenter, verbose_name="Presentation leader", related_name="presentation_leader", null=True, blank=True)
-    presenters          = models.ManyToManyField(Presenter, related_name="presentation_presenters", null=True, blank=True)
-    funding             = models.CharField("Funding source (if applicable)", max_length=256, help_text="e.g. external funding, SURE, etc.", null=True, blank=True)
-    work_type           = models.CharField(max_length=32, choices=WORK_TYPES)
-    permission          = models.CharField("Permission to reproduce", max_length=3, choices=BINARY_CHOICES, help_text="Do you grant Carthage permission to reproduce your presentation?")
-    shared              = models.CharField("Faculty sponsor approval", max_length=3, choices=BINARY_CHOICES, help_text="Has your faculty sponsor approved your proposal? Note: Faculty and staff presenters should choose 'yes'.")
+    title = models.CharField(
+        "Presentation title", max_length=256
+    )
+    leader = models.ForeignKey(
+        Presenter, verbose_name="Presentation leader",
+        related_name="presentation_leader", null=True, blank=True
+    )
+    presenters = models.ManyToManyField(
+        Presenter, related_name="presentation_presenters",
+        null=True, blank=True
+    )
+    funding = models.CharField(
+        "Funding source (if applicable)", max_length=256,
+        help_text="e.g. external funding, SURE, etc.",
+        null=True, blank=True
+    )
+    work_type = models.CharField(
+        max_length=32, choices=WORK_TYPES
+    )
+    permission = models.CharField(
+        "Permission to reproduce", max_length=3,
+        choices=BINARY_CHOICES,
+        help_text = """
+            Do you grant Carthage permission to reproduce your presentation?
+        """
+    )
+    shared = models.CharField(
+        "Faculty sponsor approval", max_length=3, choices=BINARY_CHOICES, help_text="Has your faculty sponsor approved your proposal? Note: Faculty and staff presenters should choose 'yes'.")
     abstract_text       = models.TextField("Abstract", help_text='Copy and paste your abstract text or start typing.')
     need_table          = models.CharField(max_length=3, choices=BINARY_CHOICES)
     need_electricity    = models.CharField(max_length=3, choices=BINARY_CHOICES)
