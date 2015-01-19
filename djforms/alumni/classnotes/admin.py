@@ -51,9 +51,7 @@ class ContactAdmin(admin.ModelAdmin):
                 else:
                     TO_LIST = ["tapplegarth@carthage.edu",]
                 email = settings.DEFAULT_FROM_EMAIL
-                subject = """
-                    [Alumni Class Notes] Alumni Office has approved this note
-                """
+                subject = "[Alumni Class Notes] Alumni Office has approved this note"
                 send_mail(
                     request, TO_LIST, subject, email,
                     "alumni/classnotes/email.html",obj,settings.MANAGERS)
