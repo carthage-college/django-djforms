@@ -21,7 +21,12 @@ class PrintRequestForm(forms.ModelForm):
         mailing list at least one week before the mail
         date. It is your responsibility to coordinate
         the request from Institutional Advancement within
-        their established guidelines and procedures
+        their established guidelines and procedures.
+        Advancement requires two weeks lead time to produce
+        a mail file. Requests can be submitted via the
+        <a href="https://docs.google.com/a/carthage.edu/forms/d/1rIaD2Sm-UZSo8RBgLYk6XmnlqwPUF9di4v2f22-Iz-U/viewform?c=0&w=1">
+        Advancement Office List Request Form
+        </a>.
         """,
         choices=CONSENT, widget=forms.RadioSelect(),
     )
