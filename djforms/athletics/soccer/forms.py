@@ -139,6 +139,7 @@ class SoccerCampRegistrationForm(forms.ModelForm):
         model = SoccerCampAttender
         exclude = (
             'country','order','second_name','previous_name','salutation',
-            'insurance_card','medical_history','assumption_risk'
+            'medical_history','assumption_risk','insurance_card_front',
+            'insurance_card_back'
         )
 

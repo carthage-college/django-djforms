@@ -135,9 +135,18 @@ class SoccerCampAttender(Contact):
         help_text="NOTE: NO CREDIT CARDS ACCEPTED AT CHECK-INS"
     )
     # ancillary data
-    insurance_card = models.BooleanField(default=False)
     medical_history = models.BooleanField(default=False)
     assumption_risk = models.BooleanField(default=False)
+    insurance_card_front = models.FileField(
+        max_length=768,
+        upload_to="files/athletics/soccer-camp/insurance-cards",
+        blank=True, null=True
+    )
+    insurance_card_back = models.FileField(
+        max_length=768,
+        upload_to="files/athletics/soccer-camp/insurance-cards",
+        blank=True, null=True
+    )
 
     class Meta:
         verbose_name_plural = 'Soccer Camp Attenders'

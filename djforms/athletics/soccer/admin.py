@@ -15,7 +15,7 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         'email','order_transid','order_status','parent_guard','roommate',
         'dorm','years_attend','goalkeeper','shirt_size','session','reg_fee',
         'amount','order_total', 'payment_method',
-        'insurance_card','medical_history','assumption_risk'
+        'medical_history','assumption_risk','insurance_card_links'
     )
     ordering      = ('-created_at',)
     search_fields = ('last_name','email','postal_code')
@@ -23,8 +23,23 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
     list_max_show_all   = 500
     list_per_page       = 500
     list_editable = [
-        'insurance_card','medical_history','assumption_risk'
+        'medical_history','assumption_risk'
     ]
+
+    def insurance_card_links(self, instance):
+        try:
+            code = '''
+                <a href="{}" target="_blank">Front</a> |
+                <a href="{}" target="_blank">Back</a>
+            '''.format(
+                instance.insurance_card_front.url,
+                instance.insurance_card_back.url
+            )
+        except:
+            code = None
+        return code
+    insurance_card_links.allow_tags = True
+    insurance_card_links.short_description = "Insurance Card Files"
 
     def queryset(self, request):
         """
