@@ -35,11 +35,11 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         TODAY = datetime.date.today()
         YEAR = int(TODAY.year)
         MES = int(TODAY.month)
-        DAY = int(TODAY.day)
+        #DAY = int(TODAY.day)
         qs = super(SoccerCampAttenderAdmin, self).queryset(request)
-        if MES <= 7 and DAY <= 21:
+        if MES <= 8:
             YEAR = YEAR - 1
-        start_date = datetime.date(YEAR, 7, 21)
+        start_date = datetime.date(YEAR, 8, 1)
         return qs.filter(created_at__gte=start_date)
 
     def order_status(self, obj):
