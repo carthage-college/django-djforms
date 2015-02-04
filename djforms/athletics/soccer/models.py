@@ -1,8 +1,8 @@
 from django.db import models
 from django.conf import settings
 
-from djforms.core.models import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
-from djforms.core.models import STATE_CHOICES
+from djtools.fields import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
+from djtools.fields import STATE_CHOICES
 from djforms.processors.models import Contact
 
 YEAR_CHOICES = (

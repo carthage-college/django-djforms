@@ -1,6 +1,6 @@
 from django import forms
-from djforms.core.models import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
-from djforms.core.models import STATE_CHOICES
+from djtools.fields import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
+from djtools.fields import STATE_CHOICES
 from djforms.processors.models import Contact
 from djforms.athletics.soccer.models import SoccerCampAttender, YEAR_CHOICES, REQ
 from djforms.athletics.soccer.models import SHIRT_SIZES, SESSIONS, AMOUNT_CHOICES

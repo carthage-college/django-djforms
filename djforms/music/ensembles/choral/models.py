@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 from djforms.core.models import YEAR_CHOICES
 
 class TimeSlot(models.Model):
-    date_time       = models.CharField("Time slot", max_length="128")
-    active          = models.BooleanField(default=True)
+    date_time = models.CharField("Time slot", max_length="128")
+    active = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'music_ensembles_choral_timeslot'
@@ -16,15 +16,31 @@ class TimeSlot(models.Model):
         return self.date_time
 
 class Candidate(models.Model):
-    user            = models.ForeignKey(User, related_name="music_ensemble_choral_candidate")
+    user = models.ForeignKey(
+        User, related_name="music_ensemble_choral_candidate"
+    )
     # dates
-    created_on      = models.DateTimeField("Date Created", auto_now_add=True)
-    updated_on      = models.DateTimeField("Date Updated", auto_now=True)
+    created_on = models.DateTimeField(
+        "Date Created", auto_now_add=True
+    )
+    updated_on = models.DateTimeField(
+        "Date Updated", auto_now=True
+    )
     #core
-    time_slot       = models.ForeignKey(TimeSlot, related_name='music_ensemble_choral_timeslot')
-    majors          = models.CharField(max_length=255)
-    grad_year       = models.CharField("Current Year at Carthage", max_length=1, choices=YEAR_CHOICES)
-    experience      = models.TextField("Describe your previous choral experience", null=True, blank=True)
+    time_slot = models.ForeignKey(
+        TimeSlot, related_name='music_ensemble_choral_timeslot'
+    )
+    majors = models.CharField(
+        max_length=255
+    )
+    grad_year = models.CharField(
+        "Current Year at Carthage",
+        max_length=1, choices=YEAR_CHOICES
+    )
+    experience = models.TextField(
+        "Describe your previous choral experience",
+        null=True, blank=True
+    )
 
     class Meta:
         db_table = 'music_ensembles_choral_candidate'
