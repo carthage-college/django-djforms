@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load livewhale_api %}
+{% block content_head %}
+<h1 id="page_title">
+    Summer Camp
+    <span id="secondary-dropdown"></span>
+</h1>
+{% endblock %}
+{% block left_nav %}
+<h4>
+    Music Theatre
+</h4>
+{% get_lw_content as nav blurbs 1960 %}
+{{nav.body}}
+{% endblock %}
+{% block content %}
+    <div style="background-color:#fff;">
+        {#% get_lw_content as success blurbs 1919 %#}
+        {#{success.body}#}
+    </div>
+{% endblock %}

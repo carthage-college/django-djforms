@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from djforms.music.theatre import BCC, TO_LIST
+from djforms.music.theatre.summer_camp import BCC, TO_LIST
 from djforms.processors.models import Contact, Order
 from djforms.processors.forms import TrustCommerceForm
 from djforms.music.theatre.summer_camp.forms import RegistrationForm
@@ -11,7 +11,6 @@ from djforms.music.theatre.summer_camp.forms import RegistrationForm
 from djtools.utils.mail import send_mail
 
 def registration(request):
-
     status = None
     msg = None
     if request.POST:
