@@ -8,6 +8,14 @@ Carthage College
     {{ block.super }}
     <script type="text/javascript">
         $(function() {
+            $('#id_payment_method_0').click(function() {
+                $('#payment-details').show();
+                $('#bank-transfer').hide();
+            });
+            $('#id_payment_method_1').click(function() {
+                $('#payment-details').hide();
+                $('#bank-transfer').show();
+            });
             // disable submit button after users clicks it
             $('form#profile').submit(function(){
                 $(this).children('input[type=submit]').attr('disabled', 'disabled');
@@ -20,21 +28,26 @@ Carthage College
 #id_reg_fee {color:#800;font-weight:bold;}
 {% if form_reg.data.payment_method == "Credit Card" %}
 #payment-details { display:inherit; }
+#bank-transfer { display:none; }
+{% else %}{% if form_reg.data.payment_method == "Bank Transfer" %}
+#payment-details { display:none; }
+#bank-transfer { display:inherit; }
 {% else %}
 #payment-details { display:none; }
-{% endif %}
+#bank-transfer { display:none; }
+{% endif %}{% endif %}
 #session-info > ol li {display:block;margin-bottom:5px;}
 #id_security_code, #id_reg_fee {width:100px;}
-#id_card_number {width:150px;}
-#id_postal_code, #id_home_phone, #id_work_phone,
-#id_dob, #id_age, #id_expiration_month, #id_expiration_year {width:120px;}
+#id_card_number {width:175px;}
+#id_postal_code, #id_dob, #id_expiration_month, #id_expiration_year {
+width:120px;
+}
 #security {color:#000099;float:right;padding:5px;}
 li.ctrlHolder div ul li {display:inline; padding-right:3px;}
 .forms-container, .forms-container label {font-weight:bold;}
 </style>
 {% endblock %}
 {% block content %}
-    <div class="buffer forms-container" style="background-color:#fff;">
     <div id="security"><div style="margin-left:30px;">
     <a href="https://www.securitymetrics.com/site_certificate.adp?s=carthage.edu&amp;i=131614"
         target="_blank" >
@@ -42,18 +55,28 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
             alt="SecurityMetrics" border="0">
     </a>
     </div></div>
-    <h2>Summer Camp Registration Form</h2>
-    <p><strong>HOW TO REGISTER:</strong>
-    Complete this form and submit it by clicking on the "Register" button.</p>
-    <h4>Method of Payment</h4>
-    <p>
-        <strong>Note</strong>:
+    <h2>Registration Form</h2>
+    <div class="large-8 medium-6 small-4">
+        <h4>How to Register</h4>
+        <p>
+        Complete this form and submit it by clicking on the "Register" button.
+        </p>
+        <h4>Cost and  Method of Payment</h4>
+        <p>
+        The $2,800 camp fee is due by June 10, 2015. Refunds may be requested
+        prior to the June 10 deadline. After June 10, 2015, a partial
+        refund may be requested. After July 1, 2015, no refunds will be given.
+        </p>
+        <p>
         The Carthage web site supports secure credit card transactions.
-    </p>
-    <p>
+        You may also pay by bank transfer.
+        </p>
+        <p>
         After you complete the registration form, we will send confirmation
         via email.
-    </p>
+        </p>
+    </div>
+    <div class="forms-container clear">
     {% include "includes/required_text.html" %}
     {% if form_proc.errors or form_reg.errors %}
         <p class="error">
@@ -62,6 +85,8 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
     {% endif %}
     <form method="post" action="." class="form" id="profile">
         {% csrf_token %}
+        <fieldset class="blockLabels" id="registration-info">
+        <ol>
         {% for field in form_reg %}
             {% include "form_field.inc.html" %}
         {% endfor %}
@@ -83,7 +108,7 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
             {% include "form_field_credit_card.inc.html" %}
             </ol>
         </fieldset>
-        <fieldset class="blockLabels">
+        <fieldset class="blockLabels" id="bank-transfer">
             <ol>
                 <li class="btnHolder">
                     <p>
@@ -94,6 +119,12 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
                     Soccer Office<br />
                     2001 Alford Park Drive<br />
                     Kenosha, WI  53140</blockquote>
+                </li>
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <ol>
+                <li class="btnHolder">
                     <label for="id_submit">&nbsp;&nbsp;</label>
                     <input type="submit" value="Register" class="button" />
                     <p>

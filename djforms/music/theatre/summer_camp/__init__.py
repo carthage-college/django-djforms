@@ -3,6 +3,7 @@ http://www.micahcarrick.com/authorize-net-credit-card-form-django.html
 """
 from django.conf import settings
 
+REG_FEE = 2800
 if settings.DEBUG:
     TO_LIST = [settings.SERVER_EMAIL,]
 else:

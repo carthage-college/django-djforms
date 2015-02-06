@@ -3,8 +3,6 @@ from django import forms
 
 from djforms.admissions.admitted.models import *
 
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
-
 GENDER_CHOICES = (
     ('Female (女)','Female (女)'),
     ('Male (男)','Male (男)'),

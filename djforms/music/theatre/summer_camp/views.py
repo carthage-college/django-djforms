@@ -3,12 +3,15 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from djforms.music.theatre.summer_camp import BCC, TO_LIST
+from djforms.music.theatre.summer_camp import BCC, TO_LIST, REG_FEE
 from djforms.processors.models import Contact, Order
 from djforms.processors.forms import TrustCommerceForm
 from djforms.music.theatre.summer_camp.forms import RegistrationForm
 
 from djtools.utils.mail import send_mail
+
+import logging
+logger = logging.getLogger(__name__)
 
 def registration(request):
     status = None
@@ -20,9 +23,11 @@ def registration(request):
             # credit card payment
             if contact.payment_method == "Credit Card":
                 order = Order(
-                    total=total,auth="sale",status="In Process",
+                    total=REG_FEE,auth="sale",status="In Process",
                     operator="DJMusicTheatreCamp"
                 )
+                logger.debug("contact = {}".format(contact))
+                logger.debug("order = {}".format(order.total))
                 form_proc = TrustCommerceForm(order, contact, request.POST)
                 if form_proc.is_valid():
                     r = form_proc.processor_response
@@ -45,6 +50,7 @@ def registration(request):
                     )
                 else:
                     r = form_proc.processor_response
+                    logger.debug(r.__dict__)
                     if r:
                         order.status = r.status
                     else:
@@ -65,7 +71,7 @@ def registration(request):
                     )
             else:
                 order = Order(
-                    total=total,auth="COD",status="Pay later",
+                    total=REG_FEE,auth="COD",status="Pay later",
                     operator="DJMusicTheatreCamp"
                 )
                 order.save()

@@ -2,7 +2,7 @@ from django.db import models
 from django.core import urlresolvers
 from django.utils.safestring import mark_safe
 
-from django_countries import CountryField
+from django_countries.fields import CountryField
 from djforms.core.models import Promotion, GenericContact
 
 ORDER_STATUS = (
@@ -101,7 +101,7 @@ class Contact(GenericContact):
     )
     phone = models.CharField(
         verbose_name='Phone number',
-        max_length=12,
+        max_length=18,
         help_text="Format: XXX-XXX-XXXX"
     )
     address1 = models.CharField(
@@ -121,7 +121,7 @@ class Contact(GenericContact):
     )
     state = models.CharField(
         verbose_name="State",
-        max_length=2,
+        max_length=128,
         null=True, blank=True
     )
     postal_code = models.CharField(
@@ -130,6 +130,7 @@ class Contact(GenericContact):
         null=True, blank=True
     )
     country = CountryField(
+        blank_label='(select country)',
         null=True, blank=True
     )
     order = models.ManyToManyField(

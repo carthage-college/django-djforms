@@ -14,8 +14,6 @@
 {{nav.body}}
 {% endblock %}
 {% block content %}
-    <div style="background-color:#fff;">
-        {#% get_lw_content as success blurbs 1919 %#}
-        {#{success.body}#}
-    </div>
+    {% get_lw_content as success blurbs 1962 %}
+    {{success.body}}
 {% endblock %}

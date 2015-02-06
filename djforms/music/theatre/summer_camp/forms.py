@@ -7,12 +7,36 @@ from djforms.music.theatre.summer_camp.models import VOICE_TYPE
 
 from djtools.fields import BINARY_CHOICES, GENDER_CHOICES
 
+from django_countries.widgets import CountrySelectWidget
+
 class RegistrationForm(forms.ModelForm):
     last_name = forms.CharField(
         label="Last name (姓)"
     )
     first_name = forms.CharField(
         label="First name (名)"
+    )
+    address1 = forms.CharField(
+        label='Home address (家庭地址)',
+        max_length=255,widget=forms.TextInput()
+    )
+    city = forms.CharField(
+        label='City (城市)',max_length=128,
+        widget=forms.TextInput()
+    )
+    state = forms.CharField(
+        label="Provence",
+        max_length=128
+    )
+    postal_code = forms.CharField(
+        label='Postal code (邮政编码)', max_length='6'
+    )
+    email = forms.EmailField(
+        label='Email address (电子邮件信箱)'
+    )
+    phone = forms.CharField(
+        label='Telephone number (电话)',max_length=18,
+        help_text="e.g. +86 xxx XXXX YYYY"
     )
     dob = forms.DateField(
         label="Birthday (出生日)",
@@ -21,31 +45,11 @@ class RegistrationForm(forms.ModelForm):
     gender = forms.TypedChoiceField(
         choices=GENDER_CHOICES,widget=forms.RadioSelect()
     )
-    address = forms.CharField(
-        label='Home address (家庭地址)',
-        max_length=255,widget=forms.TextInput()
-    )
-    city = forms.CharField(
-        label='City (城市)',max_length=128,
-        widget=forms.TextInput()
-    )
-    postal_code = forms.CharField(
-        label='Postal code (邮政编码)', max_length='6'
-    )
-    country = forms.CharField(
-        label='Country (国家)',max_length=128
-    )
-    email = forms.EmailField(
-        label='Email address (电子邮件信箱)'
-    )
-    phone = forms.CharField(
-        label='Telephone number (电话)',max_length=18
-    )
     voice_type = forms.TypedChoiceField(
-        label="Entering level",choices=VOICE_TYPE,
+        choices=VOICE_TYPE,
         widget=forms.RadioSelect()
     )
-    how_hear = forms.MultipleChoiceField(
+    how_hear = forms.TypedChoiceField(
         label="How did you hear about our Summer Camp in Music Theatre?",
         choices=HOW_HEAR,widget=forms.RadioSelect()
     )
@@ -56,8 +60,6 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = SummerCampAttender
         exclude = (
-            'country','order','second_name','previous_name','salutation',
-            'medical_history','assumption_risk','insurance_card_front',
-            'insurance_card_back'
+            'order','second_name','previous_name','salutation',
         )
-
+        widgets = {'country': CountrySelectWidget}
