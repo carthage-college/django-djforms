@@ -8,9 +8,6 @@ from djforms.giving.forms import *
 from djforms.core.models import Promotion
 from djtools.utils.mail import send_mail
 
-import logging
-logger = logging.getLogger(__name__)
-
 def giving_form(request, transaction, campaign=None):
     """
     multipurpose method to handle various types of donations
@@ -44,7 +41,6 @@ def giving_form(request, transaction, campaign=None):
         if ct_form.is_valid() and or_form.is_valid():
             contact = ct_form.save()
             email = contact.email
-            logger.debug("contact email = %s" % email)
             or_data = or_form.save(commit=False)
             or_data.status = "In Process"
             if campaign:

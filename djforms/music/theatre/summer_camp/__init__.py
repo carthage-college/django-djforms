@@ -1,6 +1,3 @@
-"""
-http://www.micahcarrick.com/authorize-net-credit-card-form-django.html
-"""
 from django.conf import settings
 
 REG_FEE = 2800
