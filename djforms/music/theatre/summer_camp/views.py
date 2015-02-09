@@ -10,9 +10,6 @@ from djforms.music.theatre.summer_camp.forms import RegistrationForm
 
 from djtools.utils.mail import send_mail
 
-import logging
-logger = logging.getLogger(__name__)
-
 def registration(request):
     status = None
     msg = None
@@ -26,8 +23,6 @@ def registration(request):
                     total=REG_FEE,auth="sale",status="In Process",
                     operator="DJMusicTheatreCamp"
                 )
-                logger.debug("contact = {}".format(contact))
-                logger.debug("order = {}".format(order.total))
                 form_proc = TrustCommerceForm(order, contact, request.POST)
                 if form_proc.is_valid():
                     r = form_proc.processor_response
@@ -50,7 +45,6 @@ def registration(request):
                     )
                 else:
                     r = form_proc.processor_response
-                    logger.debug(r.__dict__)
                     if r:
                         order.status = r.status
                     else:
