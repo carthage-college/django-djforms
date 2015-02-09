@@ -124,5 +124,5 @@ class PledgeOrderForm(OrderForm):
         model = Order
         fields = (
             'total', 'comments', 'cycle', 'payments', 'avs',
-            'start_date', 'auth'
+            'auth'
         )

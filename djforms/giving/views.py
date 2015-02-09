@@ -53,8 +53,6 @@ def giving_form(request, transaction, campaign=None):
             or_data.save()
             contact.order.add(or_data)
             cc_form = CreditCardForm(or_data, contact, request.POST, prefix="cc")
-            logger.debug("contact = {}".format(contact.__dict__))
-            logger.debug("order = {}".format(or_data.__dict__))
             if cc_form.is_valid():
                 # save and update order
                 r = cc_form.processor_response
@@ -88,7 +86,6 @@ def giving_form(request, transaction, campaign=None):
                 return HttpResponseRedirect(url)
             else:
                 r = cc_form.processor_response
-                logger.debug("response = {}".format(r.__dict__))
                 if r:
                     or_data.status = r.status
                 else:

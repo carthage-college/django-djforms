@@ -83,12 +83,15 @@ class PaymentProcessor():
 
         # subscription/recurring billing
         if self.auth == "store":
+            self.transactionData['verify'] = 'y'
             self.transactionData['cycle'] = self.order.cycle
             self.transactionData['payments'] = unicode(self.order.payments)
+            """
             if hasattr(self.order, 'start_date'):
                 if self.order.start_date:
-                    self.transactionData['start'] = unicode(self.order.start_date)
-
+                    #self.transactionData['start'] = unicode(self.order.start_date)
+                    self.transactionData['start'] = str(self.order.start_date)
+            """
         for key, value in self.transactionData.items():
             if isinstance(value, unicode):
                 self.transactionData[key] = value.encode('utf7',"ignore")
@@ -111,8 +114,8 @@ class PaymentProcessor():
                 if status == 'decline':
                     msg = result['declinetype']
                 elif status == 'baddata':
-                    msg = result['offenders']
-                    #msg = result
+                    #msg = result['offenders']
+                    msg = result
                 elif status == 'error':
                     msg = result['errortype']
                 else:
