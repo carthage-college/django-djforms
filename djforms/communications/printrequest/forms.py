@@ -1,5 +1,7 @@
 from django import forms
 from django.conf import settings
+from django.utils.safestring import mark_safe
+
 from localflavor.us.forms import USPhoneNumberField
 
 from djforms.communications.printrequest.models import PrintRequest
@@ -15,7 +17,7 @@ class PrintRequestForm(forms.ModelForm):
         help_text="Check all that apply"
     )
     consent = forms.TypedChoiceField(
-        label = """
+        label = mark_safe("""
         If the Office of Communications coordinates
         your mailing with a mail house, we need your
         mailing list at least one week before the mail
@@ -27,7 +29,7 @@ class PrintRequestForm(forms.ModelForm):
         <a href="https://docs.google.com/a/carthage.edu/forms/d/1rIaD2Sm-UZSo8RBgLYk6XmnlqwPUF9di4v2f22-Iz-U/viewform?c=0&w=1">
         Advancement Office List Request Form
         </a>.
-        """,
+        """),
         choices=CONSENT, widget=forms.RadioSelect(),
     )
     is_mailing = forms.TypedChoiceField(
