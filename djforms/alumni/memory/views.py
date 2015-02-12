@@ -39,7 +39,7 @@ def questionnaire_form(request):
                 "[Alumni Questionnaire Detail] %s %s" %
                 (memory.first_name,memory.last_name),
                 memory.email,
-                "alumni/memory/questionnaire/email.html",
+                "alumni/memory/email.html",
                 memory, settings.MANAGERS
             )
 
@@ -48,7 +48,7 @@ def questionnaire_form(request):
         form = QuestionnaireForm()
 
     return render_to_response(
-        "alumni/memory/questionnaire/form.html",
+        "alumni/memory/form.html",
         {"form": form,}, context_instance=RequestContext(request)
     )
 
@@ -59,7 +59,7 @@ def questionnaire_detail(request, quid):
 
     mq = get_object_or_404(Questionnaire, id=quid)
 
-    template_name = "alumni/memory/questionnaire/detail.html"
+    template_name = "alumni/memory/detail.html"
     return render_to_response(
         template_name, {'mq': mq,},
         context_instance=RequestContext(request)

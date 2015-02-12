@@ -77,10 +77,12 @@ urlpatterns = patterns('',
     (r'^music/', include('djforms.music.urls')),
     # polisci
     (r'^political-science/', include('djforms.polisci.urls')),
-    # for the security appeal form environment
-    (r'^security/', include('djforms.security.urls')),
+    # office of the president
+    (r'^president/', include('djforms.president.urls')),
     # for the security appeal form environment
     (r'^scholars/', include('djforms.scholars.urls')),
+    # for the security appeal form environment
+    (r'^security/', include('djforms.security.urls')),
     # sustainability
     (r'^sustainability/', include('djforms.sustainability.urls')),
     # writing across curriculum

@@ -1,0 +1,5 @@
+{% load livewhale_api %}
+<h4>Office of the President</h4>
+{% get_lw_content as nav blurbs 1964 %}
+{{nav.body}}
+

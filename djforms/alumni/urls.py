@@ -75,5 +75,15 @@ urlpatterns = patterns('djforms.alumni',
         r'^distinguished/nomination/$',
         'distinguished.views.nomination_form',
         name='distinguished_nomination_form'
-    )
+    ),
+    url(
+        r'^memory/(?P<quid>\d+)/detail/$',
+        'memory.views.questionnaire_detail',
+        name="memory_questionnaire_detail"
+    ),
+    url(
+        r'^memory/$',
+        'memory.views.questionnaire_form',
+        name='memory_questionnaire_form'
+    ),
 )
