@@ -19,8 +19,8 @@ def nomination_form(request):
                 TO_LIST = [settings.SERVER_EMAIL]
             else:
                 TO_LIST = [settings.HONORARY_DEGREE_NOMINATION_EMAIL]
-            subject = "Honorary Degree Nomination Award Nomination: {}".format(
-                data.nominee_first_name, data.nominee_last_name
+            subject = "Honorary Degree Nomination: {} {}".format(
+                data.candidate_first_name, data.candidate_last_name
             )
             send_mail(
                 request, TO_LIST,

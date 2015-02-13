@@ -29,7 +29,7 @@ class Nomination(GenericContact):
         null=True, blank=True
     )
     reason = models.TextField(
-        "Reason for Nomination",
+        "Reason for nomination",
         help_text = """
             Please explain in detail why you are nominating
             this individual for an honorary degree.

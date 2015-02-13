@@ -1,22 +1,51 @@
-<pre style="font-size:1.5em;">
-Salutation.................. {{data.salutation}}
-First name.................. {{data.first_name}}
-Second name................. {{data.second_name}}
-Last name................... {{data.last_name}}
-Suffix...................... {{data.suffix}}
-Previous name............... {{data.previous_name}}
-Email....................... {{data.email}}
-Hometown.................... {{data.hometown}}
-
-Class....................... {{data.classyear}}
-Spouse...................... {{data.spousename}}
-Spouse previous name........ {{data.spousepreviousname}}
-Spouse class................ {{data.spouseyear}}
-Category.................... {{data.category}}
-</pre>
-
-<h3>Class note</h3>
-
-<p>{{data.classnote}}</p>
-
-<p><a href="{{data.get_edit_url}}">Manage this class note</a></p>
+{% load humanize %}
+<h2>Candidate</h2>
+<dl style="margin-bottom:5px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+        Name
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.candidate_first_name}}
+        {{data.candidate_last_name}}
+    </dd>
+    <dd style="margin:2px 0; padding:5px 0;">
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">
+        Class year
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.candidate_class_year|default:"&nbsp;"}}
+    </dd>
+</dl>
+<h3>Reason</h3>
+<div>
+{{data.reason|safe}}
+</div>
+<h3>Links</h3>
+<p>
+{{data.links|safe}}
+</p>
+<h4>
+    <a href="https://www.carthage.edu/assets/{{data.cv}}">
+        CV/Résumé
+    </a>
+</h4>
+<h2>Nominator</h2>
+<dl style="margin-bottom:5px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">
+        Name
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.first_name}}
+        {{data.last_name}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">
+        Email
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.email}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">
+        Class/Year
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.class_year|default:"&nbsp;"}}
+    </dd>
+</dl>
