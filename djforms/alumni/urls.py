@@ -72,9 +72,17 @@ urlpatterns = patterns('djforms.alumni',
         name="distinguished_nomination_success"
     ),
     url(
-        r'^distinguished/nomination/$',
+        r'^distinguished/nomination/',
         'distinguished.views.nomination_form',
         name='distinguished_nomination_form'
+    ),
+    # fond memories
+    url(
+        r'^memory/success/$',
+        TemplateView.as_view(
+            template_name='alumni/memory/done.html'
+        ),
+        name="memory_questionnaire_success"
     ),
     url(
         r'^memory/(?P<quid>\d+)/detail/$',
@@ -82,7 +90,12 @@ urlpatterns = patterns('djforms.alumni',
         name="memory_questionnaire_detail"
     ),
     url(
-        r'^memory/$',
+        r'^memory/(?P<campaign>[a-zA-Z0-9_-]+)',
+        'memory.views.questionnaire_form',
+        name='memory_questionnaire_promo_form'
+    ),
+    url(
+        r'^memory',
         'memory.views.questionnaire_form',
         name='memory_questionnaire_form'
     ),

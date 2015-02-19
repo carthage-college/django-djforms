@@ -1,13 +1,13 @@
-<pre style="font-size:1.5em;">
-Data from Alumni Memory Questionnaire form:
-
-First Name:         {{data.first_name}}
-Last Name:          {{data.last_name}}
-Email:              {{data.email}}
-Phone:              {{data.phone}}
-
-URL:
-</pre>
-<p><a href="http://{{site_domain}}{{data.get_absolute_url}}">
-Click here</a> to view all the information that was submitted by<br />
-{{data.first_name}} {{data.last_name}}, including any photos and captions.</p>
+{% autoescape off %}
+<h2>
+{{data.promotion.title|default:"Alumni Memory"}} Questionnaire Detail
+</h2>
+{% include "alumni/memory/detail_data.inc.html" %}
+<p>
+    <a href="https://{{server_url}}{% url 'memory_questionnaire_detail' data.id %}">
+        View all the information
+    </a>
+    that was submitted by<br />
+    {{data.first_name}} {{data.last_name}}, including any photos and captions.
+</p>
+{% endautoescape %}

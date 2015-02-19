@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Success{% endblock %}
+{% block left_nav %}
+    <h4>Alumni</h4>
+    {% include "alumni/left_nav.html" %}
+{% endblock %}
+{% block content_head %}
+<h1 id="page_title">Fond Memories<span id="secondary-dropdown"></span></h1>
+{% endblock %}
+{% block content %}
+    <h2>Success</h2>
+    <p class="description" style="color: green">
+        Your data has been submited successfully!
+    </p>
+{% endblock %}

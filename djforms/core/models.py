@@ -5,10 +5,12 @@ from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 
 from localflavor.us.models import USStateField
-
 from tagging import fields, managers
-from imagekit.models import ImageModel
 from userprofile.models import BaseProfile
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
+
+from djtools.fields.helpers import upload_to_path
 
 import datetime
 
@@ -149,28 +151,24 @@ def create_profile(sender, instance, created, **kwargs):
 
 post_save.connect(create_profile, sender=User)
 
-class Photo(ImageModel):
-    title = models.CharField(max_length=256)
-    original_image = models.ImageField(upload_to='photos', max_length="256")
-    caption = models.TextField('Caption')
-    num_views = models.PositiveIntegerField(editable=False, default=0)
 
-    class IKOptions:
-        # This inner class is where we define the ImageKit options for the model
-        spec_module = 'djforms.core.photo_specs'
-        cache_dir = 'photos/cache'
-        image_field = 'original_image'
-        save_count_as = 'num_views'
+class Photo(models.Model):
+    title = models.CharField(max_length=255)
+    original = models.ImageField(
+        upload_to=upload_to_path, max_length="255"
+    )
+    thumbnail = ImageSpecField(
+        source='original',
+        processors=[ResizeToFill(100, 134)],
+        format='JPEG',
+        options={'quality': 80}
+    )
+    caption = models.TextField(
+        'Caption', null=True, blank=True
+    )
 
-    def _save_FIELD_file(self, field, filename, raw_contents, save=True):
-        filename = "%s_%s" % (self.id, filename)
-        super(Patch, self)._save_FIELD_file(field, filename, raw_contents, save)
-
-    def __unicode__(self):
-        return self.title
-
-    #def get_absolute_url(self):
-    #    return reverse("photo_details", args=[self.pk])
+    def get_slug(self):
+        return "photos/"
 
 class Department(models.Model):
     """ Department """
@@ -204,12 +202,38 @@ class Promotion(models.Model):
     """
     Promotions and campaigns for ecommerce apps
     """
-    title           = models.CharField(max_length=255)
-    description     = models.TextField("Description", help_text="This information will appear above the form.", null=True, blank=True)
-    about           = models.TextField("About", help_text="This information will appear in the sidebar next to the form.", null=True, blank=True)
-    thank_you       = models.TextField("Thank you", help_text="This information will be appear after the visitor successfully submits the form.", null=True, blank=True)
-    email_info      = models.TextField("Email instructions", help_text="This information will be sent to the contact email address of the person filling out the form.", null=True, blank=True)
-    slug            = models.SlugField(max_length=255, verbose_name="Slug", unique=True)
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(
+        "Slug", max_length=255, unique=True
+    )
+    description = models.TextField(
+        "Description",
+        help_text="This information will appear above the form.",
+        null=True, blank=True
+    )
+    about = models.TextField(
+        "About",
+        help_text = """
+            This information will appear in the sidebar next to the form.
+        """,
+        null=True, blank=True
+    )
+    thank_you = models.TextField(
+        "Thank you",
+        help_text = """
+            This information will be appear after the visitor
+            successfully submits the form.
+        """,
+        null=True, blank=True
+    )
+    email_info = models.TextField(
+        "Email instructions",
+        help_text = """
+            This information will be sent to the contact email address
+            of the person filling out the form.
+        """,
+        null=True, blank=True
+    )
 
     def __unicode__(self):
         return self.title

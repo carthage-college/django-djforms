@@ -1,0 +1,51 @@
+<dl {{dl_detail}}>
+    <dt {{dl_dt}}>First Name:</dt>
+    <dd {{dl_dd}}>{{ data.first_name }}</dd>
+    <dt {{dl_dt}}>Last Name:</dt>
+    <dd {{dl_dd}}>{{ data.last_name }}</dd>
+    <dt {{dl_dt}}>Email:</dt>
+    <dd {{dl_dd}}>
+        <a href="mailto:{{ data.email }}">{{ data.email }}</a>
+    </dd>
+    <dt {{dl_dt}}>Address:</dt>
+    <dd {{dl_dd}}>{{ data.address1 }} {{ data.address2 }}</dd>
+    <dt {{dl_dt}}>City:</dt>
+    <dd {{dl_dd}}>{{ data.city }}</dd>
+    <dt {{dl_dt}}>State:</dt>
+    <dd {{dl_dd}}>{{ data.state }}</dd>
+    <dt {{dl_dt}}>Postal Code:</dt>
+    <dd {{dl_dd}}>{{ data.postal_code }}</dd>
+    <dt {{dl_dt}}>Phone:</dt>
+    <dd {{dl_dd}}>{{ data.phone }}</dd>
+    <dt {{dl_dt}}>Occupation 1:</dt>
+    <dd {{dl_dd}}>{{ data.occupation1 }}</dd>
+    <dt {{dl_dt}}>Occupation 2:</dt>
+    <dd {{dl_dd}}>{{ data.occupation2 }}</dd>
+    <dt {{dl_dt}}>Special?</dt>
+    <dd {{clear}}></dd>
+    <dd {{dd_desc}}>{{ data.special }}</dd>
+    {% if data.professor %}
+    <dt {{dl_dt}}>Favorite professor:</dt>
+    <dd {{dl_dd}}>{{ data.professor }}</dd>
+    <dt {{dl_dt}}>Why?</dt>
+    <dd {{clear}}></dd>
+    <dd {{dd_desc}}>{{ data.professor_why }}</dd>
+    {% endif %}
+    <dt {{dl_dt}}>Relive Carthage moment:</dt>
+    <dd {{clear}}></dd>
+    <dd {{dd_desc}}>{{ data.relive }}</dd>
+    <dt {{dl_dt}}>Message:</dt>
+    <dd {{clear}}></dd>
+    <dd {{dd_desc}}>{{ data.message }}</dd>
+    <dt {{dl_dt}}>Photos:</dt>
+    <dd {{clear}}></dd>
+    {% for photo in data.photos.all %}
+    <dt {{dl_dt}}>
+        <a href="https://{{server_url}}{{photo.original.url}}">
+            <img src="https://{{server_url}}{{ photo.thumbnail.url }}" alt="{{ photo.title }}" />
+        </a>
+    </dt>
+    <dd {{dl_dd}}>{{ photo.caption }}</dd>
+    <dd {{clear}}></dd>
+    {% endfor %}
+</dl>

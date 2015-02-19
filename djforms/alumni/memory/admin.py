@@ -1,12 +1,10 @@
 from django.contrib import admin
 from djforms.alumni.memory.models import Questionnaire
-#from djforms.core.models import Photo
 
-"""
+
 class PhotoInline(admin.TabularInline):
     model = Questionnaire.photos.through
     extra = 5
-"""
 
 class QuestionnaireAdmin(admin.ModelAdmin):
     model = Questionnaire
@@ -18,7 +16,7 @@ class QuestionnaireAdmin(admin.ModelAdmin):
         'last_name', 'email', 'city', 'state','postal_code'
     )
 
-    #inlines = [PhotoInline,]
-    #exclude = ('photos',)
+    inlines = [PhotoInline,]
+    exclude = ('photos',)
 
 admin.site.register(Questionnaire, QuestionnaireAdmin)
