@@ -33,7 +33,7 @@ urlpatterns = patterns('djforms.alumni',
     url(
         r'^classnotes/carthaginian/$',
         'classnotes.views.screenscrape',
-        name="classnotes_archives_year"
+        name="classnotes_carthaginian"
     ),
     url(
         r'^classnotes/success/$',
@@ -41,7 +41,7 @@ urlpatterns = patterns('djforms.alumni',
         name="classnotes_success"
     ),
     url(
-        r'^classnotes/archives/(?P<year>\d+)',
+        r'^classnotes/archives/(?P<year>\d+)/',
         'classnotes.views.archives',
         name="classnotes_archives_year"
     ),

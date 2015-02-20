@@ -75,3 +75,52 @@ class KappaPhiEta50thReunion(QuestionnaireForm):
         required = True
     )
 
+class PiTheta50thReunion(QuestionnaireForm):
+
+    greek_parent = forms.CharField(
+        label="Who is your Pi Theta mom?",
+        required = True
+    )
+    greek_siblings = forms.CharField(
+        label = "Who is your Pi Theta daughter(s)?",
+        widget = forms.Textarea,
+        required = True
+    )
+    special = forms.CharField(
+        label = "What was your favorite Pi Theta tradition?",
+        widget = forms.Textarea,
+        required = True
+    )
+    relive = forms.CharField(
+        label = """
+            If you had the chance to relive a single
+            Pi Theta moment, which one would you choose?
+        """,
+        widget = forms.Textarea,
+        required = True
+    )
+
+class KappaChiOmega50thReunion(QuestionnaireForm):
+
+    greek_parent = forms.CharField(
+        label="Who is your Kappa Chi Omega mom?",
+        required = True
+    )
+    greek_siblings = forms.CharField(
+        label = "Who is your Kappa Chi Omega daughter(s)?",
+        widget = forms.Textarea,
+        required = True
+    )
+    special = forms.CharField(
+        label = "What was your favorite Kappa Chi Omega tradition?",
+        widget = forms.Textarea,
+        required = True
+    )
+    relive = forms.CharField(
+        label = """
+            If you had the chance to relive a single
+            Kappa Chi Omega moment, which one would you choose?
+        """,
+        widget = forms.Textarea,
+        required = True
+    )

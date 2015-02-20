@@ -59,7 +59,7 @@ def questionnaire_form(request, campaign=None):
             if settings.DEBUG:
                 TO_LIST = [settings.SERVER_EMAIL,]
             else:
-                TO_LIST = ["lhansen@carthage.edu",]
+                TO_LIST = ["alumnioffice@carthage.edu","lhansen@carthage.edu",]
             send_mail(
                 request, TO_LIST,
                 "[{}] {} {}".format(

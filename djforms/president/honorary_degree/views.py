@@ -26,7 +26,7 @@ def nomination_form(request):
                 request, TO_LIST,
                 subject, data.email,
                 "president/honorary_degree/email.html", data,
-                settings.MANAGERS, attach=True
+                settings.MANAGERS
             )
             return HttpResponseRedirect(
                 reverse_lazy("honorary_degree_nomination_success")

@@ -2,19 +2,14 @@
 from django import forms
 
 from djforms.president.honorary_degree.models import Nomination
-from djtools.fields import YEARS1
 
 from captcha.fields import CaptchaField
 
-
-CLASSYEARS  = list(YEARS1)
-CLASSYEARS.insert(0,("","--Select--"))
 
 class NominationForm(forms.ModelForm):
 
     candidate_class_year = forms.CharField(
         label="Candidate class year (if applicable)",
-        widget=forms.Select(choices=CLASSYEARS),
         required=False
     )
     cv = forms.FileField(
@@ -24,7 +19,6 @@ class NominationForm(forms.ModelForm):
     last_name = forms.CharField(label="Your last name")
     class_year = forms.CharField(
         label="Your class year (if applicable)",
-        widget=forms.Select(choices=CLASSYEARS),
         required=False
     )
     email = forms.EmailField()
