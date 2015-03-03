@@ -19,6 +19,9 @@
                 $(this).val($(this).val().replace(/,/g,''));
                 $(this).val($(this).val().replace(/\$/g,''));
             });
+
+            $("#id_or-total").before('<span class="cost">$</span>');
+
             // disable submit button after users clicks it
             $('form#profile').submit(function(){
                 $(this).children('input[type=submit]').attr('disabled', 'disabled');
@@ -34,8 +37,10 @@
     padding:3px 0 3px 5px;width:99%;}
     #id_cc-security_code, #id_cc-expiration_month,
     #id_cc-expiration_year {width:70px;}
-    #id_or-start_date, #id_ct-postal_code, #id_or-total {width:100px;}
+    #id_or-start_date, #id_ct-postal_code, #id_or-total, #pledge_total {width:100px;}
     li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
+    .cost, #pledge_total_help { font-weight:bold; color:green; }
+    #pledge_total_help { margin-left:9px; }
     </style>
 {% endblock %}
 {% block left_nav %}

@@ -91,7 +91,10 @@ class PledgeOrderForm(OrderForm):
     """
     A subscrition form for recurring billing
     """
-    total = forms.CharField(label="Amount")
+    total = forms.CharField(
+        label="Gift installments",
+        help_text="How much would you like to give for each installment."
+    )
     comments = forms.CharField(
         label = "Designation",
         help_text = '''
@@ -113,7 +116,7 @@ class PledgeOrderForm(OrderForm):
     cycle = forms.CharField(
         widget=forms.Select(choices=CYCLES),
         required=True,
-        label="Interval",
+        label="Frequency",
         help_text='''
             Choose how often the donation should be sent during the term
             of the pledge.
@@ -123,6 +126,6 @@ class PledgeOrderForm(OrderForm):
     class Meta:
         model = Order
         fields = (
-            'total', 'comments', 'cycle', 'payments', 'avs',
+            'total', 'cycle', 'payments', 'comments', 'avs',
             'auth'
         )
