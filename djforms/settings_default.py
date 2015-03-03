@@ -44,7 +44,7 @@ CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.word_challenge'
 #CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 CAPTCHA_NOISE_FUNCTIONS = ''
 CAPTCHA_DICTIONARY_MAX_LENGTH = 9
-CAPTCHA_WORDS_DICTIONARY = '/d2/django_projects/djtools/fields/words.txt')
+CAPTCHA_WORDS_DICTIONARY = '/d2/django_projects/djtools/fields/words.txt'
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
