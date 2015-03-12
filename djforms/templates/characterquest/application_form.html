@@ -1,23 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Character Quest Application Form{% endblock %}
-{% block extra_javascript %}
-<script src="{{jquery_version}}" type="text/javascript"></script>
-<script src="http://www.carthage.edu/assets/js/jquery/ui/ui.datepicker.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#id_profile-dob").datepicker({
-            firstDay:1,appendText:"(format mm/dd/yyyy)",
-            changeFirstDay:false,dateFormat:"mm/dd/yy",
-            yearRange: "-25:+0",showOn:"both",
-            buttonImage: "//www.carthage.edu/assets/img/ico/calendar.gif",
-            buttonImageOnly:true
-        });
-    });
-</script>
-<script type="text/javascript" src="http://www.carthage.edu/djmedia/js/getElementsBySelector.js"></script>
-{% endblock %}
 {% block extra_style %}
-<link href="http://www.carthage.edu/assets/css/jquery/ui/datepicker/ui.datepicker.css" rel="stylesheet" type="text/css" />
 <style>
 .form textarea {
     width:600px;
@@ -37,27 +20,26 @@
 {% block content %}
 <div class="forms-container">
     {% if not expired %}
-    <p>
-        Complete the form below to submit your application for Character Quest.
-        <strong>All fields are required</strong>.
-    </p>
-    <form action="." class="form" method="post">
+        {% load livewhale_api %}
+        {% get_lw_content as header blurbs 1979 %}
+        {{header.body}}
+        <form action="." class="form" method="post">
         {% csrf_token %}
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in profile_form %}
-                    {% include "form_field.inc.html" %}
-                {% endfor %}
-                {% for field in form %}
-                    {% include "form_field.inc.html" %}
-                {% endfor %}
-                <li class="btnHolder">
-                <label for="id_submit">&nbsp;&nbsp;</label>
-                <input type="submit" value="Submit" class="button" />
-                </li>
-            </ol>
-        </fieldset>
-    </form>
+            <fieldset class="blockLabels">
+                <ol>
+                    {% for field in profile_form %}
+                        {% include "form_field.inc.html" %}
+                    {% endfor %}
+                    {% for field in form %}
+                        {% include "form_field.inc.html" %}
+                    {% endfor %}
+                    <li class="btnHolder">
+                    <label for="id_submit">&nbsp;&nbsp;</label>
+                    <input type="submit" value="Submit" class="button" />
+                    </li>
+                </ol>
+            </fieldset>
+        </form>
     {% else %}
         <p>We are no longer accepting applications.</p>
     {% endif %}

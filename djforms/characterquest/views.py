@@ -10,7 +10,7 @@ from djforms.characterquest.forms import ApplicationProfileForm
 from djforms.core.models import UserProfile
 
 from djtools.utils.mail import send_mail
-
+from djtools.fields import TODAY
 from datetime import date
 
 @login_required
@@ -21,11 +21,18 @@ def application_profile_form(request):
         TO_LIST = ["nwinkler@carthage.edu",]
     BCC = settings.MANAGERS
 
-    today = date.today()
-    x_date = date(today.year, 5, 5)
-    s_date = date(today.year, 4, 1)
+    s_date = date(
+        TODAY.year,
+        settings.CHARACTER_QUEST_START_MONTH,
+        settings.CHARACTER_QUEST_START_DAY
+    )
+    x_date = date(
+        TODAY.year,
+        settings.CHARACTER_QUEST_END_MONTH,
+        settings.CHARACTER_QUEST_END_DAY
+    )
     expired = False
-    if x_date < today or s_date > today:
+    if x_date < TODAY or s_date > TODAY:
         if not request.user.is_staff and \
         not request.user.has_perm('characterquest.change_applicationprofile'):
             expired = True

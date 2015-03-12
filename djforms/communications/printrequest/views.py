@@ -24,9 +24,9 @@ def print_request(request):
             data.save()
             if not settings.DEBUG:
                 TO_LIST.append(data.user.email)
-                subject = "[Print request] {}: {}".format(
+                subject = u"[Print request] {}: {}".format(
                     data.project_name, data.date_created
-                )
+                ).encode('utf-8').strip()
                 send_mail(
                     request, TO_LIST,
                     subject, data.user.email,

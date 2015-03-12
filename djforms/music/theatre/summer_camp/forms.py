@@ -25,7 +25,7 @@ class RegistrationForm(forms.ModelForm):
         widget=forms.TextInput()
     )
     state = forms.CharField(
-        label="Provence",
+        label="Province",
         max_length=128
     )
     postal_code = forms.CharField(

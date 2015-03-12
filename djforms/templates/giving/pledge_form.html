@@ -20,7 +20,7 @@
 
                 $("#pledge_total").val( "$" + amount );
                 c = $("#id_or-cycle").find(":selected").text();
-                help = "That is: $" + total + " " + c + " over " + payments/12 + " years.";
+                help = "That is: $" + total + " " + c + " over " + payments/12 + " year(s).";
                 console.log( help );
                 $("#pledge_total_help").html( help );
             });
@@ -94,7 +94,7 @@
                     {% if field.name == "payments" %}
                         <li class="form-group ctrlHolder">
                             <h3 style="margin-top:9px;">
-                                <label style="color:green;">Total</label>
+                                <label style="color:green;">Total gift</label>
                             </h3>
                             <input type="text" id="pledge_total" disabled />
                         </li>

@@ -1,6 +1,7 @@
-{% load get_api %}
-{% get_api_object as menu menutree menu 124 code %}
-{{menu}}
+{% load livewhale_api %}
+<h4>Character Quest</h4>
+{% get_lw_content as nav blurbs 1976 %}
+{{nav.body}}
 <ul>
     <li class="last-featured"></li>
 </ul>

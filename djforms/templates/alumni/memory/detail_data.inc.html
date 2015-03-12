@@ -18,9 +18,9 @@
     <dt {{dl_dt}}>Phone:</dt>
     <dd {{dl_dd}}>{{ data.phone }}</dd>
     <dt {{dl_dt}}>Occupation 1:</dt>
-    <dd {{dl_dd}}>{{ data.occupation1 }}</dd>
+    <dd {{dl_dd}}>{{ data.occupation1|default:"&nbsp;" }}</dd>
     <dt {{dl_dt}}>Occupation 2:</dt>
-    <dd {{dl_dd}}>{{ data.occupation2 }}</dd>
+    <dd {{dl_dd}}>{{ data.occupation2|default:"&nbsp;" }}</dd>
     <dt {{dl_dt}}>Special?</dt>
     <dd {{clear}}></dd>
     <dd {{dd_desc}}>{{ data.special }}</dd>

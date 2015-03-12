@@ -33,6 +33,7 @@ class ContactForm(forms.ModelForm):
     spouseyear = forms.CharField(
         label="Spouse's class", max_length=4,
         widget=forms.Select(choices=SPOUSEYEARS),
+        required=False
     )
     email = forms.EmailField(
         label="Email",

@@ -1,4 +1,5 @@
 {% extends "music/theatre/summer_camp/registration_done.html" %}
+{% load livewhale_api %}
 {% block title %}
 Summer Camp &mdash;
 Music Theatre &mdash;
@@ -57,24 +58,8 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
     </div></div>
     <h2>Registration Form</h2>
     <div class="large-8 medium-6 small-4">
-        <h4>How to Register</h4>
-        <p>
-        Complete this form and submit it by clicking on the "Register" button.
-        </p>
-        <h4>Cost and  Method of Payment</h4>
-        <p>
-        The $2,800 camp fee is due by June 10, 2015. Refunds may be requested
-        prior to the June 10 deadline. After June 10, 2015, a partial
-        refund may be requested. After July 1, 2015, no refunds will be given.
-        </p>
-        <p>
-        The Carthage web site supports secure credit card transactions.
-        You may also pay by bank transfer.
-        </p>
-        <p>
-        After you complete the registration form, we will send confirmation
-        via email.
-        </p>
+        {% get_lw_content as howto blurbs 1977 %}
+        {{howto.body}}
     </div>
     <div class="forms-container clear">
     {% include "includes/required_text.html" %}
@@ -131,10 +116,8 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
                 </li>
             </ol>
         </fieldset>
-        <h2>Questions?</h2>
-        <fieldset class="blockLabels">
-            <strong>Call Corinne Ness at (262) 551-5733</strong></p>
-        </fieldset>
+        {% get_lw_content as questions blurbs 1978 %}
+        {{questions.body}}
     </form>
     </div>
 {% endblock %}

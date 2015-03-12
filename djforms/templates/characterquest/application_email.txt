@@ -20,12 +20,14 @@ Year                {{data.profile.college_year}}
 </pre>
 
 <h3>Oganizations and Activities</h3>
-<pre style="font-size:12px;">{{data.organizations}}</pre>
+<pre style="font-size:12px;">{{data.organizations|striptags}}</pre>
 <h3>Why You?</h3>
-<p>{{data.skills_experience}}</p>
+<pre style="font-size:12px;">{{data.skills_experience|striptags}}</pre>
 <h3>Leadership Acumen</h3>
-<p>{{data.why_orientation_leader}}</p>
+<pre style="font-size:12px;">{{data.why_orientation_leader|striptags}}</pre>
 <h3>Leadership Experience</h3>
-<p>{{data.describe_experience}}</p>
+<pre style="font-size:12px;">{{data.describe_experience|striptags}}</pre>
+<h3>Peer mentoring</h3>
+<pre style="font-size:12px;">{{data.peer_mentoring|striptags}}</pre>
 <h3>References</h3>
-<p>{{data.references}}</p>
+<pre style="font-size:12px;">{{data.references|striptags}}</pre>

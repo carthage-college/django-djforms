@@ -17,7 +17,10 @@ class ApplicationProfileForm(forms.ModelForm):
     gender = forms.CharField(
         widget=forms.RadioSelect(choices=GENDER_CHOICES)
     )
-    dob = forms.DateField(label="Birthday")
+    dob = forms.DateField(
+        label="Birthday",
+        help_text = "(MM/DD/YYYY)"
+    )
     campus_address = forms.CharField()
     campus_box = forms.CharField(max_length="4")
     college_id = forms.CharField(label="Carthage ID", max_length="7")
@@ -39,5 +42,5 @@ class ApplicationForm(forms.ModelForm):
         exclude = ('profile',)
         fields = [
             'organizations','skills_experience','why_orientation_leader',
-            'describe_experience','references'
+            'describe_experience','peer_mentoring','references'
         ]
