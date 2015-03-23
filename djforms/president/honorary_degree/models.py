@@ -29,6 +29,7 @@ class Nomination(GenericContact):
         "CV or résumé",
         upload_to=upload_to_path,
         max_length=768,
+        null=True, blank=True
     )
     # nominator (includes fn,sn,email from GenericContact)
     class_year = models.CharField(

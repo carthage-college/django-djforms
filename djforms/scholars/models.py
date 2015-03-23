@@ -188,7 +188,11 @@ class Presentation(models.Model):
     objects = models.Manager()
     # core
     title = models.CharField(
-        "Presentation title", max_length=256
+        "Presentation title", max_length=255
+    )
+    reviewer = models.CharField(
+        max_length=128,
+        null=True, blank=True
     )
     leader = models.ForeignKey(
         Presenter, verbose_name="Presentation leader",
@@ -199,7 +203,7 @@ class Presentation(models.Model):
         null=True, blank=True
     )
     funding = models.CharField(
-        "Funding source (if applicable)", max_length=256,
+        "Funding source (if applicable)", max_length=255,
         help_text="e.g. external funding, SURE, etc.",
         null=True, blank=True
     )
@@ -218,7 +222,7 @@ class Presentation(models.Model):
     abstract_text       = models.TextField("Abstract", help_text='Copy and paste your abstract text or start typing.')
     need_table          = models.CharField(max_length=3, choices=BINARY_CHOICES)
     need_electricity    = models.CharField(max_length=3, choices=BINARY_CHOICES)
-    poster_file         = models.FileField(upload_to='files/scholars/posters/2014', max_length="256", help_text='Upload a poster file', null=True, blank=True)
+    poster_file         = models.FileField(upload_to='files/scholars/posters/2014', max_length="768", help_text='Upload a poster file', null=True, blank=True)
     status              = models.BooleanField(default=False)
 
     class Meta:

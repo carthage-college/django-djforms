@@ -37,7 +37,7 @@ class PresentationForm(forms.ModelForm):
 
     class Meta:
         model = Presentation
-        exclude = ('user','updated_by','date_created','date_updated',
+        exclude = ('user','reviewer', 'updated_by','date_created','date_updated',
         'presenters','ranking','leader','status','work_type_other','tags')
 
     def __init__(self,*args,**kwargs):

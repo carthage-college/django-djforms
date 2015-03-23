@@ -13,7 +13,9 @@ class NominationForm(forms.ModelForm):
         required=False
     )
     cv = forms.FileField(
-        label="CV or résumé", max_length="256"
+        label="CV or résumé",
+        max_length=768,
+        required=False
     )
     first_name = forms.CharField(label="Your first name")
     last_name = forms.CharField(label="Your last name")
