@@ -12,10 +12,12 @@ from djforms.scholars.models import get_json
 from djforms.core.models import Department, YEAR_CHOICES
 
 from djtools.utils.mail import send_mail
+from djtools.fields import TODAY, NOW
 
-import datetime, os
+from datetime import date
 
-NOW  = datetime.datetime.now()
+import os
+
 YEAR = int(NOW.year)
 if int(NOW.month) > 9 and not settings.DEBUG:
     YEAR += 1
@@ -23,7 +25,7 @@ if int(NOW.month) > 9 and not settings.DEBUG:
 BCC = settings.MANAGERS
 
 import logging
-logging.basicConfig(filename=settings.LOG_FILENAME,level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 def _update_presenters(presenter, presenters):
     presenter.first_name   = presenters.first_name
@@ -46,6 +48,7 @@ def _update_presenters(presenter, presenters):
 def form(request, pid=None):
     presenters = []
     presentation = None
+    # flag managers
     manager = request.user.has_perm('scholars.manage_presentation')
     # get people for select field
     jason  = get_json("faculty")
@@ -53,23 +56,41 @@ def form(request, pid=None):
     for j in jason:
         faculty.append(j[j.keys()[0]])
 
+    # define our submission window
+    s_date = date(
+        TODAY.year,
+        settings.COS_START_MONTH,
+        settings.COS_START_DAY
+    )
+    x_date = date(
+        TODAY.year,
+        settings.COS_END_MONTH,
+        settings.COS_END_DAY
+    )
+    expired = False
+    if x_date < TODAY or s_date > TODAY:
+        if not request.user.is_staff and not manager:
+            expired = True
+
     if pid:
         presentation = get_object_or_404(
             Presentation,id=pid,date_updated__year=YEAR
         )
         # check perms
         if presentation.user != request.user and not manager:
-            raise Http404
+            return HttpResponseRedirect(reverse("auth_login"))
     else:
-        try:
-            presentation = Presentation.objects.get(
-                user=request.user,date_updated__year=YEAR
-            )
-            pid = presentation.id
-        except:
-            pass
+        if not expired:
+            try:
+                presentation = Presentation.objects.get(
+                    user=request.user,date_updated__year=YEAR
+                )
+                pid = presentation.id
+            except:
+                pass
+        else:
             # 404 after submission period has ended
-            #raise Http404
+            raise Http404
 
     if presentation:
         # create list for GET requests to populate presenters fields
@@ -107,7 +128,7 @@ def form(request, pid=None):
                     mug = mugshot[len(mugshot)-h]
                 except:
                     mug = None
-                    logging.exception("Celebration of Scholars mugshot error.")
+                    logger.debug("Celebration of Scholars mugshot error.")
                 h -= 1
             elif mugshoth[i]:
                 mug = mugshoth[i]
@@ -199,7 +220,7 @@ def form(request, pid=None):
         "presenters":presenters,"copies":copies,
         "faculty":faculty,"cyears":YEAR_CHOICES,
         "depts":DEPTS,"types":PRESENTER_TYPES,
-        "pid":pid,"manager":manager
+        "pid":pid,"manager":manager,"expired":expired
     }
     return render_to_response (
         "scholars/presentation/form.html",
