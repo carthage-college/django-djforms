@@ -45,6 +45,16 @@ CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.word_challenge'
 CAPTCHA_NOISE_FUNCTIONS = ''
 CAPTCHA_DICTIONARY_MAX_LENGTH = 9
 CAPTCHA_WORDS_DICTIONARY = '/d2/django_projects/djtools/fields/words.txt'
+# Character Quest Window
+CHARACTER_QUEST_END_MONTH = 4
+CHARACTER_QUEST_END_DAY = 3
+CHARACTER_QUEST_START_MONTH = 3
+CHARACTER_QUEST_START_DAY = 1
+# Celebration of Scholars Window
+COS_END_MONTH = 3
+COS_END_DAY = 23
+COS_START_MONTH = 2
+COS_START_DAY = 2
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
