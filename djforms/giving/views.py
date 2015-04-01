@@ -1,15 +1,14 @@
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.template import RequestContext, loader
-from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render_to_response, get_object_or_404
 
 from djforms.processors.forms import TrustCommerceForm as CreditCardForm
 from djforms.giving.forms import *
 from djforms.core.models import Promotion
 from djtools.utils.mail import send_mail
 
-import logging
-logger = logging.getLogger(__name__)
 
 def giving_form(request, transaction, campaign=None):
     """
@@ -46,13 +45,12 @@ def giving_form(request, transaction, campaign=None):
             email = contact.email
             or_data = or_form.save(commit=False)
             or_data.status = "In Process"
-            if campaign:
-                or_data.operator = ("DJ%s%s" % (trans_cap,campaign.slug.capitalize()))[:20]
-            else:
-                or_data.operator = "DJForms%s" % trans_cap
+            or_data.operator = "DJForms%s" % trans_cap
             or_data.save()
             contact.order.add(or_data)
-            cc_form = CreditCardForm(or_data, contact, request.POST, prefix="cc")
+            cc_form = CreditCardForm(
+                or_data, contact, request.POST, prefix="cc"
+            )
             if cc_form.is_valid():
                 # save and update order
                 r = cc_form.processor_response
@@ -60,7 +58,9 @@ def giving_form(request, transaction, campaign=None):
                     # deal with payments
                     years = str( int(or_data.payments) / 12 )
                     if or_data.cycle != "1m":
-                        or_data.payments = str( int(or_data.payments) / int(or_data.cycle[:-1]) )
+                        or_data.payments = str(
+                            int(or_data.payments) / int(or_data.cycle[:-1])
+                        )
                 or_data.status = r.msg['status']
                 or_data.transid = r.msg['transid']
                 or_data.billingid = r.msg.get('billingid')
@@ -72,17 +72,25 @@ def giving_form(request, transaction, campaign=None):
                 # sendmail
                 or_data.contact = contact
                 data = {'order':or_data,'campaign':campaign,'years':years,}
-                subject = "Thank you, %s %s, for your donation to Carthage" % (contact.first_name,contact.last_name)
+                subject = "Thank you, %s %s, for your donation to Carthage" % (
+                    contact.first_name,contact.last_name
+                )
                 TO_LIST.append(email)
                 send_mail(
                     request, TO_LIST, subject, email,
                     'giving/%s_email.html' % transaction, data, BCC
                 )
                 # redirect
-                slug = ""
                 if campaign:
-                    slug = campaign.slug
-                url = 'http://www.carthage.edu/forms/giving/%s/success/%s' % (transaction, slug)
+                    url = reverse(
+                        'giving_success_campaign',
+                        args=[transaction,campaign.slug]
+                    )
+                else:
+                    url = reverse(
+                        'giving_success_generic',
+                        args=[transaction]
+                    )
                 return HttpResponseRedirect(url)
             else:
                 r = cc_form.processor_response
