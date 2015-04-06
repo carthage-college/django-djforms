@@ -9,20 +9,19 @@ from djforms.giving.forms import *
 from djforms.core.models import Promotion
 from djtools.utils.mail import send_mail
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 def giving_form(request, transaction, campaign=None):
     """
     multipurpose method to handle various types of donations
     """
     # recipients
-    TO_LIST = []
     if settings.DEBUG:
         BCC = settings.MANAGERS
     else:
-        BCC = [settings.SERVER_EMAIL,
-            "lpiela@carthage.edu","lhansen@carthage.edu",
-            "hkeller@carthage.edu","arobillard@carthage.edu"
-        ]
+        BCC = settings.GIVING_DONATIONS_BCC
 
     trans_cap = transaction.capitalize()
     or_form_name = trans_cap + "OrderForm"
@@ -51,9 +50,12 @@ def giving_form(request, transaction, campaign=None):
             cc_form = CreditCardForm(
                 or_data, contact, request.POST, prefix="cc"
             )
+            logger.debug("contact = {}".format(contact.__dict__))
+            logger.debug("order = {}".format(or_data.__dict__))
             if cc_form.is_valid():
                 # save and update order
                 r = cc_form.processor_response
+                logger.debug("response = {}".format(r.__dict__))
                 if transaction == "pledge":
                     # deal with payments
                     years = str( int(or_data.payments) / 12 )
@@ -75,9 +77,8 @@ def giving_form(request, transaction, campaign=None):
                 subject = "Thank you, %s %s, for your donation to Carthage" % (
                     contact.first_name,contact.last_name
                 )
-                TO_LIST.append(email)
                 send_mail(
-                    request, TO_LIST, subject, email,
+                    request, [email,], subject, email,
                     'giving/%s_email.html' % transaction, data, BCC
                 )
                 # redirect

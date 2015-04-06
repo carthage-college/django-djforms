@@ -1,22 +1,39 @@
 #!/usr/bin/python
 
+from django.conf import settings
+
 from djforms.scholars.models import Presentation
 
 import os, uuid
 
-prez = Presentation.objects.all()
+from djtools.fields import TODAY
 
-root_path = "/data2/django_projects/djforms/assets/"
+YEAR = int(TODAY.year)
+
+prez = Presentation.objects.filter(date_updated__year=YEAR)
+
+root_path = os.path.join(settings.ROOT_DIR, "assets")
 upload_dir = "files/scholars/mugshots/"
+count = 1
 
 for p in prez:
     for s in p.presenters.all():
         if s.mugshot:
-            orig         = root_path + s.mugshot.name
-            new_filename = "%s%s_%s_%s.jpg" % (upload_dir, s.last_name, s.first_name, uuid.uuid4().hex)
-            new          = root_path + new_filename
-            #print new_filename, s.mugshot.name
-            #print new_filename
-            os.rename(orig, new)
-            s.mugshot.name = new_filename
-            s.save()
+            orig = os.path.join(root_path, s.mugshot.name)
+            new_filename = "{}{}_{}_{}.jpg".format(
+                upload_dir, s.last_name, s.first_name, uuid.uuid4().hex
+            )
+            new = os.path.join(root_path, new_filename)
+            print "{}) {} {} ".format(
+                count, s.mugshot.name, new_filename
+            )
+            count += 1
+            try:
+                os.rename(orig, new)
+                s.mugshot.name = new_filename
+                s.save()
+            except:
+                print "No such file or directory."
+                print "Original: {}".format(orig)
+                print "New: {}".format(new)
+
