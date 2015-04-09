@@ -346,7 +346,7 @@ def email_all_presenters(request):
     """
     template = "scholars/presenters/email_all_presenters.html"
 
-    p = Presentation.objects.filter(date_updated__year=year)
+    p = Presentation.objects.filter(date_updated__year=YEAR)
 
     return render_to_response (
         template, {"prez": p,},

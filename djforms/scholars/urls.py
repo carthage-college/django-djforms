@@ -60,6 +60,10 @@ urlpatterns = patterns('djforms.scholars.views',
         name="email_presenters_done"
     ),
     url(
+        r'^presenters/email/all/$',
+        'presentation.email_all_presenters',name="email_all_presenters"
+    ),
+    url(
         r'^presenters/email/(?P<pid>\d+)/(?P<action>[-\w]+)/$',
         'presentation.email_presenters',name="email_presenters"
     ),

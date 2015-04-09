@@ -7,8 +7,8 @@ body {font-size:1.1em;font-family:verdana, arial, sans-serif;}
 </style>
 </head>
 <body>
-{% for p in prez %}
-    {{p.user.email}},<br />
+{% for p in prez|dictsort:"user.last_name" %}
+    {{p.user.first_name}} {{p.user.last_name}} &lt;{{p.user.email}}&gt;,<br />
 {% endfor %}
 </body>
 </html>
