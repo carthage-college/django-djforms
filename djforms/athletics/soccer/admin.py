@@ -1,13 +1,31 @@
 from django.contrib import admin
 
 from djforms.athletics.soccer.models import SoccerCampAttender
+from djforms.core.util import export_as_csv_action
 
 import datetime
+import csv
+
+'''
+def export_attenders(modeladmin, request, queryset):
+    # exclude these fields from registration data
+    #exclude = ['id','user']
+    response = HttpResponse("", content_type="text/csv; charset=utf-8")
+    filename = "{}.csv".format(modeladmin)
+    response['Content-Disposition']='attachment; filename={}'.format(filename)
+    writer = csv.writer(response)
+    for reg in queryset:
+        writer.writerow(fields)
+    return response
+
+export_attenders.short_description = "Export Soccer Camp Attenders"
+'''
 
 class SoccerCampAttenderAdmin(admin.ModelAdmin):
     model = SoccerCampAttender
     exclude       = ('country','second_name','previous_name','salutation')
     raw_id_fields = ('order',)
+    actions = [export_as_csv_action(header=True)]
 
     list_display  = (
         'last_name','first_name','created_at','dob','age','football',

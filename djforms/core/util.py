@@ -17,7 +17,8 @@ def export_as_csv_action(description="Export selected objects as CSV file",
         based on http://djangosnippets.org/snippets/1697/
         """
         opts = modeladmin.model._meta
-        field_names = set([field.name for field in opts.fields])
+        #field_names = set([field.name for field in opts.fields])
+        field_names = [field.name for field in opts.fields]
         if fields:
             fieldset = set(fields)
             field_names = field_names & fieldset
@@ -50,7 +51,7 @@ def export(qs, fields=None):
         headers = []
         for field in model._meta.fields:
             headers.append(field.name)
-        
+
         for field in model._meta.many_to_many:
             headers.append(field.name)
 
