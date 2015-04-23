@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django import forms
 
 from djforms.core.models import BINARY_CHOICES, GENDER_CHOICES, MARITAL_CHOICES, SEMESTER_CHOICES

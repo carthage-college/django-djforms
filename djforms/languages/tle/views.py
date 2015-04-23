@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.http import Http404
 from django.conf import settings
 from django.utils.dates import MONTHS
@@ -61,9 +62,9 @@ def application_form(request, stype):
                 TO_LIST = settings.MODERN_LANGUAGES_TLE_APPLICATIONS
                 TO_LIST.append(cd['email'])
 
-            subject = "[Modern Languages] TLE {}: {} {}".format(
+            subject = u"[Modern Languages] TLE {}: {} {}".format(
                 stype.capitalize(), cd['first_name'], cd['last_name']
-            )
+            ).encode('utf-8')
 
             send_mail(
                 request, TO_LIST,

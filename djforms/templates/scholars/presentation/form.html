@@ -19,6 +19,12 @@
                     "orderedList", "unorderedList"
                 ]
             });
+            $("#id_poster_file").parent().css({
+                'backgroundColor' : '#fff6bf',
+                "border-color": "#ffd324",
+                "border-width":"1px",
+                "border-style":"solid"
+            });
             var copies = {{copies}};
             // copy duplicate master for new presenter
             $("#clone").click(function () {
