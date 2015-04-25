@@ -1,0 +1,15 @@
+{% extends "communications/metamorphosis/done.html" %}
+{% block content %}
+    <h2>Submissions</h2>
+    <ul>
+    {% for d in data %}
+        {% if d.status %}
+            <li>
+                <a href="{% url 'metamorphosis_questionnaire_detail' d.id %}">
+                    {{d.student_name}}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% endblock %}

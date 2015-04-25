@@ -1,0 +1,10 @@
+{% extends "communications/metamorphosis/done.html" %}
+{% block content %}
+    {% if data.status %}
+    {% include "communications/metamorphosis/detail_data.inc.html" %}
+    {% else %}
+        <h2>
+            The Office of Communications have not yet approved this submission.
+        </h2>
+    {% endif %}
+{% endblock %}

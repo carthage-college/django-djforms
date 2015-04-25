@@ -1,0 +1,12 @@
+{% autoescape off %}
+<h2>Next Step: The World</h2>
+{% include "communications/metamorphosis/detail_data.inc.html" %}
+<p>
+    <a href="https://{{server_url}}{% url 'metamorphosis_questionnaire_detail' data.id %}">
+        View all the information
+    </a>
+    that was submitted by<br />
+    {{data.your_name}} on behalf of {{data.student_name}},
+    including any photos and captions.
+</p>
+{% endautoescape %}

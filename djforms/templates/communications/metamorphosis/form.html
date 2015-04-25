@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load livewhale_api %}
+{% block title %}
+    How has your student changed since their freshman year?
+    &mdash;
+    Office of Communications &mdash;
+    Carthage College
+{% endblock %}
+{% block extra_javascript %}
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea-0.8.min.js"
+        type="text/javascript" charset="utf-8"></script>
+    <script src="https://malsup.github.io/min/jquery.blockUI.min.js"
+        type="text/javascript"></script>
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/multifile/jquery.Metadata.js"
+        type="text/javascript" language="javascript"></script>
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/multifile/jQuery.MultiFile.min.js"
+        type="text/javascript" language="javascript"></script>
+<script>
+$(function(){
+    $('#PhotoFileUpload').MultiFile({
+        accept:'gif|jpg|png', max:3, STRING: {
+            file: '<em title="Click to remove" onclick="$(this).parent().prev().click()">$file</em>',
+            remove:'<img src="//www.carthage.edu/themes/shared/img/ico/delete.gif" width="16" height="16" alt="x" title="remove" />',
+            denied:'You cannot select a $ext file.\nTry again...',
+            selected:'File selected: $file',
+            duplicate:'This file has already been selected:\n$file'
+        },
+        afterFileAppend: function(element, value, master_element){
+            domid = value.replace(/\./g, "");
+            domid = domid.replace(/ /g, "");
+            $('#photo-captions').append(
+                '<textarea name="captions[]" id="'+domid+'"></textarea>'
+            );
+        },
+        onFileRemove: function(element, value, master_element){
+            domid = value.replace(/\./g, "");
+            domid = domid.replace(/ /g, "");
+            $("#" + domid).remove();
+        },
+    });
+    $("textarea").htmlarea({
+        toolbar: [
+            "html","bold", "italic", "underline", "superscript",
+            "subscript", "|", "h1", "h2", "h3", "h4", "|", "indent",
+            "outdent", "horizontalrule", "link", "unlink", "|",
+            "orderedList", "unorderedList"
+        ]
+    });
+});
+</script>
+{% endblock %}
+{% block extra_style %}
+<link href="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea.css"
+    rel="stylesheet" />
+<style>
+#photo-captions textarea {
+    height:60px;
+    width: 200px;
+    display:block;
+    margin-bottom:20px;
+}
+.MultiFile-label {
+    padding-bottom:60px;
+}
+</style>
+{% endblock %}
+{% block left_nav %}
+    {% include "communications/left_nav.html" %}
+{% endblock %}
+{% block content_head %}
+{% get_lw_content as intro blurbs 2003 %}
+<h1 id="page_title">
+    {{intro.title}}
+    <span id="secondary-dropdown"></span>
+</h1>
+{% endblock %}
+{% block content %}
+{% get_lw_content as intro blurbs 2003 %}
+{{intro.body}}
+<div class="forms-container">
+    {% include "includes/required_text.html" %}
+    {% include "includes/errors_text.html" %}
+    <form action="." class="form" id="profile" method="post"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="blockLabels">
+            <ol>
+                {% for field in form %}
+                    {% include "form_field.inc.html" %}
+                {% endfor %}
+                <li class="ctrlHolder">
+                <h3>Share a photo</h3>
+                <div class="fileinputs">
+                <p>
+                    Submit a photo from your student's freshman year.
+                    (A picture from move-in or Family Weekend would be great!)
+                </p>
+                <p>
+                    Maximum of 3 photos (allowed file formats: jpg and png).
+                </p>
+                <table width="100%">
+                    <tr>
+                        <td width="300" valign="top">
+                            <input type="file" class="medium" name="photos[]"
+                                id="PhotoFileUpload" maxlength="3"
+                                style="margin-bottom: 10px;" />
+                        </td>
+                        <td width="400" valign="top">
+                            <strong>Captions</strong>
+                            <div id="photo-captions">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                </div>
+                </li>
+                <li class="btnHolder">
+                <label for="id_submit">&nbsp;&nbsp;</label>
+                <input type="submit" value="Submit" class="button" />
+                </li>
+            </ol>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
