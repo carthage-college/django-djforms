@@ -1,5 +1,25 @@
 {% extends "base.html" %}
 {% block title %}Parking Violation Appeal Request Form{% endblock %}
+{% block extra_style %}
+<link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
+    rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block extra_javascript %}
+<script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
+    type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    // date picker
+    $("#id_citation_date").datepicker({
+        firstDay:1,
+        changeFirstDay:false,dateFormat:"yy-mm-dd",
+        showOn:"both",
+        buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
+        buttonImageOnly:true
+    });
+});
+</script>
+{% endblock %}
 {% block left_nav %}
     {% include "security/left_nav.html" %}
 {% endblock %}

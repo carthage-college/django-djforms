@@ -2,7 +2,7 @@ from django.db import models
 from djforms.core.models import GenericContact, GenericChoice
 
 class ParkingTicketAppeal(GenericContact):
-    carthage_id = models.CharField(
+    college_id = models.CharField(
         "Carthage ID#", max_length=10
     )
     residency_status = models.ForeignKey(
@@ -30,6 +30,14 @@ class ParkingTicketAppeal(GenericContact):
     )
     citation_number = models.CharField(
         "Citation Number", max_length=30
+    )
+    citation_date = models.DateField(
+        "Date of citation",
+        auto_now=False
+    )
+    towed = models.CharField(
+        "Was your vehicle Towed?",
+        max_length=8
     )
     appeal_box = models.TextField(
         "Comments",
