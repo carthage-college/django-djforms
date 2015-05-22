@@ -1,10 +1,37 @@
 {% extends "communications/metamorphosis/done.html" %}
+{% block extra_style %}
+<link rel="stylesheet" href="//www.carthage.edu/static/vendor/jquery/plugins/wowwindow/wowwindow.css"
+    type="text/css" />
+<style>
+.jqmClose{
+    background:#FFDD00; border:1px solid #FFDD00; color:#000; clear:right;
+    float:right; padding:0 5px; cursor:pointer; }
+.jqmClose:hover{ background:#FFF; }
+#jqmContent{
+    width:99%; height:99%; display: block; clear:both; margin:auto;
+    margin-top:10px; background:#111; border:1px dotted #444; }
+</style>
+{% endblock %}
+{% block extra_javascript %}
+<script src="//www.carthage.edu/static/vendor/jquery/plugins/wowwindow/jquery.wowwindow.min.js"
+    type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $(function() {
+        $('a[rel=popupfoto]').wowwindow({
+            draggable: true,
+            videoIframe: false,
+            rotate: false
+        });
+    });
+</script>
+{% endblock %}
 {% block content %}
-    {% if data.status %}
+    {% if data.status or user.is_staff %}
     {% include "communications/metamorphosis/detail_data.inc.html" %}
     {% else %}
         <h2>
-            The Office of Communications have not yet approved this submission.
+            This submission has not yet been approved by
+            the Office of Communications. Please check back soon.
         </h2>
     {% endif %}
 {% endblock %}

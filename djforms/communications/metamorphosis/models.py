@@ -6,7 +6,8 @@ from djforms.core.models import Photo
 
 class Questionnaire(models.Model):
     your_name = models.CharField(
-        max_length=128
+        max_length=128,
+        null=True, blank=True
     )
     student_name = models.CharField(
         "Your student's name",
@@ -33,7 +34,7 @@ class Questionnaire(models.Model):
     status = models.BooleanField(default=False)
 
     def get_absolute_url(self):
-        return reverse("metamorphosis_detail", args=[self.pk])
+        return reverse("metamorphosis_questionnaire_detail", args=[self.pk])
 
     def get_slug(self):
         return "communications/metamorphosis/"

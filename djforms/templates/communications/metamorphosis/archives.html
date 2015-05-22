@@ -3,7 +3,7 @@
     <h2>Submissions</h2>
     <ul>
     {% for d in data %}
-        {% if d.status %}
+        {% if d.status or user.is_staff %}
             <li>
                 <a href="{% url 'metamorphosis_questionnaire_detail' d.id %}">
                     {{d.student_name}}

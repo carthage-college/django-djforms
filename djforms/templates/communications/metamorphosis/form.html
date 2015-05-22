@@ -68,14 +68,17 @@ $(function(){
     {% include "communications/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
-{% get_lw_content as intro blurbs 2003 %}
 <h1 id="page_title">
-    {{intro.title}}
+    Next step: The World
     <span id="secondary-dropdown"></span>
 </h1>
 {% endblock %}
 {% block content %}
-{% get_lw_content as intro blurbs 2003 %}
+{% if who == "parent" %}
+    {% get_lw_content as intro blurbs 2003 %}
+{% else %}
+    {% get_lw_content as intro blurbs 2004 %}
+{% endif %}
 {{intro.body}}
 <div class="forms-container">
     {% include "includes/required_text.html" %}
