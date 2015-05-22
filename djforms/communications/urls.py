@@ -9,7 +9,7 @@ urlpatterns = patterns('djforms.communications',
         r'^print-request/success/$', TemplateView.as_view(
             template_name='communications/printrequest/done.html'
         ),
-        name='printrequest_success'
+        name='print_request_success'
     ),
     url(
         r'^print-request/$',
@@ -38,7 +38,7 @@ urlpatterns = patterns('djforms.communications',
         name="metamorphosis_questionnaire_archives"
     ),
     url(
-        r'^metamorphosis',
+        r'^metamorphosis/(?P<who>[a-zA-Z0-9_-]+)/',
         'metamorphosis.views.questionnaire_form',
         name='metamorphosis_questionnaire_form'
     )
