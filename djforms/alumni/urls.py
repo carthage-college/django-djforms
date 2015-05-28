@@ -85,6 +85,11 @@ urlpatterns = patterns('djforms.alumni',
         name="memory_questionnaire_success"
     ),
     url(
+        r'^memory/archives/$',
+        'memory.views.questionnaire_archives',
+        name="memory_questionnaire_archives"
+    ),
+    url(
         r'^memory/(?P<quid>\d+)/detail/$',
         'memory.views.questionnaire_detail',
         name="memory_questionnaire_detail"

@@ -26,6 +26,10 @@ class Questionnaire(GenericContact):
         "Zip code",
         max_length=10
     )
+    class_year = models.CharField(
+        "Your class year",
+        max_length=4
+    )
     phone = models.CharField(
         "Phone number",
         max_length=18,

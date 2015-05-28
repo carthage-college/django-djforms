@@ -3,6 +3,8 @@
     <dd {{dl_dd}}>{{ data.first_name }}</dd>
     <dt {{dl_dt}}>Last Name:</dt>
     <dd {{dl_dd}}>{{ data.last_name }}</dd>
+    <dt {{dl_dt}}>Year:</dt>
+    <dd {{dl_dd}}>{{ data.class_year|default:"&nbsp;" }}</dd>
     <dt {{dl_dt}}>Email:</dt>
     <dd {{dl_dd}}>
         <a href="mailto:{{ data.email }}">{{ data.email }}</a>

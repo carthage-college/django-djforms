@@ -90,3 +90,15 @@ def questionnaire_detail(request, quid):
         template_name, {'data': mq,},
         context_instance=RequestContext(request)
     )
+
+def questionnaire_archives(request):
+    """
+    Simple view to display all of the questionnaires
+    """
+
+    objects = Questionnaire.objects.all().order_by("promotion","-created_at")
+    template_name = "alumni/memory/archives.html"
+    return render_to_response(
+        template_name, {'objects': objects,},
+        context_instance=RequestContext(request)
+    )

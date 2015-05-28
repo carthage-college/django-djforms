@@ -1,38 +1,65 @@
 from django.contrib import admin
+from django.http import HttpResponse
 
 from djforms.athletics.soccer.models import SoccerCampAttender
-from djforms.core.util import export_as_csv_action
 
 import datetime
 import csv
 
-'''
 def export_attenders(modeladmin, request, queryset):
-    # exclude these fields from registration data
-    #exclude = ['id','user']
+    """
+    Export soccer camp attenders to CSV
+    """
+    field_names = [
+        'last_name','first_name','created_at','dob','age','football',
+        'gender','address1','city','state','postal_code','phone','email',
+        'order','parent_guard','roommate', 'dorm','years_attend','goalkeeper',
+        'shirt_size','session','amount','payment_method','reg_fee',
+        'medical_history','assumption_risk','insurance_card_links'
+    ]
+
+    headers = [
+        'last_name','first_name','created_at','dob','age','football',
+        'gender','address1','city','state','postal_code','phone','email',
+        'order_total','order_transid','order_status','parent_guard',
+        'roommate', 'dorm','years_attend', 'goalkeeper',
+        'shirt_size','session','amount','payment_method','reg_fee',
+        'medical_history','assumption_risk','insurance_card_links'
+    ]
+
     response = HttpResponse("", content_type="text/csv; charset=utf-8")
-    filename = "{}.csv".format(modeladmin)
+    filename = "soccer_soccercampattenders.csv"
     response['Content-Disposition']='attachment; filename={}'.format(filename)
     writer = csv.writer(response)
+    writer.writerow(headers)
     for reg in queryset:
+        fields = []
+        for field in field_names:
+            if field == "order":
+                fields.append(reg.order.all()[0].total)
+                fields.append(reg.order.all()[0].transid)
+                fields.append(reg.order.all()[0].status)
+            else:
+                fields.append(
+                    unicode(getattr(reg, field, None)).encode("utf-8", "ignore")
+                )
         writer.writerow(fields)
     return response
 
 export_attenders.short_description = "Export Soccer Camp Attenders"
-'''
 
 class SoccerCampAttenderAdmin(admin.ModelAdmin):
     model = SoccerCampAttender
     exclude       = ('country','second_name','previous_name','salutation')
     raw_id_fields = ('order',)
-    actions = [export_as_csv_action(header=True)]
+    actions = [export_attenders]
 
     list_display  = (
         'last_name','first_name','created_at','dob','age','football',
         'gender','address1','address2','city','state','postal_code','phone',
         'email','order_transid','order_status','parent_guard','roommate',
         'dorm','years_attend','goalkeeper','shirt_size','session','reg_fee',
-        'amount','order_total', 'payment_method',
+        'amount','order_total','payment_method',
         'medical_history','assumption_risk','insurance_card_links'
     )
     ordering      = ('-created_at',)
