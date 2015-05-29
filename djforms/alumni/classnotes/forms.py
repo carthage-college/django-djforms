@@ -13,7 +13,7 @@ CLASSYEARS  = list(YEARS1)
 SPOUSEYEARS = list(YEARS1)
 
 CLASSYEARS.insert(0,("","Your class"))
-CLASSYEARS.insert(1,("","Friend of Carthage"))
+CLASSYEARS.insert(1,("1847","Friend of Carthage"))
 SPOUSEYEARS.insert(0,("","Spouse's class"))
 REQ=REQ_CSS
 CATEGORIES = (
@@ -27,8 +27,7 @@ CATEGORIES = (
 class ContactForm(forms.ModelForm):
     classyear = forms.CharField(
         label="Class", max_length=4,
-        widget=forms.Select(choices=CLASSYEARS),
-        required=False
+        widget=forms.Select(choices=CLASSYEARS)
     )
     spouseyear = forms.CharField(
         label="Spouse's class", max_length=4,

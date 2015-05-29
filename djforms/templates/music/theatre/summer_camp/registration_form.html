@@ -51,7 +51,7 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
 {% block content %}
     <div id="security"><div style="margin-left:30px;">
     <a href="https://www.securitymetrics.com/site_certificate.adp?s=carthage.edu&amp;i=131614"
-        target="_blank" >
+        target="_blank">
         <img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif"
             alt="SecurityMetrics" border="0">
     </a>
@@ -96,14 +96,8 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
         <fieldset class="blockLabels" id="bank-transfer">
             <ol>
                 <li class="btnHolder">
-                    <p>
-                        Bank Transfer Details:
-                    </p>
-                    <blockquote>
-                    Carthage College<br />
-                    Soccer Office<br />
-                    2001 Alford Park Drive<br />
-                    Kenosha, WI  53140</blockquote>
+                    {% get_lw_content as questions blurbs 2037 %}
+                    {{questions.body}}
                 </li>
             </ol>
         </fieldset>

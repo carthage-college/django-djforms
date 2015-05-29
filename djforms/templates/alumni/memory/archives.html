@@ -1,0 +1,24 @@
+{% extends "alumni/memory/done.html" %}
+{% block title %}
+    Alumni Memory Questionnaire Archives &mdash;
+    Alumni &mdash;
+    Carthage College
+{% endblock %}
+{% block content_head %}
+<h1 id="page_title">Fond Memories Archives<span id="secondary-dropdown"></span></h1>
+{% endblock %}
+{% block content %}
+    <ul>
+    {% for obj in objects %}
+        {% ifchanged obj.promotion %}
+            <h2>{{ obj.promotion|default:"Alumni Memory"}}</h2>
+        {% endifchanged %}
+        <li>
+            <a href="{% url 'memory_questionnaire_detail' obj.id %}"
+                title="{{obj.created_at}}">
+                {{obj.last_name}}, {{obj.first_name}}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
