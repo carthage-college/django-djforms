@@ -1,18 +1,17 @@
 from django.conf.urls.defaults import *
 from django.views.generic import TemplateView
 
-urlpatterns = patterns('djforms.global_bridge.summer_school.views',
-    # summer school
+urlpatterns = patterns('djforms.global_bridge.views',
+    # registration
     url(
-        r'^summer-school/registration/success/$',
+        r'^registration/success/$',
         TemplateView.as_view(
-            template_name="global_bridge/summer_school/registration_done.html"
+            template_name="global_bridge/registration_done.html"
         ),
-        name="global_bridge_summer_school_registration_success"
+        name="global_bridge_registration_success"
     ),
     url(
-        r'^summer-school/registration/$',
-        'registration',
-        name="global_bridge_summer_school_registration"
+        r'^registration/$', 'index',
+        name="global_bridge_registration"
     ),
 )

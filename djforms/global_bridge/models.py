@@ -57,5 +57,5 @@ class Registration(GenericContact):
     )
 
     class Meta:
-        db_table = 'global_bridge_summer_school_registration'
+        db_table = 'global_bridge_registration'
 

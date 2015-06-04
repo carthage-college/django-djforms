@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from djforms.global_bridge.summer_school.models import Registration
-from djforms.global_bridge.summer_school.models import HOW_HEAR
+from djforms.global_bridge.models import Registration
+from djforms.global_bridge.models import HOW_HEAR
 
 from djtools.fields import BINARY_CHOICES, GENDER_CHOICES
 
@@ -45,7 +45,7 @@ class RegistrationForm(forms.ModelForm):
         choices=GENDER_CHOICES,widget=forms.RadioSelect()
     )
     how_hear = forms.TypedChoiceField(
-        label="How did you hear about our Global Bridge Summer School?",
+        label="How did you hear about our Global Bridge program at Carthage?",
         choices=HOW_HEAR,widget=forms.RadioSelect()
     )
 
