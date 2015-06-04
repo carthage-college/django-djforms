@@ -1,10 +1,5 @@
 {% extends "global_bridge/registration_done.html" %}
 {% load livewhale_api %}
-{% block title %}
-Registration Form &mdash;
-Global Bridge &mdash;
-Carthage College
-{% endblock %}
 {% block extra_javascript %}
     {{ block.super }}
     <script type="text/javascript">
@@ -26,7 +21,6 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
 </style>
 {% endblock %}
 {% block content %}
-    <h2>Registration Form</h2>
     <div class="forms-container clear">
     {% include "includes/required_text.html" %}
     {% if form.errors %}
