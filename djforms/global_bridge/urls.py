@@ -6,7 +6,7 @@ urlpatterns = patterns('djforms.global_bridge.summer_school.views',
     url(
         r'^summer-school/registration/success/$',
         TemplateView.as_view(
-            template_name="summer_school/registration_done.html"
+            template_name="global_bridge/summer_school/registration_done.html"
         ),
         name="global_bridge_summer_school_registration_success"
     ),
