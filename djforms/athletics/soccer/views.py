@@ -20,10 +20,13 @@ def camp_registration(request):
         if form_reg.is_valid():
             contact = form_reg.save()
             # calc amount
+            fee = contact.reg_fee
+            if fee[0] == "$":
+                fee = fee[1:]
             if contact.amount == "Full amount":
-                total = contact.reg_fee
+                total = int(float(fee))
             else:
-                if int(float(contact.reg_fee)) <= 225:
+                if int(float(fee)) <= 225:
                     total = 50
                 else:
                     total = 200
