@@ -36,9 +36,18 @@ def export_attenders(modeladmin, request, queryset):
         fields = []
         for field in field_names:
             if field == "order":
-                fields.append(reg.order.all()[0].total)
-                fields.append(reg.order.all()[0].transid)
-                fields.append(reg.order.all()[0].status)
+                # somehow, a transaction comes through w/out these two
+                try:
+                    transid = reg.order.all()[0].transid
+                    status = reg.order.all()[0].status
+                    total = reg.order.all()[0].total
+                except:
+                    transid=""
+                    status=""
+                    total=""
+                fields.append(transid)
+                fields.append(status)
+                fields.append(total)
             else:
                 fields.append(
                     unicode(getattr(reg, field, None)).encode("utf-8", "ignore")
