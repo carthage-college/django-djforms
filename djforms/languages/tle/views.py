@@ -9,21 +9,25 @@ from django.core.urlresolvers import reverse_lazy
 
 from djforms.languages.tle.forms import *
 from djtools.utils.mail import send_mail
+from djtools.utils.convert import str_to_class
 
 import datetime
 
 def application_form(request, stype):
     form_name = stype.capitalize() + "Form"
-    try:
-        #form = form = eval(form_name)()
-        form = eval(form_name)()
-    except:
+    form = str_to_class("djforms.alumni.memory.forms", form_name)()
+    if not form:
         raise Http404
 
     education = ''
     ulength = 1
     if request.method=='POST':
-        form = eval(form_name)(request.POST)
+        form = str_to_class(
+            "djforms.alumni.memory.forms", form_name
+        )(request.POST)
+        # check if someone is attempting something nefarious
+        if not form:
+            raise Http404
         data = request.POST.copy()
         if form.is_valid():
             cd = form.cleaned_data

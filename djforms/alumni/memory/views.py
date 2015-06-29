@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy
 
+from djtools.utils.convert import str_to_class
 from djtools.utils.mail import send_mail
 from djforms.alumni.memory.forms import *
 from djforms.alumni.memory.models import Questionnaire
@@ -23,18 +24,17 @@ def questionnaire_form(request, campaign=None):
         campaign = ""
         form_name = "QuestionnaireForm"
 
-    try:
-        form = eval(form_name)()
-    except:
+    form = str_to_class("djforms.alumni.memory.forms", form_name)()
+    if not form:
         raise Http404
 
     if request.method=="POST":
 
-        try:
-            form = eval(form_name)(
-                data=request.POST, files=request.FILES
-            )
-        except:
+        form = str_to_class(
+            "djforms.alumni.memory.forms", form_name
+        )(data=request.POST, files=request.FILES)
+
+        if not form:
             # form_name does not match an existing form
             raise Http404
 
