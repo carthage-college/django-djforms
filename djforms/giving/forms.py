@@ -2,10 +2,11 @@ from django import forms
 
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
-from djforms.giving.models import DonationContact
+from djforms.giving.models import BrickContact, DonationContact
 
-from datetime import date
+from djtools.fields import TODAY
 
+YEAR = TODAY.year
 PAYMENT = (
     ('', '--------'),
     ('12', '1 year'),
@@ -20,6 +21,12 @@ CYCLES = (
     ('3m', 'Quarterly'),
     ('12m', 'Yearly'),
 )
+BRICK_TYPES = (
+    (YEAR-2000+100,YEAR-2000+100),
+    (150, 150),
+    (YEAR-2000+300,YEAR-2000+300),
+    (500, 500),
+)
 RELATION_CHOICES = (
     ('', '--Select--'),
     ('Alumni', 'Alumni'),
@@ -28,8 +35,58 @@ RELATION_CHOICES = (
     ('Parent', 'Parent'),
     ('Student', 'Student'),
 )
-CLASS = [(x, x) for x in reversed(xrange(1926,date.today().year + 4))]
+CLASS = [(x, x) for x in reversed(xrange(1926,YEAR + 4))]
 CLASS.insert(0, ("","-----"))
+
+
+class BrickContactForm(ContactForm):
+    """
+    Brick contact form
+    """
+
+    class_of = forms.ChoiceField(
+        required=False, label='Class of', choices=CLASS
+    )
+    brick_type = forms.ChoiceField(
+        label='Class of', choices=BRICK_TYPES,
+        widget=forms.RadioSelect()
+    )
+    inscription_1 = forms.CharField(
+        max_length=14
+    )
+    inscription_2 = forms.CharField(
+        max_length=14
+    )
+    inscription_3 = forms.CharField(
+        max_length=14
+    )
+    inscription_4 = forms.CharField(
+        max_length=14, required=False
+    )
+    inscription_5 = forms.CharField(
+        max_length=14, required=False
+    )
+
+    class Meta:
+        model = BrickContact
+        fields = (
+            'first_name','last_name','email','phone',
+            'address1','address2','city','state','postal_code',
+            'class_of','inscription_1','inscription_2','inscription_3',
+            'inscription_4','inscription_5'
+        )
+
+class BrickOrderForm(OrderForm):
+    """
+    Brick order form
+    """
+
+    total = forms.CharField(widget=forms.HiddenInput())
+
+    class Meta:
+        model = Order
+        fields = ('total','avs','auth')
+
 
 class DonationContactForm(ContactForm):
     """
@@ -86,6 +143,15 @@ class DonationOrderForm(OrderForm):
         model = Order
         fields = ('total','comments','avs','auth')
         #fields = ('total','avs','auth')
+
+
+class PledgeContactForm(DonationContactForm):
+    """
+    Pledge Contact form, inherits everything from DonationContactForm and
+    is merely a placeholder for view logic
+    """
+    pass
+
 
 class PledgeOrderForm(OrderForm):
     """
