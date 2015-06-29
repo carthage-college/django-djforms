@@ -26,3 +26,27 @@ class DonationContact(Contact):
             or will inclusions.
         '''
     )
+
+class BrickContact(Contact):
+    """
+    Brick contact details for an order
+    """
+    class_of = models.CharField(
+        max_length=4, null=True, blank=True
+    )
+    inscription_1 = models.CharField(
+        max_length=14
+    )
+    inscription_2 = models.CharField(
+        max_length=14
+    )
+    inscription_3 = models.CharField(
+        max_length=14
+    )
+    inscription_4 = models.CharField(
+        max_length=14, null=True, blank=True
+    )
+    inscription_5 = models.CharField(
+        max_length=14, null=True, blank=True
+    )
+
