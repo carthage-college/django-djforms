@@ -8,12 +8,17 @@ from django.template import RequestContext, loader, Context
 from djforms.admissions.visitdays.models import VisitDay, VisitDayEvent
 from djforms.admissions.visitdays.forms import *
 
+from djtools.utils.convert import str_to_class
+
 def VisitDayForm(request, event_type):
     visit_day = get_object_or_404(VisitDay, slug=event_type)
     short = False
+    form_name = event_type.capitalize()+"Form"
     if request.method=='POST':
         try:
-            form = eval(event_type.capitalize()+"Form")(event_type,request.POST)
+            form = str_to_class(
+                "djforms.admissions.visitdays.forms", form_name
+            )(event_type,request.POST)
         except:
             form = VisitDayBaseForm(event_type,request.POST)
             short = True
@@ -68,7 +73,9 @@ def VisitDayForm(request, event_type):
             )
     else:
         try:
-            form = eval(event_type.capitalize()+"Form")(event_type)
+            form = str_to_class(
+                "djforms.admissions.visitdays.forms", form_name
+            )(event_type)
         except:
             form = VisitDayBaseForm(event_type)
     return render_to_response(
