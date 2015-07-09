@@ -15,7 +15,7 @@ import datetime
 
 def application_form(request, stype):
     form_name = stype.capitalize() + "Form"
-    form = str_to_class("djforms.alumni.memory.forms", form_name)()
+    form = str_to_class("djforms.languages.tle.forms", form_name)()
     if not form:
         raise Http404
 
