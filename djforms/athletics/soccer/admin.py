@@ -74,8 +74,8 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
     ordering      = ('-created_at',)
     search_fields = ('last_name','email','postal_code')
 
-    list_max_show_all   = 500
-    list_per_page       = 500
+    list_max_show_all   = 1000
+    list_per_page       = 1000
     list_editable = [
         'medical_history','assumption_risk'
     ]
