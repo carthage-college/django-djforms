@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
-from djforms.global_bridge.models import Registration
-from djforms.global_bridge.models import HOW_HEAR
+from djforms.global_bridge.models import Registration, PAYMENT_CHOICES
 
 from djtools.fields import BINARY_CHOICES, GENDER_CHOICES
 
@@ -44,11 +43,13 @@ class RegistrationForm(forms.ModelForm):
     gender = forms.TypedChoiceField(
         choices=GENDER_CHOICES,widget=forms.RadioSelect()
     )
-    how_hear = forms.TypedChoiceField(
-        label="How did you hear about our Global Bridge program at Carthage?",
-        choices=HOW_HEAR,widget=forms.RadioSelect()
+    payment_method = forms.TypedChoiceField(
+        choices=PAYMENT_CHOICES, widget=forms.RadioSelect()
     )
 
     class Meta:
         model = Registration
+        exclude = (
+            'order','second_name','previous_name','salutation',
+        )
         widgets = {'country': CountrySelectWidget}

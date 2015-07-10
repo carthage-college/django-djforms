@@ -4,6 +4,14 @@
     {{ block.super }}
     <script type="text/javascript">
         $(function() {
+            $('#id_payment_method_0').click(function() {
+                $('#payment-details').show();
+                $('#bank-transfer').hide();
+            });
+            $('#id_payment_method_1').click(function() {
+                $('#payment-details').hide();
+                $('#bank-transfer').show();
+            });
             // disable submit button after users clicks it
             $('form#profile').submit(function(){
                 $(this).children('input[type=submit]').attr('disabled', 'disabled');
@@ -13,17 +21,38 @@
 {% endblock %}
 {% block extra_style %}
 <style type="text/css" media="screen, projection">
-#id_postal_code, #id_dob {
-width:120px;
-}
+#id_reg_fee {color:#800;font-weight:bold;}
+{% if form_reg.data.payment_method == "Credit Card" %}
+#payment-details { display:inherit; }
+#bank-transfer { display:none; }
+{% else %}{% if form_reg.data.payment_method == "Bank Transfer" %}
+#payment-details { display:none; }
+#bank-transfer { display:inherit; }
+{% else %}
+#payment-details { display:none; }
+#bank-transfer { display:none; }
+{% endif %}{% endif %}
+#session-info > ol li {display:block;margin-bottom:5px;}
+#id_security_code, #id_reg_fee {width:100px;}
+#id_card_number {width:175px;}
+#id_postal_code, #id_dob, #id_expiration_month, #id_expiration_year {
+width:120px; }
+#security {color:#000099;float:right;padding:5px;}
 li.ctrlHolder div ul li {display:inline; padding-right:3px;}
 .forms-container, .forms-container label {font-weight:bold;}
 </style>
 {% endblock %}
 {% block content %}
+    <div id="security"><div style="margin-left:30px;">
+    <a href="https://www.securitymetrics.com/site_certificate.adp?s=carthage.edu&amp;i=131614"
+        target="_blank">
+        <img src="https://www.securitymetrics.com/images/sm_ccsafe_wh.gif"
+            alt="SecurityMetrics" border="0">
+    </a>
+    </div></div>
     <div class="forms-container clear">
     {% include "includes/required_text.html" %}
-    {% if form.errors %}
+    {% if form_proc.errors or form_reg.errors %}
         <p class="error">
             There were errors with the data submitted, see below.
         </p>
@@ -32,10 +61,34 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
         {% csrf_token %}
         <fieldset class="blockLabels" id="registration-info">
         <ol>
-        {% for field in form %}
+        {% for field in form_reg %}
             {% include "form_field.inc.html" %}
         {% endfor %}
         </ol>
+        </fieldset>
+        <fieldset class="blockLabels" id="payment-details">
+            <h2>Credit Card Details</h2>
+            {% if form_proc.errors and status %}
+                <div style="padding-left:4px;">
+                    <p class="notice">
+                        The transaction failed.
+                        {% if status == "baddata" or status == "decline" %}
+                            Error: <strong>{{status}}</strong>
+                        {% endif %}
+                    </p>
+                </div>
+            {% endif %}
+            <ol>
+            {% include "form_field_credit_card.inc.html" %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels" id="bank-transfer">
+            <ol>
+                <li class="btnHolder">
+                    {% get_lw_content as banktransfer blurbs 2050 %}
+                    {{banktransfer.body}}
+                </li>
+            </ol>
         </fieldset>
         <fieldset class="blockLabels">
             <ol>
