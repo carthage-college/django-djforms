@@ -22,7 +22,7 @@
 
             $("#id_or-total").before('<span class="cost">$</span>');
 
-            // disable submit button after users clicks it
+            // disable submit button after user clicks it
             $('form#profile').submit(function(){
                 $(this).children('input[type=submit]').attr('disabled', 'disabled');
             });
@@ -43,6 +43,7 @@
     #pledge_total_help { margin-left:9px; }
     </style>
 {% endblock %}
+{% block group_name %}Giving{% endblock %}
 {% block left_nav %}
     {% include "giving/left_nav.html" %}
 {% endblock %}
@@ -52,7 +53,6 @@
 {% block content_head %}
     <h1 id="page_title">
         {{campaign.title|default:"Your Giving Matters"}}
-        <span id="secondary-dropdown"></span>
     </h1>
 {% endblock %}
 {% block content %}

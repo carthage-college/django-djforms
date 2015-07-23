@@ -1,15 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Success{% endblock %}
+{% block group_name %}Campus Security{% endblock %}
 {% block left_nav %}
     {% include "security/left_nav.html" %}
 {% endblock %}
 {% block content %}
-<div id="second">
-    <div class="buffer">
-        <h2 class="page_title">Success</h2>
-        <p class="description" style="color: green">
-            Your parking violation appeal request has been sent.
-        </p>
-    </div>
-</div>
+    <h2 class="page_title">Success</h2>
+    <p class="description" style="color: green">
+        Your parking violation appeal request has been sent.
+    </p>
 {% endblock %}

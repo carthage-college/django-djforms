@@ -1,15 +1,12 @@
 {% extends "base.html" %}
 {% load livewhale_api %}
+{% block group_name %}Athletics{% endblock %}
 {% block content_head %}
 <h1 id="page_title">
     Carthage College Soccer Camp
-    <span id="secondary-dropdown"></span>
 </h1>
 {% endblock %}
 {% block left_nav %}
-<h4>
-    Carthage College Soccer Camp
-</h4>
 {% get_lw_content as nav blurbs 1920 %}
 {{nav.body}}
 {% endblock %}

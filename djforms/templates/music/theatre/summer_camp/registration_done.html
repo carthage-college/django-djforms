@@ -1,17 +1,14 @@
 {% extends "base.html" %}
 {% load livewhale_api %}
+{% block group_name %}Music Theatre{% endblock %}
+{% block left_nav %}
+{% get_lw_content as nav blurbs 1960 %}
+{{nav.body}}
+{% endblock %}
 {% block content_head %}
 <h1 id="page_title">
     Summer Camp
-    <span id="secondary-dropdown"></span>
 </h1>
-{% endblock %}
-{% block left_nav %}
-<h4>
-    Music Theatre
-</h4>
-{% get_lw_content as nav blurbs 1960 %}
-{{nav.body}}
 {% endblock %}
 {% block content %}
     {% get_lw_content as success blurbs 1962 %}

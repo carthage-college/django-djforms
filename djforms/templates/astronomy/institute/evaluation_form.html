@@ -9,6 +9,7 @@ li.ctrlHolder div ul li {display:inline;padding-right:3px;}
 .form .blockLabels label {display: inherit;}
 </style>
 {% endblock %}
+{% block group_name %}Astronomy{% endblock %}
 {% block left_nav %}
     {% include "astronomy/left_nav.html" %}
 {% endblock %}
@@ -16,7 +17,6 @@ li.ctrlHolder div ul li {display:inline;padding-right:3px;}
 {% block content_head %}
     <h1 id="page_title">
         Evaluation Form
-        <span id="secondary-dropdown"></span>
     </h1>
 {% endblock %}
 {% block content %}

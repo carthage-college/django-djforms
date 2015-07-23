@@ -142,7 +142,6 @@ class DonationOrderForm(OrderForm):
     class Meta:
         model = Order
         fields = ('total','comments','avs','auth')
-        #fields = ('total','avs','auth')
 
 
 class PledgeContactForm(DonationContactForm):

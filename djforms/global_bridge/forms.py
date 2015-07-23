@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
+from djforms.processors.models import Order
+from djforms.processors.forms import OrderForm
 from djforms.global_bridge.models import Registration, PAYMENT_CHOICES
 
 from djtools.fields import BINARY_CHOICES, GENDER_CHOICES
@@ -53,3 +55,14 @@ class RegistrationForm(forms.ModelForm):
             'order','second_name','previous_name','salutation',
         )
         widgets = {'country': CountrySelectWidget}
+
+class RegistrationOrderForm(OrderForm):
+    """
+    Registration order form
+    """
+
+    total = forms.CharField(label="Indicate the amount you are paying today")
+
+    class Meta:
+        model = Order
+        fields = ('total','avs','auth')

@@ -29,13 +29,13 @@ function ValidateTransfer(){
     #visit_day_form textarea {width:460px;height:150px;}
     </style>
 {% endblock %}
+{% block group_name %}Admissions{% endblock %}
 {% block left_nav %}
     {% include "admissions/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
     <h1 id="page_title">
         {{visit_day.title}}
-        <span id="secondary-dropdown"></span>
     </h1>
 {% endblock %}
 {% block content %}

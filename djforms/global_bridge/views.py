@@ -3,8 +3,8 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from djforms.global_bridge import BCC, TO_LIST, REG_FEE
-from djforms.global_bridge.forms import RegistrationForm
+from djforms.global_bridge import BCC, TO_LIST
+from djforms.global_bridge.forms import RegistrationForm, RegistrationOrderForm
 
 from djforms.processors.models import Contact, Order
 from djforms.processors.forms import TrustCommerceForm
@@ -16,13 +16,15 @@ def index(request):
     msg = None
     if request.POST:
         form_reg = RegistrationForm(request.POST)
-        if form_reg.is_valid():
+        form_ord = RegistrationOrderForm(request.POST)
+        if form_reg.is_valid() and form_ord.is_valid():
             contact = form_reg.save()
+            data_ord = form_ord.cleaned_data
             # credit card payment
             if contact.payment_method == "Credit Card":
                 order = Order(
-                    total=REG_FEE,auth="sale",status="In Process",
-                    operator="DJFormsGlobalBrigReg"
+                    total=data_ord["total"],auth="sale",status="In Process",
+                    operator="GlobalBridgeReg"
                 )
                 form_proc = TrustCommerceForm(order, contact, request.POST)
                 if form_proc.is_valid():
@@ -66,7 +68,7 @@ def index(request):
                     )
             else:
                 order = Order(
-                    total=REG_FEE,auth="COD",status="Pay later",
+                    total=data_ord["total"], auth="COD", status="Pay later",
                     operator="DJFormsGlobalBrigReg"
                 )
                 order.save()
@@ -89,12 +91,14 @@ def index(request):
             else:
                 form_proc = TrustCommerceForm()
     else:
+        initial = {'avs':False,'auth':'sale'}
         form_reg = RegistrationForm()
+        form_ord = RegistrationOrderForm(initial=initial)
         form_proc = TrustCommerceForm()
     return render_to_response(
         'global_bridge/registration_form.html',
         {
-            'form_reg': form_reg,'form_proc':form_proc,
+            'form_reg': form_reg,'form_proc':form_proc,'form_ord': form_ord,
             'status':status,'msg':msg,
         }, context_instance=RequestContext(request)
     )

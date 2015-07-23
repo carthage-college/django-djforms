@@ -5,18 +5,13 @@ Registration Form &mdash;
 Global Bridge &mdash;
 Carthage College
 {% endblock %}
-{% block content_head %}
-<h1 id="page_title">
-    Registration Form
-    <span id="secondary-dropdown"></span>
-</h1>
-{% endblock %}
+{% block group_name %}Global Bridge{% endblock %}
 {% block left_nav %}
-<h4>
-    Global Bridge
-</h4>
 {% get_lw_content as nav blurbs 2040 %}
 {{nav.body}}
+{% endblock %}
+{% block content_head %}
+<h1 id="page_title">Registration Form</h1>
 {% endblock %}
 {% block content %}
     {% get_lw_content as success blurbs 2041 %}

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load get_api %}
 {% block title %}Choral Ensemble Tryout &mdash; Music &mdash; Carthage College{% endblock %}
+{% block group_name %}Music{% endblock %}
 {% block left_nav %}
     {% include "music/left_nav.html" %}
 {% endblock %}
@@ -9,11 +10,6 @@
 {{header}}
 {% get_api_object as title cms snippet 706 code %}
 {{title}}
-<div class="buffer">
-<h1>Success</h1>
+<h2>Success</h2>
 <p>We have received your Choral Ensemble tryout submission.</p>
-</div>
-{% endblock %}
-{% block sidebar %}
-    {% include "music/ensembles/side_bar.html" %}
 {% endblock %}

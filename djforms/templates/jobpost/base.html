@@ -29,6 +29,7 @@
         {{block.super}}
     {% endifusergroup %}
 {% endblock %}
+{% block group_name %}Financial Aide{% endblock %}
 {% block left_nav %}
     <ul>
         <li><a href="https://www.carthage.edu/forms/job/">Available Jobs</a></li>
@@ -55,7 +56,6 @@
     {% ifusergroup carthageStaffStatus carthageFacultyStatus %}
     <h1 id="page_title">
         Carthage College Jobs
-        <span id="secondary-dropdown"></span>
     </h1>
     {% endifusergroup %}
 {% endblock %}

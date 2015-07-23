@@ -30,8 +30,8 @@ $(function() {
 });
 </script>
 {% endblock %}
+{% block group_name %}Alumni{% endblock %}
 {% block left_nav %}
-    <h4>Alumni</h4>
     {% include "alumni/classnotes/side_bar.html" %}
     <h4>&nbsp;</h4>
     {% include "alumni/left_nav.html" %}
@@ -39,7 +39,6 @@ $(function() {
 {% block content_head %}
 <h1 id="page_title">
     Class Notes
-    <span id="secondary-dropdown"></span>
 </h1>
 {% endblock %}
 {% block content %}
