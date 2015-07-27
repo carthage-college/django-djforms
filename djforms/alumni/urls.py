@@ -6,29 +6,6 @@ urlpatterns = patterns('djforms.alumni',
         r'^success/$',
         TemplateView.as_view(template_name='alumni/data_entered.html')
     ),
-    # homecoming attendance
-    url(
-        r'^homecoming/success/$',
-        TemplateView.as_view(
-            template_name='alumni/homecoming/attendance/done.html'
-        ),
-        name="homecoming_attendance_success"
-    ),
-    url(
-        r'^homecoming/attendees/(?P<year>\d+)/$',
-        'homecoming.views.attendees',
-        name="homecoming_attendees_year"
-    ),
-    url(
-        r'^homecoming/attendees/$',
-        'homecoming.views.attendees',
-        name="homecoming_attendees"
-    ),
-    url(
-        r'^homecoming/$',
-        'homecoming.views.attendance',
-        name='homecoming_attendance'
-    ),
     # classnotes
     url(
         r'^classnotes/carthaginian/$',
