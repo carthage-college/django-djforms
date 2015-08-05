@@ -67,7 +67,7 @@ COUNTRIES = (
 ("Germany^","Germany^"),
 ("Ghana*","Ghana*"),
 ("Greece*","Greece*"),
-("Grenada","Grenada")
+("Grenada","Grenada"),
 ("Guatemala","Guatemala"),
 ("Guinea","Guinea"),
 ("Guinea-Bissau","Guinea-Bissau"),
@@ -193,5 +193,5 @@ COUNTRIES = (
 ("Viet Nam*","Viet Nam*"),
 ("Yemen","Yemen"),
 ("Zambia","Zambia"),
-("Zimbabwe","Zimbabwe"),
+("Zimbabwe","Zimbabwe")
 )
