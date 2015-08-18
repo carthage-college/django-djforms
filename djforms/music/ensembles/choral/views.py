@@ -71,7 +71,7 @@ def manager(request):
                 user.last_name=form.cleaned_data["last_name"]
                 user.email = form.cleaned_data["email"]
                 user.save()
-                g = Group.objects.get(name__iexact="Students")
+                g = Group.objects.get(name__iexact="carthageStudentStatus")
                 g.user_set.add(user)
             candidate.user = user
             candidate.save()

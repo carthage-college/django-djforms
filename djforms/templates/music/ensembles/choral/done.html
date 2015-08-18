@@ -1,15 +1,14 @@
 {% extends "base.html" %}
-{% load get_api %}
 {% block title %}Choral Ensemble Tryout &mdash; Music &mdash; Carthage College{% endblock %}
 {% block group_name %}Music{% endblock %}
 {% block left_nav %}
     {% include "music/left_nav.html" %}
 {% endblock %}
 {% block content %}
-{% get_api_object as header cms snippet 834 code %}
-{{header}}
-{% get_api_object as title cms snippet 706 code %}
-{{title}}
+{# get_api_object as header cms snippet 834 code #}
+{#header#}
+{# get_api_object as title cms snippet 706 code #}
+{#title#}
 <h2>Success</h2>
 <p>We have received your Choral Ensemble tryout submission.</p>
 {% endblock %}
