@@ -11,7 +11,10 @@ def registration(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL]
     else:
-        TO_LIST = ["ncottrell@carthage.edu, jroberg@carthage.edu"]
+        TO_LIST = [
+            "jroberg@carthage.edu"
+            "ncottrell@carthage.edu",
+        ]
     BCC = settings.MANAGERS
 
     if request.method=='POST':
