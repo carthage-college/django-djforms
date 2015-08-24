@@ -7,6 +7,7 @@ from djforms.core.models import YEAR_CHOICES
 class TimeSlot(models.Model):
     date_time = models.CharField("Time slot", max_length="128")
     active = models.BooleanField(default=True)
+    rank = models.IntegerField(null=True,blank=True)
 
     class Meta:
         db_table = 'music_ensembles_choral_timeslot'
