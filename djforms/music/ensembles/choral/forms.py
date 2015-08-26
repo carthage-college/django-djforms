@@ -2,7 +2,7 @@ from django import forms
 
 from djforms.music.ensembles.choral.models import Candidate, TimeSlot
 
-TIME_SLOTS = TimeSlot.objects.filter(active=True).order_by("date_time")
+TIME_SLOTS = TimeSlot.objects.filter(active=True).order_by("rank")
 
 class CandidateForm(forms.ModelForm):
 
