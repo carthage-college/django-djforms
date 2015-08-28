@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load get_api %}
+{% load livewhale_api %}
 {% block title %}
     Choral Ensemble Auditions &mdash; Music &mdash; Carthage College
 {% endblock %}
@@ -14,39 +15,8 @@
 {% endblock %}
 {% block content %}
 <div class="forms-container">
-    <p>
-        Please complete the form below to sign up for
-        a Choral audition session.
-        </p>
-    <h2>Time Slots</h2>
-    <p>
-        There are two audition sessions from which to choose a 10 minute slot:
-    </p>
-    <ul class="bullets">
-        <li>Monday, September 7: 4:00pm&mdash;9:00pm</li>
-        <li>Tuesday, September 8: 9:00am&mdash;8:00pm</li>
-    </ul>
-    <h3>Freshman and Transfer Students</h3>
-    <p>Make certain that you check your orientation schedule.</p>
-    <h3>Returning Students</h3>
-    <p>
-        You are encouraged to sign up
-        <strong>Monday 2-4pm</strong> or
-        <strong>Tuesday 9-12pm</strong>.
-    </p>
-    <h2>Choral Auditions consist of:</h2>
-    <ol class="nobull">
-    <li>Vocalizations</li>
-    <li>Tonal Memory Exercises</li>
-    <li>Sigh Reading</li>
-    <li>Singing "My Country 'Tis of Thee" in different keys</li>
-    </ol>
-    <h3>
-        A prepared song is not required, but you are welcome to perform it.
-    </h3>
-    <p>
-        Questions? Please call <a href="tel:262-551-5918">262-551-5918</a>
-        or <a href="mailto:egarcianovelli@carthage.edu">email</a>.
+    {% get_lw_content as content blurbs 2078 %}
+    {{content.body}}
     {% include "includes/generic_form.html" %}
 </div>
 {% endblock %}
