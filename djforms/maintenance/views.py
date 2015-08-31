@@ -58,12 +58,13 @@ def maintenance_request_form(request):
             TO_LIST = [settings.MAINTENANCE_MANAGER]
 
             managers = User.objects.filter(groups__id__in=[2,3])
-            for m in managers:
-                perms = m.get_profile().permission.filter(
-                    name=maintenance_request.type_of_request.name
-                )
-                if perms:
-                    TO_LIST.append(m.email)
+            if not settings.DEBUG:
+                for m in managers:
+                    perms = m.get_profile().permission.filter(
+                        name=maintenance_request.type_of_request.name
+                    )
+                    if perms:
+                        TO_LIST.append(m.email)
 
             reviewers = User.objects.filter(groups__id=4)
             for r in reviewers:

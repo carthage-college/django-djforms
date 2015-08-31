@@ -12,8 +12,8 @@ def registration(request):
         TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = [
-            "jroberg@carthage.edu"
-            "ncottrell@carthage.edu",
+            "jroberg@carthage.edu",
+            "ncottrell@carthage.edu"
         ]
     BCC = settings.MANAGERS
 
