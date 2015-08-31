@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
 
 from djforms.core.models import Photo
 from djforms.core.models import GenericChoice
@@ -108,9 +109,10 @@ class MaintenanceRequest(models.Model):
         obj_text += 'Building Name:      %s\n' % self.building.name
         obj_text += 'Room Number:        %s\n' % self.room_number
         obj_text += 'Floor:              %s\n' % self.floor
-        obj_text += '\nDescription of the problem:\n\n%s\n' % self.description
+        obj_text += '\nDescription:\n\n%s\n\n\n' % self.description
         if self.photo:
-            obj_text += '<a href="https://%s/%s">Photo</a>' % (
+            photo_url = "https://%s/%s" % (
                 settings.SERVER_URL, self.photo.original.url
             )
-        return obj_text
+            obj_text += 'Photo:              %s\n' % photo_url
+        return mark_safe(obj_text)
