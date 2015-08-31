@@ -1,6 +1,9 @@
 from django.contrib import admin
-from djforms.maintenance.models import *
 from django.http import HttpResponse
+from django.contrib.admin.widgets import ForeignKeyRawIdWidget
+
+from djforms.maintenance.models import *
+from djforms.core.models import Photo
 
 import csv
 
@@ -27,22 +30,32 @@ def export_evs_requests(modeladmin, request, queryset):
     return response
 export_evs_requests.short_description = "Export EVS Maintenance Requests"
 
+
 class MaintenanceRequestAdmin(admin.ModelAdmin):
     model = MaintenanceRequest
     list_display  = (
         'id', 'building_name', 'room_number', 'type_of_request',
         'date_created', 'damage_charge', 'last_name', 'first_name',
-        'email', 'phone', 'status'
+        'email', 'phone', 'photo_link', 'status'
     )
     ordering = [
         '-id','building','type_of_request','date_created',
         'user__last_name','user__email','status'
     ]
-    #list_filter   = ('building_name', 'type_of_request')
     search_fields = ('building__name', 'room_number', 'type_of_request__name')
     actions       = [export_evs_requests]
-    raw_id_fields = ("user","updated_by",)
+    raw_id_fields = ("user","updated_by","photo")
     list_per_page = 500
+
+    def photo_link(self, instance):
+        code = None
+        if instance.photo:
+            code = '<a href="{}" target="_blank">Photo</a>'.format(
+                instance.photo.original.url
+            )
+        return code
+    photo_link.allow_tags = True
+    photo_link.short_description = "Photo"
 
     def save_model(self, request, obj, form, change):
         if change:

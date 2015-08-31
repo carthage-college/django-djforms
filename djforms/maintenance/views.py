@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext, loader, Context
@@ -12,6 +13,7 @@ from djforms.maintenance.forms import EVSForm, EVSFormUpdate
 from djforms.maintenance.models import MaintenanceRequest
 from djforms.core.forms import UserProfileForm
 from djforms.core.models import UserProfile
+from djforms.core.models import Photo
 
 from djtools.utils.mail import send_mail
 
@@ -29,7 +31,7 @@ def maintenance_request_form(request):
             p = UserProfile(user=request.user)
             p.save()
             profile = request.user.get_profile()
-        form = EVSForm(request.POST, prefix="evs")
+        form = EVSForm(request.POST, request.FILES, prefix="evs")
         profile_form = UserProfileForm(
             request.POST, prefix="profile", instance=profile
         )
@@ -38,6 +40,15 @@ def maintenance_request_form(request):
             maintenance_request.user = request.user
 
             maintenance_request.status = 'New'
+
+            if request.FILES.get('evs-photo'):
+                photo = request.FILES['evs-photo']
+                filename = photo.name
+                photo.name = photo.name.replace(' ', '')
+                p = Photo(title=photo.name)
+                p.original.save(photo.name, ContentFile(photo.read()))
+                maintenance_request.photo = p
+
             maintenance_request.save()
             form.save_m2m()
             if profile_form["phone"]:

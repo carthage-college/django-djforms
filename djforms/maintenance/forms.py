@@ -31,7 +31,7 @@ class EVSForm(forms.ModelForm):
         model = MaintenanceRequest
         exclude = (
             'user','date_completed','status','damage_charge','notes',
-            'updated_by'
+            'updated_by','photo'
         )
 
     def clean_floor(self):

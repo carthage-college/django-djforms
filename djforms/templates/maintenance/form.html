@@ -21,7 +21,8 @@
         For emergencies, please contact the Dean of Students Office at:
         <strong>551-5800</strong>
     </p>
-    <form method="post" action="." class="form" id="profile">
+    <form method="post" action="." class="form" id="profile"
+        enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="blockLabels">
             <ol>
@@ -64,8 +65,16 @@
                         value="{{request.user.get_profile.phone}}" />
                 </li>
                 {% endif %}
+                <li class="ctrlHolder">
+                    <h3><label for="id_evs-photo">Photo</label></h3>
+                    <div>
+                        <input type="file" class="medium" name="evs-photo"
+                            id="id_evs-photo" style="margin-bottom: 10px;" />
+                        <p class="help">Upload a photo from your device</p>
+                    </div>
+                </li>
                 <li class="btnHolder">
-                <input type="submit" value="Submit Request" class="button" />
+                    <input type="submit" value="Submit Request" class="button" />
                 </li>
             </ol>
         </fieldset>

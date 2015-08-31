@@ -11,6 +11,7 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
 from djtools.fields.helpers import upload_to_path
+from djtools.fields.validators import MimetypeValidator
 
 import datetime
 
@@ -155,7 +156,8 @@ post_save.connect(create_profile, sender=User)
 class Photo(models.Model):
     title = models.CharField(max_length=255)
     original = models.ImageField(
-        upload_to=upload_to_path, max_length="255"
+        upload_to=upload_to_path, max_length="255",
+        #validators=[MimetypeValidator('image/jpeg')],
     )
     thumbnail = ImageSpecField(
         source='original',

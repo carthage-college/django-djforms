@@ -1,7 +1,8 @@
 from django.db import models
-from djforms.core.models import GenericChoice
-
 from django.contrib.auth.models import User
+
+from djforms.core.models import Photo
+from djforms.core.models import GenericChoice
 
 STATUS_CHOICES = (
     ('New', 'New'),
@@ -53,6 +54,12 @@ class MaintenanceRequest(models.Model):
     )
     description = models.TextField(
         "Description", help_text="Please explain the nature of the problem."
+    )
+    photo = models.ForeignKey(
+        Photo,
+        related_name = "maintenance_photo",
+        help_text="Upload a photo from your device",
+        null=True, blank=True
     )
     notes = models.TextField(
         "Notes", help_text="Staff can provide further information here.",
