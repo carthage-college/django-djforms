@@ -2,10 +2,15 @@ from django.conf.urls.defaults import *
 from django.views.generic import TemplateView
 
 urlpatterns = patterns('djforms.lis',
+    # copy/print card request
+    url(
+        r'^copy-print/$',
+        'copyprint.views.index'
+    ),
     # print requests
     url(
         r'^print-request/$',
-        'printjobs.views.print_request'
+        'printjobs.views.index'
     ),
     # generic success view
     url(
