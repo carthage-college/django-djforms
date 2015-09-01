@@ -12,7 +12,7 @@ from djtools.utils.mail import send_mail
 import datetime
 
 @login_required
-def print_request(request):
+def index(request):
     if request.method=='POST':
         form = PrintRequestForm(request.POST, request.FILES)
         if form.is_valid():
