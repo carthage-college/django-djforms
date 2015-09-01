@@ -118,7 +118,7 @@ INSTALLED_APPS = (
     'djforms.giving',
     'djforms.global_bridge',
     'djforms.jobpost',
-    'djforms.lis',
+    'djforms.lis.copyprint',
     'djforms.languages',
     'djforms.maintenance',
     'djforms.music.ensembles.choral',
@@ -171,6 +171,7 @@ SERVER_EMAIL = ''
 SERVER_MAIL=""
 # email addresses
 MAINTENANCE_MANAGER = ""
+COPYPRINT_CARD_REQUEST_EMAIL = ""
 COS_DEFAULT_NAME = ""
 COS_DEFAULT_EMAIL = ""
 ALUMNI_OFFICE_EMAIL = ""
