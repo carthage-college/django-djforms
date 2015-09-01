@@ -1,27 +1,15 @@
-<style>
-dl {margin-bottom:50px;}
-dl dt {
-background:#5f9be3;
-color:#fff;
-float:left;
-font-weight:bold;
-margin-right:10px;
-padding:5px;
-width:200px;
-}
-dl dd {
-margin:2px 0;
-padding:5px 0;
-}
-</style>
 <h1>LIS Print Job Request</h1>
-<h2>{{date|date:"F"}} {{date|date:"jS"}}, {{date|date:"Y"}}</h2>
+<h2>{{data.date|date:"F"}} {{data.date|date:"jS"}}, {{data.date|date:"Y"}}</h2>
 <h3>Request Information</h3>
-<dl>
+<dl style="margin-bottom:50px;">
     {% for name,value in data.items %}
     {% if name != "instructions" %}
-        <dt>{{name}}:</dt>
-        <dd>{{value}}</dd>
+        <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">
+            {{name}}:
+        </dt>
+        <dd style="margin:2px 0;padding:5px 0;">
+            {{value}}
+        </dd>
     {% endif %}
     {% endfor %}
 </dl>
