@@ -22,11 +22,11 @@ def index(request):
             else:
                 TO_LIST = [settings.COPYPRINT_CARD_REQUEST_EMAIL]
             subject = "Copy Print Card Request: {}, {} from {}".format(
-                data.last_name, data.first_name, data.entity_name
+                data.user.last_name, data.user.first_name, data.entity_name
             )
             send_mail(
                 request, TO_LIST,
-                subject, data.email,
+                subject, data.user.email,
                 "lis/copyprint/email.html", data,
                 settings.MANAGERS
             )

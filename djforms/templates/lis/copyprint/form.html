@@ -16,9 +16,11 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
 </h1>
 {% endblock %}
 {% block content %}
+<div class="large-8 medium-7 small-12">
 {% get_lw_content as copy blurbs 2079 %}
 {{copy.body}}
-<div class="forms-container">
+</div>
+<div class="forms-container clear">
     {% include "includes/generic_form_multi.html" %}
 </div>
 {% endblock %}

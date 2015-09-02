@@ -61,13 +61,6 @@ class CardRequest(models.Model):
     class Meta:
         db_table = 'lis_copyprint_card_request'
 
-    def __unicode__(self):
-        return u"{}, {} from {}".format(
-            self.last_name,
-            self.first_name,
-            self.entity_name
-        )
-
     def first_name(self):
         return self.user.first_name
     def last_name(self):
@@ -75,4 +68,9 @@ class CardRequest(models.Model):
     def email(self):
         return self.user.email
 
-
+    def __unicode__(self):
+        return u"{}, {} from {}".format(
+            self.user.last_name,
+            self.user.first_name,
+            self.entity_name
+        )
