@@ -1,7 +1,7 @@
 <h1>LIS Copy/Print Card Request</h1>
 <h3>Information</h3>
 <dl style="margin-bottom:50px;">
-    {% for name,value in data.items %}
+    {% for name,value in data.get_fields %}
         <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">
             {{name}}
         </dt>

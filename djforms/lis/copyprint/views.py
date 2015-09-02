@@ -20,7 +20,10 @@ def index(request):
             if settings.DEBUG:
                 TO_LIST = [settings.SERVER_EMAIL]
             else:
-                TO_LIST = [settings.COPYPRINT_CARD_REQUEST_EMAIL]
+                TO_LIST = [
+                    settings.COPYPRINT_CARD_REQUEST_EMAIL,
+                    data.user.email
+                ]
             subject = "Copy Print Card Request: {}, {} from {}".format(
                 data.user.last_name, data.user.first_name, data.entity_name
             )

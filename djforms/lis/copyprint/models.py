@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 STATUS = (
     ("New","New"),
     ("Replacement","Replacement"),
-    ("Lost","Lost")
 )
 
 class CardRequest(models.Model):
@@ -49,6 +48,7 @@ class CardRequest(models.Model):
         null=True, blank=True
     )
     printing_budget = models.CharField(
+        "Printing Budget Amount",
         max_length="16",
         null=True, blank=True
     )
@@ -67,6 +67,11 @@ class CardRequest(models.Model):
         return self.user.last_name
     def email(self):
         return self.user.email
+
+    def get_fields(self):
+        return [
+            (field.name, field.value_to_string(self)) for field in CardRequest._meta.fields
+        ]
 
     def __unicode__(self):
         return u"{}, {} from {}".format(

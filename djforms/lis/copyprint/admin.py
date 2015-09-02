@@ -3,7 +3,10 @@ from djforms.lis.copyprint.models import CardRequest
 
 class CardRequestAdmin(admin.ModelAdmin):
     model = CardRequest
-    list_display  = ('last_name', 'first_name', 'email', 'entity_name')
+    list_display  = (
+        'last_name', 'first_name', 'email',
+        'entity_name','account_number','status'
+    )
     raw_id_fields = ('user',)
     search_fields = ('last_name', 'email', 'entity_name')
 
