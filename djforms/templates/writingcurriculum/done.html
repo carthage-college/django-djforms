@@ -1,13 +1,15 @@
 {% extends "base.html" %}
-{% load get_api %}
 {% block title %}Writing Intensive Course Proposal Form{% endblock %}
-{% block columns %}<link href="http://www.carthage.edu/media/css/douglasfir/3_column.css" rel="stylesheet" type="text/css" />{% endblock %}
-{% block group_name %}Academics{% endblock %}
+{% block group_name %}WAC{% endblock %}
 {% block left_nav %}
     {% include "writingcurriculum/left_nav.html" %}
+{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Writing Intensive Course Proposal
+    </h1>
 {% endblock %}
 {% block content %}
 <h2>Success</h2>
 <p>Your information has been submited.</p>
-</div>
 {% endblock %}

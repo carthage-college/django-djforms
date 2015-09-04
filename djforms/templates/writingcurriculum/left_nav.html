@@ -1,8 +1,16 @@
-    <ul id="nav" class="sf-vertical">
-        <li><a href="http://www.carthage.edu/academics/committees/wac/">WAC Blog</a></li>
-        <li><a href="http://www.carthage.edu/academics/writing/">Overview</a></li>
-        <li><a href="http://www.carthage.edu/academics/writing/contact/">Director</a></li>
-        <li><a href="http://www.carthage.edu/academics/writing/guidelines/">Guidelines</a></li>
-        <li class="last-featured"><a href="http://www.carthage.edu/writingcurriculum/">Course Proposal Form</a></li>
-        {% if not user.is_anonymous %}<li><a href="{% url 'my_proposals' %}">My Proposals</a></li>{% endif %}
-    </ul>
+<ul>
+    <li class="last-featured">
+        <a href="http://www.carthage.edu/writingcurriculum/">
+            Course Proposal Form
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'my_proposals' %}">
+            My Proposals
+        </a>
+    </li>
+</ul>
+<hr>
+{% load livewhale_api %}
+{% get_lw_content as nav blurbs 2043 %}
+{{nav.body}}
