@@ -6,6 +6,7 @@ from djforms.lis.copyprint.models import CardRequest, STATUS
 class CardRequestForm(forms.ModelForm):
 
     status = forms.TypedChoiceField(
+        label="What type of card are you requesting?",
         choices=STATUS,widget=forms.RadioSelect()
     )
 
