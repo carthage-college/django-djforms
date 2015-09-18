@@ -1,7 +1,7 @@
 from django import forms
 
 from djforms.characterquest.models import ApplicationProfile
-from djforms.core.models import UserProfile, BINARY_CHOICES
+from djforms.core.models import UserProfile
 from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, YEAR_CHOICES
 
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
