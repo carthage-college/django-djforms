@@ -1,12 +1,54 @@
 <h1>LIS Copy/Print Card Request</h1>
 <h3>Information</h3>
 <dl style="margin-bottom:50px;">
-    {% for name,value in data.get_fields %}
-        <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">
-            {{name}}
-        </dt>
-        <dd style="margin:2px 0;padding:5px 0;">
-            {{value}}
-        </dd>
-    {% endfor %}
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">
+        Person requesting card
+    </dt>
+    <dd style="margin:2px 0;padding:5px 0;">
+        {{data.user.last_name}}, {{data.user.first_name}}
+    </dd>
+
+
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">
+        Entity name
+    </dt>
+    <dd style="margin:2px 0;padding:5px 0;">
+        {{data.entity_name}}
+    </dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">
+        Account number
+    </dt>
+    <dd style="margin:2px 0;padding:5px 0;">
+        {{data.account_number}}
+    </dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">
+        Dept. head or entity's president
+    </dt>
+    <dd style="margin:2px 0;padding:5px 0;">
+        {{data.entity_head}}
+    </dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">
+        Treasurer or equivalent
+    </dt>
+    <dd style="margin:2px 0;padding:5px 0;">
+        {{data.entity_treasurer|default:"&nbsp;"}}
+    </dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">
+        Advisor
+    </dt>
+    <dd style="margin:2px 0;padding:5px 0;">
+        {{data.entity_advisor|default:"&nbsp;"}}
+    </dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">
+        Printing budget
+    </dt>
+    <dd style="margin:2px 0;padding:5px 0;">
+        {{data.printing_budget|default:"&nbsp;"}}
+    </dd>
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">
+        Type of card requested
+    </dt>
+    <dd style="margin:2px 0;padding:5px 0;">
+        {{data.status}}
+    </dd>
 </dl>
