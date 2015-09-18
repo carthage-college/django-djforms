@@ -5,6 +5,7 @@ from djforms.processors.forms import ContactForm, OrderForm
 from djforms.giving.models import BrickContact, DonationContact
 
 from djtools.fields import TODAY
+from djforms.core.models import BINARY_CHOICES
 
 YEAR = TODAY.year
 PAYMENT = (
@@ -138,59 +139,14 @@ class DonationOrderForm(OrderForm):
         ''',
         required=False
     )
-
-    class Meta:
-        model = Order
-        fields = ('total','comments','avs','auth')
-
-
-class PledgeContactForm(DonationContactForm):
-    """
-    Pledge Contact form, inherits everything from DonationContactForm and
-    is merely a placeholder for view logic
-    """
-    pass
-
-
-class PledgeOrderForm(OrderForm):
-    """
-    A subscrition form for recurring billing
-    """
-    total = forms.CharField(
-        label="Gift installments",
-        help_text="How much would you like to give for each installment."
+    payments = forms.CharField(
+        required=False, widget=forms.HiddenInput()
     )
-    comments = forms.CharField(
-        label = "Designation",
-        help_text = '''
-            Please indicate if you would like your gift to be directed to
-            a specific area. If this space is left blank, gifts will be
-            directed to the
-            <a href="/give/carthage-fund/">Carthage Fund</a>.
-        ''',
-        required=False
-    )
-    payments = forms.IntegerField(
-        widget=forms.Select(choices=PAYMENT),
-        max_value=60, min_value=12, label="Duration",
-        help_text='''
-            Choose the number of years during which you want to donate
-            the set amount above.
-        '''
-    )
-    cycle = forms.CharField(
-        widget=forms.Select(choices=CYCLES),
-        required=True,
-        label="Frequency",
-        help_text='''
-            Choose how often the donation should be sent during the term
-            of the pledge.
-        '''
+    pledge = forms.CharField(
+        required=False, widget=forms.HiddenInput()
     )
 
     class Meta:
         model = Order
-        fields = (
-            'total', 'cycle', 'payments', 'comments', 'avs',
-            'auth'
-        )
+        fields = ('total','comments','avs','auth','payments')
+

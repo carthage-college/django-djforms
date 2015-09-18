@@ -28,10 +28,19 @@ class OrderForm(forms.ModelForm):
     """
     A generic form to collect order info
     """
-    avs                 = forms.CharField(widget=forms.HiddenInput())
-    auth                = forms.CharField(widget=forms.HiddenInput())
-    cycle               = forms.CharField(widget=forms.HiddenInput(), required=False)
-    total               = forms.CharField(max_length=100)
+    avs = forms.CharField(
+        required = False,
+        widget=forms.HiddenInput()
+    )
+    auth = forms.CharField(
+        required = False,
+        widget=forms.HiddenInput()
+    )
+    cycle = forms.CharField(
+        required = False,
+        widget=forms.HiddenInput()
+    )
+    total = forms.CharField(max_length=100)
 
     class Meta:
         model = Order

@@ -17,6 +17,8 @@ BRICK_PRICES = ["150","500",YEAR-2000+100,YEAR-2000+300]
 import logging
 logger = logging.getLogger(__name__)
 
+SUBJECT = """Thank you, {} {}, for your donation to Carthage"""
+
 def giving_form(request, transaction, campaign=None):
     """
     multipurpose function to handle various types of donations
@@ -58,6 +60,8 @@ def giving_form(request, transaction, campaign=None):
             or_data = or_form.save(commit=False)
             or_data.status = "In Process"
             or_data.operator = "DJForms%s" % trans_cap
+            or_data.avs = 0
+            # deal with commemorative brick options
             if transaction == "brick" and contact.class_of == str(YEAR):
                 if or_data.total == 150:
                     or_data.total = BRICK_PRICES[2]
@@ -65,8 +69,17 @@ def giving_form(request, transaction, campaign=None):
                     or_data.total = BRICK_PRICES[3]
                 else:
                     raise Http404
+            # deal with payments if they have chosen to pledge
+            if request.POST.get("or-pledge") != "":
+                or_data.payments = request.POST["or-payments"]
+                or_data.auth = "store"
+                or_data.grand_total = or_data.total
+                or_data.total = or_data.total / int(or_data.payments)
+                or_data.cycle = "1m"
+            else:
+                or_data.payments = None
+            logger.debug("order data = {}".format(or_data.__dict__))
             or_data.save()
-            logger.debug("or_data = {}".format(or_data.__dict__))
             contact.order.add(or_data)
             email = contact.email
             cc_form = CreditCardForm(
@@ -75,13 +88,6 @@ def giving_form(request, transaction, campaign=None):
             if cc_form.is_valid():
                 # save and update order
                 r = cc_form.processor_response
-                if transaction == "pledge":
-                    # deal with payments
-                    years = str( int(or_data.payments) / 12 )
-                    if or_data.cycle != "1m":
-                        or_data.payments = str(
-                            int(or_data.payments) / int(or_data.cycle[:-1])
-                        )
                 or_data.status = r.msg['status']
                 or_data.transid = r.msg['transid']
                 or_data.billingid = r.msg.get('billingid')
@@ -92,10 +98,8 @@ def giving_form(request, transaction, campaign=None):
                 or_data.save()
                 # sendmail
                 or_data.contact = contact
-                data = {'order':or_data,'campaign':campaign,'years':years,}
-                subject = "Thank you, %s %s, for your donation to Carthage" % (
-                    contact.first_name,contact.last_name
-                )
+                data = {'order':or_data,'campaign':campaign,'years':years}
+                subject = SUBJECT.format(contact.first_name, contact.last_name)
                 send_mail(
                     request, [email,], subject, email,
                     'giving/%s_email.html' % transaction, data, BCC
@@ -124,11 +128,10 @@ def giving_form(request, transaction, campaign=None):
                 status = or_data.status
                 or_data.save()
                 if settings.DEBUG:
-                    logger.debug("cc = {}".format(cc_form.__dict__))
                     or_data.contact = contact
                     data = {'order':or_data,'campaign':campaign,'years':years,}
-                    subject = "Thank you, %s %s, for your donation to Carthage" % (
-                        contact.first_name,contact.last_name
+                    subject = SUBJECT.format(
+                        contact.first_name, contact.last_name
                     )
                     send_mail(
                         request, [email,], subject, email,
@@ -138,14 +141,10 @@ def giving_form(request, transaction, campaign=None):
             cc_form = CreditCardForm(None, request.POST, prefix="cc")
             cc_form.is_valid()
     else:
-        initial = {'avs':False,'auth':'sale'}
-        if transaction == "pledge":
-            initial = {'cycle':"1m",'avs':False,'auth':'store',}
-
         # order form
         or_form = str_to_class(
             "djforms.giving.forms", or_form_name
-        )(prefix="or", initial=initial)
+        )(prefix="or")
         # contact form
         ct_form = str_to_class(
             "djforms.giving.forms", ct_form_name
