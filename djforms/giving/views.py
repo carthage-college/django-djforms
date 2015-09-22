@@ -72,13 +72,13 @@ def giving_form(request, transaction, campaign=None):
             # deal with payments if they have chosen to pledge
             if request.POST.get("or-pledge") != "":
                 or_data.payments = request.POST["or-payments"]
+                logger.debug("order data = {}".format(or_data.__dict__))
                 or_data.auth = "store"
                 or_data.grand_total = or_data.total
                 or_data.total = or_data.total / int(or_data.payments)
                 or_data.cycle = "1m"
             else:
                 or_data.payments = None
-            logger.debug("order data = {}".format(or_data.__dict__))
             or_data.save()
             contact.order.add(or_data)
             email = contact.email

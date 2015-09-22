@@ -1,6 +1,12 @@
 {% extends "giving/donation_form.html" %}
+{% load livewhale_api %}
 {% block content %}
-    <p>
-        {{campaign.thank_you|default:"Thank you for donating to Carthage College."}}
-    </p>
+    {% if campaign.thank_you %}
+    <div>
+        {{campaign.thank_you}}
+    </div>
+    {% else %}
+    {% get_lw_content as thank_you blurbs 2087 %}
+    {{thank_you.body}}
+    {% endif %}
 {% endblock %}

@@ -30,30 +30,30 @@
                 }
                 fiscal = new Date(year, 6, 30);
                 months = monthDiff(today, fiscal) + 1;
-                if ( $('#pledge').prop('checked')) {
-                    $('#id_or-payments').val(months);
-                }
-                message = "$" + (amount / months);
+                $('#id_or-payments').val(months);
+                message = "That will be $" + (amount / months) + " a month for ";
+                message += months + " months for a total of $" + amount + ".";
                 $('#pledge-payments').text(message);
-                $('#pledge-total').text("$" + amount + ".");
             }
             {% if or_form.pledge.value and or_form.total.value %}
             calculatePayments({{or_form.total.value}});
             {% endif %}
-            $('#id_or-total').keyup(function() {
-                $(this).val($(this).val().replace(/,/g,''));
-                $(this).val($(this).val().replace(/\$/g,''));
-                // calculate payments
-                calculatePayments($(this).val());
-            });
             $('#id_or-total').blur(function() {
                 $(this).val($(this).val().replace(/,/g,''));
                 $(this).val($(this).val().replace(/\$/g,''));
                 calculatePayments($(this).val());
             });
+
+            $('#pledge').change(function () {
+                $('#pledge-payments').toggle(this.checked);
+            }).change(); //ensure visible state matches initially
+
             {% if or_form.pledge.value %}
             $('#pledge').prop('checked', true);
             $('#id_or-pledge').val(true);
+            $('#pledge-payments').show();
+            {% else %}
+            $('#pledge-payments').hide();
             {% endif %}
             // disable submit button after user clicks it
             $('form#profile').submit(function(){
@@ -79,7 +79,7 @@
     li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
     .cost, #pledge_total_help { font-weight:bold; color:green; }
     #pledge_total_help { margin-left:9px; }
-    #pledge-payments, #pledge-total { color:green; }
+    #pledge-payments { color:green;display:none }
     </style>
 {% endblock %}
 {% block group_name %}Giving{% endblock %}
@@ -141,11 +141,9 @@
                     </div>
                     <h3>
                         <label for="pledge">
-                            Give
-                            <span id="pledge-payments"></span>
-                            in monthly installments through
-                            June, 2016 totaling
-                            <span id="pledge-total">...</span>
+                            Give in monthly installments through
+                            June, 2016.
+                            <br><span id="pledge-payments"></span>
                         </label>
                     </h3>
                 </li>
