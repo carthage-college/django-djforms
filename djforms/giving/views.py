@@ -167,7 +167,7 @@ def giving_success(request, transaction, campaign=None):
         campaign = get_object_or_404(Promotion, slug=campaign)
 
     return render_to_response(
-        'giving/%s_success.html' % transaction,
+        'giving/{}_success.html'.format(transaction),
         { 'campaign': campaign, },
         context_instance=RequestContext(request)
     )
