@@ -14,6 +14,7 @@ from djtools.fields import TODAY
 YEAR = TODAY.year
 BRICK_PRICES = ["150","500",YEAR-2000+100,YEAR-2000+300]
 
+import os
 import logging
 logger = logging.getLogger(__name__)
 
@@ -152,8 +153,17 @@ def giving_form(request, transaction, campaign=None):
         # credit card
         cc_form = CreditCardForm(prefix="cc")
 
+    # build our template path
+    template = 'giving/'
+    if campaign:
+        template += 'campaigns/{}/'.format(campaign.slug)
+    template += '{}_form.html'.format(transaction)
+
+    if not os.path.isfile(os.path.join(settings.ROOT_DIR, "templates", template)):
+        raise Http404, "Page not found: {}".format(template)
+
     return render_to_response(
-        'giving/%s_form.html' % transaction,
+        template,
         {
             'ct_form': ct_form, 'or_form': or_form, 'form_proc': cc_form,
             'status': status, 'campaign': campaign,'year':str(YEAR)
@@ -166,8 +176,17 @@ def giving_success(request, transaction, campaign=None):
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
 
+    # build our template path
+    template = 'giving/'
+    if campaign:
+        template += 'campaigns/{}/'.format(campaign.slug)
+    template += '{}_success.html'.format(transaction)
+
+    if not os.path.isfile(os.path.join(settings.ROOT_DIR, "templates", template)):
+        raise Http404, "Page not found: {}".format(template)
+
     return render_to_response(
-        'giving/{}_success.html'.format(transaction),
+        template,
         { 'campaign': campaign, },
         context_instance=RequestContext(request)
     )

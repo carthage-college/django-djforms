@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "djjune/base.html" %}
 {% block title %}
     {{campaign.title|default:"Giving to Carthage"}}
-    Form &mdash; Giving &mdash; Carthage College
+    Form &mdash; Giving &mdash;
 {% endblock %}
 {% block extra_javascript %}
     {% include "giving/donation_form.inc.js" %}
@@ -10,39 +10,42 @@
     <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
         rel="stylesheet" type="text/css" />
     <style type="text/css">
-    #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;
+    #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#303030;
     padding:3px 0 3px 5px;width:99%;}
     #id_cc-security_code, #id_cc-expiration_month,
     #id_cc-expiration_year {width:70px;}
     #id_or-start_date, #id_ct-postal_code, #id_or-total, #pledge_total {width:100px;}
     li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
+    #subpage-content #profile ol li { list-style-type:none; margin-left:0;}
     .cost, #pledge_total_help { font-weight:bold; color:green; }
     #pledge_total_help { margin-left:9px; }
-    #pledge-payments { color:green;display:none }
+    #pledge-payments { color:#3ab0c8;display:none }
+    .campaign-description {margin-bottom: 10px;}
     </style>
 {% endblock %}
-{% block group_name %}Giving{% endblock %}
-{% block left_nav %}
-    {% include "giving/left_nav.html" %}
-{% endblock %}
-{% block sidebar %}
-    {% include "giving/side_bar.html" %}
-{% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        {{campaign.title|default:"Your Giving Matters"}}
-    </h1>
+{% block page_header %}Give to Carthage{% endblock %}
+{% block subpage-nav %}
+<ul>
+    <li>
+        <a href="/campaign/why-give/#donors">Why We Give</a>
+    </li>
+    <li>
+        <a href="/campaign/why-give/evidence">Evidence of Impact</a>
+    </li>
+    <li>
+        <a href="/campaign/why-give/#levels">Levels of Giving</a>
+    </li>
+</ul>
 {% endblock %}
 {% block content %}
-<div class="forms-container{% if campaign.about %}
-    large-8 medium-10 small-12"{% endif %}">
-    {% include "includes/security_metrics.html" %}
-    <br />
-    <div class="content clear">
+<div class="forms-container" style="width:500px;margin:auto;">
+    <div class="campaign-description clear">
         {% if campaign.description %}
             {{campaign.description}}
         {% endif %}
     </div>
+    {% include "includes/security_metrics.html" %}
+    <br />
     <p>
         Fields marked with an asterisk
         <img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />
@@ -158,9 +161,4 @@
         {% include "form_submit.inc.html" %}
     </form>
 </div>
-{% if campaign.about %}
-<div class="forms-sidebar large-4 medium-6 small-12">
-    {{campaign.about}}
-</div>
-{% endif %}
 {% endblock %}
