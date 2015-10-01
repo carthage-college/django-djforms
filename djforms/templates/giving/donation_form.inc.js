@@ -33,8 +33,7 @@
             calculatePayments({{or_form.total.value}});
             {% endif %}
             $('#id_or-total').blur(function() {
-                $(this).val($(this).val().replace(/,/g,''));
-                $(this).val($(this).val().replace(/\$/g,''));
+                $(this).val($(this).val().replace(/[^\d\.]/g, ''));
                 calculatePayments($(this).val());
             });
 
