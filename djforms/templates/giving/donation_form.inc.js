@@ -25,7 +25,8 @@
                 fiscal = new Date(year, 6, 30);
                 months = monthDiff(today, fiscal) + 1;
                 $('#id_or-payments').val(months);
-                message = "That will be $" + (amount / months) + " a month for ";
+                donation = Math.round((amount / months) * 1000) / 1000;
+                message = "That will be $" + donation + " a month for ";
                 message += months + " months for a total of $" + amount + ".";
                 $('#pledge-payments').text(message);
             }
