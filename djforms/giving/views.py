@@ -81,7 +81,6 @@ def giving_form(request, transaction, campaign=None):
                 or_data.payments = None
             if campaign:
                 or_data.promotion = campaign
-                logger.debug("campaign = {}".format(or_data.promotion.__dict__))
             or_data.save()
             contact.order.add(or_data)
             email = contact.email
