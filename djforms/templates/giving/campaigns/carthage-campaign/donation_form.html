@@ -5,6 +5,17 @@
 {% endblock %}
 {% block extra_javascript %}
     {% include "giving/donation_form.inc.js" %}
+    <script type="text/javascript">
+    $(function() {
+        $(".required > input").addClass("required");
+        $(".required > select").addClass("required");
+        $(".required > textarea").addClass("required");
+        $(".warning > input").addClass("error");
+        $(".warning > select").addClass("error");
+        $(".warning > textarea").addClass("error");
+        $(".required > ul").parent().parent().find('h3').addClass("required");
+    });
+    </script>
 {% endblock %}
 {% block extra_style %}
     <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
