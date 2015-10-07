@@ -73,13 +73,15 @@ def giving_form(request, transaction, campaign=None):
             # deal with payments if they have chosen to pledge
             if request.POST.get("or-pledge") != "":
                 or_data.payments = request.POST["or-payments"]
-                logger.debug("order data = {}".format(or_data.__dict__))
                 or_data.auth = "store"
                 or_data.grand_total = or_data.total
                 or_data.total = or_data.total / int(or_data.payments)
                 or_data.cycle = "1m"
             else:
                 or_data.payments = None
+            if campaign:
+                or_data.promotion = campaign
+                logger.debug("campaign = {}".format(or_data.promotion.__dict__))
             or_data.save()
             contact.order.add(or_data)
             email = contact.email
@@ -94,12 +96,10 @@ def giving_form(request, transaction, campaign=None):
                 or_data.billingid = r.msg.get('billingid')
                 or_data.cc_name = cc_form.name
                 or_data.cc_4_digits = cc_form.card[-4:]
-                if campaign:
-                    or_data.promotion = campaign
                 or_data.save()
                 # sendmail
                 or_data.contact = contact
-                data = {'order':or_data,'campaign':campaign,'years':years}
+                data = {'order':or_data,'years':years}
                 subject = SUBJECT.format(contact.first_name, contact.last_name)
                 send_mail(
                     request, [email,], subject, email,
@@ -130,7 +130,7 @@ def giving_form(request, transaction, campaign=None):
                 or_data.save()
                 if settings.DEBUG:
                     or_data.contact = contact
-                    data = {'order':or_data,'campaign':campaign,'years':years,}
+                    data = {'order':or_data,'years':years,}
                     subject = SUBJECT.format(
                         contact.first_name, contact.last_name
                     )

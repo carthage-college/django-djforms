@@ -1,9 +1,6 @@
-<h1>{{campaign|default:"Donation to Carthage"}}</h1>
-{% if campaign.slug %}
-<p><strong>Campaign ID</strong>: {{campaign.slug}}</p>
-{% endif %}
-{% if campaign.email_info %}
-    <p>{{campaign.email_info}}</p>
+<h1>{{data.order.promotion.title|default:"Donation to Carthage"}}</h1>
+{% if data.order.promotion.email_info %}
+    <p>{{data.order.promotion.email_info}}</p>
 {% else %}
     <p>
         Thank you for your support and the donation.
