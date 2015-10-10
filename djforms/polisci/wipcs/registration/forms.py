@@ -7,8 +7,6 @@ from djforms.polisci.wipcs.registration.models import PAYMENT_CHOICES
 from djforms.core.models import REQ, STATE_CHOICES
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
-from tagging.models import Tag, TaggedItem
-
 FEE_CHOICES = (
     ("55","Faculty/Graduate student $55"),
     ("10","Undergraduate student $10")
