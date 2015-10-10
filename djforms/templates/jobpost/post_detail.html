@@ -175,7 +175,7 @@
         {% endifequal %}
         {% if perms.jobpost.can_manage %}
             <div id="list_of_applications">
-            <h1>List of applications </h1>
+            <h2>List of applications </h2>
             {% for jobapplyform in object_list %}
                 <div>
                 <dl class="job-detail">
@@ -199,7 +199,7 @@
         {% endif %}
     {% else %}
         {% if post.active %}
-            <h1 class="page_title">{{ post.title }}</h1>
+            <h2 class="page_title">{{ post.title }}</h2>
             <dl class="job-detail">
                 <dt class="job-header">Job posted on:</dt><dd class="job-data">{{ post.publish|date:"F j, Y" }}</dd><dd class="clear"></dd>
                 <dt class="job-header">Job is for:</dt><dd class="job-data">{{ post.period }}</dd><dd class="clear"></dd>
@@ -240,7 +240,7 @@
             </form>
             </div>
         {% else %}
-            <h1>THIS POST IS NOT CURRENTLY AVAILABLE</h1>
+            <h2>THIS POST IS NOT CURRENTLY AVAILABLE</h2>
         {% endif %}
     {% endifusergroup %}
     {% if is_paginated %}
