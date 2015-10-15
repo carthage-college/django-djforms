@@ -22,7 +22,8 @@
         rel="stylesheet" type="text/css" />
     <style type="text/css">
     #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#303030;
-    padding:3px 0 3px 5px;width:99%;}
+    padding:3px 0 3px 5px;width:300px;}
+    #subpage-content h3 { line-height: 20px; }
     #id_cc-security_code, #id_cc-expiration_month,
     #id_cc-expiration_year {width:70px;}
     #id_or-start_date, #id_ct-postal_code, #id_or-total, #pledge_total {width:100px;}
@@ -32,12 +33,14 @@
     #pledge_total_help { margin-left:9px; }
     #pledge-payments { color:#3ab0c8;display:none }
     .campaign-description {margin-bottom: 10px;}
+    .forms-container .large-6 {float:none;display:inherit;}
     </style>
 {% endblock %}
 {% block page_header %}Give to Carthage{% endblock %}
 {% block subpage-nav %}{% endblock %}
 {% block content %}
-<div class="forms-container" style="width:500px;margin:auto;">
+<div class="forms-container">
+<div class="large-6 medium-12 small-12" style="margin:auto;">
     <div class="campaign-description clear">
         {% if campaign.description %}
             {{campaign.description}}
@@ -129,7 +132,11 @@
                         {% endif %}
                         </div>
                         {% if field.name == "postal_code" %}
-                        <h3 style="margin-top:9px;">Matching Funds</h3>
+                        </li>
+                        <li>
+                            <h3>
+                            Matching Funds
+                            </h3>
                         {% endif %}
                     {% endif %}
                     </li>
@@ -159,5 +166,6 @@
         </fieldset>
         {% include "form_submit.inc.html" %}
     </form>
+</div>
 </div>
 {% endblock %}
