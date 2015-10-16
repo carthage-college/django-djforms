@@ -36,6 +36,13 @@ class PrintRequestForm(forms.ModelForm):
         label = "Is this project being mailed?",
         choices=BINARY_CHOICES, widget=forms.RadioSelect(),
     )
+    website_update = forms.TypedChoiceField(
+        label = """
+            Is there a website that needs to be updated as part
+            of this project?
+        """,
+        choices=BINARY_CHOICES, widget=forms.RadioSelect(),
+    )
     attachments = forms.TypedChoiceField(
         label = "Are you submitting any files with this print request?",
         choices=BINARY_CHOICES, widget=forms.RadioSelect(),
@@ -47,6 +54,8 @@ class PrintRequestForm(forms.ModelForm):
         who_mailing = cleaned_data.get("who_mailing")
         how_mailing = cleaned_data.get("how_mailing")
         speed_mailing = cleaned_data.get("speed_mailing")
+        website_update = cleaned_data.get("website_update")
+        website_url = cleaned_data.get("website_url")
 
         if is_mailing == "Yes":
             if who_mailing == "":
@@ -55,6 +64,9 @@ class PrintRequestForm(forms.ModelForm):
                 self._errors["how_mailing"] = self.error_class(["Required field."])
             if speed_mailing == "":
                 self._errors["speed_mailing"] = self.error_class(["Required field."])
+
+        if website_update == "Yes" and website_url == "":
+            self._errors["website_url"] = self.error_class(["Required field."])
 
         print_format = cleaned_data.get("print_format")
         print_format_other = cleaned_data.get("print_format_other")

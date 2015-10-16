@@ -135,6 +135,15 @@ class PrintRequest(models.Model):
         """,
         max_length=128
     )
+    website_update = models.CharField(
+        "Is there a website that needs to be updated as part of this project?",
+        max_length=4
+    )
+    website_url = models.CharField(
+        "If so, what is the URL of the page that needs updating?",
+        max_length=255,
+        null=True,blank=True
+    )
     is_mailing = models.CharField(
         "Is this project being mailed?",
         max_length=4
