@@ -31,27 +31,27 @@ urlpatterns = patterns('djforms.polisci',
     #    name='model_united_nations_registration'
     #),
     url(
-        r'^wipcs/proposal/success/$',
+        r'^iea/proposal/success/$',
         TemplateView.as_view(
-            template_name="polisci/wipcs/proposal/done.html"
+            template_name="polisci/iea/proposal/done.html"
         ),
-        name="wipcs_proposal_success"
+        name="iea_proposal_success"
     ),
     url(
-        r'^wipcs/proposal/$',
-        'wipcs.proposal.views.form',
-        name='wipcs_proposal'
+        r'^iea/proposal/$',
+        'iea.proposal.views.form',
+        name='iea_proposal'
     ),
     url(
-        r'^wipcs/registration/success/$',
+        r'^iea/registration/success/$',
         TemplateView.as_view(
-            template_name="polisci/wipcs/registration/done.html"
+            template_name="polisci/iea/registration/done.html"
         ),
-        name="wipcs_registration_success"
+        name="iea_registration_success"
     ),
     url(
-        r'^wipcs/registration/$',
-        'wipcs.registration.views.form',
-        name='wipcs_registration'
+        r'^iea/registration/$',
+        'iea.registration.views.form',
+        name='iea_registration'
     ),
 )
