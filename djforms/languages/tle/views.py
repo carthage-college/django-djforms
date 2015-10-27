@@ -23,7 +23,7 @@ def application_form(request, stype):
     ulength = 1
     if request.method=='POST':
         form = str_to_class(
-            "djforms.alumni.memory.forms", form_name
+            "djforms.languages.tle.forms", form_name
         )(request.POST)
         # check if someone is attempting something nefarious
         if not form:
