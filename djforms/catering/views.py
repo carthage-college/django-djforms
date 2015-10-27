@@ -28,10 +28,7 @@ class CateringEventWizard(SessionWizardView):
         if settings.DEBUG:
             TO_LIST = [settings.SERVER_EMAIL]
         else:
-            TO_LIST = [
-                "dhoffman1@carthage.edu","svanags@carthage.edu",
-                "mmichaud@carthage.edu", "jklabechek@carthage.edu"
-            ]
+            TO_LIST = settings.CATERING_TO_LIST
 
         event = Event()
         xfields = {'open_to':"", 'room_set_up':"", 'beverages':""}

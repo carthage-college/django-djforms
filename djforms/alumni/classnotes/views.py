@@ -17,7 +17,7 @@ def contact(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL]
     else:
-        TO_LIST = ["dmoore2@carthage.edu",]
+        TO_LIST = settings.ALUMNI_CLASSNOTES_EMAILS
     BCC = settings.MANAGERS
 
     if request.method=='POST':
