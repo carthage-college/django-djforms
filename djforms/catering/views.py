@@ -25,10 +25,11 @@ class CateringEventWizard(SessionWizardView):
     template_name = "catering/event_form_wizard.html"
 
     def done(self, form_list, **kwargs):
+        # keeps python from concatenating other sessions
         if settings.DEBUG:
             TO_LIST = [settings.SERVER_EMAIL]
         else:
-            TO_LIST = settings.CATERING_TO_LIST
+            TO_LIST = list(settings.CATERING_TO_LIST)
 
         event = Event()
         xfields = {'open_to':"", 'room_set_up':"", 'beverages':""}
