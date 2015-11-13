@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url
 from django.views.generic import TemplateView, RedirectView
 
 urlpatterns = patterns('djforms.admissions',
@@ -37,5 +37,5 @@ urlpatterns = patterns('djforms.admissions',
     ),
     url(
         r'^china/$', 'china.views.interest_form', name='interest_form'
-    ),
+    )
 )

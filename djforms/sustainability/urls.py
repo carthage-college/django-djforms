@@ -1,7 +1,7 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url
 from django.views.generic import TemplateView
 
-urlpatterns = patterns('',
+urlpatterns = patterns('djforms.sustainability.green.views',
     url(
         r'^green/pledge/success/$',
         TemplateView.as_view(
@@ -11,12 +11,10 @@ urlpatterns = patterns('',
     ),
     url(
         r'^green/pledge/archives/$',
-        'djforms.sustainability.green.views.pledge_archives',
-        name="green_pledge_archives"
+        'pledge_archives', name="green_pledge_archives"
     ),
     url(
         r'^green/pledge/$',
-        'djforms.sustainability.green.views.pledge_form',
-        name="green_pledge_form"
-    ),
+        'pledge_form', name="green_pledge_form"
+    )
 )

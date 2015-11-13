@@ -58,7 +58,7 @@ class PostFormWithHidden(forms.ModelForm):
 
     class Meta:
         model = Post
-        exclude = ('slug')
+        exclude = ('slug',)
 
     #Makes sure the user picks an expire date later than the post date
     def clean_date(self):
