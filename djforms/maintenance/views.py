@@ -23,6 +23,13 @@ from tagging.models import Tag, TaggedItem
 
 @login_required
 def maintenance_request_form(request):
+
+    if settings.DEBUG:
+        TO_LIST = [settings.SERVER_EMAIL]
+    else:
+        TO_LIST = [settings.MAINTENANCE_MANAGER]
+    BCC = settings.MANAGERS
+
     if request.method=='POST':
         try:
             profile = request.user.get_profile()
@@ -55,7 +62,6 @@ def maintenance_request_form(request):
                 p = profile_form.cleaned_data
                 profile.phone = p["phone"]
                 profile.save()
-            TO_LIST = [settings.MAINTENANCE_MANAGER]
 
             managers = User.objects.filter(groups__id__in=[2,3])
             if not settings.DEBUG:
@@ -84,7 +90,7 @@ def maintenance_request_form(request):
                 maintenance_request.type_of_request.name
             )
             email = EmailMessage(subject,
-                t.render(c), request.user.email, TO_LIST, settings.MANAGERS,
+                t.render(c), request.user.email, TO_LIST, BCC,
                 headers = {
                     'Reply-To': request.user.email,
                     'From': request.user.email
@@ -136,7 +142,9 @@ def maintenance_requests(request):
         type_reqs=MaintenanceRequest.objects.filter(type_of_request__in=tpids)
         # check to see if our editor is also a reviewer, and if so, add reqs
         if request.user.groups.filter(id=4):
-            building_reqs = MaintenanceRequest.objects.filter(building__in=bpids).exclude(type_of_request__in=tpids)
+            building_reqs = MaintenanceRequest.objects.filter(
+                building__in=bpids
+            ).exclude(type_of_request__in=tpids)
         else:
             building_reqs = MaintenanceRequest.objects.none()
         my_reqs = sorted(
@@ -147,7 +155,9 @@ def maintenance_requests(request):
         my_reqs = MaintenanceRequest.objects.filter(type_of_request__in=bpids)
     # student
     else:
-        my_reqs = MaintenanceRequest.objects.filter(user__username=request.user.username).order_by("-date_created")
+        my_reqs = MaintenanceRequest.objects.filter(
+            user__username=request.user.username
+        ).order_by("-date_created")
     return render_to_response(
         "maintenance/requests.html",
         {"my_reqs": my_reqs,}, context_instance=RequestContext(request)
