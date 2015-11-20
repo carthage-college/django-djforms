@@ -1,90 +1,85 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
-<head>
-<style>
-dl {margin-bottom:50px;}
-dl dt {
-background:#5f9be3;
-color:#fff;
-float:left;
-font-weight:bold;
-margin-right:10px;
-padding:5px;
-width:200px;
-}
-dl dd {
-margin:2px 0;
-padding:5px 0;
-}
-</style>
-</head>
+<head></head>
 <body>
-<h1>{{visit_day.title}}</h1>
-{{visit_day.description|safe}}
-{{visit_day.email_info|safe}}
+<h1>{{data.visit_day.title}}</h1>
+{{data.visit_day.description|safe}}
+{{data.visit_day.email_info|safe}}
 <ul>
-<li><a href="http://www.carthage.edu/about/directions">Directions to Carthage</a></li>
-<li><a href="http://www.carthage.edu/assets/mediaman/admissions/campusmap-bw.pdf">Carthage Campus Map</a></li>
-<li><a href="http://www.carthage.edu/admissions/visit/lodging.cfm">Lodging information</a></li>
+    <li>
+        <a href="https://www.carthage.edu/about/directions/">
+            Directions to Carthage
+        </a>
+    </li>
+    <li>
+        <a href="https://www.carthage.edu/about/campus-map/">
+            Carthage Campus Map
+        </a>
+    </li>
+    <li>
+        <a href="https://www.carthage.edu/admissions/visit/lodging/">
+            Lodging information
+        </a>
+    </li>
 </ul>
 <h2>Yes, I plan to attend on</h2>
 <dl style="margin-bottom:50px;">
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Date</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.date}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.date}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Number Attending</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.number_attend}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.number_attend}}</dd>
 </dl>
 <h2>Personal Information</h2>
 <dl style="margin-bottom:50px;">
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">First Name</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.first_name}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.first_name}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Last Name</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.last_name}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.last_name}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Email</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.email}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.email}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Address</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.address}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.address}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">City</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.city}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.city}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">State</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.state}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.state}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Zip</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.postal_code}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.postal_code}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Phone</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.phone}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.phone}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Mobile</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.mobile|default:"&nbsp;"}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.mobile|default:"&nbsp;"}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Gender</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.gender}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.gender}}</dd>
 </dl>
-{% if not short %}
+{% if not data.short %}
 <h2>Educational Background and Plans</h2>
 <dl style="margin-bottom:50px;">
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">High School</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.high_school}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.high_school}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">City</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.hs_city}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.hs_city}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">State</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.hs_state}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.hs_state}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Graduation Year</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.hs_grad_year}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.hs_grad_year}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Entering as a</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.entry_as}}</dd>
-    {% if data.entry_as == "Transfer" %}
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.entry_as}}</dd>
+    {% if data.profile.entry_as == "Transfer" %}
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Transfer School</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.transfer}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.transfer}}</dd>
     {% endif %}
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Entry Year</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.entry_year}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.entry_year}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Entry Term</dt>
-    <dd style="margin:2px 0;padding:5px 0;">{{data.entry_term}}</dd>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.entry_term}}</dd>
 </dl>
 <h3>Academic Interests</h3>
-<p>{{data.academic}}</p>
+<p>{{data.profile.academic}}</p>
 <h3>Extracurricular Interests</h3>
-<p>{{data.xtracurricular}}</p>
+<p>{{data.profile.xtracurricular}}</p>
 <h3>Comments</h3>
-<p>{{data.comments}}</p>
+<p>{{data.profile.comments}}</p>
 {% endif %}
 </body>
 </html>

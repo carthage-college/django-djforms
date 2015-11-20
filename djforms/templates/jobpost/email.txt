@@ -1,7 +1,38 @@
 {% autoescape off %}
-Data from job submission at:
+<a href="https://{{server_url}}{% url 'post_detail' data.job.job.id %}">
+    Application data for job submission
+</a>
 
-http://www.carthage.edu/forms/job/{{post.slug}}
+<pre style="fontsize:1.5em;">
+Submit Date...... {{data.job.apply_date}}
+First Name....... {{data.job.first_name}}
+Last Name........ {{data.job.last_name}}
+Email............ {{data.job.email}}
 
-<pre style="fontsize:1.5em;">{{data.render_email|safe}}</pre>
+Address
+
+{{data.job.address}}
+
+Phone............ {{data.job.phone}}
+ID............... {{data.job.college_id}}
+Year............. {{data.job.college_year}}
+Major............ {{data.job.major}}
+</pre>
+
+<h4>Hours</h4>
+<div style="width:50%;">
+<pre>
+{{data.job.hours}}
+</pre>
+</div>
+
+<h4>Application Details</h4>
+<div style="width:75%;">
+{{data.job.app_details}}
+</div>
+
+{% if data.job.cv %}
+<h4>CV</h4>
+https://{{server_url}}/assets/{{data.job.cv}}
+{% endif %}
 {% endautoescape %}

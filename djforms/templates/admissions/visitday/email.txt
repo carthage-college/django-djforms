@@ -1,35 +1,35 @@
 <pre style="font-size:1.1em;">
-Date........................ {{data.date}}
-Number Attending............ {{data.number_attend}}
-First Name.................. {{data.first_name}}
-Last Name................... {{data.last_name}}
-Email....................... {{data.email}}
-Address..................... {{data.address}}
-City........................ {{data.city}}
-State....................... {{data.state}}
-Zip......................... {{data.postal_code}}
-Phone....................... {{data.phone}}
-Mobile...................... {{data.mobile}}
-Gender...................... {{data.gender}}
-{% if not short %}High School................. {{data.high_school}}
-City........................ {{data.hs_city}}
-State....................... {{data.hs_state}}
-Graduation Year............. {{data.hs_grad_year}}
-Entering as a............... {{data.entry_as}}
-{% if data.entry_as == "Transfer" %}Transfer School............. {{data.transfer}}{% endif %}
-Entry Year.................. {{data.entry_year}}
-Entry Term.................. {{data.entry_term}}
+Date........................ {{data.profile.date}}
+Number Attending............ {{data.profile.number_attend}}
+First Name.................. {{data.profile.first_name}}
+Last Name................... {{data.profile.last_name}}
+Email....................... {{data.profile.email}}
+Address..................... {{data.profile.address}}
+City........................ {{data.profile.city}}
+State....................... {{data.profile.state}}
+Zip......................... {{data.profile.postal_code}}
+Phone....................... {{data.profile.phone}}
+Mobile...................... {{data.profile.mobile}}
+Gender...................... {{data.profile.gender}}
+{% if not data.short %}High School................. {{data.profile.high_school}}
+City........................ {{data.profile.hs_city}}
+State....................... {{data.profile.hs_state}}
+Graduation Year............. {{data.profile.hs_grad_year}}
+Entering as a............... {{data.profile.entry_as}}
+{% if data.profile.entry_as == "Transfer" %}Transfer School............. {{data.profile.transfer}}{% endif %}
+Entry Year.................. {{data.profile.entry_year}}
+Entry Term.................. {{data.profile.entry_term}}
 <br />
 Academic Interests:
 <br />
-{{data.academic}}
+{{data.profile.academic}}
 <br />
 Extracurricular Interests:
 <br />
-{{data.xtracurricular}}
+{{data.profile.xtracurricular}}
 <br />
 Comments:
 <br />
-{{data.comments}}
+{{data.profile.comments}}
 {% endif %}
 </pre>

@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core.mail import EmailMessage
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader, Context
 from django.http import Http404, HttpResponseRedirect, HttpResponse
@@ -166,7 +166,9 @@ def post_detail(request, pid, page=0):
                     post.num_positions = request.POST['num_positions']
                     post.expire_date = parser.parse(request.POST['expire_date'])
                     post.save()
-                    return HttpResponseRedirect('https://www.carthage.edu/forms/job/success/')
+                    return HttpResponseRedirect(
+                        reverse_lazy("data_entered")
+                    )
             else:
                 form = PostFormWithoutHidden(instance=post)
 
@@ -191,24 +193,25 @@ def post_detail(request, pid, page=0):
         if request.method == 'POST':
             form = JobApplyForms(request.POST, request.FILES)
             if form.is_valid():
-                job = form.save(commit=False)
-                job.cv = request.FILES.get('cv')
-                job.job = post
-                data = job.save()
-                form.save_m2m()
-                bcc = settings.MANAGERS
-                t = loader.get_template('jobpost/email.txt')
-                c = Context({'data':job,'post':post})
-                frum = job.email
-                email = EmailMessage(
-                    "[Job application] %s" % post.title, t.render(c), frum,
-                    [post.creator.email,], bcc,
-                    headers = {'Reply-To': frum,'From': frum}
+                data = form.save(commit=False)
+                #job.cv = request.FILES.get('cv')
+                data.job = post
+                data.save()
+                #form.save_m2m()
+                if settings.DEBUG:
+                    TO_LIST = [settings.SERVER_EMAIL]
+                else:
+                    TO_LIST = [post.creator.email,]
+
+                send_mail(
+                    request, TO_LIST,
+                    "[Job application] {}".format(post.title), data.email,
+                    "jobpost/email.txt", {'job':data,},
+                    settings.MANAGERS
                 )
-                email.content_subtype = "html"
-                email.send(fail_silently=True)
-                #send_mail(request, TO_LIST, subject, contact['email'], "adulted/admissions_email.html", data, BCC)
-                return HttpResponseRedirect('https://www.carthage.edu/forms/job/success/')
+                return HttpResponseRedirect(
+                    reverse_lazy("data_entered")
+                )
         else:
             form = JobApplyForms()
         return render_to_response(
@@ -223,7 +226,9 @@ def post_manage(request, pid):
         form = PostFormWithoutHidden(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('https://www.carthage.edu/forms/job/success/')
+            return HttpResponseRedirect(
+                reverse_lazy("data_entered")
+            )
     else:
         form = PostFormWithoutHidden(instance=post)
     return render_to_response(
@@ -280,10 +285,7 @@ def post_manage_list(request, page=0):
 @group_required('carthageStaffStatus','carthageFacultyStatus')
 def post_create(request):
     """
-    Post list
-
-    Template: ``jobpost/add_form.html``
-    Context:
+    Create a new Job
     """
 
     if request.method == 'POST':
@@ -293,20 +295,16 @@ def post_create(request):
             new_post.creator = request.user
             data = new_post.save()
             form.save_m2m()
-            bcc = settings.MANAGERS
-            t = loader.get_template('jobpost/post_created_email.txt')
-            c = Context({'data':new_post,})
-            email = EmailMessage(
-                "[Job Post Created] %s" % new_post.title, t.render(c),
-                new_post.creator.email, ["vvatistas@carthage.edu",], bcc,
-                headers = {
-                    'Reply-To': new_post.creator.email,
-                    'From': new_post.creator.email
-                }
+            send_mail(
+                request, ["vvatistas@carthage.edu",],
+                "[Job Post Created] {}".format(new_post.title),
+                new_post.creator.email,
+                "jobpost/post_created_email.txt", {'post':new_post},
+                settings.MANAGERS
             )
-            email.content_subtype = "html"
-            email.send(fail_silently=True)
-            return HttpResponseRedirect('https://www.carthage.edu/forms/job/success/')
+            return HttpResponseRedirect(
+                reverse_lazy("data_entered")
+            )
     else:
         form = PostFormWithHidden()
     return render_to_response(

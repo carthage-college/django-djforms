@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.core.mail import EmailMessage
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.core.files.base import ContentFile
@@ -28,7 +27,6 @@ def maintenance_request_form(request):
         TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = [settings.MAINTENANCE_MANAGER]
-    BCC = settings.MANAGERS
 
     if request.method=='POST':
         try:
@@ -80,8 +78,6 @@ def maintenance_request_form(request):
                 if perms:
                     TO_LIST.append(r.email)
 
-            t = loader.get_template('maintenance/email.html')
-            c = Context({'data':maintenance_request,})
             subject = "[Maintenance ID: %s] %s Floor %s Room %s: %s" % (
                 str(maintenance_request.id),
                 maintenance_request.building.name,
@@ -89,14 +85,11 @@ def maintenance_request_form(request):
                 maintenance_request.room_number,
                 maintenance_request.type_of_request.name
             )
-            email = EmailMessage(subject,
-                t.render(c), request.user.email, TO_LIST, BCC,
-                headers = {
-                    'Reply-To': request.user.email,
-                    'From': request.user.email
-                }
+            send_mail(
+                request, TO_LIST, subject, request.user.email,
+                "maintenance/email.html",
+                maintenance_request, settings.MANAGERS
             )
-            email.send(fail_silently=True)
 
             return HttpResponseRedirect(reverse("maintenance_request_success"))
     else:

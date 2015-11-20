@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext, loader
@@ -11,6 +10,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from djforms.catering.forms import EventForm1, EventForm2, EventForm3
 from djforms.catering.forms import EventForm4, EventForm5
 from djforms.catering.models import Event
+
+from djtools.utils.mail import send_mail
 
 import os.path
 
@@ -45,20 +46,18 @@ class CateringEventWizard(SessionWizardView):
         event.room_set_up = xfields['room_set_up']
         event.beverages = xfields['beverages']
         event.save()
-        t = loader.get_template('catering/event_email.html')
-        c = RequestContext(self.request, {'event':event,})
+        # send mail
         email = event.user.email
         TO_LIST.append(email)
-        email = EmailMessage(
-            ("[Event Request Form] %s: %s %s" %
-                (
-                    event.department,event.user.first_name,event.user.last_name
-                )
-            ), t.render(c), email, TO_LIST, settings.MANAGERS,
-            headers = {'Reply-To': email,'From': email}
+        subject = "[Event Request Form] {}: {} {}".format(
+            event.department,event.user.first_name,event.user.last_name
         )
-        email.content_subtype = "html"
-        email.send(fail_silently=True)
+        send_mail(
+            self.request, TO_LIST, subject, email,
+            "catering/event_email.html", {'event':event,},
+            settings.MANAGERS
+        )
+
         return HttpResponseRedirect(
             reverse_lazy("catering_event_success")
         )

@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 
 from djforms.core.models import GenericChoice, BINARY_CHOICES
 
+from djtools.fields.helpers import upload_to_path
+
 DAY_SPS_CHOICES = (
     ('Day', 'Day'),
     ('SPS', 'SPS'),
@@ -105,7 +107,7 @@ class CourseProposal(models.Model):
         null=True, blank=True
     )
     syllabus = models.FileField(
-        upload_to = 'files/writingcurriculum/',
+        upload_to=upload_to_path,
         max_length = "255",
         help_text = """
             If you have a syllabus developed and available in an
@@ -179,3 +181,5 @@ class CourseProposal(models.Model):
     def phone(self):
         return self.user.get_profile().phone
 
+    def get_slug(self):
+        return "writingcurriculum/"

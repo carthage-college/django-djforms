@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect, Http404
-from django.core.mail import EmailMessage
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext, loader
 from django.contrib.auth.models import User
@@ -11,13 +10,14 @@ from djforms.core.models import UserProfile
 from djforms.writingcurriculum.forms import ProposalForm
 from djforms.writingcurriculum.models import CourseCriteria, CourseProposal
 
+from djtools.utils.mail import send_mail
+
 @login_required
 def proposal_form(request, pid=None):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL,]
     else:
         TO_LIST = ["msnavely@carthage.edu"]
-    BCC = settings.MANAGERS
 
     copies=1
     proposal = None
@@ -46,8 +46,12 @@ def proposal_form(request, pid=None):
             p = UserProfile(user=request.user)
             p.save()
             profile = request.user.get_profile()
-        form = ProposalForm(request.POST, request.FILES, prefix="wac", instance=proposal)
-        profile_form = UserProfileForm(request.POST, prefix="profile", instance=profile)
+        form = ProposalForm(
+            request.POST, request.FILES, prefix="wac", instance=proposal
+        )
+        profile_form = UserProfileForm(
+            request.POST, prefix="profile", instance=profile
+        )
         pids = request.POST.getlist('wac-id[]')
 
         type_assignment = request.POST.getlist('wac-type_assignment[]')
@@ -119,25 +123,17 @@ def proposal_form(request, pid=None):
             # save the proposal object
             proposal.save()
 
-            bcc = settings.MANAGERS
-            t = loader.get_template('writingcurriculum/email.html')
-            c = RequestContext(
-                request,
-                {'data':proposal,'user':request.user,'criteria':criteria}
+            subject ="[WAC Proposal] {}: by {} {}".format(
+                proposal.course_title,request.user.first_name,
+                request.user.last_name
             )
-            email = EmailMessage(
-                ("[WAC Proposal] %s: by %s %s" % (
-                    proposal.course_title,request.user.first_name,
-                    request.user.last_name)
-                ), t.render(c), request.user.email, TO_LIST, BCC,
-                headers = {
-                    'Reply-To': request.user.email,'From': request.user.email
-                }
+            send_mail(
+                request, TO_LIST, subject, request.user.email,
+                "writingcurriculum/email.html", {
+                    'proposal':proposal,'user':request.user,'criteria':criteria
+                }, settings.MANAGERS
             )
-            email.content_subtype = "html"
-            #if proposal.syllabus:
-            #    email.attach(proposal.syllabus.name.split('/')[2],proposal.syllabus)
-            email.send(fail_silently=True)
+
             return HttpResponseRedirect('/forms/writingcurriculum/success/')
     else:
         if not proposal:

@@ -1,40 +1,40 @@
 <pre style="font-size:1.5em;">
-Date created................ {{data.date_created}}
-Date updated................ {{data.date_updated}}
-First name.................. {{user.first_name}}
-Last name................... {{user.last_name}}
-Email....................... {{user.email}}
-Phone....................... {{user.get_profile.phone}}
-Title....................... {{data.course_title}}
-Course number............... {{data.course_number}}
-Department.................. {{data.department}}
-Term........................ {{data.academic_term}}
-Day or SPS.................. {{data.day_sps}}
-Approved WI course?......... {{data.approved_wi}}
-If not, when?............... {{data.when_approved_wi}}
-WI workshop................. {{data.workshop}}
-If not, when?............... {{data.when_workshop}}
-Permission.................. {{data.permission}}
-{% if data.syllabus %}Syllabus.................... <a href="http://www.carthage.edu/assets/{{data.syllabus}}">Click here to download</a>
+Date created................ {{data.proposal.date_created}}
+Date updated................ {{data.proposal.date_updated}}
+First name.................. {{data.user.first_name}}
+Last name................... {{data.user.last_name}}
+Email....................... {{data.user.email}}
+Phone....................... {{data.user.get_profile.phone}}
+Title....................... {{data.proposal.course_title}}
+Course number............... {{data.proposal.course_number}}
+Department.................. {{data.proposal.department}}
+Term........................ {{data.proposal.academic_term}}
+Day or SPS.................. {{data.proposal.day_sps}}
+Approved WI course?......... {{data.proposal.approved_wi}}
+If not, when?............... {{data.proposal.when_approved_wi}}
+WI workshop................. {{data.proposal.workshop}}
+If not, when?............... {{data.proposal.when_workshop}}
+Permission.................. {{data.proposal.permission}}
+{% if data.proposal.syllabus %}Syllabus....................<a href="https://www.carthage.edu/assets/{{data.proposal.syllabus}}">Click here to download</a>
 {% endif %}
 Description:
 
-{{data.description}}
+{{data.proposal.description}}
 
 Objectives:
 
-{{data.objectives}}
+{{data.proposal.objectives}}
 
 Three learning outcomes:
 
-{{data.learning_outcomes}}
+{{data.proposal.learning_outcomes}}
 
 Assessment methods:
 
-{{data.assessment_methods}}
+{{data.proposal.assessment_methods}}
 </pre>
 <h2>Criteria</h2>
-{% for criterion in data.criteria.all %}
+{% for criterion in data.proposal.criteria.all %}
 <h3>{{forloop.counter}}.</h3>
 <p><strong>Writing Assignment Type</strong>: {{criterion.type_assignment}}</p>
 <p><strong>Number of Pages Required</strong>: {{criterion.number_pages}}</p>
