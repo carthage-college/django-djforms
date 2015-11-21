@@ -30,7 +30,7 @@ $(function() {
         buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
         buttonImageOnly:true
     });
-    {% if form.data.is_mailing == "Yes" %}
+    {% if form.is_mailing.value == "Yes" %}
         $("#toggle-hide").removeClass("hidden")
     {% else %}
         $("#toggle-hide").addClass("hidden");

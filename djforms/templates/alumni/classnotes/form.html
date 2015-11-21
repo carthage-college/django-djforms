@@ -54,50 +54,102 @@ $(function() {
             <ul class="inline">
                 <li><h3>Contact Information</h3></li>
                 <li>
-                    <label for="id_salutation" class="placeholder">Salutation</label><br />
-                    <input class="medium" id="id_salutation" type="text" name="salutation" placeholder="Ms, Mr, Dr" maxlength="16" value="{{form.data.salutation}}" />
+                    <label for="id_salutation" class="placeholder">
+                        Salutation
+                    </label><br>
+                    <input class="medium" id="id_salutation" name="salutation"
+                        type="text" placeholder="Ms, Mr, Dr, etc." maxlength="16"
+                        value="{{form.salutation.value|default_if_none:""}}">
                 </li>
                 <li>
-                    <label for="id_first_name" class="placeholder">First name</label><br />
-                    <input class="medium required{% if form.first_name.errors %} error{% endif %}" id="id_first_name" type="text" name="first_name" placeholder="First name" maxlength="128" value="{{form.data.first_name}}" {% if not template_debug %}required {% endif %}/></li>
+                    <label for="id_first_name" class="placeholder">
+                        First name
+                    </label><br>
+                    <input class="medium required
+                        {% if form.first_name.errors %} error{% endif %}"
+                        id="id_first_name" type="text" name="first_name"
+                        placeholder="First name" maxlength="128"
+                        value="{{form.first_name.value|default_if_none:""}}"
+                        {% if not template_debug %}required {% endif %}>
+                </li>
                 </li>
                 <li>
-                    <label for="id_second_name" class="placeholder">Middle name</label><br />
-                    <input class="medium" id="id_second_name" type="text" name="second_name" placeholder="Middle name" maxlength="128" value="{{form.data.second_name}}" />
+                    <label for="id_second_name" class="placeholder">
+                        Middle name
+                    </label><br>
+                    <input class="medium" id="id_second_name" name="second_name"
+                        placeholder="Middle name" maxlength="128" type="text"
+                        value="{{form.second_name.value|default_if_none:""}}">
                 </li>
             </ul>
             <ul class="inline">
                 <li>
-                    <label for="id_last_name" class="placeholder">Last name</label><br />
-                    <input class="medium required{% if form.last_name.errors %} error{% endif %}" id="id_last_name" type="text" name="last_name" placeholder="Last name" maxlength="128" value="{{form.data.last_name}}" {% if not template_debug %}required {% endif %}/>
+                    <label for="id_last_name" class="placeholder">
+                        Last name
+                    </label><br>
+                    <input class="medium required
+                        {% if form.last_name.errors %} error{% endif %}"
+                        id="id_last_name" type="text" name="last_name"
+                        placeholder="Last name" maxlength="128"
+                        value="{{form.last_name.value|default_if_none:""}}"
+                        {% if not template_debug %}required {% endif %}>
                 </li>
                 <li>
-                    <label for="id_previous_name" class="placeholder">Previous name</label><br />
-                    <input class="medium" id="id_previous_name" type="text" name="previous_name" placeholder="Previous name" maxlength="128" value="{{form.data.previous_name}}" />
+                    <label for="id_previous_name" class="placeholder">
+                        Previous name
+                    </label><br>
+                    <input class="medium" id="id_previous_name"
+                        type="text" maxlength="128"
+                        name="previous_name" placeholder="Previous name"
+                        value="{{form.previous_name.value|default_if_none:""}}">
                 </li>
                 <li>
-                    <label for="id_suffix" class="placeholder">Suffix</label><br />
-                    <input class="medium" id="id_suffix" type="text" name="suffix" placeholder="Ph.D, MD, Jr, Sr" maxlength="16" value="{{form.data.suffix}}" />
+                    <label for="id_suffix" class="placeholder">
+                        Suffix
+                    </label><br>
+                    <input class="medium" id="id_suffix" type="text"
+                        maxlength="16" name="suffix"
+                        placeholder="Ph.D, MD, Jr, Sr, etc."
+                        value="{{form.suffix.value|default_if_none:""}}">
                 </li>
             </ul>
             <ul class="inline">
                 <li>
-                    <label for="id_email" class="placeholder">Email</label><br />
-                    <input class="large{% if form.email.errors %} error{% endif %}" id="id_email" type="email" name="email" placeholder="Email" maxlength="75" value="{{form.data.email}}" {% if not template_debug %}required {% endif %}/>
+                    <label for="id_email" class="placeholder">
+                        Email
+                    </label><br>
+                    <input class="large
+                        {% if form.email.errors %} error{% endif %}"
+                        id="id_email" type="email" name="email"
+                        placeholder="Email" maxlength="75"
+                        value="{{form.email.value|default_if_none:""}}"
+                        {% if not template_debug %}required {% endif %}>
                 </li>
                 <li>
                     {{form.classyear}}
-                    {% if form.classyear.errors %} <span class="error">Required</span>{% endif %}
+                    {% if form.classyear.errors %}
+                        <span class="error">Required</span>
+                    {% endif %}
                 </li>
             </ul>
             <ul class="inline">
                 <li>
-                    <label for="id_spousename" class="placeholder">Spouse&#39;s name</label><br />
-                    <input class="medium" id="id_spousename" type="text" name="spousename" placeholder="Spouse&#39;s name" maxlength="128" value="{{form.data.spousename}}" />
+                    <label for="id_spousename" class="placeholder">
+                        Spouse&#39;s name
+                    </label><br>
+                    <input class="medium" id="id_spousename"
+                        type="text" name="spousename"
+                        placeholder="Spouse&#39;s name" maxlength="128"
+                        value="{{form.spousename.value|default_if_none:""}}">
                 </li>
                 <li>
-                    <label for="id_spousepreviousname" class="placeholder">Spouse&#39;s previous name</label>
-                    <input class="medium" id="id_spousepreviousname" type="text" name="spousepreviousname" placeholder="Spouse&#39;s previous name" maxlength="32" value="{{form.data.spousepreviousname}}" />
+                    <label for="id_spousepreviousname" class="placeholder">
+                        Spouse&#39;s previous name
+                    </label>
+                    <input class="medium" id="id_spousepreviousname"
+                        type="text" name="spousepreviousname" maxlength="32"
+                        placeholder="Spouse&#39;s previous name"
+                        value="{{form.spousepreviousname.value|default_if_none:""}}">
                 </li>
                 <li>
                     {{form.spouseyear}}
@@ -107,15 +159,20 @@ $(function() {
                 <li>
                     <label for="id_hometown" class="placeholder">
                         Home Town
-                    </label><br />
-                    <input class="xlarge required{% if form.hometown.errors %} error{% endif%}" id="id_hometown" type="text" name="hometown" placeholder="Hometown" maxlength="128" value="{{form.data.hometown}}" {% if not template_debug %}required {% endif %}/>
+                    </label><br>
+                    <input class="xlarge required
+                        {% if form.hometown.errors %} error{% endif%}"
+                        id="id_hometown" type="text" name="hometown"
+                        placeholder="Hometown" maxlength="128"
+                        value="{{form.hometown.value|default_if_none:""}}"
+                        {% if not template_debug %}required {% endif %}>
                     <div class="help">
                         City and state. Include country, if outside the US.
                     </div>
                 </li>
             </ul>
         </fieldset>
-        <br />
+        <br>
         <fieldset class="blockLabels">
             <ul>
                 <li>
@@ -129,8 +186,7 @@ $(function() {
                             Please provide a brief bit of text.
                         </div>
                     {% endif %}
-                    <textarea class="required" id="id_classnote" rows="10"
-                        cols="40" name="classnote">{{form.data.classnote}}</textarea>
+                    <textarea class="required" id="id_classnote" rows="10" cols="40" name="classnote">{{form.classnote.value|default_if_none:""}}</textarea>
                 </li>
                 <li>
                     <h3><label for="id_category">Category</label></h3>
@@ -143,9 +199,11 @@ $(function() {
                 </li>
                 <li>
                     <h3><label for="id_picture">Photo</label></h3>
-                    <input type="text" class="file" name="file_info" id="faux_picture" placeholder="Photo" />
+                    <input type="text" class="file" name="file_info"
+                        id="faux_picture" placeholder="Photo">
                     <div class="file_upload">
-                        <input type="file" name="picture" id="id_picture" placeholder="Photo" />
+                        <input type="file" name="picture" id="id_picture"
+                            placeholder="Photo" />
                     </div>
                     <div class="help clear">75 dpi and .jpg only</div>
                 </li>
@@ -153,12 +211,14 @@ $(function() {
                     <h3>
                         <label for="id_caption">Caption for your photo</label>
                     </h3>
-                    <input id="id_caption" type="text" name="caption" maxlength="255" />
+                    <input id="id_caption" type="text" name="caption"
+                        value="{{form.caption.value|default_if_none:""}}"
+                        maxlength="255">
                 </li>
                 <li>
                     <h3>
                         <label for="id_captcha_1">
-                        Input the text you see in the image on the left
+                            Input the text you see in the image on the left
                         </label>
                     </h3>
                     {% if form.captcha.errors %}
