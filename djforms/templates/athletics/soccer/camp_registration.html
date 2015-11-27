@@ -1,4 +1,5 @@
 {% extends "athletics/base.html" %}
+{% load livewhale_api %}
 {% block title %}
 Soccer Camp Registration Form &mdash;
 Athletics &mdash;
@@ -91,27 +92,8 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
     </a>
     </div></div>
     <h2>Soccer Camp Registration Form</h2>
-    <p><strong>HOW TO REGISTER:</strong>
-    Complete this form and submit it by clicking on the "Register" button.</p>
-    <p><strong>Note</strong>:
-    A $200.00 deposit is required with each reservation
-    ($50 deposit for the Day Camp and Junior Kickers programs).
-    <strong>THE DEPOSIT IS NON-REFUNDABLE</strong>.
-    The deposit is applied to camp fee.
-    There is a late fee; call for details.</p>
-    <h4>Method of Payment</h4>
-    <p><strong>Note</strong>:
-    The Carthage web site supports secure credit card transactions.</p>
-    <p>
-    Credit Cards are only accepted through online registration,
-    not at check-ins. If you have a balance coming or did not pay
-    in full at time of registration, cash or check are the only methods
-    of payment.
-    </p>
-    <p>
-        After you complete the registration form, we will send confirmation
-        via email.
-    </p>
+    {% get_lw_content as how_to blurbs 2145 %}
+    {{how_to.body}}
     {% include "includes/required_text.html" %}
     {% if form_proc.errors or form_reg.errors %}
         <p class="error">
@@ -176,26 +158,8 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
         <fieldset class="blockLabels">
             <ol>
                 <li class="btnHolder">
-                    <p>
-                        Make all checks payable to:
-                        <strong>Carthage College</strong>, and mail to:
-                    </p>
-                    <blockquote>
-                    Carthage College<br />
-                    Soccer Office<br />
-                    2001 Alford Park Drive<br />
-                    Kenosha, WI  53140</blockquote>
-                    <p>
-                        Upon receipt of your registration, additional
-                        information will be sent to you within 8 to 10 days,
-                        including check-in procedures, items to bring, medical
-                        release forms, and directions.
-                    </p>
-                    <p>
-                        IMPORTANT: Full payment due before June 10th
-                        (in addition to the medical forms and assumption
-                        of risk form).
-                    </p>
+                    {% get_lw_content as payments blurbs 2146 %}
+                    {{payments.body}}
                     <label for="id_submit">&nbsp;&nbsp;</label>
                     <input type="submit" value="Register" class="button" />
                     <p>
