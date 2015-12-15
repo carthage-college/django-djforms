@@ -71,7 +71,7 @@ def giving_form(request, transaction, campaign=None):
                 else:
                     raise Http404
             # deal with payments if they have chosen to pledge
-            if request.POST.get("or-pledge") != "":
+            if transaction != "brick" and request.POST.get("or-pledge") != "":
                 or_data.payments = request.POST["or-payments"]
                 or_data.auth = "store"
                 or_data.grand_total = or_data.total
