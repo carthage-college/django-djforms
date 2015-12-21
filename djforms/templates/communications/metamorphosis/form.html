@@ -46,6 +46,16 @@ $(function(){
             "orderedList", "unorderedList"
         ]
     });
+    $('form#profile').submit(function(){
+        /* check textarea for just br tag */
+        $("textarea").each(function(){
+            if (this.value == "<br>") {
+                this.value = "";
+            }
+        });
+        // disable submit button after users clicks it
+        $(this).children('input[type=submit]').attr('disabled', 'disabled');
+    });
 });
 </script>
 {% endblock %}
