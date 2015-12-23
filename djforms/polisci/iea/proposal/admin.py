@@ -6,7 +6,8 @@ class ProposalContactAdmin(admin.ModelAdmin):
     model = ProposalContact
     list_display = (
         'last_name', 'first_name', 'email', 'address1', 'address2', 'city',
-        'state', 'postal_code', 'phone', 'submitting'
+        'state', 'postal_code', 'phone', 'presenter_type', 'affiliation',
+        'submitting'
     )
     ordering = ('-created_at',)
     list_filter = (

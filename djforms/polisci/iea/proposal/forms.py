@@ -35,7 +35,7 @@ class ProposalContactForm(forms.ModelForm):
         model = ProposalContact
         fields = (
             'first_name','last_name','email','address1','address2',
-            'city','state','postal_code','phone','how_hear','abstract',
-            'submitting'
+            'city','state','postal_code','phone','presenter_type',
+            'affiliation','how_hear','abstract','submitting'
         )
 

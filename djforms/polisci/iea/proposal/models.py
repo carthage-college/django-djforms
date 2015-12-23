@@ -4,12 +4,21 @@ from djforms.core.models import GenericContact
 
 from tagging import fields, managers
 
-SUBMITTING =(
+SUBMITTING = (
     ("Creative Presentation", "Creative Presentation"),
     ("Paper for presentation", "Paper for presentation"),
     ("Poster for presentation", "Poster for presentation"),
     ("Roundtable proposal", "Roundtable proposal")
 )
+
+PRESENTER_TYPE = (
+    ("Professor", "Professor"),
+    ("Graduate Student", "Graduate Student"),
+    ("Undergraduate Student", "Undergraduate Student"),
+    ("Activist", "Activist"),
+    ("Other", "Other")
+)
+
 
 class ProposalContact(GenericContact):
 
@@ -42,6 +51,14 @@ class ProposalContact(GenericContact):
         max_length=10,
         verbose_name="Zip",
         null=True, blank=True
+    )
+    presenter_type = models.CharField(
+        "I am a",
+        max_length="128", choices=PRESENTER_TYPE
+    )
+    affiliation = models.CharField(
+        "Academic or university affiliation",
+         max_length="255"
     )
     how_hear = models.CharField(
         "How did you hear about this conference?",
