@@ -55,8 +55,7 @@ class ProposalContact(GenericContact):
         max_length="128", choices=PRESENTER_TYPE
     )
     country = CountryField(
-        blank_label='(select country)',
-        null=True, blank=True
+        blank_label='(select country)'
     )
     affiliation = models.CharField(
         "Academic or university affiliation",
