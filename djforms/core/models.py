@@ -107,21 +107,6 @@ class GenericContact(models.Model):
     def __unicode__(self):
         return u'%s %s' % (self.last_name, self.first_name)
 
-#For making a generic Contact form
-class GenericContactForm(models.Model):
-    name = models.CharField(max_length=128)
-    slug = models.CharField(max_length=255, verbose_name="Slug", unique=True)
-    description = models.TextField('Form Description')
-    form_class = models.CharField(max_length=255, verbose_name="Form Class name", unique=True)
-    template = models.CharField(max_length=255)
-    recipients = models.ManyToManyField(User, related_name='contact_form_recipients')
-    is_public = models.BooleanField(default=True, help_text="Is the form available for public viewing?")
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __unicode__(self):
-        return self.name
-
 class UserProfile(BaseProfile):
     """
     User profile model
