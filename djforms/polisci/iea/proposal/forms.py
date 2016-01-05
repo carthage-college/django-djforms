@@ -2,7 +2,8 @@ from django import forms
 
 from djforms.processors.models import Order
 from djforms.polisci.iea.proposal.models import ProposalContact
-from djforms.core.models import REQ, STATE_CHOICES
+from djforms.core.models import REQ
+from djtools.fields import STATE_CHOICES
 
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 from django_countries.widgets import CountrySelectWidget
@@ -19,6 +20,7 @@ class ProposalContactForm(forms.ModelForm):
         max_length=128,widget=forms.TextInput(attrs=REQ)
     )
     state = forms.CharField(
+        help_text = 'Choose "Other" if outside the United States',
         widget=forms.Select(choices=STATE_CHOICES, attrs=REQ)
     )
 
