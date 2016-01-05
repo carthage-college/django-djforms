@@ -76,7 +76,7 @@ class Order(models.Model):
 
     def __unicode__(self):
         try:
-            c = Contact.objects.get(order=self)
+            c = self.contact()
             return u'%s %s' % (c.last_name, c.first_name)
         except:
             return ""
