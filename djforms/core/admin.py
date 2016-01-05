@@ -18,7 +18,7 @@ class PromotionAdmin(admin.ModelAdmin):
 
 # core models
 admin.site.register(Department)
-admin.site.register(GenericContactForm)
+#admin.site.register(GenericContactForm)
 admin.site.register(GenericChoice, GenericChoiceAdmin)
 admin.site.register(Photo, PhotoAdmin)
 admin.site.register(Promotion, PromotionAdmin)
