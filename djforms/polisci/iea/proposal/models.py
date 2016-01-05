@@ -2,7 +2,7 @@ from django.db import models
 
 from djforms.core.models import GenericContact
 
-from tagging import fields, managers
+from django_countries.fields import CountryField
 
 SUBMITTING = (
     ("Creative Presentation", "Creative Presentation"),
@@ -24,8 +24,7 @@ class ProposalContact(GenericContact):
 
     phone = models.CharField(
         verbose_name='Phone number',
-        max_length=12,
-        help_text="Format: XXX-XXX-XXXX"
+        max_length=16
     )
     address1 = models.CharField(
         max_length=255,
@@ -49,12 +48,15 @@ class ProposalContact(GenericContact):
     )
     postal_code = models.CharField(
         max_length=10,
-        verbose_name="Zip",
         null=True, blank=True
     )
     presenter_type = models.CharField(
         "I am a",
         max_length="128", choices=PRESENTER_TYPE
+    )
+    country = CountryField(
+        blank_label='(select country)',
+        null=True, blank=True
     )
     affiliation = models.CharField(
         "Academic or university affiliation",

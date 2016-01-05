@@ -3,9 +3,9 @@ from django import forms
 from djforms.processors.models import Order
 from djforms.polisci.iea.proposal.models import ProposalContact
 from djforms.core.models import REQ, STATE_CHOICES
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
-from tagging.models import Tag, TaggedItem
+from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from django_countries.widgets import CountrySelectWidget
 
 
 class ProposalContactForm(forms.ModelForm):
@@ -21,21 +21,13 @@ class ProposalContactForm(forms.ModelForm):
     state = forms.CharField(
         widget=forms.Select(choices=STATE_CHOICES, attrs=REQ)
     )
-    postal_code = USZipCodeField(
-        label="Zip code",
-        widget=forms.TextInput(
-            attrs={'class': 'required input-small','maxlength':'10'}
-        )
-    )
-    phone = USPhoneNumberField(
-        widget=forms.TextInput(attrs=REQ)
-    )
 
     class Meta:
         model = ProposalContact
         fields = (
             'first_name','last_name','email','address1','address2',
-            'city','state','postal_code','phone','presenter_type',
+            'city','state','postal_code','country','phone','presenter_type',
             'affiliation','how_hear','abstract','submitting'
         )
+        widgets = {'country': CountrySelectWidget}
 
