@@ -65,7 +65,7 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
 
     list_display  = (
         'last_name','first_name','created_at','dob','age','football',
-        'gender','address1','address2','city','state','postal_code','phone',
+        'gender','address1','city','state','postal_code','phone',
         'email','order_transid','order_status','parent_guard','roommate',
         'dorm','years_attend','goalkeeper','shirt_size','session','reg_fee',
         'amount','order_total','payment_method',
