@@ -77,7 +77,7 @@ def screenscrape(request):
 
 def obits(request):
     obs = Contact.objects.filter(category="Death Announcement")
-    notes = obs.order_by("classyear", "last_name")
+    notes = obs.order_by("-classyear", "last_name")
 
     return render_to_response("alumni/classnotes/archives.html", {
         "notes": notes,"title":"In Memoriam",

@@ -3,7 +3,7 @@
     Class Notes Archives &mdash; Alumni &mdash; Carthage College
 {% endblock %}
 {% block extra_style %}
-<link rel="stylesheet" href="//www.carthage.edu/static/vendor/jquery/plugins/wowwindow/wowwindow.css"
+<link rel="stylesheet" href="//www.carthage.edu/static/vendor/jquery/plugins/magnific/popup.css"
     type="text/css" />
 <style>
 .jqmClose{
@@ -16,20 +16,20 @@
 </style>
 {% endblock %}
 {% block extra_javascript %}
-<script src="//www.carthage.edu/static/vendor/jquery/plugins/wowwindow/jquery.wowwindow.min.js"
+<script src="//www.carthage.edu/static/vendor/jquery/plugins/magnific/popup.js"
     type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     $(function() {
-        $('a[rel=popupfoto]').wowwindow({
-            draggable: true,
-            videoIframe: false,
-            rotate: false
-        });
-        $('.jqmodal').wowwindow({
-            draggable: true,
-            height: 600,
-            width: 800,
-            videoIframe: false
+        $('a[rel=popupfoto]').magnificPopup({type:'image'});
+        $('.jqmodal').magnificPopup({
+            type: 'iframe',
+            iframe: {
+                patterns: {
+                    dashboard: {
+                        src: $(this).attr('href')
+                    }
+                }
+            }
         });
     });
 </script>
@@ -59,7 +59,15 @@ Class Notes Archive &mdash;
     {% for n in notes %}
         {% ifchanged n.classyear %}
             {% if not forloop.first %}&nbsp;|&nbsp;{% endif %}
-            <strong><a href="#{{ n.classyear }}">{{ n.classyear }}</a></strong>
+            <strong>
+                <a href="#{{ n.classyear }}">
+                {% if n.classyear == "1847" %}
+                Friends of the college
+                {% else %}
+                {{ n.classyear }}
+                {% endif %}
+                </a>
+            </strong>
         {% endifchanged %}
     {% endfor %}
     </p>
@@ -67,7 +75,13 @@ Class Notes Archive &mdash;
     {% for n in notes %}
         {% ifchanged %}
             <h2 style="color:#880;">
-                <a name="{{ n.classyear }}">{{ n.classyear }}</a>
+                <a name="{{ n.classyear }}" class="anchor">
+                {% if n.classyear == "1847" %}
+                Friends of the college
+                {% else %}
+                {{ n.classyear }}
+                {% endif %}
+                </a>
             </h2>
         {% endifchanged %}
         {% if n.picture %}
