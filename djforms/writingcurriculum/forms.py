@@ -6,17 +6,17 @@ from djforms.writingcurriculum.models import CourseProposal, DAY_SPS_CHOICES
 from tagging.models import Tag, TaggedItem
 
 try:
-    period_tag = Tag.objects.get(name__iexact='Period')
-    PERIOD = TaggedItem.objects.get_by_model(
-        GenericChoice, period_tag
+    term_tag = Tag.objects.get(name__iexact='WAC Term')
+    TERM = TaggedItem.objects.get_by_model(
+        GenericChoice, term_tag
     ).filter(active = True)
 except:
-    PERIOD = GenericChoice.objects.none()
+    TERM = GenericChoice.objects.none()
 
 class ProposalForm(forms.ModelForm):
     academic_term = forms.ModelChoiceField(
         empty_label = None,
-        queryset = PERIOD, widget=forms.RadioSelect()
+        queryset = TERM, widget=forms.RadioSelect()
     )
     day_sps = forms.ChoiceField(
         label = "Day or SPS",
