@@ -101,7 +101,7 @@ class Contact(GenericContact):
     )
     phone = models.CharField(
         verbose_name='Phone number',
-        max_length=18,
+        max_length=24,
         help_text="Format: XXX-XXX-XXXX"
     )
     address1 = models.CharField(
