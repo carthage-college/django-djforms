@@ -52,7 +52,7 @@ def form(request, pid=None):
     manager = request.user.has_perm('scholars.manage_presentation')
     # get people for select field
     jason  = get_json("faculty")
-    faculty = settings.COS_FACULTY
+    faculty = []
     for j in jason:
         faculty.append(j[j.keys()[0]])
 
