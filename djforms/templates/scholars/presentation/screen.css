@@ -9,6 +9,6 @@
 }
 .work-type, .requirements, .funding, .abstract {margin-bottom:10px;}
 .work-type p, .requirements span, .funding span, .abstract span {
-    font-size:1.3em;font-weight:bold;
+    font-size:1.2em;
 }
 .work-type p span {font-size:.9em;font-weight:normal;}
