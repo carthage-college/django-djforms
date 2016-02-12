@@ -64,6 +64,7 @@
                     <input type="hidden" name="profile-phone"
                         value="{{request.user.get_profile.phone}}" />
                 </li>
+                {% endif %}
                 <li class="ctrlHolder">
                     <h3><label for="id_evs-photo">Photo</label></h3>
                     <div>
@@ -72,7 +73,6 @@
                         <p class="help">Upload a photo from your device</p>
                     </div>
                 </li>
-                {% endif %}
                 <li class="btnHolder">
                     <input type="submit" value="Submit Request" class="button" />
                 </li>
