@@ -11,6 +11,8 @@ class DonationContactAdmin(admin.ModelAdmin):
     model = DonationContact
     exclude = ('country','second_name','previous_name','salutation')
     raw_id_fields = ('order',)
+    list_max_show_all   = 500
+    list_per_page       = 500
 
     ordering = ['-created_at','last_name', 'city', 'state', 'postal_code']
     search_fields = ('last_name', 'phone', 'city', 'state', 'postal_code')
