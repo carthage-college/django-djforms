@@ -39,6 +39,7 @@
             $('form#profile').submit(function(){
                 $('#id_or-total').val( $("input[name=ct-brick_type]:checked").val() );
                 $(this).children('input[type=submit]').attr('disabled', 'disabled');
+                return true;
             });
         });
     </script>

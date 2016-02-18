@@ -57,6 +57,7 @@ Carthage College
             // disable submit button after users clicks it
             $('form#profile').submit(function(){
                 $(this).children('input[type=submit]').attr('disabled', 'disabled');
+                return true;
             });
         });
     </script>

@@ -19,6 +19,7 @@
             // disable submit button after user clicks it
             $('form#profile').submit(function(){
                 $(this).children('input[type=submit]').attr('disabled', 'disabled');
+                return true;
             });
         });
     </script>

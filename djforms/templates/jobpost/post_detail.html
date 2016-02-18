@@ -27,6 +27,7 @@
             });
             $('#apply-form').submit(function(){
                 $('input[type=submit]', this).attr('disabled', 'disabled');
+                return true;
             });
             $('#print-link h2').append('<a href="#" id="print">Print</a>');
             $('#print').click(function() {
