@@ -7,7 +7,7 @@
             <div class="person">
                 <p>
                     {% if o.mugshot %}
-                        <img class="mugshot"
+                        <img class="mugshot" style="width:250px;"
                             src="https://{{server_url}}{{media_url}}{{o.mugshot}}" />
                     {% endif %}
                     <strong>Name</strong>:
@@ -27,10 +27,14 @@
                             {{prof.firstname}} {{prof.lastname}}
                     </a>
                     {% else %}
-                        {{o.sponsor}}
+                        {{o.sponsor_name}}
                     {% endif %}
                     <br />
                     <strong>Other Sponsors</strong>: {{o.sponsor_other}}<br />
+                    <strong>Type of research: </strong>{{p.work_type}}<br />
+                    {% if p.funding %}
+                    <strong>Funding:</strong> {{p.funding}}<br>
+                    {% endif %}
                 </p>
                 <div style="clear:both;"></div>
             </div>
@@ -39,7 +43,7 @@
             <div class="person">
                 <p>
                     {% if o.mugshot %}
-                        <img class="mugshot"
+                        <img class="mugshot" style="width:250px;"
                             src="https://{{server_url}}{{media_url}}{{o.mugshot}}" />
                     {% endif %}
                     <strong>Name</strong>:
@@ -52,28 +56,23 @@
                     {% endif %}
                     <br />
                     <strong>Department</strong>: {{o.department}}<br />
+                    <strong>Type of research: </strong>{{p.work_type}}<br />
+                    {% if p.funding %}
+                    <strong>Funding:</strong> {{p.funding}}<br>
+                    {% endif %}
                 </p>
                 <div style="clear:both;"></div>
             </div>
         {% endif %}
     {% endfor %}
-    <div class="work-type">
-        <p>Type of research: <span>{{p.work_type}}</span></p>
-    </div>
     <div class="abstract">
-        <span>Abstract</span>
+        <h3>Abstract</h3>
         {{p.abstract_text|safe}}
     </div>
     {% if p.requirements %}
     <div class="requirements">
         <span>Requirements</span>
         {{p.requirements}}
-    </div>
-    {% endif %}
-    {% if p.funding %}
-    <div class="funding">
-        <span>Funding</span>
-        {{p.funding}}
     </div>
     {% endif %}
     {% if p.abstract_file %}
