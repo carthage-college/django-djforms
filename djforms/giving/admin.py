@@ -14,8 +14,10 @@ class DonationContactAdmin(admin.ModelAdmin):
     list_max_show_all   = 500
     list_per_page       = 500
 
-    ordering = ['-created_at','last_name', 'city', 'state', 'postal_code']
-    search_fields = ('last_name', 'phone', 'city', 'state', 'postal_code')
+    ordering = [
+        '-created_at','last_name','city','state','postal_code','anonymous'
+    ]
+    search_fields = ('last_name','phone','city','state','postal_code')
     #inlines = [OrderInline,]
 
     list_display  = (
@@ -25,7 +27,7 @@ class DonationContactAdmin(admin.ModelAdmin):
         'order_promo',
         'order_cycle','order_payments','order_start_date',
         'order_transid','order_status','order_total',
-        'order_comments','opt_in'
+        'order_comments','opt_in','anonymous'
     )
 
     def order_promo(self, obj):

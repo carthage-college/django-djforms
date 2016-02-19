@@ -108,6 +108,13 @@ class DonationContactForm(ContactForm):
             life insurance, or will inclusions.
         '''
     )
+    anonymous = forms.BooleanField(
+        required=False,
+        label='''
+            I would like my gift to remain anonymous, and not be
+            published on any donor list or in the annual report.
+        '''
+    )
     spouse = forms.CharField(
         required=False, label='Spouse', max_length=100
     )
@@ -120,7 +127,7 @@ class DonationContactForm(ContactForm):
         fields = (
             'first_name','last_name','spouse','relation','class_of','email',
             'phone','address1','address2','city','state','postal_code',
-            'matching_company','opt_in'
+            'matching_company','opt_in','anonymous'
         )
 
 class DonationOrderForm(OrderForm):

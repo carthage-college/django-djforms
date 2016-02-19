@@ -142,9 +142,16 @@ def giving_form(request, transaction, campaign=None):
             cc_form.is_valid()
     else:
         # order form
+        init = {}
+        if request.GET.get("amount"):
+            try:
+                # simple way to guard against malicious data
+                init["total"] = float(request.GET.get("amount"))
+            except:
+                pass
         or_form = str_to_class(
             "djforms.giving.forms", or_form_name
-        )(prefix="or")
+        )(prefix="or", initial=init)
         # contact form
         ct_form = str_to_class(
             "djforms.giving.forms", ct_form_name

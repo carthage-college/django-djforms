@@ -26,6 +26,12 @@ class DonationContact(Contact):
             or will inclusions.
         '''
     )
+    anonymous = models.BooleanField(
+        verbose_name='''
+            I would like my gift to remain anonymous, and not be
+            published on any donor list or in the annual report.
+        '''
+    )
 
 class BrickContact(Contact):
     """
