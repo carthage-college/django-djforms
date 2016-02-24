@@ -1,12 +1,9 @@
 {% extends "djsuki/base.html" %}
-{% load get_api %}
 {% block title %}Directory &mdash; Alumni &mdash; Carthage College{% endblock %}
 {% block content %}
 <div class="row-fluid">
     <!-- Begin image slider -->
     <div class="flexslider image-slider span6">
-        {% get_api_object as gallery photologue gallery 125 code %}
-        {{gallery}}
     </div>
     <!-- end  .flexslider. image-slider span6 -->
     <div class="span6">
@@ -94,11 +91,7 @@
 {% endblock %}
 {% block news %}
 <h4>Alumni News</h4>
-{% get_api_object as news cms newspageblock 433 code %}
-{{news}}
 {% endblock %}
 {% block events %}
 <h4>Upcoming Events</h4>
-{% get_api_object as events cms calendarpageblock 11 code %}
-{{events}}
 {% endblock %}
