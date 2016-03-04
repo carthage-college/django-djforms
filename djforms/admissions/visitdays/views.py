@@ -52,7 +52,7 @@ def VisitDayForm(request, event_type):
             else:
                 TO_LIST = ["admissions@carthage.edu"]
 
-            subject = "{} on {} for {}, {}".format(
+            subject = u"{} on {} for {}, {}".format(
                 visit_day.title, profile.date, profile.last_name,
                 profile.first_name
             )
