@@ -42,5 +42,5 @@ class ApplicationForm(forms.ModelForm):
         exclude = ('profile',)
         fields = [
             'organizations','skills_experience','why_orientation_leader',
-            'describe_experience','peer_mentoring','references'
+            'describe_experience','references'
         ]

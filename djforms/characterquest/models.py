@@ -33,13 +33,6 @@ class ApplicationProfile(models.Model):
             at Carthage is all about.
         """
     )
-    peer_mentoring = models.TextField(
-        "Peer mentoring",
-        help_text = """
-            What characteristics do you possess that make you a valuable
-            peer resource for new students?
-        """
-    )
     references = models.TextField(
         "References",
         help_text = """
