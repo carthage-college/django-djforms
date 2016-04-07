@@ -271,7 +271,7 @@ def email_presenters(request,pid,action):
                     else:
                         TO_LIST.append(presentation.leader.sponsor_email)
                 data = {"content":form_data["content"]}
-                sub = "[Celebration of Scholars] Info about your presentation",
+                sub = "[Celebration of Scholars] Info about your presentation"
                 send_mail (
                     request, TO_LIST, sub,
                     FEMAIL, "scholars/presenters/email_data.html", data, BCC

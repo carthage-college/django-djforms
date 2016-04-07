@@ -98,6 +98,7 @@ class GenericContact(models.Model):
     updated_at          = models.DateTimeField(auto_now=True)
     first_name          = models.CharField(max_length=128)
     last_name           = models.CharField(max_length=128)
+    #email               = models.EmailField(null=True,blank=True)
     email               = models.EmailField()
 
     class Meta:
