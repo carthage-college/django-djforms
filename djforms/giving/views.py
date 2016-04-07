@@ -146,7 +146,7 @@ def giving_form(request, transaction, campaign=None):
         if request.GET.get("amount"):
             try:
                 # simple way to guard against malicious data
-                init["total"] = float(request.GET.get("amount"))
+                init["total"] = "{0:.2f}".format(int(request.GET.get("amount")))
             except:
                 pass
         or_form = str_to_class(
