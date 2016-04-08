@@ -37,7 +37,7 @@ for p in prez:
                 s.mugshot.name = new_filename
                 s.save()
             except:
-                print "No such file or directory."
+                print "No such file or directory or permissions problem"
                 print "Original: {}".format(orig)
                 print "New: {}".format(new)
 
