@@ -18,7 +18,7 @@ import os
 import logging
 logger = logging.getLogger(__name__)
 
-SUBJECT = """Thank you, {} {}, for your donation to Carthage"""
+SUBJECT = u"""Thank you, {} {}, for your donation to Carthage"""
 
 def giving_form(request, transaction, campaign=None):
     """
