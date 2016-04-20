@@ -18,7 +18,7 @@ def application_profile_form(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL]
     else:
-        TO_LIST = settings.CHARACTER_QUEST_TO_LIST
+        TO_LIST = list(settings.CHARACTER_QUEST_TO_LIST)
     BCC = settings.MANAGERS
 
     s_date = date(
