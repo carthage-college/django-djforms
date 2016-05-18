@@ -48,10 +48,6 @@ AUTH_PROFILE_MODULE = 'core.UserProfile'
 SECRET_KEY = ''
 HONEYPOT_FIELD_NAME=""
 HONEYPOT_VALUE=""
-CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.word_challenge'
-CAPTCHA_NOISE_FUNCTIONS = ''
-CAPTCHA_DICTIONARY_MAX_LENGTH = 9
-CAPTCHA_WORDS_DICTIONARY = ''
 # Character Quest Window
 CHARACTER_QUEST_END_MONTH = 4
 CHARACTER_QUEST_END_DAY = 12
@@ -94,7 +90,6 @@ INSTALLED_APPS = (
     # third party projects
     'authority',
     'bootstrapform',
-    'captcha',
     'django_countries',
     'honeypot',
     'imagekit',

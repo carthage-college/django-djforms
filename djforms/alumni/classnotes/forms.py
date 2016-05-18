@@ -5,8 +5,6 @@ from djforms.alumni.classnotes.models import Contact
 
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
-from captcha.fields import CaptchaField
-
 import datetime
 
 CLASSYEARS  = list(YEARS1)
@@ -48,7 +46,6 @@ class ContactForm(forms.ModelForm):
         widget=forms.Select(choices=CATEGORIES, attrs=REQ),
         required=True
     )
-    captcha = CaptchaField(required=True)
 
     class Meta:
         model = Contact
@@ -63,6 +60,6 @@ class ContactForm(forms.ModelForm):
             'salutation','first_name','second_name','last_name','suffix',
             'previous_name','email','classyear','spousename',
             'spousepreviousname','spouseyear','hometown','classnote',
-            'category','picture','caption','captcha'
+            'category','picture','caption'
         ]
 
