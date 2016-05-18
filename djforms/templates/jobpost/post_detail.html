@@ -45,15 +45,17 @@
                         $.ajax ({
                             type: "POST",
                             url: "/forms/job/applicants/delete/",
-                            data: {pid:{{post.id}},},
+                            data: {pid:{{post.id}}},
                             cache: false,
                             error:function(xhr, ajaxOptions, thrownError) {
                                 $("#dialog-confirm").dialog( "close" );
+                                console.log("fail");
                                 $.blockUI({  message: "<h1>ERROR: "+ thrownError +"</h1>" });
                                 $.unblockUI({ fadeOut: 2000 });
                             },
                             success: function() {
                                 $("#dialog-confirm").dialog( "close" );
+                                console.log("success");
                                 $.blockUI({ message: "<h1>Applicants deleted</h1>" });
                                 $.unblockUI({ fadeOut: 2000 });
                             }
@@ -72,7 +74,9 @@
 {% endifusergroup %}
 {% endblock %}
 {% block extra_style %}
-{% ifusergroup Staff Faculty %}
+{% ifusergroup carthageStaffStatus carthageFacultyStatus %}
+        <link href="//www.carthage.edu/static/vendor/jquery/ui/current/jquery-ui.min.css"
+            rel="stylesheet" type="text/css" />
     <link href="//www.carthage.edu/static/vendor/jquery/ui/1.11.0/jquery-ui.min.css"
         rel="stylesheet" type="text/css" />
     <link href="//www.carthage.edu/static/vendor/jquery/ui/1.11.0/jquery-ui.theme.min.css"
