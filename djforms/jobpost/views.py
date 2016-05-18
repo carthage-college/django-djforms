@@ -37,7 +37,7 @@ def applicants_delete(request):
     if request.method == "POST":
         pid = request.POST.get('pid')
         job = Post.objects.get(id=pid)
-        if job.creator == request.user:
+        if job.creator == request.user or request.user.is_superuser:
             JobApplyForm.objects.filter(job__id=pid).delete()
             return HttpResponse(
                 "Success", mimetype="text/plain; charset=utf-8"
