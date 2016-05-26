@@ -18,4 +18,15 @@ urlpatterns = patterns('djforms.lis',
         TemplateView.as_view(template_name='lis/data_entered.html'),
         name="lis_success"
     ),
+    # mathematica
+    url(
+        r'^conferences/mathematica/registration/success/$',
+        'conferences.mathematica.views.registration_success',
+        name="mathematica_registration_success"
+    ),
+    url(
+        r'^conferences/mathematica/registration/$',
+        'conferences.mathematica.views.registration_form',
+        name='mathematica_registration_form'
+    ),
 )
