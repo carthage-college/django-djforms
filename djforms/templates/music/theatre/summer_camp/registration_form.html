@@ -102,15 +102,7 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
                 </li>
             </ol>
         </fieldset>
-        <fieldset class="blockLabels">
-            <ol>
-                <li class="btnHolder">
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Register" class="button" />
-                    <p>
-                </li>
-            </ol>
-        </fieldset>
+        {% include "form_submit.inc.html" %}
         {% get_lw_content as questions blurbs 1978 %}
         {{questions.body}}
     </form>

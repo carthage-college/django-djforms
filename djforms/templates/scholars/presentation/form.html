@@ -254,14 +254,9 @@
                     </div>
                     {% endfor %}
                 </li>
-                {% block buttons %}
-                <li class="btnHolder">
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Submit" class="button" />
-                </li>
-                {% endblock %}
             </ol>
         </fieldset>
+        {% include "form_submit.inc.html" %}
     </form>
     {# else #}
     <!--

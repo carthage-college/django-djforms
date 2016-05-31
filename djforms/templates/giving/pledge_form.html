@@ -121,11 +121,8 @@
             {% endif %}
             <ol>
                 {% include "form_field_credit_card.inc.html" %}
-                <li class="btnHolder">
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Submit" class="button" />
-                </li>
             </ol>
+            {% include "form_submit.inc.html" %}
         </fieldset>
     </form>
 </div>

@@ -33,12 +33,9 @@
                     {% for field in form %}
                         {% include "form_field.inc.html" %}
                     {% endfor %}
-                    <li class="btnHolder">
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Submit" class="button" />
-                    </li>
                 </ol>
             </fieldset>
+            {% include "form_submit.inc.html" %}
         </form>
     {% else %}
         <p>We are no longer accepting applications.</p>

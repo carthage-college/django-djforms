@@ -161,12 +161,10 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
                 <li class="btnHolder">
                     {% get_lw_content as payments blurbs 2146 %}
                     {{payments.body}}
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Register" class="button" />
-                    <p>
                 </li>
             </ol>
         </fieldset>
+        {% include "form_submit.inc.html" %}
         <h2>Questions?</h2>
         <fieldset class="blockLabels">
             <strong>Call Steve Domin at (262) 551-5930</strong></p>

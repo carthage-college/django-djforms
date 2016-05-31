@@ -109,14 +109,7 @@
                 {% endfor %}
             </ol>
         </fieldset>
-        <fieldset class="blockLabels">
-            <ol>
-                <li class="btnHolder">
-                    <label for="id_submit">&nbsp;&nbsp;</label>
-                    <input type="submit" value="Submit Request" class="button" />
-                </li>
-            </ol>
-        </fieldset>
+        {% include "form_submit.inc.html" %}
     </form>
 </div>
 {% endblock %}
