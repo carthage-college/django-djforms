@@ -35,15 +35,8 @@ def registration_form(request):
                 order.cc_name = form_proc.name
                 order.cc_4_digits = form_proc.card[-4:]
                 order.save()
-                # save guest object if attender form & guest form is valid
-                if guest:
-                    guest = form_reg2.save()
-                    guest.order.add(order)
-                    guest.save()
                 order.contact = contact
                 TO_LIST.append(contact.email)
-                # save guest to order object for email data
-                order.guest = guest
                 send_mail(
                     request, TO_LIST,
                     "[LIS] Course-Ference registration",
