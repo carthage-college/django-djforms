@@ -15,111 +15,67 @@
         First name
     </dt>
     <dd {{dl_dd}}>
-        {{data.reg.first_name}}
-    </dd>
-    <dt {{dl_dt}}>
-        Middle name
-    </dt>
-    <dd {{dl_dd}}>
-        {{data.reg.second_name|default:"&nbsp;"}}
+        {{data.contact.first_name}}
     </dd>
     <dt {{dl_dt}}>
         Last name
     </dt>
     <dd {{dl_dd}}>
-        {{data.reg.last_name}}
+        {{data.contact.last_name}}
     </dd>
     <dt {{dl_dt}}>
-        Previous name
+        Email
     </dt>
     <dd {{dl_dd}}>
-        {{data.reg.previous_name|default:"&nbsp;"}}
+        {{data.contact.email|default:"&nbsp;"}}
+    </dd>
+    <dt {{dl_dt}}>
+        Job title
+    </dt>
+    <dd {{dl_dd}}>
+        {{data.contact.job_title}}
+    </dd>
+    <dt {{dl_dt}}>
+        Institution/Organization
+    </dt>
+    <dd {{dl_dd}}>
+        {{data.contact.affiliation}}
     </dd>
     <dt {{dl_dt}}>
         Address
     </dt>
     <dd {{dl_dd}}>
-        {{data.reg.address1}}
+        {{data.contact.address1}}
     </dd>
     <dt {{dl_dt}}>
         City
     </dt>
     <dd {{dl_dd}}>
-        {{data.reg.city}}
+        {{data.contact.city}}
     </dd>
     <dt {{dl_dt}}>
         State
     </dt>
     <dd {{dl_dd}}>
-        {{data.reg.state}}
+        {{data.contact.state}}
     </dd>
     <dt {{dl_dt}}>
         Postal code
     </dt>
     <dd {{dl_dd}}>
-        {{data.reg.postal_code}}
+        {{data.contact.postal_code}}
     </dd>
     <dt {{dl_dt}}>
-        Mobile phone
+        Phone
     </dt>
     <dd {{dl_dd}}>
-        {{data.reg.phone|default:"&nbsp;"}}
+        {{data.contact.phone}}
     </dd>
-    <dt {{dl_dt}}>
-        Home phone
-    </dt>
-    <dd {{dl_dd}}>
-        {{data.reg.phone_home|default:"&nbsp;"}}
-    </dd>
-    <dt {{dl_dt}}>
-        Work phone
-    </dt>
-    <dd {{dl_dd}}>
-        {{data.reg.phone_work|default:"&nbsp;"}}
-    </dd>
-    <dt {{dl_dt}}>
-        Personal email
-    </dt>
-    <dd {{dl_dd}}>
-        {{data.reg.email|default:"&nbsp;"}}
-    </dd>
-    <dt {{dl_dt}}>
-        Work email
-    </dt>
-    <dd {{dl_dd}}>
-        {{data.reg.email_work|default:"&nbsp;"}}
-    </dd>
-    <dt {{dl_dt}}>
-        Social Security number
-    </dt>
-    <dd {{dl_dd}}>
-        {{data.reg.social_security_four}}
-    </dd>
-    <dt {{dl_dt}}>
-        Date of birth
-    </dt>
-    <dd {{dl_dd}}>
-        {{data.reg.date_of_birth}}
-    </dd>
-    <dt {{dl_dt}}>
-        Attended Carthage?
-    </dt>
-    <dd {{dl_dd}}>
-        {{data.reg.attended_before}}
-    </dd>
-    {% if data.reg.collegeid %}
-    <dt {{dl_dt}}>
-        College ID
-    </dt>
-    <dd {{dl_dd}}>
-        {{data.reg.collegeid|default:"&nbsp;"}}
-    </dd>
-    {% endif %}
 </dl>
 <h3>Payment Information</h3>
 <dl {{dl_detail}}>
     <dt {{dl_dt}}>
-        Registration fee
+        Conference fee
     </dt>
     <dd {{dl_dd}}>
         ${{data.total}}

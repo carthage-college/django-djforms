@@ -37,9 +37,9 @@ def registration_form(request):
                 order.save()
                 order.contact = contact
                 TO_LIST.append(contact.email)
+                subject = "[LIS] Mathematica conference registration"
                 send_mail(
-                    request, TO_LIST,
-                    "[LIS] Course-Ference registration",
+                    request, TO_LIST, subject,
                     contact.email, email_template, order, BCC
                 )
                 return HttpResponseRedirect(
@@ -58,7 +58,7 @@ def registration_form(request):
                 if settings.DEBUG:
                     order.contact = contact
                     send_mail(
-                        request, TO_LIST, "[LIS] Course-Ference registration",
+                        request, TO_LIST, subject,
                         contact.email, email_template, order, BCC
                     )
                 else:
