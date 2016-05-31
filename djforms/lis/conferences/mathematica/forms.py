@@ -9,8 +9,9 @@ from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 
 FEE_CHOICES = (
-    ("55","Faculty/Graduate student $55"),
-    ("10","Undergraduate student $10")
+    ("30","$30 for individual registration"),
+    #("40","$40 for individual registration"),
+    ("100","$100 group discount of four or more.")
 )
 
 class RegistrationForm(ContactForm):
