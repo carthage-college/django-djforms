@@ -90,6 +90,6 @@ def registration_form(request):
 
 def registration_success(request):
     return render_to_response(
-        "lis/conferences/mathematicae/registration_done.html",
-        template, context_instance=RequestContext(request)
+        "lis/conferences/mathematica/registration_done.html",
+        context_instance=RequestContext(request)
     )
