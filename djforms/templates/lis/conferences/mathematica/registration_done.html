@@ -8,14 +8,13 @@ Carthage College
 {% endblock %}
 {% block group_name %}Library &amp; Information Services{% endblock %}
 {% block left_nav %}
-{% get_lw_content as nav blurbs 2119 %}
-{{nav.body}}
+    {% include "lis/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
 <h1 id="page_title">Mathematica Conference</h1>
 {% endblock %}
 {% block content %}
-    <h3>Registration Success</h3>
-    {% get_lw_content as success blurbs 2120 %}
+    <h2>Registration Success</h2>
+    {% get_lw_content as success blurbs 2237 %}
     {{success.body}}
 {% endblock %}
