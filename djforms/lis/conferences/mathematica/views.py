@@ -15,7 +15,7 @@ def registration_form(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL,]
     else:
-        TO_LIST = ["mathematica@carthage.edu",]
+        TO_LIST = list(settings.LIS_MATHEMATICA_REGISTRATION_EMAIL)
     BCC = settings.MANAGERS
 
     if request.POST:
