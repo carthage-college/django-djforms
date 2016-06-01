@@ -72,6 +72,11 @@
         {{data.contact.phone}}
     </dd>
 </dl>
+{% if data.contact.group_members %}
+<h4>Group members</h4>
+<pre>
+{{data.contact.group_members}}
+</pre>
 <h3>Payment Information</h3>
 <dl {{dl_detail}}>
     <dt {{dl_dt}}>

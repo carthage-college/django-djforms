@@ -66,7 +66,7 @@ urlpatterns = patterns('',
     # giving
     (r'^giving/', include('djforms.giving.urls')),
     # global bridge
-    (r'^global-bridge/', include('djforms.global_bridge.urls')),
+    #(r'^global-bridge/', include('djforms.global_bridge.urls')),
     # LIS
     (r'^lis/', include('djforms.lis.urls')),
     # for the job post environment

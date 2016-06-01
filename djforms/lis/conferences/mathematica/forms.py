@@ -10,8 +10,14 @@ from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 FEE_CHOICES = (
     ("30","$30 for individual registration"),
-    #("40","$40 for individual registration"),
-    ("100","$100 group discount of four or more.")
+    ("40","$40 for individual registration  (after July 15)"),
+    (
+        "100",
+        """
+            $100 group discount for groups of four or more
+            (must all be from the same institution)
+        """
+    ),
 )
 
 class RegistrationForm(ContactForm):
@@ -59,7 +65,7 @@ class RegistrationForm(ContactForm):
         model = Registration
         fields = (
             'first_name','last_name','email','job_title','affiliation',
-            'address1','city','state','postal_code','phone'
+            'address1','city','state','postal_code','phone','group_members'
         )
 
 

@@ -11,6 +11,14 @@ class Registration(Contact):
     job_title = models.CharField(
         max_length="128", null=True, blank=True
     )
+    group_members = models.TextField(
+        "Group members", null=True, blank=True,
+        help_text = """
+            For those choosing the group discount,
+            please include all group members' names,
+            email addresses, and titles.
+        """
+    )
 
     class Meta:
-        db_table = 'course_ference_attender'
+        db_table = 'lis_mathematica_registration'

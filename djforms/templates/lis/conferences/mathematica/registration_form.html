@@ -1,5 +1,31 @@
 {% extends "lis/conferences/mathematica/registration_done.html" %}
 {% load filters livewhale_api %}
+{% block extra_javascript %}
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    $group_members = $('#id_group_members');
+    $group_members_container = $('#group-members');
+    {% if form_ord.total.value == 100 %}
+        $group_members_container.slideDown(200);
+        $('#id_group_members').addClass("required");
+    {% else %}
+        $group_members_container.slideUp(200);
+        $group_members.removeClass("required");
+    {% endif %}
+    $fees = $('input[type=radio]');
+    $fees.change(function() {
+        $val = $(this).val();
+        if ($val == "100") {
+            $group_members_container.slideDown(200);
+            $group_members.addClass("required");
+        } else {
+            $group_members_container.slideUp(200);
+            $group_members.removeClass("required");
+        }
+    });
+});
+</script>
+{% endblock %}
 {% block extra_style %}
     <style type="text/css">
     #id_postal_code, #id_security_code,
@@ -31,17 +57,32 @@
             <legend>Contact Information</legend>
             <ol class="fleft">
                 {% for field in form_reg.visible_fields %}
-                    {% if forloop.counter|divisibleby:6 %}
-                    </ol>
-                    <ol class="fleft">
+                    {% if field.name != "group_members" %}
+                        {% if forloop.counter|divisibleby:6 %}
+                        </ol>
+                        <ol class="fleft">
+                        {% endif %}
+                        {% include "form_field.inc.html" %}
                     {% endif %}
-                    {% include "form_field.inc.html" %}
                 {% endfor %}
             </ol>
             <ol class="cf clear">
                 {% for field in form_ord.visible_fields %}
                     {% include "form_field.inc.html" %}
                 {% endfor %}
+                <li class="form-group ctrlHolder" id="group-members">
+                    <h3>
+                        <label for="id_group_members">Group members:</label>
+                    </h3>
+                    <div>
+                        <textarea rows="10" name="group_members" id="id_group_members" cols="40">{{form_reg.group_members.value|default:""}}</textarea>
+                        <p class="help">
+                            For those choosing the group discount,
+                            please include all group members' names,
+                            email addresses, and titles.
+                        </p>
+                    </div>
+                </li>
             </ol>
         </fieldset>
         <fieldset class="blockLabels" id="payment-details">
