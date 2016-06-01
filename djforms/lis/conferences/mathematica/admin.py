@@ -4,13 +4,13 @@ from djforms.lis.conferences.mathematica.models import Registration
 
 class RegistrationAdmin(admin.ModelAdmin):
     model = Registration
-
     list_display  = (
         'last_name','first_name','email','address1','address2','city','state',
         'postal_code','phone','affiliation','order_status','order_transid'
     )
     ordering      = ['last_name','affiliation']
     search_fields = ('last_name','affiliation')
+    raw_id_fields = ('order',)
 
     list_max_show_all   = 500
     list_per_page       = 500

@@ -20,6 +20,7 @@ def registration_form(request):
 
     if request.POST:
         email_template = "lis/conferences/mathematica/registration_email.html"
+        subject = "[LIS] Mathematica conference registration"
         form_reg = RegistrationForm(request.POST)
         form_ord = RegistrationOrderForm(request.POST)
         if form_reg.is_valid() and form_ord.is_valid():
@@ -37,7 +38,6 @@ def registration_form(request):
                 order.save()
                 order.contact = contact
                 TO_LIST.append(contact.email)
-                subject = "[LIS] Mathematica conference registration"
                 send_mail(
                     request, TO_LIST, subject,
                     contact.email, email_template, order, BCC

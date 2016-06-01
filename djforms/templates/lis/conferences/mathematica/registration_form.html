@@ -5,7 +5,7 @@
 $(function() {
     $group_members = $('#id_group_members');
     $group_members_container = $('#group-members');
-    {% if form_ord.total.value == 100 %}
+    {% if form_ord.total.value == "100" %}
         $group_members_container.slideDown(200);
         $('#id_group_members').addClass("required");
     {% else %}
