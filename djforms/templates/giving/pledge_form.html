@@ -107,23 +107,30 @@
                 </li>
             </ol>
         </fieldset>
+        <h2>Billing Information</h2>
         <fieldset class="blockLabels">
-            <h2>Billing Information</h2>
-            {% if form_proc.errors %}
+            {% if form_proc.errors and status %}
                 <div style="padding-left:4px;">
-                    <p class="error">
-                        The transaction was declined for the following reason:
-                        {% if status == "baddata" or status == "decline" %}
-                            <strong>{{status}}</strong>
-                        {% endif %}
-                    </p>
+                <p class="error">The transaction failed. Error: <strong>{{status}}</strong></p>
                 </div>
             {% endif %}
             <ol>
                 {% include "form_field_credit_card.inc.html" %}
             </ol>
-            {% include "form_submit.inc.html" %}
         </fieldset>
+        <fieldset class="blockLabels">
+            <ol>
+                <li class="ctrlHolder">
+                    <input type="checkbox" name="ct-anonymous"
+                        {% if ct_form.anonymous.value %}checked{% endif %}
+                        id="id_ct-anonymous">
+                    I would like my gift to remain anonymous,
+                    and not be published on any donor list or
+                    in the annual report.
+                </li>
+            </ol>
+        </fieldset>
+        {% include "form_submit.inc.html" %}
     </form>
 </div>
 {% if campaign.about %}
