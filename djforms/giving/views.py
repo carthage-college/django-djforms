@@ -85,7 +85,7 @@ def giving_form(request, transaction, campaign=None):
             contact.order.add(or_data)
             email = contact.email
             cc_form = CreditCardForm(
-                or_data, contact, request.POST, prefix="cc"
+                or_data, contact, request.POST
             )
             if cc_form.is_valid():
                 # save and update order
@@ -138,7 +138,7 @@ def giving_form(request, transaction, campaign=None):
                         'giving/%s_email.html' % transaction, data, BCC
                     )
         else:
-            cc_form = CreditCardForm(None, request.POST, prefix="cc")
+            cc_form = CreditCardForm(None, request.POST)
             cc_form.is_valid()
     else:
         # order form
@@ -157,7 +157,7 @@ def giving_form(request, transaction, campaign=None):
             "djforms.giving.forms", ct_form_name
         )(prefix="ct")
         # credit card
-        cc_form = CreditCardForm(prefix="cc")
+        cc_form = CreditCardForm()
 
     # build our template path
     template = 'giving/'
