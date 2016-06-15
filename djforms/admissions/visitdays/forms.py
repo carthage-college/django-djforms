@@ -108,3 +108,8 @@ class SaturdayForm(VisitDayForm):
 class TransferForm(VisitDayForm):
     class Meta:
         model = VisitDayProfile
+
+class TransferTuesdaysForm(VisitDayForm):
+    class Meta:
+        model = VisitDayProfile
+

@@ -13,11 +13,15 @@ from djtools.utils.convert import str_to_class
 def VisitDayForm(request, event_type):
     visit_day = get_object_or_404(VisitDay, slug=event_type)
     short = False
-    form_name = event_type.capitalize()+"Form"
+    #form_name = event_type.capitalize()
+    slug_list = event_type.split("-")
+    form_name = slug_list.pop(0).capitalize()
+    for n in slug_list:
+        form_name += "{}".format(n.capitalize())
     if request.method=='POST':
         try:
             form = str_to_class(
-                "djforms.admissions.visitdays.forms", form_name
+                "djforms.admissions.visitdays.forms", "{}Form".format(form_name)
             )(event_type,request.POST)
         except:
             form = VisitDayBaseForm(event_type,request.POST)
@@ -67,7 +71,7 @@ def VisitDayForm(request, event_type):
     else:
         try:
             form = str_to_class(
-                "djforms.admissions.visitdays.forms", form_name
+                "djforms.admissions.visitdays.forms", "{}Form".format(form_name)
             )(event_type)
         except:
             form = VisitDayBaseForm(event_type)
