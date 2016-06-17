@@ -68,13 +68,15 @@ def camp_registration(request):
                     contact.order.add(order)
                     status = order.status
                     order.reg = contact
-                    send_mail(
+                    sent = send_mail(
                         request, TO_LIST,
                         "[{}] Soccer camp registration".format(status),
                         contact.email,
                         "athletics/soccer/camp_registration_email.html",
                         order, BCC
                     )
+                    order.send_mail = sent
+                    order.save()
             else:
                 order = Order(
                     total=total,auth="COD",status="Pay later",
@@ -83,11 +85,13 @@ def camp_registration(request):
                 order.save()
                 contact.order.add(order)
                 order.reg = contact
-                send_mail(
+                sent = send_mail(
                     request, TO_LIST, "Soccer camp registration",
                     contact.email,
                     "athletics/soccer/camp_registration_email.html", order, BCC
                 )
+                order.send_mail = sent
+                order.save()
                 return HttpResponseRedirect(reverse('soccer_camp_success'))
         else:
             if request.POST.get('payment_method') == "Credit Card":
