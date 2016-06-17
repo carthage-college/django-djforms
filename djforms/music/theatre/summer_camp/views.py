@@ -33,13 +33,15 @@ def registration(request):
                     order.save()
                     contact.order.add(order)
                     order.reg = contact
-                    send_mail(
+                    sent = send_mail(
                         request, TO_LIST,
                         "Music Theatre summer camp registration",
                         contact.email,
                         "music/theatre/summer_camp/registration_email.html",
                         order, BCC
                     )
+                    order.send_mail = sent
+                    order.save()
                     return HttpResponseRedirect(
                         reverse('music_theatre_summer_camp_success')
                     )
@@ -48,7 +50,7 @@ def registration(request):
                     if r:
                         order.status = r.status
                     else:
-                        order.status = "Blocked"
+                        order.status = "Form Invalid"
                     order.cc_name = form_proc.name
                     if form_proc.card:
                         order.cc_4_digits = form_proc.card[-4:]
@@ -56,13 +58,6 @@ def registration(request):
                     contact.order.add(order)
                     status = order.status
                     order.reg = contact
-                    send_mail(
-                        request, TO_LIST,
-                        "[{}] Music Theatre summer camp registration".format(status),
-                        contact.email,
-                        "music/theatre/summer_camp/registration_email.html",
-                        order, BCC
-                    )
             else:
                 order = Order(
                     total=REG_FEE,auth="COD",status="Pay later",
@@ -71,13 +66,15 @@ def registration(request):
                 order.save()
                 contact.order.add(order)
                 order.reg = contact
-                send_mail(
+                sent = send_mail(
                     request, TO_LIST,
                     "Music Theatre summer camp registration",
                     contact.email,
                     "music/theatre/summer_camp/registration_email.html",
                     order, BCC
                 )
+                order.send_mail = sent
+                order.save()
                 return HttpResponseRedirect(
                     reverse('music_theatre_summer_camp_success')
                 )

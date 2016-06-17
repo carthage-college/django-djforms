@@ -100,10 +100,12 @@ def giving_form(request, transaction, campaign=None):
                 or_data.contact = contact
                 data = {'order':or_data,'years':years}
                 subject = SUBJECT.format(contact.first_name, contact.last_name)
-                send_mail(
+                sent = send_mail(
                     request, [email,], subject, email,
                     'giving/%s_email.html' % transaction, data, BCC
                 )
+                or_data.send_mail = sent
+                or_data.save()
                 # redirect
                 if campaign:
                     url = reverse(
@@ -121,22 +123,12 @@ def giving_form(request, transaction, campaign=None):
                 if r:
                     or_data.status = r.status
                 else:
-                    or_data.status = "Blocked"
+                    or_data.status = "Form Invalid"
                 or_data.cc_name = cc_form.name
                 if cc_form.card:
                     or_data.cc_4_digits = cc_form.card[-4:]
                 status = or_data.status
                 or_data.save()
-                if settings.DEBUG:
-                    or_data.contact = contact
-                    data = {'order':or_data,'years':years,}
-                    subject = SUBJECT.format(
-                        contact.first_name, contact.last_name
-                    )
-                    send_mail(
-                        request, [email,], subject, email,
-                        'giving/%s_email.html' % transaction, data, BCC
-                    )
         else:
             cc_form = CreditCardForm(None, request.POST)
             cc_form.is_valid()

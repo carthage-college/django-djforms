@@ -38,10 +38,12 @@ def registration_form(request):
                 order.save()
                 order.contact = contact
                 TO_LIST.append(contact.email)
-                send_mail(
+                sent = send_mail(
                     request, TO_LIST, subject,
                     contact.email, email_template, order, BCC
                 )
+                order.send_mail = sent
+                order.save()
                 return HttpResponseRedirect(
                     reverse('mathematica_registration_success')
                 )
@@ -50,21 +52,11 @@ def registration_form(request):
                 if r:
                     order.status = r.status
                 else:
-                    order.status = "Blocked"
+                    order.status = "Form Invalid"
                 order.cc_name = form_proc.name
                 if form_proc.card:
                     order.cc_4_digits = form_proc.card[-4:]
                 order.save()
-                if settings.DEBUG:
-                    order.contact = contact
-                    send_mail(
-                        request, TO_LIST, subject,
-                        contact.email, email_template, order, BCC
-                    )
-                else:
-                    return HttpResponseRedirect(
-                        reverse('mathematica_registration_success')
-                    )
         else:
             form_proc = ProcessorForm(None, request.POST)
             form_proc.is_valid()

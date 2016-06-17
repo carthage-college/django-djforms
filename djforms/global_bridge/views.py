@@ -36,13 +36,15 @@ def index(request):
                     order.save()
                     contact.order.add(order)
                     order.reg = contact
-                    send_mail(
+                    sent = send_mail(
                         request, TO_LIST,
                         "Global Bridge registration",
                         contact.email,
                         "global_bridge/registration_email.html",
                         order, BCC
                     )
+                    order.send_mail = sent
+                    order.save()
                     return HttpResponseRedirect(
                         reverse('global_bridge_registration_success')
                     )
@@ -51,7 +53,7 @@ def index(request):
                     if r:
                         order.status = r.status
                     else:
-                        order.status = "Blocked"
+                        order.status = "Form Invalid"
                     order.cc_name = form_proc.name
                     if form_proc.card:
                         order.cc_4_digits = form_proc.card[-4:]
@@ -59,13 +61,6 @@ def index(request):
                     contact.order.add(order)
                     status = order.status
                     order.reg = contact
-                    send_mail(
-                        request, TO_LIST,
-                        "[{}] Global Bridge registration".format(status),
-                        contact.email,
-                        "global_bridge/registration_email.html",
-                        order, BCC
-                    )
             else:
                 order = Order(
                     total=data_ord["total"], auth="COD", status="Pay later",
@@ -74,13 +69,15 @@ def index(request):
                 order.save()
                 contact.order.add(order)
                 order.reg = contact
-                send_mail(
+                sent = send_mail(
                     request, TO_LIST,
                     "Global Bridge registration",
                     contact.email,
                     "global_bridge/registration_email.html",
                     order, BCC
                 )
+                order.send_mail = sent
+                order.save()
                 return HttpResponseRedirect(
                     reverse('global_bridge_registration_success')
                 )

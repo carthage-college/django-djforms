@@ -46,19 +46,21 @@ def camp_registration(request):
                     order.save()
                     contact.order.add(order)
                     order.reg = contact
-                    send_mail(
+                    sent = send_mail(
                         request, TO_LIST, "Soccer camp registration",
                         contact.email,
                         "athletics/soccer/camp_registration_email.html",
                         order, BCC
                     )
+                    order.send_mail = sent
+                    order.save()
                     return HttpResponseRedirect(reverse('soccer_camp_success'))
                 else:
                     r = form_proc.processor_response
                     if r:
                         order.status = r.status
                     else:
-                        order.status = "Blocked"
+                        order.status = "Form Invalid"
                     order.cc_name = form_proc.name
                     if form_proc.card:
                         order.cc_4_digits = form_proc.card[-4:]
