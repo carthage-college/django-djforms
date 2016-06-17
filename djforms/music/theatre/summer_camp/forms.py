@@ -60,6 +60,6 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = SummerCampAttender
         exclude = (
-            'order','second_name','previous_name','salutation',
+            'order','second_name','previous_name','salutation','address2'
         )
         widgets = {'country': CountrySelectWidget}

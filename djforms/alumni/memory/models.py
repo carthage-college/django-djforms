@@ -15,7 +15,7 @@ class Questionnaire(GenericContact):
         max_length=255
     )
     address2 = models.CharField(
-        "",
+        "Address 2",
         max_length=255
     )
     city = models.CharField(

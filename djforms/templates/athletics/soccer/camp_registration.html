@@ -104,36 +104,36 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
     <form method="post" action="." class="form" id="profile">{% csrf_token %}
         {% for field in form_reg %}
             {% if field.name == "first_name" %}
-                <h2>Contact Information</h2>
                 <fieldset class="blockLabels">
+                <legend>Contact Information</legend>
                 <ol>
             {% endif %}
             {% if field.name == "gender" %}
                 </ol>
                 </fieldset>
-                <h2>Personal Information</h2>
                 <fieldset class="blockLabels">
+                <legend>Personal Information</legend>
                 <ol>
             {% endif %}
             {% if field.name == "roommate" %}
                 </ol>
                 </fieldset>
-                <h2>Housing Information</h2>
                 <fieldset class="blockLabels">
+                <legend>Housing Information</legend>
                 <ol>
             {% endif %}
             {% if field.name == "session" %}
                 </ol>
                 </fieldset>
-                <h2>Session Information</h2>
                 <fieldset class="blockLabels" id="session-info">
+                <legend>Session Information</legend>
                 <ol>
             {% endif %}
             {% if field.name == "reg_fee" %}
                 </ol>
                 </fieldset>
-                <h2>Method of Payment</h2>
                 <fieldset class="blockLabels">
+                <legend>Method of Payment</legend>
                 <ol>
             {% endif %}
             {% include "form_field.inc.html" %}
@@ -141,7 +141,7 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
         </ol>
         </fieldset>
         <fieldset class="blockLabels" id="payment-details">
-            <h2>Credit Card Details</h2>
+            <legend>Credit Card Details</legend>
             {% if form_proc.errors and status %}
                 <div style="padding-left:4px;">
                     <p class="notice">
@@ -157,6 +157,7 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
             </ol>
         </fieldset>
         <fieldset class="blockLabels">
+            <legend>Payment Information</legend>
             <ol>
                 <li class="btnHolder">
                     {% get_lw_content as payments blurbs 2146 %}
@@ -165,8 +166,8 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
             </ol>
         </fieldset>
         {% include "form_submit.inc.html" %}
-        <h2>Questions?</h2>
         <fieldset class="blockLabels">
+            <legend>Questions?</legend>
             <strong>Call Steve Domin at (262) 551-5930</strong></p>
         </fieldset>
     </form>

@@ -37,11 +37,6 @@ urlpatterns = patterns('djforms.alumni',
         'classnotes.views.contact',
         name='classnotes_form'
     ),
-    # alumni directory UI maquette
-    url(
-        r'^directory/$',
-        TemplateView.as_view(template_name='alumni/directory/home.html')
-    ),
     # distinguised alumni nomination
     url(
         r'^distinguished/nomination/success/$',

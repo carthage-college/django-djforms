@@ -30,11 +30,11 @@ $(function() {
 });
 </script>
 {% endblock %}
-{% block group_name %}Alumni{% endblock %}
+{% block group_name %}
+<a href="/alumni/">Alumni</a>
+{% endblock %}
 {% block left_nav %}
     {% include "alumni/classnotes/side_bar.html" %}
-    <h4>&nbsp;</h4>
-    {% include "alumni/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
 <h1 id="page_title">
@@ -126,6 +126,9 @@ $(function() {
                         {% if not template_debug %}required {% endif %}>
                 </li>
                 <li>
+                    <label for="id_classyear" style="display:none;">
+                        Your Class
+                    </label>
                     {{form.classyear}}
                     {% if form.classyear.errors %}
                         <span class="error">Required</span>
@@ -152,6 +155,9 @@ $(function() {
                         value="{{form.spousepreviousname.value|default_if_none:""}}">
                 </li>
                 <li>
+                    <label for="id_spouseyear" style="display:none;">
+                        Spouse's Class
+                    </label>
                     {{form.spouseyear}}
                 </li>
             </ul>
@@ -198,10 +204,11 @@ $(function() {
                     {{form.category}}
                 </li>
                 <li>
-                    <h3><label for="id_picture">Photo</label></h3>
+                    <h3><label for="faux_picture">Photo</label></h3>
                     <input type="text" class="file" name="file_info"
                         id="faux_picture" placeholder="Photo">
                     <div class="file_upload">
+                        <label for="id_picture" style="display:none;">Photo</label>
                         <input type="file" name="picture" id="id_picture"
                             placeholder="Photo" />
                     </div>

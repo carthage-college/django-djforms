@@ -3,25 +3,6 @@
     Nomination &mdash; Distinguished Alumni Awards &mdash;
     Alumni &mdash; Carthage College
 {% endblock %}
-{% block extra_style %}
-    <link href="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea.css"
-        rel="stylesheet" />
-{% endblock %}
-{% block extra_javascript %}
-    <script src="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea-0.8.min.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            $("#id_nominee-description").htmlarea({
-                toolbar: [
-                    "html","bold", "italic", "underline", "superscript",
-                    "subscript", "|", "h1", "h2", "h3", "h4", "|", "indent",
-                    "outdent", "horizontalrule", "link", "unlink", "|",
-                    "orderedList", "unorderedList"
-                ]
-            });
-        });
-    </script>
-{% endblock %}
 {% block group_name %}Alumni{% endblock %}
 {% block left_nav %}
     {% include "alumni/left_nav.html" %}

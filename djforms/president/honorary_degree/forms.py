@@ -3,8 +3,6 @@ from django import forms
 
 from djforms.president.honorary_degree.models import Nomination
 
-from captcha.fields import CaptchaField
-
 
 class NominationForm(forms.ModelForm):
 
@@ -13,7 +11,7 @@ class NominationForm(forms.ModelForm):
         required=False
     )
     cv = forms.FileField(
-        label="CV or résumé",
+        label="CV",
         max_length=768,
         required=False
     )
@@ -24,18 +22,12 @@ class NominationForm(forms.ModelForm):
         required=False
     )
     email = forms.EmailField()
-    captcha = CaptchaField(
-        label = """
-            Input the text you see in the image on the left
-        """,
-        required=True
-    )
 
     class Meta:
         model = Nomination
         fields = (
             'candidate_first_name','candidate_last_name',
             'candidate_class_year', 'reason','links','cv','first_name',
-            'last_name','email','class_year','captcha'
+            'last_name','email','class_year'
         )
 
