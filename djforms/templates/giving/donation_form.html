@@ -63,7 +63,14 @@
             <ol>
                 <li class="ctrlHolder">
                     <h3><label for="id_or-total">Amount</label></h3>
-                    <div class="required">
+                        {% if or_form.total.errors %}
+                            <div class="required warning">
+                            <span class="error-message">
+                                {{ or_form.total.errors|join:", "}}
+                            </span>
+                        {% else %}
+                            <div class="required">
+                        {% endif %}
                         <input type="text" placeholder="$"
                             name="or-total" id="id_or-total" class="required"
                             value="{{or_form.total.value|default:""}}">
