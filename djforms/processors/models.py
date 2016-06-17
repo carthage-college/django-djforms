@@ -70,7 +70,7 @@ class Order(models.Model):
     transid = models.CharField(
         max_length=100, null=True, blank=True
     )
-    mail_sent = models.BooleanField(default=False)
+    send_mail = models.BooleanField(default=False)
 
     def contact(self):
         try:
