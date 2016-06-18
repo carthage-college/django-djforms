@@ -50,24 +50,22 @@ function ValidateTransfer(){
     <form method="post" action="." class="form" id="visit_day_form">
         {% csrf_token %}
         <fieldset class="blockLabels">
+            <legend>Yes, I plan to attend on:</legend>
             <ol>
                 {% for field in form %}
-                    {% if field.name == "date" %}
-                        <li class="ctrlHolder">
-                            <h2 class="fheader">Yes, I plan to attend on:</h2>
-                        </li>
-                    {% endif %}
                     {% if field.name == "first_name" %}
-                        <li class="ctrlHolder">
-                            <h2 class="fheader">Personal Information</h2>
-                        </li>
+                        </ol></fieldset>
+                        <fieldset class="blockLabels">
+                            <legend>Personal Information</legend>
+                            <ol>
                     {% endif %}
                     {% if field.name == "high_school" %}
-                        <li class="ctrlHolder">
-                            <h2 class="fheader">
+                        </ol></fieldset>
+                        <fieldset class="blockLabels">
+                            <legend>
                                 Educational Background and Plans
-                            </h2>
-                        </li>
+                            </legend>
+                            <ol>
                     {% endif %}
                     {% include "form_field.inc.html" %}
                 {% endfor %}
