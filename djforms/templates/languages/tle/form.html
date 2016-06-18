@@ -83,11 +83,14 @@
                     {% include "form_field.inc.html" %}
                 {% endfor %}
                 {% if type == "masters" %}
-                <li class="ctrlHolder">
-                    <h2>
+                </ol></fieldset>
+                <fieldset class="blockLabels">
+                    <legend>
                         List all colleges or universities attended,
                         beginning with the most recent:
-                    </h2>
+                    </legend>
+                <ol>
+                <li class="ctrlHolder">
                     {% if not education and length == 1 %}
                         <p class="help padding-left">
                             Click on the "plus" sign below to add another
@@ -143,7 +146,7 @@
                     </div>
                 </p>
                 </li>
-                {% else %}{{length}}
+                {% else %}
                     {{education}}
                 {% endif %}
                 </ol>
