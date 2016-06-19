@@ -4,8 +4,6 @@ from tagging.models import Tag, TaggedItem
 from djforms.core.models import STATE_CHOICES, GenericChoice
 from djforms.core.models import BINARY_CHOICES
 
-from captcha.fields import CaptchaField
-
 try:
     status_tag = Tag.objects.get(name='Residency Status')
     RESIDENCY_STATUS = TaggedItem.objects.get_by_model(
@@ -36,11 +34,6 @@ class ParkingTicketAppealForm(forms.ModelForm):
         label="Was your vehicle Towed?",
         choices=BINARY_CHOICES,
         widget=forms.RadioSelect()
-    )
-    captcha = CaptchaField(
-        label = """
-            Input the text you see in the image on the left
-        """
     )
 
     class Meta:
