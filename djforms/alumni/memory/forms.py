@@ -5,7 +5,6 @@ from djforms.alumni.memory.models import Questionnaire
 from djtools.fields import YEARS1
 
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
-from captcha.fields import CaptchaField
 
 CLASSYEARS  = list(YEARS1)
 CLASSYEARS.insert(0,("","--select--"))
@@ -29,12 +28,6 @@ class QuestionnaireForm(forms.ModelForm):
     greek_siblings = forms.CharField(
         required = True
     )
-    captcha = CaptchaField(
-        label = """
-            Input the text you see in the image on the left
-        """,
-        required = True
-    )
 
     class Meta:
         model = Questionnaire
@@ -46,7 +39,7 @@ class QuestionnaireForm(forms.ModelForm):
             'first_name','second_name','last_name','class_year',
             'address1','address2','city','state','postal_code','phone','email',
             'occupation1','occupation2','greek_parent',
-            'greek_siblings','special','relive','message','captcha'
+            'greek_siblings','special','relive','message',
         )
 
 
