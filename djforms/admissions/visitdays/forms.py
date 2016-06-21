@@ -113,3 +113,7 @@ class TransferTuesdaysForm(VisitDayForm):
     class Meta:
         model = VisitDayProfile
 
+class NursingForm(VisitDayForm):
+    class Meta:
+        model = VisitDayProfile
+
