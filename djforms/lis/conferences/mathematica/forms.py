@@ -37,6 +37,9 @@ class RegistrationForm(ContactForm):
     job_title = forms.CharField(
         max_length=128,widget=forms.TextInput(attrs=REQ)
     )
+    department = forms.CharField(
+        max_length=128,widget=forms.TextInput(attrs=REQ)
+    )
     affiliation = forms.CharField(
         label="Institution/Organization",
         max_length=256,widget=forms.TextInput(attrs=REQ)
@@ -64,8 +67,9 @@ class RegistrationForm(ContactForm):
     class Meta:
         model = Registration
         fields = (
-            'first_name','last_name','email','job_title','affiliation',
-            'address1','city','state','postal_code','phone','group_members'
+            'first_name','last_name','email','job_title','department',
+            'affiliation','address1','city','state','postal_code',
+            'phone','group_members'
         )
 
 

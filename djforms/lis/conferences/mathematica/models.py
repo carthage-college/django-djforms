@@ -11,6 +11,9 @@ class Registration(Contact):
     job_title = models.CharField(
         max_length="128", null=True, blank=True
     )
+    department = models.CharField(
+        max_length="128", null=True, blank=True
+    )
     group_members = models.TextField(
         "Group members", null=True, blank=True,
         help_text = """

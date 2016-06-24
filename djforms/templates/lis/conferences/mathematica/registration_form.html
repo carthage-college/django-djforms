@@ -30,6 +30,7 @@ $(function() {
     <style type="text/css">
     #id_postal_code, #id_security_code,
     #id_expiration_month,#id_expiration_year {width:100px;}
+    .form select { height: 42px; }
     </style>
 {% endblock %}
 {% block content %}
@@ -58,7 +59,7 @@ $(function() {
             <ol class="fleft">
                 {% for field in form_reg.visible_fields %}
                     {% if field.name != "group_members" %}
-                        {% if forloop.counter|divisibleby:6 %}
+                        {% if forloop.counter|divisibleby:7 %}
                         </ol>
                         <ol class="fleft">
                         {% endif %}
