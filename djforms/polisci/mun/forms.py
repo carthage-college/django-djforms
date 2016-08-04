@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from djforms.core.models import STATE_CHOICES
+from djforms.core.models import BINARY_CHOICES
 from djforms.polisci.mun import COUNTRIES
 
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
@@ -62,6 +63,13 @@ class AttenderForm(forms.Form):
             (include your choice and delegation number)
         """,
         widget=forms.Textarea, required=False
+    )
+    missle_crisis = forms.TypedChoiceField(
+        label="""
+            Do you want to be entered into the random draw for participation
+            in the Historical Cuban Missile Crisis simulation?
+        """,
+        choices=BINARY_CHOICES, widget=forms.RadioSelect
     )
 
 class CountryForm(forms.Form):

@@ -11,14 +11,11 @@ def registration(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL]
     else:
-        TO_LIST = [
-            "jroberg@carthage.edu",
-            "ncottrell@carthage.edu"
-        ]
+        TO_LIST = settings.MODEL_UN_TO_LIST
     BCC = settings.MANAGERS
 
     if request.method=='POST':
-        form_cont = AttenderForm(request.POST, prefix="cont")
+        form_cont = AttenderForm(request.POST, prefix="cont", label_suffix='')
         form_pais = CountryForm(request.POST, prefix="pais")
         if form_cont.is_valid() and form_pais.is_valid():
             contact = form_cont.cleaned_data
@@ -35,7 +32,7 @@ def registration(request):
                 reverse_lazy("model_united_nations_success")
             )
     else:
-        form_cont = AttenderForm(prefix="cont")
+        form_cont = AttenderForm(prefix="cont", label_suffix='')
         form_pais = CountryForm(prefix="pais")
     return render_to_response(
         "polisci/mun/form.html",
