@@ -31,7 +31,7 @@ def candidate(request):
                 request, TO_LIST,
                 "[Choral Tryout Reservation] %s %s" %
                 (candidate.user.first_name,candidate.user.last_name),
-                "dshapovalov@carthage.edu",
+                settings.CHORAL_TRYOUTS_FROM
                 "music/ensembles/choral/email.html",
                 candidate, settings.MANAGERS
             )
