@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load livewhale_api %}
 {% block title %}
     {{campaign.title|default:"Giving to Carthage"}}
     Form &mdash; Giving &mdash; Carthage College
@@ -18,7 +19,8 @@
     li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
     .cost, #pledge_total_help { font-weight:bold; color:green; }
     #pledge_total_help { margin-left:9px; }
-    #pledge-payments { color:green;display:none }
+    #page-content-wrap #pledge-payments p { color:green;font-weight:bold;
+      margin-bottom:5px; }
     </style>
 {% endblock %}
 {% block group_name %}Giving{% endblock %}
@@ -77,16 +79,30 @@
                     </div>
                 </li>
                 <li class="ctrlHolder">
+                    <div class="fleft">
+                        <input type="checkbox" name="pledge" id="pledge">
+                    </div>
+                    <h3>
+                        <label for="pledge">
+                            Make my gift recurring
+                        </label>
+                    </h3>
+                    <div class="clear" id="pledge-payments">
+                    {% get_lw_content as recurring_warning blurbs 2294 %}
+                    {{recurring_warning.body}}
+                    </div>
+                </li>
+                <li class="ctrlHolder">
                     <h3><label for="id_or-comments">Designation</label></h3>
                     <div>
-                        <input type="text" name="or-comments" id="id_or-comments"
-                            value="{{or_form.comments.value|default:""}}">
-                        <p class="help">
-                            Please indicate if you would like your gift to be
-                            directed to a specific area. If this space is
-                            left blank, gifts will be directed to the
-                            <a href="/give/carthage-fund/">Carthage Fund</a>.
-                        </p>
+                      <input type="text" name="or-comments" id="id_or-comments"
+                        value="{{or_form.comments.value|default:""}}">
+                      <p class="help">
+                        Please indicate if you would like your gift to be
+                        directed to a specific area. If this space is
+                        left blank, gifts will be directed to the
+                        <a href="/give/carthage-fund/">Carthage Fund</a>.
+                      </p>
                     </div>
                 </li>
             </ol>

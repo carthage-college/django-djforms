@@ -18,7 +18,6 @@ import os
 import logging
 logger = logging.getLogger(__name__)
 
-SUBJECT = u"""Thank you, {} {}, for your donation to Carthage"""
 
 def giving_form(request, transaction, campaign=None):
     """
@@ -30,6 +29,8 @@ def giving_form(request, transaction, campaign=None):
     else:
         BCC = settings.GIVING_DONATIONS_BCC
 
+    # subject of email
+    SUBJECT = u"""Thank you, {} {}, for your donation to Carthage"""
     trans_cap = transaction.capitalize()
     ct_form_name = trans_cap + "ContactForm"
     or_form_name = trans_cap + "OrderForm"
@@ -72,10 +73,11 @@ def giving_form(request, transaction, campaign=None):
                     raise Http404
             # deal with payments if they have chosen to pledge
             if transaction != "brick" and request.POST.get("or-pledge") != "":
-                or_data.payments = request.POST["or-payments"]
+                #or_data.payments = request.POST["or-payments"]
+                or_data.payments = 0
                 or_data.auth = "store"
-                or_data.grand_total = or_data.total
-                or_data.total = or_data.total / int(or_data.payments)
+                #or_data.grand_total = or_data.total
+                #or_data.total = or_data.total / int(or_data.payments)
                 or_data.cycle = "1m"
             else:
                 or_data.payments = None
