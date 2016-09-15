@@ -12,7 +12,7 @@ from djtools.utils.mail import send_mail
 from djtools.fields import TODAY
 
 YEAR = TODAY.year
-BRICK_PRICES = ["150","500",YEAR-2000+100,YEAR-2000+300]
+BRICK_PRICES = ["250","500",YEAR-2000+100,YEAR-2000+300]
 
 import os
 import logging
@@ -64,7 +64,7 @@ def giving_form(request, transaction, campaign=None):
             or_data.avs = 0
             # deal with commemorative brick options
             if transaction == "brick" and contact.class_of == str(YEAR):
-                if or_data.total == 150:
+                if or_data.total == 250:
                     or_data.total = BRICK_PRICES[2]
                 elif or_data.total == 500:
                     or_data.total = BRICK_PRICES[3]
