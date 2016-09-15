@@ -31,7 +31,7 @@
                     $('#personal_price').text("$" + (100 + (year-2000)));
                     $('#recognition_price').text("$" + (300 + (year-2000)));
                 } else {
-                    $('#personal_price').text("$150");
+                    $('#personal_price').text("$250");
                     $('#recognition_price').text("$500");
                 }
             });
@@ -105,16 +105,16 @@
                             </span>
                         </div>
                     {% endif %}
-                    <input type="radio" id="personal_brick" value="150"
+                    <input type="radio" id="personal_brick" value="250"
                         name="ct-brick_type" class="fleft"
-                        {% if ct_form.brick_type.value == "150" %}
+                        {% if ct_form.brick_type.value == "250" %}
                         checked="checked"
                         {% endif %}
                         >
                     <label for="personal_brick" class="cf">
                         <strong>
                             <em>Personal Brick</em>&mdash;
-                            <span id="personal_price" class="cost">$150</span>
+                            <span id="personal_price" class="cost">$250</span>
                         </strong>
                     </label>
                     (4" x 8" - 3 lines)<br>
