@@ -57,6 +57,9 @@ def giving_form(request, transaction, campaign=None):
         or_form = str_to_class(
             "djforms.giving.forms", or_form_name
         )(request.POST, prefix="or")
+        cc_form = CreditCardForm(
+            or_form, ct_form, request.POST
+        )
         if ct_form.is_valid() and or_form.is_valid():
             contact = ct_form.save()
             or_data = or_form.save(commit=False)
@@ -131,9 +134,9 @@ def giving_form(request, transaction, campaign=None):
                     or_data.cc_4_digits = cc_form.card[-4:]
                 status = or_data.status
                 or_data.save()
-        else:
-            cc_form = CreditCardForm(None, request.POST)
-            cc_form.is_valid()
+        #else:
+        #    cc_form = CreditCardForm(None, request.POST)
+        #    cc_form.is_valid()
     else:
         # order form
         init = {}
