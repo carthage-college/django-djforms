@@ -14,17 +14,21 @@ def export_candidates(modeladmin, request, queryset):
         [
             'First name', 'email', 'status', 'act/stat', 'GPA', 'GPA scale',
             'Adjusted GPA', 'Information', 'Prospect status', 'Created',
-            'Updated'
+            'Updated','information'
         ]
     )
     for c in queryset:
-        writer.writerow(
-            [
-                c.first_name, c.email, c.status, c.act_sat, c.gpa, c.gpa_scale,
-                c.adjusted_gpa, c.information, c.prospect_status,c.created_on,
-                c.updated_on
-            ]
-        )
+        row = [
+            c.first_name.encode('utf-8'), c.email, c.status,
+            c.act_sat.encode('utf-8'),
+            c.gpa.encode('utf-8'), c.gpa_scale.encode('utf-8'),
+            c.adjusted_gpa.encode('utf-8'),
+            c.information.encode('utf-8'),
+            c.prospect_status,c.created_on, c.updated_on,
+            c.information.encode('utf-8')
+        ]
+
+        writer.writerow(row)
     return response
 export_candidates.short_description = """
     Export the selected Candidates for admissions to Carthage
