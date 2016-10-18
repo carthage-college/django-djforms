@@ -39,9 +39,10 @@ class MaintenanceRequestAdmin(admin.ModelAdmin):
         'email', 'phone', 'photo_link', 'status'
     )
     ordering = [
-        '-id','building','type_of_request','date_created',
+        '-id','building','date_created',
         'user__last_name','user__email','status'
     ]
+    list_filter   = ('type_of_request',)
     search_fields = ('building__name', 'room_number', 'type_of_request__name')
     actions       = [export_evs_requests]
     raw_id_fields = ("user","updated_by","photo")
