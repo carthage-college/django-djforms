@@ -18,8 +18,8 @@ Carthage College
                 $('#bank-transfer').show();
             });
             // disable submit button after users clicks it
-            $('form#profile').submit(function(){
-                $(this).children('input[type=submit]').attr('disabled', 'disabled');
+            $('form#profile').bind('submit', function (e) {
+                $('form#profile input[type=submit]').prop('disabled', true);
                 return true;
             });
         });

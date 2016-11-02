@@ -36,9 +36,9 @@
                 }
             });
             // disable submit button after users clicks it
-            $('form#profile').submit(function(){
+            $('form#profile').bind('submit', function (e) {
                 $('#id_or-total').val( $("input[name=ct-brick_type]:checked").val() );
-                $(this).children('input[type=submit]').attr('disabled', 'disabled');
+                $('form#profile input[type=submit]').prop('disabled', true);
                 return true;
             });
         });

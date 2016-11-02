@@ -55,8 +55,8 @@ Carthage College
                 $('label[for="id_amount_1"]').html('<input type="radio" id="id_amount_1" value="Full amount" name="amount" /> Full amount: $' + reg_fee);
             });
             // disable submit button after users clicks it
-            $('form#profile').submit(function(){
-                $(this).children('input[type=submit]').attr('disabled', 'disabled');
+            $('form#profile').bind('submit', function (e) {
+                $('form#profile input[type=submit]').prop('disabled', true);
                 return true;
             });
         });

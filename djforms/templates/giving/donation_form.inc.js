@@ -13,13 +13,14 @@
         $('#pledge-payments').hide();
         {% endif %}
         // disable submit button after user clicks it
-        $('form#profile').submit(function(){
+        $('form#profile').bind('submit', function (e) {
           if ( $('#pledge').prop('checked')) {
             $('#id_or-pledge').val(true);
           }else{
             $('#id_or-pledge').val("");
           }
-          $(this).children('input[type=submit]').attr('disabled', 'disabled');
+          $('form#profile input[type=submit]').prop('disabled', true);
+          return true;
         });
     });
 </script>
