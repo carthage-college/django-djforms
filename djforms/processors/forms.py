@@ -59,6 +59,11 @@ class CreditCardForm(forms.Form):
     A generic form to collect credit card information
     and then charge the credit card.
     """
+    def __init__(self, *args, **kwargs):
+        # globally override the Django >=1.6 default of ':'
+        kwargs.setdefault('label_suffix', '')
+        super(CreditCardForm, self).__init__(*args, **kwargs)
+
     billing_name = forms.CharField(
         max_length=128, label="Name on card", widget=forms.TextInput(attrs=REQ)
     )
