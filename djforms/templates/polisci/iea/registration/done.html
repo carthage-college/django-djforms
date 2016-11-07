@@ -1,14 +1,6 @@
-{% extends "polisci/wipcs/registration/form.html" %}
+{% extends "polisci/iea/registration/form.html" %}
 {% load livewhale_api %}
 {% block content %}
-    <h2>Thank you for registering</h2>
-    <p>
-        We have received your registration for the conference.
-        You will receive a detailed confirmation of your
-        registration shortly.
-    </p>
-    <p>
-        If you have any questions, please do not hesitate to
-        <a href="mailto:dusinger@carthage.edu">contact us</a>.
-    </p>
+    {% get_lw_content as success blurbs 2400 %}
+    {{success.body}}
 {% endblock %}
