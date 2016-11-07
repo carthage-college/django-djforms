@@ -1,10 +1,15 @@
 from django import forms
+from django.utils.safestring import mark_safe
 
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
-from djforms.polisci.wipcs.registration.models import RegistrationContact
-from djforms.polisci.wipcs.registration.models import PAYMENT_CHOICES
+from djforms.polisci.iea.registration.models import RegistrationContact
+from djforms.polisci.iea.registration.models import PAYMENT_CHOICES, REGGIES
+from djforms.polisci.iea.registration.models import SERVE_AS_CHOICES
 from djforms.core.models import REQ, STATE_CHOICES
+
+from djtools.fields import BINARY_CHOICES
+
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 FEE_CHOICES = (
@@ -14,9 +19,14 @@ FEE_CHOICES = (
 
 class RegistrationContactForm(ContactForm):
     """
-    WIPCS conference registration contact form, extends
+    IEA conference registration contact form, extends
     base ContactForm in processors app
     """
+
+    def __init__(self, *args, **kwargs):
+        # globally override the Django >=1.6 default of ':'
+        kwargs.setdefault('label_suffix', '')
+        super(RegistrationContactForm, self).__init__(*args, **kwargs)
 
     address1 = forms.CharField(
         max_length=255,widget=forms.TextInput(attrs=REQ)
@@ -36,6 +46,21 @@ class RegistrationContactForm(ContactForm):
     phone = USPhoneNumberField(
         widget=forms.TextInput(attrs=REQ)
     )
+    serve_as = forms.TypedChoiceField(
+        label=mark_safe("Do you wish to serve as a&#133;?"),
+        choices=SERVE_AS_CHOICES, widget=forms.RadioSelect(),
+        help_text='''
+            If so, please provide your Discipline and Specialty below.
+        ''',
+        required=False
+    )
+    registration_fee = forms.TypedChoiceField(
+        choices=REGGIES, widget=forms.RadioSelect()
+    )
+    kao_member = forms.TypedChoiceField(
+        choices=BINARY_CHOICES, widget=forms.RadioSelect(),
+        help_text = 'KAO Members receive a $50 discount on the Registration Fee.'
+    )
     payment_method = forms.TypedChoiceField(
         choices=PAYMENT_CHOICES, widget=forms.RadioSelect()
     )
@@ -43,19 +68,21 @@ class RegistrationContactForm(ContactForm):
     class Meta:
         model = RegistrationContact
         fields = (
-            'first_name','last_name','email','address1','address2',
-            'city','state','postal_code','phone','how_hear',
-            'payment_method'
+            'first_name','last_name','institution','email',
+            'address1','address2','city','state','postal_code','phone',
+            'serve_as','discipline','specialty','registration_fee',
+            'kao_member','payment_method'
         )
 
 class RegistrationOrderForm(OrderForm):
     """
-    LIS conference registration order form, extends
+    Conference registration order form, extends
     base OrderForm in processors app
     """
     total = forms.CharField(
-        label="Conference Fee",
-        widget=forms.RadioSelect(choices=FEE_CHOICES)
+        help_text = '''
+            NOTE: There is a 3% service charge added to the registration fee.
+        '''
     )
 
     class Meta:

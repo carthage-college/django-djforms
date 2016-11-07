@@ -17,7 +17,7 @@
                     "orderedList", "unorderedList"
                 ]
             });
-            $('form#profile').submit(function(){
+            $('form#profile').bind('submit', function (e) {
                 /* check textarea for just br tag */
                 $("textarea").each(function(){
                     if (this.value == "<br>") {
@@ -25,7 +25,7 @@
                     }
                 });
                 // disable submit button after users clicks it
-                $(this).children('input[type=submit]').attr('disabled', 'disabled');
+                $('form#profile input[type=submit]').prop('disabled', true);
                 return true;
             });
         });

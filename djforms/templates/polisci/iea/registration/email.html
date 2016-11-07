@@ -26,6 +26,13 @@
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
         margin-right:10px; padding:5px; width:200px;">
+        Institution
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.contact.institution}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
         Email
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
@@ -67,12 +74,50 @@
     <dd style="margin:2px 0; padding:5px 0;">
         {{data.contact.phone}}
     </dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:200px;">
-        Conference fee
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
+        padding:5px; width:200px;">
+        Do you wish to serve as...?
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        ${{data.total}}
+        {{data.contact.serve_as}}
+    </dd>
+    {% if data.contact.serve_as %}
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
+        padding:5px; width:200px;">
+        Discipline
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.contact.discipline}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
+        padding:5px; width:200px;">
+        Specialty
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.contact.specialty}}
+    </dd>
+    {% endif %}
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        Registration type
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.contact.registration_fee}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        KAO Member
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.contact.kao_member}}
+        {% if data.contact.kao_member == "Yes"%}($50 discount){% endif %}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        Registration fee total
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        ${{data.total}} (Includes 3% service fee)
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
         padding:5px; width:200px;">
@@ -102,11 +147,4 @@
         {{data.transid}}
     </dd>
     {% endif %}
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:200px;">
-        How did you hear about this conference?
-    </dt>
-    <dd style="margin:2px 0; padding:5px 0;">
-        {{data.contact.how_hear}}
-    </dd>
 </dl>
