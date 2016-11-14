@@ -38,7 +38,7 @@ try:
     meal_service = Tag.objects.get(name__iexact='Meal service')
     MEAL_SERVICE = TaggedItem.objects.get_by_model(
         GenericChoice, meal_service
-    ).filter(active=True).order_by("name")
+    ).filter(active=True).order_by("ranking")
 except:
     MEAL_SERVICE = GenericChoice.objects.none()
 
