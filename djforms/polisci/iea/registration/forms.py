@@ -11,6 +11,8 @@ from djforms.core.models import REQ, STATE_CHOICES
 from djtools.fields import BINARY_CHOICES
 
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from django_countries.widgets import CountrySelectWidget
+
 
 FEE_CHOICES = (
     ("55","Faculty/Graduate student $55"),
@@ -35,6 +37,7 @@ class RegistrationContactForm(ContactForm):
         max_length=128,widget=forms.TextInput(attrs=REQ)
     )
     state = forms.CharField(
+        help_text = 'Choose "Other" if outside the United States',
         widget=forms.Select(choices=STATE_CHOICES, attrs=REQ)
     )
     postal_code = USZipCodeField(
@@ -69,10 +72,12 @@ class RegistrationContactForm(ContactForm):
         model = RegistrationContact
         fields = (
             'first_name','last_name','institution','email',
-            'address1','address2','city','state','postal_code','phone',
-            'serve_as','discipline','specialty','registration_fee',
+            'address1','address2','city','state','postal_code','country',
+            'phone','serve_as','discipline','specialty','registration_fee',
             'kao_member','payment_method'
         )
+        widgets = {'country': CountrySelectWidget}
+
 
 class RegistrationOrderForm(OrderForm):
     """

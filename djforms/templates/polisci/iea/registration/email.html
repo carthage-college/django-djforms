@@ -87,14 +87,14 @@
         Discipline
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.contact.discipline}}
+        {{data.contact.discipline|default:"&nbsp;"}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
         padding:5px; width:200px;">
         Specialty
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.contact.specialty}}
+        {{data.contact.specialty|default:"&nbsp;"}}
     </dd>
     {% endif %}
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
