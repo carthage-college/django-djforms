@@ -6,11 +6,12 @@ from djforms.processors.forms import ContactForm, OrderForm
 from djforms.polisci.iea.registration.models import RegistrationContact
 from djforms.polisci.iea.registration.models import PAYMENT_CHOICES, REGGIES
 from djforms.polisci.iea.registration.models import SERVE_AS_CHOICES
-from djforms.core.models import REQ, STATE_CHOICES
+from djforms.core.models import REQ
 
 from djtools.fields import BINARY_CHOICES
+from djtools.fields import STATE_CHOICES
 
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from localflavor.us.forms import USPhoneNumberField
 from django_countries.widgets import CountrySelectWidget
 
 
@@ -40,13 +41,7 @@ class RegistrationContactForm(ContactForm):
         help_text = 'Choose "Other" if outside the United States',
         widget=forms.Select(choices=STATE_CHOICES, attrs=REQ)
     )
-    postal_code = USZipCodeField(
-        label="Zip code",
-        widget=forms.TextInput(
-            attrs={'class': 'required input-small','maxlength':'10'}
-        )
-    )
-    phone = USPhoneNumberField(
+    phone = forms.CharField(
         widget=forms.TextInput(attrs=REQ)
     )
     serve_as = forms.TypedChoiceField(
@@ -65,7 +60,11 @@ class RegistrationContactForm(ContactForm):
         help_text = 'KAO Members receive a $50 discount on the Registration Fee.'
     )
     payment_method = forms.TypedChoiceField(
-        choices=PAYMENT_CHOICES, widget=forms.RadioSelect()
+        choices=PAYMENT_CHOICES, widget=forms.RadioSelect(),
+        help_text = '''
+            NOTE: There is a 3% service charge added to the registration fee
+            for credit card transactions.
+        '''
     )
 
     class Meta:
@@ -85,9 +84,6 @@ class RegistrationOrderForm(OrderForm):
     base OrderForm in processors app
     """
     total = forms.CharField(
-        help_text = '''
-            NOTE: There is a 3% service charge added to the registration fee.
-        '''
     )
 
     class Meta:

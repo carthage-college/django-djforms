@@ -14,14 +14,31 @@ Conference on the Environment
             var dueDate = new Date("2017-05-31");
             var today = new Date();
             var late_fee = 0;
+            {% if form_con.data.payment_method == "Credit Card" %}
+            var service_charge = true;
+            {% else %}
+            var service_charge = false;
+            {% endif %}
+            var $reg_fee = {{form_ord.data.total|default:0}};
             if (dueDate < today) {
                 $('#id_registration_fee_0').closest('li').remove();
             }
             $('#id_payment_method_0').click(function() {
+                if ($reg_fee > 0 && service_charge == false) {
+                  $reg_fee += ($reg_fee * .03);
+                  $('#id_total').attr('value', $reg_fee);
+                }
+                service_charge = true;
                 $('#check-details').slideUp(200);
                 $('#creditcard-details').slideDown(200);
             });
             $('#id_payment_method_1').click(function() {
+                // remove service charge if need be
+                if ($reg_fee > 0 && service_charge == true) {
+                  $reg_fee -= $reg_fee - ($reg_fee / 1.03);
+                  $('#id_total').attr('value', $reg_fee);
+                }
+                service_charge = false;
                 $('#creditcard-details').slideUp(200);
                 $('#check-details').slideDown(200);
             });
@@ -32,32 +49,37 @@ Conference on the Environment
             if ( $('#id_kao_member_0').is(':checked') ) {
                 kao = true;
             }
-            var $reg_fee = {{form_ord.data.total|default:0}};
             $('input[id^="id_registration_fee_"]').click(function() {
                 $reg_fee = parseInt($(this).attr('value').split('|')[1]);
                 // after deadline late fee for some folks
                 if (dueDate < today) {
                     if ( $(this).attr('id') == 'id_registration_fee_4' || $(this).attr('id') == 'id_registration_fee_5' ) {
-                        late_fee = 75;
-                        $reg_fee += late_fee;
+                      late_fee = 75;
+                      $reg_fee += late_fee;
                     }
                 }
                 // kao discount
                 if ( kao == true ) {
-                    $reg_fee -= 50;
+                  $reg_fee -= 50;
                 }
-                // add the service fee
-                $reg_fee += ($reg_fee * .03);
+                // add the service charge if paying by credit card
+                if (service_charge == true) {
+                  $reg_fee += ($reg_fee * .03);
+                }
                 $('#id_total').attr('value', $reg_fee);
             });
             $('#id_kao_member_0').click(function() {
                 if ($reg_fee > 0) {
-                    // remove service fee
-                    $reg_fee -= $reg_fee - ($reg_fee / 1.03);
+                    if (service_charge == true) {
+                      // remove service charge
+                      $reg_fee -= $reg_fee - ($reg_fee / 1.03);
+                    }
                     // kao discount
                     $reg_fee -= 50;
-                    // add service fee
-                    $reg_fee += ($reg_fee * .03);
+                    if (service_charge == true) {
+                      // add service charge
+                      $reg_fee += ($reg_fee * .03);
+                    }
                     $('#id_total').attr('value', $reg_fee);
                 }
                 kao = true;
@@ -65,16 +87,16 @@ Conference on the Environment
             $('#id_kao_member_1').click(function() {
                 if (kao == true) {
                     if ($reg_fee > 0) {
-                        console.log($reg_fee);
-                        // remove service fee
-                        $reg_fee -= $reg_fee - ($reg_fee / 1.03);
-                        console.log($reg_fee);
+                        if (service_charge == true) {
+                          // remove service charge
+                          $reg_fee -= $reg_fee - ($reg_fee / 1.03);
+                        }
                         // remove kao discount
                         $reg_fee += 50;
-                        console.log($reg_fee);
-                        // add service fee
-                        $reg_fee += ($reg_fee * .03);
-                        console.log($reg_fee);
+                        if (service_charge == true) {
+                           // add service charge
+                          $reg_fee += ($reg_fee * .03);
+                        }
                         $('#id_total').attr('value', $reg_fee);
                     }
                 }

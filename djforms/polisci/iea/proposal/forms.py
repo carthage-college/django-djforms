@@ -5,7 +5,6 @@ from djforms.polisci.iea.proposal.models import ProposalContact
 from djforms.core.models import REQ
 from djtools.fields import STATE_CHOICES
 
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 from django_countries.widgets import CountrySelectWidget
 
 
