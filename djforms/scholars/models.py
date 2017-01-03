@@ -222,7 +222,7 @@ class Presentation(models.Model):
     abstract_text       = models.TextField("Abstract", help_text='Copy and paste your abstract text or start typing.')
     need_table          = models.CharField(max_length=3, choices=BINARY_CHOICES)
     need_electricity    = models.CharField(max_length=3, choices=BINARY_CHOICES)
-    poster_file         = models.FileField(upload_to='files/scholars/posters/2014', max_length="768", help_text='Upload a poster file', null=True, blank=True)
+    poster_file         = models.FileField(upload_to='files/scholars/posters/2017', max_length="768", help_text='Upload a poster file', null=True, blank=True)
     status              = models.BooleanField(default=False)
 
     class Meta:

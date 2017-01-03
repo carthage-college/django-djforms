@@ -28,9 +28,9 @@ REGGIES = (
         )
     ),
     (
-        'Spouses/companions|100',
+        'Spouses/companions|75',
         mark_safe(
-            '$100 Spouses/companions <strong>&dagger;</strong>'
+            '$75 Spouses/companions <strong>&dagger;</strong>'
         )
     ),
     (
