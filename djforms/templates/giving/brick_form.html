@@ -12,7 +12,7 @@
             $("#inscription_5").slideUp(200);
             {% endif %}
             {% if ct_form.class_of.value == year %}
-            $('#personal_price').text("$" + (100 + (year-2000)));
+            $('#personal_price').text("$" + (200 + (year-2000)));
             $('#recognition_price').text("$" + (300 + (year-2000)));
             {% endif %}
             $("input[name=ct-brick_type]:radio").change(function () {
@@ -28,7 +28,7 @@
             });
             $("#id_ct-class_of").change(function () {
                 if ($(this).val() == year) {
-                    $('#personal_price').text("$" + (100 + (year-2000)));
+                    $('#personal_price').text("$" + (200 + (year-2000)));
                     $('#recognition_price').text("$" + (300 + (year-2000)));
                 } else {
                     $('#personal_price').text("$250");
