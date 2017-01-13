@@ -12,7 +12,7 @@ from djtools.utils.mail import send_mail
 from djtools.fields import TODAY
 
 YEAR = TODAY.year
-BRICK_PRICES = ["250","500",YEAR-2000+100,YEAR-2000+300]
+BRICK_PRICES = ["250","500",YEAR-2000+200,YEAR-2000+300]
 
 import os
 import logging
