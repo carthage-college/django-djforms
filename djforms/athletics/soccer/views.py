@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from djforms.athletics.soccer import BCC, TO_LIST
+from djforms.athletics.soccer import BCC, INSURANCE_TO_LIST, TO_LIST
 from djforms.processors.models import Contact, Order
 from djforms.processors.forms import TrustCommerceForm
 from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
@@ -111,7 +111,6 @@ def camp_registration(request):
     )
 
 def insurance_card(request):
-
     if request.POST:
         form = SoccerCampInsuranceCardForm(request.POST, request.FILES)
         if form.is_valid():
@@ -121,7 +120,7 @@ def insurance_card(request):
                 data['first_name']
             )
             send_mail(
-                request, TO_LIST,
+                request, INSURANCE_TO_LIST,
                 subject, data['email'],
                 "athletics/soccer/camp_insurance_card_email.html",
                 data, BCC, attach=True
