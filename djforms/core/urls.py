@@ -49,8 +49,6 @@ urlpatterns = patterns('',
     (r'^admissions/', include('djforms.admissions.urls')),
     # alumni
     (r'^alumni/', include('djforms.alumni.urls')),
-    # astronomy
-    (r'^astronomy/', include('djforms.astronomy.urls')),
     # athletics
     (r'^athletics/', include('djforms.athletics.urls')),
     # biology
@@ -63,8 +61,6 @@ urlpatterns = patterns('',
     (r'^communications/', include('djforms.communications.urls')),
     # giving
     (r'^giving/', include('djforms.giving.urls')),
-    # global bridge
-    #(r'^global-bridge/', include('djforms.global_bridge.urls')),
     # LIS
     (r'^lis/', include('djforms.lis.urls')),
     # for the job post environment
