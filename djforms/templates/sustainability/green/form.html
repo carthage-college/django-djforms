@@ -96,7 +96,13 @@
         </li>
     </ul>
     {% if not pledge and not anon %}
-        {% include "includes/generic_form.html" %}
+        <form method="post" action="." class="form" id="profile">
+          {% csrf_token %}
+          {% for hidden in form.hidden_fields %}
+          {{ hidden }}
+          {% endfor %}
+          {% include "form_submit.inc.html" %}
+        </form>
         <p>
             Once you click "submit", your name will appear in
             <a href="{% url 'green_pledge_archives' %}">
@@ -106,11 +112,11 @@
         </p>
     {% endif %}
     {% if anon %}
-        <p>
-            <a href="/forms/accounts/login/?next={{request.path}}">
+        <h3>
+            <a href="{% url 'auth_login' %}/?next={{request.path}}">
                 Please login in order to  make the pledge
             </a>.
-        </p>
+        </h3>
     {% endif %}
     <p>
         This pledge began at Carthage College, Kenosha, WI,
