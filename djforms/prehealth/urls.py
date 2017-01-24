@@ -1,17 +1,21 @@
 from django.conf.urls import patterns, url
 from django.views.generic import TemplateView
 
-urlpatterns = patterns('djforms.prehealth.views',
-    # registration
+
+urlpatterns = patterns('djforms.prehealth',
     url(
-        r'^registration/success/$',
+        r'^committee-letter/success/$',
         TemplateView.as_view(
-            template_name="global_bridge/registration_done.html"
+            template_name="committee_letter/done.html"
         ),
-        name="global_bridge_registration_success"
+        name="prehealth_committee_letter_success"
     ),
+    #url(
+    #    r'^committee-letter/(?P<cid>\d+)/detail/$',
+    #    'applicant_detail',name="prehealth_committee_letter_applicant_detail"
+    #),
     url(
-        r'^registration/$', 'index',
-        name="global_bridge_registration"
+        r'^committee-letter/$', 'committee_letter.views.applicant_form',
+        name="prehealth_committee_letter_applicant_form"
     ),
 )
