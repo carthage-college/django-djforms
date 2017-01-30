@@ -98,8 +98,10 @@ class Applicant(models.Model):
         upload_to=upload_to_path,
         max_length=768,
         help_text = '''
-            Download the following form to submit your
-            personal statements and short essays
+            <a href="#" target="_blank">
+              Please download the Personal Statements form</a>,
+            fill it out, scan it or photograph it, and upload it
+            above to submit your personal statements and short essays.
         '''
     )
     transcripts = models.FileField(
@@ -108,7 +110,8 @@ class Applicant(models.Model):
         validators=[MimetypeValidator('application/pdf')],
         help_text = '''
             Download your unofficial Carthage transcripts from
-            <a href="https://my.carthage.edu/" target="_blank">my.carthage.edu</a>
+            <a href="https://my.carthage.edu/" target="_blank">
+                my.carthage.edu</a>
             and save it as a PDF and upload it above.
             The transcripts should include your grades for the fall semester.
         '''
@@ -118,8 +121,8 @@ class Applicant(models.Model):
         max_length=768,
         help_text = '''
             <a href="#" target="_blank">
-                Please download the waiver form</a>.
-            Fill it out, scan it,
+                Please download the waiver form</a>,
+            fill it out, scan it or photograph it,
             and upload it above. While strongly advised, requesting a
             committee letter through the Carthage Pre-Health Advisory
             Committee is completely optional for medical school or
