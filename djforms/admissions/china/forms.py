@@ -18,7 +18,7 @@ HELP_CHOICES = (
     ('I am interested in scheduling a musical theatre audition in China',
      'I am interested in scheduling a musical theatre audition in China'),
     ('I would like to receive more information about your programs',
-     'I would like to receive more information about your programs',)
+     'I would like to receive more information about your programs'),
 )
 UNDERGRADUATE_DEGREES = (
     ('Accounting','Accounting 会计学'),
