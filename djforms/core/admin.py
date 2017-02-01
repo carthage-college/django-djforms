@@ -19,12 +19,13 @@ PERMISSION = TaggedItem.objects.get_union_by_model(
 
 class UserProfileAdminForm(forms.ModelForm):
 
-  class Meta:
-    model = UserProfile
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
 
-  def __init__(self, *args, **kwargs):
-    super(UserProfileAdminForm, self).__init__(*args, **kwargs)
-    self.fields['permission'].queryset = PERMISSION
+    def __init__(self, *args, **kwargs):
+        super(UserProfileAdminForm, self).__init__(*args, **kwargs)
+        self.fields['permission'].queryset = PERMISSION
 
 
 class GenericChoiceAdmin(admin.ModelAdmin):
