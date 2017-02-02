@@ -13,8 +13,13 @@ handler500 = 'djtools.views.errors.server_error'
 urlpatterns = patterns('',
     # home
     (r'^$', TemplateView.as_view(template_name="forms_home.html")),
-    # academics
-    #(r'^academics/', include('djforms.academics.urls')),
+    # simple 400 error view
+    url(
+        r'^denied/$',
+        TemplateView.as_view(
+            template_name="denied.html"
+        ), name="access_denied"
+    ),
     # auth
     url(
         r'^accounts/login',

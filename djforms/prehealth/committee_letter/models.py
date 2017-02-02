@@ -2,16 +2,31 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from djforms.core.models import GenericChoice
+
 from djtools.fields import BINARY_CHOICES
 from djtools.fields.helpers import upload_to_path
 from djtools.fields.validators import MimetypeValidator
 from djtools.fields.validators import credit_gpa_validator
 
-PROGRAMS_CHOICES = (
-    ("DO","D.O."),
-    ("DDS","D.D.S."),
-    ("MD","M.D"),
-    ("MDPhD","M.D./Ph.D")
+from tagging.models import Tag, TaggedItem
+
+try:
+    program_choices_tag = Tag.objects.get(name__iexact='Pre-Health Programs')
+    PROGRAM_CHOICES = TaggedItem.objects.get_by_model(
+        GenericChoice, program_choices_tag
+    ).filter(active=True).order_by("name")
+except:
+    PROGRAM_CHOICES = GenericChoice.objects.none()
+
+RANKING_CHOICES = (
+    ('Outstanding','Outstanding'),
+    ('Excellent','Excellent'),
+    ('Above Average','Above Average'),
+    ('Average','Average'),
+    ('Fair','Fair'),
+    ('Poor','Poor'),
+    ('No basis to evaluate','No basis to evaluate'),
 )
 
 
@@ -31,17 +46,16 @@ class Applicant(models.Model):
     # owners
     created_by = models.ForeignKey(
         User, verbose_name="Applicant",
-        related_name="prehealth_committee_letter_applicant_created_by"
+        related_name='prehealth_committee_letter_applicant_created_by'
     )
     updated_by = models.ForeignKey(
         User, verbose_name="Updated by",
-        related_name="prehealth_committee_letter_applicant_updated_by"
+        related_name='prehealth_committee_letter_applicant_updated_by'
     )
     # core
-    programs_apply = models.CharField(
-        "What Programs are you applying for?",
-        choices=PROGRAMS_CHOICES,
-        max_length=32
+    programs_apply = models.ManyToManyField(
+        GenericChoice, verbose_name="For which programs are you applying?",
+        related_name='prehealth_committee_letter_applicant_programs'
     )
     first_generation = models.CharField(
         "Are you a first generation college student?",
@@ -57,6 +71,7 @@ class Applicant(models.Model):
     )
     minor = models.CharField(
         "Minor(s)",
+        null = True, blank = True,
         max_length=128
     )
     gpa_overall = models.CharField(
@@ -73,10 +88,9 @@ class Applicant(models.Model):
         null = True, blank = True,
         max_length=128,
     )
-    mcat_dat_date = models.CharField(
+    mcat_dat_date = models.DateField(
         "When will you take the MCAT/DAT again? (if applicable)",
         null = True, blank = True,
-        max_length=128
     )
     cv = models.FileField(
         "Résumé",
@@ -98,9 +112,9 @@ class Applicant(models.Model):
         upload_to=upload_to_path,
         max_length=768,
         help_text = '''
-            <a href="#" target="_blank">
+            <a href="https://www.carthage.edu/live/files/3254" target="_blank">
               Please download the Personal Statements form</a>,
-            fill it out, scan it or photograph it, and upload it
+            complete the form, and upload it
             above to submit your personal statements and short essays.
         '''
     )
@@ -120,12 +134,11 @@ class Applicant(models.Model):
         upload_to=upload_to_path,
         max_length=768,
         help_text = '''
-            <a href="#" target="_blank">
+            <a href="https://www.carthage.edu/live/files/3255" target="_blank">
                 Please download the waiver form</a>,
-            fill it out, scan it or photograph it,
-            and upload it above. While strongly advised, requesting a
-            committee letter through the Carthage Pre-Health Advisory
-            Committee is completely optional for medical school or
+            complete the form, and upload it above. While strongly advised,
+            requesting a committee letter through the Carthage Pre-Health
+            Advisory Committee is completely optional for medical school or
             dental school applicants. However, in order to apply through
             the committee, we need this waiver signed.
         '''
@@ -156,15 +169,20 @@ class Applicant(models.Model):
     def get_slug(self):
         return 'pre-health/committee-letter/'
 
+    def __unicode__(self):
+        return u'{}, {}'.format(
+            self.created_by.last_name, self.created_by.first_name
+        )
 
-class Recommender(models.Model):
+
+class Recommendation(models.Model):
     '''
     Letters of Recommendation
     '''
-    user = models.ForeignKey(
-        User, verbose_name="Recommender",
-        null = True, blank = True,
-        related_name="prehealth_recommender"
+
+    applicant = models.ForeignKey(
+        Applicant, verbose_name="Applicant",
+        related_name="prehealth_committee_letter_recommendation_applicant"
     )
     name = models.CharField(
         "Name of Recommender",
@@ -175,5 +193,68 @@ class Recommender(models.Model):
         max_length=128
     )
 
+
+class Evaluation(models.Model):
+    '''
+    Evanluation form
+    '''
+
+    created_by = models.ForeignKey(
+        User, verbose_name="Applicant",
+        related_name='prehealth_committee_letter_evaluation_created_by'
+    )
+    updated_by = models.ForeignKey(
+        User, verbose_name="Updated by",
+        related_name='prehealth_committee_letter_evaluation_updated_by'
+    )
+    applicant = models.ForeignKey(
+        Applicant, verbose_name="Applicant",
+        related_name="prehealth_committee_letter_evaluation_applicant"
+    )
+    knowledge = models.CharField(
+        "Knowledge of Subject Matter",
+        max_length=64,
+        choices=RANKING_CHOICES,
+    )
+    curiosity = models.CharField(
+        "Intellectual Curiosity",
+        max_length=64,
+        choices=RANKING_CHOICES,
+    )
+    communication = models.CharField(
+        "Communication Skills – Oral/Written",
+        max_length=64,
+        choices=RANKING_CHOICES,
+    )
+    cooperation = models.CharField(
+        "Ability to get along with Others – Willingness to Cooperate",
+        max_length=64,
+        choices=RANKING_CHOICES,
+    )
+    maturity = models.CharField(
+        "Maturity",
+        max_length=64,
+        choices=RANKING_CHOICES,
+    )
+    integrity = models.CharField(
+        "Integrity",
+        max_length=64,
+        choices=RANKING_CHOICES,
+    )
+    overall = models.CharField(
+        "Overall Evaluation",
+        max_length=64,
+        choices=RANKING_CHOICES,
+    )
+    recommendation = models.FileField(
+        upload_to=upload_to_path,
+        validators=[MimetypeValidator('application/pdf')],
+        max_length=768,
+        help_text = '''
+            Upload your letter of recommendation in PDF format.
+        '''
+    )
+
     def get_slug(self):
-        return 'pre-health/recommendation/'
+        return 'pre-health/committee-letter/evaluation/'
+
