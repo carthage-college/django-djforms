@@ -1,0 +1,37 @@
+{% extends "prehealth/committee_letter/evaluation/done.html" %}
+{% load livewhale_api %}
+{% block extra_style %}
+  <style type="text/css" media="screen, projection">
+    li.ctrlHolder div ul li {display:inline; padding-right:3px;}
+    .forms-container, .forms-container label {font-weight:bold;}
+    #page-content-wrap .content li { padding-left: 5px; }
+  </style>
+{% endblock %}
+{% block content %}
+  <div class="forms-container clear">
+    {% include "includes/required_text.html" %}
+    {% if form_app.errors or form_rec.errors %}
+        <p class="error">
+            There were errors with the data submitted, see below.
+        </p>
+    {% endif %}
+    <form method="post" action="." class="form"
+        id="profile" enctype="multipart/form-data">
+
+        {% csrf_token %}
+        <fieldset class="blockLabels">
+          <legend>Ranking</legend>
+          <p>
+            Please rank the student in the categories below,
+            compared to other graduating Carthage students.
+          </p>
+          <ol>
+          {% for field in form %}
+            {% include "form_field.inc.html" %}
+          {% endfor %}
+          </ol>
+        </fieldset>
+        {% include "form_submit.inc.html" %}
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% load livewhale_api %}
+{% autoescape off %}
+<p>
+  Dear {{data.name}},
+</p>
+<p>
+{{data.created_by.first_name}} {{data.created_by.last_name}}
+listed you as a reference for his/her application
+for medical or dental school.
+</p>
+{% get_lw_content as email blurbs 2447 %}
+{{email.body}}
+
+<ul>
+  <li>
+    <a href="{% url 'prehealth_committee_letter_faculty_evaluation' data.id %}">
+      Faculty Evaluation Form
+    </a>
+  </li>
+  <li>
+    <a href="https://{{server_url}}/{{data.get_absolute_url}}">
+    Student Application</a>
+  </li>
+<ul>
+{% endautoescape %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load livewhale_api %}
+{% block title %}
+Committee Letter Form Success &mdash;
+Pre-Health &mdash;
+Carthage College
+{% endblock %}
+{% block group_name %}Pre-Health{% endblock %}
+{% block left_nav %}
+{% get_lw_content as nav blurbs 2444 %}
+{{nav.body}}
+{% endblock %}
+{% block content_head %}
+<h1 id="page_title">Committee Letter Form</h1>
+{% endblock %}
+{% block content %}
+    {% get_lw_content as success blurbs 2446 %}
+    {{success.body}}
+{% endblock %}
