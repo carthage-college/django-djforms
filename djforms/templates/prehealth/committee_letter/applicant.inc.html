@@ -62,10 +62,10 @@
 <div class="forms-sidebar">
 <h3>Files</h3>
 <ul class="nobull">
-<li><a href="{{data.cv.url}}">CV/Résumé</a></li>
-<li><a href="{{data.personal_statements.url}}">Personal Statements</a></li>
-<li><a href="{{data.transcripts.url}}">Transcripts</a></li>
-<li><a href="{{data.waiver.url}}">Waiver</a></li>
+<li><a href="https://{{server_url}}{{data.cv.url}}">CV/Résumé</a></li>
+<li><a href="https://{{server_url}}{{data.personal_statements.url}}">Personal Statements</a></li>
+<li><a href="https://{{server_url}}{{data.transcripts.url}}">Transcripts</a></li>
+<li><a href="https://{{server_url}}{{data.waiver.url}}">Waiver</a></li>
 </ul>
 <h3>Recommendation Contacts</h3>
 <ul class="nobull">
@@ -80,7 +80,7 @@
 <div>
   <h3>Complete Applicantion</h3>
   <p>
-    View the <a href="{{data.get_absolute_url}}">committee letter</a>
+    View the <a href="https://{{server_url}}/{{data.get_absolute_url}}">committee letter</a>
     application in full, along with the letters of recommendation from
     the above professors, which will be available after they complete
     their step in the process.

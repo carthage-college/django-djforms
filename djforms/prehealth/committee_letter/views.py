@@ -14,6 +14,7 @@ from djforms.prehealth.committee_letter.forms import ApplicantForm
 from djforms.prehealth.committee_letter.forms import EvaluationForm
 
 from djtools.utils.mail import send_mail
+from djtools.utils.users import in_group
 from djtools.decorators.auth import group_required
 
 
@@ -54,7 +55,7 @@ def evaluation_form(request, aid):
             access = True
             break
 
-    if access or user.is_superuser:
+    if access or in_group(request.user, "SuperStaff"):
 
         if request.method == 'POST':
             form = EvaluationForm(request.POST, request.FILES)
@@ -69,7 +70,11 @@ def evaluation_form(request, aid):
 
                 # obtain the distribution list with appropriate pre-health folks
                 to_list = _to_list(app)
-
+                # subject for email
+                subject = u"[Committee Letter Evaluation] For {}, {} by {},{}".format(
+                    data.created_by.last_name, data.created_by.first_name,
+                    app.created_by.last_name, app.created_by.first_name
+                ).encode('utf-8').strip()
                 if not settings.DEBUG:
                     # send email to pre-health folks
                     send_mail(
@@ -168,7 +173,7 @@ def applicant_form(request):
             for rec in recs:
                 data.name = rec.name
                 send_mail(
-                    request, [rec.email,], subject, dr,
+                    request, [rec.email,], subject, settings.PREHEALTH_MD,
                     "prehealth/committee_letter/email_faculty.html", data,
                     settings.MANAGERS
                 )
@@ -213,7 +218,7 @@ def applicant_form(request):
     )
 
 
-@group_required('carthageStaffStatus','carthageFacultyStatus')
+@group_required('SuperStaff')
 def applicant_detail(request, aid):
     '''
     Simple view to display the application detail

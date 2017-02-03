@@ -70,6 +70,8 @@
   </style>
 {% endblock %}
 {% block content %}
+  {% get_lw_content as intro blurbs 2449 %}
+  {{intro.body}}
   <div class="forms-container clear">
     {% include "includes/required_text.html" %}
     {% if form_app.errors or form_rec.errors %}
