@@ -72,14 +72,14 @@ def evaluation_form(request, aid):
                 to_list = _to_list(app)
                 # subject for email
                 subject = u"[Committee Letter Evaluation] For {}, {} by {},{}".format(
-                    data.created_by.last_name, data.created_by.first_name,
-                    app.created_by.last_name, app.created_by.first_name
+                    app.created_by.last_name, app.created_by.first_name,
+                    data.created_by.last_name, data.created_by.first_name
                 ).encode('utf-8').strip()
                 if not settings.DEBUG:
                     # send email to pre-health folks
                     send_mail(
                         request, to_list, subject, data.created_by.email,
-                        "prehealth/committee_letter/evaluation/email.html", data,
+                        "prehealth/committee_letter/evaluation/email.html", app,
                         settings.MANAGERS
                     )
 
