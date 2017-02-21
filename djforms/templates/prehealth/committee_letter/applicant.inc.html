@@ -40,7 +40,7 @@
     <dt style="background:#efefef; color:#000; float:left; margin-right:10px; padding:5px; width:200px;">
         Minor(s)
     </dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.minor}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.minor|default:"&nbsp;"}}</dd>
     <dt style="background:#efefef; color:#000; float:left; margin-right:10px; padding:5px; width:200px;">
         GPA Overall
     </dt>
@@ -52,11 +52,11 @@
     <dt style="background:#efefef; color:#000; float:left; margin-right:10px; padding:5px; width:200px;">
         MCAT/DAT Scores
     </dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.mcat_dat_scores}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.mcat_dat_scores|default:"&nbsp;}}</dd>
     <dt style="background:#efefef; color:#000; float:left; margin-right:10px; padding:5px; width:200px;">
         Retake MCAT/DAT date
     </dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.mcat_dat_date}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.mcat_dat_date|default:"&nbsp;}}</dd>
   </dl>
 </div>
 <div class="forms-sidebar">
