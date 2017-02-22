@@ -11,6 +11,8 @@ from djforms.writingcurriculum.forms import ProposalForm
 from djforms.writingcurriculum.models import CourseCriteria, CourseProposal
 
 from djtools.utils.mail import send_mail
+from djtools.fields import TODAY
+
 
 @login_required
 def proposal_form(request, pid=None):
@@ -141,10 +143,19 @@ def proposal_form(request, pid=None):
             copies = len(criteria)
         form = ProposalForm(prefix="wac", instance=proposal)
         profile_form = UserProfileForm(prefix="profile")
+
+    # academic year
+    year = TODAY.year + 1
+    year_past = year - 1
+    if TODAY.month > 3:
+        year += 1
+        year_past = year
+
     return render_to_response(
         "writingcurriculum/form.html",{
             "form": form,"profile_form": profile_form,
-            "criteria": criteria, "copies":copies
+            "criteria": criteria, "copies":copies,
+            'year':year,'year_past':year_past
         }, context_instance=RequestContext(request)
     )
 

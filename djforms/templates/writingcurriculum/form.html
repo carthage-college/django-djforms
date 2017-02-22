@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load livewhale_api %}
 {% block title %}
 Writing Intensive Course Proposal Form &mdash;
 Carthage College
@@ -96,10 +97,16 @@ Carthage College
 {% endblock %}
 {% block content %}
 <div class="forms-container">
-    <p>Deadline for the 2015-2016 School Year: January 31, 2016.</p>
-    <p>The WAC Committee will accept late proposals through February 28, 2016.
-    However, submitting a late proposal may not allow time for the negotiation
-    that is sometimes necessary to secure approval.</p>
+    <p>
+        Deadline for the {{year_past}}-{{year}} School Year:
+        <strong>January 31, {{year_past}}</strong>.
+    </p>
+    <p>
+        The WAC Committee will accept late proposals through
+        <strong>February 28, {{year_past}}</strong>.
+        However, submitting a late proposal may not allow time for the negotiation
+        that is sometimes necessary to secure approval.
+    </p>
     {% include "includes/errors_text.html" %}
     {% include "includes/required_text.html" %}
     <form method="post" action="." class="form"
