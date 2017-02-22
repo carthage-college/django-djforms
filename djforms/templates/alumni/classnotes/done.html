@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load livewhale_api %}
 {% block title %}Class Notes &mdash; Alumni &mdash; Carthage College{% endblock %}
 {% block extra_javascript %}{% endblock %}
 {% block extra_style %}{% endblock %}
@@ -13,10 +14,6 @@
 <h1 id="page_title">Class Notes</h1>
 {% endblock %}
 {% block content %}
-<h2>Success</h2>
-<p>We have received your class notes submission.</p>
-<p>
-    <a href="{% url 'classnotes_archives' %}">Click here</a>
-    to peruse the Class Notes archives.
-</p>
+    {% get_lw_content as success blurbs 2454 %}
+    {{success.body}}
 {% endblock %}
