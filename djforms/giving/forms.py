@@ -157,3 +157,54 @@ class DonationOrderForm(OrderForm):
         model = Order
         fields = ('total','comments','avs','auth','payments')
 
+
+class PledgeContactForm(DonationContactForm):
+    """
+    Pledge Contact form, inherits everything from DonationContactForm and
+    is merely a placeholder for view logic
+    """
+    pass
+
+
+class PledgeOrderForm(OrderForm):
+    """
+    A subscrition form for recurring billing
+    """
+    total = forms.CharField(
+        label="Gift installments",
+        help_text="How much would you like to give for each installment."
+    )
+    comments = forms.CharField(
+        label = "Designation",
+        help_text = '''
+            Please indicate if you would like your gift to be directed to
+            a specific area. If this space is left blank, gifts will be
+            directed to the
+            <a href="/give/carthage-fund/">Carthage Fund</a>.
+        ''',
+        required=False
+    )
+    payments = forms.IntegerField(
+        widget=forms.Select(choices=PAYMENT),
+        max_value=60, min_value=12, label="Duration",
+        help_text='''
+            Choose the number of years during which you want to donate
+            the set amount above.
+        '''
+    )
+    cycle = forms.CharField(
+        widget=forms.Select(choices=CYCLES),
+        required=True,
+        label="Frequency",
+        help_text='''
+            Choose how often the donation should be sent during the term
+            of the pledge.
+        '''
+    )
+
+    class Meta:
+        model = Order
+        fields = (
+            'total', 'cycle', 'payments', 'comments', 'avs',
+            'auth'
+        )
