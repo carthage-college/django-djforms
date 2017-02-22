@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.utils.encoding import smart_str
 
 import csv
+import datetime
 
 def get_json(yuri):
     jason = cache.get('%s_api_json' % yuri)
@@ -92,8 +93,8 @@ class PresentationAdmin(admin.ModelAdmin):
         'poster','date_created'
     )
     ordering = [
-        'title','work_type','permission','shared','need_table',
-        'need_electricity','status','date_created'
+        '-date_created','title','work_type','permission','shared','need_table',
+        'need_electricity','status',
     ]
     search_fields = (
         'title','user__last_name','user__email','funding'
@@ -102,6 +103,16 @@ class PresentationAdmin(admin.ModelAdmin):
         'status','date_created'
     )
     list_editable = ['reviewer']
+
+    def queryset(self, request):
+        """
+        only show presentations that were created after a certain date.
+        """
+        TODAY = datetime.date.today()
+        YEAR = int(TODAY.year)
+        qs = super(PresentationAdmin, self).queryset(request)
+        start_date = datetime.date(YEAR, 1, 1)
+        return qs.filter(date_created__gte=start_date)
 
     def save_model(self, request, obj, form, change):
         if change:
