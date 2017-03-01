@@ -79,7 +79,7 @@ def evaluation_form(request, aid):
                     # send email to pre-health folks
                     send_mail(
                         request, to_list, subject, data.created_by.email,
-                        "prehealth/committee_letter/evaluation/email.html", app,
+                        "prehealth/committee_letter/evaluation/email.html", data,
                         settings.MANAGERS
                     )
 
