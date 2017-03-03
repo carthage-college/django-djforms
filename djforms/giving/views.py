@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 from django.template import RequestContext, loader
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
@@ -29,10 +30,21 @@ def giving_form(request, transaction, campaign=None):
     else:
         BCC = settings.GIVING_DONATIONS_BCC
 
+    status = None
     # subject of email
     SUBJECT = u"""Thank you, {} {}, for your donation to Carthage"""
     trans_cap = transaction.capitalize()
-    ct_form_name = trans_cap + "ContactForm"
+    # check for a campaign and obtain contact form
+    if campaign:
+        campaign = get_object_or_404(Promotion, slug=campaign)
+        ct_form_name = "{}{}ContactForm".format(
+            campaign.title.replace(" ", ""),
+            trans_cap
+        )
+    else:
+        campaign = ""
+        ct_form_name = trans_cap + "ContactForm"
+    # order form
     or_form_name = trans_cap + "OrderForm"
     or_form = str_to_class(
         "djforms.giving.forms", or_form_name
@@ -43,12 +55,6 @@ def giving_form(request, transaction, campaign=None):
     # just checking for bad requests
     if not or_form or not ct_form:
         raise Http404
-    # giving campaigns
-    if campaign:
-        campaign = get_object_or_404(Promotion, slug=campaign)
-    else:
-        campaign = ""
-    status = None
     years = None
     if request.POST:
         ct_form = str_to_class(

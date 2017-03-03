@@ -130,6 +130,27 @@ class DonationContactForm(ContactForm):
             'matching_company','opt_in','anonymous'
         )
 
+
+class GivingDayDonationContactForm(DonationContactForm):
+    """
+    Giving Day campaign form, extends Donation Contact form
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(GivingDayDonationContactForm, self).__init__(*args, **kwargs)
+        self.fields.pop('phone')
+        self.fields.pop('spouse')
+        self.fields.pop('matching_company')
+
+    class Meta:
+        model = DonationContact
+        fields = (
+            'first_name','last_name','spouse','relation','class_of','email',
+            'address1','address2','city','state','postal_code','opt_in',
+            'anonymous'
+        )
+
+
 class DonationOrderForm(OrderForm):
     """
     A donation form

@@ -1,18 +1,12 @@
+{% load livewhale_api %}
 <h1>{{data.order.promotion.title|default:"Donation to Carthage"}}</h1>
 {% if data.order.promotion.email_info %}
     <p>{{data.order.promotion.email_info}}</p>
 {% else %}
-    <p>
-        Thank you for your support and the donation.
-    </p>
-    <p>
-        This email is your confirmation and may be used as a receipt
-        for tax purposes.
-    </p>
-    <p>
-        If you have any questions, please do not hesitate to
-        <a href="mailto:giving@carthage.edu">contact us</a>.
-    </p>
+    {% autoescape off %}
+      {% get_lw_content as donation_email blurbs 2457 %}
+      {{donation_email.body}}
+    {% endautoescape %}
 {% endif %}
 <dl style="margin-bottom:30px;">
     {% if data.order.auth == "store" %}

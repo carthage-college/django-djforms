@@ -112,7 +112,7 @@
             <ol>
                 {% for field in ct_form %}
                     <li class="ctrlHolder">
-                    {% if field.name == "matching_company" or field.name == "opt_in" %}
+                    {% if field.name == "opt_in" %}
                     {{field}} {{field.label_tag}}<br />
                     {% else %}{% if field.name = "anonymous" %}{% else %}
                         {% if field.name == "address2" %}
@@ -134,22 +134,9 @@
                             <p class="help">{{field.help_text}}</p>
                         {% endif %}
                         </div>
-                        {% if field.name == "postal_code" %}
-                        <h3 style="margin-top:9px;">Matching Funds</h3>
-                        {% endif %}
                     {% endif %}{% endif %}
                     </li>
                 {% endfor %}
-                <li>
-                    <h3>Thrivent Choice</h3>
-                    <p>
-                        Thrivent members may allocate their Thrivent Choice
-                        dollars to Carthage. Please contact Thrivent or visit
-                        <a href="https://www.thrivent.com/making-a-difference/living-generously/thrivent-choice/"
-                            target="_blank">the website</a>
-                        for more information.
-                    </p>
-                </li>
             </ol>
         </fieldset>
         <h2>Billing Information</h2>
