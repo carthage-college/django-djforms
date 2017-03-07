@@ -39,7 +39,7 @@ def _to_list(data):
                 to.append(do)
     return to
 
-@group_required('carthageStaffStatus','carthageFacultyStatus')
+@login_required
 def evaluation_form(request, aid):
     '''
     Evaluation and recommendation form, submitted after student submits
@@ -51,7 +51,7 @@ def evaluation_form(request, aid):
     # check if our user is in the list of recommendation contacts
     access = False
     for rec in app.prehealth_committee_letter_recommendation_applicant.all():
-        if rec.email == user.email:
+        if rec.email.strip() == user.email:
             access = True
             break
 
