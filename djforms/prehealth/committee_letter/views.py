@@ -55,7 +55,7 @@ def evaluation_form(request, aid):
             access = True
             break
 
-    if access or in_group(request.user, "SuperStaff"):
+    if access or in_group(request.user, 'SuperStaff'):
 
         if request.method == 'POST':
             form = EvaluationForm(request.POST, request.FILES)
@@ -79,7 +79,7 @@ def evaluation_form(request, aid):
                     # send email to pre-health folks
                     send_mail(
                         request, to_list, subject, data.created_by.email,
-                        "prehealth/committee_letter/evaluation/email.html", data,
+                        'prehealth/committee_letter/evaluation/email.html', data,
                         settings.MANAGERS
                     )
 
@@ -99,7 +99,9 @@ def evaluation_form(request, aid):
 
     else:
         # something is rotten in denmark
-        return reverse_lazy("access_denied")
+        return HttpResponseRedirect(
+            reverse_lazy('access_denied')
+        )
 
 
 @login_required
