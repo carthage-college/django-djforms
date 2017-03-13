@@ -38,7 +38,7 @@ def giving_form(request, transaction, campaign=None):
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
         ct_form_name = "{}{}ContactForm".format(
-            campaign.title.replace(" ", ""),
+            campaign.slug.replace('-',' ').title().replace(' ',''),
             trans_cap
         )
     else:
