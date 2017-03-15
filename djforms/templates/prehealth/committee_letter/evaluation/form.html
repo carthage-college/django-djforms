@@ -8,6 +8,8 @@
   </style>
 {% endblock %}
 {% block content %}
+  <h2>For Student: {{app.created_by.last_name}}, {{app.created_by.first_name}}</h2>
+  <h3>Submitted By: {{user.last_name}}, {{user.first_name}}</h3>
   <div class="forms-container clear">
     {% include "includes/required_text.html" %}
     {% if form_app.errors or form_rec.errors %}

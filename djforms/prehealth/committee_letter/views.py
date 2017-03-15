@@ -92,7 +92,7 @@ def evaluation_form(request, aid):
         return render_to_response(
             'prehealth/committee_letter/evaluation/form.html',
             {
-                'form': form,
+                'form': form,'app':app,
             },
             context_instance=RequestContext(request)
         )
