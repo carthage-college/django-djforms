@@ -52,9 +52,19 @@ def giving_form(request, transaction, campaign=None):
     ct_form = str_to_class(
         "djforms.giving.forms", ct_form_name
     )
+
     # just checking for bad requests
-    if not or_form or not ct_form:
+    if not or_form:
         raise Http404
+
+    # there might not be a custom campaign form
+    # so we just use the default contact form
+    if not ct_form:
+        ct_form_name = trans_cap + "ContactForm"
+        ct_form = str_to_class(
+            "djforms.giving.forms", ct_form_name
+        )
+
     years = None
     if request.POST:
         ct_form = str_to_class(
