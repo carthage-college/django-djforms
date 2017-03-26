@@ -5,19 +5,21 @@ from django.template import RequestContext, loader
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 
-from djforms.processors.forms import TrustCommerceForm as CreditCardForm
 from djforms.giving.forms import *
 from djforms.core.models import Promotion
-from djtools.utils.convert import str_to_class
-from djtools.utils.mail import send_mail
+from djforms.giving.models import DonationContact
+from djforms.processors.forms import TrustCommerceForm as CreditCardForm
+
 from djtools.fields import TODAY
+from djtools.utils.mail import send_mail
+from djtools.utils.convert import str_to_class
 
 YEAR = TODAY.year
 BRICK_PRICES = ["250","500",YEAR-2000+200,YEAR-2000+300]
 
+from datetime import timedelta
+
 import os
-import logging
-logger = logging.getLogger(__name__)
 
 
 def giving_form(request, transaction, campaign=None):
@@ -190,6 +192,7 @@ def giving_form(request, transaction, campaign=None):
         context_instance=RequestContext(request)
     )
 
+
 def giving_success(request, transaction, campaign=None):
     # giving campaigns
     if campaign:
@@ -209,3 +212,15 @@ def giving_success(request, transaction, campaign=None):
         { 'campaign': campaign, },
         context_instance=RequestContext(request)
     )
+
+
+def donors(request, campaign=None):
+
+    start_date = TODAY - timedelta(days=365)
+    donors = DonationContact.objects.filter(order__time_stamp__gte=start_date)
+    return render_to_response(
+        'giving/donors.html',
+        { 'donors':donors, 'campaign': campaign, 'count':donors.count()},
+        context_instance=RequestContext(request)
+    )
+
