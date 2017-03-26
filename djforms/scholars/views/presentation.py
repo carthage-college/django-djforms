@@ -278,7 +278,9 @@ def email_presenters(request,pid,action):
                 )
                 return HttpResponseRedirect(reverse("email_presenters_done"))
             else:
-                return HttpResponseRedirect(reverse("email_presenters_form"))
+                return HttpResponseRedirect(
+                    reverse('email_presenters_form', args=[pid,action])
+                )
     else:
         form = EmailPresentersForm()
 
@@ -334,9 +336,13 @@ def action(request):
         action = request.POST["action"]
         presentation = get_object_or_404(Presentation,id=pid)
         if action == "update":
-            return HttpResponseRedirect(reverse('presentation_update', args=[pid]))
+            return HttpResponseRedirect(
+                reverse('presentation_update', args=[pid])
+            )
         else:
-            return HttpResponseRedirect(reverse('email_presenters', args=[pid,action]))
+            return HttpResponseRedirect(
+                reverse('email_presenters_form', args=[pid,action])
+            )
     else:
         raise Http404, "Page not found"
 

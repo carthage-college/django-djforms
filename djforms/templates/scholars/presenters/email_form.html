@@ -120,7 +120,14 @@
                 </li>
             </ol>
             </fieldset>
-            {% include "form_submit.inc.html" %}
+            <fieldset class="btnHolder">
+              <ol>
+                <li>
+                  <label for="id_submit" style="display:none;">Submit</label>
+                  <input id="id_submit" name="confirm" value="Submit" class="button" type="submit">
+                </li>
+              </ol>
+            </fieldset>
         </form>
     {% endif %}
 {% endblock %}

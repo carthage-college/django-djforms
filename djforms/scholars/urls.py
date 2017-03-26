@@ -65,6 +65,6 @@ urlpatterns = patterns('djforms.scholars.views',
     ),
     url(
         r'^presenters/email/(?P<pid>\d+)/(?P<action>[-\w]+)/$',
-        'presentation.email_presenters',name="email_presenters"
+        'presentation.email_presenters',name="email_presenters_form"
     ),
 )
