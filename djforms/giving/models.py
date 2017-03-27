@@ -1,12 +1,17 @@
 from django.db import models
-from djforms.processors.models import Contact
+from django.contrib.auth.models import User
+
+from djforms.processors.models import Contact, Order
+
 
 class DonationContact(Contact):
-    """
+    '''
     Donation contact details for an order
-    """
+    '''
+
     spouse = models.CharField(
-        max_length=100, null=True, blank=True
+        max_length=100,
+        null=True, blank=True
     )
     relation = models.CharField(
         max_length=100,
@@ -33,10 +38,41 @@ class DonationContact(Contact):
         '''
     )
 
+
+class MatchingChallenge(models.Model):
+    '''
+    Donation match challenge goal
+    '''
+
+    order = models.ForeignKey(
+        Order, verbose_name="Contact's Order",
+        related_name="matching_challenge_order"
+    )
+    user = models.ForeignKey(
+        User, verbose_name="Created by",
+        related_name="matching_challenge_user"
+    )
+    date_created = models.DateTimeField(
+        "Date Created", auto_now_add=True
+    )
+    name = models.CharField(
+        max_length=128,
+    )
+    description = models.TextField()
+    amount = models.DecimalField(
+        decimal_places=2, max_digits=10,
+        null = True, blank = True
+    )
+    donors = models.IntegerField(
+        null=True, blank=True
+    )
+
+
 class BrickContact(Contact):
-    """
+    '''
     Brick contact details for an order
-    """
+    '''
+
     class_of = models.CharField(
         max_length=4, null=True, blank=True
     )
