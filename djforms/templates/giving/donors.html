@@ -1,0 +1,51 @@
+{% extends "giving/donation_form.html" %}
+{% load humanize %}
+{% block extra_style %}
+<style type="text/css">
+.generic-subpage #page-content-wrap {
+    margin-top: 0;
+}
+</style>
+{% endblock %}
+{% block hero %}
+<div id="page-hero-wrap">
+  <div class="lw_widget lw_widget_images">
+  <ul class="lw_widget_results lw_widget_results_images">
+    <li class="lw_item_1 lw_has_image">
+      <a href="//www.carthage.edu/live/image/gid/168/width/650/11690_red_and_ready-web-header1.jpg" class="lw_preview_image lw_disable_preview">
+        <img src="//www.carthage.edu/live/image/gid/168/11690_red_and_ready-web-header1.jpg" alt="A banner image for the Giving Day website." class="lw_image lw_image11690" width="1400" height="502" data-max-w="1400" data-max-h="502">
+      </a>
+    </li>
+  </ul>
+  </div>
+  <div id="page-title-wrap" class="site-width cf">
+    <h1 id="section_title" class="large-8 medium-7 small-12">
+         Giving Day
+    </h1>
+  </div>
+</div>
+{% endblock %}
+{% block content %}
+<h2>~{{count|intcomma}} Donations within the Last Year</h2>
+<ul>
+{% for obj in donors %}
+    {% ifchanged obj.last_name %}
+        {% ifchanged obj.last_name|lower|slice:":1" %}
+            </ul>
+            <h3 style="margin-bottom: 2px;">
+                {{obj.last_name|slice:":1" }}
+            </h3>
+            <hr>
+            <ul>
+        {% endifchanged %}
+        <li>
+            {{obj.last_name|title}}, {{obj.first_name|title}}
+            {% if obj.class_of %}
+            {{obj.class_of}}
+            {% endif %}
+            ({{obj.relation}})
+        </li>
+    {% endifchanged %}
+{% endfor %}
+</ul>
+{% endblock %}
