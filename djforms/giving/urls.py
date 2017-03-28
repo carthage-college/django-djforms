@@ -5,6 +5,10 @@ urlpatterns = patterns('djforms.giving.views',
         r'^donors/$', 'donors', name='giving_donors'
     ),
     url(
+        r'^donors/(?P<slug>[a-zA-Z0-9_-]+)/$',
+        'donors', name='giving_donors_campaign'
+    ),
+    url(
         r'^campaign/(?P<slug>[a-zA-Z0-9_-]+)/$',
         'promotion_ajax', name='promotion_ajax'
     ),

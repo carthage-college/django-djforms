@@ -1,4 +1,5 @@
 {% extends "giving/donation_form.html" %}
+{% load livewhale_api %}
 {% load humanize %}
 {% block extra_style %}
 <style type="text/css">
@@ -25,8 +26,17 @@
   </div>
 </div>
 {% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Who's Given
+    </h1>
+{% endblock %}
 {% block content %}
-<h2>~{{count|intcomma}} Donations within the Last Year</h2>
+{% get_lw_content as intro blurbs 2470 %}
+{{intro.body}}
+{% get_lw_content as donations blurbs 2469 %}
+<h2>{{donations.body}}</h2>
+<h3>{{count|intcomma}}</h3>
 <ul>
 {% for obj in donors %}
     {% ifchanged obj.last_name %}
