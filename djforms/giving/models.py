@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from djforms.processors.models import Contact, Order
+from djforms.processors.models import Contact
 
 
 class DonationContact(Contact):
@@ -36,35 +36,6 @@ class DonationContact(Contact):
             I would like my gift to remain anonymous, and not be
             published on any donor list or in the annual report.
         '''
-    )
-
-
-class MatchingChallenge(models.Model):
-    '''
-    Donation match challenge goal
-    '''
-
-    order = models.ForeignKey(
-        Order, verbose_name="Contact's Order",
-        related_name="matching_challenge_order"
-    )
-    user = models.ForeignKey(
-        User, verbose_name="Created by",
-        related_name="matching_challenge_user"
-    )
-    date_created = models.DateTimeField(
-        "Date Created", auto_now_add=True
-    )
-    name = models.CharField(
-        max_length=128,
-    )
-    description = models.TextField()
-    amount = models.DecimalField(
-        decimal_places=2, max_digits=10,
-        null = True, blank = True
-    )
-    donors = models.IntegerField(
-        null=True, blank=True
     )
 
 

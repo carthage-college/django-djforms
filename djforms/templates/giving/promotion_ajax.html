@@ -1,0 +1,18 @@
+<div class="stats">
+    <span class="percent">{{data.percent}}%</span>
+    <span class="divider">|</span>
+    <span class="donors">
+        <strong>
+            {% if data.donors %}
+            {{data.total}} Donors
+            {% else %}
+            ${{data.total}}
+            {% endif %}
+        </strong>
+    </span>
+    <div class="bar">
+        <div class="total">
+            <div class="percent" style="height: {{data.percent}}%;"></div>
+        </div>
+    </div>
+</div>

@@ -224,3 +224,15 @@ def donors(request, campaign=None):
         context_instance=RequestContext(request)
     )
 
+def promotion_ajax(request, slug):
+    '''
+    ajax request, returns HTML for dynamic display.
+    accepts a campaign slug for identifying the Promotion() class object.
+    '''
+    promo = Promotion.objects.get(slug=slug)
+
+    return render_to_response(
+        "giving/promotion_ajax.html",
+        {"data":promo,},
+        context_instance=RequestContext(request)
+    )

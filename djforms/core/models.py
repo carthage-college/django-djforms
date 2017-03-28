@@ -186,10 +186,19 @@ class Department(models.Model):
     def get_absolute_url(self):
         return ('department_detail', None, { 'slug':self.slug })
 
+
 class Promotion(models.Model):
     """
     Promotions and campaigns for ecommerce apps
     """
+    user = models.ForeignKey(
+        User, verbose_name="Created by",
+        related_name="matching_campaign_user",
+        null=True, blank=True
+    )
+    date_created = models.DateTimeField(
+        "Date Created", auto_now_add=True
+    )
     title = models.CharField(max_length=255)
     slug = models.SlugField(
         "Slug", max_length=255, unique=True
@@ -222,9 +231,47 @@ class Promotion(models.Model):
         """,
         null=True, blank=True
     )
+    amount = models.DecimalField(
+        decimal_places=2, max_digits=10,
+        null = True, blank = True
+    )
+    donors = models.IntegerField(
+        null=True, blank=True
+    )
+    institutional = models.BooleanField(
+        default=False,
+    )
 
     def __unicode__(self):
         return self.title
+
+    def all(self):
+        return self.order_set.filter(status="Approved")
+
+    def count(self):
+        return self.order_set.count()
+
+    def amount_total(self):
+        total = 0
+        for obj in self.all():
+            total += obj.total
+        return total
+
+    def percent(self):
+        total = 0
+        if self.donors:
+            p = (self.count() / self.donors) * 100
+        else:
+            p = int((self.amount_total() / self.amount) * 100)
+        return p
+
+    def total(self):
+        if self.donors:
+            count = self.count()
+        else:
+            count = self.amount_total()
+        return count
+
 
 STATE_CHOICES = (
     ('','State'),
