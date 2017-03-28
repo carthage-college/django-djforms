@@ -15,7 +15,6 @@ class OrderAdmin(admin.ModelAdmin):
     ]
     list_filter   = ('status','auth','avs','cycle','payments','promotion')
     search_fields = ('transid','cc_4_digits','cc_name')
-    raw_id_fields = ('promotion',)
 
     def contact_name(self, obj):
         return '''

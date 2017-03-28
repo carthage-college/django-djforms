@@ -6,6 +6,7 @@ from django_countries.fields import CountryField
 from djforms.core.models import Promotion, GenericContact
 
 ORDER_STATUS = (
+    ('Manual', 'Manual'),
     ('Blocked', 'Blocked'),
     ('In process', 'In process'),
     ('Pay later', 'Pay later'),
