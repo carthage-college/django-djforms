@@ -217,7 +217,9 @@ def giving_success(request, transaction, campaign=None):
 def donors(request, campaign=None):
 
     start_date = TODAY - timedelta(days=365)
-    donors = DonationContact.objects.filter(order__time_stamp__gte=start_date)
+    donors = DonationContact.objects.filter(anonymous=False).filter(
+        order__time_stamp__gte=start_date
+    )
     return render_to_response(
         'giving/donors.html',
         { 'donors':donors, 'campaign': campaign, 'count':donors.count()},
