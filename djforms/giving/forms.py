@@ -145,7 +145,7 @@ class GivingDayDonationContactForm(DonationContactForm):
     class Meta:
         model = DonationContact
         fields = (
-            'first_name','last_name','spouse','relation','class_of','email',
+            'first_name','last_name','relation','class_of','email',
             'address1','address2','city','state','postal_code','opt_in',
             'anonymous'
         )
@@ -229,3 +229,42 @@ class PledgeOrderForm(OrderForm):
             'total', 'cycle', 'payments', 'comments', 'avs',
             'auth'
         )
+
+class ManagerContactForm(DonationContactForm):
+    '''
+    form that allows manager to create a donation contact manually for
+    things like cash donations
+    '''
+
+    def __init__(self, *args, **kwargs):
+        super(ManagerContactForm, self).__init__(*args, **kwargs)
+        self.fields.pop('state')
+        self.fields.pop('postal_code')
+        self.fields.pop('phone')
+        self.fields.pop('spouse')
+        self.fields.pop('opt_in')
+        self.fields.pop('matching_company')
+
+    class Meta:
+        model = DonationContact
+        fields = (
+            'first_name','last_name','relation','class_of','email'
+        )
+
+
+class ManagerOrderForm(forms.ModelForm):
+    '''
+    form that allows manager to create a donation order manually for
+    things like cash donations
+    '''
+
+    '''
+    opt_in = forms.CharField(widget=forms.HiddenInput())
+    anonymous = forms.CharField(widget=forms.HiddenInput())
+    matching_company = forms.CharField(widget=forms.HiddenInput())
+    '''
+
+    class Meta:
+        model = Order
+        fields = ('total','promotion')
+

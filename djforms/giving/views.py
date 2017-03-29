@@ -4,6 +4,7 @@ from django.utils.safestring import mark_safe
 from django.template import RequestContext, loader
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
 
 from djforms.giving.forms import *
 from djforms.core.models import Promotion
@@ -84,6 +85,7 @@ def giving_form(request, transaction, campaign=None):
             or_data.status = "In Process"
             or_data.operator = "DJForms%s" % trans_cap
             or_data.avs = 0
+            or_data.auth = 'sale'
             # deal with commemorative brick options
             if transaction == "brick" and contact.class_of == str(YEAR):
                 if or_data.total == 250:
@@ -96,7 +98,7 @@ def giving_form(request, transaction, campaign=None):
             if transaction != "brick" and request.POST.get("or-pledge") != "":
                 #or_data.payments = request.POST["or-payments"]
                 or_data.payments = 0
-                or_data.auth = "store"
+                or_data.auth = 'store'
                 #or_data.grand_total = or_data.total
                 #or_data.total = or_data.total / int(or_data.payments)
                 or_data.cycle = "1m"
@@ -228,15 +230,54 @@ def donors(request, slug=None):
         context_instance=RequestContext(request)
     )
 
+
 def promotion_ajax(request, slug):
     '''
     ajax request, returns HTML for dynamic display.
     accepts a campaign slug for identifying the Promotion() class object.
     '''
-    promo = Promotion.objects.get(slug=slug)
+    promo = get_object_or_404(Promotion, slug=slug)
 
     return render_to_response(
         "giving/promotion_ajax.html",
         {"data":promo,},
         context_instance=RequestContext(request)
     )
+
+
+@staff_member_required
+def manager_cash(request):
+    '''
+    cash donation form
+    '''
+
+    if request.POST:
+        ct_form = ManagerContactForm(request.POST, prefix="ct")
+        or_form = ManagerOrderForm(request.POST, prefix="or")
+        if ct_form.is_valid() and or_form.is_valid():
+            # contact
+            contact = ct_form.save(commit=False)
+            contact.opt_in = 0
+            contact.anonymous = 0
+            contact.matching_company = 0
+            contact.save()
+            # order
+            or_data = or_form.save(commit=False)
+            or_data.status = "Manual"
+            or_data.operator = "DJFormsCashDonation"
+            or_data.avs = 0
+            or_data.auth = 'cash'
+            or_data.save()
+            contact.order.add(or_data)
+            # redirect
+            return HttpResponseRedirect( reverse( 'giving_manager_success') )
+    else:
+        ct_form = ManagerContactForm(prefix="ct")
+        or_form = ManagerOrderForm(prefix="or")
+
+    return render_to_response(
+        "giving/manager/cash_form.html",
+        {'ct_form': ct_form, 'or_form':or_form,},
+        context_instance=RequestContext(request)
+    )
+
