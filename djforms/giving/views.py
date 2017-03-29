@@ -175,13 +175,11 @@ def giving_form(request, transaction, campaign=None):
         cc_form = CreditCardForm()
 
     # build our template path
-    template = 'giving/'
+    template = 'giving/{}_form.html'.format(transaction)
     if campaign:
-        template += 'campaigns/{}/'.format(campaign.slug)
-    template += '{}_form.html'.format(transaction)
-
-    if not os.path.isfile(os.path.join(settings.ROOT_DIR, "templates", template)):
-        raise Http404, "Page not found: {}".format(template)
+        temp = 'campaigns/{}/'.format(campaign.slug)
+        if os.path.isfile(os.path.join(settings.ROOT_DIR, "templates", temp)):
+            template = temp
 
     return render_to_response(
         template,

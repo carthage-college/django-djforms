@@ -32,11 +32,17 @@
     </h1>
 {% endblock %}
 {% block content %}
+{% if campaign %}
 {% get_lw_content as intro blurbs 2470 %}
 {{intro.body}}
-{% get_lw_content as donations blurbs 2469 %}
-<h2>{{donations.body}}</h2>
-<h3>{{count|intcomma}}</h3>
+{% get_lw_content as header blurbs 2469 %}
+{{header.body}}
+{% else %}
+<h2>
+  ~{{count|intcomma}}
+  Donations within the Last Year
+</h2>
+{% endif %}
 <ul>
 {% for obj in donors %}
     {% ifchanged obj.last_name %}
