@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -246,7 +247,8 @@ class Promotion(models.Model):
         return self.title
 
     def all(self):
-        return self.order_set.filter(status="Approved")
+        objs = self.order_set.filter(Q(status="Approved") | Q(status="Manual"))
+        return objs
 
     def count(self):
         return self.order_set.count()
