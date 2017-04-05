@@ -62,8 +62,11 @@ def giving_form(request, transaction, campaign=None):
 
     # there might not be a custom campaign form
     # so we just use the default contact form
-    if not ct_form:
-        ct_form_name = trans_cap + "ContactForm"
+    if campaign and not ct_form:
+        ct_form_name = "{}{}ContactForm".format(
+            settings.GIVING_DEFAULT_CONTACT_FORM,
+            trans_cap
+        )
         ct_form = str_to_class(
             "djforms.giving.forms", ct_form_name
         )
@@ -179,9 +182,15 @@ def giving_form(request, transaction, campaign=None):
     # build our template path
     template = 'giving/{}_form.html'.format(transaction)
     if campaign:
-        temp = 'campaigns/{}/'.format(campaign.slug)
+        temp = 'giving/campaigns/{}/{}_form.html'.format(
+            campaign.slug,transaction
+        )
         if os.path.isfile(os.path.join(settings.ROOT_DIR, "templates", temp)):
             template = temp
+        else:
+            template = 'giving/campaigns/{}/{}_form.html'.format(
+                settings.GIVING_DEFAULT_CAMPAIGN, transaction
+            )
 
     return render_to_response(
         template,
@@ -199,13 +208,17 @@ def giving_success(request, transaction, campaign=None):
         campaign = get_object_or_404(Promotion, slug=campaign)
 
     # build our template path
-    template = 'giving/'
+    template = 'giving/{}_success.html'.format(transaction)
     if campaign:
-        template += 'campaigns/{}/'.format(campaign.slug)
-    template += '{}_success.html'.format(transaction)
-
-    if not os.path.isfile(os.path.join(settings.ROOT_DIR, "templates", template)):
-        raise Http404, "Page not found: {}".format(template)
+        temp = 'giving/campaigns/{}/{}_success.html'.format(
+            campaign.slug, transaction
+        )
+        if os.path.isfile(os.path.join(settings.ROOT_DIR, "templates", temp)):
+            template = temp
+        else:
+            template = 'giving/campaigns/{}/{}_success.html'.format(
+                settings.GIVING_DEFAULT_CAMPAIGN, transaction
+            )
 
     return render_to_response(
         template,

@@ -93,6 +93,7 @@ class DonationContactForm(ContactForm):
     """
     Donation Contact form, extends base ContactForm in processors app
     """
+
     class_of = forms.ChoiceField(
         required=False, label='Class of', choices=CLASS
     )
@@ -124,6 +125,13 @@ class DonationContactForm(ContactForm):
 
     class Meta:
         model = DonationContact
+        '''
+        fields = (
+            'first_name','last_name','relation','class_of','email',
+            'address1','address2','city','state','postal_code','opt_in',
+            'anonymous'
+        )
+        '''
         fields = (
             'first_name','last_name','spouse','relation','class_of','email',
             'phone','address1','address2','city','state','postal_code',
