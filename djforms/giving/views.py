@@ -216,18 +216,32 @@ def giving_success(request, transaction, campaign=None):
 
 def donors(request, slug=None):
 
+    promo = None
     start_date = TODAY - timedelta(days=365)
+    template = 'giving/donors.html'
+
     if slug:
-        promo = Promotion.objects.get(slug=slug)
-        const = '{}_START_DATE'.format(promo.slug.replace('-','_').upper())
-        start_date = getattr(settings, const, None)
+        promo = get_object_or_404(Promotion, slug=slug)
+        if slug == 'giving-day':
+            const = '{}_START_DATE'.format(promo.slug.replace('-','_').upper())
+            start_date = getattr(settings, const, None)
+
+        # template
+        temp = 'giving/campaigns/{}/donors.html'.format(promo.slug)
+        if os.path.isfile(os.path.join(settings.ROOT_DIR, "templates", temp)):
+            template = temp
+
     donors = DonationContact.objects.filter(anonymous=False).filter(
         order__time_stamp__gte=start_date
     )
+
+    if slug and slug != 'giving-day':
+        donors = donors.filter(order__promotion__slug=slug)
+
     return render_to_response(
-        'giving/donors.html',
-        { 'donors':donors, 'campaign': slug, 'count':donors.count()},
-        context_instance=RequestContext(request)
+        template, {
+            'donors':donors, 'promo':promo, 'count':donors.count()
+        }, context_instance=RequestContext(request)
     )
 
 
