@@ -157,7 +157,7 @@
             <ol>
                 {% for field in ct_form %}
                     <li class="ctrlHolder">
-                    {% if field.name == "opt_in" %}
+                    {% if field.name == "matching_company" or field.name == "opt_in" %}
                     {{field}} {{field.label_tag}}<br />
                     {% else %}{% if field.name = "anonymous" %}{% else %}
                         {% if field.name == "address2" %}
