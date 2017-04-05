@@ -41,8 +41,14 @@
 {% block content %}
 {% get_lw_content as intro blurbs 2470 %}
 {{intro.body}}
-{% get_lw_content as header blurbs 2469 %}
-{{header.body}}
+{% if user.is_superuser %}
+<h2>
+  {{count|intcomma}} Giving Day Donations
+</h2>
+{% else %}
+  {% get_lw_content as header blurbs 2469 %}
+  {{header.body}}
+{% endif %}
 <ul>
 {% for obj in donors %}
     {% ifchanged obj.last_name %}
