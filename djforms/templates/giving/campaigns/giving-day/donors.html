@@ -1,14 +1,6 @@
-{% extends "giving/donation_form.html" %}
+{% extends "giving/campaigns/giving-day/donation_form.html" %}
 {% load livewhale_api %}
 {% load humanize %}
-{% block extra_style %}
-<style type="text/css">
-.generic-subpage #page-content-wrap {
-    margin-top: 0;
-}
-#header-background {opacity:1 !important;}
-</style>
-{% endblock %}
 {% block hero %}
 <div id="page-hero-wrap">
   <div class="lw_widget lw_widget_images">
@@ -26,12 +18,6 @@
     </h1>
   </div>
 </div>
-{% endblock %}
-{% block left_nav %}
-{% get_lw_content as nav blurbs 2472 %}
-{{nav.body}}
-{% get_lw_content as call blurbs 2193 %}
-{{call.body}}
 {% endblock %}
 {% block content_head %}
     <h1 id="page_title">

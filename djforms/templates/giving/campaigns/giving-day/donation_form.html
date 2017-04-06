@@ -22,14 +22,16 @@
     #page-content-wrap #pledge-payments p { color:green;font-weight:bold;
       margin-bottom:5px; }
     .generic-subpage #page-content-wrap { margin-top: 0; }
-    .generic-subpage #secondary-navigation-wrap { padding: 45px 0 0 45px;}
-    .generic-subpage #page-content-wrap .background {
+    .generic-subpage #secondary-navigation-wrap { padding: 25px 0 0 45px;}
+    .generic-subpage #page-content-wrap .generic-background {
     background: #e9e8e5; position: absolute; top: 0;
     height: 20px; width: 100%; z-index: 0;
     }
     .generic-subpage #page-sidebar { margin-top: 20px; }
     .generic-subpage #header-background { opacity: 1 !important;}
     #djforms.generic-subpage #main-content { padding-top: 20px; }
+    .generic-subpage #page-sidebar #sidebar-buttons { margin: 0 0 35px 0; }
+    .generic-subpage #page-content-wrap { margin-top: 0; }
     </style>
 {% endblock %}
 {% block hero %}
@@ -50,7 +52,7 @@
   </div>
 </div>
 {% endblock %}
-{% block group_name %}Giving{% endblock %}
+{% block group_name %}<a href="/giving-day/"> Giving Day</a>{% endblock %}
 {% block left_nav %}
     {% get_lw_content as nav blurbs 2472 %}
     {{nav.body}}
