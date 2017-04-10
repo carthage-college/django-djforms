@@ -2,6 +2,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 
 from djforms.polisci.iea.registration.forms import RegistrationContactForm
 from djforms.polisci.iea.registration.forms import RegistrationOrderForm
@@ -9,6 +10,7 @@ from djforms.polisci.iea import TO_LIST, BCC
 from djforms.processors.forms import TrustCommerceForm
 from djtools.utils.mail import send_mail
 
+@login_required
 def form(request):
     """
     Registration form
