@@ -242,12 +242,18 @@ class Promotion(models.Model):
     institutional = models.BooleanField(
         default=False,
     )
+    '''
+    ratio = models.CharField(
+        max_length=8,
+        null=True, blank=True
+    )
+    '''
 
     def __unicode__(self):
         return self.title
 
     def all(self):
-        objs = self.order_set.filter(Q(status="Approved") | Q(status="Manual"))
+        objs = self.order_set.filter(Q(status="approved") | Q(status="manual"))
         return objs
 
     def count(self):
@@ -257,10 +263,14 @@ class Promotion(models.Model):
         total = 0
         for obj in self.all():
             total += obj.total
+        '''
+        if self.ratio:
+            r = self.ratio.split(':')
+            total = int(r[0] * total) + int(r[1] * total)
+        '''
         return total
 
     def percent(self):
-        total = 0
         if self.donors:
             p = (self.count() / self.donors) * 100
         else:

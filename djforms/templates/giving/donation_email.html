@@ -1,7 +1,7 @@
 {% load livewhale_api %}
 <h1>{{data.order.promotion.title|default:"Donation to Carthage"}}</h1>
 {% if data.order.promotion.email_info %}
-    <p>{{data.order.promotion.email_info}}</p>
+    <div>{{data.order.promotion.email_info|safe}}</div>
 {% else %}
     {% autoescape off %}
       {% get_lw_content as donation_email blurbs 2457 %}
@@ -81,7 +81,7 @@
         Email
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.order.contact.email}}
+        {{data.order.contact.email|default:"&nbsp;"}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
         margin-right:10px; padding:5px; width:220px;">

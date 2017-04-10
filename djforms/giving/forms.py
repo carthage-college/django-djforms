@@ -244,6 +244,12 @@ class ManagerContactForm(DonationContactForm):
     things like cash donations
     '''
 
+    email = forms.EmailField(
+        label = "Your email address",
+        required = False,
+        max_length=128
+    )
+
     def __init__(self, *args, **kwargs):
         super(ManagerContactForm, self).__init__(*args, **kwargs)
         self.fields.pop('state')

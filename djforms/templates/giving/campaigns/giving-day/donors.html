@@ -37,7 +37,7 @@
 {% endif %}
 <ul>
 {% for obj in donors %}
-    {% ifchanged obj.last_name %}
+    {% ifchanged obj.last_name and ifchanged obj.first_name %}
         {% ifchanged obj.last_name|lower|slice:":1" %}
             </ul>
             <h3 style="margin-bottom: 2px;">

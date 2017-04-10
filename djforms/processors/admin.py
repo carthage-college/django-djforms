@@ -5,16 +5,19 @@ class OrderAdmin(admin.ModelAdmin):
     model = Order
 
     list_display  = (
-        'last_name', 'contact_name', 'email', 'operator', 'promotion',
-        'time_stamp', 'status', 'auth', 'cycle', 'payments', 'total',
-        'start_date','transid'
+        'last_name', 'contact_name', 'email', 'comments', 'operator',
+        'promotion', 'time_stamp', 'status', 'auth', 'cycle', 'payments',
+        'total', 'start_date','transid'
     )
     ordering = [
         '-id', 'promotion', '-time_stamp','status','auth','avs','cycle',
         'payments','start_date'
     ]
-    list_filter   = ('status','auth','avs','cycle','payments','promotion')
+    #list_filter   = ('status','auth','avs','cycle','payments','promotion')
+    list_filter   = ('status','promotion')
     search_fields = ('transid','cc_4_digits','cc_name')
+    list_max_show_all   = 500
+    list_per_page       = 500
 
     def contact_name(self, obj):
         return '''

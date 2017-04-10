@@ -246,7 +246,7 @@ def donors(request, slug=None):
 
     donors = DonationContact.objects.filter(anonymous=False).filter(
         order__time_stamp__gte=start_date
-    )
+    ).filter(order__status__in=['approved','manual'])
 
     if slug and slug != 'giving-day':
         donors = donors.filter(order__promotion__slug=slug)
