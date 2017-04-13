@@ -11,8 +11,10 @@ class DonationContactAdmin(admin.ModelAdmin):
     model = DonationContact
     exclude = ('country','second_name','previous_name','salutation')
     raw_id_fields = ('order',)
-    list_max_show_all   = 1000
-    list_per_page       = 1000
+    list_max_show_all   = 500
+    list_per_page       = 500
+    #list_max_show_all   = 2000
+    #list_per_page       = 2000
 
     ordering = [
         '-created_at','last_name','city','state','postal_code',
@@ -22,14 +24,21 @@ class DonationContactAdmin(admin.ModelAdmin):
     #inlines = [OrderInline,]
 
     list_display  = (
-        'last_name','first_name','created_at','email','phone',
+        'last_name','first_name','order_cc_name','created_at','email','phone',
         'address1','address2','city','state','postal_code',
         'spouse','relation','class_of','matching_company',
-        'order_promo',
-        'order_cycle','order_payments','order_start_date',
+        'order_promo', 'order_cycle','order_payments','order_start_date',
         'order_transid','order_status','order_total',
         'order_comments','opt_in','anonymous'
     )
+
+    def order_cc_name(self, obj):
+        try:
+            name = obj.order.all()[0].cc_name
+        except:
+            name = None
+        return name
+    order_cc_name.short_description = 'CC Name'
 
     def order_promo(self, obj):
         try:
