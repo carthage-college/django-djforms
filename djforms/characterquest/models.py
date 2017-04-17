@@ -15,8 +15,8 @@ class ApplicationProfile(models.Model):
     skills_experience = models.TextField(
         "Why you?",
         help_text = """
-            Why do you want to be part of the Character Quest Leadership
-            Certification process, and how will you utilize it during
+            Why do you want to be part of the LEAD Retreat
+            and how will you utilize it during
             your time at Carthage?
         """
     )
@@ -36,7 +36,7 @@ class ApplicationProfile(models.Model):
     references = models.TextField(
         "References",
         help_text = """
-            Please list two references along with their phone numbers.
+            Please list two references along with their email addresses.
             References should be Carthage faculty, staff, coaching
             staff or advisors.
         """
