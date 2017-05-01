@@ -56,7 +56,7 @@ def application_profile_form(request):
             applicant.save()
             if not settings.DEBUG:
                 TO_LIST.append(request.user.email)
-            subject = "CharacterQuest Application: %s %s" % \
+            subject = "LEAD Retreat Application: %s %s" % \
                 (
                     applicant.profile.user.first_name,
                     applicant.profile.user.last_name
