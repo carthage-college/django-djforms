@@ -55,8 +55,12 @@ def archives(request, year=None):
     else:
         year = 2010
 
-    ns = Contact.objects.exclude(pubstatus=False).exclude(category='Death Announcement').exclude(classnote__exact='None')
-    notes = ns.filter(classyear__range=[year,year+9]).order_by("-classyear", "last_name")
+    ns = Contact.objects.exclude(pubstatus=False).exclude(
+        category='Death Announcement'
+    ).exclude(classnote__exact='None')
+    notes = ns.filter(classyear__range=[year,year+9]).order_by(
+        '-classyear', '-created_at'
+    )
     manager = request.user.has_perm('classnotes.change_contact')
 
     return render_to_response(
