@@ -10,22 +10,17 @@ from djforms.admissions.visitdays.forms import *
 from djtools.utils.mail import send_mail
 from djtools.utils.convert import str_to_class
 
-def VisitDayForm(request, event_type):
+
+def visit_day_form(request, event_type):
     visit_day = get_object_or_404(VisitDay, slug=event_type)
     short = False
-    #form_name = event_type.capitalize()
-    slug_list = event_type.split("-")
-    form_name = slug_list.pop(0).capitalize()
-    for n in slug_list:
-        form_name += "{}".format(n.capitalize())
     if request.method=='POST':
-        try:
-            form = str_to_class(
-                "djforms.admissions.visitdays.forms", "{}Form".format(form_name)
-            )(event_type,request.POST)
-        except:
+        if visit_day.extended:
+            form = VisitDayForm(event_type,request.POST)
+        else:
             form = VisitDayBaseForm(event_type,request.POST)
             short = True
+
         if form.is_valid():
             BCC = settings.MANAGERS
             profile = form.save()
@@ -69,12 +64,11 @@ def VisitDayForm(request, event_type):
                 reverse_lazy("visitday_success")
             )
     else:
-        try:
-            form = str_to_class(
-                "djforms.admissions.visitdays.forms", "{}Form".format(form_name)
-            )(event_type)
-        except:
+        if visit_day.extended:
+            form = VisitDayForm(event_type)
+        else:
             form = VisitDayBaseForm(event_type)
+
     return render_to_response(
         "admissions/visitday/form.html",
         {"form": form,"event_type":event_type,"visit_day":visit_day},

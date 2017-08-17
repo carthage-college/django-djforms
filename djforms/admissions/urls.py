@@ -17,7 +17,7 @@ urlpatterns = patterns('djforms.admissions',
     ),
     url(
         r'^visit/(?P<event_type>[a-zA-Z0-9_-]+)/$',
-        'visitdays.views.VisitDayForm',
+        'visitdays.views.visit_day_form',
         name='visitday_form'
     ),
     url(
