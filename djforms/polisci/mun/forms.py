@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#) -*- coding: utf-8 -*-
 from django import forms
 from djforms.core.models import STATE_CHOICES
 from djforms.core.models import BINARY_CHOICES
@@ -69,7 +69,12 @@ class AttenderForm(forms.Form):
             Do you want to be entered into the random draw for participation
             in the Historical Cuban Missile Crisis simulation?
         """,
-        choices=BINARY_CHOICES, widget=forms.RadioSelect
+        choices=BINARY_CHOICES, widget=forms.RadioSelect,
+        help_text="""
+            If 'Yes', please state in the Questions/Comments text box above
+            whether you would like one or two students in the
+            Historical Cuban Missile Crisis simulation
+        """
     )
 
 class CountryForm(forms.Form):
