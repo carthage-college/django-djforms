@@ -114,7 +114,8 @@ class VisitDayProfile(VisitDayBaseProfile):
         "Academic Interests", null=True, blank=True
     )
     xtracurricular = models.TextField(
-        "Extracurricular Interests", null=True, blank=True
+        "Extracurricular Interests (clubs, fine arts, sports, etc.)",
+        null=True, blank=True
     )
     comments = models.TextField(null=True, blank=True)
 
