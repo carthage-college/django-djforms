@@ -53,7 +53,10 @@ class RegistrationContactForm(ContactForm):
         required=False
     )
     registration_fee = forms.TypedChoiceField(
-        choices=REGGIES, widget=forms.RadioSelect()
+        choices=REGGIES, widget=forms.RadioSelect(),
+        help_text="""
+            All fees are stated in US Dollars
+        """
     )
     kao_member = forms.TypedChoiceField(
         choices=BINARY_CHOICES, widget=forms.RadioSelect(),
