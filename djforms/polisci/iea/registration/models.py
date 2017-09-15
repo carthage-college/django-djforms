@@ -16,13 +16,16 @@ PAYMENT_CHOICES = (
     ('Check', 'Check'),
 )
 REGGIES = (
-    ('Early Registration|300','$300 Early Registration (due by May 31, 2017)'),
+    (
+        'Early Registration|275',
+        '$275 USD Early Registration (due by April 30, 2018)'
+    ),
     ('Graduate Student|125','$125 Graduate Student'),
     (
-        'Undergraduate Student|100',
+        'Undergraduate Student|75',
         mark_safe(
             '''
-            $100 Undergraduate Student (Verification Required)
+            $75 Undergraduate Student (Verification Required)
             <strong>&dagger;</strong>
             '''
         )
@@ -40,9 +43,9 @@ REGGIES = (
         )
     ),
     (
-        'Local Participants|100',
+        'Local Participants|75',
         mark_safe(
-            '$100 Local Participants <strong>&dagger;&dagger;&dagger;</strong>'
+            '$75 Local Montreal Region Participants <strong>&dagger;&dagger;&dagger;</strong>'
         )
     ),
 )
