@@ -86,8 +86,7 @@ class RegistrationOrderForm(OrderForm):
     Conference registration order form, extends
     base OrderForm in processors app
     """
-    total = forms.CharField(
-    )
+    total = forms.CharField()
 
     class Meta:
         model       = Order

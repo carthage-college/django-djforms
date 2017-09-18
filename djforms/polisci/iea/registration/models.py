@@ -47,7 +47,7 @@ REGGIES = (
         mark_safe(
             '$75 Local Montreal Region Participants <strong>&dagger;&dagger;&dagger;</strong>'
         )
-    ),
+    )
 )
 
 
