@@ -195,6 +195,13 @@ class PledgeContactForm(DonationContactForm):
     pass
 
 
+class GivingDayPledgeContactForm(DonationContactForm):
+    """
+    Same as above, but for Giving Day
+    """
+    pass
+
+
 class PledgeOrderForm(OrderForm):
     """
     A subscrition form for recurring billing
