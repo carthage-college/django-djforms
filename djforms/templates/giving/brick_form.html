@@ -69,8 +69,7 @@
     </h1>
 {% endblock %}
 {% block content %}
-    {% include "includes/security_metrics.html" %}
-    <br />
+    {# include "includes/security_metrics.html" #}
     <div class="content cf">
         {% get_lw_content as content blurbs 2046 %}
         {{content.body}}

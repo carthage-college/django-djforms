@@ -230,6 +230,7 @@ def giving_success(request, transaction, campaign=None):
 def donors(request, slug=None):
 
     promo = None
+    percent = 0
     start_date = TODAY - timedelta(days=365)
     template = 'giving/donors.html'
 
@@ -239,6 +240,7 @@ def donors(request, slug=None):
             const = '{}_START_DATE'.format(promo.slug.replace('-','_').upper())
             start_date = getattr(settings, const, None)
 
+        percent = promo.percent()
         # template
         temp = 'giving/campaigns/{}/donors.html'.format(promo.slug)
         if os.path.isfile(os.path.join(settings.ROOT_DIR, "templates", temp)):
@@ -251,11 +253,22 @@ def donors(request, slug=None):
     if slug and slug != 'giving-day':
         donors = donors.filter(order__promotion__slug=slug)
 
-    return render_to_response(
-        template, {
-            'donors':donors, 'promo':promo, 'count':donors.count()
-        }, context_instance=RequestContext(request)
-    )
+    ctext = {
+        'donors':donors, 'promo':promo, 'count':donors.count(),
+        'percent': percent
+    }
+
+    if request.GET.get('ajax'):
+        template = 'giving/donors.json'
+        response = render_to_response(
+            template, ctext, content_type='text/plain; charset=utf-8'
+        )
+    else:
+        response = render_to_response(
+            template, ctext, context_instance=RequestContext(request)
+        )
+
+    return response
 
 
 def promotion_ajax(request, slug):
