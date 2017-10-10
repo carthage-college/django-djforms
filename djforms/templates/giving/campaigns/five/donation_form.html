@@ -1,0 +1,11 @@
+{% extends "giving/donation_form.html" %}
+{% load livewhale_api %}
+{% block group_name %}Carthage Crowdfunding Challenge{% endblock %}
+{% block left_nav %}
+    {% include "giving/campaigns/one/left_nav.html" %}
+{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        {{campaign.title}}
+    </h1>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "giving/campaigns/one/donation_form.html" %}
+{% load livewhale_api %}
+{% block content %}
+    {% if campaign.thank_you %}
+    <div>
+        {{campaign.thank_you}}
+    </div>
+    {% else %}
+    {% get_lw_content as thank_you blurbs 2087 %}
+    {{thank_you.body}}
+    {% endif %}
+    <p>
+      <a href="/give/reason/" target="_blank">
+        Share your reason for supporting Carthage
+      </a>
+    </p>
+{% endblock %}
