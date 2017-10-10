@@ -3,6 +3,7 @@
 {
     "count": "{{count|intcomma}}",
     "percent": "{{percent}}",
+    "total": "{{promo.total|intcomma}}",
     "title": "{{promo.title}}",
     "results": [
     {% for obj in donors %}
