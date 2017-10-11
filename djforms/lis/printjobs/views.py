@@ -2,7 +2,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse_lazy
-from django.template import RequestContext, loader
+from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
 from djforms.lis.printjobs.forms import PrintRequestForm
@@ -10,6 +10,7 @@ from djforms.lis.printjobs.forms import PrintRequestForm
 from djtools.utils.mail import send_mail
 
 import datetime
+
 
 @login_required
 def index(request):
@@ -25,7 +26,7 @@ def index(request):
             else:
                 TO_LIST = ["mrprintreqs@carthage.edu",data['email']]
 
-            subject = "[LIS Print Request]: %s from the %s Department" % (
+            subject = "[LIS Print Request]: {} from the {} Department".format(
                 data['name'],data['department']
             )
 
