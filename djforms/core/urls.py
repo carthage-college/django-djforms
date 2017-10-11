@@ -72,8 +72,6 @@ urlpatterns = patterns('',
     (r'^job/', include('djforms.jobpost.urls')),
     # for the modern language form environment
     (r'^languages/', include('djforms.languages.urls')),
-    # maintenance/evs
-    (r'^maintenance/', include('djforms.maintenance.urls')),
     # music
     (r'^music/', include('djforms.music.urls')),
     # polisci
