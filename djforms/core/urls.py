@@ -68,12 +68,8 @@ urlpatterns = patterns('',
     (r'^giving/', include('djforms.giving.urls')),
     # LIS
     (r'^lis/', include('djforms.lis.urls')),
-    # for the job post environment
-    (r'^job/', include('djforms.jobpost.urls')),
     # for the modern language form environment
     (r'^languages/', include('djforms.languages.urls')),
-    # maintenance/evs
-    (r'^maintenance/', include('djforms.maintenance.urls')),
     # music
     (r'^music/', include('djforms.music.urls')),
     # polisci

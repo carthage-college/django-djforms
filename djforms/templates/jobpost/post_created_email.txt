@@ -1,2 +1,0 @@
-A new job post has been created and can be managed
-<a href="https://{{server_url}}{% url 'post_manage' data.post.id %}">here</a>.
