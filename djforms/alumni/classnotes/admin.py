@@ -6,6 +6,7 @@ from djforms.alumni.classnotes.forms import CLASSYEARS, SPOUSEYEARS, CATEGORIES
 
 from djtools.utils.mail import send_mail
 
+
 class ContactAdminForm(forms.ModelForm):
     classyear       = forms.CharField(label="Class", max_length=4, widget=forms.Select(choices=CLASSYEARS))
     spouseyear      = forms.CharField(label="Spouse's class", max_length=4, widget=forms.Select(choices=SPOUSEYEARS), required=False)
@@ -14,6 +15,8 @@ class ContactAdminForm(forms.ModelForm):
 
     class Meta(object):
         model = Contact
+        fields = '__all__'
+
 
 class ContactAdmin(admin.ModelAdmin):
     form            = ContactAdminForm
