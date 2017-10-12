@@ -4,7 +4,7 @@ from django.core.cache import cache
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
-from djforms.core.models import Department, GenericChoice
+from djforms.core.models import Department
 from djforms.core.models import YEAR_CHOICES, BINARY_CHOICES
 from djtools.utils.mail import send_mail
 
