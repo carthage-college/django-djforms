@@ -6,21 +6,21 @@ from django.contrib import admin
 from djforms.prehealth.committee_letter.models import Applicant, Recommendation
 from djforms.prehealth.committee_letter.models import PROGRAM_CHOICES
 
-#from tagging.models import Tag, TaggedItem
-
 
 class RecommendationInline(admin.TabularInline):
     model = Recommendation
     fields = ('name', 'email')
 
+
 class ApplicantAdminForm(forms.ModelForm):
 
-  class Meta:
-    model = Applicant
+    class Meta:
+        model = Applicant
+        fields = '__all__'
 
-  def __init__(self, *args, **kwargs):
-    super(ApplicantAdminForm, self).__init__(*args, **kwargs)
-    self.fields['programs_apply'].queryset = PROGRAM_CHOICES
+    def __init__(self, *args, **kwargs):
+        super(ApplicantAdminForm, self).__init__(*args, **kwargs)
+        self.fields['programs_apply'].queryset = PROGRAM_CHOICES
 
 
 class ApplicantAdmin(admin.ModelAdmin):
