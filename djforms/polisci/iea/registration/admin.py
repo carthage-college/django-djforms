@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from djforms.polisci.wipcs.registration.models import RegistrationContact
+from djforms.polisci.iea.registration.models import RegistrationContact
 
 class RegistrationContactAdmin(admin.ModelAdmin):
     model = RegistrationContact
