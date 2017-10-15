@@ -9,16 +9,6 @@ from djtools.fields.helpers import upload_to_path
 from djtools.fields.validators import MimetypeValidator
 from djtools.fields.validators import credit_gpa_validator
 
-from tagging.models import Tag, TaggedItem
-
-try:
-    program_choices_tag = Tag.objects.get(name__iexact='Pre-Health Programs')
-    PROGRAM_CHOICES = TaggedItem.objects.get_by_model(
-        GenericChoice, program_choices_tag
-    ).filter(active=True).order_by("name")
-except:
-    PROGRAM_CHOICES = GenericChoice.objects.none()
-
 RANKING_CHOICES = (
     ('Outstanding','Outstanding'),
     ('Excellent','Excellent'),

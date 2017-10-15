@@ -5,11 +5,11 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 
-from localflavor.us.models import USStateField
-from tagging import fields, managers
-from userprofile.models import BaseProfile
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+from localflavor.us.models import USStateField
+from taggit.managers import TaggableManager
+from userprofile.models import BaseProfile
 
 from djtools.fields.helpers import upload_to_path
 from djtools.fields.validators import MimetypeValidator
@@ -76,62 +76,106 @@ if settings.DEBUG:
 else:
     REQ = {'class': 'required','required': 'required'}
 
-YEARS1 =  [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +1))]
-YEARS3 =  [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +3))]
+YEARS1 = [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +1))]
+YEARS3 = [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +3))]
 
-#For making choices for choice fields for forms
+
 class GenericChoice(models.Model):
+    """
+    For making choices for select fields in forms
+    """
     name = models.CharField(unique=True, max_length=255)
     value = models.CharField(max_length=255)
-    ranking = models.IntegerField(null=True, blank=True, default=0, max_length=3, verbose_name="Ranking", help_text="A number from 0 to 999 to determine this object's position in a list.")
-    active = models.BooleanField(help_text='Do you want the field to be visable on your form?', verbose_name='Is active?', default=True)
-    tags = fields.TagField()
+    ranking = models.IntegerField(
+        null=True, blank=True,
+        default=0, max_length=3,
+        verbose_name="Ranking",
+        help_text="""
+          A number from 0 to 999 to determine this object's position in a list.
+        """
+    )
+    active = models.BooleanField(
+        help_text="""
+            Do you want the field to be visable on your form?
+        """,
+        verbose_name='Is active?', default=True
+    )
+    tags = TaggableManager()
 
     def __unicode__(self):
         return self.name
 
+    def tag_list(self):
+        return u", ".join(o.name for o in self.tags.all())
+
     class Meta:
         ordering = ['ranking']
 
+
 #For making contacts for forms
 class GenericContact(models.Model):
-    created_at          = models.DateTimeField(auto_now_add=True)
-    updated_at          = models.DateTimeField(auto_now=True)
-    first_name          = models.CharField(max_length=128)
-    last_name           = models.CharField(max_length=128)
-    #email               = models.EmailField(null=True,blank=True)
-    email               = models.EmailField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    first_name = models.CharField(max_length=128)
+    last_name = models.CharField(max_length=128)
+    email = models.EmailField()
 
     class Meta:
         abstract = True
         ordering = ['last_name']
 
     def __unicode__(self):
-        return u'%s %s' % (self.last_name, self.first_name)
+        return u'{} {}'.format(self.last_name, self.first_name)
+
 
 class UserProfile(BaseProfile):
     """
     User profile model
     """
-    phone   = models.CharField(max_length=12, verbose_name='Phone Number', help_text="Format: XXX-XXX-XXXX", null=True, blank=True)
-    address = models.CharField(max_length=255, verbose_name = 'Address', null=True, blank=True)
-    city    = models.CharField(max_length=128, verbose_name = 'City', null=True, blank=True)
-    state   = USStateField()
-    zip     = models.CharField(max_length=10, verbose_name = 'Zip code', null=True, blank=True)
-    dob     = models.DateField("Birthday", null=True, blank=True)
-    gender  = models.CharField(max_length="16", choices=GENDER_CHOICES, null=True, blank=True)
-    campus_address  = models.CharField("Campus Address",max_length="64",null=True, blank=True)
-    campus_box = models.CharField("Campus Box #",max_length="4",null=True, blank=True)
-    #college_access_code = models.CharField("Carthage Access Code",max_length="7",null=True, blank=True)
-    college_id = models.CharField("Carthage ID", max_length="7",null=True, blank=True)
-    college_year = models.CharField("Current Year at Carthage",max_length="1",choices=YEAR_CHOICES,null=True, blank=True)
-    permission = models.ManyToManyField(GenericChoice, verbose_name='Permissions', null=True, blank=True)
+    phone = models.CharField(
+        max_length=12, verbose_name="Phone Number",
+        help_text="Format: XXX-XXX-XXXX", null=True, blank=True
+    )
+    address = models.CharField(
+        max_length=255, verbose_name = "Address", null=True, blank=True
+    )
+    city = models.CharField(
+        max_length=128, verbose_name = "City", null=True, blank=True
+    )
+    state = USStateField()
+    zip = models.CharField(
+        max_length=10, verbose_name = "Zip code", null=True, blank=True
+    )
+    dob = models.DateField(
+        "Birthday", null=True, blank=True
+    )
+    gender = models.CharField(
+        max_length=16, choices=GENDER_CHOICES, null=True, blank=True
+    )
+    campus_address = models.CharField(
+        "Campus Address", max_length="64", null=True, blank=True
+    )
+    campus_box = models.CharField(
+        "Campus Box #", max_length="4", null=True, blank=True
+    )
+    college_id = models.CharField(
+        "Carthage ID", max_length="7",null=True, blank=True
+    )
+    college_year = models.CharField(
+        "Current Year at Carthage", max_length=1,
+        choices=YEAR_CHOICES, null=True, blank=True
+    )
 
     def __unicode__(self):
-        return "%s %s's profile with username: %s" % (self.user.first_name, self.user.last_name, self.user.username)
+        return "{} {}'s profile with username: {}".format(
+            self.user.first_name, self.user.last_name, self.user.username
+        )
+
 
 def create_profile(sender, instance, created, **kwargs):
-    """Create the UserProfile when a new User is saved"""
+    """
+    Create the UserProfile when a new User is saved
+    """
     if created:
         profile = UserProfile()
         profile.user = instance
@@ -143,7 +187,7 @@ post_save.connect(create_profile, sender=User)
 class Photo(models.Model):
     title = models.CharField(max_length=255)
     original = models.ImageField(
-        upload_to=upload_to_path, max_length="255",
+        upload_to=upload_to_path, max_length=255,
         validators=[MimetypeValidator('image/jpeg')],
     )
     thumbnail = ImageSpecField(
@@ -159,21 +203,26 @@ class Photo(models.Model):
     def get_slug(self):
         return "photos/"
 
+
 class Department(models.Model):
     """ Department """
-    name          = models.CharField(max_length=100, verbose_name = 'Department Name')
-    slug          = models.SlugField(unique=True)
-    number        = models.CharField(max_length=3, verbose_name = 'Department Number')
-    contact_name  = models.CharField(max_length=100, verbose_name = 'Department Contact')
-    contact_phone = models.CharField(max_length=100, verbose_name = 'Department Phone')
-    tags          = fields.TagField(blank=True, null=True, default='', help_text="Seperate multiple tags with a space or comma if they contain more than one word.")
-    # tag object manager
-    tag_objects   = managers.ModelTaggedItemManager()
-    # Default object manager
-    objects       = models.Manager()
+    name = models.CharField(
+        max_length=100, verbose_name = "Department Name"
+    )
+    slug = models.SlugField(unique=True)
+    number = models.CharField(
+        max_length=3, verbose_name = "Department Number"
+    )
+    contact_name = models.CharField(
+        max_length=100, verbose_name = "Department Contact"
+    )
+    contact_phone = models.CharField(
+        max_length=100, verbose_name = "Department Phone"
+    )
+    tags = TaggableManager()
 
     class Meta:
-        verbose_name_plural = 'departments'
+        verbose_name_plural = "Departments"
         db_table = 'core_departments'
         ordering = ('name',)
 
@@ -181,7 +230,7 @@ class Department(models.Model):
         prepopulated_fields = {'slug': ('name',)}
 
     def __unicode__(self):
-        return '%s' % self.name
+        return '{} '.format(self.name)
 
     @models.permalink
     def get_absolute_url(self):

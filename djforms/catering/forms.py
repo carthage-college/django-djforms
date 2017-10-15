@@ -6,41 +6,23 @@ from djforms.core.models import GenericChoice
 
 from djtools.fields.time import KungfuTimeField
 
-from tagging.models import Tag, TaggedItem
-
 import datetime
 
-try:
-    building_tag = Tag.objects.get(name__iexact='Building Name')
-    BUILDINGS = TaggedItem.objects.get_by_model(
-        GenericChoice, building_tag
-    ).filter(active=True).order_by("name")
-except:
-    BUILDINGS = GenericChoice.objects.none()
+BUILDINGS = GenericChoice.objects.filter(
+    tags__name__in=['Building Name']
+).filter(active=True).order_by('name')
 
-try:
-    open_to_tag = Tag.objects.get(name__iexact='Audience Choices')
-    OPEN_TO = TaggedItem.objects.get_by_model(
-        GenericChoice, open_to_tag
-    ).filter(active=True).order_by("name")
-except:
-    OPEN_TO = GenericChoice.objects.none()
+OPEN_TO = GenericChoice.objects.filter(
+    tags__name__in=['Audience Choices']
+).filter(active=True).order_by('name')
 
-try:
-    room_setup_tag = Tag.objects.get(name__iexact='Room setup')
-    ROOM_SET_UP = TaggedItem.objects.get_by_model(
-        GenericChoice, room_setup_tag
-    ).filter(active=True).order_by("ranking")
-except:
-    ROOM_SET_UP = GenericChoice.objects.none()
+ROOM_SET_UP = GenericChoice.objects.filter(
+    tags__name__in=['Room setup']
+).filter(active=True).order_by('name')
 
-try:
-    meal_service = Tag.objects.get(name__iexact='Meal service')
-    MEAL_SERVICE = TaggedItem.objects.get_by_model(
-        GenericChoice, meal_service
-    ).filter(active=True).order_by("ranking")
-except:
-    MEAL_SERVICE = GenericChoice.objects.none()
+MEAL_SERVICE = GenericChoice.objects.filter(
+    tags__name__in=['Meal service']
+).filter(active=True).order_by('name')
 
 
 class EventForm1(forms.ModelForm):

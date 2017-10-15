@@ -12,7 +12,9 @@ handler500 = 'djtools.views.errors.server_error'
 
 urlpatterns = patterns('',
     # home
-    (r'^$', TemplateView.as_view(template_name="forms_home.html")),
+    (
+        r'^$', RedirectView.as_view(url='https://www.carthage.edu/bridge/')
+    ),
     # simple 400 error view
     url(
         r'^denied/$',
@@ -68,12 +70,8 @@ urlpatterns = patterns('',
     (r'^giving/', include('djforms.giving.urls')),
     # LIS
     (r'^lis/', include('djforms.lis.urls')),
-    # for the job post environment
-    (r'^job/', include('djforms.jobpost.urls')),
     # for the modern language form environment
     (r'^languages/', include('djforms.languages.urls')),
-    # maintenance/evs
-    (r'^maintenance/', include('djforms.maintenance.urls')),
     # music
     (r'^music/', include('djforms.music.urls')),
     # polisci

@@ -4,11 +4,11 @@ from django.core.cache import cache
 from django.contrib.auth.models import User
 from django.utils.safestring import mark_safe
 
-from djforms.core.models import Department, GenericChoice
+from djforms.core.models import Department
 from djforms.core.models import YEAR_CHOICES, BINARY_CHOICES
 from djtools.utils.mail import send_mail
 
-from tagging import fields, managers
+from taggit.managers import TaggableManager
 
 import urllib, json
 
@@ -172,20 +172,10 @@ class Presentation(models.Model):
     date_updated = models.DateTimeField(
         "Date Updated", auto_now=True
     )
-    tags = fields.TagField(
-        blank=True, null=True, default='',
-        help_text = """
-            Seperate multiple tags with a space, or use comma
-            if a tag contains more than one word.
-        """
-    )
+    tags = TaggableManager()
     ranking = models.IntegerField(
         null=True, blank=True, default=0
     )
-    # tag object manager
-    tag_objects = managers.ModelTaggedItemManager()
-    # Default object manager
-    objects = models.Manager()
     # core
     title = models.CharField(
         "Presentation title", max_length=255
@@ -218,18 +208,35 @@ class Presentation(models.Model):
         """
     )
     shared = models.CharField(
-        "Faculty sponsor approval", max_length=3, choices=BINARY_CHOICES, help_text="Has your faculty sponsor approved your proposal? Note: Faculty and staff presenters should choose 'yes'.")
-    abstract_text       = models.TextField("Abstract", help_text='Copy and paste your abstract text or start typing.')
-    need_table          = models.CharField(max_length=3, choices=BINARY_CHOICES)
-    need_electricity    = models.CharField(max_length=3, choices=BINARY_CHOICES)
-    poster_file         = models.FileField(upload_to='files/scholars/posters/2017', max_length="768", help_text='Upload a poster file', null=True, blank=True)
-    status              = models.BooleanField(default=False)
+        "Faculty sponsor approval",
+        max_length=3, choices=BINARY_CHOICES,
+        help_text = """
+            Has your faculty sponsor approved your proposal?
+            Note: Faculty and staff presenters should choose 'yes'.
+        """
+    )
+    abstract_text = models.TextField(
+        "Abstract",
+        help_text="Copy and paste your abstract text or start typing."
+    )
+    need_table = models.CharField(max_length=3, choices=BINARY_CHOICES)
+    need_electricity = models.CharField(max_length=3, choices=BINARY_CHOICES)
+    poster_file = models.FileField(
+        upload_to='files/scholars/posters/2017',
+        max_length=768,
+        help_text="Upload a poster file",
+        null=True, blank=True
+    )
+    status = models.BooleanField(default=False)
 
     class Meta:
         #ordering        = ('-date_created',)
         ordering        = ('date_created',)
         get_latest_by   = 'date_created'
         permissions     = ( ("manage_presentation", "manage presentation"), )
+
+    def __unicode__(self):
+        return self.title
 
     def save(self, *args, **kwargs):
         # send email if approved
@@ -243,13 +250,19 @@ class Presentation(models.Model):
                 BCC = settings.MANAGERS
                 email = settings.DEFAULT_FROM_EMAIL
                 subject = "[Celebration of Scholars] Presentation has been approved"
-                send_mail(None,TO_LIST,subject,email,"scholars/presentation/approved_mail.html",self,BCC)
+                send_mail(
+                    None,TO_LIST,subject,email,
+                    'scholars/presentation/approved_mail.html',self,BCC
+                )
         else:
             self.updated_by = self.user
         super(Presentation, self).save()
 
     def __unicode__(self):
-        return self.title
+        return self.name
+
+    def tag_list(self):
+        return u", ".join(o.name for o in self.tags.all())
 
     @models.permalink
     def get_absolute_url(self):
@@ -291,11 +304,12 @@ class Presentation(models.Model):
     def poster(self):
         p = False
         if self.poster_file:
-            p = mark_safe(u'<a href="http://%s/assets/%s">Download</a>' % (settings.SERVER_URL,self.poster_file))
+            p = mark_safe(u'<a href="https://{}/assets/{}">Download</a>'.format(
+                settings.SERVER_URL,self.poster_file)
+            )
         return p
     poster.allow_tags = True
 
     def presentation_type(self):
         return WORK_TYPES[self.work_type][1]
-
 

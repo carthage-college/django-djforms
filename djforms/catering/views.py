@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext, loader
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render_to_response, get_object_or_404
-from django.contrib.formtools.wizard.views import SessionWizardView
+from formtools.wizard.views import SessionWizardView
 from django.contrib.admin.views.decorators import staff_member_required
 
 from djforms.catering.forms import EventForm1, EventForm2, EventForm3
