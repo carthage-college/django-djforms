@@ -5,7 +5,6 @@ from djforms.processors.models import Contact
 
 from djtools.fields import BINARY_CHOICES
 
-from tagging import fields, managers
 
 SERVE_AS_CHOICES = (
     ('Discussant', 'Discussant'),

@@ -8,3 +8,4 @@ class PledgeForm(forms.ModelForm):
 
     class Meta:
         model = Pledge
+        fields = '__all__'

@@ -32,6 +32,7 @@ class VisitDayBaseForm(forms.ModelForm):
 
     class Meta:
         model = VisitDayBaseProfile
+        fields = '__all__'
 
     def __init__(self,event_type,*args,**kwargs):
         super(VisitDayBaseForm,self).__init__(*args,**kwargs)
@@ -86,6 +87,7 @@ class VisitDayForm(forms.ModelForm):
 
     class Meta:
         model = VisitDayProfile
+        fields = '__all__'
 
     def __init__(self,event_type,*args,**kwargs):
         super(VisitDayForm,self).__init__(*args,**kwargs)

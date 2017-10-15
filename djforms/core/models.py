@@ -5,11 +5,11 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 
-from localflavor.us.models import USStateField
-from tagging import fields
-from userprofile.models import BaseProfile
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+from localflavor.us.models import USStateField
+from taggit.managers import TaggableManager
+from userprofile.models import BaseProfile
 
 from djtools.fields.helpers import upload_to_path
 from djtools.fields.validators import MimetypeValidator
@@ -100,10 +100,13 @@ class GenericChoice(models.Model):
         """,
         verbose_name='Is active?', default=True
     )
-    tags = fields.TagField()
+    tags = TaggableManager()
 
     def __unicode__(self):
         return self.name
+
+    def tag_list(self):
+        return u", ".join(o.name for o in self.tags.all())
 
     class Meta:
         ordering = ['ranking']
@@ -199,6 +202,39 @@ class Photo(models.Model):
 
     def get_slug(self):
         return "photos/"
+
+
+class Department(models.Model):
+    """ Department """
+    name = models.CharField(
+        max_length=100, verbose_name = "Department Name"
+    )
+    slug = models.SlugField(unique=True)
+    number = models.CharField(
+        max_length=3, verbose_name = "Department Number"
+    )
+    contact_name = models.CharField(
+        max_length=100, verbose_name = "Department Contact"
+    )
+    contact_phone = models.CharField(
+        max_length=100, verbose_name = "Department Phone"
+    )
+    tags = TaggableManager()
+
+    class Meta:
+        verbose_name_plural = "Departments"
+        db_table = 'core_departments'
+        ordering = ('name',)
+
+    class Admin:
+        prepopulated_fields = {'slug': ('name',)}
+
+    def __unicode__(self):
+        return '{} '.format(self.name)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('department_detail', None, { 'slug':self.slug })
 
 
 class Promotion(models.Model):
