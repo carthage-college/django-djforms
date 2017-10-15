@@ -1,22 +1,16 @@
 from django import forms
-from django.forms import ModelForm
 from djforms.core.models import BINARY_CHOICES, GenericChoice
 from djforms.writingcurriculum.models import CourseProposal, DAY_SPS_CHOICES
 
-from tagging.models import Tag, TaggedItem
+TERMS = GenericChoice.objects.filter(
+    tags__name__in=['WAC Term']
+).filter(active=True)
 
-try:
-    term_tag = Tag.objects.get(name__iexact='WAC Term')
-    TERM = TaggedItem.objects.get_by_model(
-        GenericChoice, term_tag
-    ).filter(active = True)
-except:
-    TERM = GenericChoice.objects.none()
 
 class ProposalForm(forms.ModelForm):
     academic_term = forms.ModelChoiceField(
         empty_label = None,
-        queryset = TERM, widget=forms.RadioSelect()
+        queryset = TERMS, widget=forms.RadioSelect()
     )
     day_sps = forms.ChoiceField(
         label = "Day or SPS",

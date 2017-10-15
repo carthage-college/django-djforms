@@ -7,7 +7,7 @@ from djforms.core.models import GenericChoice
 
 
 class GenericChoiceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'value', 'ranking', 'active', 'tags')
+    list_display = ('name', 'value', 'ranking', 'active','tag_list')
 
 
 class UserProfileAdmin(admin.ModelAdmin):

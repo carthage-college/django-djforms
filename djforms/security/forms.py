@@ -1,24 +1,17 @@
 from django import forms
+
 from djforms.security.models import ParkingTicketAppeal
-from tagging.models import Tag, TaggedItem
 from djforms.core.models import STATE_CHOICES, GenericChoice
 from djforms.core.models import BINARY_CHOICES
 
-try:
-    status_tag = Tag.objects.get(name='Residency Status')
-    RESIDENCY_STATUS = TaggedItem.objects.get_by_model(
-        GenericChoice, status_tag
-    ).filter(active = True)
-except:
-    RESIDENCY_STATUS = GenericChoice.objects.none()
+RESIDENCY_STATUS = GenericChoice.objects.filter(
+    tags__name__in=['Residency Status']
+).filter(active=True).order_by('name')
 
-try:
-    type_tag = Tag.objects.get(name='Permit Type')
-    PERMIT_TYPE = TaggedItem.objects.get_by_model(
-        GenericChoice, type_tag
-    ).filter(active = True)
-except:
-    PERMIT_TYPE = GenericChoice.objects.none()
+PERMIT_TYPE = GenericChoice.objects.filter(
+    tags__name__in=['Permit Type']
+).filter(active=True).order_by('name')
+
 
 class ParkingTicketAppealForm(forms.ModelForm):
     state   = forms.CharField(

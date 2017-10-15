@@ -12,7 +12,9 @@ handler500 = 'djtools.views.errors.server_error'
 
 urlpatterns = patterns('',
     # home
-    (r'^$', TemplateView.as_view(template_name="forms_home.html")),
+    (
+        r'^$', RedirectView.as_view(url='https://www.carthage.edu/bridge/')
+    ),
     # simple 400 error view
     url(
         r'^denied/$',

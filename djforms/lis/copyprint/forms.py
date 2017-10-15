@@ -12,3 +12,4 @@ class CardRequestForm(forms.ModelForm):
 
     class Meta:
         model = CardRequest
+        fields = '__all__'

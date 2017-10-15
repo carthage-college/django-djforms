@@ -2,14 +2,18 @@
 from django import forms
 
 from djforms.core.models import STATE_CHOICES
+from djforms.core.models import GenericChoice
 from djforms.prehealth.committee_letter.models import Applicant, Evaluation
-from djforms.prehealth.committee_letter.models import PROGRAM_CHOICES
 from djforms.prehealth.committee_letter.models import RANKING_CHOICES
 from djforms.prehealth.committee_letter.models import Recommendation
 
 from djtools.fields import BINARY_CHOICES
 
 from localflavor.us.forms import USPhoneNumberField
+
+PROGRAM_CHOICES = GenericChoice.objects.filter(
+    tags__name__in=['Pre-Health Programs']
+).filter(active=True).order_by('name')
 
 
 class ApplicantForm(forms.ModelForm):

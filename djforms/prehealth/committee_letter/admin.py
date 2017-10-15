@@ -4,7 +4,7 @@ from django.contrib import admin
 
 #from djforms.core.models import GenericChoice
 from djforms.prehealth.committee_letter.models import Applicant, Recommendation
-from djforms.prehealth.committee_letter.models import PROGRAM_CHOICES
+from djforms.prehealth.committee_letter.forms import PROGRAM_CHOICES
 
 
 class RecommendationInline(admin.TabularInline):

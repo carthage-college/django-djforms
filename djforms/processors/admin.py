@@ -20,7 +20,7 @@ class OrderAdmin(admin.ModelAdmin):
     list_per_page       = 500
 
     def contact_name(self, obj):
-        return '''
+        return u'''
             <strong><a href="{}{}/">{}</a></strong>
         '''.format(
             '/forms/admin/processors/contact/', obj.cid(), obj.first_name()
