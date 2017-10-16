@@ -91,6 +91,7 @@
                     {{recurring_warning.body}}
                     </div>
                 </li>
+                {% block designation %}
                 <li class="ctrlHolder">
                     <h3><label for="id_or-comments">Designation</label></h3>
                     <div>
@@ -104,6 +105,7 @@
                       </p>
                     </div>
                 </li>
+                {% endblock %}
             </ol>
         </fieldset>
         <h2>Contact Information</h2>
