@@ -78,8 +78,6 @@ urlpatterns = patterns('',
     (r'^political-science/', include('djforms.polisci.urls')),
     # pre-health
     (r'^pre-health/', include('djforms.prehealth.urls')),
-    # office of the president
-    #(r'^president/', include('djforms.president.urls')),
     # for the security appeal form environment
     (r'^scholars/', include('djforms.scholars.urls')),
     # for the security appeal form environment

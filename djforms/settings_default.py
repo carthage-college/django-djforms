@@ -133,7 +133,6 @@ INSTALLED_APPS = (
     'djforms.polisci.iea.proposal',
     'djforms.polisci.iea.registration',
     'djforms.prehealth.committee_letter',
-    'djforms.president.honorary_degree',
     'djforms.processors',
     'djforms.scholars',
     'djforms.security',
@@ -265,11 +264,11 @@ COS_DEFAULT_NAME = ''
 COS_DEFAULT_EMAIL = ''
 ALUMNI_OFFICE_EMAIL = ''
 GIVING_DONATIONS_BCC = []
-HONORARY_DEGREE_NOMINATION_EMAIL = ''
 COMMUNICATIONS_METAMORPHOSIS_TO_LIST = []
 MODEL_UN_TO_LIST = []
 # TLE applications
 MODERN_LANGUAGES_TLE_APPLICATIONS = []
+STUDY_ABROAD_EMAIL = ''
 BIOLOGY_GENOMICS = []
 POLITICAL_SCIENCE_IEA_EMAIL = []
 CONTINUING_STUDIES_ENRICHMENT_REGISTRATION_EMAIL = ''

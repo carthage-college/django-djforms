@@ -24,8 +24,4 @@ urlpatterns = patterns('djforms.languages',
         r'^tle/(?P<stype>[\d\w]+)/$',
         'tle.views.application_form'
     ),
-    url(
-        r'^poetry-festival/',
-        include('djforms.languages.poetryfestival.urls')
-    ),
 )
