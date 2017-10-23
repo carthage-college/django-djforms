@@ -43,11 +43,11 @@ def proposal_form(request, pid=None):
 
     if request.method=='POST':
         try:
-            profile = request.user.get_profile()
+            profile = request.user.userprofile
         except:
             p = UserProfile(user=request.user)
             p.save()
-            profile = request.user.get_profile()
+            profile = request.user.userprofile
         form = ProposalForm(
             request.POST, request.FILES, prefix="wac", instance=proposal
         )

@@ -148,13 +148,13 @@ class Applicant(models.Model):
         return self.created_by.email
 
     def city(self):
-        return self.created_by.get_profile().city
+        return self.created_by.userprofile.city
 
     def state(self):
-        return self.created_by.get_profile().state
+        return self.created_by.userprofile.state
 
     def phone(self):
-        return self.created_by.get_profile().phone
+        return self.created_by.userprofile.phone
 
     def get_slug(self):
         return 'pre-health/committee-letter/'

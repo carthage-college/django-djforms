@@ -179,7 +179,7 @@ class CourseProposal(models.Model):
         return self.user.email
 
     def phone(self):
-        return self.user.get_profile().phone
+        return self.user.userprofile.phone
 
     def get_slug(self):
         return "writingcurriculum/"

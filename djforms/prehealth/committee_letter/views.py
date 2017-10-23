@@ -140,7 +140,7 @@ def applicant_form(request):
             form_app.save_m2m()
 
             # update user profile
-            profile = data.created_by.get_profile()
+            profile = data.created_by.userprofile
             profile.city = request.POST['city']
             profile.state = request.POST['state']
             profile.phone = request.POST['phone']

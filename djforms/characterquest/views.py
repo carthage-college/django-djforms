@@ -37,11 +37,11 @@ def application_profile_form(request):
         not request.user.has_perm('characterquest.change_applicationprofile'):
             expired = True
     try:
-        profile = request.user.get_profile()
+        profile = request.user.userprofile
     except:
         p = UserProfile(user=request.user)
         p.save()
-        profile = request.user.get_profile()
+        profile = request.user.userprofile
     if request.method=='POST':
         form = ApplicationForm(request.POST, prefix="applicant")
         profile_form = ApplicationProfileForm(
