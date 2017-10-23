@@ -19,7 +19,7 @@ def proposal_form(request, pid=None):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL,]
     else:
-        TO_LIST = ["msnavely@carthage.edu"]
+        TO_LIST = [settings.WAC_EMAIL]
 
     copies=1
     proposal = None
