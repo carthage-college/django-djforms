@@ -161,6 +161,7 @@ class CourseProposal(models.Model):
         ordering = ('-date_created',)
         get_latest_by = 'date_created'
 
+    '''
     @models.permalink
     def get_absolute_url(self):
         return ('writing_curriculum_request_detail', [str(self.id)])
@@ -168,6 +169,7 @@ class CourseProposal(models.Model):
     @models.permalink
     def get_update_url(self):
         return ('writing_curriculum_request_update', [str(self.id)])
+    '''
 
     def first_name(self):
         return self.user.first_name
