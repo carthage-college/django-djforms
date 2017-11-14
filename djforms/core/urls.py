@@ -1,7 +1,9 @@
 from django.contrib import admin
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView, RedirectView
+
+from djforms.core.util import admin_list_export
 
 from djauth.views import loggedout
 
@@ -10,32 +12,36 @@ admin.autodiscover()
 handler404 = 'djtools.views.errors.four_oh_four_error'
 handler500 = 'djtools.views.errors.server_error'
 
-urlpatterns = patterns('',
+
+urlpatterns = [
     # home
-    (
+    url(
         r'^$', RedirectView.as_view(url='https://www.carthage.edu/bridge/')
     ),
     # simple 400 error view
     url(
         r'^denied/$',
         TemplateView.as_view(
-            template_name="denied.html"
-        ), name="access_denied"
+            template_name='denied.html'
+        ), name='access_denied'
     ),
     # auth
     url(
         r'^accounts/login',
-        auth_views.login,{'template_name': 'accounts/login.html'},
+        auth_views.login,
+        {'template_name': 'accounts/login.html'},
         name='auth_login'
     ),
     url(
         r'^accounts/logout/$',
-        auth_views.logout,{'next_page': '/forms/accounts/loggedout/'},
+        auth_views.logout,
+        {'next_page': '/forms/accounts/loggedout/'},
         name='auth_logout'
     ),
     url(
         r'^accounts/loggedout',
-        loggedout,{'template_name': 'accounts/logged_out.html'},
+        loggedout,
+        {'template_name': 'accounts/logged_out.html'},
         name='auth_loggedout'
     ),
     url(
@@ -44,46 +50,47 @@ urlpatterns = patterns('',
     # CSV
     url(
         r'^admin/(?P<app_label>[\d\w]+)/(?P<model_name>[\d\w]+)/csv/',
-        'djforms.core.util.admin_list_export'
+        admin_list_export,
+        name='admin_list_export'
     ),
     # admin
-    (r'^admin/', include(admin.site.urls) ),
+    url(r'^admin/', include(admin.site.urls)),
     # override user creation
     #(r'^admin/auth/user/add/', 'djauth.views.user_add'),
     # admin/docs
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     # admissions
-    (r'^admissions/', include('djforms.admissions.urls')),
+    url(r'^admissions/', include('djforms.admissions.urls')),
     # alumni
-    (r'^alumni/', include('djforms.alumni.urls')),
+    url(r'^alumni/', include('djforms.alumni.urls')),
     # athletics
-    (r'^athletics/', include('djforms.athletics.urls')),
+    url(r'^athletics/', include('djforms.athletics.urls')),
     # biology
-    (r'^biology/', include('djforms.biology.urls')),
+    url(r'^biology/', include('djforms.biology.urls')),
     # catering
-    (r'^catering/', include('djforms.catering.urls')),
+    url(r'^catering/', include('djforms.catering.urls')),
     # CharacterQuest
-    (r'^character-quest/', include('djforms.characterquest.urls')),
+    url(r'^character-quest/', include('djforms.characterquest.urls')),
     # communications
-    (r'^communications/', include('djforms.communications.urls')),
+    url(r'^communications/', include('djforms.communications.urls')),
     # giving
-    (r'^giving/', include('djforms.giving.urls')),
+    url(r'^giving/', include('djforms.giving.urls')),
     # LIS
-    (r'^lis/', include('djforms.lis.urls')),
+    url(r'^lis/', include('djforms.lis.urls')),
     # for the modern language form environment
-    (r'^languages/', include('djforms.languages.urls')),
+    url(r'^languages/', include('djforms.languages.urls')),
     # music
-    (r'^music/', include('djforms.music.urls')),
+    url(r'^music/', include('djforms.music.urls')),
     # polisci
-    (r'^political-science/', include('djforms.polisci.urls')),
+    url(r'^political-science/', include('djforms.polisci.urls')),
     # pre-health
-    (r'^pre-health/', include('djforms.prehealth.urls')),
+    url(r'^pre-health/', include('djforms.prehealth.urls')),
     # for the security appeal form environment
-    (r'^scholars/', include('djforms.scholars.urls')),
+    url(r'^scholars/', include('djforms.scholars.urls')),
     # for the security appeal form environment
-    (r'^security/', include('djforms.security.urls')),
+    url(r'^security/', include('djforms.security.urls')),
     # sustainability
-    (r'^sustainability/', include('djforms.sustainability.urls')),
+    url(r'^sustainability/', include('djforms.sustainability.urls')),
     # writing across curriculum
-    (r'^writingcurriculum/', include('djforms.writingcurriculum.urls')),
-)
+    url(r'^writingcurriculum/', include('djforms.writingcurriculum.urls'))
+]

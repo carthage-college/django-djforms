@@ -1,7 +1,12 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.views.generic import TemplateView
 
-urlpatterns = patterns('djforms.alumni',
+from djforms.alumni.classnotes import views as classnotes
+from djforms.alumni.distinguished import views as distinguished
+from djforms.alumni.memory import views as memory
+
+
+urlpatterns = [
     url(
         r'^success/$',
         TemplateView.as_view(template_name='alumni/data_entered.html')
@@ -9,43 +14,43 @@ urlpatterns = patterns('djforms.alumni',
     # classnotes
     url(
         r'^classnotes/carthaginian/$',
-        'classnotes.views.screenscrape',
-        name="classnotes_carthaginian"
+        classnotes.screenscrape,
+        name='classnotes_carthaginian'
     ),
     url(
         r'^classnotes/success/$',
         TemplateView.as_view(template_name='alumni/classnotes/done.html'),
-        name="classnotes_success"
+        name='classnotes_success'
     ),
     url(
         r'^classnotes/archives/(?P<year>\d+)/',
-        'classnotes.views.archives',
-        name="classnotes_archives_year"
+        classnotes.archives,
+        name='classnotes_archives_year'
     ),
     url(
         r'^classnotes/archives/$',
-        'classnotes.views.archives',
-        name="classnotes_archives"
+        classnotes.archives,
+        name='classnotes_archives'
     ),
     url(
         r'^classnotes/inmemoriam/$',
-        'classnotes.views.obits',
-        name="classnotes_obits"
+        classnotes.obits,
+        name='classnotes_obits'
     ),
     url(
         r'^classnotes/$',
-        'classnotes.views.contact',
+        classnotes.contact,
         name='classnotes_form'
     ),
     # distinguised alumni nomination
     url(
         r'^distinguished/nomination/success/$',
         TemplateView.as_view(template_name='alumni/data_entered.html'),
-        name="distinguished_nomination_success"
+        name='distinguished_nomination_success'
     ),
     url(
         r'^distinguished/nomination/',
-        'distinguished.views.nomination_form',
+        distinguished.nomination_form,
         name='distinguished_nomination_form'
     ),
     # fond memories
@@ -54,26 +59,26 @@ urlpatterns = patterns('djforms.alumni',
         TemplateView.as_view(
             template_name='alumni/memory/done.html'
         ),
-        name="memory_questionnaire_success"
+        name='memory_questionnaire_success'
     ),
     url(
         r'^memory/archives/$',
-        'memory.views.questionnaire_archives',
-        name="memory_questionnaire_archives"
+        memory.questionnaire_archives,
+        name='memory_questionnaire_archives'
     ),
     url(
         r'^memory/(?P<quid>\d+)/detail/$',
-        'memory.views.questionnaire_detail',
-        name="memory_questionnaire_detail"
+        memory.questionnaire_detail,
+        name='memory_questionnaire_detail'
     ),
     url(
         r'^memory/(?P<campaign>[a-zA-Z0-9_-]+)',
-        'memory.views.questionnaire_form',
+        memory.questionnaire_form,
         name='memory_questionnaire_promo_form'
     ),
     url(
         r'^memory',
-        'memory.views.questionnaire_form',
+        memory.questionnaire_form,
         name='memory_questionnaire_form'
-    ),
-)
+    )
+]

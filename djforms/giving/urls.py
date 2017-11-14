@@ -1,41 +1,44 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.views.generic import TemplateView
 
-urlpatterns = patterns('djforms.giving.views',
+from djforms.giving import views
+
+
+urlpatterns = [
     url(
-        r'^donors/$', 'donors', name='giving_donors'
+        r'^donors/$', views.donors, name='giving_donors'
     ),
     url(
         r'^donors/(?P<slug>[a-zA-Z0-9_-]+)/$',
-        'donors', name='giving_donors_campaign'
+        views.donors, name='giving_donors_campaign'
     ),
     url(
         r'^manager/cash/$',
-        'manager_cash', name='giving_manager_cash'
+        views.manager_cash, name='giving_manager_cash'
     ),
     url(
         r'^manager/success/',
-        TemplateView.as_view(template_name="giving/manager/success.html"),
-        name="giving_manager_success"
+        TemplateView.as_view(template_name='giving/manager/success.html'),
+        name='giving_manager_success'
     ),
     url(
         r'^campaign/(?P<slug>[a-zA-Z0-9_-]+)/$',
-        'promotion_ajax', name='promotion_ajax'
+        views.promotion_ajax, name='promotion_ajax'
     ),
     url(
         r'^(?P<transaction>[a-zA-Z0-9_-]+)/(?P<campaign>[a-zA-Z0-9_-]+)/success/$',
-        'giving_success', name='giving_success_campaign'
+        views.giving_success, name='giving_success_campaign'
     ),
     url(
         r'^(?P<transaction>[a-zA-Z0-9_-]+)/success/$',
-        'giving_success', name='giving_success_generic'
+        views.giving_success, name='giving_success_generic'
     ),
     url(
         r'^(?P<transaction>[a-zA-Z0-9_-]+)/(?P<campaign>[a-zA-Z0-9_-]+)',
-        'giving_form', name='giving_form_campaign'
+        views.giving_form, name='giving_form_campaign'
     ),
     url(
         r'^(?P<transaction>[a-zA-Z0-9_-]+)/$',
-        'giving_form', name='giving_form_generic'
-    ),
-)
+        views.giving_form, name='giving_form_generic'
+    )
+]

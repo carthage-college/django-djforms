@@ -1,20 +1,23 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.views.generic import TemplateView
 
-urlpatterns = patterns('djforms.sustainability.green.views',
+from djforms.sustainability.green import views as green
+
+
+urlpatterns = [
     url(
         r'^green/pledge/success/$',
         TemplateView.as_view(
-            template_name="sustainability/green/done.html"
+            template_name='sustainability/green/done.html'
         ),
-        name="green_pledge_success"
+        name='green_pledge_success'
     ),
     url(
         r'^green/pledge/archives/$',
-        'pledge_archives', name="green_pledge_archives"
+        green.pledge_archives, name='green_pledge_archives'
     ),
     url(
         r'^green/pledge/$',
-        'pledge_form', name="green_pledge_form"
+        green.pledge_form, name='green_pledge_form'
     )
-)
+]

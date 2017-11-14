@@ -1,21 +1,28 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.views.generic import TemplateView
 
-urlpatterns = patterns('djforms.writingcurriculum.views',
+from djforms.writingcurriculum import views
+
+
+urlpatterns = [
     url(
         r'^success/$', TemplateView.as_view(
-            template_name="writingcurriculum/done.html"
+            template_name='writingcurriculum/done.html'
         )
     ),
     url(
         r'^proposal/(?P<pid>\d+)/update/$',
-        'proposal_form', name="proposal_update"
+        views.proposal_form,
+        name='proposal_update'
     ),
     url(
         r'^proposal/archives/$',
-        'my_proposals', name="my_proposals"
+        views.my_proposals,
+        name='my_proposals'
     ),
     url(
-        r'^$', 'proposal_form', name='proposal_form'
-    ),
-)
+        r'^$',
+        views.proposal_form,
+        name='proposal_form'
+    )
+]

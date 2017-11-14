@@ -1,8 +1,10 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.views.generic import TemplateView
 
+from djforms.prehealth.committee_letter import views
 
-urlpatterns = patterns('djforms.prehealth',
+
+urlpatterns = [
     url(
         r'^committee-letter/success/$',
         TemplateView.as_view(
@@ -19,17 +21,17 @@ urlpatterns = patterns('djforms.prehealth',
     ),
     url(
         r'^committee-letter/(?P<aid>\d+)/detail/$',
-        'committee_letter.views.applicant_detail',
+        views.applicant_detail,
         name='prehealth_committee_letter_applicant_detail'
     ),
     url(
         r'^committee-letter/(?P<aid>\d+)/evaluation/$',
-        'committee_letter.views.evaluation_form',
+        views.evaluation_form,
         name='prehealth_committee_letter_evaluation_form'
     ),
     url(
         r'^committee-letter/$',
-        'committee_letter.views.applicant_form',
+        views.applicant_form,
         name='prehealth_committee_letter_applicant_form'
-    ),
-)
+    )
+]
