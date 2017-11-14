@@ -20,7 +20,7 @@ DATABASES = {
         'USER': '',
         'PASSWORD': '',
         'OPTIONS': {
-           "init_command": "SET storage_engine=MyISAM",
+           'init_command': 'SET storage_engine=MyISAM',
         }
     },
 }
@@ -78,14 +78,14 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(os.path.dirname(__file__), 'templates'),
-            "/data2/django_templates/djkorra/",
-            "/data2/django_templates/djcher/",
-            "/data2/django_templates/",
+            '/data2/django_templates/djkorra/',
+            '/data2/django_templates/djcher/',
+            '/data2/django_templates/',
         ],
         'OPTIONS': {
             'debug':DEBUG,
             'context_processors': [
-                "djtools.context_processors.sitevars",
+                'djtools.context_processors.sitevars',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.media',
@@ -181,19 +181,19 @@ SESSION_COOKIE_NAME = ''
 SESSION_COOKIE_AGE = 86400
 COS_FACULTY = [{ }]
 # logggin stuff
-LOG_FILEPATH = os.path.join(os.path.dirname(__file__), "logs/")
-LOG_FILENAME = LOG_FILEPATH + "debug.log"
+LOG_FILEPATH = os.path.join(os.path.dirname(__file__), 'logs/')
+LOG_FILENAME = LOG_FILEPATH + 'debug.log'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
         'standard': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%Y/%b/%d %H:%M:%S"
+            'format' : '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s',
+            'datefmt' : '%Y/%b/%d %H:%M:%S'
         },
         'verbose': {
             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s',
-            'datefmt' : "%Y/%b/%d %H:%M:%S"
+            'datefmt' : '%Y/%b/%d %H:%M:%S'
         },
         'simple': {
             'format': '%(levelname)s %(message)s'
@@ -310,7 +310,7 @@ CACHES = {
         #'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         #'LOCATION': '/var/tmp/django_directory_cache',
         #'TIMEOUT': 60*60*24*365,
-        #'KEY_PREFIX': "DJFORMS_",
+        #'KEY_PREFIX': 'DJFORMS_',
         #'OPTIONS': {
         #    'MAX_ENTRIES': 100000,
         #    'CULL_FREQUENCY': 4,
