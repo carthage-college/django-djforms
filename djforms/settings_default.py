@@ -5,7 +5,6 @@ from datetime import datetime
 
 DEBUG = False
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     ('', ''),
@@ -74,25 +73,33 @@ MIDDLEWARE_CLASSES = (
     'honeypot.middleware.HoneypotMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-TEMPLATE_DIRS = (
-    "/data2/django_projects/djforms/templates/",
-    "/data2/django_templates/djkorra/",
-    "/data2/django_templates/djcher/",
-    "/data2/django_templates/",
-
-)
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "djtools.context_processors.sitevars",
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.request",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.media",
-    'django.contrib.messages.context_processors.messages',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(os.path.dirname(__file__), 'templates'),
+            "/data2/django_templates/djkorra/",
+            "/data2/django_templates/djcher/",
+            "/data2/django_templates/",
+        ],
+        'OPTIONS': {
+            'debug':DEBUG,
+            'context_processors': [
+                "djtools.context_processors.sitevars",
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.media',
+                'django.template.context_processors.request',
+                'django.template.context_processors.static',
+                'django.contrib.messages.context_processors.messages',
+            ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader'
+            ]
+        },
+    },
+]
 INSTALLED_APPS = (
     # django apps
     'django.contrib.admin',
