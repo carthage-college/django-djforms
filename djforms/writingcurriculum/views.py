@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext, loader
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
@@ -49,10 +48,10 @@ def proposal_form(request, pid=None):
             p.save()
             profile = request.user.userprofile
         form = ProposalForm(
-            request.POST, request.FILES, prefix="wac", instance=proposal
+            request.POST, request.FILES, prefix='wac', instance=proposal
         )
         profile_form = UserProfileForm(
-            request.POST, prefix="profile", instance=profile
+            request.POST, prefix='profile', instance=profile
         )
         pids = request.POST.getlist('wac-id[]')
 
@@ -131,7 +130,7 @@ def proposal_form(request, pid=None):
             )
             send_mail(
                 request, TO_LIST, subject, request.user.email,
-                "writingcurriculum/email.html", {
+                'writingcurriculum/email.html', {
                     'proposal':proposal,'user':request.user,'criteria':criteria
                 }, settings.MANAGERS
             )
@@ -139,10 +138,10 @@ def proposal_form(request, pid=None):
             return HttpResponseRedirect('/forms/writingcurriculum/success/')
     else:
         if not proposal:
-            criteria = [""]
+            criteria = ['']
             copies = len(criteria)
-        form = ProposalForm(prefix="wac", instance=proposal)
-        profile_form = UserProfileForm(prefix="profile")
+        form = ProposalForm(prefix='wac', instance=proposal)
+        profile_form = UserProfileForm(prefix='profile')
 
     # academic year
     year = TODAY.year + 1
@@ -151,19 +150,21 @@ def proposal_form(request, pid=None):
         year += 1
         year_past = year
 
-    return render_to_response(
-        "writingcurriculum/form.html",{
-            "form": form,"profile_form": profile_form,
-            "criteria": criteria, "copies":copies,
+    return render(
+        request, 'writingcurriculum/form.html',{
+            'form': form,'profile_form': profile_form,
+            'criteria': criteria, 'copies':copies,
             'year':year,'year_past':year_past
-        }, context_instance=RequestContext(request)
+        }
     )
+
 
 @login_required
 def my_proposals(request):
     objects = CourseProposal.objects.filter(
-        user=request.user).order_by("-date_created")
-    return render_to_response(
-        "writingcurriculum/my_proposals.html",
-        {"objects": objects,}, context_instance=RequestContext(request)
+        user=request.user).order_by('-date_created')
+
+    return render(
+        request, 'writingcurriculum/my_proposals.html',
+        {'objects': objects,}
     )

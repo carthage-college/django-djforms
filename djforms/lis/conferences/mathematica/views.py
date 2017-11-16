@@ -1,6 +1,5 @@
 from django.conf import settings
-from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 
 from django.core.urlresolvers import reverse
@@ -11,6 +10,7 @@ from djforms.lis.conferences.mathematica.forms import RegistrationForm
 
 from djtools.utils.mail import send_mail
 
+
 def registration_form(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL,]
@@ -19,14 +19,14 @@ def registration_form(request):
     BCC = settings.MANAGERS
 
     if request.POST:
-        email_template = "lis/conferences/mathematica/registration_email.html"
-        subject = "[LIS] Mathematica conference registration"
+        email_template = 'lis/conferences/mathematica/registration_email.html'
+        subject = '[LIS] Mathematica conference registration'
         form_reg = RegistrationForm(request.POST)
         form_ord = RegistrationOrderForm(request.POST)
         if form_reg.is_valid() and form_ord.is_valid():
             contact = form_reg.save()
             order = form_ord.save()
-            order.operator = "DJFormsMathematicaReg"
+            order.operator = 'DJFormsMathematicaReg'
             contact.order.add(order)
             form_proc = ProcessorForm(order, contact, request.POST)
             if form_proc.is_valid():
@@ -52,7 +52,7 @@ def registration_form(request):
                 if r:
                     order.status = r.status
                 else:
-                    order.status = "Form Invalid"
+                    order.status = 'Form Invalid'
                 order.cc_name = form_proc.name
                 if form_proc.card:
                     order.cc_4_digits = form_proc.card[-4:]
@@ -65,16 +65,15 @@ def registration_form(request):
         form_ord = RegistrationOrderForm(initial={'avs':False,'auth':'sale',})
         form_proc = ProcessorForm()
 
-    return render_to_response(
+    return render(
+        request,
         'lis/conferences/mathematica/registration_form.html',
         {
             'form_reg':form_reg,'form_ord':form_ord,'form_proc':form_proc
-        },
-        context_instance=RequestContext(request)
+        }
     )
 
 def registration_success(request):
-    return render_to_response(
-        "lis/conferences/mathematica/registration_done.html",
-        context_instance=RequestContext(request)
+    return render(
+        request, 'lis/conferences/mathematica/registration_done.html'
     )

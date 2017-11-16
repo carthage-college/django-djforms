@@ -2,11 +2,10 @@
 from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
-from django.template import RequestContext, loader
 
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 
 from djforms.prehealth.committee_letter.models import Applicant, Evaluation
 from djforms.prehealth.committee_letter.models import Recommendation
@@ -39,6 +38,7 @@ def _to_list(data):
                 to.append(do)
     return to
 
+
 @login_required
 def evaluation_form(request, aid):
     '''
@@ -68,7 +68,7 @@ def evaluation_form(request, aid):
                 data.updated_by = request.user
                 data.save()
 
-                # obtain the distribution list with appropriate pre-health folks
+                # obtain the distribution list w/ appropriate pre-health folks
                 to_list = _to_list(app)
                 # subject for email
                 subject = u"[Committee Letter Evaluation] For {}, {} by {}, {}".format(
@@ -79,22 +79,23 @@ def evaluation_form(request, aid):
                     # send email to pre-health folks
                     send_mail(
                         request, to_list, subject, data.created_by.email,
-                        'prehealth/committee_letter/evaluation/email.html', data,
-                        settings.MANAGERS
+                        'prehealth/committee_letter/evaluation/email.html',
+                        data, settings.MANAGERS
                     )
 
                 return HttpResponseRedirect(
-                    reverse_lazy('prehealth_committee_letter_evaluation_success')
+                    reverse_lazy(
+                        'prehealth_committee_letter_evaluation_success'
+                    )
                 )
         else:
             form = EvaluationForm()
 
-        return render_to_response(
-            'prehealth/committee_letter/evaluation/form.html',
+        return render(
+            request, 'prehealth/committee_letter/evaluation/form.html',
             {
                 'form': form,'app':app,
-            },
-            context_instance=RequestContext(request)
+            }
         )
 
     else:
@@ -111,7 +112,7 @@ def applicant_form(request):
     '''
 
     copies=1
-    recommendations = [""]
+    recommendations = ['']
     if request.method == 'POST':
         form_app = ApplicantForm(request.POST, request.FILES)
 
@@ -166,7 +167,7 @@ def applicant_form(request):
             # send email to pre-health folks
             send_mail(
                 request, to_list, subject, data.created_by.email,
-                "prehealth/committee_letter/email.html", data,
+                'prehealth/committee_letter/email.html', data,
                 settings.MANAGERS
             )
 
@@ -176,7 +177,7 @@ def applicant_form(request):
                 data.name = rec.name
                 send_mail(
                     request, [rec.email,], subject, settings.PREHEALTH_MD,
-                    "prehealth/committee_letter/email_faculty.html", data,
+                    'prehealth/committee_letter/email_faculty.html', data,
                     settings.MANAGERS
                 )
 
@@ -202,21 +203,21 @@ def applicant_form(request):
                     })
                 else:
                     copies = len(recommendations)
+
                 # needs django 1.8+
-                #form_app.add_error(
-                #    None, "You must submit at least 1 recommendation contact"
-                #)
+                form_app.add_error(
+                    None, "You must submit at least 1 recommendation contact"
+                )
     else:
         form_app = ApplicantForm()
 
-    return render_to_response(
-        'prehealth/committee_letter/form.html',
+    return render(
+        request, 'prehealth/committee_letter/form.html',
         {
             'form_app': form_app,
             'recommendations': recommendations,
             'copies': copies
-        },
-        context_instance=RequestContext(request)
+        }
     )
 
 
@@ -228,9 +229,9 @@ def applicant_detail(request, aid):
 
     app = get_object_or_404(Applicant, id=aid)
 
-    template_name = "prehealth/committee_letter/detail.html"
-    return render_to_response(
-        template_name, {'data': app,'detail':True},
-        context_instance=RequestContext(request)
+    template_name = 'prehealth/committee_letter/detail.html'
+
+    return render(
+        request, template_name, {'data': app,'detail':True}
     )
 

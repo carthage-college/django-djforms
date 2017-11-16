@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from django.views.generic import TemplateView, RedirectView
 
-
 from djforms.polisci.mun import views as mun
 from djforms.polisci.iea.registration import views as registration
 from djforms.polisci.iea.proposal import views as proposal

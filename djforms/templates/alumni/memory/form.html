@@ -7,7 +7,7 @@
 {% block extra_javascript %}
     <script src="https://malsup.github.io/min/jquery.blockUI.min.js"
         type="text/javascript"></script>
-    <script src="//www.carthage.edu/static/vendor/jquery/plugins/multifile/jquery.Metadata.js"
+    <script src="//www.carthage.edu/static/vendor/jquery/plugins/multifile/jquery.MetaData.js"
         type="text/javascript" language="javascript"></script>
     <script src="//www.carthage.edu/static/vendor/jquery/plugins/multifile/jQuery.MultiFile.min.js"
         type="text/javascript" language="javascript"></script>
@@ -24,9 +24,7 @@ $(function(){
         afterFileAppend: function(element, value, master_element){
             domid = value.replace(/\./g, "");
             domid = domid.replace(/ /g, "");
-            $('#photo-captions').append(
-                '<textarea name="captions[]" id="'+domid+'"></textarea>'
-            );
+            $('#photo-captions').append( '<textarea name="captions[]" id="'+domid+'"></textarea>');
         },
         onFileRemove: function(element, value, master_element){
             domid = value.replace(/\./g, "");
