@@ -1,5 +1,4 @@
-from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
@@ -10,6 +9,7 @@ from djforms.music.theatre.summer_camp.forms import RegistrationForm
 
 from djtools.utils.mail import send_mail
 
+
 def registration(request):
     status = None
     msg = None
@@ -18,10 +18,10 @@ def registration(request):
         if form_reg.is_valid():
             contact = form_reg.save()
             # credit card payment
-            if contact.payment_method == "Credit Card":
+            if contact.payment_method == 'Credit Card':
                 order = Order(
-                    total=REG_FEE,auth="sale",status="In Process",
-                    operator="DJMusicTheatreCamp"
+                    total=REG_FEE,auth='sale',status='In Process',
+                    operator='DJMusicTheatreCamp'
                 )
                 form_proc = TrustCommerceForm(order, contact, request.POST)
                 if form_proc.is_valid():
@@ -35,9 +35,9 @@ def registration(request):
                     order.reg = contact
                     sent = send_mail(
                         request, TO_LIST,
-                        "Music Theatre summer camp registration",
+                        'Music Theatre summer camp registration',
                         contact.email,
-                        "music/theatre/summer_camp/registration_email.html",
+                        'music/theatre/summer_camp/registration_email.html',
                         order, BCC
                     )
                     order.send_mail = sent
@@ -50,7 +50,7 @@ def registration(request):
                     if r:
                         order.status = r.status
                     else:
-                        order.status = "Form Invalid"
+                        order.status = 'Form Invalid'
                     order.cc_name = form_proc.name
                     if form_proc.card:
                         order.cc_4_digits = form_proc.card[-4:]
@@ -60,17 +60,17 @@ def registration(request):
                     order.reg = contact
             else:
                 order = Order(
-                    total=REG_FEE,auth="COD",status="Pay later",
-                    operator="DJMusicTheatreCamp"
+                    total=REG_FEE,auth='COD',status='Pay later',
+                    operator='DJMusicTheatreCamp'
                 )
                 order.save()
                 contact.order.add(order)
                 order.reg = contact
                 sent = send_mail(
                     request, TO_LIST,
-                    "Music Theatre summer camp registration",
+                    'Music Theatre summer camp registration',
                     contact.email,
-                    "music/theatre/summer_camp/registration_email.html",
+                    'music/theatre/summer_camp/registration_email.html',
                     order, BCC
                 )
                 order.send_mail = sent
@@ -79,7 +79,7 @@ def registration(request):
                     reverse('music_theatre_summer_camp_success')
                 )
         else:
-            if request.POST.get('payment_method') == "Credit Card":
+            if request.POST.get('payment_method') == 'Credit Card':
                 form_proc = TrustCommerceForm(None, request.POST)
                 form_proc.is_valid()
             else:
@@ -87,10 +87,12 @@ def registration(request):
     else:
         form_reg = RegistrationForm()
         form_proc = TrustCommerceForm()
-    return render_to_response(
+
+    return render(
+        request,
         'music/theatre/summer_camp/registration_form.html',
         {
             'form_reg': form_reg,'form_proc':form_proc,
             'status':status,'msg':msg,
-        }, context_instance=RequestContext(request)
+        }
     )

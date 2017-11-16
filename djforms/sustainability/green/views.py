@@ -1,9 +1,8 @@
 from django import forms
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
-from django.template import RequestContext, loader
 from django.contrib.auth.decorators import login_required
 
 from djforms.sustainability.green.forms import PledgeForm
@@ -18,7 +17,7 @@ def pledge_form(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL]
     else:
-        TO_LIST = ["csabar@carthage.edu","lhuaracha@carthage.edu",]
+        TO_LIST = settings.SUSTAINABILITY_EMAIL_LIST
     BCC = settings.MANAGERS
 
     user = request.user
@@ -38,30 +37,30 @@ def pledge_form(request):
             data = form.save(commit=False)
             data.user = request.user
             data.save()
-            subject = "[Sustainability Pledge] %s %s" % (
+            subject = "[Sustainability Pledge] {} {}".format(
                 user.first_name,user.last_name
             )
             send_mail(
                 request,TO_LIST,subject,user.email,
-                "sustainability/green/email.html", data, BCC
+                'sustainability/green/email.html', data, BCC
             )
             return HttpResponseRedirect(
-                reverse_lazy("green_pledge_success")
+                reverse_lazy('green_pledge_success')
             )
 
     else:
         form = PledgeForm(initial={'user':user})
 
-    return render_to_response(
-        "sustainability/green/form.html",
-        {"form": form, "anon": anon, "pledge":pledge,},
-        context_instance=RequestContext(request)
+    return render(
+        'sustainability/green/form.html',
+        {'form': form, 'anon': anon, 'pledge':pledge,}
     )
 
+
 def pledge_archives(request):
-    pledges = Pledge.objects.all().order_by("id")
-    return render_to_response(
-        "sustainability/green/archives.html",
-        {"pledges": pledges,},
-        context_instance=RequestContext(request)
+    pledges = Pledge.objects.all().order_by('id')
+
+    return render(
+        request, 'sustainability/green/archives.html',
+        {'pledges': pledges,}
     )

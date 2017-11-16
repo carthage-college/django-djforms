@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
@@ -15,7 +14,7 @@ def study_abroad(request):
         form = StudyAbroadForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-            cd["user"] = request.user
+            cd['user'] = request.user
             email = request.user.email
             if settings.DEBUG:
                 TO_LIST = [settings.SERVER_EMAIL]
@@ -26,14 +25,14 @@ def study_abroad(request):
             subject = "Student Information for Study Abroad"
             send_mail(
                 request, TO_LIST, subject, email,
-                "languages/studyabroad/email.html", cd, settings.MANAGERS
+                'languages/studyabroad/email.html', cd, settings.MANAGERS
             )
             return HttpResponseRedirect(
-                reverse_lazy("study_abroad_success")
+                reverse_lazy('study_abroad_success')
             )
     else:
         form = StudyAbroadForm()
-    return render_to_response(
-        'languages/studyabroad/form.html',
-        {'form': form}, context_instance=RequestContext(request)
+
+    return render(
+        request, 'languages/studyabroad/form.html', {'form': form}
     )

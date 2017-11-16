@@ -1,5 +1,4 @@
-from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
@@ -19,15 +18,17 @@ def form(request):
             send_mail(
                 request, TO_LIST,
                 "[IEA] Conference Proposal", contact.email,
-                "polisci/iea/proposal/email.html", contact, BCC
+                'polisci/iea/proposal/email.html', contact, BCC
             )
             return HttpResponseRedirect(
                 reverse('iea_proposal_success')
             )
     else:
         form = ProposalContactForm()
-    return render_to_response(
-        'polisci/iea/proposal/form.html', {
+
+    return render(
+        request, 'polisci/iea/proposal/form.html', {
             'form': form,
-        }, context_instance=RequestContext(request))
+        }
+    )
 

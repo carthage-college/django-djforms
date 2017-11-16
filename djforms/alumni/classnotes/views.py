@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
-from django.template import RequestContext, loader
 
 from djforms.alumni.classnotes.forms import ContactForm
 from djforms.alumni.classnotes.models import Contact
@@ -11,6 +10,7 @@ from djtools.utils.mail import send_mail
 from honeypot.decorators import check_honeypot
 
 import datetime
+
 
 @check_honeypot
 def contact(request):
@@ -27,24 +27,25 @@ def contact(request):
             email = settings.DEFAULT_FROM_EMAIL
             if contact.email:
                 email = contact.email
-            subject = "[Alumni Class Notes] %s %s" % (
+            subject = "[Alumni Class Notes] {} {}".format(
                 contact.first_name,contact.last_name
             )
             send_mail(
                 request,TO_LIST, subject, email,
-                "alumni/classnotes/email.html", contact, BCC
+                'alumni/classnotes/email.html', contact, BCC
             )
             return HttpResponseRedirect(
-                reverse_lazy("classnotes_success")
+                reverse_lazy('classnotes_success')
             )
     else:
         form = ContactForm()
     manager = request.user.has_perm('classnotes.change_contact')
-    return render_to_response(
-        "alumni/classnotes/form.html",
-        {"form": form,"manager":manager,},
-        context_instance=RequestContext(request)
+
+    return render(
+        request, 'alumni/classnotes/form.html',
+        {'form': form,'manager':manager,}
     )
+
 
 def archives(request, year=None):
     """
@@ -63,28 +64,31 @@ def archives(request, year=None):
     )
     manager = request.user.has_perm('classnotes.change_contact')
 
-    return render_to_response(
-        "alumni/classnotes/archives.html", {
-            "notes": notes,"year":year,"manager":manager,
-        },
-        context_instance=RequestContext(request)
+    return render(
+        request, 'alumni/classnotes/archives.html', {
+            'notes': notes,'year':year,'manager':manager,
+        }
     )
+
 
 def screenscrape(request):
     ns = Contact.objects.exclude(carthaginianstatus=True)
-    notes = ns.order_by("classyear", "last_name")
+    notes = ns.order_by('classyear', 'last_name')
     manager = request.user.has_perm('classnotes.change_contact')
 
-    return render_to_response("alumni/classnotes/archives.html", {
-        "notes": notes,"title":"Carthaginian","manager":manager,
-    }, context_instance=RequestContext(request))
+    return render(
+        request, 'alumni/classnotes/archives.html', {
+            'notes': notes,'title':'Carthaginian','manager':manager,
+        }
+    )
+
 
 def obits(request):
-    obs = Contact.objects.filter(category="Death Announcement")
-    notes = obs.order_by("-classyear", "last_name")
+    obs = Contact.objects.filter(category='Death Announcement')
+    notes = obs.order_by('-classyear', 'last_name')
 
-    return render_to_response("alumni/classnotes/archives.html", {
-        "notes": notes,"title":"In Memoriam",
-    }, context_instance=RequestContext(request))
-
-
+    return render(
+        request, 'alumni/classnotes/archives.html', {
+            'notes': notes,'title':'In Memoriam',
+        }
+    )

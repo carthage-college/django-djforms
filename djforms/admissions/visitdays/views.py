@@ -1,14 +1,15 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
+from django.shortcuts import render, get_object_or_404
 
 from djforms.admissions.visitdays.models import VisitDay, VisitDayEvent
 from djforms.admissions.visitdays.forms import *
 
 from djtools.utils.mail import send_mail
 from djtools.utils.convert import str_to_class
+
+email = settings.ADMISSIONS_EMAIL
 
 
 def visit_day_form(request, event_type):
@@ -33,35 +34,34 @@ def visit_day_form(request, event_type):
                     visit_day.title, profile.date
                 )
                 send_mail(
-                    request, ["admissions@carthage.edu",], subject,
-                    "admissions@carthage.edu",
-                    "admissions/visitday/email_event_full.html", None, BCC
+                    request, [email,], subject, email,
+                    'admissions/visitday/email_event_full.html', None, BCC
                 )
             event.save()
             # send HTML email to attendee
             subject = "{} on {}".format(visit_day.title, profile.date)
             data = {'profile':profile,'visit_day':visit_day,'short':short}
             send_mail(
-                request, [profile.email], subject, "admissions@carthage.edu",
-                "admissions/visitday/email.html", data, BCC
+                request, [profile.email], subject, email,
+                'admissions/visitday/email.html', data, BCC
             )
             # send text mail to admissions folks
             if settings.DEBUG:
                 TO_LIST = [settings.SERVER_EMAIL]
             else:
-                TO_LIST = ["admissions@carthage.edu"]
+                TO_LIST = [email,]
 
             subject = u"{} on {} for {}, {}".format(
                 visit_day.title, profile.date, profile.last_name,
                 profile.first_name
             )
             send_mail(
-                request, TO_LIST, subject, "admissions@carthage.edu",
-                "admissions/visitday/email.txt", data, BCC
+                request, TO_LIST, subject, email,
+                'admissions/visitday/email.txt', data, BCC
             )
 
             return HttpResponseRedirect(
-                reverse_lazy("visitday_success")
+                reverse_lazy('visitday_success')
             )
     else:
         if visit_day.extended:
@@ -69,8 +69,8 @@ def visit_day_form(request, event_type):
         else:
             form = VisitDayBaseForm(event_type)
 
-    return render_to_response(
-        "admissions/visitday/form.html",
-        {"form": form,"event_type":event_type,"visit_day":visit_day},
-        context_instance=RequestContext(request)
+    return render(
+        request,
+        'admissions/visitday/form.html',
+        {'form': form,'event_type':event_type,'visit_day':visit_day}
     )

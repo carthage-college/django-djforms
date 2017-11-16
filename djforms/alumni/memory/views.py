@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
+from django.shortcuts import render, get_object_or_404
 from django.core.files.base import ContentFile
 from django.core.urlresolvers import reverse_lazy
 
@@ -13,25 +12,26 @@ from djforms.core.models import Photo, Promotion
 
 import datetime
 
+
 def questionnaire_form(request, campaign=None):
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
-        slug_list = campaign.slug.split("-")
+        slug_list = campaign.slug.split('-')
         form_name = slug_list.pop(0).capitalize()
         for n in slug_list:
-            form_name += "{}".format( n.capitalize() )
+            form_name += '{}'.format( n.capitalize() )
     else:
-        campaign = ""
-        form_name = "QuestionnaireForm"
+        campaign = ''
+        form_name = 'QuestionnaireForm'
 
-    form = str_to_class("djforms.alumni.memory.forms", form_name)()
+    form = str_to_class('djforms.alumni.memory.forms', form_name)()
     if not form:
         raise Http404
 
-    if request.method=="POST":
+    if request.method=='POST':
 
         form = str_to_class(
-            "djforms.alumni.memory.forms", form_name
+            'djforms.alumni.memory.forms', form_name
         )(data=request.POST, files=request.FILES)
 
         if not form:
@@ -40,12 +40,12 @@ def questionnaire_form(request, campaign=None):
 
         if form.is_valid():
             memory = form.save()
-            category = "Alumni Questionnaire Detail"
+            category = 'Alumni Questionnaire Detail'
             if campaign:
                 memory.promotion = campaign
                 category = campaign.title
-            photos = request.FILES.getlist("photos[]")
-            captions = request.POST.getlist("captions[]")
+            photos = request.FILES.getlist('photos[]')
+            captions = request.POST.getlist('captions[]')
             counter=0
             for photo in photos:
                 filename = photo.name
@@ -59,24 +59,24 @@ def questionnaire_form(request, campaign=None):
             if settings.DEBUG:
                 TO_LIST = [settings.SERVER_EMAIL,]
             else:
-                TO_LIST = ["alumnioffice@carthage.edu","lhansen@carthage.edu",]
+                TO_LIST = settings.ALUMNI_MEMORY_EMAIL
             send_mail(
                 request, TO_LIST,
-                "[{}] {} {}".format(
+                '[{}] {} {}'.format(
                     category, memory.first_name, memory.last_name
                 ), memory.email,
-                "alumni/memory/email.html",
+                'alumni/memory/email.html',
                 memory, settings.MANAGERS
             )
             return HttpResponseRedirect(
-                reverse_lazy("memory_questionnaire_success")
+                reverse_lazy('memory_questionnaire_success')
             )
 
-    return render_to_response(
-        "alumni/memory/form.html",
-        {"form": form,"campaign":campaign},
-        context_instance=RequestContext(request)
+    return render(
+        request, 'alumni/memory/form.html',
+        {'form': form,'campaign':campaign}
     )
+
 
 def questionnaire_detail(request, quid):
     """
@@ -85,20 +85,21 @@ def questionnaire_detail(request, quid):
 
     mq = get_object_or_404(Questionnaire, id=quid)
 
-    template_name = "alumni/memory/detail.html"
-    return render_to_response(
-        template_name, {'data': mq,},
-        context_instance=RequestContext(request)
+    template_name = 'alumni/memory/detail.html'
+
+    return render(
+        request, template_name, {'data': mq,}
     )
+
 
 def questionnaire_archives(request):
     """
     Simple view to display all of the questionnaires
     """
 
-    objects = Questionnaire.objects.all().order_by("promotion","-created_at")
-    template_name = "alumni/memory/archives.html"
-    return render_to_response(
-        template_name, {'objects': objects,},
-        context_instance=RequestContext(request)
+    objects = Questionnaire.objects.all().order_by('promotion','-created_at')
+    template_name = 'alumni/memory/archives.html'
+
+    return render(
+        request, template_name, {'objects': objects,}
     )

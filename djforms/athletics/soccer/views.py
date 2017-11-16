@@ -1,6 +1,5 @@
 from django.template import RequestContext
-from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.core.urlresolvers import reverse
 
 from djforms.athletics.soccer import BCC, INSURANCE_TO_LIST, TO_LIST
@@ -10,6 +9,7 @@ from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
 from djforms.athletics.soccer.forms import SoccerCampInsuranceCardForm
 
 from djtools.utils.mail import send_mail
+
 
 def camp_registration(request):
 
@@ -21,9 +21,9 @@ def camp_registration(request):
             contact = form_reg.save()
             # calc amount
             fee = contact.reg_fee
-            if fee[0] == "$":
+            if fee[0] == '$':
                 fee = fee[1:]
-            if contact.amount == "Full amount":
+            if contact.amount == 'Full amount':
                 total = int(float(fee))
             else:
                 if int(float(fee)) <= 225:
@@ -31,10 +31,10 @@ def camp_registration(request):
                 else:
                     total = 200
             # credit card payment
-            if contact.payment_method == "Credit Card":
+            if contact.payment_method == 'Credit Card':
                 order = Order(
-                    total=total,auth="sale",status="In Process",
-                    operator="DJSoccerCamp"
+                    total=total,auth='sale',status='In Process',
+                    operator='DJSoccerCamp'
                 )
                 form_proc = TrustCommerceForm(order, contact, request.POST)
                 if form_proc.is_valid():
@@ -47,9 +47,9 @@ def camp_registration(request):
                     contact.order.add(order)
                     order.reg = contact
                     sent = send_mail(
-                        request, TO_LIST, "Soccer camp registration",
+                        request, TO_LIST, 'Soccer camp registration',
                         contact.email,
-                        "athletics/soccer/camp_registration_email.html",
+                        'athletics/soccer/camp_registration_email.html',
                         order, BCC
                     )
                     order.send_mail = sent
@@ -60,7 +60,7 @@ def camp_registration(request):
                     if r:
                         order.status = r.status
                     else:
-                        order.status = "Form Invalid"
+                        order.status = 'Form Invalid'
                     order.cc_name = form_proc.name
                     if form_proc.card:
                         order.cc_4_digits = form_proc.card[-4:]
@@ -70,17 +70,17 @@ def camp_registration(request):
                     order.reg = contact
                     sent = send_mail(
                         request, TO_LIST,
-                        "[{}] Soccer camp registration".format(status),
+                        '[{}] Soccer camp registration'.format(status),
                         contact.email,
-                        "athletics/soccer/camp_registration_email.html",
+                        'athletics/soccer/camp_registration_email.html',
                         order, BCC
                     )
                     order.send_mail = sent
                     order.save()
             else:
                 order = Order(
-                    total=total,auth="COD",status="Pay later",
-                    operator="DJSoccerCamp"
+                    total=total,auth='COD',status='Pay later',
+                    operator='DJSoccerCamp'
                 )
                 order.save()
                 contact.order.add(order)
@@ -88,13 +88,13 @@ def camp_registration(request):
                 sent = send_mail(
                     request, TO_LIST, "Soccer camp registration",
                     contact.email,
-                    "athletics/soccer/camp_registration_email.html", order, BCC
+                    'athletics/soccer/camp_registration_email.html', order, BCC
                 )
                 order.send_mail = sent
                 order.save()
                 return HttpResponseRedirect(reverse('soccer_camp_success'))
         else:
-            if request.POST.get('payment_method') == "Credit Card":
+            if request.POST.get('payment_method') == 'Credit Card':
                 form_proc = TrustCommerceForm(None, request.POST)
                 form_proc.is_valid()
             else:
@@ -102,27 +102,28 @@ def camp_registration(request):
     else:
         form_reg = SoccerCampRegistrationForm()
         form_proc = TrustCommerceForm()
-    return render_to_response(
-        'athletics/soccer/camp_registration.html',
+
+    return render(
+        request, 'athletics/soccer/camp_registration.html',
         {
             'form_reg': form_reg,'form_proc':form_proc,
             'status':status,'msg':msg,
-        }, context_instance=RequestContext(request)
+        }
     )
+
 
 def insurance_card(request):
     if request.POST:
         form = SoccerCampInsuranceCardForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
-            subject = "[Insurance card]: {}, {}".format(
-                data['last_name'],
-                data['first_name']
+            subject = u"[Insurance card]: {}, {}".format(
+                data['last_name'], data['first_name']
             )
             send_mail(
                 request, INSURANCE_TO_LIST,
                 subject, data['email'],
-                "athletics/soccer/camp_insurance_card_email.html",
+                'athletics/soccer/camp_insurance_card_email.html',
                 data, BCC, attach=True
             )
             return HttpResponseRedirect(
@@ -131,9 +132,7 @@ def insurance_card(request):
     else:
         form = SoccerCampInsuranceCardForm()
 
-    return render_to_response(
-        'athletics/soccer/camp_insurance_card_form.html',
-        {'form': form,},
-        context_instance=RequestContext(request)
+    return render(
+        request, 'athletics/soccer/camp_insurance_card_form.html',
+        {'form': form,}
     )
-

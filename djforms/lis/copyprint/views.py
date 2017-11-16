@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
-from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
 from djforms.lis.copyprint.forms import CardRequestForm
+
 from djtools.utils.mail import send_mail
+
 
 @login_required
 def index(request):
@@ -24,22 +25,21 @@ def index(request):
                     settings.COPYPRINT_CARD_REQUEST_EMAIL,
                     data.user.email
                 ]
-            subject = "Copy Print Card Request: {}, {} from {}".format(
+            subject = 'Copy Print Card Request: {}, {} from {}'.format(
                 data.user.last_name, data.user.first_name, data.entity_name
             )
             send_mail(
                 request, TO_LIST,
                 subject, data.user.email,
-                "lis/copyprint/email.html", data,
+                'lis/copyprint/email.html', data,
                 settings.MANAGERS
             )
             return HttpResponseRedirect(
-                reverse_lazy("lis_success")
+                reverse_lazy('lis_success')
             )
     else:
         form = CardRequestForm()
-    return render_to_response(
-        "lis/copyprint/form.html",
-        {"form":form,},
-        context_instance=RequestContext(request)
+
+    return render(
+        request, 'lis/copyprint/form.html', {'form':form,}
     )

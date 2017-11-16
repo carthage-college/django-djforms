@@ -1,44 +1,46 @@
 from django.conf import settings
-from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 
 from djforms.alumni.distinguished.forms import NomineeForm, NominatorForm
+
 from djtools.utils.mail import send_mail
 
 import datetime
 
+
 def nomination_form(request):
     if request.method=='POST':
-        nominee_form = NomineeForm(request.POST,prefix="nominee")
-        nominator_form = NominatorForm(request.POST,prefix="nominator")
+        nominee_form = NomineeForm(request.POST,prefix='nominee')
+        nominator_form = NominatorForm(request.POST,prefix='nominator')
         if nominee_form.is_valid() and nominator_form.is_valid():
             data = {
-                "nominee": nominee_form.cleaned_data,
-                "nominator": nominator_form.cleaned_data
+                'nominee': nominee_form.cleaned_data,
+                'nominator': nominator_form.cleaned_data
             }
             if settings.DEBUG:
                 TO_LIST = [settings.SERVER_EMAIL]
             else:
                 TO_LIST = [settings.ALUMNI_OFFICE_EMAIL]
-            subject = "Distinguished Alumni Award Nomination: {}".format(
-                data["nominee"]["name"]
+            subject = 'Distinguished Alumni Award Nomination: {}'.format(
+                data['nominee']['name']
             )
             send_mail(
                 request, TO_LIST,
-                subject, data["nominator"]["email"],
-                "alumni/distinguished/email.html", data,
+                subject, data['nominator']['email'],
+                'alumni/distinguished/email.html', data,
                 settings.MANAGERS
             )
             return HttpResponseRedirect(
-                reverse_lazy("distinguished_nomination_success")
+                reverse_lazy('distinguished_nomination_success')
             )
     else:
-        nominee_form = NomineeForm(prefix="nominee")
-        nominator_form = NominatorForm(prefix="nominator")
-    return render_to_response(
-        "alumni/distinguished/form.html",
-        {"nominee_form":nominee_form,"nominator_form":nominator_form,},
-        context_instance=RequestContext(request)
+        nominee_form = NomineeForm(prefix='nominee')
+        nominator_form = NominatorForm(prefix='nominator')
+
+    return render(
+        request,
+        'alumni/distinguished/form.html',
+        {'nominee_form':nominee_form,'nominator_form':nominator_form,}
     )

@@ -16,6 +16,8 @@ ENTRY_YEAR_CHOICES = (
     (YEAR,YEAR),
     (YEAR+1,YEAR+1)
 )
+
+
 class BaseForm(forms.Form):
     first_name          = forms.CharField(max_length=50)
     middle_name         = forms.CharField(max_length=50, required=False)
