@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
 
 from djforms.scholars.views.forms import EmailPresentersForm, PresentationForm
@@ -22,9 +22,11 @@ if int(NOW.month) > 9 and not settings.DEBUG:
     YEAR += 1
 
 BCC = settings.MANAGERS
+login_url = settings.LOGIN_URL
 
 import logging
 logger = logging.getLogger(__name__)
+
 
 def _update_presenters(presenter, presenters):
     presenter.first_name   = presenters.first_name
@@ -50,7 +52,7 @@ def form(request, pid=None):
     # flag managers
     manager = request.user.has_perm('scholars.manage_presentation')
     # get people for select field
-    jason  = get_json("faculty")
+    jason  = get_json('faculty')
     faculty = []
     for j in jason:
         faculty.append(j[j.keys()[0]])
@@ -77,7 +79,7 @@ def form(request, pid=None):
         )
         # check perms
         if presentation.user != request.user and not manager:
-            return HttpResponseRedirect(reverse("auth_login"))
+            return HttpResponseRedirect(reverse('auth_login'))
     else:
         if not expired:
             try:
@@ -122,12 +124,12 @@ def form(request, pid=None):
         # mugshoth is a hidden field to mirror mugshot as counter.
         h = len(mugshot)
         for i in range (1,len(last_name)):
-            if mugshoth[i] == "True":
+            if mugshoth[i] == 'True':
                 try:
                     mug = mugshot[len(mugshot)-h]
                 except:
                     mug = None
-                    logger.debug("Celebration of Scholars mugshot error.")
+                    logger.debug('Celebration of Scholars mugshot error.')
                 h -= 1
             elif mugshoth[i]:
                 mug = mugshoth[i]
@@ -186,65 +188,66 @@ def form(request, pid=None):
                     presentation.leader = p
             # save the presentation object
             if manager:
-                if request.POST.get('status') == "on":
+                if request.POST.get('status') == 'on':
                     presentation.status = True
                 else:
                     presentation.status = False
             presentation.save()
             if not manager:
-                data = {"presentation":presentation,"pid":pid,}
-                status = ""
+                data = {'presentation':presentation,'pid':pid,}
+                status = ''
                 if pid:
-                    status = " (updated)"
-                subject = """[CoS Presentation] %s%s: by %s %s""" % (
+                    status = ' (updated)'
+                subject = """[CoS Presentation] {}{}: by {} {}""".format(
                     presentation.title,status,request.user.first_name,
                     request.user.last_name
                 )
                 send_mail (
-                    request, [settings.SERVER_EMAIL], subject, request.user.email,
-                    "scholars/presentation/email.html", data, BCC
+                    request, [settings.SERVER_EMAIL], subject,
+                    request.user.email, 'scholars/presentation/email.html',
+                    data, BCC
                 )
-            return HttpResponseRedirect(reverse("presentation_form_done"))
+            return HttpResponseRedirect(reverse('presentation_form_done'))
         else:
             copies = len(presenters) + 1
 
     else:
         form = PresentationForm(instance=presentation)
         if not pid:
-            presenters = [""]
+            presenters = ['']
             copies = 1
 
     context = {
-        "presentation":presentation,"form":form,
-        "presenters":presenters,"copies":copies,
-        "faculty":faculty,"cyears":YEAR_CHOICES,
-        "depts":DEPTS,"types":PRESENTER_TYPES,
-        "pid":pid,"manager":manager,"expired":expired
+        'presentation':presentation,'form':form,
+        'presenters':presenters,'copies':copies,
+        'faculty':faculty,'cyears':YEAR_CHOICES,
+        'depts':DEPTS,'types':PRESENTER_TYPES,
+        'pid':pid,'manager':manager,'expired':expired
     }
-    return render_to_response (
-        "scholars/presentation/form.html",
-        context, context_instance=RequestContext(request)
+
+    return render(
+        request, 'scholars/presentation/form.html', context
     )
 
 
 @permission_required(
     'scholars.manage_presentation',
-    login_url="/forms/accounts/login/"
+    login_url=login_url
 )
 def manager(request):
     p = Presentation.objects.filter(date_updated__year=YEAR)
-    presentations = p.order_by("-date_created")
-    #presentations = Presentation.objects.all().order_by("-date_created")
-    return render_to_response (
-        "scholars/presentation/manager.html",
-        {"presentations":presentations,},
-        context_instance=RequestContext(request)
+    presentations = p.order_by('-date_created')
+    #presentations = Presentation.objects.all().order_by('-date_created')
+
+    return render(
+        request, 'scholars/presentation/manager.html',
+        {'presentations':presentations,}
     )
 
 
 @permission_required(
     'scholars.manage_presentation',
-    login_url="/forms/accounts/login/"
+    login_url=login_url
 )
 def email_presenters(request,pid,action):
     """
@@ -256,12 +259,12 @@ def email_presenters(request,pid,action):
         form = EmailPresentersForm(request.POST)
         if form.is_valid():
             form_data = form.cleaned_data
-            if "confirm" in request.POST:
-                context = {"form":form,"data":form_data,"p":presentation}
-                return render_to_response (
-                    "scholars/presenters/email_form.html",
-                    context,context_instance=RequestContext(request))
-            elif "execute" in request.POST:
+            if 'confirm' in request.POST:
+                context = {'form':form,'data':form_data,'p':presentation}
+                return render(
+                    request, 'scholars/presenters/email_form.html', context
+                )
+            elif 'execute' in request.POST:
                 FEMAIL = request.user.email
                 TO_LIST = [presentation.user.email,]
                 if presentation.leader.sponsor_email:
@@ -269,13 +272,13 @@ def email_presenters(request,pid,action):
                         TO_LIST.append(settings.SERVER_EMAIL)
                     else:
                         TO_LIST.append(presentation.leader.sponsor_email)
-                data = {"content":form_data["content"]}
+                data = {'content':form_data['content']}
                 sub = "[Celebration of Scholars] Info about your presentation"
                 send_mail (
                     request, TO_LIST, sub,
-                    FEMAIL, "scholars/presenters/email_data.html", data, BCC
+                    FEMAIL, 'scholars/presenters/email_data.html', data, BCC
                 )
-                return HttpResponseRedirect(reverse("email_presenters_done"))
+                return HttpResponseRedirect(reverse('email_presenters_done'))
             else:
                 return HttpResponseRedirect(
                     reverse('email_presenters_form', args=[pid,action])
@@ -283,10 +286,9 @@ def email_presenters(request,pid,action):
     else:
         form = EmailPresentersForm()
 
-    return render_to_response (
-        "scholars/presenters/email_form.html",
-        {"form": form,"data":form_data,"p":presentation,"action":action},
-        context_instance=RequestContext(request)
+    return render(
+        request, 'scholars/presenters/email_form.html',
+        {'form': form,'data':form_data,'p':presentation,'action':action}
     )
 
 
@@ -299,42 +301,41 @@ def archives(request, ptype, medium, year=None):
     else:
         year = YEAR
 
-    template = "scholars/%s/archives_%s.html" % (ptype, medium)
+    template = 'scholars/{}/archives_{}.html'.format(ptype, medium)
 
-    if os.path.isfile(os.path.join(settings.ROOT_DIR, "templates", template)):
-        if ptype == "presentation":
+    if os.path.isfile(os.path.join(settings.ROOT_DIR, 'templates', template)):
+        if ptype == 'presentation':
             p = Presentation.objects.filter(date_updated__year=year)
-            p.filter(status=True).order_by("user__last_name")
+            p.filter(status=True).order_by('user__last_name')
         else:
             prez = Presenter.objects.filter(date_updated__year=year)
-            p = prez.order_by("last_name")
+            p = prez.order_by('last_name')
 
-        return render_to_response (
-            template, {"prez": p,"year":year,},
-            context_instance=RequestContext(request)
+        return render(
+            request, template, {'prez': p,'year':year,}
         )
     else:
-        raise Http404, "Page not found"
+        raise Http404, 'Page not found'
 
 
 def detail(request, pid):
     presentation = get_object_or_404(Presentation,id=pid)
     manager = request.user.has_perm('scholars.manage_presentation')
-    return render_to_response (
-        "scholars/presentation/detail.html",
-        {"p": presentation,"manager":manager},
-        context_instance=RequestContext(request)
+    return render(
+        request, 'scholars/presentation/detail.html',
+        {'p': presentation,'manager':manager}
     )
 
 
-@permission_required('scholars.manage_presentation', login_url="/forms/accounts/login/")
+@permission_required(
+    'scholars.manage_presentation', login_url=login_url)
 def action(request):
     manager = request.user.has_perm('scholars.manage_presentation')
     if request.method=='POST' and manager:
-        pid = int(request.POST["pid"])
-        action = request.POST["action"]
+        pid = int(request.POST['pid'])
+        action = request.POST['action']
         presentation = get_object_or_404(Presentation,id=pid)
-        if action == "update":
+        if action == 'update':
             return HttpResponseRedirect(
                 reverse('presentation_update', args=[pid])
             )
@@ -343,17 +344,18 @@ def action(request):
                 reverse('email_presenters_form', args=[pid,action])
             )
     else:
-        raise Http404, "Page not found"
+        raise Http404, 'Page not found'
+
 
 def email_all_presenters(request):
     """
     Send an email to all presenters
     """
-    template = "scholars/presenters/email_all_presenters.html"
+    template = 'scholars/presenters/email_all_presenters.html'
 
     p = Presentation.objects.filter(date_updated__year=YEAR)
 
-    return render_to_response (
-        template, {"prez": p,},
-        context_instance=RequestContext(request)
+    return render(
+        request, template, {'prez': p,}
     )
+
