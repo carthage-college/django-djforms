@@ -13,10 +13,10 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'HOST': '',
+        'HOST': '127.0.0.1',
         'PORT': '',
         'NAME': '',
-        'ENGINE': '',
+        'ENGINE': 'django.db.backends.mysql',
         'USER': '',
         'PASSWORD': '',
         'OPTIONS': {
@@ -43,12 +43,11 @@ SERVER_URL = ''
 API_URL = '{}/{}'.format(SERVER_URL, 'api')
 LIVEWHALE_API_URL = 'https://{}'.format(SERVER_URL)
 API_KEY = ''
-API_PEOPLE_URL = ''
+API_PEOPLE_URL=''
 AUTH_PROFILE_MODULE = 'core.UserProfile'
 SECRET_KEY = ''
 HONEYPOT_FIELD_NAME=''
 HONEYPOT_VALUE=''
-
 # Character Quest Window
 CHARACTER_QUEST_END_MONTH = 5
 CHARACTER_QUEST_END_DAY = 1
@@ -63,9 +62,8 @@ COS_START_DAY = 2
 GIVING_DEFAULT_CONTACT_FORM = 'GivingDay'
 GIVING_DEFAULT_CAMPAIGN = 'giving-day'
 GIVING_DAY_START_DATE = datetime.strptime(
-    'May 1 2018 4:20PM','%b %d %Y %I:%M%p'
+    'Jan 1 2017 6:00PM','%b %d %Y %I:%M%p'
 )
-
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -164,22 +162,22 @@ LDAP_OBJECT_CLASS = ''
 LDAP_OBJECT_CLASS_LIST = []
 LDAP_GROUPS = {}
 LDAP_RETURN = []
-LDAP_ID_ATTR = ''
+LDAP_ID_ATTR=''
 LDAP_AUTH_USER_PK = False
 # auth backends
 AUTHENTICATION_BACKENDS = (
     'djauth.ldapBackend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-LOGIN_URL = ''
-LOGOUT_URL = ''
-LOGIN_REDIRECT_URL = ''
+LOGIN_URL = '{}accounts/login/'.format(ROOT_URL)
+LOGOUT_URL = '{}accounts/logout/'.format(ROOT_URL)
+LOGIN_REDIRECT_URL = ROOT_URL
 USE_X_FORWARDED_HOST = True
-SESSION_COOKIE_DOMAIN = ''
+SESSION_COOKIE_DOMAIN=''
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_NAME = ''
+SESSION_COOKIE_NAME =''
 SESSION_COOKIE_AGE = 86400
-COS_FACULTY = [{ }]
+COS_FACULTY = [{}]
 # logggin stuff
 LOG_FILEPATH = os.path.join(os.path.dirname(__file__), 'logs/')
 LOG_FILENAME = LOG_FILEPATH + 'debug.log'
@@ -261,8 +259,10 @@ EMAIL_PORT = 587
 EMAIL_FAIL_SILENTLY = True
 DEFAULT_FROM_EMAIL = ''
 SERVER_EMAIL = ''
-SERVER_MAIL = ''
+SERVER_MAIL=''
+
 # email addresses
+SUSTAINABILITY_EMAIL_LIST = []
 SOCCER_CAMP_TO_LIST = []
 MAINTENANCE_MANAGER = ''
 CHARACTER_QUEST_TO_LIST = []
@@ -271,23 +271,29 @@ COS_DEFAULT_NAME = ''
 COS_DEFAULT_EMAIL = ''
 ALUMNI_OFFICE_EMAIL = ''
 ALUMNI_MEMORY_EMAIL = []
-GIVING_DONATIONS_BCC = []
+GIVING_DONATIONS_BCC = [
+    SERVER_EMAIL,
+]
 COMMUNICATIONS_METAMORPHOSIS_TO_LIST = []
-MODEL_UN_TO_LIST = []
+COMMUNICATIONS_PRINT_REQUEST_EMAIL = ''
 # TLE applications
 MODERN_LANGUAGES_TLE_APPLICATIONS = []
 STUDY_ABROAD_EMAIL = ''
 BIOLOGY_GENOMICS = []
 POLITICAL_SCIENCE_IEA_EMAIL = []
+POLISCI_MODEL_UN_TO_LIST = []
 CONTINUING_STUDIES_ENRICHMENT_REGISTRATION_EMAIL = ''
 ALUMNI_CLASSNOTES_EMAILS = []
+ADMISSIONS_CHINA_EMAIL_LIST = []
+ADMISSIONS_ADMITTED_EMAIL_LIST = []
+ADMISSIONS_EMAIL = ''
 CATERING_TO_LIST = []
 LIS_MATHEMATICA_REGISTRATION_EMAIL = []
 LIS_PRINT_REQUEST_EMAIL = ''
 CHORAL_TRYOUTS_FROM = ''
 PREHEALTH_DO = ''
 PREHEALTH_MD = ''
-WAC_EMAIL = ''
+WAC_EMAIL = []
 SECURITY_PARKING_TICKET_APPEAL_EMAIL = ''
 # Authorize.net
 GATEWAY_API_LOGIN = ''
@@ -299,12 +305,12 @@ GATEWAY_NAME = ''
 # TrustCommerce
 TC_LOGIN = ''
 TC_PASSWORD = ''
+#TC_LIVE = True
 TC_LIVE = False
 TC_AVS = 'n'
-#TC_AUTH_TYPE = 'store' # recurring subsciption
 TC_AUTH_TYPE = 'sale'
 TC_CYCLE = '1m'
-TC_OPERATOR = ''
+TC_OPERATOR = 'DJForms'
 # caching
 CACHES = {
     'default': {
