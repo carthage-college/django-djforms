@@ -3,8 +3,10 @@ import os.path
 
 from datetime import datetime
 
+from djzbar.settings import INFORMIX_EARL as INFORMIX_EARL
+
 DEBUG = False
-DEBUG = True
+INFORMIX_DEBUG = ''
 
 ADMINS = (
     ('', ''),
@@ -131,13 +133,14 @@ INSTALLED_APPS = (
     'djforms.core',
     'djforms.giving',
     'djforms.languages',
+    #'djforms.lis.conferences.mathematica',
     'djforms.lis.copyprint',
-    'djforms.lis.conferences.mathematica',
     'djforms.music.ensembles.choral',
     'djforms.music.theatre.summer_camp',
     'djforms.polisci.iea.proposal',
     'djforms.polisci.iea.registration',
     'djforms.prehealth.committee_letter',
+    'djforms.president.honorary_degree',
     'djforms.processors',
     'djforms.scholars',
     'djforms.security',
@@ -146,6 +149,7 @@ INSTALLED_APPS = (
     # other inhouse django
     'djtools',
 )
+# django-countries settings
 COUNTRIES_FIRST = {
     'US': ('United States'),
 }
@@ -233,6 +237,11 @@ LOGGING = {
             'propagate': True,
             'level':'DEBUG',
         },
+        'djauth': {
+            'handlers':['logfile'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
         'django': {
             'handlers':['console'],
             'propagate': True,
@@ -274,6 +283,7 @@ ALUMNI_MEMORY_EMAIL = []
 GIVING_DONATIONS_BCC = [
     SERVER_EMAIL,
 ]
+HONORARY_DEGREE_NOMINATION_EMAIL = ''
 COMMUNICATIONS_METAMORPHOSIS_TO_LIST = []
 COMMUNICATIONS_PRINT_REQUEST_EMAIL = ''
 # TLE applications
