@@ -95,7 +95,7 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
     insurance_card_links.allow_tags = True
     insurance_card_links.short_description = "Insurance Card Files"
 
-    def queryset(self, request):
+    def get_queryset(self, request):
         """
         only show registrations that were created after a certain date.
         they wanted to delete old registrations to make the dashboard
@@ -105,7 +105,7 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         YEAR = int(TODAY.year)
         MES = int(TODAY.month)
         #DAY = int(TODAY.day)
-        qs = super(SoccerCampAttenderAdmin, self).queryset(request)
+        qs = super(SoccerCampAttenderAdmin, self).get_queryset(request)
         if MES <= 8:
             YEAR = YEAR - 1
         start_date = datetime.date(YEAR, 8, 1)
