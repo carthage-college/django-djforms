@@ -2,7 +2,8 @@ import csv
 
 from django.http import HttpResponse, HttpResponseForbidden
 from django.template.defaultfilters import slugify
-from django.db.models.loading import get_model
+from django.apps import apps
+
 
 def export_as_csv_action(description="Export selected objects as CSV file",
                          fields=None, exclude=None, header=True):
@@ -85,7 +86,7 @@ def admin_list_export(request, app_label, model_name, queryset=None, fields=None
     if not request.user.is_staff:
         return HttpResponseForbidden()
     if not queryset:
-        model = get_model(app_label, model_name)
+        model = apps.get_model(app_label, model_name)
         queryset = model.objects.all()
         filters = dict()
         for key, value in request.GET.items():

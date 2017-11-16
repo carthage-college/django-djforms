@@ -59,7 +59,7 @@
                     <li class="ctrlHolder">
                     {% if field.name == "matching_company" or field.name == "opt_in" %}
                     {{field}} {{field.label_tag}}<br />
-                    {% else %}{% if field.name = "anonymous" %}{% else %}
+                    {% else %}{% if field.name == "anonymous" %}{% else %}
                         {% if field.name == "address2" %}
                         <label for="id_ct-address2" style="display:none;">{{ field.name }}</label>
                         {% else %}
