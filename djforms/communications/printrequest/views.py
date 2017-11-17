@@ -14,7 +14,7 @@ def print_request(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL]
     else:
-        TO_LIST = settings.COMMUNICATIONS_PRINT_REQUEST_EMAIL
+        TO_LIST = [settings.COMMUNICATIONS_PRINT_REQUEST_EMAIL]
 
     if request.method == 'POST':
         form = PrintRequestForm(request.POST, request.FILES)
