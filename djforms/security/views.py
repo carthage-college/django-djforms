@@ -12,7 +12,7 @@ def parking_ticket_appeal_form(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL]
     else:
-        TO_LIST = settings.SECURITY_PARKING_TICKET_APPEAL_EMAIL
+        TO_LIST = [settings.SECURITY_PARKING_TICKET_APPEAL_EMAIL]
 
     if request.method == 'POST':
         form = ParkingTicketAppealForm(request.POST)
