@@ -32,7 +32,10 @@ class VisitDayBaseForm(forms.ModelForm):
 
     class Meta:
         model = VisitDayBaseProfile
-        fields = '__all__'
+        fields = [
+            'date','number_attend','first_name','last_name','email',
+            'address','city','state','postal_code','phone','mobile','gender'
+        ]
 
     def __init__(self,event_type,*args,**kwargs):
         super(VisitDayBaseForm,self).__init__(*args,**kwargs)
@@ -43,10 +46,6 @@ class VisitDayBaseForm(forms.ModelForm):
         for event in qs:
             choices.append((event.id,event))
         self.fields['date'].choices = choices
-        self.fields.keyOrder = [
-            'date','number_attend','first_name','last_name','email',
-            'address','city','state','postal_code','phone','mobile','gender'
-        ]
 
     def clean_number_attend(self):
         if self.cleaned_data.get('date'):
@@ -87,7 +86,14 @@ class VisitDayForm(forms.ModelForm):
 
     class Meta:
         model = VisitDayProfile
-        fields = '__all__'
+        fields = [
+            'date','number_attend','first_name','last_name',
+            'email','address','city','state','postal_code',
+            'phone','mobile','gender','high_school','hs_city',
+            'hs_state','hs_grad_year','entry_as','transfer',
+            'entry_year','entry_term','academic','xtracurricular',
+            'comments'
+        ]
 
     def __init__(self,event_type,*args,**kwargs):
         super(VisitDayForm,self).__init__(*args,**kwargs)
@@ -117,14 +123,6 @@ class VisitDayForm(forms.ModelForm):
         self.fields['transfer'].widget.attrs['class'] = 'validate[funcCall[ValidateTransfer]]'
         self.fields['entry_year'].widget.attrs['class'] = 'validate[required,custom[year]]'
         self.fields['entry_term'].widget.attrs['class'] = 'validate[required]'
-        self.fields.keyOrder = [
-            'date','number_attend','first_name','last_name',
-            'email','address','city','state','postal_code',
-            'phone','mobile','gender','high_school','hs_city',
-            'hs_state','hs_grad_year','entry_as','transfer',
-            'entry_year','entry_term','academic','xtracurricular',
-            'comments'
-        ]
 
     def clean_transfer(self):
         cd = self.cleaned_data
