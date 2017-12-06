@@ -3,6 +3,9 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
+from djtools.fields.helpers import upload_to_path
+
+
 FORMATS = (
     ('Booklet / Event program','Booklet / Event program'),
     ('Brochure','Brochure'),
@@ -172,24 +175,27 @@ class PrintRequest(models.Model):
     )
     file_1 = models.FileField(
         "",
-        upload_to="files/communications/printrequest/",
+        upload_to=upload_to_path,
         blank=True
     )
     file_2 = models.FileField(
         "",
-        upload_to="files/communications/printrequest/",
+        upload_to=upload_to_path,
         blank=True
     )
     file_3 = models.FileField(
         "",
-        upload_to="files/communications/printrequest/",
+        upload_to=upload_to_path,
         blank=True
     )
     file_4 = models.FileField(
         "",
-        upload_to="files/communications/printrequest/",
+        upload_to=upload_to_path,
         blank=True
     )
 
     class Meta:
         db_table = 'communications_printrequest'
+
+    def get_slug(self):
+        return 'files/communications/printrequest/'
