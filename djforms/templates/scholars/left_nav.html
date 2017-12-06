@@ -3,12 +3,12 @@
     <ul>
     {% if perms.scholars.manage_presentation %}
     <li>
-        <a href="{% url 'scholars.views.presentation.manager' %}">
+        <a href="{% url 'presentation_manager' %}">
             Manage Presentations
         </a>
     </li>
     <li>
-        <a href="{% url 'scholars.views.presentation.archives' 'presenters' 'screen' %}">
+        <a href="{% url 'presentation_archives_home' 'presenters' 'screen' %}">
             List Presenters
         </a>
     </li>
@@ -20,17 +20,22 @@
     {% endif %}
     {% if not perms.scholars.manage_presentation %}
         <li>
-            <a href="{% url 'scholars.views.presentation.form' %}">
+            <a href="{% url 'presentation_form' %}">
                 My Presentation
             </a>
         </li>
     {% endif %}
     <li class="lw_has_subnav">
-        <a href="{% url 'scholars.views.presentation.archives' 'presentation' 'screen' %}"
+        <a href="{% url 'presentation_archives_home' 'presentation' 'screen' %}"
             class="lw_subnav_toggle">
             <span class="lw_separator_title">Archives</span>
         </a>
         <ul class="lw_subnav">
+        <li>
+            <a href="{% url 'presentation_archives' 'presentation' 'screen' '2017' %}">
+                2017
+            </a>
+        </li>
         <li>
             <a href="{% url 'presentation_archives' 'presentation' 'screen' '2016' %}">
                 2016
@@ -55,7 +60,7 @@
     </li>
     {% if not user.is_anonymous %}
         <li>
-            <a href="{% url 'auth_logout' %}?next={% url 'scholars.views.presentation.archives' 'presentation' 'screen' %}">
+            <a href="{% url 'auth_logout' %}?next={% url 'presentation_archives_home' 'presentation' 'screen' %}">
                 Logout
             </a>
         </li>
