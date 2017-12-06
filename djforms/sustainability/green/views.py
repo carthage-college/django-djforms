@@ -52,7 +52,7 @@ def pledge_form(request):
         form = PledgeForm(initial={'user':user})
 
     return render(
-        'sustainability/green/form.html',
+        request, 'sustainability/green/form.html',
         {'form': form, 'anon': anon, 'pledge':pledge,}
     )
 
