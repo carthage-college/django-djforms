@@ -36,7 +36,9 @@ def camp_registration(request):
                     total=total,auth='sale',status='In Process',
                     operator='DJSoccerCamp'
                 )
-                form_proc = TrustCommerceForm(order, contact, request.POST)
+                form_proc = TrustCommerceForm(
+                    order, contact, request.POST, use_required_attribute=False
+                )
                 if form_proc.is_valid():
                     r = form_proc.processor_response
                     order.status = r.msg['status']
@@ -95,13 +97,15 @@ def camp_registration(request):
                 return HttpResponseRedirect(reverse('soccer_camp_success'))
         else:
             if request.POST.get('payment_method') == 'Credit Card':
-                form_proc = TrustCommerceForm(None, request.POST)
+                form_proc = TrustCommerceForm(
+                    None, request.POST, use_required_attribute=False
+                )
                 form_proc.is_valid()
             else:
-                form_proc = TrustCommerceForm()
+                form_proc = TrustCommerceForm(use_required_attribute=False)
     else:
         form_reg = SoccerCampRegistrationForm()
-        form_proc = TrustCommerceForm()
+        form_proc = TrustCommerceForm(use_required_attribute=False)
 
     return render(
         request, 'athletics/soccer/camp_registration.html',
