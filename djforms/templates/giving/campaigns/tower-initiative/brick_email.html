@@ -1,15 +1,8 @@
-<h1> Mark your place in Carthage history </h1>
-    <p>
-        Thank you for your support and your donation of a commemorative brick.
-    </p>
-    <p>
-        This email is your purchase confirmation and may be used
-        as a receipt for tax purposes.
-    </p>
-    <p>
-    If you have any questions, please do not hesitate to
-    <a href="mailto:giving@carthage.edu">contact us</a>.
-    </p>
+{% load livewhale_api %}
+{% autoescape off %}
+  {% get_lw_content as donation_email blurbs 2598 %}
+  {{donation_email.body}}
+{% endautoescape %}
 <h3>Donation Information</h3>
 <dl style="margin-bottom:30px;">
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Amount</dt>
