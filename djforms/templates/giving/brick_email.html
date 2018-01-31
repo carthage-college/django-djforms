@@ -1,3 +1,4 @@
+{% load livewhale_api %}
 {% autoescape off %}
   {% get_lw_content as donation_email blurbs 2599 %}
   {{donation_email.body}}

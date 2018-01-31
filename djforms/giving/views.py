@@ -127,9 +127,22 @@ def giving_form(request, transaction, campaign=None):
                 or_data.contact = contact
                 data = {'order':or_data,'years':years}
                 subject = SUBJECT.format(contact.first_name, contact.last_name)
+                # build our email template path
+                template = 'giving/{}_email.html'.format(transaction)
+                if campaign:
+                    temp = 'giving/campaigns/{}/{}_email.html'.format(
+                        campaign.slug, transaction
+                    )
+                    sendero = os.path.join(settings.ROOT_DIR,'templates',temp)
+                    if os.path.isfile(sendero):
+                        template = temp
+                    else:
+                        template = 'giving/campaigns/{}/{}_email.html'.format(
+                            settings.GIVING_DEFAULT_CAMPAIGN, transaction
+                        )
+
                 sent = send_mail(
-                    request, [email,], subject, email,
-                    'giving/{}_email.html'.format(transaction), data, BCC
+                    request, [email,], subject, email, template, data, BCC
                 )
                 or_data.send_mail = sent
                 or_data.save()
