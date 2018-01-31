@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load livewhale_api %}
 {% block title %}
-    Brick Form &mdash; Giving &mdash; Carthage College
+    Tower Intitative Brick Form &mdash; Giving &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
     <script type="text/javascript">
@@ -12,7 +12,7 @@
             $("#inscription_5").slideUp(200);
             {% endif %}
             {% if ct_form.class_of.value == year %}
-            $('#personal_price').text("$" + (100 + (year-2000)));
+            $('#personal_price').text("$" + (200 + (year-2000)));
             $('#recognition_price').text("$" + (300 + (year-2000)));
             {% endif %}
             $("input[name=ct-brick_type]:radio").change(function () {
@@ -28,7 +28,7 @@
             });
             $("#id_ct-class_of").change(function () {
                 if ($(this).val() == year) {
-                    $('#personal_price').text("$" + (100 + (year-2000)));
+                    $('#personal_price').text("$" + (200 + (year-2000)));
                     $('#recognition_price').text("$" + (300 + (year-2000)));
                 } else {
                     $('#personal_price').text("$250");
@@ -41,6 +41,7 @@
                 $('form#profile input[type=submit]').prop('disabled', true);
                 return true;
             });
+
         });
     </script>
 {% endblock %}
@@ -61,14 +62,12 @@
 {% endblock %}
 {% block content_head %}
     <h1 id="page_title">
-        Mark your place in Carthage history
+        {{campaign.title}}
     </h1>
 {% endblock %}
 {% block content %}
-    {# include "includes/security_metrics.html" #}
-    <br />
     <div class="content cf">
-        {% get_lw_content as content blurbs 2046 %}
+        {% get_lw_content as content blurbs 2596 %}
         {{content.body}}
     </div>
     <div class="forms-container large-8 medium-8 small-12">
@@ -83,6 +82,7 @@
         {% for hidden in or_form.hidden_fields %}
         {{ hidden }}
         {% endfor %}
+        {% block details %}
         <fieldset class="blockLabels">
             <legend>Brick Details</legend>
             <ol>
@@ -178,6 +178,7 @@
                 </li>
             </ol>
         </fieldset>
+        {% endblock %}
         <fieldset class="blockLabels">
             <legend>Contact Information</legend>
             <ol>

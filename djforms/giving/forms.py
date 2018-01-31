@@ -37,7 +37,7 @@ RELATION_CHOICES = (
     ('Student', 'Student'),
 )
 CLASS = [(x, x) for x in reversed(xrange(1926,YEAR + 4))]
-CLASS.insert(0, ("","-----"))
+CLASS.insert(0, ('','-----'))
 
 
 class BrickContactForm(ContactForm):
@@ -76,6 +76,7 @@ class BrickContactForm(ContactForm):
             'class_of','inscription_1','inscription_2','inscription_3',
             'inscription_4','inscription_5'
         )
+
 
 class BrickOrderForm(OrderForm):
     """

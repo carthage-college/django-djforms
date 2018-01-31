@@ -12,7 +12,7 @@
             $("#inscription_5").slideUp(200);
             {% endif %}
             {% if ct_form.class_of.value == year %}
-            $('#personal_price').text("$" + (100 + (year-2000)));
+            $('#personal_price').text("$" + (200 + (year-2000)));
             $('#recognition_price').text("$" + (300 + (year-2000)));
             {% endif %}
             $("input[name=ct-brick_type]:radio").change(function () {
@@ -28,7 +28,7 @@
             });
             $("#id_ct-class_of").change(function () {
                 if ($(this).val() == year) {
-                    $('#personal_price').text("$" + (100 + (year-2000)));
+                    $('#personal_price').text("$" + (200 + (year-2000)));
                     $('#recognition_price').text("$" + (300 + (year-2000)));
                 } else {
                     $('#personal_price').text("$250");
@@ -41,6 +41,7 @@
                 $('form#profile input[type=submit]').prop('disabled', true);
                 return true;
             });
+
         });
     </script>
 {% endblock %}
@@ -65,11 +66,11 @@
     </h1>
 {% endblock %}
 {% block content %}
-    {# include "includes/security_metrics.html" #}
-    <br />
     <div class="content cf">
+        {% block intro %}
         {% get_lw_content as content blurbs 2046 %}
         {{content.body}}
+        {% endblock %}
     </div>
     <div class="forms-container large-8 medium-8 small-12">
     {% include "includes/required_text.html" %}
@@ -83,6 +84,7 @@
         {% for hidden in or_form.hidden_fields %}
         {{ hidden }}
         {% endfor %}
+        {% block details %}
         <fieldset class="blockLabels">
             <legend>Brick Details</legend>
             <ol>
@@ -178,6 +180,7 @@
                 </li>
             </ol>
         </fieldset>
+        {% endblock %}
         <fieldset class="blockLabels">
             <legend>Contact Information</legend>
             <ol>

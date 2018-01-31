@@ -1,0 +1,6 @@
+{% extends "giving/brick_form.html" %}
+{% load livewhale_api %}
+{% block content %}
+{% get_lw_content as thanks blurbs 2045 %}
+{{thanks.body}}
+{% endblock %}
