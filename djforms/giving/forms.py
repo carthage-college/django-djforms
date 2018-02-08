@@ -124,6 +124,27 @@ class TowerInitiativeBrickContactForm(ContactForm):
             'class_of','inscription_1','inscription_2','inscription_3',
             'inscription_4','inscription_5','inscription_6','inscription_7'
         )
+    def clean(self):
+        """
+        Check inspription length for 'personal' brick type
+        """
+        super(TowerInitiativeBrickContactForm, self).clean()
+        cd = self.cleaned_data
+        error = False
+        if cd['brick_type'] == '500':
+            for x in xrange(1, 6):
+                field = 'inscription_{}'.format(str(x))
+                if len(cd[field]) > 13:
+                    self._errors[field] = self.error_class(
+                        ["Your inscription exceeds 13 characters"]
+                    )
+                    error = True
+            if error:
+                raise forms.ValidationError(
+                    "The length of one or more inspription fields is too long."
+                )
+
+        return self.cleaned_data
 
 
 class BrickOrderForm(OrderForm):

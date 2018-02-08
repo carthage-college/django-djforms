@@ -133,59 +133,108 @@
                     19 characters and spaces per line
                 </li>
                 <li class="ctrlHolder" id="inscription_1">
+                    {% if ct_form.inscription_1.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_1.errors|join:", "}}
+                      </span>
+                    {% else %}
                     <div>
-                        <input type="text" name="ct-inscription_1"
-                            placeholder="Line 1"
-                            value="{{ct_form.inscription_1.value|default:""}}"
-                            maxlength="13" id="id_ct-inscription_1">
+                    {% endif %}
+                      <input type="text" name="ct-inscription_1"
+                        placeholder="Line 1"
+                        value="{{ct_form.inscription_1.value|default:""}}"
+                        maxlength="13" id="id_ct-inscription_1">
                     </div>
                 </li>
                 <li class="ctrlHolder" id="inscription_2">
+                    {% if ct_form.inscription_2.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_2.errors|join:", "}}
+                      </span>
+                    {% else %}
                     <div>
-                        <input type="text" name="ct-inscription_2"
-                            placeholder="Line 2"
-                            value="{{ct_form.inscription_2.value|default:""}}"
-                            maxlength="13" id="id_ct-inscription_2">
+                    {% endif %}
+                      <input type="text" name="ct-inscription_2"
+                        placeholder="Line 2"
+                        value="{{ct_form.inscription_2.value|default:""}}"
+                        maxlength="13" id="id_ct-inscription_2">
                     </div>
                 </li>
                 <li class="ctrlHolder" id="inscription_3">
+                    {% if ct_form.inscription_3.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_3.errors|join:", "}}
+                      </span>
+                    {% else %}
                     <div>
-                        <input type="text" name="ct-inscription_3"
-                            placeholder="Line 3"
-                            value="{{ct_form.inscription_3.value|default:""}}"
-                            maxlength="13" id="id_ct-inscription_3">
+                    {% endif %}
+                      <input type="text" name="ct-inscription_3"
+                        placeholder="Line 3"
+                        value="{{ct_form.inscription_3.value|default:""}}"
+                        maxlength="13" id="id_ct-inscription_3">
                     </div>
                 </li>
                 <li class="ctrlHolder" id="inscription_4">
+                    {% if ct_form.inscription_4.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_4.errors|join:", "}}
+                      </span>
+                    {% else %}
                     <div>
-                        <input type="text" name="ct-inscription_4"
-                            placeholder="Line 4"
-                            value="{{ct_form.inscription_4.value|default:""}}"
-                            maxlength="13" id="id_ct-inscription_4">
+                    {% endif %}
+                      <input type="text" name="ct-inscription_4"
+                        placeholder="Line 4"
+                        value="{{ct_form.inscription_4.value|default:""}}"
+                        maxlength="13" id="id_ct-inscription_4">
                     </div>
                 </li>
                 <li class="ctrlHolder" id="inscription_5">
+                    {% if ct_form.inscription_5.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_5.errors|join:", "}}
+                      </span>
+                    {% else %}
                     <div>
-                        <input type="text" name="ct-inscription_5"
-                            placeholder="Line 5"
-                            value="{{ct_form.inscription_5.value|default:""}}"
-                            maxlength="13" id="id_ct-inscription_5">
+                    {% endif %}
+                      <input type="text" name="ct-inscription_5"
+                        placeholder="Line 5"
+                        value="{{ct_form.inscription_5.value|default:""}}"
+                        maxlength="13" id="id_ct-inscription_5">
                     </div>
                 </li>
                 <li class="ctrlHolder" id="inscription_6">
+                    {% if ct_form.inscription_6.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_6.errors|join:", "}}
+                      </span>
+                    {% else %}
                     <div>
-                        <input type="text" name="ct-inscription_6"
-                            placeholder="Line 6"
-                            value="{{ct_form.inscription_6.value|default:""}}"
-                            maxlength="19" id="id_ct-inscription_6">
+                    {% endif %}
+                      <input type="text" name="ct-inscription_6"
+                        placeholder="Line 6"
+                        value="{{ct_form.inscription_6.value|default:""}}"
+                        maxlength="19" id="id_ct-inscription_6">
                     </div>
                 </li>
                 <li class="ctrlHolder" id="inscription_7">
+                    {% if ct_form.inscription_7.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_7.errors|join:", "}}
+                      </span>
+                    {% else %}
                     <div>
-                        <input type="text" name="ct-inscription_7"
-                            placeholder="Line 7"
-                            value="{{ct_form.inscription_7.value|default:""}}"
-                            maxlength="19" id="id_ct-inscription_7">
+                    {% endif %}
+                      <input type="text" name="ct-inscription_7"
+                        placeholder="Line 7"
+                        value="{{ct_form.inscription_7.value|default:""}}"
+                        maxlength="19" id="id_ct-inscription_7">
                     </div>
                 </li>
             </ol>
