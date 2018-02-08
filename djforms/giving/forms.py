@@ -124,9 +124,11 @@ class TowerInitiativeBrickContactForm(ContactForm):
             'class_of','inscription_1','inscription_2','inscription_3',
             'inscription_4','inscription_5','inscription_6','inscription_7'
         )
+
+
     def clean(self):
         """
-        Check inspription length for 'personal' brick type
+        Check inscription length for 'personal' brick type
         """
         super(TowerInitiativeBrickContactForm, self).clean()
         cd = self.cleaned_data
