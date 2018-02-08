@@ -7,38 +7,35 @@
     <script type="text/javascript">
         $(function() {
             var year = new Date().getFullYear();
-            {% if ct_form.brick_type.value != "500" %}
-            $("#inscription_4").slideUp(200);
-            $("#inscription_5").slideUp(200);
-            {% endif %}
-            {% if ct_form.class_of.value == year %}
-            $('#personal_price').text("$" + (200 + (year-2000)));
-            $('#recognition_price').text("$" + (300 + (year-2000)));
+            {% if ct_form.brick_type.value != "1000" %}
+              $("#inscription_6").slideUp(200);
+              $("#inscription_7").slideUp(200);
+            {% else %}
+              for (i = 1; i < 6; i++) {
+                $("#id_ct-inscription_" + i).attr('maxlength','19');
+              }
             {% endif %}
             $("input[name=ct-brick_type]:radio").change(function () {
                 if ($(this).attr("id") == "recognition_brick") {
-                    $("#inscription_4").slideDown(200);
-                    $("#inscription_5").slideDown(200);
+                  $("#inscription_6").slideDown(200);
+                  $("#inscription_7").slideDown(200);
+                  for (i = 1; i < 6; i++) {
+                    $("#id_ct-inscription_" + i).attr('maxlength','19');
+                  }
                 } else {
-                    $("#id_ct-inscription_4").val("");
-                    $("#id_ct-inscription_5").val("");
-                    $("#inscription_4").slideUp(200);
-                    $("#inscription_5").slideUp(200);
-                }
-            });
-            $("#id_ct-class_of").change(function () {
-                if ($(this).val() == year) {
-                    $('#personal_price').text("$" + (200 + (year-2000)));
-                    $('#recognition_price').text("$" + (300 + (year-2000)));
-                } else {
-                    $('#personal_price').text("$250");
-                    $('#recognition_price').text("$500");
+                  $("#id_ct-inscription_6").val("");
+                  $("#id_ct-inscription_7").val("");
+                  $("#inscription_6").slideUp(200);
+                  $("#inscription_7").slideUp(200);
+                  for (i = 1; i < 6; i++) {
+                    $("#id_ct-inscription_" + i).attr('maxlength','13');
+                  }
                 }
             });
             // disable submit button after users clicks it
             $('form#profile').bind('submit', function (e) {
-                $('#id_or-total').val( $("input[name=ct-brick_type]:checked").val() );
-                $('form#profile input[type=submit]').prop('disabled', true);
+              $('#id_or-total').val( $("input[name=ct-brick_type]:checked").val() );
+              $('form#profile input[type=submit]').prop('disabled', true);
                 return true;
             });
 
@@ -102,24 +99,25 @@
                             </span>
                         </div>
                     {% endif %}
-                    <input type="radio" id="personal_brick" value="250"
+                    <input type="radio" id="personal_brick" value="500"
                         name="ct-brick_type" class="fleft"
-                        {% if ct_form.brick_type.value == "250" %}
+                        {% if ct_form.brick_type.value == "500" %}
                         checked="checked"
                         {% endif %}
                         >
                     <label for="personal_brick" class="cf">
                         <strong>
                             <em>Personal Brick</em>&mdash;
-                            <span id="personal_price" class="cost">$250</span>
+                            <span id="personal_price" class="cost">$500</span>
                         </strong>
                     </label>
-                    (4" x 8" - 3 lines)<br>
+                    (8" x 8" - 5 lines)<br>
+                    13 characters and spaces per line
                 </li>
                 <li class="ctrlHolder">
                     <input type="radio" id="recognition_brick" class="fleft"
-                        name="ct-brick_type" value="500"
-                        {% if ct_form.brick_type.value == "500" %}
+                        name="ct-brick_type" value="1000"
+                        {% if ct_form.brick_type.value == "1000" %}
                         checked="checked"
                         {% endif %}
                         >
@@ -127,21 +125,19 @@
                         <strong>
                             <em>Recognition Brick</em>&mdash;
                             <span id="recognition_price" class="cost">
-                                $500
+                                $1000
                             </span>
                         </strong>
                     </label>
-                    (8" x 8" - 5 lines or 1 line &amp; logo)<br>
-                </li>
-                <li class="ctrlHolder">
-                    <h3>Inscription (14 characters and spaces per line)</h3>
+                    (12" x 12" - 7 lines)<br>
+                    19 characters and spaces per line
                 </li>
                 <li class="ctrlHolder" id="inscription_1">
                     <div>
                         <input type="text" name="ct-inscription_1"
                             placeholder="Line 1"
                             value="{{ct_form.inscription_1.value|default:""}}"
-                            maxlength="14" id="id_ct-inscription_1">
+                            maxlength="13" id="id_ct-inscription_1">
                     </div>
                 </li>
                 <li class="ctrlHolder" id="inscription_2">
@@ -149,7 +145,7 @@
                         <input type="text" name="ct-inscription_2"
                             placeholder="Line 2"
                             value="{{ct_form.inscription_2.value|default:""}}"
-                            maxlength="14" id="id_ct-inscription_2">
+                            maxlength="13" id="id_ct-inscription_2">
                     </div>
                 </li>
                 <li class="ctrlHolder" id="inscription_3">
@@ -157,7 +153,7 @@
                         <input type="text" name="ct-inscription_3"
                             placeholder="Line 3"
                             value="{{ct_form.inscription_3.value|default:""}}"
-                            maxlength="14" id="id_ct-inscription_3">
+                            maxlength="13" id="id_ct-inscription_3">
                     </div>
                 </li>
                 <li class="ctrlHolder" id="inscription_4">
@@ -165,7 +161,7 @@
                         <input type="text" name="ct-inscription_4"
                             placeholder="Line 4"
                             value="{{ct_form.inscription_4.value|default:""}}"
-                            maxlength="14" id="id_ct-inscription_4">
+                            maxlength="13" id="id_ct-inscription_4">
                     </div>
                 </li>
                 <li class="ctrlHolder" id="inscription_5">
@@ -173,7 +169,23 @@
                         <input type="text" name="ct-inscription_5"
                             placeholder="Line 5"
                             value="{{ct_form.inscription_5.value|default:""}}"
-                            maxlength="14" id="id_ct-inscription_5">
+                            maxlength="13" id="id_ct-inscription_5">
+                    </div>
+                </li>
+                <li class="ctrlHolder" id="inscription_6">
+                    <div>
+                        <input type="text" name="ct-inscription_6"
+                            placeholder="Line 6"
+                            value="{{ct_form.inscription_6.value|default:""}}"
+                            maxlength="19" id="id_ct-inscription_6">
+                    </div>
+                </li>
+                <li class="ctrlHolder" id="inscription_7">
+                    <div>
+                        <input type="text" name="ct-inscription_7"
+                            placeholder="Line 7"
+                            value="{{ct_form.inscription_7.value|default:""}}"
+                            maxlength="19" id="id_ct-inscription_7">
                     </div>
                 </li>
             </ol>
@@ -183,7 +195,7 @@
             <legend>Contact Information</legend>
             <ol>
                 {% for field in ct_form %}
-                    {% if field.name != "class_of" and field.name != "brick_type" and field.name != "inscription_1" and field.name != "inscription_2" and field.name != "inscription_3" and field.name != "inscription_4" and field.name != "inscription_5" %}
+                    {% if field.name != "class_of" and field.name != "brick_type" and field.name != "inscription_1" and field.name != "inscription_2" and field.name != "inscription_3" and field.name != "inscription_4" and field.name != "inscription_5" and field.name != "inscription_6" and field.name != "inscription_7" %}
                     <li class="ctrlHolder">
                         {% if field.name != "address2" %}
                         <h3>{{ field.label_tag }}</h3>

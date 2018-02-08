@@ -48,18 +48,23 @@ class BrickContact(Contact):
         max_length=4, null=True, blank=True
     )
     inscription_1 = models.CharField(
-        max_length=14
+        max_length=24
     )
     inscription_2 = models.CharField(
-        max_length=14
+        max_length=24
     )
     inscription_3 = models.CharField(
-        max_length=14
+        max_length=24
     )
     inscription_4 = models.CharField(
-        max_length=14, null=True, blank=True
+        max_length=24, null=True, blank=True
     )
     inscription_5 = models.CharField(
-        max_length=14, null=True, blank=True
+        max_length=24, null=True, blank=True
     )
-
+    inscription_6 = models.CharField(
+        max_length=24, null=True, blank=True
+    )
+    inscription_7 = models.CharField(
+        max_length=24, null=True, blank=True
+    )

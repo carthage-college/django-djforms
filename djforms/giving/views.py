@@ -89,7 +89,8 @@ def giving_form(request, transaction, campaign=None):
             or_data.avs = 0
             or_data.auth = 'sale'
             # deal with commemorative brick options
-            if transaction == 'brick' and contact.class_of == str(YEAR):
+            class_of = contact.class_of
+            if transaction=='brick' and not campaign and class_of==str(YEAR):
                 if or_data.total == 250:
                     or_data.total = BRICK_PRICES[2]
                 elif or_data.total == 500:

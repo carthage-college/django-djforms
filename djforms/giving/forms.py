@@ -28,6 +28,10 @@ BRICK_TYPES = (
     (YEAR-2000+300,YEAR-2000+300),
     (500, 500),
 )
+TOWER_INITITATIVE_BRICK_TYPES = (
+    (500, 500),
+    (1000, 1000)
+)
 RELATION_CHOICES = (
     ('', '--Select--'),
     ('Alumni', 'Alumni'),
@@ -75,6 +79,50 @@ class BrickContactForm(ContactForm):
             'address1','address2','city','state','postal_code',
             'class_of','inscription_1','inscription_2','inscription_3',
             'inscription_4','inscription_5'
+        )
+
+
+class TowerInitiativeBrickContactForm(ContactForm):
+    """
+    Tower Initiative Brick contact form
+    """
+
+    class_of = forms.ChoiceField(
+        required=False, label='Class of', choices=CLASS
+    )
+    brick_type = forms.ChoiceField(
+        label='Class of', choices=TOWER_INITITATIVE_BRICK_TYPES,
+        widget=forms.RadioSelect()
+    )
+    inscription_1 = forms.CharField(
+        max_length=19
+    )
+    inscription_2 = forms.CharField(
+        max_length=19
+    )
+    inscription_3 = forms.CharField(
+        max_length=19
+    )
+    inscription_4 = forms.CharField(
+        max_length=19,
+    )
+    inscription_5 = forms.CharField(
+        max_length=19
+    )
+    inscription_6 = forms.CharField(
+        max_length=19, required=False
+    )
+    inscription_7 = forms.CharField(
+        max_length=19, required=False
+    )
+
+    class Meta:
+        model = BrickContact
+        fields = (
+            'first_name','last_name','email','phone',
+            'address1','address2','city','state','postal_code',
+            'class_of','inscription_1','inscription_2','inscription_3',
+            'inscription_4','inscription_5','inscription_6','inscription_7'
         )
 
 
