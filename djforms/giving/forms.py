@@ -88,7 +88,8 @@ class TowerInitiativeBrickContactForm(ContactForm):
     """
 
     class_of = forms.ChoiceField(
-        required=False, label='Class of', choices=CLASS
+        required=False, label='Class of', choices=CLASS,
+        help_text="If applicable"
     )
     brick_type = forms.ChoiceField(
         label='Class of', choices=TOWER_INITITATIVE_BRICK_TYPES,
