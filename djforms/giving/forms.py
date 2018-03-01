@@ -57,13 +57,13 @@ class BrickContactForm(ContactForm):
         widget=forms.RadioSelect()
     )
     inscription_1 = forms.CharField(
-        max_length=14
+        max_length=14, required=False
     )
     inscription_2 = forms.CharField(
-        max_length=14
+        max_length=14, required=False
     )
     inscription_3 = forms.CharField(
-        max_length=14
+        max_length=14, required=False
     )
     inscription_4 = forms.CharField(
         max_length=14, required=False
@@ -96,19 +96,19 @@ class TowerInitiativeBrickContactForm(ContactForm):
         widget=forms.RadioSelect()
     )
     inscription_1 = forms.CharField(
-        max_length=19
+        max_length=19, required=False
     )
     inscription_2 = forms.CharField(
-        max_length=19
+        max_length=19, required=False
     )
     inscription_3 = forms.CharField(
-        max_length=19
+        max_length=19, required=False
     )
     inscription_4 = forms.CharField(
-        max_length=19,
+        max_length=19, required=False
     )
     inscription_5 = forms.CharField(
-        max_length=19
+        max_length=19, required=False
     )
     inscription_6 = forms.CharField(
         max_length=19, required=False
@@ -125,29 +125,6 @@ class TowerInitiativeBrickContactForm(ContactForm):
             'class_of','inscription_1','inscription_2','inscription_3',
             'inscription_4','inscription_5','inscription_6','inscription_7'
         )
-
-
-    def clean(self):
-        """
-        Check inscription length for 'personal' brick type
-        """
-        super(TowerInitiativeBrickContactForm, self).clean()
-        cd = self.cleaned_data
-        error = False
-        if cd['brick_type'] == '500':
-            for x in xrange(1, 6):
-                field = 'inscription_{}'.format(str(x))
-                if len(cd[field]) > 13:
-                    self._errors[field] = self.error_class(
-                        ["Your inscription exceeds 13 characters"]
-                    )
-                    error = True
-            if error:
-                raise forms.ValidationError(
-                    "The length of one or more inspription fields is too long."
-                )
-
-        return self.cleaned_data
 
 
 class BrickOrderForm(OrderForm):
