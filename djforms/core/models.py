@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Q
 from django.conf import settings
+from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
@@ -142,7 +143,9 @@ class UserProfile(BaseProfile):
     city = models.CharField(
         max_length=128, verbose_name = "City", null=True, blank=True
     )
-    state = USStateField()
+    state = USStateField(
+        null=True, blank=True
+    )
     zip = models.CharField(
         max_length=10, verbose_name = "Zip code", null=True, blank=True
     )
@@ -171,17 +174,14 @@ class UserProfile(BaseProfile):
             self.user.first_name, self.user.last_name, self.user.username
         )
 
-
-def create_profile(sender, instance, created, **kwargs):
-    """
-    Create the UserProfile when a new User is saved
-    """
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        profile = UserProfile()
-        profile.user = instance
-        profile.save()
+        UserProfile.objects.create(user=instance)
 
-post_save.connect(create_profile, sender=User)
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
 
 
 class Photo(models.Model):

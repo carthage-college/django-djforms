@@ -258,9 +258,6 @@ class Presentation(models.Model):
             self.updated_by = self.user
         super(Presentation, self).save()
 
-    def __unicode__(self):
-        return self.name
-
     def tag_list(self):
         return u", ".join(o.name for o in self.tags.all())
 
