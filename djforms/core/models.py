@@ -144,7 +144,8 @@ class UserProfile(BaseProfile):
         max_length=128, verbose_name = "City", null=True, blank=True
     )
     state = USStateField(
-        null=True, blank=True
+        null=True, blank=True,
+        default='WI'
     )
     zip = models.CharField(
         max_length=10, verbose_name = "Zip code", null=True, blank=True
@@ -181,7 +182,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    instance.userprofile.save()
 
 
 class Photo(models.Model):
