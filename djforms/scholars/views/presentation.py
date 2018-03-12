@@ -198,7 +198,7 @@ def form(request, pid=None):
                 status = ''
                 if pid:
                     status = ' (updated)'
-                subject = """[CoS Presentation] {}{}: by {} {}""".format(
+                subject = u"""[CoS Presentation] {}{}: by {} {}""".format(
                     presentation.title,status,request.user.first_name,
                     request.user.last_name
                 )
