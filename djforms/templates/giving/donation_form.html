@@ -110,7 +110,7 @@
                 {% for field in ct_form %}
                     <li class="ctrlHolder">
                     {% if field.name == "matching_company" or field.name == "opt_in" %}
-                    {{field}} {{field.label_tag}}<br />
+                    {{field}} {{field.label_tag}}
                     {% else %}{% if field.name == "anonymous" %}{% else %}
                         {% if field.name == "address2" %}
                         <label for="id_ct-address2" style="display:none;">{{ field.name }}</label>
@@ -132,7 +132,7 @@
                         {% endif %}
                         </div>
                         {% if field.name == "postal_code" %}
-                        <h3 style="margin-top:9px;">Matching Funds</h3>
+                        </li><li><h3>Matching Funds</h3></li>
                         {% endif %}
                     {% endif %}{% endif %}
                     </li>
@@ -147,6 +147,17 @@
                         for more information.
                     </p>
                 </li>
+                <li>
+                    <h3>Anonymous Giving</h3><br>
+                    <input type="checkbox" name="ct-anonymous"
+                        {% if ct_form.anonymous.value %}checked{% endif %}
+                        id="id_ct-anonymous">
+                    <label for="id_ct-anonymous">
+                    I would like my gift to remain anonymous,
+                    and not be published on any donor list or
+                    in the annual report.</label>
+
+                </li>
             </ol>
         </fieldset>
         <h2>Billing Information</h2>
@@ -158,19 +169,6 @@
             {% endif %}
             <ol>
                 {% include "form_field_credit_card.inc.html" %}
-            </ol>
-        </fieldset>
-        <fieldset class="blockLabels">
-            <ol>
-                <li class="ctrlHolder">
-                    <input type="checkbox" name="ct-anonymous"
-                        {% if ct_form.anonymous.value %}checked{% endif %}
-                        id="id_ct-anonymous">
-                    <label for="id_ct-anonymous">
-                    I would like my gift to remain anonymous,
-                    and not be published on any donor list or
-                    in the annual report.</label>
-                </li>
             </ol>
         </fieldset>
         {% include "form_submit.inc.html" %}
