@@ -117,6 +117,12 @@ def form(request, pid=None):
         mugshoth     = request.POST.getlist('mugshoth[]')
         mugshot      = request.FILES.getlist('mugshot[]')
 
+        # leader is a boolean field and the html returns '' when
+        # the checkbox is not checked
+        for idx, val in enumerate(leader):
+            if val == '':
+                leader[idx] = False
+
         if pid:
             presenters = []
         # here we deal with the problem of file fields not including
