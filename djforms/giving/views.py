@@ -290,10 +290,11 @@ def promotion_ajax(request, slug):
     accepts a campaign slug for identifying the Promotion() class object.
     '''
     promo = get_object_or_404(Promotion, slug=slug)
+    url = reverse('giving_form_campaign', args=['donation', slug])
 
     return render(
         request, 'giving/promotion_ajax.html',
-        {'data':promo,}
+        {'data':promo,'earl':url}
     )
 
 
