@@ -276,6 +276,14 @@ def donors(request, slug=None):
             request, template, ctext,
             content_type='text/plain; charset=utf-8'
         )
+    elif request.GET.get('latest'):
+        latest = request.GET.get('latest')
+        template = 'giving/donors_latest.html'
+        objects = donors.order_by('-order__time_stamp')[:latest]
+        response = render(
+            request, template, {'donors':objects},
+            content_type='text/plain; charset=utf-8'
+        )
     else:
         response = render(
             request, template, ctext
