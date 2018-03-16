@@ -1,16 +1,21 @@
+<div class="footer">
+  <a class="cta_button" href="{{data.earl}}">Give</a>
+  <div class="stats">
     <span class="percent">{{data.percent|default:"0"}}%</span>
     <span class="divider">|</span>
     <span class="donors">
-        <strong>
-            {% if data.donors %}
-            {{data.total}} Donors
-            {% else %}
-            ${{data.total}} <!-- ({{data.count}} donors) -->
-            {% endif %}
-        </strong>
+      <strong>
+       {% if data.donors %}
+       {{data.total}} Donors
+       {% else %}
+       ${{data.total}} <!-- ({{data.count}} donors) -->
+       {% endif %}
+      </strong>
     </span>
-    <div class="bar">
-        <div class="total">
-            <div class="percent" style="height: {{data.percent}}%;"></div>
-        </div>
-    </div>
+  </div>
+</div>
+<div class="bar">
+  <div class="total">
+    <div class="percent" style="height: {{data.percent}}%;"></div>
+  </div>
+</div>
