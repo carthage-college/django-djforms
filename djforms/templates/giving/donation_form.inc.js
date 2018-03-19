@@ -1,3 +1,5 @@
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"
+  type="text/javascript" charset="utf-8"></script>
 <script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
   type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
@@ -22,5 +24,27 @@
           $('form#profile input[type=submit]').prop('disabled', true);
           return true;
         });
+        /*
+        $("#id_or-total").on("change", function() {
+            var $total = $(this).val();
+            if ($total < 5) {
+                $message = "Please consider making a gift of $5 to offset processing costs.";
+            } else if ($total < 66) {
+                $message = "Last year, the average gift of Giving Day was around $66.";
+            } else {
+                $message = "";
+            }
+            if ($message) {
+                var $dia =$('<div id="dialog-message">' + $message + '</div>')
+                $dia.dialog({
+                    modal: true,
+                    title: "Donation Tip",
+                    closeText: "",
+                    draggable: false,
+                    resizable: false
+                });
+            }
+        });
+        */
     });
 </script>
