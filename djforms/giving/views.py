@@ -374,7 +374,9 @@ def manager(request, slug=None):
             promo = get_object_or_404(Promotion, slug=slug)
 
             if slug == 'giving-day':
-                const = '{}_START_DATE'.format(promo.slug.replace('-','_').upper())
+                const = '{}_START_DATE'.format(
+                    promo.slug.replace('-','_').upper()
+                )
                 start_date = getattr(settings, const, None)
 
         donors = DonationContact.objects.filter(

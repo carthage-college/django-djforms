@@ -33,7 +33,7 @@ table.dataTable thead span.sort-icon {
 $(document).ready(function() {
   $("body").toggleClass("sidenav-toggled");
   var table = $('#data-table').DataTable({
-    'order': [[ 2, 'desc' ]],
+    'order': [[ 3, 'desc' ]],
     'lengthMenu': [
       [25, 50, 100, 250, 500, 1000, 2000, -1],
       [25, 50, 100, 250, 500, 1000, 2000, 'All']
@@ -185,7 +185,7 @@ $(document).ready(function() {
         <td>{{o.order_transid}}</td>
         <td>{{o.order_status}}</td>
         <td>{{o.order_total}}</td>
-        <td>{{o.order_comments}}</td>
+        <td>{{o.order_comments|default:"&nbsp;"}}</td>
       </tr>
     {% endfor %}
     </tbody>
