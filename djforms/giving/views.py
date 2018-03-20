@@ -91,20 +91,26 @@ def giving_form(request, transaction, campaign=None):
             # deal with commemorative brick options
             class_of = contact.class_of
             if transaction=='brick':
-                or_data.comments = "{}\n{}\n{}\n{}\n{}".format(
-                    ct_form.inscription_1,
-                    ct_form.inscription_2,
-                    ct_form.inscription_3,
-                    ct_form.inscription_4,
-                    ct_form.inscription_5
+                comments = '{}\n{}\n{}\n{}\n{}\n'.format(
+                    ct_form['inscription_1'].value(),
+                    ct_form['inscription_2'].value(),
+                    ct_form['inscription_3'].value(),
+                    ct_form['inscription_4'].value(),
+                    ct_form['inscription_5'].value(),
                 )
-                if class_of==str(YEAR):
+                if campaign:
+                    comments += '{}\n{}\n'.format(
+                        ct_form['inscription_6'].value(),
+                        ct_form['inscription_7'].value(),
+                    )
+                if not campaign and class_of==str(YEAR):
                     if or_data.total == 250:
                         or_data.total = BRICK_PRICES[2]
                     elif or_data.total == 500:
                         or_data.total = BRICK_PRICES[3]
                     else:
                         raise Http404
+                or_data.comments = comments
             # deal with payments if they have chosen to pledge
             if transaction != 'brick' and request.POST.get('or-pledge') != '':
                 #or_data.payments = request.POST['or-payments']
