@@ -91,21 +91,27 @@ $(document).ready(function() {
 {% endblock %}
 {% block navbar-sidenav %}
 <ul class="navbar-nav navbar-sidenav">
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Cash Donation Form">
-    <a class="nav-link" href="{% url 'giving_manager_cash' %}">
-      <i class="fa fa-fw fa fa-money"></i>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Donors List">
+    <a class="nav-link" href="{% url 'giving_manager_home' %}">
+        <i class="fa fa-th-list" aria-hidden="true"></i>
       <span class="nav-link-text">Cash Donation</span>
     </a>
   </li>
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bricks and Pavers">
     <a class="nav-link" href="{% url 'giving_manager_home_campaign' 'bricks' %}">
-      <i class="fa fa-fw fa fa-cubes"></i>
+      <i class="fa fa-fw fa fa-cubes" aria-hidden="true"></i>
       <span class="nav-link-text">Bricks & Pavers</span>
+    </a>
+  </li>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Cash Donation Form">
+    <a class="nav-link" href="{% url 'giving_manager_cash' %}">
+      <i class="fa fa-fw fa fa-money" aria-hidden="true"></i>
+      <span class="nav-link-text">Cash Donation</span>
     </a>
   </li>
   <li class="nav-item">
     <a class="nav-link text-center" data-toggle="tooltip" data-placement="right" title="Expand Menu" id="sidenavToggler">
-      <i class="fa fa-fw fa-angle-double-left"></i>
+      <i class="fa fa-fw fa-angle-double-left" aria-hidden="true"></i>
     </a>
   </li>
 </ul>

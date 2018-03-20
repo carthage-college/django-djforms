@@ -54,6 +54,7 @@ pre {
 <script>
 $(document).ready(function() {
   $("body").toggleClass("sidenav-toggled");
+  $(':input[type=text],input[type=email],input[type=number],select').addClass('form-control');
 });
 </script>
 {% include "giving/donation_form.inc.js" %}
@@ -63,11 +64,7 @@ $(document).ready(function() {
     Form &mdash; Giving &mdash; Carthage College
 {% endblock %}
 {% block breadcrumb %}
-<div class="row">
-    <div class="col-lg-12">
       <h1>Cash or Check Donation</h1>
-    </div>
-</div>
 {% endblock %}
 {% block content %}
 {% if messages %}
