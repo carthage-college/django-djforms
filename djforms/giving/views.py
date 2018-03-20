@@ -7,7 +7,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from djforms.giving.forms import *
 from djforms.core.models import Promotion
-from djforms.giving.models import DonationContact
+from djforms.giving.models import BrickContact, DonationContact
 from djforms.processors.forms import TrustCommerceForm as CreditCardForm
 
 from djtools.fields import TODAY
@@ -90,13 +90,21 @@ def giving_form(request, transaction, campaign=None):
             or_data.auth = 'sale'
             # deal with commemorative brick options
             class_of = contact.class_of
-            if transaction=='brick' and not campaign and class_of==str(YEAR):
-                if or_data.total == 250:
-                    or_data.total = BRICK_PRICES[2]
-                elif or_data.total == 500:
-                    or_data.total = BRICK_PRICES[3]
-                else:
-                    raise Http404
+            if transaction=='brick':
+                or_data.comments = "{}\n{}\n{}\n{}\n{}".format(
+                    ct_form.inscription_1,
+                    ct_form.inscription_2,
+                    ct_form.inscription_3,
+                    ct_form.inscription_4,
+                    ct_form.inscription_5
+                )
+                if class_of==str(YEAR):
+                    if or_data.total == 250:
+                        or_data.total = BRICK_PRICES[2]
+                    elif or_data.total == 500:
+                        or_data.total = BRICK_PRICES[3]
+                    else:
+                        raise Http404
             # deal with payments if they have chosen to pledge
             if transaction != 'brick' and request.POST.get('or-pledge') != '':
                 #or_data.payments = request.POST['or-payments']
@@ -341,3 +349,37 @@ def manager_cash(request):
         {'ct_form': ct_form, 'or_form':or_form,}
     )
 
+
+@staff_member_required
+def manager(request, slug=None):
+    '''
+    home view that displays all donors
+    '''
+
+    promo = None
+    start_date = TODAY - timedelta(days=365)
+
+    if slug == 'bricks':
+        donors = BrickContact.objects.filter(
+            order__time_stamp__gte=start_date
+        ).filter(order__status__in=['approved','manual'])
+    else:
+        if slug:
+            promo = get_object_or_404(Promotion, slug=slug)
+
+            if slug == 'giving-day':
+                const = '{}_START_DATE'.format(promo.slug.replace('-','_').upper())
+                start_date = getattr(settings, const, None)
+
+        donors = DonationContact.objects.filter(
+            order__time_stamp__gte=start_date
+        ).filter(order__status__in=['approved','manual'])
+
+        if slug != 'giving-day':
+            donors = donors.filter(order__promotion__slug=slug)
+
+    return render(
+        request, 'giving/manager/home.html', {
+            'objects':donors, 'count':donors.count(), 'campaign':promo
+        }
+    )

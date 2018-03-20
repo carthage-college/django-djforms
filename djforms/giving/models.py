@@ -38,6 +38,69 @@ class DonationContact(Contact):
         '''
     )
 
+    def order_cc_name(self):
+        try:
+            name = self.order.all()[0].cc_name
+        except:
+            name = None
+        return name
+
+    def order_promo(self):
+        try:
+            promo = self.order.all()[0].promotion
+        except:
+            promo = None
+        return promo
+
+    def order_status(self):
+        try:
+            stat = self.order.all()[0].status
+        except:
+            stat = None
+        return stat
+
+    def order_transid(self):
+        try:
+            tid = self.order.all()[0].transid
+        except:
+            tid = None
+        return tid
+
+    def order_total(self):
+        try:
+            tid = self.order.all()[0].total
+        except:
+            tid = None
+        return tid
+
+    def order_cycle(self):
+        try:
+            cycle = self.order.all()[0].cycle
+        except:
+            cycle = None
+        return cycle
+
+    def order_payments(self):
+        try:
+            payments = self.order.all()[0].payments
+        except:
+            payments = None
+        return payments
+
+    def order_start_date(self):
+        try:
+            sdate = self.order.all()[0].start_date
+        except:
+            sdate = None
+        return sdate
+
+    def order_comments(self):
+        try:
+            com = self.order.all()[0].comments
+        except:
+            com = None
+        return com
+
 
 class BrickContact(Contact):
     '''
@@ -68,3 +131,66 @@ class BrickContact(Contact):
     inscription_7 = models.CharField(
         max_length=24, null=True, blank=True
     )
+
+    def order_cc_name(self):
+        try:
+            name = self.order.all()[0].cc_name
+        except:
+            name = None
+        return name
+
+    def order_promo(self):
+        try:
+            promo = self.order.all()[0].promotion
+        except:
+            promo = None
+        return promo
+
+    def order_status(self):
+        try:
+            stat = self.order.all()[0].status
+        except:
+            stat = None
+        return stat
+
+    def order_transid(self):
+        try:
+            tid = self.order.all()[0].transid
+        except:
+            tid = None
+        return tid
+
+    def order_total(self):
+        try:
+            tid = self.order.all()[0].total
+        except:
+            tid = None
+        return tid
+
+    def order_cycle(self):
+        try:
+            cycle = self.order.all()[0].cycle
+        except:
+            cycle = None
+        return cycle
+
+    def order_payments(self):
+        try:
+            payments = self.order.all()[0].payments
+        except:
+            payments = None
+        return payments
+
+    def order_start_date(self):
+        try:
+            sdate = self.order.all()[0].start_date
+        except:
+            sdate = None
+        return sdate
+
+    def order_comments(self):
+        try:
+            com = self.order.all()[0].comments
+        except:
+            com = None
+        return com

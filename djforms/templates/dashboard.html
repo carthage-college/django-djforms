@@ -1,190 +1,63 @@
-{% extends "djdash/base.html" %}
-{% load ifusergroup %}
-{% block title %}
-    Forms &mdash;
-    Carthage College
-{% endblock %}
+{% extends "djbootmin/base.html" %}
 {% block extra_style %}
-<link href="//www.carthage.edu/themes/shared/css/forms.css"
-    rel="stylesheet" type="text/css" />
-<style>
-.container h4 {margin-top: 20px;}
-form ol {padding-left:0;}
-li.ctrlHolder div ul li {display:inline; padding-right:3px;}
-.bg-danger {
-    padding: 15px;
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    rel="stylesheet">
+<link href="https://www.carthage.edu/themes/shared/css/tables.css"
+    rel="stylesheet" type="text/css">
+<!-- print CSS -->
+<link href="https://www.carthage.edu/themes/shared/css/print.css"
+    rel="stylesheet">
+<style type="text/css">
+.bg-boot{background-color:#563d7c;}
+#page-wrapper{margin:0;padding:0;}
+.panel-primary > .panel-heading { color: inherit; }
+.btn {padding: .1rem .2rem;font-size:inherit;}
+.card-body { padding: .5rem; }
+.card-body select { width: 100%; }
+.card-header { font-size:1.2em; padding: .25rem .5rem;}
+.card-footer { padding: .25rem .5rem;}
+.card {min-height: 160px;}
+.content-wrapper { margin-top:60px; }
+nav a {color: #cbbde2;}
+nav a:hover {color:#fff;}
+nav .input-group-btn {font-size:1.3em;}
+.navbar-toggler-icon {color:yellow;}
+.dropdown-menu {padding: 5px; background-color:#563d7c;}
+.dropdown, .dropup { padding: 3px; }
+.success a { color: #007bff; }
+.panel-primary > .panel-heading {color: inherit;}
+.btn {padding: .1rem .2rem;font-size:inherit;}
+dt, dd {line-height:.85em;}
+dt {overflow: hidden; white-space: nowrap;}
+dd {overflow: hidden;white-space: nowrap;}
+dt:after {
+  content: " ..................................................................................";
+  color: #cacaca;
 }
-.form ol li, .form ul li {
-    list-style-type: none;
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
-.form ol li, .form ul li {
-    list-style-type: none;
+/* Overrides for BS form classes */
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
 }
-dl dt {
-    background-color: #ddf3f3;
-    color: #003c4b;
-}
-.dl-horizontal dt {
-    width: 200px;
-}
-dl dd {
-    margin: 2px 0 2px 5px;
-}
-.dashintro {padding-top:20px;}
-.green { font-weight:bold; color:green; }
-.table-hover > tbody > tr:hover > td.minor { background-color: #ccf; }
-.table-striped > tbody > tr:nth-child(2n+1) > td.minor {
-    background-color: #ccf;
-}
-.red {color:#800;}
-.green {color:#080;}
-div.DTTT {
-float: right;
-margin-bottom: 1em;
-position: relative;
-}
-.input-group .form-control {
-    width: 80%;
-}
-
-.blockOverlay{z-index:10000 !important;}
-.ui-widget-overlay{opacity:.5;}
-.ui-dialog{z-index:10010 !important;}
-.ui-dialog-content {padding:7px;}
-.ui-dialog-titlebar{padding:3px;}
-table.dataTable > tbody > tr:hover > td.minor { background-color: #ccf; }
-table.dataTable > tbody > tr:nth-child(2n+1) > td.minor { background-color: #ccf; }
-table.dataTable > tbody tr.selected { background-color: #b0bed9 !important; }
-table.dataTable > tbody tr:nth-child(even):hover td{ background-color: #fae7b5 !important; }
-table.dataTable > tbody tr:nth-child(odd):hover td { background-color: #fae7b5 !important; }
-
-table.dataTable tbody th, table.dataTable tbody td { padding: 8px 4px 4px 6px; }
-table.dataTable thead th, table.dataTable thead td { border-bottom: 1px solid #111; padding: 6px 4px 2px 4px; }
-table.dataTable tfoot th, table.dataTable tfoot td { padding: 6px; }
-
-.dataTables_wrapper .dataTables_paginate {
-    padding-top: 0;
-}
-.dataTables_wrapper .pagination {
-    margin: 0;
-}
-.dataTables_wrapper .dataTables_length {
-    padding-left: 0.755em;
-    padding-top: 0.755em;
-}
-.dataTables_wrapper .dataTables_info {
-    padding-top: 1.11em;
-}
-.btn-block {
-    width: 20%;
-}
-.navbar-static-side { width: 170px; }
-@media (min-width: 768px) {
-    #page-wrapper { margin: 0 0 0 170px; }
-}
+.form-group .control-label { font-weight:700; }
 </style>
 {% endblock %}
-{% block jquery %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"
-    type="text/javascript"></script>
-{% endblock %}
-{% block navbar-header %}
-    <div class="navbar-header">
-        <a href="/" style="float:left;">
-            <img src="https://www.carthage.edu/themes/korra/assets/images/carthage-logo-main.png" height="50">
-        </a>
-        <a class="navbar-brand"
-            href="https://www.carthage.edu/registrar/">
-            Pre-Health
-        </a>
-    </div>
-{% endblock %}
-{% block navbar-top-links %}
-    <ul class="nav navbar-top-links navbar-right">
-        {% block manager %}{% endblock %}
-        <li class="dropdown user-dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-user"></i> {{user.first_name}}
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li class="divider"></li>
-                <li>
-                    {% if user.is_anonymous %}
-                    <a href="{% url 'auth_login' %}">
-                        <i class="fa fa-sign-in"></i> Sign In
-                    </a>
-                    {% else %}
-                    <a href="{% url 'auth_logout' %}">
-                        <i class="fa fa-sign-out"></i> Sign Out
-                    </a>
-                    {% endif %}
-                </li>
-            </ul>
-        </li>
-        <!-- /.dropdown-user -->
-    </ul>
-{% endblock %}
-{% block navbar-static-side %}
-<div class="navbar-default navbar-static-side" role="navigation">
-    <div class="sidebar-collapse">
-        <ul class="nav" id="side-menu">
-            {% if not user.is_anonymous %}
-            <li>
-                <a href="{% url 'home' %}">
-                    <i class="fa fa-home fa-fw"></i>
-                    Home
-                </a>
-            </li>
-            {% endif %}
-            <li>
-                <a href="https://my.carthage.edu/">
-                    <i class="fa fa-university fa-fw"></i>
-                    My.Carthage
-                </a>
-            </li>
-            {% if user.is_superuser %}
-            <li>
-                <a href="{% url 'admin:index' %}">
-                    <i class="fa fa-tachometer fa-fw"></i>
-                    Administration
-                </a>
-            </li>
-            {% endif %}
-        </ul>
-        <!-- /#side-menu -->
-    </div>
-    <!-- /.sidebar-collapse -->
-</div>
-{% endblock %}
-{% block content %}
-{% endblock content %}
 {% block extra_javascript %}
-<script src="//www.carthage.edu/static/vendor/dashboard/js/plugins/dataTables/jquery.dataTables.js"></script>
-<script src="//www.carthage.edu/static/vendor/dashboard/js/plugins/dataTables/dataTables.bootstrap.js"></script>
 <script>
 $(function() {
-  var table = $('.proposals-data').dataTable({
-    "lengthMenu": [
-      [30, 60, 90, 200, 500, -1],
-      [30, 60, 90, 200, 500]
-    ]
-  });
-  $(".required > input").addClass("required");
-  $(".required > select").addClass("required");
-  $(".required > textarea").addClass("required");
-  $(".warning > input").addClass("error");
-  $(".warning > select").addClass("error");
-  $(".warning > textarea").addClass("error");
-  $(".required > ul").parent().parent().find('h3').addClass("required");
-  $('#olvidado').click(function(e) {
-    e.preventDefault();
-    $('div#form-olvidado').toggle('500');
-  });
-  $('#acceso').click(function(e) {
-    e.preventDefault();
-    $('div#form-olvidado').toggle('500');
-  });
+  $("body").toggleClass("sidenav-toggled");
 });
 </script>
 {% endblock %}
+{% block body_tag %}{% endblock %}
+{% block content %}{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block logout %}{% endblock %}

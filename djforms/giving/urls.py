@@ -21,6 +21,16 @@ urlpatterns = [
         TemplateView.as_view(template_name='giving/manager/success.html'),
         name='giving_manager_success'
     ),
+    # dashboard home
+    url(
+        r'^manager/$',
+        views.manager, name='giving_manager_home'
+    ),
+    url(
+        r'^manager/(?P<slug>[a-zA-Z0-9_-]+)/$',
+        views.manager, name='giving_manager_home_campaign'
+    ),
+    # campaign, mini-goal, crowd fund challenge, etc.
     url(
         r'^campaign/(?P<slug>[a-zA-Z0-9_-]+)/$',
         views.promotion_ajax, name='promotion_ajax'

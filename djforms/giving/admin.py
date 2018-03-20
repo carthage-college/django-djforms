@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from djforms.giving.models import DonationContact
+from djforms.giving.models import BrickContact, DonationContact
 from djforms.processors.models import Order
 
 class OrderInline(admin.TabularInline):
@@ -109,4 +109,18 @@ class DonationContactAdmin(admin.ModelAdmin):
             obj.updated_by = request.user
         obj.save()
 
+class BrickContactAdmin(DonationContactAdmin):
+    exclude = ('country','second_name',)
+    ordering = (
+        '-created_at','last_name','city','state','postal_code',
+    )
+    list_display  = (
+        'last_name','first_name','order_cc_name','created_at','email','phone',
+        'address1','address2','city','state','postal_code',
+        'order_promo', 'order_cycle','order_payments','order_start_date',
+        'order_transid','order_status','order_total','order_comments'
+    )
+    pass
+
+admin.site.register(BrickContact, BrickContactAdmin)
 admin.site.register(DonationContact, DonationContactAdmin)

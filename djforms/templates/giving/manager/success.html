@@ -1,6 +1,12 @@
-{% extends "giving/donation_form.html" %}
-{% load livewhale_api %}
+{% extends "giving/manager/home.html" %}
+{% block breadcrumb %}
+<div class="row">
+  <div class="col-lg-12">
+    <h1>Success</h1>
+  </div>
+</div>
+{% endblock %}
 {% block content %}
-    {% get_lw_content as thank_you blurbs 2087 %}
-    {{thank_you.body}}
+<p>Your cash donation has been saved.</p>
+<p><a href="{% url 'giving_manager_cash' %}">Submit another</a>?</p>
 {% endblock %}
