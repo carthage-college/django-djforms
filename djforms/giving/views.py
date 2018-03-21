@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.utils.safestring import mark_safe
-from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 
 from djforms.giving.forms import *
 from djforms.core.models import Promotion
@@ -20,12 +20,14 @@ BRICK_PRICES = ['250','500',YEAR-2000+200,YEAR-2000+300]
 from datetime import timedelta
 
 import os
+import json
 
 
 def giving_form(request, transaction, campaign=None):
     """
     multipurpose function to handle various types of donations
     """
+
     # recipients
     if settings.DEBUG or not settings.TC_LIVE:
         BCC = settings.MANAGERS
@@ -285,18 +287,28 @@ def donors(request, slug=None):
     }
 
     if request.GET.get('ajax'):
-        template = 'giving/donors.json'
         response = render(
-            request, template, ctext,
+            request, 'giving/donors.json', ctext,
             content_type='text/plain; charset=utf-8'
         )
     elif request.GET.get('latest'):
-        latest = request.GET.get('latest')
-        template = 'giving/donors_latest.html'
-        objects = donors.order_by('-order__time_stamp')[:latest]
-        response = render(
-            request, template, {'donors':objects},
-            content_type='text/plain; charset=utf-8'
+        try:
+            latest = int(request.GET.get('latest'))
+            latest = request.GET.get('latest')
+            objects = donors.order_by('-order__time_stamp')[:latest]
+            response = render(
+                request, 'giving/donors_latest.html', {'donors':objects},
+                content_type='text/plain; charset=utf-8'
+            )
+        except:
+            raise Http404
+
+    elif request.GET.get('relation'):
+        donors = donors.filter(relation=request.GET.get('relation'))
+        results = [{"count": "{}".format(donors.count()),}]
+        response = HttpResponse(
+            json.dumps(results),
+            content_type='application/json; charset=utf-8'
         )
     else:
         response = render(
@@ -307,10 +319,11 @@ def donors(request, slug=None):
 
 
 def promotion_ajax(request, slug):
-    '''
+    """
     ajax request, returns HTML for dynamic display.
     accepts a campaign slug for identifying the Promotion() class object.
-    '''
+    """
+
     promo = get_object_or_404(Promotion, slug=slug)
     url = reverse('giving_form_campaign', args=['donation', slug])
 
@@ -322,9 +335,9 @@ def promotion_ajax(request, slug):
 
 @staff_member_required
 def manager_cash(request):
-    '''
+    """
     cash donation form
-    '''
+    """
 
     if request.POST:
         ct_form = ManagerContactForm(request.POST, prefix='ct')
@@ -358,9 +371,9 @@ def manager_cash(request):
 
 @staff_member_required
 def manager(request, slug=None):
-    '''
+    """
     home view that displays all donors
-    '''
+    """
 
     promo = None
     start_date = TODAY - timedelta(days=365)
