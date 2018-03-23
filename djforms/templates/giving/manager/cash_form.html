@@ -82,12 +82,12 @@ $(document).ready(function() {
         {% csrf_token %}
         <fieldset>
         {% for field in or_form.visible_fields %}
-          {% include "form_field.inc.html" %}
+          {% include "djbootmin/form_field.inc.html" %}
         {% endfor %}
         </fieldset>
         <fieldset>
         {% for field in ct_form.visible_fields %}
-          {% include "form_field.inc.html" %}
+          {% include "djbootmin/form_field.inc.html" %}
         {% endfor %}
         </fieldset>
         <fieldset class="mb-5">
