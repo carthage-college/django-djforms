@@ -95,7 +95,7 @@ def form(request, pid=None):
 
     if presentation:
         # create list for GET requests to populate presenters fields
-        for copies, p in enumerate(presentation.presenters.all()):
+        for copies, p in enumerate(presentation.presenters.all(), start=1):
             presenters.append(p)
         # add 1 since lists are zero based
         copies += 1
