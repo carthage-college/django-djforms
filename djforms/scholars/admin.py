@@ -83,7 +83,7 @@ export_scholars.short_description = """
 class PresentationAdmin(admin.ModelAdmin):
     model = Presentation
     actions = [export_scholars]
-    raw_id_fields = ("user","updated_by",)
+    raw_id_fields = ('user','updated_by','leader')
     list_max_show_all = 500
     list_per_page = 500
     list_display = (
@@ -119,5 +119,26 @@ class PresentationAdmin(admin.ModelAdmin):
             obj.updated_by = request.user
         obj.save()
 
-admin.site.register(Presenter)
+
+class PresenterAdmin(admin.ModelAdmin):
+    model = Presenter
+    list_max_show_all = 500
+    list_per_page = 500
+    list_display = (
+        'date_created','last_name','first_name','email','leader','prez_type',
+        'college_year','major','hometown','sponsor','sponsor_name',
+        'sponsor_email','sponsor_other','department'
+    )
+    ordering = [
+        'date_created','last_name','first_name','email','leader','prez_type',
+        'college_year','major','hometown','sponsor','sponsor_name',
+        'sponsor_email','sponsor_other','department'
+    ]
+    search_fields = (
+        'last_name','first_name','email'
+    )
+
+
+
+admin.site.register(Presenter, PresenterAdmin)
 admin.site.register(Presentation, PresentationAdmin)
