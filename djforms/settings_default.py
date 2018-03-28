@@ -79,7 +79,6 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(os.path.dirname(__file__), 'templates'),
             '/data2/django_templates/djkorra/',
-            '/data2/django_templates/djbootmin/',
             '/data2/django_templates/djcher/',
             '/data2/django_templates/',
         ],
