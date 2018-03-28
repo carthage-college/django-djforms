@@ -198,7 +198,7 @@ class GivingDayDonationContactForm(DonationContactForm):
         super(GivingDayDonationContactForm, self).__init__(*args, **kwargs)
         self.fields.pop('phone')
         self.fields.pop('spouse')
-        self.fields.pop('matching_company')
+        self.fields.pop('opt_in')
 
     class Meta:
         model = DonationContact
