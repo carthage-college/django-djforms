@@ -28,9 +28,9 @@
         $("#id_or-total").on("change", function() {
             var $total = $(this).val();
             if ($total < 5) {
-                $message = "Please consider making a gift of $5 to offset processing costs.";
+                $message = "Please consider making a gift of at least $5 to offset processing fees.";
             } else if ($total < 66) {
-                $message = "Last year, the average gift of Giving Day was around $66.";
+                $message = "Last year, the average gift on Giving Day was $66.";
             } else {
                 $message = "";
             }
