@@ -24,7 +24,7 @@
         {% ifchanged obj.last_name|lower|slice:":1" %}
             </ul>
             <h3 style="margin-bottom: 2px;">
-                {{obj.last_name|slice:":1" }}
+                {{obj.last_name|title|slice:":1"}}
             </h3>
             <hr>
             <ul>
