@@ -24,7 +24,6 @@
           $('form#profile input[type=submit]').prop('disabled', true);
           return true;
         });
-        /*
         $("#id_or-total").on("change", function() {
             var $total = $(this).val();
             if ($total < 5) {
@@ -45,6 +44,5 @@
                 });
             }
         });
-        */
     });
 </script>
