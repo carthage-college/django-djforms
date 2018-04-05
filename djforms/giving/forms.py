@@ -332,7 +332,7 @@ class ManagerOrderForm(forms.ModelForm):
     promotion = forms.ModelChoiceField(
         label = "Promotion",
         queryset = Promotion.objects.all().order_by('-date_created'),
-        required = True
+        required = False
     )
     '''
     opt_in = forms.CharField(widget=forms.HiddenInput())
