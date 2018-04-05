@@ -156,6 +156,7 @@ $(document).ready(function() {
       <th>Transaction status</th>
       <th>Donation</th>
       <th>Designation</th>
+      <th>Anonymous</th>
     </tr>
     </thead>
     <tbody>
@@ -176,8 +177,8 @@ $(document).ready(function() {
         <td>{{o.address1|default:"&nbsp;"}}</td>
         <td>{{o.address2|default:"&nbsp;"}}</td>
         <td>{{o.city|default:"&nbsp;"}}</td>
-        <td>{{o.state}}</td>
-        <td>{{o.postal_code}}</td>
+        <td>{{o.state|default:"&nbsp;"}}</td>
+        <td>{{o.postal_code|default:"&nbsp;"}}</td>
         <td>{{o.spouse|default:"&nbsp;"}}</td>
         <td>{{o.relation}}</td>
         <td>{{o.class_of}}</td>
@@ -188,10 +189,11 @@ $(document).ready(function() {
           {% else %}&nbsp;{% endif %}
         </td>
 
-        <td>{{o.order_transid}}</td>
+        <td>{{o.order_transid|default:"&nbsp;"}}</td>
         <td>{{o.order_status}}</td>
         <td>{{o.order_total}}</td>
         <td>{{o.order_comments|default:"&nbsp;"}}</td>
+        <td>{{o.anonymous|default:"&nbsp;"}}</td>
       </tr>
     {% endfor %}
     </tbody>
@@ -215,6 +217,7 @@ $(document).ready(function() {
       <th>Transaction status</th>
       <th>Donation</th>
       <th>Designation</th>
+      <th>Anonymous</th>
     </tfoot>
     </table>
     </div>
