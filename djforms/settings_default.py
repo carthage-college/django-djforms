@@ -111,7 +111,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     # third party projects
     #'authority',
-    'bootstrapform',
     'django_countries',
     'honeypot',
     'imagekit',

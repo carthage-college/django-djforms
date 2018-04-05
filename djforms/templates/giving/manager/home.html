@@ -181,7 +181,13 @@ $(document).ready(function() {
         <td>{{o.spouse|default:"&nbsp;"}}</td>
         <td>{{o.relation}}</td>
         <td>{{o.class_of}}</td>
-        <td>{{o.order_promo|default:"&nbsp;"}}</td>
+        <td>
+          {% if o.order_promo %}
+          <a href="{% url 'giving_donors_campaign' o.order_promo.slug %}">
+            {{o.order_promo|default:"&nbsp;"}}</a>
+          {% else %}&nbsp;{% endif %}
+        </td>
+
         <td>{{o.order_transid}}</td>
         <td>{{o.order_status}}</td>
         <td>{{o.order_total}}</td>
