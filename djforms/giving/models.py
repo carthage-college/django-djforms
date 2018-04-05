@@ -59,6 +59,13 @@ class DonationContact(Contact):
             stat = None
         return stat
 
+    def order_oid(self):
+        try:
+            oid = self.order.all()[0].id
+        except:
+            oid = None
+        return oid
+
     def order_transid(self):
         try:
             tid = self.order.all()[0].transid

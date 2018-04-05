@@ -163,14 +163,18 @@ $(document).ready(function() {
     {% for o in objects %}
       <tr>
         <td>
-            <a href="{# url 'donation_detail' o.id #}">
-              {{o.last_name}}
-            </a>
+          <a href="{% url 'admin:giving_donationcontact_change' o.id %}">
+            {{o.last_name}}
+          </a>
         </td>
         <td>{{o.first_name}}</td>
-        <td>{{o.order_cc_name}}</td>
         <td>
-          {{o.created_at|date:'Y-m-d H:i:s'}}
+          {{o.order_cc_name}}
+        </td>
+        <td>
+          <a href="{% url 'admin:processors_order_change' o.order_oid %}">
+            {{o.created_at|date:'Y-m-d H:i:s'}}
+          </a>
         </td>
         <td>{{o.email}}</td>
         <td>{{o.phone|default:"&nbsp;"}}</td>
@@ -188,7 +192,6 @@ $(document).ready(function() {
             {{o.order_promo|default:"&nbsp;"}}</a>
           {% else %}&nbsp;{% endif %}
         </td>
-
         <td>{{o.order_transid|default:"&nbsp;"}}</td>
         <td>{{o.order_status}}</td>
         <td>{{o.order_total}}</td>
