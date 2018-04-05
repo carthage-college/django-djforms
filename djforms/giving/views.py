@@ -93,7 +93,7 @@ def giving_form(request, transaction, campaign=None):
             # deal with commemorative brick options
             class_of = contact.class_of
             if transaction=='brick':
-                comments = '{}\n{}\n{}\n{}\n{}\n'.format(
+                comments = u'{}\n{}\n{}\n{}\n{}\n'.format(
                     ct_form['inscription_1'].value(),
                     ct_form['inscription_2'].value(),
                     ct_form['inscription_3'].value(),
@@ -101,7 +101,7 @@ def giving_form(request, transaction, campaign=None):
                     ct_form['inscription_5'].value(),
                 )
                 if campaign:
-                    comments += '{}\n{}\n'.format(
+                    comments += u'{}\n{}\n'.format(
                         ct_form['inscription_6'].value(),
                         ct_form['inscription_7'].value(),
                     )
