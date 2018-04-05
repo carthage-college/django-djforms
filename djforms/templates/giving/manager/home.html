@@ -71,13 +71,13 @@ $(document).ready(function() {
   </ul>
 {% endblock navbar-top-links %}
 {% block navbar-header %}
-  <a href="{% url 'giving_manager_home' %}" class="mr-sm-3 mr-lg-3"><i class="fa fa-home fa-2x green"></i></a>
-  <a class="navbar-brand" href="{% url 'giving_manager_home' %}">Donations Manager</a>
+  <a href="{% url 'giving_manager_home_campaign' 'giving-day' %}" class="mr-sm-3 mr-lg-3"><i class="fa fa-home fa-2x green"></i></a>
+  <a class="navbar-brand" href="{% url 'giving_manager_home_campaign' 'giving-day' %}">Donations Manager</a>
 {% endblock %}
 {% block navbar-sidenav %}
 <ul class="navbar-nav navbar-sidenav">
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Donors List">
-    <a class="nav-link" href="{% url 'giving_manager_home' %}">
+    <a class="nav-link" href="{% url 'giving_manager_home_campaign' 'giving-day' %}">
         <i class="fa fa-th-list" aria-hidden="true"></i>
       <span class="nav-link-text">Cash Donation</span>
     </a>
