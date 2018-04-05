@@ -322,7 +322,8 @@ class Promotion(models.Model):
 
     def percent(self):
         if self.donors:
-            p = (self.count() / self.donors) * 100
+            p = float(self.count())/float(self.donors) * 100
+
         else:
             p = int((self.amount_total() / self.amount) * 100)
         return p
