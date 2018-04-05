@@ -1,5 +1,6 @@
 from django import forms
 
+from djforms.core.models import Promotion
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
 from djforms.giving.models import BrickContact, DonationContact
@@ -324,11 +325,15 @@ class ManagerContactForm(DonationContactForm):
 
 
 class ManagerOrderForm(forms.ModelForm):
-    '''
+    """
     form that allows manager to create a donation order manually for
     things like cash donations
-    '''
-
+    """
+    promotion = forms.ModelChoiceField(
+        label = "Promotion",
+        queryset = Promotion.objects.all().order_by('-date_created'),
+        required = True
+    )
     '''
     opt_in = forms.CharField(widget=forms.HiddenInput())
     anonymous = forms.CharField(widget=forms.HiddenInput())
