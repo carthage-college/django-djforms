@@ -376,8 +376,7 @@ def manager(request, slug=None):
     """
 
     promo = None
-    #start_date = TODAY - timedelta(days=365)
-    start_date = TODAY - timedelta(days=1)
+    start_date = TODAY - timedelta(days=365)
 
     if slug == 'bricks':
         donors = BrickContact.objects.filter(
