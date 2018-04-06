@@ -302,7 +302,7 @@ class ManagerContactForm(DonationContactForm):
     things like cash donations
     '''
 
-    last_name = forms.CharField(
+    first_name = forms.CharField(
         max_length=128, required=False
     )
     email = forms.EmailField(
