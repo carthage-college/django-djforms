@@ -1,16 +1,29 @@
 # Various things to do after submissions have ended
 
+0. Set up your shell environment properly in .bash_aliases
+so that the DJ Forms settings file is use.
+
 1. Print:
 
 https://www.carthage.edu/forms/scholars/presentation/print/
 
 2. Mugshots:
 
+chown -R username:staff assets/files/scholars/mugshots/
+cd scholars
+
+rename files to include user's lastname, firstname:
+
 python munge_mugshot.py
 
-will give you a list of files, which you can then use to tar:
+print out a list of files for tar command:
 
-python tar_mugshots.py
+python tar_mugshots.py > mugshots.txt
+
+cd ../assets/
+tar czvf mugshots.tar.gz -T ../scholars/mugshots.txt
+
+chown -R www-data:www-data assets/files/scholars/mugshots/
 
 3. Posters:
 

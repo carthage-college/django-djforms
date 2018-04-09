@@ -4,6 +4,9 @@
 # don't forget to chown -R the files/scholars directory
 #
 
+import django
+django.setup()
+
 from django.conf import settings
 
 from djforms.scholars.models import Presentation
