@@ -311,7 +311,8 @@ def archives(request, ptype, medium, year=None):
 
     if os.path.isfile(os.path.join(settings.ROOT_DIR, 'templates', template)):
         if ptype == 'presentation':
-            p = Presentation.objects.filter(date_updated__year=year)
+            p = Presentation.objects.filter(
+                date_updated__year=year).filter(status=True)
             p.filter(status=True).order_by('user__last_name')
         else:
             prez = Presenter.objects.filter(date_updated__year=year)
@@ -346,6 +347,8 @@ def action(request):
                 reverse('presentation_update', args=[pid])
             )
         else:
+            if not action:
+                action = 'update'
             return HttpResponseRedirect(
                 reverse('email_presenters_form', args=[pid,action])
             )
