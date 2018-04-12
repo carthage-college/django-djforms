@@ -34,6 +34,7 @@ SITE_ID = 1
 USE_I18N = True
 DEFAULT_CHARSET = 'utf-8'
 FILE_CHARSET = 'utf-8'
+FILE_UPLOAD_PERMISSIONS=0o644
 ROOT_URLCONF = 'djforms.core.urls'
 MEDIA_ROOT = '/data2/django_projects/djforms/assets/'
 MEDIA_URL = '/static/forms/assets/'
