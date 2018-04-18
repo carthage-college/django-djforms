@@ -64,7 +64,7 @@ urlpatterns = [
     # 10 Apr 2014: currently not completed but needed for 2015
     #url(
     #    r'^presenters/email/leaders/$',
-    #    'presentation.email_leaders',name="email_leaders"
+    #    presentation.email_leaders, name="email_leaders"
     #),
     # send email to a presentation's leader and sponsor
     url(
