@@ -4,6 +4,7 @@
 import os
 import sys
 import uuid
+import argparse
 
 # env
 sys.path.append('/usr/lib/python2.7/dist-packages/')
@@ -14,11 +15,13 @@ sys.path.append('/data2/django_projects/')
 sys.path.append('/data2/django_third/')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djforms.settings')
 
+# primt django
+import django
+django.setup()
+
 from django.conf import settings
 
 from djforms.scholars.models import Presentation
-
-import argparse
 
 # set up command-line options
 desc = """
@@ -40,10 +43,8 @@ parser.add_argument(
     dest='test'
 )
 
+
 def main():
-    '''
-    main function
-    '''
 
     prez = Presentation.objects.filter(date_created__year=year)
 
@@ -56,7 +57,7 @@ def main():
             orig = '{}/{}'.format(root_path, p.poster_file.name)
             # new file
             fname = p.poster_file.name.split('/')[-1]
-            new_filename = '{}/{}'.format(upload_dir, fname)
+            new_filename = '{}{}'.format(upload_dir, fname)
             new = root_path + new_filename
             # rename and save
             if not test:
