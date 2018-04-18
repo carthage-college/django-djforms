@@ -35,8 +35,6 @@ def giving_form(request, transaction, campaign=None):
         BCC = settings.GIVING_DONATIONS_BCC
 
     status = None
-    # subject of email
-    SUBJECT = u"""Thank you, {} {}, for your donation to Carthage"""
     trans_cap = transaction.capitalize()
     # check for a campaign and obtain contact form
     if campaign:
@@ -143,7 +141,15 @@ def giving_form(request, transaction, campaign=None):
                 # sendmail
                 or_data.contact = contact
                 data = {'order':or_data,'years':years}
-                subject = SUBJECT.format(contact.first_name, contact.last_name)
+                # subject of email
+                SUBJECT = u"Thank you, {}{} {}, for your donation to Carthage"
+                try:
+                    spouse = " and {}".format(contact.spouse)
+                except:
+                    spouse = ""
+                subject = SUBJECT.format(
+                    spouse, contact.first_name, contact.last_name
+                )
                 # build our email template path
                 template = 'giving/{}_email.html'.format(transaction)
                 if campaign:
