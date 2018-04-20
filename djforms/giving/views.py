@@ -145,7 +145,7 @@ def giving_form(request, transaction, campaign=None):
                 SUBJECT = u"Thank you, {}{} {}, for your donation to Carthage"
                 try:
                     if contact.spouse:
-                        spouse = " and {}".format(contact.spouse)
+                        spouse = "{} and ".format(contact.spouse)
                 except:
                     spouse = ""
                 subject = SUBJECT.format(
