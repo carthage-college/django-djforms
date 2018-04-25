@@ -65,7 +65,7 @@
         Postal code
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.contact.postal_code}}
+        {{data.contact.postal_code|default:"&nbsp;"}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
         padding:5px; width:200px;">
@@ -79,7 +79,7 @@
         Do you wish to serve as...?
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.contact.serve_as}}
+        {{data.contact.serve_as|default:"&nbsp;"}}
     </dd>
     {% if data.contact.serve_as %}
     <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
