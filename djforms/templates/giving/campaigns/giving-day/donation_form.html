@@ -1,6 +1,5 @@
 {% extends "giving/donation_form.html" %}
 {% load livewhale_api %}
-{% load honeypot %}
 {% block title %}
     {{campaign.title|default:"Giving to Carthage"}}
     Form &mdash; Giving &mdash; Carthage College
@@ -107,7 +106,6 @@
     {% endif %}
     <form method="post" action="." class="form" id="profile">
         {% csrf_token %}
-        {% render_honeypot_field %}
         {% for hidden in or_form.hidden_fields %}
         {{ hidden }}
         {% endfor %}
