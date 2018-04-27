@@ -102,6 +102,7 @@ TEMPLATES = [
     },
 ]
 INSTALLED_APPS = (
+
     # django apps
     'django.contrib.admin',
     'django.contrib.admindocs',
@@ -111,13 +112,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     # third party projects
-    #'authority',
+    'bootstrapform',
     'django_countries',
+    'captcha',
     'honeypot',
     'imagekit',
     #'oembed',
-    'taggit',
     'userprofile',
+    'taggit',
+    #'taggit',
     # djforms stuff
     'djforms.admissions',
     'djforms.admissions.admitted',
@@ -132,9 +135,10 @@ INSTALLED_APPS = (
     'djforms.communications.printrequest',
     'djforms.core',
     'djforms.giving',
-    'djforms.languages',
+    'djforms.lis',
     #'djforms.lis.conferences.mathematica',
     'djforms.lis.copyprint',
+    'djforms.languages',
     'djforms.music.ensembles.choral',
     'djforms.music.theatre.summer_camp',
     'djforms.polisci.iea.proposal',
@@ -146,7 +150,8 @@ INSTALLED_APPS = (
     'djforms.security',
     'djforms.sustainability.green',
     'djforms.writingcurriculum',
-    # other inhouse django
+    # other inhouse django apps
+    #'djtinue.enrichment',
     'djtools',
 )
 # django-countries settings
@@ -321,6 +326,10 @@ TC_AVS = 'n'
 TC_AUTH_TYPE = 'sale'
 TC_CYCLE = '1m'
 TC_OPERATOR = 'DJForms'
+# recaptcha
+RECAPTCHA_PUBLIC_KEY = ''
+RECAPTCHA_PRIVATE_KEY = ''
+NOCAPTCHA = True
 # caching
 CACHES = {
     'default': {
