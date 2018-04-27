@@ -1,4 +1,5 @@
 {% extends "giving/donation_form.html" %}
+{% load honeypot %}
 {% block extra_javascript %}
     {{block.super}}
     <script type="text/javascript">
@@ -60,6 +61,7 @@
     </p>
     <form method="post" action="." class="form" id="profile">
         {% csrf_token %}
+        {% render_honeypot_field %}
         {% for hidden in or_form.hidden_fields %}
         {{ hidden }}
         {% endfor %}
