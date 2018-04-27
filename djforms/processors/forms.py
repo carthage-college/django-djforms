@@ -4,6 +4,7 @@ from djforms.core.models import STATE_CHOICES
 from models import Contact, Order
 from trust_commerce import PaymentProcessor
 
+from captcha.fields import ReCaptchaField
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 from datetime import date
@@ -90,7 +91,7 @@ class CreditCardForm(forms.Form):
         """,
         widget=forms.TextInput(attrs=REQ)
     )
-
+    captcha = ReCaptchaField()
 
 class TrustCommerceForm(CreditCardForm):
     """
