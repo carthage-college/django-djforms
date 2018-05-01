@@ -17,7 +17,7 @@ PAYMENT_CHOICES = (
 REGGIES = (
     (
         'Early Registration|275',
-        '$275 USD Early Registration (due by April 30, 2018)'
+        '$275 USD Early Registration (due by May 21, 2018)'
     ),
     ('Graduate Student|125','$125 Graduate Student'),
     (
@@ -33,12 +33,6 @@ REGGIES = (
         'Spouses/companions|75',
         mark_safe(
             '$75 Spouses/companions <strong>&dagger;</strong>'
-        )
-    ),
-    (
-        'Panel/session organizers|150',
-        mark_safe(
-            '$150 Panel/session organizers <strong>&dagger;&dagger;</strong>'
         )
     ),
     (
