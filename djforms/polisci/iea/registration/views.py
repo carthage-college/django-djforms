@@ -22,7 +22,11 @@ def form(request):
             order = form_ord.save()
             order.operator = 'DJForms: PoliSci IEA'
             if contact.payment_method == 'Credit Card':
-                form_proc = TrustCommerceForm(order, contact, request.POST)
+
+                form_proc = TrustCommerceForm(
+                    order, contact, request.POST, use_required_attribute=False
+                )
+
                 if form_proc.is_valid():
                     r = form_proc.processor_response
                     order.status = r.msg['status']
@@ -79,16 +83,21 @@ def form(request):
                 )
         else:
             if request.POST.get('payment_method') == 'Credit Card':
-                form_proc = TrustCommerceForm(None, request.POST)
+
+                form_proc = TrustCommerceForm(
+                    None, request.POST, use_required_attribute=False
+                )
+
                 form_proc.is_valid()
             else:
-                form_proc = TrustCommerceForm()
+
+                form_proc = TrustCommerceForm(use_required_attribute=False)
     else:
         form_con = RegistrationContactForm()
         form_ord = RegistrationOrderForm(
             initial={'avs':False,'auth':'sale'}
         )
-        form_proc = TrustCommerceForm()
+        form_proc = TrustCommerceForm(use_required_attribute=False)
 
     return render(
         request, 'polisci/iea/registration/form.html', {

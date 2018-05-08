@@ -13,6 +13,7 @@ EXP_MONTH = [(x, x) for x in xrange(1, 13)]
 EXP_YEAR = [(x, x) for x in xrange(date.today().year, date.today().year + 15)]
 REQ = {'class': 'required'}
 
+
 class ContactForm(forms.ModelForm):
     """
     A generic form to collect contact info
@@ -32,6 +33,7 @@ class ContactForm(forms.ModelForm):
             'country','order','second_name','previous_name',
             'salutation','longitude','latitude'
         )
+
 
 class OrderForm(forms.ModelForm):
     """
@@ -54,6 +56,7 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ('total',)
+
 
 class CreditCardForm(forms.Form):
     """
@@ -92,6 +95,7 @@ class CreditCardForm(forms.Form):
         widget=forms.TextInput(attrs=REQ)
     )
     captcha = ReCaptchaField()
+
 
 class TrustCommerceForm(CreditCardForm):
     """
