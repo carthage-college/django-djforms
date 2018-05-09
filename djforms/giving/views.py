@@ -274,8 +274,7 @@ def donors(request, slug=None):
     if slug:
         promo = get_object_or_404(Promotion, slug=slug)
         if slug == 'giving-day':
-            const = '{}_START_DATE'.format(promo.slug.replace('-','_').upper())
-            start_date = getattr(settings, const, None)
+            start_date = settings.GIVING_DAY_START_DATE
 
         percent = promo.percent()
         # template
@@ -386,6 +385,7 @@ def manager(request, slug=None):
 
     promo = None
     start_date = TODAY - timedelta(days=365)
+    end_date = TODAY
 
     if slug == 'bricks':
         donors = BrickContact.objects.filter(
@@ -396,13 +396,13 @@ def manager(request, slug=None):
             promo = get_object_or_404(Promotion, slug=slug)
 
             if slug == 'giving-day':
-                const = '{}_START_DATE'.format(
-                    promo.slug.replace('-','_').upper()
-                )
-                start_date = getattr(settings, const, None)
+                start_date = settings.GIVING_DAY_START_DATE
+                end_date = settings.GIVING_DAY_END_DATE
 
         donors = DonationContact.objects.filter(
             order__time_stamp__gte=start_date
+        ).filter(
+            order__time_stamp__lte=end_date
         ).filter(order__status__in=['approved','manual'])
 
         if slug != 'giving-day':
