@@ -1,13 +1,13 @@
 from django import forms
 
-from djtools.fields import STATE_CHOICES, YEARS1, REQ_CSS
+from djtools.fields import STATE_CHOICES, YEARS1, YEARS4, REQ_CSS
 from djforms.alumni.classnotes.models import Contact
 
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 import datetime
 
-CLASSYEARS  = list(YEARS1)
+CLASSYEARS  = list(YEARS4)
 SPOUSEYEARS = list(YEARS1)
 
 CLASSYEARS.insert(0,("","Your class"))
@@ -21,6 +21,7 @@ CATEGORIES = (
     ('Death Announcement','Death Announcement'),
     ('Other News','Other News'),
 )
+
 
 class ContactForm(forms.ModelForm):
     classyear = forms.CharField(
