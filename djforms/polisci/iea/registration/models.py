@@ -17,7 +17,7 @@ PAYMENT_CHOICES = (
 REGGIES = (
     (
         'Early Registration|275',
-        '$275 USD Early Registration (due by May 21, 2018)'
+        '$275 USD Early Registration (due by May 31, 2018)'
     ),
     ('Graduate Student|125','$125 Graduate Student'),
     (
