@@ -20,9 +20,6 @@ Conference on the Environment
             var service_charge = false;
             {% endif %}
             var $reg_fee = {{form_ord.data.total|default:0}};
-            //if (dueDate < today) {
-                //$('#id_registration_fee_0').closest('li').remove();
-            //}
             $('#id_payment_method_0').click(function() {
                 if ($reg_fee > 0 && service_charge == false) {
                   $reg_fee += ($reg_fee * .03);
@@ -53,10 +50,8 @@ Conference on the Environment
                 $reg_fee = parseInt($(this).attr('value').split('|')[1]);
                 // after deadline late fee for some folks
                 if (dueDate < today) {
-                    if ( $(this).attr('id') == 'id_registration_fee_4' || $(this).attr('id') == 'id_registration_fee_5' ) {
-                      late_fee = 75;
-                      $reg_fee += late_fee;
-                    }
+                  late_fee = 75;
+                  $reg_fee += late_fee;
                 }
                 // kao discount
                 if ( kao == true ) {
