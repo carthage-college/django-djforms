@@ -145,13 +145,13 @@ def giving_form(request, transaction, campaign=None):
                 SUBJECT = u"Thank you, {}{} {}, for your donation to Carthage"
                 try:
                     if contact.spouse:
-                        spouse = "{} and ".format(contact.spouse)
+                        spouse = " and {}".format(contact.spouse)
                     else:
                         spouse = ""
                 except:
                     spouse = ""
                 subject = SUBJECT.format(
-                    spouse, contact.first_name, contact.last_name
+                    contact.first_name, spouse, contact.last_name
                 )
                 # build our email template path
                 template = 'giving/{}_email.html'.format(transaction)
