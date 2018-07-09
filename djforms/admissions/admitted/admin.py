@@ -7,7 +7,7 @@ import csv
 
 def export_candidates(modeladmin, request, queryset):
 
-    response = HttpResponse(mimetype='text/csv')
+    response = HttpResponse("", content_type="text/csv; charset=utf-8")
     response['Content-Disposition'] = 'attachment; filename=will_i_be_admitted.csv'
     writer = csv.writer(response)
     writer.writerow(

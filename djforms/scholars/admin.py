@@ -37,7 +37,7 @@ def get_people(yuri):
 
 def export_scholars(modeladmin, request, queryset):
 
-    response = HttpResponse(mimetype='text/csv')
+    response = HttpResponse("", content_type="text/csv; charset=utf-8")
     response['Content-Disposition'] = 'attachment; filename=cos.csv'
     writer = csv.writer(response)
     writer.writerow([
