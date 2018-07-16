@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -9,6 +10,7 @@ from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
 from djforms.athletics.soccer.forms import SoccerCampInsuranceCardForm
 
 from djtools.utils.mail import send_mail
+REQUIRED_ATTRIBUTE = settings.REQUIRED_ATTRIBUTE
 
 
 def camp_registration(request):
@@ -37,7 +39,8 @@ def camp_registration(request):
                     operator='DJSoccerCamp'
                 )
                 form_proc = TrustCommerceForm(
-                    order, contact, request.POST, use_required_attribute=False
+                    order, contact, request.POST,
+                    use_required_attribute=REQUIRED_ATTRIBUTE
                 )
                 if form_proc.is_valid():
                     r = form_proc.processor_response
@@ -98,14 +101,18 @@ def camp_registration(request):
         else:
             if request.POST.get('payment_method') == 'Credit Card':
                 form_proc = TrustCommerceForm(
-                    None, request.POST, use_required_attribute=False
+                    None,request.POST,use_required_attribute=REQUIRED_ATTRIBUTE
                 )
                 form_proc.is_valid()
             else:
-                form_proc = TrustCommerceForm(use_required_attribute=False)
+                form_proc = TrustCommerceForm(
+                    use_required_attribute=REQUIRED_ATTRIBUTE
+                )
     else:
         form_reg = SoccerCampRegistrationForm()
-        form_proc = TrustCommerceForm(use_required_attribute=False)
+        form_proc = TrustCommerceForm(
+            use_required_attribute=REQUIRED_ATTRIBUTE
+        )
 
     return render(
         request, 'athletics/soccer/camp_registration.html',

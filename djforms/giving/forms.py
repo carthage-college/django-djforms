@@ -1,6 +1,6 @@
 from django import forms
 
-from djforms.core.models import Promotion
+from djforms.core.models import Promotion, STATE_CHOICES
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
 from djforms.giving.models import BrickContact, DonationContact
@@ -145,6 +145,21 @@ class DonationContactForm(ContactForm):
     Donation Contact form, extends base ContactForm in processors app
     """
 
+    address1 = forms.CharField(
+        required=True, label = "Address", max_length=255
+    )
+    city = forms.CharField(
+        required=True, max_length=120
+    )
+    city = forms.CharField(
+        required=True, max_length=120
+    )
+    state = forms.ChoiceField(
+        required=True, choices=STATE_CHOICES
+    )
+    postal_code = forms.CharField(
+        required=True, max_length=12
+    )
     class_of = forms.ChoiceField(
         required=False, label='Class of', choices=CLASS
     )

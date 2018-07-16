@@ -211,13 +211,13 @@ def giving_form(request, transaction, campaign=None):
                 pass
         or_form = str_to_class(
             'djforms.giving.forms', or_form_name
-        )(prefix='or', initial=init)
+        )(prefix='or', initial=init, use_required_attribute=False)
         # contact form
         ct_form = str_to_class(
             'djforms.giving.forms', ct_form_name
-        )(prefix='ct')
+        )(prefix='ct', use_required_attribute=False)
         # credit card
-        cc_form = CreditCardForm()
+        cc_form = CreditCardForm(use_required_attribute=False)
 
     # build our template path
     template = 'giving/{}_form.html'.format(transaction)

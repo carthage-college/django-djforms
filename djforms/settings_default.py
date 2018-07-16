@@ -7,6 +7,7 @@ from djzbar.settings import INFORMIX_EARL as INFORMIX_EARL
 
 DEBUG = False
 INFORMIX_DEBUG = ''
+REQUIRED_ATTRIBUTE = False
 
 ADMINS = (
     ('', ''),
