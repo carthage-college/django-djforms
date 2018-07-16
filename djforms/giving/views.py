@@ -14,13 +14,14 @@ from djtools.fields import TODAY
 from djtools.utils.mail import send_mail
 from djtools.utils.convert import str_to_class
 
-YEAR = TODAY.year
-BRICK_PRICES = ['250','500',YEAR-2000+200,YEAR-2000+300]
-
 from datetime import timedelta
 
 import os
 import json
+
+YEAR = TODAY.year
+BRICK_PRICES = ['250','500',YEAR-2000+200,YEAR-2000+300]
+REQUIRED_ATTRIBUTE = settings.REQUIRED_ATTRIBUTE
 
 
 def giving_form(request, transaction, campaign=None):
@@ -74,12 +75,13 @@ def giving_form(request, transaction, campaign=None):
     if request.POST:
         ct_form = str_to_class(
             'djforms.giving.forms', ct_form_name
-        )(request.POST, prefix='ct')
+        )(request.POST, prefix='ct', use_required_attribute=REQUIRED_ATTRIBUTE)
         or_form = str_to_class(
             'djforms.giving.forms', or_form_name
-        )(request.POST, prefix='or')
+        )(request.POST, prefix='or', use_required_attribute=REQUIRED_ATTRIBUTE)
         cc_form = CreditCardForm(
-            or_form, ct_form, request.POST
+            or_form, ct_form, request.POST,
+            use_required_attribute=REQUIRED_ATTRIBUTE
         )
         if ct_form.is_valid() and or_form.is_valid():
             contact = ct_form.save()
@@ -195,9 +197,7 @@ def giving_form(request, transaction, campaign=None):
                     or_data.cc_4_digits = cc_form.card[-4:]
                 status = or_data.status
                 or_data.save()
-        #else:
-        #    cc_form = CreditCardForm(None, request.POST)
-        #    cc_form.is_valid()
+
     else:
         # order form
         init = {}
@@ -211,13 +211,14 @@ def giving_form(request, transaction, campaign=None):
                 pass
         or_form = str_to_class(
             'djforms.giving.forms', or_form_name
-        )(prefix='or', initial=init, use_required_attribute=False)
+        )(prefix='or', initial=init, use_required_attribute=REQUIRED_ATTRIBUTE)
+
         # contact form
         ct_form = str_to_class(
             'djforms.giving.forms', ct_form_name
-        )(prefix='ct', use_required_attribute=False)
+        )(prefix='ct', use_required_attribute=REQUIRED_ATTRIBUTE)
         # credit card
-        cc_form = CreditCardForm(use_required_attribute=False)
+        cc_form = CreditCardForm(use_required_attribute=REQUIRED_ATTRIBUTE)
 
     # build our template path
     template = 'giving/{}_form.html'.format(transaction)
