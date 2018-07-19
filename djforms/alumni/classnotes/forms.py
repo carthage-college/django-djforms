@@ -1,9 +1,7 @@
 from django import forms
 
-from djtools.fields import STATE_CHOICES, YEARS1, YEARS4, REQ_CSS
+from djtools.fields import YEARS1, YEARS4, REQ_CSS
 from djforms.alumni.classnotes.models import Contact
-
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
 
 import datetime
 
