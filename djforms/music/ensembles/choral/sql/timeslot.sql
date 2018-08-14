@@ -98,7 +98,7 @@ VALUES
 ('Tuesday, September 4: 5:30pm'),
 ('Tuesday, September 4: 5:40pm'),
 ('Tuesday, September 4: 5:50pm'),
-('Tuesday, September 4: 6:00pm');
+('Tuesday, September 4: 6:00pm'),
 ('Tuesday, September 4: 6:10pm'),
 ('Tuesday, September 4: 6:20pm'),
 ('Tuesday, September 4: 6:30pm'),
