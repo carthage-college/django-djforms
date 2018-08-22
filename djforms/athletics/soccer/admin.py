@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse
 
@@ -5,6 +6,7 @@ from djforms.athletics.soccer.models import SoccerCampAttender
 
 import datetime
 import csv
+
 
 def export_attenders(modeladmin, request, queryset):
     """
@@ -57,6 +59,7 @@ def export_attenders(modeladmin, request, queryset):
 
 export_attenders.short_description = "Export Soccer Camp Attenders"
 
+
 class SoccerCampAttenderAdmin(admin.ModelAdmin):
     model = SoccerCampAttender
     exclude       = ('country','second_name','previous_name','salutation')
@@ -106,9 +109,9 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         MES = int(TODAY.month)
         #DAY = int(TODAY.day)
         qs = super(SoccerCampAttenderAdmin, self).get_queryset(request)
-        if MES <= 8:
+        if MES < settings.SOCCER_CAMP_MONTH:
             YEAR = YEAR - 1
-        start_date = datetime.date(YEAR, 8, 1)
+        start_date = datetime.date(YEAR, 8, settings.SOCCER_CAMP_DAY)
         return qs.filter(created_at__gte=start_date)
 
     def order_status(self, obj):
@@ -141,4 +144,3 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         obj.save()
 
 admin.site.register(SoccerCampAttender, SoccerCampAttenderAdmin)
-

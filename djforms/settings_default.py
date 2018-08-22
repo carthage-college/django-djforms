@@ -332,6 +332,9 @@ TC_OPERATOR = 'DJForms'
 RECAPTCHA_PUBLIC_KEY = ''
 RECAPTCHA_PRIVATE_KEY = ''
 NOCAPTCHA = True
+# Soccer camp
+SOCCER_CAMP_MONTH=8
+SOCCER_CAMP_DAY=1
 # caching
 CACHES = {
     'default': {
