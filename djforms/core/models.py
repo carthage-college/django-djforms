@@ -248,7 +248,7 @@ class Promotion(models.Model):
     user = models.ForeignKey(
         User, verbose_name="Created by",
         related_name="matching_campaign_user",
-        null=True, blank=True
+        editable=False, null=True, blank=True
     )
     date_created = models.DateTimeField(
         "Date Created", auto_now_add=True
@@ -266,8 +266,7 @@ class Promotion(models.Model):
         "About",
         help_text = """
             This information will appear in the sidebar next to the form.
-        """,
-        null=True, blank=True
+        """, editable=False, null=True, blank=True
     )
     thank_you = models.TextField(
         "Thank you",
@@ -293,7 +292,7 @@ class Promotion(models.Model):
         null=True, blank=True
     )
     institutional = models.BooleanField(
-        default=False,
+        default=False, editable=False
     )
     '''
     ratio = models.CharField(
