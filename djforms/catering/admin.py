@@ -8,7 +8,9 @@ class EventAdmin(admin.ModelAdmin):
         'event_name','created_on',
         'first_name','last_name','email','department'
     )
-    search_fields = ('last_name', 'email','event_name')
-    raw_id_fields = ("user",)
+    search_fields = (
+        'user__last_name','user__first_name','user__email','event_name'
+    )
+    raw_id_fields = ('user',)
 
 admin.site.register(Event, EventAdmin)
