@@ -25,7 +25,7 @@ def index(request):
             else:
                 TO_LIST = [settings.LIS_PRINT_REQUEST_EMAIL, data['email']]
 
-            subject = "[LIS Print Request]: {} from the {} Department".format(
+            subject = "[Print Request]: {} from the {} Department".format(
                 data['name'],data['department']
             )
 

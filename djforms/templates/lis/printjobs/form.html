@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}LIS Print Job Request{% endblock %}
+{% load livewhale_api %}
+{% block title %}Print Job Request{% endblock %}
 {% block extra_javascript %}
     <script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
         type="text/javascript" charset="utf-8"></script>
@@ -25,13 +26,14 @@
 li.ctrlHolder div ul li {display:inline; padding-right:3px;}
 </style>
 {% endblock %}
-{% block group_name %}Library &amp; Information Services{% endblock %}
+{% block group_name %}Business Office{% endblock %}
 {% block left_nav %}
-    {% include "lis/left_nav.html" %}
+    {% get_lw_content as nav blurbs 1829 %}
+    {{nav.body}}
 {% endblock %}
 {% block content_head %}
     <h1 id="page_title">
-        LIS Print Job Request
+        Print Job Request
     </h1>
 {% endblock %}
 {% block content %}

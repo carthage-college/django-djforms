@@ -16,6 +16,12 @@ urlpatterns = [
         r'^print-request/$',
         printjobs.index
     ),
+    # print requests success
+    url(
+        r'^print-request/success/',
+        TemplateView.as_view(template_name='lis/printjobs/data_entered.html'),
+        name='print_request_success'
+    ),
     # generic success view
     url(
         r'^success/',
