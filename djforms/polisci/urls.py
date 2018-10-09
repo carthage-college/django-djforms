@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, RedirectView
 
 from djforms.polisci.mun import views as mun
@@ -19,7 +20,7 @@ urlpatterns = [
     ),
     url(
         r'^model-united-nations/registration/$',
-        mun.registration,
+        login_required(mun.registration),
         name='model_united_nations_registration'
     ),
     # had to revert to old reg form
