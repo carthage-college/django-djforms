@@ -17,14 +17,7 @@ class Event(models.Model):
     extension = models.CharField("Phone number", max_length=12)
     # event and sponsor info
     event_name = models.CharField(max_length=128)
-    event_date = models.DateField(
-        '''
-        help_text="""
-            Allow for a minumum of 3 business days before the day of the event,
-            and a maximum of 180 days.
-        """
-        '''
-    )
+    event_date = models.DateField()
     event_start = models.TimeField(
         "Starts at", help_text="(Format HH:MM am/pm)"
     )
