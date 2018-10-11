@@ -1,4 +1,5 @@
 {% extends "catering/event_base.html" %}
+{% load livewhale_api %}
 {% block title %}
     Event Request Form &mdash; Catering &mdash; Carthage College
 {% endblock %}
@@ -8,9 +9,6 @@
     </h1>
 {% endblock %}
 {% block content %}
-    <p>
-        Thank you for submitting your event request.
-        This request will not be confirmed until someone
-        from Catering Services has contacted you.
-    </p>
+    {% get_lw_content as success blurbs 2648 %}
+    {{success.body}}
 {% endblock %}
