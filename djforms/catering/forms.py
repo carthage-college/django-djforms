@@ -51,6 +51,7 @@ class EventForm1(forms.ModelForm):
         biz_date = today
 
         # minimum of 3 business days prior. handles past and current days.
+        '''
         for i in range(3):
             biz_date += datetime.timedelta(days=1)
             # monday = 0
@@ -62,6 +63,7 @@ class EventForm1(forms.ModelForm):
                 Minimum of 3 business days before event date.
                 """
             )
+        '''
 
         # maximum of 180 days into the future
         if event_date >= (today + datetime.timedelta(days=180)):
@@ -71,6 +73,7 @@ class EventForm1(forms.ModelForm):
                 """
             )
         return self.cleaned_data['event_date']
+
 
 class EventForm2(forms.ModelForm):
     open_to = forms.ModelMultipleChoiceField(
@@ -83,6 +86,7 @@ class EventForm2(forms.ModelForm):
             'department', 'coordinator', 'purpose', 'account_number',
             'open_to', 'facility_att', 'housing_att'
         )
+
 
 class EventForm3(forms.ModelForm):
     room_set_up = forms.ModelMultipleChoiceField(
@@ -98,6 +102,7 @@ class EventForm3(forms.ModelForm):
             'table_cloth', 'breakout', 'registration', 'skirting',
             'head', 'other_table'
         )
+
 
 class EventForm4(forms.ModelForm):
     service_start = KungfuTimeField(
@@ -120,6 +125,7 @@ class EventForm4(forms.ModelForm):
             'dining_att', 'service_start', 'service_end', 'program_start',
             'program_end', 'meal_service', 'menu_desc', 'other_reqs'
         )
+
 
 class EventForm5(forms.ModelForm):
 
