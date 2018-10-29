@@ -108,6 +108,20 @@ class DonationContact(Contact):
             com = None
         return com
 
+    def order_statement(self):
+        try:
+            sta = self.order.all()[0].statement
+        except:
+            sta = None
+        return sta
+
+    def order_binary(self):
+        try:
+            bny = self.order.all()[0].binary
+        except:
+            bny = None
+        return bny
+
 
 class BrickContact(Contact):
     '''
