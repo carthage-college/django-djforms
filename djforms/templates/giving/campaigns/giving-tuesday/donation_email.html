@@ -1,0 +1,13 @@
+{% extends "giving/donation_email.html" %}
+{% block comments %}
+{% if data.order.statement %}
+<h3>In honor of</h3>
+<p>{{data.order.comments}}</p>
+{% endif %}
+{% if data.order.comments %}
+<h3>Designation</h3>
+<p>{{data.order.comments}}</p>
+<h3>Can we share your story on social media?</h3>
+<p>{{data.order.binary}}</p>
+{% endif %}
+{% endblock comments %}
