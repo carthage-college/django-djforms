@@ -142,10 +142,12 @@
         {{data.order.contact.spouse|default:"&nbsp;"}}
     </dd>
 </dl>
+{% block comments %}
 {% if data.order.comments %}
 <h3>Designation</h3>
 <p>{{data.order.comments}}</p>
 {% endif %}
+{% endblock comments %}
 {% if data.order.contact.matching_company %}
 <h3>Matching Funds</h3>
 <ul>

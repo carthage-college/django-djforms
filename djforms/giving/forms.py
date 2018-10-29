@@ -250,7 +250,36 @@ class DonationOrderForm(OrderForm):
 
     class Meta:
         model = Order
-        fields = ('total','comments','avs','auth','payments')
+        fields = (
+            'total','comments','avs','auth','payments'
+        )
+
+
+
+class GivingTuesdayDonationOrderForm(DonationOrderForm):
+    """
+    Donation form for giving tuesday campaign
+    """
+
+    statement = forms.CharField(label="In honor off", required=False)
+    comments = forms.CharField(
+        widget=forms.Textarea,
+        label = "Reason for honoring",
+        required=False
+    )
+    binary = forms.ChoiceField(
+        label="""
+            Can we share your story on social media?
+        """,
+        required=False, initial='Yes',
+        choices=BINARY_CHOICES, widget=forms.RadioSelect()
+    )
+
+    class Meta:
+        model = Order
+        fields = (
+            'total','statement','comments','binary','avs','auth','payments'
+        )
 
 
 class PledgeContactForm(DonationContactForm):

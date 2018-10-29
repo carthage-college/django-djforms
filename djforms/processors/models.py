@@ -1,9 +1,11 @@
 from django.db import models
 from django.core import urlresolvers
 from django.utils.safestring import mark_safe
-
 from django_countries.fields import CountryField
+
 from djforms.core.models import Promotion, GenericContact
+
+from djtools.fields import BINARY_CHOICES
 
 ORDER_STATUS = (
     ('Manual', 'Manual'),
@@ -39,7 +41,15 @@ class Order(models.Model):
     total = models.DecimalField(
         decimal_places=2, max_digits=10
     )
+    statement = models.CharField(
+        max_length=255, null=True, blank=True
+    )
     comments = models.TextField(
+        null=True, blank=True
+    )
+    binary = models.CharField(
+        max_length=4,
+        choices=BINARY_CHOICES,
         null=True, blank=True
     )
     time_stamp = models.DateTimeField(

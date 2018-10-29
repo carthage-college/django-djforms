@@ -44,11 +44,16 @@ def giving_form(request, transaction, campaign=None):
             campaign.slug.replace('-',' ').title().replace(' ',''),
             trans_cap
         )
+        or_form_name = '{}{}OrderForm'.format(
+            campaign.slug.replace('-',' ').title().replace(' ',''),
+            trans_cap
+        )
     else:
         campaign = ''
         ct_form_name = trans_cap + 'ContactForm'
-    # order form
-    or_form_name = trans_cap + 'OrderForm'
+        # order form
+        or_form_name = trans_cap + 'OrderForm'
+
     or_form = str_to_class(
         'djforms.giving.forms', or_form_name
     )
