@@ -261,7 +261,7 @@ class GivingTuesdayDonationOrderForm(DonationOrderForm):
     Donation form for giving tuesday campaign
     """
 
-    statement = forms.CharField(label="In honor off", required=False)
+    statement = forms.CharField(label="In honor of", required=False)
     comments = forms.CharField(
         widget=forms.Textarea,
         label = "Reason for honoring",
