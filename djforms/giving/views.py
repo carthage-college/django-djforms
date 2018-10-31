@@ -61,10 +61,6 @@ def giving_form(request, transaction, campaign=None):
         'djforms.giving.forms', ct_form_name
     )
 
-    # just checking for bad requests
-    if not or_form:
-        raise Http404
-
     # there might not be a custom campaign form
     # so we just use the default contact form
     if campaign and not ct_form:
@@ -75,6 +71,9 @@ def giving_form(request, transaction, campaign=None):
         ct_form = str_to_class(
             'djforms.giving.forms', ct_form_name
         )
+    if campaign and not or_form:
+        or_form_name = 'DonationOrderForm'
+        or_form = DonationOrderForm()
 
     years = None
     if request.POST:
