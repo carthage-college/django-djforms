@@ -6,10 +6,10 @@ from djforms.giving import views
 
 urlpatterns = [
     url(
-        r'^donors/$', views.donors, name='giving_donors'
+        r'^donors', views.donors, name='giving_donors'
     ),
     url(
-        r'^donors/(?P<slug>[a-zA-Z0-9_-]+)/$',
+        r'^donors/(?P<slug>[a-zA-Z0-9_-]+)',
         views.donors, name='giving_donors_campaign'
     ),
     url(
@@ -17,7 +17,7 @@ urlpatterns = [
         views.manager_cash, name='giving_manager_cash'
     ),
     url(
-        r'^manager/success/',
+        r'^manager/success',
         TemplateView.as_view(template_name='giving/manager/success.html'),
         name='giving_manager_success'
     ),
@@ -36,11 +36,11 @@ urlpatterns = [
         views.promotion_ajax, name='promotion_ajax'
     ),
     url(
-        r'^(?P<transaction>[a-zA-Z0-9_-]+)/(?P<campaign>[a-zA-Z0-9_-]+)/success/$',
+        r'^(?P<transaction>[a-zA-Z0-9_-]+)/(?P<campaign>[a-zA-Z0-9_-]+)/success',
         views.giving_success, name='giving_success_campaign'
     ),
     url(
-        r'^(?P<transaction>[a-zA-Z0-9_-]+)/success/$',
+        r'^(?P<transaction>[a-zA-Z0-9_-]+)/success',
         views.giving_success, name='giving_success_generic'
     ),
     url(
