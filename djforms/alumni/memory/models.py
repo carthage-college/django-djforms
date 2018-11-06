@@ -89,7 +89,7 @@ class Questionnaire(GenericContact):
     photos = models.ManyToManyField(
         Photo, verbose_name = "Photos",
         related_name = "alumni_memory_questionaire_photos",
-        null=True, blank=True
+        blank=True
     )
     promotion = models.ForeignKey(
         Promotion, null=True, blank=True

@@ -92,11 +92,11 @@ class Presenter(models.Model):
         "Presentation leader", default=False
     )
     prez_type = models.CharField(
-        "Presenter type", max_length="16",
+        "Presenter type", max_length=16,
         choices=PRESENTER_TYPES, null=True, blank=True
     )
     college_year = models.CharField(
-        "Current year at Carthage", max_length="1",
+        "Current year at Carthage", max_length=1,
         choices=YEAR_CHOICES, null=True, blank=True
     )
     major = models.CharField(
@@ -189,8 +189,7 @@ class Presentation(models.Model):
         related_name="presentation_leader", null=True, blank=True
     )
     presenters = models.ManyToManyField(
-        Presenter, related_name="presentation_presenters",
-        null=True, blank=True
+        Presenter, related_name="presentation_presenters", blank=True
     )
     funding = models.CharField(
         "Funding source (if applicable)", max_length=255,

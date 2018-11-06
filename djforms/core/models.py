@@ -88,9 +88,8 @@ class GenericChoice(models.Model):
     name = models.CharField(unique=True, max_length=255)
     value = models.CharField(max_length=255)
     ranking = models.IntegerField(
-        null=True, blank=True,
-        default=0, max_length=3,
         verbose_name="Ranking",
+        null=True, blank=True, default=0,
         help_text="""
           A number from 0 to 999 to determine this object's position in a list.
         """
@@ -157,13 +156,13 @@ class UserProfile(BaseProfile):
         max_length=16, choices=GENDER_CHOICES, null=True, blank=True
     )
     campus_address = models.CharField(
-        "Campus Address", max_length="64", null=True, blank=True
+        "Campus Address", max_length=64, null=True, blank=True
     )
     campus_box = models.CharField(
-        "Campus Box #", max_length="4", null=True, blank=True
+        "Campus Box #", max_length=4, null=True, blank=True
     )
     college_id = models.CharField(
-        "Carthage ID", max_length="7",null=True, blank=True
+        "Carthage ID", max_length=7,null=True, blank=True
     )
     college_year = models.CharField(
         "Current Year at Carthage", max_length=1,

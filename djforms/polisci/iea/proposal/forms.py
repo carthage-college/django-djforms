@@ -1,6 +1,7 @@
 from django import forms
 
 from djforms.processors.models import Order
+from djforms.processors.forms import ContactForm, OrderForm
 from djforms.polisci.iea.proposal.models import ProposalContact
 from djforms.core.models import REQ
 from djtools.fields import STATE_CHOICES
@@ -32,3 +33,14 @@ class ProposalContactForm(forms.ModelForm):
         )
         widgets = {'country': CountrySelectWidget}
 
+
+class ProposalOrderForm(OrderForm):
+    """
+    Conference abstract proposal order form, extends
+    base OrderForm in processors app
+    """
+    total = forms.CharField()
+
+    class Meta:
+        model       = Order
+        fields      = ('total','avs','auth')

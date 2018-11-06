@@ -20,7 +20,7 @@ def form(request):
         if form_con.is_valid() and form_ord.is_valid():
             contact = form_con.save()
             order = form_ord.save()
-            order.operator = 'DJForms: PoliSci IEA'
+            order.operator = settings.POLITICAL_SCIENCE_IEA_OPERATOR
             if contact.payment_method == 'Credit Card':
 
                 form_proc = TrustCommerceForm(

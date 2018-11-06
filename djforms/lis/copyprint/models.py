@@ -27,34 +27,34 @@ class CardRequest(models.Model):
     )
     #core
     entity_name = models.CharField(
-        max_length="128",
+        max_length=128,
         help_text = "The department, organization, or club name"
     )
     account_number = models.CharField(
-        max_length="16"
+        max_length=16
     )
     entity_head = models.CharField(
         "The department head or the entity's president",
-        max_length="128"
+        max_length=128
     )
     entity_treasurer = models.CharField(
         "Treasurer or equivalent",
-        max_length="128",
+        max_length=128,
         null=True, blank=True,
     )
     entity_advisor = models.CharField(
         "Advisor",
-        max_length="128",
+        max_length=128,
         null=True, blank=True
     )
     printing_budget = models.CharField(
         "Printing Budget Amount",
-        max_length="16",
+        max_length=16,
         null=True, blank=True
     )
     status = models.CharField(
         "What type of card are you requesting?",
-        max_length="32",
+        max_length=32,
         choices=STATUS
     )
 

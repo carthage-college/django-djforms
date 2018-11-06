@@ -179,8 +179,7 @@ class Contact(GenericContact):
         null=True, blank=True
     )
     order = models.ManyToManyField(
-        Order,
-        related_name="contact_orders",
-        null=True, blank=True
+        Order, blank=True,
+        related_name='contact_orders'
     )
 

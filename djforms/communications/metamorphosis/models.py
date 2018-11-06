@@ -29,7 +29,7 @@ class Questionnaire(models.Model):
     photos = models.ManyToManyField(
         Photo, verbose_name = "Photos",
         related_name = "metamorphosis_questionaire_photos",
-        null=True, blank=True
+        blank=True
     )
     status = models.BooleanField(default=False)
 

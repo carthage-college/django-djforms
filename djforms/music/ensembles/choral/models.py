@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from djforms.core.models import YEAR_CHOICES
 
 class TimeSlot(models.Model):
-    date_time = models.CharField("Time slot", max_length="128")
+    date_time = models.CharField("Time slot", max_length=128)
     active = models.BooleanField(default=True)
     rank = models.IntegerField(null=True,blank=True)
 

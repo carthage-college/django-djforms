@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from djforms.polisci.iea.proposal.models import ProposalContact
 
+
 class ProposalContactAdmin(admin.ModelAdmin):
     model = ProposalContact
     list_display = (
@@ -18,4 +19,3 @@ class ProposalContactAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(ProposalContact, ProposalContactAdmin)
-

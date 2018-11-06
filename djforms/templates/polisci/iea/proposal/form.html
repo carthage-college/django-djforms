@@ -1,29 +1,15 @@
 {% extends "base.html" %}
+{% load livewhale_api %}
 {% block title %}
-    IEA Conference Call for Papers Form &mdash;
+    IEA Conference Call for Abstracts Form &mdash;
     Political Science &mdash;
     Carthage College
 {% endblock %}
 {% block extra_javascript %}
     {{ block.super }}
-    <script src="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea-0.8.min.js"></script>
     <script type="text/javascript">
         $(function() {
-            $("#id_abstract").htmlarea({
-                toolbar: [
-                    "html","bold", "italic", "underline", "superscript",
-                    "subscript", "|", "h1", "h2", "h3", "h4", "|", "indent",
-                    "outdent", "horizontalrule", "link", "unlink", "|",
-                    "orderedList", "unorderedList"
-                ]
-            });
             $('form#profile').bind('submit', function (e) {
-                /* check textarea for just br tag */
-                $("textarea").each(function(){
-                    if (this.value == "<br>") {
-                        this.value = "";
-                    }
-                });
                 // disable submit button after users clicks it
                 $('form#profile input[type=submit]').prop('disabled', true);
                 return true;
@@ -32,8 +18,6 @@
     </script>
 {% endblock %}
 {% block extra_style %}
-    <link href="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea.css"
-        rel="stylesheet" />
     <style type="text/css">
     #id_postal_code {width:100px;}
     </style>
@@ -42,11 +26,102 @@
 {% block left_nav %}{% endblock %}
 {% block content_head %}
     <h1 id="page_title">
-        Call for Papers
+        Call for Abstracts
     </h1>
 {% endblock %}
 {% block content %}
 <div class="forms-container">
-    {% include "includes/generic_form_multi.html" %}
+    {% if form_proc.errors or form_ord.errors or form_con.errors %}
+      <p class="error">
+        There were errors with the data submitted, see below.
+      </p>
+    {% endif %}
+    <form method="post" action="." class="form"
+        id="profile" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for hidden in form_ord.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+        <fieldset class="blockLabels">
+          <h2>Contact Information</h2>
+          <ol>
+            {% for field in form_con.visible_fields %}
+              {% if field.name == "payment_method" %}
+                <li class="form-group ctrlHolder">
+                  <h5>Registration Fee Notes</h5>
+                    {% get_lw_content as pay_check blurbs 2397 %}
+                    {{pay_check.body}}
+                </li>
+                {% for field in form_ord.visible_fields %}
+                  {% include "form_field.inc.html" %}
+                {% endfor %}
+              {% endif %}
+              {% include "form_field.inc.html" %}
+            {% endfor %}
+          </ol>
+        </fieldset>
+        <fieldset class="blockLabels" id="creditcard-details">
+          <h2>Billing Information</h2>
+          {% if form_proc.errors %}
+            <div style="padding-left:4px;">
+              <p class="notice">
+                The transaction failed.
+                {% if status == "baddata" or status == "decline" %}
+                  Error: <strong>{{status}}</strong>
+                {% endif %}
+              </p>
+            </div>
+          {% endif %}
+          <ol>
+            {% for field in form_proc %}
+                {% if field.name != "captcha" %}
+                {% if field.name == "expiration_month" %}
+                <li class="ctrlHolder">
+                <h3>
+                  <label for="id_expiration_month">Expiration Date</label>
+                </h3>
+                <div class="required">{{field}}
+                {% else %}
+                    {% if field.name == "expiration_year" %}
+                    <label for="id_expiration_year" style="display:none;">
+                        Expiration Year
+                    </label>
+                    &mdash;&nbsp;{{field}}
+                </div>
+                </li>
+                {% else %}
+                <li class="ctrlHolder">
+                <h3>{{ field.label_tag }}</h3>
+                {% if field.errors %}
+                    <div class="required warning">
+                    <span class="error-message">
+                      {{ field.errors|join:", "}}
+                    </span>
+                {% else %}
+                    <div{% if field.field.required %} class="required"{% endif %}>
+                {% endif %}
+                {{field}}
+                {% if field.help_text %}
+                    <p class="help">{{field.help_text}}</p>
+                {% endif %}
+                </div>
+                </li>
+                {% endif %}{% endif %}{% endif %}
+            {% endfor %}
+          </ol>
+        </fieldset>
+        <fieldset class="blockLabels" id="check-details">
+          <ol>
+            <li class="btnHolder">
+              {% get_lw_content as pay_check blurbs 2396 %}
+              {{pay_check.body}}
+            </li>
+          </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            {{form_proc.captcha}}
+        </fieldset>
+        {% include "form_submit.inc.html" %}
+    </form>
 </div>
 {% endblock %}

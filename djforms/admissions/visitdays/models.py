@@ -100,11 +100,11 @@ class VisitDayProfile(VisitDayBaseProfile):
     hs_state = USStateField("High School State")
     hs_grad_year = models.IntegerField("High School Graduation Year")
     entry_as = models.CharField(
-        "Entering as a", max_length="16", choices=ENTRY_CHOICES
+        "Entering as a", max_length=16, choices=ENTRY_CHOICES
     )
     transfer = models.CharField(
         "If transfer, list University/College Attended and City/State",
-        max_length="255", null=True, blank=True
+        max_length=255, null=True, blank=True
     )
     entry_year = models.IntegerField("Entry Year")
     entry_term = models.CharField(

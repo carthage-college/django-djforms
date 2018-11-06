@@ -54,7 +54,7 @@ class Event(models.Model):
     open_to = models.ManyToManyField(
         GenericChoice, verbose_name="Event open to",
         related_name="catering_event_open_to",
-        null=True, blank=True
+        blank=True
     )
     # facility requirements
     facility_att = models.CharField(
@@ -67,7 +67,7 @@ class Event(models.Model):
         GenericChoice, verbose_name="Room set-up",
         help_text="Check all that apply.",
         related_name="catering_event_room_set_up",
-        null=True, blank=True
+        blank=True
     )
     room_set_other = models.FileField(
         verbose_name="",
