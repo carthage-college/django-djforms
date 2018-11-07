@@ -4,13 +4,16 @@ from djforms.processors.models import Contact
 
 from django_countries.fields import CountryField
 
+PAYMENT_CHOICES = (
+    ('Credit Card', 'Credit Card'),
+    ('Check', 'Check'),
+)
 SUBMITTING = (
     ("Creative Presentation", "Creative Presentation"),
     ("Paper for presentation", "Paper for presentation"),
     ("Poster for presentation", "Poster for presentation"),
     ("Roundtable proposal", "Roundtable proposal")
 )
-
 PRESENTER_TYPE = (
     ("Professor", "Professor"),
     ("Graduate Student", "Graduate Student"),
@@ -38,6 +41,11 @@ class ProposalContact(Contact):
     submitting = models.CharField(
         "You are submitting a:",
         max_length=128, choices=SUBMITTING
+    )
+    # payment
+    payment_method = models.CharField(
+        max_length=128,
+        choices=PAYMENT_CHOICES
     )
 
     class Meta:

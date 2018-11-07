@@ -1,78 +1,63 @@
-<p>
-    Thank you for participating in the <em>IEA Conference</em>.
-</p>
-<p>
-    We have received your proposal for the conference.
-    We will respond to you presently.
-</p>
-<p>
-    If you have any questions, please do not hesitate to
-    <a href="mailto:jroberg@carthage.edu">contact us</a>.
-</p>
+{% load livewhale_api %}
+{% get_lw_content as confirmation blurbs 2656 %}
+{{confirmation.body}}
 <dl style="margin-bottom:30px;">
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:250px;">
+        margin-right:10px; padding:5px; width:200px;">
         First name
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.first_name}}
+        {{data.contact.first_name}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:250px;">
+        margin-right:10px; padding:5px; width:200px;">
         Last name
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.last_name}}
+        {{data.contact.last_name}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:250px;">
+        margin-right:10px; padding:5px; width:200px;">
         Email
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.email}}
+        {{data.contact.email}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:250px;">
+        margin-right:10px; padding:5px; width:200px;">
         Address
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.address1}}
-        {% if data.address2 %}, {{data.address2}}{% endif %}
+        {{data.contact.address1}}
+        {% if data.contact.address2 %}, {{data.contact.address2}}{% endif %}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:250px;">
+        margin-right:10px; padding:5px; width:200px;">
         City
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.city}}
+        {{data.contact.city}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:250px;">
+        margin-right:10px; padding:5px; width:200px;">
         State
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.state}}
+        {{data.contact.state}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:250px;">
+        margin-right:10px; padding:5px; width:200px;">
         Postal code
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.postal_code}}
-    </dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:250px;">
-        Country
-    </dt>
-    <dd style="margin:2px 0; padding:5px 0;">
-        {{data.country}}
+        {{data.contact.postal_code|default:"&nbsp;"}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
-        padding:5px; width:250px;">
+        padding:5px; width:200px;">
         Phone
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.phone}}
+        {{data.contact.phone}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
         padding:5px; width:250px;">
@@ -102,9 +87,43 @@
     <dd style="margin:2px 0; padding:5px 0;">
         {{data.how_hear}}
     </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">
+        Submission fee
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        ${{data.total}} (Includes 3% service fee)
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
+        padding:5px; width:200px;">
+        Payment method
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.reg.payment_method}}
+    </dd>
+    {% if data.transid %}
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
+        padding:5px; width:200px;">
+        Name on Card
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.cc_name}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
+        padding:5px; width:200px;">
+        Card ending with:
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        x{{data.cc_4_digits}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+        margin-right:10px; padding:5px; width:200px;">Transaction ID</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.transid}}
+    </dd>
+    {% endif %}
 </dl>
 <h3 style="clear:both;">Abstract</h3>
 <div>
     {{data.abstract|safe}}
 </div>
-

@@ -12,7 +12,7 @@ from djtools.utils.mail import send_mail
 
 def form(request):
     """
-    Proposal form
+    Abstract Proposal form
     """
     if request.POST:
         form_con =ProposalContactForm(request.POST)
@@ -92,9 +92,9 @@ def form(request):
             else:
                 form_proc = TrustCommerceForm(use_required_attribute=False)
     else:
-        form_con = RegistrationContactForm()
-        form_ord = RegistrationOrderForm(
-            initial={'avs':False,'auth':'sale'}
+        form_con = ProposalContactForm()
+        form_ord = ProposalOrderForm(
+            initial={'total':50, 'avs':False,'auth':'sale'}
         )
         form_proc = TrustCommerceForm(use_required_attribute=False)
 

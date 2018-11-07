@@ -36,3 +36,7 @@ we only use this for alumni memory form. we should dump that app
 or refactor it with the current imagekit project:
 
 git@github.com:matthewwithanm/django-imagekit.git
+
+_Apps list for Migrations_
+
+admin, admindocs, admissions, admitted, auth, bootstrapform, captcha, catering, characterquest, choral, classnotes, committee_letter, contenttypes, copyprint, core, django_countries, djtools, genomics, giving, green, honeypot, humanize, imagekit, languages, lis, memory, metamorphosis, printrequest, processors, proposal, registration, scholars, security, sites, soccer, summer_camp, taggit, userprofile, visitdays, writingcurriculum

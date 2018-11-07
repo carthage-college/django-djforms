@@ -9,6 +9,33 @@
     {{ block.super }}
     <script type="text/javascript">
         $(function() {
+            // set total field to readonly so we can update it accordingly
+            $('#id_total').attr('readonly', true);
+            {% if form_con.data.payment_method == "Credit Card" %}
+            var service_charge = true;
+            {% else %}
+            var service_charge = false;
+            {% endif %}
+            var $reg_fee = {{form_ord.data.total|default:0}};
+            $('#id_payment_method_0').click(function() {
+                if ($reg_fee > 0 && service_charge == false) {
+                  $reg_fee += ($reg_fee * .03);
+                  $('#id_total').attr('value', $reg_fee);
+                }
+                service_charge = true;
+                $('#check-details').slideUp(200);
+                $('#creditcard-details').slideDown(200);
+            });
+            $('#id_payment_method_1').click(function() {
+                // remove service charge if need be
+                if ($reg_fee > 0 && service_charge == true) {
+                  $reg_fee -= $reg_fee - ($reg_fee / 1.03);
+                  $('#id_total').attr('value', $reg_fee);
+                }
+                service_charge = false;
+                $('#creditcard-details').slideUp(200);
+                $('#check-details').slideDown(200);
+            });
             $('form#profile').bind('submit', function (e) {
                 // disable submit button after users clicks it
                 $('form#profile input[type=submit]').prop('disabled', true);
@@ -19,7 +46,21 @@
 {% endblock %}
 {% block extra_style %}
     <style type="text/css">
-    #id_postal_code {width:100px;}
+    #id_postal_code, #id_total,
+    #id_expiration_month,#id_expiration_year {width:100px;}
+    #id_total {color:green;font-weight:bold;}
+    {% if form_con.data.payment_method == "Credit Card" %}
+    #check-details { display:none; }
+    #creditcard-details { display:inherit; }
+    {% else %}
+    {% if form_con.data.payment_method == "Check" %}
+    #check-details { display:inherit; }
+    #creditcard-details { display:none; }
+    {% else %}
+    #check-details { display:none; }
+    #creditcard-details { display:none; }
+    {% endif %}{% endif %}
+    #id_payment_method li {display:inline;padding-right:3px;}
     </style>
 {% endblock %}
 {% block group_name %}IEA Conference{% endblock %}
@@ -48,9 +89,8 @@
             {% for field in form_con.visible_fields %}
               {% if field.name == "payment_method" %}
                 <li class="form-group ctrlHolder">
-                  <h5>Registration Fee Notes</h5>
-                    {% get_lw_content as pay_check blurbs 2397 %}
-                    {{pay_check.body}}
+                  {% get_lw_content as pay_check blurbs 2655 %}
+                  {{pay_check.body}}
                 </li>
                 {% for field in form_ord.visible_fields %}
                   {% include "form_field.inc.html" %}
