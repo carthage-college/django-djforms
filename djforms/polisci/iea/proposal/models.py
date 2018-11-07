@@ -2,7 +2,14 @@ from django.db import models
 
 from djforms.processors.models import Contact
 
+from djtools.fields.helpers import upload_to_path
+from djtools.fields.validators import MimetypeValidator
+
 from django_countries.fields import CountryField
+
+# comment out for migrations
+FILE_VALIDATORS = [MimetypeValidator('application/pdf')]
+#FILE_VALIDATORS = []
 
 PAYMENT_CHOICES = (
     ('Credit Card', 'Credit Card'),
@@ -37,7 +44,12 @@ class ProposalContact(Contact):
         "How did you hear about this conference?",
          max_length=128
     )
-    abstract = models.TextField()
+    abstract = models.FileField(
+        upload_to=upload_to_path,
+        max_length=768,
+        validators=FILE_VALIDATORS,
+        help_text="PDF format"
+    )
     submitting = models.CharField(
         "You are submitting a:",
         max_length=128, choices=SUBMITTING
@@ -50,3 +62,7 @@ class ProposalContact(Contact):
 
     class Meta:
         db_table = 'iea_proposal_contact'
+
+    def get_slug(self):
+        return 'files/polisci/iea/proposal/'
+

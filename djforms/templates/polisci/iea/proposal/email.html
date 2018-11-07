@@ -1,6 +1,6 @@
 {% load livewhale_api %}
 {% get_lw_content as confirmation blurbs 2656 %}
-{{confirmation.body}}
+{{confirmation.body|safe}}
 <dl style="margin-bottom:30px;">
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
         margin-right:10px; padding:5px; width:200px;">
@@ -60,32 +60,25 @@
         {{data.contact.phone}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
-        padding:5px; width:250px;">
+        padding:5px; width:200px;">
         Presenter type
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.presenter_type}}
+        {{data.contact.presenter_type}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px;
-        padding:5px; width:250px;">
+        padding:5px; width:200px;">
         University Affiliation
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.affiliation}}
+        {{data.contact.affiliation}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:250px;">
+        margin-right:10px; padding:5px; width:200px;">
         You are submitting a&hellip;
     </dt>
     <dd style="margin:2px 0; padding:5px 0;">
-        {{data.submitting}}
-    </dd>
-    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
-        margin-right:10px; padding:5px; width:250px;">
-        How did you hear about this conference?
-    </dt>
-    <dd style="margin:2px 0; padding:5px 0;">
-        {{data.how_hear}}
+        {{data.contact.submitting}}
     </dd>
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
         margin-right:10px; padding:5px; width:200px;">
@@ -123,7 +116,12 @@
     </dd>
     {% endif %}
 </dl>
-<h3 style="clear:both;">Abstract</h3>
+<h3 style="clear:both;">How did you hear about the conference?</h3>
 <div>
-    {{data.abstract|safe}}
+    {{data.contact.how_hear}}
 </div>
+<h3 style="clear:both;">
+    <a href="https://{{server_url}}{{media_url}}{{data.contact.abstract}}">
+      Abstract
+    </a>
+</h3>

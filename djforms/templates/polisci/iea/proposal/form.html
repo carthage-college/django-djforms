@@ -16,11 +16,12 @@
             {% else %}
             var service_charge = false;
             {% endif %}
-            var $reg_fee = {{form_ord.data.total|default:0}};
+            var $reg_fee = {{form_ord.data.total|default:50}};
+            console.log('reg_fee = ' + $reg_fee);
             $('#id_payment_method_0').click(function() {
                 if ($reg_fee > 0 && service_charge == false) {
                   $reg_fee += ($reg_fee * .03);
-                  $('#id_total').attr('value', $reg_fee);
+                  $('#id_total').attr('value', $reg_fee.toFixed(2));
                 }
                 service_charge = true;
                 $('#check-details').slideUp(200);
@@ -30,7 +31,7 @@
                 // remove service charge if need be
                 if ($reg_fee > 0 && service_charge == true) {
                   $reg_fee -= $reg_fee - ($reg_fee / 1.03);
-                  $('#id_total').attr('value', $reg_fee);
+                  $('#id_total').attr('value', $reg_fee.toFixed(2));
                 }
                 service_charge = false;
                 $('#creditcard-details').slideUp(200);

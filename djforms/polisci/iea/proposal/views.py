@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -15,7 +16,7 @@ def form(request):
     Abstract Proposal form
     """
     if request.POST:
-        form_con =ProposalContactForm(request.POST)
+        form_con =ProposalContactForm(request.POST, request.FILES)
         form_ord = ProposalOrderForm(request.POST)
         if form_con.is_valid() and form_ord.is_valid():
             contact = form_con.save()
@@ -37,20 +38,16 @@ def form(request):
                     contact.order.add(order)
                     order.reg = contact
                     order.contact = contact
-                    reg = order.contact.registration_fee.split('|')
-                    order.contact.registration_fee = '{} (${})'.format(
-                        reg[0],reg[1]
-                    )
                     sent = send_mail(
                         request, TO_LIST,
-                        "[IEA] Conference Registration", contact.email,
-                        'polisci/iea/registration/email.html', order, BCC
+                        "[IEA] Abstract Submission", contact.email,
+                        'polisci/iea/proposal/email.html', order, BCC
                     )
                     order.send_mail = sent
                     order.save()
 
                     return HttpResponseRedirect(
-                        reverse('iea_registration_success')
+                        reverse('iea_proposal_success')
                     )
 
                 else:
