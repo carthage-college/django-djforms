@@ -4,12 +4,10 @@ from djforms.security.models import ParkingTicketAppeal
 class ParkingTicketAppealAdmin(admin.ModelAdmin):
     model = ParkingTicketAppeal
     list_display  = (
-        'last_name','first_name','college_id','email','created_at'
+        'last_name','first_name','college_id','email','created_at',
+        'residency_status','vehicle_make','vehicle_model','license_plate',
+        'state','permit_type','permit_number','citation_number','citation_date',
+        'towed'
     )
-    search_fields = (
-        'last_name','first_name','college_id','email'
-    )
-    ordering = ['-created_at',]
-    readonly_fields = ('created_at',)
 
 admin.site.register(ParkingTicketAppeal, ParkingTicketAppealAdmin)
