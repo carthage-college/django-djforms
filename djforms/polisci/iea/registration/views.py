@@ -25,7 +25,14 @@ def form(request):
         if form_con.is_valid() and form_ord.is_valid():
             contact = form_con.save()
             order = form_ord.save()
+            contact.order.add(order)
             order.operator = settings.POLITICAL_SCIENCE_IEA_OPERATOR
+            order.reg = contact
+            order.contact = contact
+            reg = order.contact.registration_fee.split('|')
+            order.contact.registration_fee = '{} (${})'.format(
+                reg[0],reg[1]
+            )
             if contact.payment_method == 'Credit Card':
 
                 form_proc = TrustCommerceForm(
@@ -39,13 +46,6 @@ def form(request):
                     order.cc_name = form_proc.name
                     order.cc_4_digits = form_proc.card[-4:]
                     order.save()
-                    contact.order.add(order)
-                    order.reg = contact
-                    order.contact = contact
-                    reg = order.contact.registration_fee.split('|')
-                    order.contact.registration_fee = '{} (${})'.format(
-                        reg[0],reg[1]
-                    )
                     sent = send_mail(
                         request, TO_LIST,
                         "[IEA] Conference Registration", contact.email,
