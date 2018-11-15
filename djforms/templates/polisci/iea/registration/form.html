@@ -29,16 +29,20 @@ Conference on the Environment
         {% else %}
         var service_charge = false;
         {% endif %}
-        var payment_method = false;
         var late_fee = 0;
         var reg_fee = {{form_ord.data.total|default:0}};
 
-        function calculate_fee(reg_fee, kao, abs, service_charge) {
+        function calculate_fee(reg_fee, kao, abs) {
           var total = window.reg_fee;
-          // after deadline late fee for some folks
-          if (reg_fee == true && window.dueDate < window.today && window.late_fee > 0) {
-            window.late_fee = 50;
-            total += 50;
+          // after deadline there is alate fee
+          if (reg_fee == true) {
+            if (window.dueDate < window.today && window.late_fee > 0) {
+              window.late_fee = 50;
+              total += 50;
+            }
+            if (window.service_charge) {
+               total += (total * .03);
+            }
           }
           // kao discount
           $kao = $('input[name=kao_member]:checked').val();
@@ -60,29 +64,16 @@ Conference on the Environment
               total += 50;
             }
           }
-          $paymentMethod = $('input[name=payment_method]:checked').val();
-          if (service_charge == true) {
-            if (typeof $paymentMethod === 'undefined') {
-              if (window.service_charge == true) {
-                total += (total * .03);
-              }
-            } else {
-              if (window.service_charge == true) {
-                total += (total * .03);
-              }
-              if (window.service_charge == false){
-                total -= total - (total / 1.03);
-              }
-            }
-          }
           if (parseFloat(total) <= 0) {
             total = 0;
             $('#check-details').hide();
             $('#paymentMethod').hide();
-            $('#id_payment_method_1').attr('checked', 'checked');
+            $('#id_payment_method_0').prop('checked', false);
+            $('#id_payment_method_1').prop('checked', true);
+            window.service_charge = false;
             $('#creditcard-details').hide();
             $('#id_total').attr('value', 0);
-            alert("You do not owe anything for registration based on your KAO and abstract submission discounts. Click the submit button and you will be have completed the registration.")
+            alert("You do not owe anything for registration based on your KAO and abstract submission discounts. Click the submit button and you will have completed the registration.")
           } else {
             $('#id_total').attr('value', total.toFixed(2));
           }
@@ -96,39 +87,42 @@ Conference on the Environment
             // manage the registration price
             $('input[name="registration_fee"]').click(function() {
               reg_fee = parseInt($(this).attr('value').split('|')[1]);
-              reg_fee = calculate_fee(true,false,false,false);
+              reg_fee = calculate_fee(true,false,false);
             });
             $('#id_kao_member_0').click(function() {
               kao = true;
-              reg_fee = calculate_fee(false,true,false,false);
+              reg_fee = calculate_fee(false,true,false);
             });
             $('#id_kao_member_1').click(function() {
               kao = false;
-              reg_fee = calculate_fee(false,true,false,false);
+              reg_fee = calculate_fee(false,true,false);
             });
             $('#id_abstract_0').click(function() {
               abs = true;
-              reg_fee = calculate_fee(false,false,true,false);
+              reg_fee = calculate_fee(false,false,true);
             });
             $('#id_abstract_1').click(function() {
               abs = false;
-              reg_fee = calculate_fee(false,false,true,false);
+              reg_fee = calculate_fee(false,false,true);
             });
             $('#id_payment_method_0').click(function() {
-              service_charge = true;
-              reg_fee = calculate_fee(false,false,false,true);
-              if (reg_fee > 0 ) {
+                if (reg_fee > 0 && service_charge == false) {
+                  reg_fee += (reg_fee * .03);
+                  $('#id_total').attr('value', reg_fee);
+                }
+                service_charge = true;
                 $('#check-details').slideUp(200);
                 $('#creditcard-details').slideDown(200);
-              }
             });
             $('#id_payment_method_1').click(function() {
-              service_charge = false;
-              reg_fee = calculate_fee(false,false,false,true);
-              if (reg_fee > 0 ) {
+                // remove service charge if need be
+                if (reg_fee > 0 && service_charge == true) {
+                  reg_fee -= reg_fee - (reg_fee / 1.03);
+                  $('#id_total').attr('value', reg_fee);
+                }
+                service_charge = false;
                 $('#creditcard-details').slideUp(200);
                 $('#check-details').slideDown(200);
-              }
             });
             // disable submit button after users clicks it
             $('form#profile').bind('submit', function (e) {
@@ -144,16 +138,25 @@ Conference on the Environment
     #id_expiration_month,#id_expiration_year {width:100px;}
     #id_total {color:green;font-weight:bold;}
     {% if form_con.data.payment_method == "Credit Card" %}
-    #check-details { display:none; }
-    #creditcard-details { display:inherit; }
+      #check-details {display:none;}
+      #registration-fee-waived {display:none;}
+      #creditcard-details {display:inherit;}
     {% else %}
-    {% if form_con.data.payment_method == "Check" %}
-    #check-details { display:inherit; }
-    #creditcard-details { display:none; }
-    {% else %}
-    #check-details { display:none; }
-    #creditcard-details { display:none; }
-    {% endif %}{% endif %}
+      {% if form_con.data.payment_method == "Check" %}
+        {% if form_con.data.kao_member == 'Yes' and form_con.data.abstract == 'Yes' and form_ord.data.total == '0' %}
+          #registration-fee-waived {display:inherit;}
+          #check-details {display:none;}
+          #paymentMethod {display:none;}
+        {% else %}
+          #check-details {display:inherit;}
+        {% endif %}
+        #creditcard-details {display:none;}
+      {% else %}
+        #check-details {display:none;}
+        #creditcard-details {display:none;}
+        #registration-fee-waived {display:none;}
+      {% endif %}
+    {% endif %}
     #id_abstract li,#id_kao_member li,#id_payment_method li {display:inline;padding-right:3px;}
     </style>
 {% endblock %}
@@ -250,6 +253,19 @@ Conference on the Environment
                 </li>
                 {% endif %}{% endif %}{% endif %}
             {% endfor %}
+          </ol>
+        </fieldset>
+        <fieldset class="blockLabels" id="registration-fee-waived">
+          <ol>
+            <li class="btnHolder">
+                <strong>
+                <span class="help">NOTE:</span>
+                You do not owe anything for registration based on your
+                KAO membership and abstract submission discounts.
+                Click the submit button and you will have completed
+                the registration.
+                </strong>
+            </li>
           </ol>
         </fieldset>
         <fieldset class="blockLabels" id="check-details">
