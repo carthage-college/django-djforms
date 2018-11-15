@@ -10,14 +10,18 @@ from djforms.processors.forms import TrustCommerceForm
 
 from djtools.utils.mail import send_mail
 
-
 def form(request):
     """
     Registration form
     """
+    required_attribute = settings.REQUIRED_ATTRIBUTE
     if request.POST:
-        form_con = RegistrationContactForm(request.POST)
-        form_ord = RegistrationOrderForm(request.POST)
+        form_con = RegistrationContactForm(
+            request.POST, use_required_attribute=required_attribute
+        )
+        form_ord = RegistrationOrderForm(
+            request.POST, use_required_attribute=required_attribute
+        )
         if form_con.is_valid() and form_ord.is_valid():
             contact = form_con.save()
             order = form_ord.save()
@@ -84,19 +88,19 @@ def form(request):
                 )
         else:
             if request.POST.get('payment_method') == 'Credit Card':
-
                 form_proc = TrustCommerceForm(
                     None, request.POST, use_required_attribute=False
                 )
-
                 form_proc.is_valid()
             else:
-
                 form_proc = TrustCommerceForm(use_required_attribute=False)
     else:
-        form_con = RegistrationContactForm()
+        form_con = RegistrationContactForm(
+            use_required_attribute=required_attribute
+        )
         form_ord = RegistrationOrderForm(
-            initial={'avs':False,'auth':'sale'}
+            initial={'avs':False,'auth':'sale'},
+            use_required_attribute=required_attribute
         )
         form_proc = TrustCommerceForm(use_required_attribute=False)
 

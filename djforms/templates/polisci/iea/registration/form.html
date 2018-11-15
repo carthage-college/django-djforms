@@ -9,98 +9,131 @@ Conference on the Environment
 {% block extra_javascript %}
     {{ block.super }}
     <script type="text/javascript">
+        // late fee date
+        var today = new Date();
+        var dueDate = new Date("2019-05-31");
+
+        var total;
+        {% if form_con.data.kao_member == "Yes" %}
+        var kao = true;
+        {% else %}
+        var kao = false;
+        {% endif %}
+        {% if form_con.data.abstract == "Yes" %}
+        var abs= true;
+        {% else %}
+        var abs = false;
+        {% endif %}
+        {% if form_con.data.payment_method == "Credit Card" %}
+        var service_charge = true;
+        {% else %}
+        var service_charge = false;
+        {% endif %}
+        var payment_method = false;
+        var late_fee = 0;
+        var reg_fee = {{form_ord.data.total|default:0}};
+
+        function calculate_fee(reg_fee, kao, abs, service_charge) {
+          var total = window.reg_fee;
+          // after deadline late fee for some folks
+          if (reg_fee == true && window.dueDate < window.today && window.late_fee > 0) {
+            window.late_fee = 50;
+            total += 50;
+          }
+          // kao discount
+          $kao = $('input[name=kao_member]:checked').val();
+          if (typeof $kao !== 'undefined' && kao == true) {
+            if ( window.kao == true ) {
+              total -= 50;
+            }
+            if ( window.kao == false ) {
+              total += 50;
+            }
+          }
+          // abstract discount
+          $abs = $('input[name=abstract]:checked').val();
+          if (typeof $abs !== 'undefined' && abs == true) {
+            if ( window.abs == true ) {
+              total -= 50;
+            }
+            if ( window.abs == false ) {
+              total += 50;
+            }
+          }
+          $paymentMethod = $('input[name=payment_method]:checked').val();
+          if (service_charge == true) {
+            if (typeof $paymentMethod === 'undefined') {
+              if (window.service_charge == true) {
+                total += (total * .03);
+              }
+            } else {
+              if (window.service_charge == true) {
+                total += (total * .03);
+              }
+              if (window.service_charge == false){
+                total -= total - (total / 1.03);
+              }
+            }
+          }
+          if (parseFloat(total) <= 0) {
+            total = 0;
+            $('#check-details').hide();
+            $('#paymentMethod').hide();
+            $('#id_payment_method_1').attr('checked', 'checked');
+            $('#creditcard-details').hide();
+            $('#id_total').attr('value', 0);
+            alert("You do not owe anything for registration based on your KAO and abstract submission discounts. Click the submit button and you will be have completed the registration.")
+          } else {
+            $('#id_total').attr('value', total.toFixed(2));
+          }
+          return total;
+        }
+
         $(function() {
-            // late fee date
-            var dueDate = new Date("2018-05-31");
-            var today = new Date();
-            var late_fee = 0;
-            {% if form_con.data.payment_method == "Credit Card" %}
-            var service_charge = true;
-            {% else %}
-            var service_charge = false;
-            {% endif %}
-            var $reg_fee = {{form_ord.data.total|default:0}};
-            $('#id_payment_method_0').click(function() {
-                if ($reg_fee > 0 && service_charge == false) {
-                  $reg_fee += ($reg_fee * .03);
-                  $('#id_total').attr('value', $reg_fee);
-                }
-                service_charge = true;
-                $('#check-details').slideUp(200);
-                $('#creditcard-details').slideDown(200);
-            });
-            $('#id_payment_method_1').click(function() {
-                // remove service charge if need be
-                if ($reg_fee > 0 && service_charge == true) {
-                  $reg_fee -= $reg_fee - ($reg_fee / 1.03);
-                  $('#id_total').attr('value', $reg_fee);
-                }
-                service_charge = false;
-                $('#creditcard-details').slideUp(200);
-                $('#check-details').slideDown(200);
-            });
             // set total field to readonly so we can update it accordingly
+            // NOTE: we don't need these two blocks
             $('#id_total').attr('readonly', true);
             // manage the registration price
-            var kao = false;
-            if ( $('#id_kao_member_0').is(':checked') ) {
-                kao = true;
-            }
-            $('input[id^="id_registration_fee_"]').click(function() {
-                $reg_fee = parseInt($(this).attr('value').split('|')[1]);
-                // after deadline late fee for some folks
-                if (dueDate < today) {
-                  late_fee = 75;
-                  $reg_fee += late_fee;
-                }
-                // kao discount
-                if ( kao == true ) {
-                  $reg_fee -= 50;
-                }
-                // add the service charge if paying by credit card
-                if (service_charge == true) {
-                  $reg_fee += ($reg_fee * .03);
-                }
-                $('#id_total').attr('value', $reg_fee);
+            $('input[name="registration_fee"]').click(function() {
+              reg_fee = parseInt($(this).attr('value').split('|')[1]);
+              reg_fee = calculate_fee(true,false,false,false);
             });
             $('#id_kao_member_0').click(function() {
-                if ($reg_fee > 0) {
-                    if (service_charge == true) {
-                      // remove service charge
-                      $reg_fee -= $reg_fee - ($reg_fee / 1.03);
-                    }
-                    // kao discount
-                    $reg_fee -= 50;
-                    if (service_charge == true) {
-                      // add service charge
-                      $reg_fee += ($reg_fee * .03);
-                    }
-                    $('#id_total').attr('value', $reg_fee);
-                }
-                kao = true;
+              kao = true;
+              reg_fee = calculate_fee(false,true,false,false);
             });
             $('#id_kao_member_1').click(function() {
-                if (kao == true) {
-                    if ($reg_fee > 0) {
-                        if (service_charge == true) {
-                          // remove service charge
-                          $reg_fee -= $reg_fee - ($reg_fee / 1.03);
-                        }
-                        // remove kao discount
-                        $reg_fee += 50;
-                        if (service_charge == true) {
-                           // add service charge
-                          $reg_fee += ($reg_fee * .03);
-                        }
-                        $('#id_total').attr('value', $reg_fee);
-                    }
-                }
-                kao = false;
+              kao = false;
+              reg_fee = calculate_fee(false,true,false,false);
+            });
+            $('#id_abstract_0').click(function() {
+              abs = true;
+              reg_fee = calculate_fee(false,false,true,false);
+            });
+            $('#id_abstract_1').click(function() {
+              abs = false;
+              reg_fee = calculate_fee(false,false,true,false);
+            });
+            $('#id_payment_method_0').click(function() {
+              service_charge = true;
+              reg_fee = calculate_fee(false,false,false,true);
+              if (reg_fee > 0 ) {
+                $('#check-details').slideUp(200);
+                $('#creditcard-details').slideDown(200);
+              }
+            });
+            $('#id_payment_method_1').click(function() {
+              service_charge = false;
+              reg_fee = calculate_fee(false,false,false,true);
+              if (reg_fee > 0 ) {
+                $('#creditcard-details').slideUp(200);
+                $('#check-details').slideDown(200);
+              }
             });
             // disable submit button after users clicks it
             $('form#profile').bind('submit', function (e) {
-                $('form#profile input[type=submit]').prop('disabled', true);
-                return true;
+              $('form#profile input[type=submit]').prop('disabled', true);
+              return true;
             });
         });
     </script>
@@ -121,11 +154,13 @@ Conference on the Environment
     #check-details { display:none; }
     #creditcard-details { display:none; }
     {% endif %}{% endif %}
-    #id_kao_member li,#id_payment_method li {display:inline;padding-right:3px;}
+    #id_abstract li,#id_kao_member li,#id_payment_method li {display:inline;padding-right:3px;}
     </style>
 {% endblock %}
 {% block group_name %}IEA Conference{% endblock %}
-{% block left_nav %}{% endblock %}
+{% block left_nav %}
+{% include "polisci/iea/left_nav.html" %}
+{% endblock %}
 {% block content_head %}
     <h1 id="page_title">
         International Interdisciplinary
@@ -150,7 +185,7 @@ Conference on the Environment
           <ol>
             {% for field in form_con.visible_fields %}
               {% if field.name == "payment_method" %}
-                <li class="form-group ctrlHolder">
+                <li class="form-group ctrlHolder" id="registrationNotes">
                   <h5>Registration Fee Notes</h5>
                     {% get_lw_content as pay_check blurbs 2397 %}
                     {{pay_check.body}}
@@ -158,8 +193,12 @@ Conference on the Environment
                 {% for field in form_ord.visible_fields %}
                   {% include "form_field.inc.html" %}
                 {% endfor %}
+                {% with dominatrix="paymentMethod" %}
+                  {% include "form_field.inc.html" %}
+                {% endwith %}
+              {% else %}
+                {% include "form_field.inc.html" %}
               {% endif %}
-              {% include "form_field.inc.html" %}
             {% endfor %}
           </ol>
         </fieldset>
@@ -222,6 +261,13 @@ Conference on the Environment
           </ol>
         </fieldset>
         <fieldset class="blockLabels">
+            {% if form_proc.captcha.errors %}
+                <div class="required warning">
+                <span class="error-message">
+                  {{ form_proc.captcha.errors|join:", "}}
+                </span>
+                </div>
+            {% endif %}
             {{form_proc.captcha}}
         </fieldset>
         {% include "form_submit.inc.html" %}

@@ -103,6 +103,8 @@ TEMPLATES = [
         },
     },
 ]
+# include html5 form attributes in input fields
+REQUIRED_ATTRIBUTE = True
 INSTALLED_APPS = (
 
     # django apps

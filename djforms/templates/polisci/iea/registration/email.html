@@ -1,17 +1,6 @@
 {% load livewhale_api %}
 {% get_lw_content as confirmation blurbs 2657 %}
-{{confirmation.body}}
-<p>
-    Thank you registering for the <em>IICE Conference.</em>.
-</p>
-<p>
-    This email is your registration confirmation and may be used as a receipt
-    for expense purposes.
-</p>
-<p>
-    If you have any questions, please do not hesitate to
-    <a href="mailto:dusinger@carthage.edu">contact us</a>.
-</p>
+{{confirmation.body|safe}}
 <dl style="margin-bottom:30px;">
     <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
         margin-right:10px; padding:5px; width:200px;">

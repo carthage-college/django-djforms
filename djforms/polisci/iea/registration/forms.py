@@ -15,11 +15,6 @@ from localflavor.us.forms import USPhoneNumberField
 from django_countries.widgets import CountrySelectWidget
 
 
-FEE_CHOICES = (
-    ("55","Faculty/Graduate student $55"),
-    ("10","Undergraduate student $10")
-)
-
 class RegistrationContactForm(ContactForm):
     """
     IEA conference registration contact form, extends
@@ -59,8 +54,19 @@ class RegistrationContactForm(ContactForm):
         """
     )
     kao_member = forms.TypedChoiceField(
+        label = "Do you have KAO membership?",
         choices=BINARY_CHOICES, widget=forms.RadioSelect(),
-        help_text = 'KAO Members receive a $50 discount on the Registration Fee.'
+        help_text = """
+            KAO Members receive a $50 discount on the Registration Fee.
+        """
+    )
+    abstract = forms.TypedChoiceField(
+        label = "Did you submit an abstract and pay the $50 fee?",
+        choices=BINARY_CHOICES, widget=forms.RadioSelect(),
+        help_text = """
+            Registrants who submitted an abstract and paid the fee receive a
+            $50 discount on the Registration Fee.
+        """
     )
     payment_method = forms.TypedChoiceField(
         choices=PAYMENT_CHOICES, widget=forms.RadioSelect(),
@@ -76,7 +82,7 @@ class RegistrationContactForm(ContactForm):
             'first_name','last_name','institution','email',
             'address1','address2','city','state','postal_code','country',
             'phone','serve_as','discipline','specialty','registration_fee',
-            'kao_member','payment_method'
+            'kao_member','abstract','payment_method'
         )
         widgets = {'country': CountrySelectWidget}
 
