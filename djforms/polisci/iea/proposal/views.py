@@ -69,7 +69,7 @@ def form(request):
                 order.reg = contact
                 order.contact = contact
 
-                send_mail(
+                sent = send_mail(
                     request, TO_LIST,
                     "[IEA] Conference Abstract Proposal", contact.email,
                     'polisci/iea/proposal/email.html', order, BCC
