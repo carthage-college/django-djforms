@@ -9,11 +9,10 @@ Conference on the Environment
 {% block extra_javascript %}
     {{ block.super }}
     <script type="text/javascript">
+        var total;
         // late fee date
         var today = new Date();
         var dueDate = new Date("2019-05-01");
-
-        var total;
         {% if form_con.data.kao_member == "Yes" %}
         var kao = true;
         {% else %}
@@ -86,8 +85,15 @@ Conference on the Environment
             $('#id_total').attr('readonly', true);
             // manage the registration price
             $('input[name="registration_fee"]').click(function() {
-              reg_fee = parseInt($(this).attr('value').split('|')[1]);
-              reg_fee = calculate_fee(true,false,false);
+              reg = $(this).attr('value').split('|');
+              reg_fee = parseInt(reg[1]);
+              if (reg[0] == 'Spouses/companions') {
+                $('#id_abstract_1').prop('checked', true);
+                $('#id_abstract_0').attr('disabled', true);
+              } else {
+                $('#id_abstract_0').attr('disabled', false);
+                reg_fee = calculate_fee(true,false,false);
+              }
             });
             $('#id_kao_member_0').click(function() {
               kao = true;
@@ -200,7 +206,9 @@ Conference on the Environment
                   {% include "form_field.inc.html" %}
                 {% endwith %}
               {% else %}
+                {% with dominatrix=field.name %}
                 {% include "form_field.inc.html" %}
+                {% endwith %}
               {% endif %}
             {% endfor %}
           </ol>
