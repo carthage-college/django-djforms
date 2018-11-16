@@ -1,7 +1,7 @@
 from django import forms
-from djforms.admissions.visitdays.models import VisitDayBaseProfile
-from djforms.admissions.visitdays.models import VisitDayEvent
-from djforms.admissions.visitdays.models import VisitDayProfile
+from djforms.admissions.visitdays.models import (
+    GUARDIAN_CHOICES, VisitDayBaseProfile, VisitDayEvent, VisitDayProfile
+)
 from djforms.core.models import STATE_CHOICES
 
 from localflavor.us.forms import USPhoneNumberField, USZipCodeField
@@ -13,7 +13,7 @@ now = datetime.datetime.today()
 
 class VisitDayBaseForm(forms.ModelForm):
 
-    email = forms.EmailField()
+    email = forms.EmailField(label="Email")
     postal_code = USZipCodeField(label="Zip Code")
     phone = USPhoneNumberField(
         help_text="Format: XXX-XXX-XXXX"
@@ -65,7 +65,14 @@ class VisitDayBaseForm(forms.ModelForm):
 
 class VisitDayForm(forms.ModelForm):
 
-    email = forms.EmailField()
+    email = forms.EmailField(label="Student Email")
+    guardian_email = forms.EmailField(label="Parent Email", required=False)
+    guardian_type = forms.ChoiceField(
+        label="",
+        widget=forms.RadioSelect,
+        choices=GUARDIAN_CHOICES,
+        required = False
+    )
     postal_code = USZipCodeField(
         label="Zip Code", help_text="Format: 99999 or 99999-9999"
     )
@@ -88,8 +95,8 @@ class VisitDayForm(forms.ModelForm):
         model = VisitDayProfile
         fields = [
             'date','number_attend','first_name','last_name',
-            'email','address','city','state','postal_code',
-            'phone','mobile','gender','high_school','hs_city',
+            'email','guardian_email','guardian_type','address','city','state',
+            'postal_code','phone','mobile','gender','high_school','hs_city',
             'hs_state','hs_grad_year','entry_as','transfer',
             'entry_year','entry_term','academic','xtracurricular',
             'comments'

@@ -37,6 +37,14 @@
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.last_name}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Email</dt>
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.email}}</dd>
+    {% if data.profile.guardian_email %}
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Parent Email</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.guardian_email}}</dd>
+    {% endif %}
+    {% if data.profile.guardian_type %}
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Parent Type</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.guardian_type}}</dd>
+    {% endif %}
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Address</dt>
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.address}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">City</dt>

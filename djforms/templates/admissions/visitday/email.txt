@@ -11,7 +11,9 @@ Zip......................... {{data.profile.postal_code}}
 Phone....................... {{data.profile.phone}}
 Mobile...................... {{data.profile.mobile}}
 Gender...................... {{data.profile.gender}}
-{% if not data.short %}High School................. {{data.profile.high_school}}
+{% if not data.short %}Parent Email................ {{data.profile.guardian_email}}
+Parent Type................. {{data.profile.guardian_type}}
+High School................. {{data.profile.high_school}}
 City........................ {{data.profile.hs_city}}
 State....................... {{data.profile.hs_state}}
 Graduation Year............. {{data.profile.hs_grad_year}}

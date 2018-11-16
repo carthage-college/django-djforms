@@ -8,6 +8,11 @@ ENTRY_CHOICES = [
     ('Freshman','Freshman'),
     ('Transfer','Transfer'),
 ]
+GUARDIAN_CHOICES = (
+    ('Mother', 'Mother'),
+    ('Father', 'Father'),
+    ('Guardian', 'Guardian'),
+)
 
 DATEFORMAT = '%A, %B %d, %Y'
 
@@ -91,6 +96,10 @@ class VisitDayBaseProfile(GenericContact):
 
 
 class VisitDayProfile(VisitDayBaseProfile):
+    guardian_email = models.EmailField(null=True, blank=True)
+    guardian_type = models.CharField(
+        "Parent/Guardian type", max_length=16, choices=GUARDIAN_CHOICES
+    )
     high_school = models.CharField(
         "High School", max_length=255
     )
