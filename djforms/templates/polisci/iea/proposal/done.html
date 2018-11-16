@@ -1,12 +1,6 @@
 {% extends "polisci/iea/proposal/form.html" %}
+{% load livewhale_api %}
 {% block content %}
-    <h2>Thank you for participating</h2>
-    <p>
-        We have received your paper proposal for the conference.
-        We will respond to you presently.
-    </p>
-    <p>
-        If you have any questions, please do not hesitate to
-        <a href="mailto:jroberg@carthage.edu">contact us</a>.
-    </p>
+    {% get_lw_content as success blurbs 2661 %}
+    {{success.body}}
 {% endblock %}
