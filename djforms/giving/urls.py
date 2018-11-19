@@ -6,11 +6,11 @@ from djforms.giving import views
 
 urlpatterns = [
     url(
-        r'^donors', views.donors, name='giving_donors'
-    ),
-    url(
         r'^donors/(?P<slug>[a-zA-Z0-9_-]+)',
         views.donors, name='giving_donors_campaign'
+    ),
+    url(
+        r'^donors', views.donors, name='giving_donors'
     ),
     url(
         r'^manager/cash/$',
