@@ -8,7 +8,10 @@
 {% include "giving/donation_form.inc.js" %}
 <script type="text/javascript">
     $(function() {
-
+        $('.tk-useless').click(function(){
+            console.log($(this).val());
+            $('#id_or-total').val($(this).val());
+        });
     });
 </script>
 {% endblock %}
@@ -39,6 +42,7 @@
     .generic-subpage #page-content-wrap { margin-top: 0; }
     .ui-widget button { float: right; }
     #dialog-message{padding:8px;}
+    .button {width:200px;}
     </style>
 {% endblock %}
 {% block hero %}
@@ -112,6 +116,11 @@
         <h2>Donation Information</h2>
         <fieldset class="blockLabels">
             <ol>
+                <li class="ctrlHolder">
+                  <button type="button" value="25" class="button tk-useless">$25</button>
+                  <button type="button" value="50" class="button tk-useless">$50</button>
+                  <button type="button" value="100" class="button tk-useless">$100</button>
+                </li>
                 <li class="ctrlHolder">
                     <h3><label for="id_or-total">Amount</label></h3>
                         {% if or_form.total.errors %}
