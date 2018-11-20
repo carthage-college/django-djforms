@@ -11,7 +11,7 @@ Conference on the Environment
     <script type="text/javascript">
         $(function() {
             var total;
-            var late_fee = 75;
+            var late_fee = 50;
             var reg_fee = {{form_ord.data.total|default:0}};
             var discounts = {
                 Yes:-50, No:50
@@ -20,7 +20,7 @@ Conference on the Environment
             var kao_flag = {% if form_ord.data.kao_member == 'Yes' %}true{% else %}false{% endif %};
             // late fee date
             var today = new Date();
-            var dueDate = new Date("2019-05-01");
+            var dueDate = new Date("2018-05-01");
             // set total field to readonly so we can update it accordingly
             // NOTE: we don't need these two blocks
             $('#id_total').attr('readonly', true);
