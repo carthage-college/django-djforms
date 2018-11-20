@@ -11,7 +11,6 @@ Conference on the Environment
     <script type="text/javascript">
         $(function() {
             var total;
-            var late_fee = 50;
             var reg_fee = {{form_ord.data.total|default:0}};
             var discounts = {
                 Yes:-50, No:50
@@ -19,8 +18,12 @@ Conference on the Environment
             var abstract_flag = {% if form_ord.data.abstract == 'Yes' %}true{% else %}false{% endif %};
             var kao_flag = {% if form_ord.data.kao_member == 'Yes' %}true{% else %}false{% endif %};
             // late fee date
+            var late_fee = false;
             var today = new Date();
-            var dueDate = new Date("2018-05-01");
+            var dueDate = new Date("2019-05-01");
+            if (dueDate < today) {
+              late_fee = true;
+            }
             // set total field to readonly so we can update it accordingly
             // NOTE: we don't need these two blocks
             $('#id_total').attr('readonly', true);
@@ -30,8 +33,8 @@ Conference on the Environment
                 // only registration_fee would be 0
                 if (val == 0) {
                   // late fee
-                  if (dueDate < today) {
-                   fee += late_fee;
+                  if (late_fee == true) {
+                   fee += 50;
                   }
                   if (kao_flag == true) {
                     fee -= 50;
@@ -69,6 +72,12 @@ Conference on the Environment
                 $('#id_abstract_0').attr('disabled', true);
                 $('#id_kao_member_1').prop('checked', false);
                 $('#id_kao_member_0').prop('checked', false);
+                kao_flag = false;
+                if (late_fee == true) {
+                  console.log(reg_fee);
+                  reg_fee += 50;
+                  console.log(reg_fee);
+                }
               } else {
                 $('#id_abstract_0').attr('disabled', false);
               }
