@@ -9,80 +9,57 @@ Conference on the Environment
 {% block extra_javascript %}
     {{ block.super }}
     <script type="text/javascript">
-        var total;
-        // late fee date
-        var today = new Date();
-        var dueDate = new Date("2019-05-01");
-        {% if form_con.data.kao_member == "Yes" %}
-        var kao = true;
-        {% else %}
-        var kao = false;
-        {% endif %}
-        {% if form_con.data.abstract == "Yes" %}
-        var abs= true;
-        {% else %}
-        var abs = false;
-        {% endif %}
-        {% if form_con.data.payment_method == "Credit Card" %}
-        var service_charge = true;
-        {% else %}
-        var service_charge = false;
-        {% endif %}
-        var late_fee = 0;
-        var reg_fee = {{form_ord.data.total|default:0}};
-
-        function calculate_fee(reg_fee, kao, abs) {
-          var total = window.reg_fee;
-          // after deadline there is alate fee
-          if (reg_fee == true) {
-            if (window.dueDate < window.today && window.late_fee > 0) {
-              window.late_fee = 50;
-              total += 50;
-            }
-            if (window.service_charge) {
-               total += (total * .03);
-            }
-          }
-          // kao discount
-          $kao = $('input[name=kao_member]:checked').val();
-          if (typeof $kao !== 'undefined' && kao == true) {
-            if ( window.kao == true ) {
-              total -= 50;
-            }
-            if ( window.kao == false ) {
-              total += 50;
-            }
-          }
-          // abstract discount
-          $abs = $('input[name=abstract]:checked').val();
-          if (typeof $abs !== 'undefined' && abs == true) {
-            if ( window.abs == true ) {
-              total -= 50;
-            }
-            if ( window.abs == false ) {
-              total += 50;
-            }
-          }
-          if (parseFloat(total) <= 0) {
-            total = 0;
-            $('#check-details').hide();
-            $('#paymentMethod').hide();
-            $('#id_payment_method_0').prop('checked', false);
-            $('#id_payment_method_1').prop('checked', true);
-            window.service_charge = false;
-            $('#creditcard-details').hide();
-            $('#id_total').attr('value', 0);
-            alert("You do not owe anything for registration based on your KAO and abstract submission discounts. Click the submit button and you will have completed the registration.")
-          } else {
-            $('#id_total').attr('value', total.toFixed(2));
-          }
-          return total;
-        }
-
         $(function() {
+            var total;
+            var late_fee = 75;
+            var reg_fee = {{form_ord.data.total|default:0}};
+            var discounts = {
+                Yes:-50, No:50
+            }
+            var abstract_flag = {% if form_ord.data.abstract == 'Yes' %}true{% else %}false{% endif %};
+            var kao_flag = {% if form_ord.data.kao_member == 'Yes' %}true{% else %}false{% endif %};
+            // late fee date
+            var today = new Date();
+            var dueDate = new Date("2019-05-01");
             // set total field to readonly so we can update it accordingly
             // NOTE: we don't need these two blocks
             $('#id_total').attr('readonly', true);
+
+
+            function calc_reg(fee, val){
+                // only registration_fee would be 0
+                if (val == 0) {
+                  // late fee
+                  if (dueDate < today) {
+                   fee += late_fee;
+                  }
+                  if (kao_flag == true) {
+                    fee -= 50;
+                  }
+                  if (abstract_flag == true) {
+                    fee -= 50;
+                  }
+                } else {
+                  fee += val;
+                }
+                if (parseFloat(fee) <= 0) {
+                  $('#total').hide();
+                  $('#check-details').hide();
+                  $('#paymentMethod').hide();
+                  $('#id_payment_method_0').prop('checked', false);
+                  $('#id_payment_method_1').prop('checked', true);
+                  $('#creditcard-details').hide();
+                  alert("You do not owe anything for registration based on your KAO and abstract submission discounts. Click the submit button and you will have completed the registration.")
+
+                }else{
+                  $('#total').show();
+                  $('#paymentMethod').show();
+                  $('#id_payment_method_0').prop('checked', false);
+                  $('#id_payment_method_1').prop('checked', false);
+                }
+                return fee
+            }
+
             // manage the registration price
             $('input[name="registration_fee"]').click(function() {
               reg = $(this).attr('value').split('|');
@@ -90,46 +67,60 @@ Conference on the Environment
               if (reg[0] == 'Spouses/companions') {
                 $('#id_abstract_1').prop('checked', true);
                 $('#id_abstract_0').attr('disabled', true);
+                $('#id_kao_member_1').prop('checked', false);
+                $('#id_kao_member_0').prop('checked', false);
               } else {
                 $('#id_abstract_0').attr('disabled', false);
-                reg_fee = calculate_fee(true,false,false);
+              }
+              reg_fee = calc_reg(reg_fee, 0);
+              $('#id_total').attr('value', reg_fee.toFixed(2));
+            });
+
+
+
+            $('input[name=kao_member]').on('change', function() {
+              if (reg_fee > 0) {
+                $kval = $('input[name=kao_member]:checked', '#profile').val();
+                if ( ($kval == 'No' && kao_flag == true) || ($kval == 'Yes' && kao_flag == false) ) {
+                  reg_fee = calc_reg(reg_fee, discounts[$(this).val()]);
+                }
+                $('#id_total').attr('value', reg_fee.toFixed(2));
+              }
+              if ($kval == 'Yes') {
+                kao_flag = true;
+              }else{
+                kao_flag = false;
               }
             });
-            $('#id_kao_member_0').click(function() {
-              kao = true;
-              reg_fee = calculate_fee(false,true,false);
-            });
-            $('#id_kao_member_1').click(function() {
-              kao = false;
-              reg_fee = calculate_fee(false,true,false);
-            });
-            $('#id_abstract_0').click(function() {
-              abs = true;
-              reg_fee = calculate_fee(false,false,true);
-            });
-            $('#id_abstract_1').click(function() {
-              abs = false;
-              reg_fee = calculate_fee(false,false,true);
-            });
-            $('#id_payment_method_0').click(function() {
-                if (reg_fee > 0 && service_charge == false) {
-                  reg_fee += (reg_fee * .03);
-                  $('#id_total').attr('value', reg_fee);
+
+
+            $('input[name=abstract]').on('change', function() {
+              if (reg_fee > 0) {
+                $aval = $('input[name=abstract]:checked', '#profile').val();
+                if ( ($aval == 'No' && abstract_flag == true) || ($aval == 'Yes' && abstract_flag == false) ) {
+                  reg_fee = calc_reg(reg_fee, discounts[$(this).val()]);
                 }
-                service_charge = true;
+                $('#id_total').attr('value', reg_fee.toFixed(2));
+              }
+              if ($aval == 'Yes') {
+                abstract_flag = true;
+              }else{
+                abstract_flag = false;
+              }
+            });
+
+
+
+
+            $('#id_payment_method_0').click(function() {
                 $('#check-details').slideUp(200);
                 $('#creditcard-details').slideDown(200);
             });
             $('#id_payment_method_1').click(function() {
-                // remove service charge if need be
-                if (reg_fee > 0 && service_charge == true) {
-                  reg_fee -= reg_fee - (reg_fee / 1.03);
-                  $('#id_total').attr('value', reg_fee);
-                }
-                service_charge = false;
                 $('#creditcard-details').slideUp(200);
                 $('#check-details').slideDown(200);
             });
+
             // disable submit button after users clicks it
             $('form#profile').bind('submit', function (e) {
               $('form#profile input[type=submit]').prop('disabled', true);
@@ -200,14 +191,16 @@ Conference on the Environment
                     {{pay_check.body}}
                 </li>
                 {% for field in form_ord.visible_fields %}
-                  {% include "form_field.inc.html" %}
+                  {% with dominatrix=field.name %}
+                    {% include "form_field.inc.html" %}
+                  {% endwith %}
                 {% endfor %}
                 {% with dominatrix="paymentMethod" %}
                   {% include "form_field.inc.html" %}
                 {% endwith %}
               {% else %}
                 {% with dominatrix=field.name %}
-                {% include "form_field.inc.html" %}
+                  {% include "form_field.inc.html" %}
                 {% endwith %}
               {% endif %}
             {% endfor %}

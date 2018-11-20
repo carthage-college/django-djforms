@@ -34,7 +34,7 @@ def form(request):
                 reg[0],reg[1]
             )
             if contact.payment_method == 'Credit Card':
-
+                order.total = float(order.total) + (float(order.total) * .03)
                 form_proc = TrustCommerceForm(
                     order, contact, request.POST, use_required_attribute=False
                 )
