@@ -7,15 +7,8 @@
     </h1>
 {% endblock %}
 {% block content %}
-<p class="intro">
-  Thank you to everyone who has given for Carthage’s Giving Tuesday!
-  This list will be updated regularly. Check back often to see who’s given.
-</p>
-<em>
-  If you gave anonymously but would now like to be recognized,
-  please email us at
-  <a href="mailto:giving@carthage.edu">giving@carthage.edu</a>.
-</em>
+{% get_lw_content as intro blurbs 2666 %}
+{{intro.body}}
 <!--
 <h2>
   {{count|intcomma}} Giving Day Donations
