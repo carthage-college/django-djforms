@@ -276,7 +276,7 @@ class Promotion(models.Model):
         null=True, blank=True
     )
     email_info = models.TextField(
-        "Email instructions",
+        "Email content",
         help_text = """
             This information will be sent to the contact email address
             of the person filling out the form.
