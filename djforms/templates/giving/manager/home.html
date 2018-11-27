@@ -195,7 +195,7 @@ $(document).ready(function() {
         <td>{{o.order_transid|default:"&nbsp;"}}</td>
         <td>{{o.order_status}}</td>
         <td>{{o.order_total}}</td>
-        <td>{{o.order_comments|default:"&nbsp;"}}</td>
+        <td>{{o.order_comments|truncatewords:5|default:"&nbsp;"}}</td>
         <td>{{o.anonymous|default:"&nbsp;"}}</td>
       </tr>
     {% endfor %}
