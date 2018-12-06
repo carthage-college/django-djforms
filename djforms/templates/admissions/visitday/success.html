@@ -10,7 +10,12 @@
     </h1>
 {% endblock %}
 {% block extra_javascript %}{% endblock %}
-{% block extra_style %}{% endblock %}
+{% block extra_style %}
+{{block.super}}
+<script>
+  fbq('track', 'CompleteRegistration');
+</script>
+{% endblock %}
 {% block content %}
     {% get_lw_content as success blurbs 2143 %}
     {{success.body}}
