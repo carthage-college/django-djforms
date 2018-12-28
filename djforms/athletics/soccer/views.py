@@ -10,7 +10,7 @@ from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
 from djforms.athletics.soccer.forms import SoccerCampInsuranceCardForm
 
 from djtools.utils.mail import send_mail
-REQUIRED_ATTRIBUTE = settings.REQUIRED_ATTRIBUTE
+REQUIRED_ATTRIBUTE = False
 
 
 def camp_registration(request):
@@ -40,7 +40,7 @@ def camp_registration(request):
                 )
                 form_proc = TrustCommerceForm(
                     order, contact, request.POST,
-                    use_required_attribute=REQUIRED_ATTRIBUTE
+                    use_required_attribute=False
                 )
                 if form_proc.is_valid():
                     r = form_proc.processor_response
@@ -101,17 +101,17 @@ def camp_registration(request):
         else:
             if request.POST.get('payment_method') == 'Credit Card':
                 form_proc = TrustCommerceForm(
-                    None,request.POST,use_required_attribute=REQUIRED_ATTRIBUTE
+                    None,request.POST, use_required_attribute=False
                 )
                 form_proc.is_valid()
             else:
                 form_proc = TrustCommerceForm(
-                    use_required_attribute=REQUIRED_ATTRIBUTE
+                    use_required_attribute=False
                 )
     else:
         form_reg = SoccerCampRegistrationForm()
         form_proc = TrustCommerceForm(
-            use_required_attribute=REQUIRED_ATTRIBUTE
+            use_required_attribute=False
         )
 
     return render(
