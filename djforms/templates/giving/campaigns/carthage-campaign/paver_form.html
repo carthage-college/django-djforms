@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load livewhale_api %}
 {% block title %}
-    Brick Form &mdash; Giving &mdash; Carthage College
+    Paver Form &mdash; Giving &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
     <script type="text/javascript">
         $(function() {
             var year = new Date().getFullYear();
-            {% if ct_form.brick_type.value != "500" %}
+            {% if ct_form.paver_type.value != "500" %}
             $("#inscription_4").slideUp(200);
             $("#inscription_5").slideUp(200);
             {% endif %}
@@ -15,8 +15,8 @@
             $('#personal_price').text("$" + (100 + (year-2000)));
             $('#recognition_price').text("$" + (300 + (year-2000)));
             {% endif %}
-            $("input[name=ct-brick_type]:radio").change(function () {
-                if ($(this).attr("id") == "recognition_brick") {
+            $("input[name=ct-paver_type]:radio").change(function () {
+                if ($(this).attr("id") == "recognition_paver") {
                     $("#inscription_4").slideDown(200);
                     $("#inscription_5").slideDown(200);
                 } else {
@@ -37,7 +37,7 @@
             });
             // disable submit button after users clicks it
             $('form#profile').bind('submit', function (e) {
-                $('#id_or-total').val( $("input[name=ct-brick_type]:checked").val() );
+                $('#id_or-total').val( $("input[name=ct-paver_type]:checked").val() );
                 $('form#profile input[type=submit]').prop('disabled', true);
                 return true;
             });
@@ -84,7 +84,7 @@
         {{ hidden }}
         {% endfor %}
         <fieldset class="blockLabels">
-            <legend>Brick Details</legend>
+            <legend>paver Details</legend>
             <ol>
                 <li class="ctrlHolder">
                     <h3>
@@ -95,37 +95,37 @@
                     {{ct_form.class_of}}
                 </li>
                 <li class="ctrlHolder">
-                    {% if ct_form.brick_type.errors %}
+                    {% if ct_form.paver_type.errors %}
                         <div class="required warning">
                             <span class="error-message">
-                                {{ ct_form.brick_type.errors|join:", "}}
+                                {{ ct_form.paver_type.errors|join:", "}}
                             </span>
                         </div>
                     {% endif %}
-                    <input type="radio" id="personal_brick" value="250"
-                        name="ct-brick_type" class="fleft"
-                        {% if ct_form.brick_type.value == "250" %}
+                    <input type="radio" id="personal_paver" value="250"
+                        name="ct-paver_type" class="fleft"
+                        {% if ct_form.paver_type.value == "250" %}
                         checked="checked"
                         {% endif %}
                         >
-                    <label for="personal_brick" class="cf">
+                    <label for="personal_paver" class="cf">
                         <strong>
-                            <em>Personal Brick</em>&mdash;
+                            <em>Personal paver</em>&mdash;
                             <span id="personal_price" class="cost">$250</span>
                         </strong>
                     </label>
                     (4" x 8" - 3 lines)<br>
                 </li>
                 <li class="ctrlHolder">
-                    <input type="radio" id="recognition_brick" class="fleft"
-                        name="ct-brick_type" value="500"
-                        {% if ct_form.brick_type.value == "500" %}
+                    <input type="radio" id="recognition_paver" class="fleft"
+                        name="ct-paver_type" value="500"
+                        {% if ct_form.paver_type.value == "500" %}
                         checked="checked"
                         {% endif %}
                         >
-                    <label for="recognition_brick">
+                    <label for="recognition_paver">
                         <strong>
-                            <em>Recognition Brick</em>&mdash;
+                            <em>Recognition paver</em>&mdash;
                             <span id="recognition_price" class="cost">
                                 $500
                             </span>
@@ -182,7 +182,7 @@
             <legend>Contact Information</legend>
             <ol>
                 {% for field in ct_form %}
-                    {% if field.name != "class_of" and field.name != "brick_type" and field.name != "inscription_1" and field.name != "inscription_2" and field.name != "inscription_3" and field.name != "inscription_4" and field.name != "inscription_5" %}
+                    {% if field.name != "class_of" and field.name != "paver_type" and field.name != "inscription_1" and field.name != "inscription_2" and field.name != "inscription_3" and field.name != "inscription_4" and field.name != "inscription_5" %}
                     <li class="ctrlHolder">
                         {% if field.name != "address2" %}
                         <h3>{{ field.label_tag }}</h3>

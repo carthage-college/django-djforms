@@ -7,12 +7,12 @@
     <script type="text/javascript">
         $(function() {
             var year = new Date().getFullYear();
-            {% if ct_form.brick_type.value == "250" or not ct_form.brick_type.value %}
+            {% if ct_form.paver_type.value == "250" or not ct_form.paver_type.value %}
               $("#inscription_4").slideUp(200);
               $("#inscription_5").slideUp(200);
               $("#inscription_6").slideUp(200);
               $("#inscription_7").slideUp(200);
-            {% else %}{% if ct_form.brick_type.value == "500" %}
+            {% else %}{% if ct_form.paver_type.value == "500" %}
               $("#inscription_6").slideUp(200);
               $("#inscription_7").slideUp(200);
             {% else %}
@@ -25,15 +25,15 @@
             $('#recognition_price').text("$" + (300 + (year-2000)));
             $('#laudatory_price').text("$" + (600 + (year-2000)));
             {% endif %}
-            $("input[name=ct-brick_type]:radio").change(function () {
-                if ($(this).attr("id") == "recognition_brick") {
+            $("input[name=ct-paver_type]:radio").change(function () {
+                if ($(this).attr("id") == "recognition_paver") {
                   $("#inscription_4").slideDown(200);
                   $("#inscription_5").slideDown(200);
                   $("#inscription_6").slideUp(200);
                   $("#inscription_7").slideUp(200);
                   $("#id_ct-inscription_6").val("");
                   $("#id_ct-inscription_7").val("");
-                } else if ($(this).attr("id") == "laudatory_brick") {
+                } else if ($(this).attr("id") == "laudatory_paver") {
                   $("#inscription_4").slideDown(200);
                   $("#inscription_5").slideDown(200);
                   $("#inscription_6").slideDown(200);
@@ -68,7 +68,7 @@
             });
             // disable submit button after users clicks it
             $('form#profile').bind('submit', function (e) {
-              $('#id_or-total').val($("input[name=ct-brick_type]:checked").val());
+              $('#id_or-total').val($("input[name=ct-paver_type]:checked").val());
               $('form#profile input[type=submit]').prop('disabled', true);
                 return true;
             });
@@ -127,17 +127,17 @@
                     <p class="help">If applicable</p>
                 </li>
                 <li class="ctrlHolder">
-                    {% if ct_form.brick_type.errors %}
+                    {% if ct_form.paver_type.errors %}
                         <div class="required warning">
                             <span class="error-message">
-                                {{ ct_form.brick_type.errors|join:", "}}
+                                {{ ct_form.paver_type.errors|join:", "}}
                             </span>
                         </div>
                     {% endif %}
-                    <input type="radio" id="personal_brick" name="ct-brick_type" value="250"{% if ct_form.brick_type.value == "250" %} checked="checked"{% endif %}>
-                    <label for="personal_brick">
+                    <input type="radio" id="personal_paver" name="ct-paver_type" value="250"{% if ct_form.paver_type.value == "250" %} checked="checked"{% endif %}>
+                    <label for="personal_paver">
                         <strong>
-                            <em>Peronsal Brick</em>&mdash;
+                            <em>Peronsal Paver</em>&mdash;
                             <span id="personal_price" class="cost">$250</span>
                         </strong>
                         (4" x 8" - 3 lines)
@@ -145,10 +145,10 @@
                     </label>
                 </li>
                 <li class="ctrlHolder">
-                    <input type="radio" id="recognition_brick" name="ct-brick_type" value="500"{% if ct_form.brick_type.value == "500" %} checked="checked"{% endif %}>
-                    <label for="recognition_brick">
+                    <input type="radio" id="recognition_paver" name="ct-paver_type" value="500"{% if ct_form.paver_type.value == "500" %} checked="checked"{% endif %}>
+                    <label for="recognition_paver">
                         <strong>
-                            <em>Recognition Brick</em>&mdash;
+                            <em>Recognition Paver</em>&mdash;
                             <span id="recognition_price" class="cost">$500</span>
                         </strong>
                         (8" x 8" - 5 lines)
@@ -156,8 +156,8 @@
                     </label>
                 </li>
                 <li class="ctrlHolder">
-                    <input type="radio" id="laudatory_brick" name="ct-brick_type" value="1000"{% if ct_form.brick_type.value == "1000" %} checked="checked"{% endif %}>
-                    <label for="laudatory_brick">
+                    <input type="radio" id="laudatory_paver" name="ct-paver_type" value="1000"{% if ct_form.paver_type.value == "1000" %} checked="checked"{% endif %}>
+                    <label for="laudatory_paver">
                         <strong>
                             <em>Laudatory Paver</em>&mdash;
                             <span id="laudatory_price" class="cost">
@@ -280,7 +280,7 @@
             <legend>Contact Information</legend>
             <ol>
                 {% for field in ct_form %}
-                    {% if field.name != "class_of" and field.name != "brick_type" and field.name != "inscription_1" and field.name != "inscription_2" and field.name != "inscription_3" and field.name != "inscription_4" and field.name != "inscription_5" and field.name != "inscription_6" and field.name != "inscription_7" %}
+                    {% if field.name != "class_of" and field.name != "paver_type" and field.name != "inscription_1" and field.name != "inscription_2" and field.name != "inscription_3" and field.name != "inscription_4" and field.name != "inscription_5" and field.name != "inscription_6" and field.name != "inscription_7" %}
                     <li class="ctrlHolder">
                         {% if field.name != "address2" %}
                         <h3>{{ field.label_tag }}</h3>

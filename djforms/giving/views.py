@@ -86,16 +86,6 @@ def giving_form(request, transaction, campaign=None):
             or_form, ct_form, request.POST,
             use_required_attribute=REQUIRED_ATTRIBUTE
         )
-        # donation amount calculation
-        if not campaign and class_of==str(YEAR):
-            if or_data.total == 250:
-                or_data.total = PAVER_TYPES[0][0]
-            elif or_data.total == 500:
-                or_data.total = PAVER_TYPES[2][0]
-            elif or_data.total == 1000:
-                or_data.total = PAVER_TYPES[4][0]
-            else:
-                raise Http404
 
         if ct_form.is_valid() and or_form.is_valid():
             contact = ct_form.save()
@@ -106,6 +96,15 @@ def giving_form(request, transaction, campaign=None):
             or_data.auth = 'sale'
             # deal with commemorative paver options
             class_of = contact.class_of
+            # donation amount calculation for current students
+            if not campaign and class_of==str(YEAR):
+                if or_data.total == 250:
+                    or_data.total = PAVER_TYPES[0][0]
+                elif or_data.total == 500:
+                    or_data.total = PAVER_TYPES[2][0]
+                elif or_data.total == 1000:
+                    or_data.total = PAVER_TYPES[4][0]
+
             if transaction=='paver':
                 comments = u'{}\n{}\n{}\n{}\n{}\n{}\n{}\n'.format(
                     ct_form['inscription_1'].value(),
