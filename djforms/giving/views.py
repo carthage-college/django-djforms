@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 
 from djforms.giving.forms import *
 from djforms.core.models import Promotion
-from djforms.giving.models import BrickContact, DonationContact
+from djforms.giving.models import PaverContact, DonationContact
 from djforms.processors.forms import TrustCommerceForm as CreditCardForm
 
 from djtools.fields import TODAY
@@ -20,7 +20,6 @@ import os
 import json
 
 YEAR = TODAY.year
-BRICK_PRICES = ['250','500',YEAR-2000+200,YEAR-2000+300]
 REQUIRED_ATTRIBUTE = settings.REQUIRED_ATTRIBUTE
 
 
@@ -87,6 +86,17 @@ def giving_form(request, transaction, campaign=None):
             or_form, ct_form, request.POST,
             use_required_attribute=REQUIRED_ATTRIBUTE
         )
+        # donation amount calculation
+        if not campaign and class_of==str(YEAR):
+            if or_data.total == 250:
+                or_data.total = PAVER_TYPES[0][0]
+            elif or_data.total == 500:
+                or_data.total = PAVER_TYPES[2][0]
+            elif or_data.total == 1000:
+                or_data.total = PAVER_TYPES[4][0]
+            else:
+                raise Http404
+
         if ct_form.is_valid() and or_form.is_valid():
             contact = ct_form.save()
             or_data = or_form.save(commit=False)
@@ -94,31 +104,21 @@ def giving_form(request, transaction, campaign=None):
             or_data.operator = 'DJForms{}'.format(trans_cap)
             or_data.avs = 0
             or_data.auth = 'sale'
-            # deal with commemorative brick options
+            # deal with commemorative paver options
             class_of = contact.class_of
-            if transaction=='brick':
-                comments = u'{}\n{}\n{}\n{}\n{}\n'.format(
+            if transaction=='paver':
+                comments = u'{}\n{}\n{}\n{}\n{}\n{}\n{}\n'.format(
                     ct_form['inscription_1'].value(),
                     ct_form['inscription_2'].value(),
                     ct_form['inscription_3'].value(),
                     ct_form['inscription_4'].value(),
                     ct_form['inscription_5'].value(),
+                    ct_form['inscription_6'].value(),
+                    ct_form['inscription_7'].value(),
                 )
-                if campaign:
-                    comments += u'{}\n{}\n'.format(
-                        ct_form['inscription_6'].value(),
-                        ct_form['inscription_7'].value(),
-                    )
-                if not campaign and class_of==str(YEAR):
-                    if or_data.total == 250:
-                        or_data.total = BRICK_PRICES[2]
-                    elif or_data.total == 500:
-                        or_data.total = BRICK_PRICES[3]
-                    else:
-                        raise Http404
                 or_data.comments = comments
             # deal with payments if they have chosen to pledge
-            if transaction != 'brick' and request.POST.get('or-pledge') != '':
+            if transaction != 'paver' and request.POST.get('or-pledge') != '':
                 #or_data.payments = request.POST['or-payments']
                 or_data.payments = 0
                 or_data.auth = 'store'
@@ -392,8 +392,8 @@ def manager(request, slug=None):
     start_date = TODAY - timedelta(days=365)
     end_date = TODAY + timedelta(days=1)
 
-    if slug == 'bricks':
-        donors = BrickContact.objects.filter(
+    if slug == 'paver':
+        donors = PaverContact.objects.filter(
             order__time_stamp__gte=start_date
         ).filter(order__status__in=['approved','manual'])
     else:

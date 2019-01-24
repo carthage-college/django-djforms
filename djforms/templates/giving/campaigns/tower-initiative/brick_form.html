@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load livewhale_api %}
 {% block title %}
-    Tower Intitative Brick Form &mdash; Giving &mdash; Carthage College
+    Paver Form &mdash; Giving &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
     <script type="text/javascript">
@@ -64,7 +64,7 @@
 {% endblock %}
 {% block content %}
     <div class="content cf">
-        {% get_lw_content as content blurbs 2596 %}
+        {% get_lw_content as content blurbs 2046 %}
         {{content.body}}
     </div>
     <div class="forms-container large-8 medium-8 small-12">
@@ -81,7 +81,7 @@
         {% endfor %}
         {% block details %}
         <fieldset class="blockLabels">
-            <legend>Brick Details</legend>
+            <legend>Paver Details</legend>
             <ol>
                 <li class="ctrlHolder">
                     <h3>
@@ -108,7 +108,7 @@
                         >
                     <label for="personal_brick" class="cf">
                         <strong>
-                            <em>Personal Brick</em>&mdash;
+                            <em>Personal Paver</em>&mdash;
                             <span id="personal_price" class="cost">$500</span>
                         </strong>
                     </label>
@@ -124,7 +124,7 @@
                         >
                     <label for="recognition_brick">
                         <strong>
-                            <em>Recognition Brick</em>&mdash;
+                            <em>Recognition Paver</em>&mdash;
                             <span id="recognition_price" class="cost">
                                 $1000
                             </span>

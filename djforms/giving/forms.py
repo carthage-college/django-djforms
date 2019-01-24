@@ -3,7 +3,7 @@ from django import forms
 from djforms.core.models import Promotion, STATE_CHOICES
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
-from djforms.giving.models import BrickContact, DonationContact
+from djforms.giving.models import PaverContact, DonationContact
 
 from djtools.fields import TODAY
 from djforms.core.models import BINARY_CHOICES
@@ -23,14 +23,12 @@ CYCLES = (
     ('3m', 'Quarterly'),
     ('12m', 'Yearly'),
 )
-BRICK_TYPES = (
-    (YEAR-2000+100,YEAR-2000+100),
+PAVER_TYPES = (
+    (YEAR-2000+200,YEAR-2000+200),
     (250, 250),
     (YEAR-2000+300,YEAR-2000+300),
     (500, 500),
-)
-TOWER_INITITATIVE_BRICK_TYPES = (
-    (500, 500),
+    (YEAR-2000+600,YEAR-2000+600),
     (1000, 1000)
 )
 RELATION_CHOICES = (
@@ -45,55 +43,17 @@ CLASS = [(x, x) for x in reversed(xrange(1926,YEAR + 4))]
 CLASS.insert(0, ('','-----'))
 
 
-class BrickContactForm(ContactForm):
+class PaverContactForm(ContactForm):
     """
-    Brick contact form
-    """
-
-    class_of = forms.ChoiceField(
-        required=False, label='Class of', choices=CLASS
-    )
-    brick_type = forms.ChoiceField(
-        label='Class of', choices=BRICK_TYPES,
-        widget=forms.RadioSelect()
-    )
-    inscription_1 = forms.CharField(
-        max_length=14, required=False
-    )
-    inscription_2 = forms.CharField(
-        max_length=14, required=False
-    )
-    inscription_3 = forms.CharField(
-        max_length=14, required=False
-    )
-    inscription_4 = forms.CharField(
-        max_length=14, required=False
-    )
-    inscription_5 = forms.CharField(
-        max_length=14, required=False
-    )
-
-    class Meta:
-        model = BrickContact
-        fields = (
-            'first_name','last_name','email','phone',
-            'address1','address2','city','state','postal_code',
-            'class_of','inscription_1','inscription_2','inscription_3',
-            'inscription_4','inscription_5'
-        )
-
-
-class TowerInitiativeBrickContactForm(ContactForm):
-    """
-    Tower Initiative Brick contact form
+    Paver contact form
     """
 
     class_of = forms.ChoiceField(
         required=False, label='Class of', choices=CLASS,
         help_text="If applicable"
     )
-    brick_type = forms.ChoiceField(
-        label='Class of', choices=TOWER_INITITATIVE_BRICK_TYPES,
+    paver_type = forms.ChoiceField(
+        label='Class of', choices=PAVER_TYPES,
         widget=forms.RadioSelect()
     )
     inscription_1 = forms.CharField(
@@ -118,8 +78,9 @@ class TowerInitiativeBrickContactForm(ContactForm):
         max_length=19, required=False
     )
 
+
     class Meta:
-        model = BrickContact
+        model = PaverContact
         fields = (
             'first_name','last_name','email','phone',
             'address1','address2','city','state','postal_code',
@@ -128,9 +89,9 @@ class TowerInitiativeBrickContactForm(ContactForm):
         )
 
 
-class BrickOrderForm(OrderForm):
+class PaverOrderForm(OrderForm):
     """
-    Brick order form
+    Paver order form
     """
 
     total = forms.CharField(widget=forms.HiddenInput())
@@ -255,7 +216,6 @@ class DonationOrderForm(OrderForm):
         )
 
 
-
 class GivingTuesdayDonationOrderForm(DonationOrderForm):
     """
     Donation form for giving tuesday campaign
@@ -340,6 +300,7 @@ class PledgeOrderForm(OrderForm):
             'auth'
         )
 
+
 class ManagerContactForm(DonationContactForm):
     '''
     form that allows manager to create a donation contact manually for
@@ -390,4 +351,3 @@ class ManagerOrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ('total','promotion')
-

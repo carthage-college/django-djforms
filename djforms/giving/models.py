@@ -123,9 +123,9 @@ class DonationContact(Contact):
         return bny
 
 
-class BrickContact(Contact):
+class PaverContact(Contact):
     '''
-    Brick contact details for an order
+    Paver contact details for an order
     '''
 
     class_of = models.CharField(

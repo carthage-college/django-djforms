@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from djforms.giving.models import BrickContact, DonationContact
+from djforms.giving.models import PaverContact, DonationContact
 from djforms.processors.models import Order
 
 class OrderInline(admin.TabularInline):
@@ -109,7 +109,7 @@ class DonationContactAdmin(admin.ModelAdmin):
             obj.updated_by = request.user
         obj.save()
 
-class BrickContactAdmin(DonationContactAdmin):
+class PaverContactAdmin(DonationContactAdmin):
     exclude = ('country','second_name',)
     ordering = (
         '-created_at','last_name','city','state','postal_code',
@@ -122,5 +122,5 @@ class BrickContactAdmin(DonationContactAdmin):
     )
     pass
 
-admin.site.register(BrickContact, BrickContactAdmin)
+admin.site.register(PaverContact, PaverContactAdmin)
 admin.site.register(DonationContact, DonationContactAdmin)
