@@ -23,7 +23,7 @@
             {% if ct_form.class_of.value == year %}
             $('#personal_price').text("$" + (200 + (year-2000)));
             $('#recognition_price').text("$" + (300 + (year-2000)));
-            $('#laudatory_price').text("$" + (600 + (year-2000)));
+            $('#laudatory_price').text("$" + (700 + (year-2000)));
             {% endif %}
             $("input[name=ct-paver_type]:radio").change(function () {
                 if ($(this).attr("id") == "recognition_paver") {
@@ -59,7 +59,7 @@
                 if ($(this).val() == year) {
                     $('#personal_price').text("$" + (200 + (year-2000)));
                     $('#recognition_price').text("$" + (300 + (year-2000)));
-                    $('#laudatory_price').text("$" + (600 + (year-2000)));
+                    $('#laudatory_price').text("$" + (700 + (year-2000)));
                 } else {
                     $('#personal_price').text("$250");
                     $('#recognition_price').text("$500");
@@ -137,7 +137,7 @@
                     <input type="radio" id="personal_paver" name="ct-paver_type" value="250"{% if ct_form.paver_type.value == "250" %} checked="checked"{% endif %}>
                     <label for="personal_paver">
                         <strong>
-                            <em>Peronsal Paver</em>&mdash;
+                            <em>Personal Paver</em>&mdash;
                             <span id="personal_price" class="cost">$250</span>
                         </strong>
                         (4" x 8" - 3 lines)
