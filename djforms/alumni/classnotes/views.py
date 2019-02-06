@@ -7,12 +7,9 @@ from djforms.alumni.classnotes.forms import ContactForm
 from djforms.alumni.classnotes.models import Contact
 from djtools.utils.mail import send_mail
 
-from honeypot.decorators import check_honeypot
-
 import datetime
 
 
-@check_honeypot
 def contact(request):
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL]
