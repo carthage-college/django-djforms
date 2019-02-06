@@ -22,9 +22,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'USER': '',
         'PASSWORD': '',
-        'OPTIONS': {
-           'init_command': 'SET storage_engine=MyISAM',
-        }
+        #'OPTIONS': {
+           #'init_command': 'SET storage_engine=MyISAM',
+        #}
     },
 }
 
