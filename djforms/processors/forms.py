@@ -89,8 +89,7 @@ class CreditCardForm(forms.Form):
     security_code = forms.CharField(
         max_length=4,
         help_text="""
-            The three or four digit security code
-            on the back of your credit card.
+            The 3 or 4 digit code on your credit card.
         """,
         widget=forms.TextInput(attrs=REQ)
     )
