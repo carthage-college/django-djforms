@@ -141,6 +141,13 @@
     <dd style="margin:2px 0; padding:5px 0;">
         {{data.order.contact.spouse|default:"&nbsp;"}}
     </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold;
+      margin-right:10px; padding:5px; width:220px;">
+      Spouse's Class
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+      {{data.order.contact.spouse_class|default:"&nbsp;"}}
+    </dd>
 </dl>
 {% block comments %}
 {% if data.order.comments %}
@@ -148,6 +155,10 @@
 <p>{{data.order.comments}}</p>
 {% endif %}
 {% endblock comments %}
+{% if data.order.contact.honouring %}
+<h3>In honour of</h3>
+<p>{{data.order.contact.honouring}}</p>
+{% endif %}
 {% if data.order.contact.matching_company %}
 <h3>Matching Funds</h3>
 <ul>

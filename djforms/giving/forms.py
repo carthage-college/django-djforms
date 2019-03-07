@@ -83,7 +83,7 @@ class PaverContactForm(ContactForm):
         model = PaverContact
         fields = (
             'first_name','last_name','email','phone',
-            'address1','address2','city','state','postal_code',
+            'address1','city','state','postal_code',
             'class_of','inscription_1','inscription_2','inscription_3',
             'inscription_4','inscription_5','inscription_6','inscription_7'
         )
@@ -107,7 +107,7 @@ class DonationContactForm(ContactForm):
     """
 
     address1 = forms.CharField(
-        required=True, label = "Address", max_length=255
+        required=True, label="Address", max_length=255
     )
     city = forms.CharField(
         required=True, max_length=120
@@ -122,46 +122,40 @@ class DonationContactForm(ContactForm):
         required=True, max_length=12
     )
     class_of = forms.ChoiceField(
-        required=False, label='Class of', choices=CLASS
+        required=False, label="Class of", choices=CLASS
     )
     matching_company = forms.BooleanField(
         required=False,
-        label='I/we are employed by a matching gift company.'
+        label="I/we are employed by a matching gift company"
     )
     opt_in = forms.BooleanField(
         required=False,
-        label='''
+        label="""
             I would like more information about planned gifts such as
             charitable trusts, charitable gifts annuities,
             life insurance, or will inclusions.
-        '''
+        """
     )
     anonymous = forms.BooleanField(
         required=False,
-        label='''
+        label="""
             I would like my gift to remain anonymous, and not be
             published on any donor list or in the annual report.
-        '''
+        """
     )
-    spouse = forms.CharField(
-        required=False, label='Spouse', max_length=100
+    spouse_class = forms.ChoiceField(
+        required=False, label="Spouse's Class", choices=CLASS
     )
     relation = forms.ChoiceField(
-        choices=RELATION_CHOICES, label='Relation to Carthage'
+        choices=RELATION_CHOICES, label="Relation to Carthage"
     )
 
     class Meta:
         model = DonationContact
-        '''
         fields = (
-            'first_name','last_name','relation','class_of','email',
-            'address1','address2','city','state','postal_code','opt_in',
-            'anonymous'
-        )
-        '''
-        fields = (
-            'first_name','last_name','spouse','relation','class_of','email',
-            'phone','address1','address2','city','state','postal_code',
+            'honouring','first_name','last_name',
+            'spouse','spouse_class','relation','class_of','email',
+            'phone','address1','city','state','postal_code',
             'matching_company','opt_in','anonymous'
         )
 
@@ -181,7 +175,7 @@ class GivingDayDonationContactForm(DonationContactForm):
         model = DonationContact
         fields = (
             'first_name','last_name','relation','class_of','email',
-            'address1','address2','city','state','postal_code','opt_in',
+            'address1','city','state','postal_code','opt_in',
             'anonymous'
         )
 
@@ -194,12 +188,12 @@ class DonationOrderForm(OrderForm):
     total = forms.CharField(label="Amount")
     comments = forms.CharField(
         label = "Designation",
-        help_text='''
+        help_text="""
             Please indicate if you would like your gift to be directed to
             a specific area. If this space is left blank, gifts will be
             directed to the
             <a href="/give/carthage-fund/">Carthage Fund</a>.
-        ''',
+        """,
         required=False
     )
     payments = forms.CharField(

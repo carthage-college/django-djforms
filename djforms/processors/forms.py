@@ -5,7 +5,7 @@ from models import Contact, Order
 from trust_commerce import PaymentProcessor
 
 from captcha.fields import ReCaptchaField
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from localflavor.us.forms import USZipCodeField
 
 from datetime import date
 
@@ -18,9 +18,9 @@ class ContactForm(forms.ModelForm):
     """
     A generic form to collect contact info
     """
-    phone = USPhoneNumberField(
+    phone = forms.CharField(
         label="Phone number", max_length=12,
-        help_text="Format: XXX-XXX-XXXX", required=False
+        required=False
     )
     state = forms.CharField(
         widget=forms.Select(choices=STATE_CHOICES), required=False

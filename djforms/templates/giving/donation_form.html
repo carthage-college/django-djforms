@@ -60,20 +60,21 @@
         {% endfor %}
         <h2>Donation Information</h2>
         <fieldset class="blockLabels">
+          <div class="large-6 medium-12 small-12 clear cf">
             <ol>
                 <li class="ctrlHolder">
                     <h3><label for="id_or-total">Amount</label></h3>
-                        {% if or_form.total.errors %}
-                            <div class="required warning">
-                            <span class="error-message">
-                                {{ or_form.total.errors|join:", "}}
-                            </span>
-                        {% else %}
-                            <div class="required">
-                        {% endif %}
-                        <input type="text" placeholder="$"
-                            name="or-total" id="id_or-total" class="required"
-                            value="{{or_form.total.value|default:""}}">
+                    {% if or_form.total.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                            {{ or_form.total.errors|join:", "}}
+                      </span>
+                    {% else %}
+                    <div class="required">
+                    {% endif %}
+                      <input type="text" placeholder="$"
+                        name="or-total" id="id_or-total" class="required"
+                        value="{{or_form.total.value|default:""}}">
                     </div>
                 </li>
                 <li class="ctrlHolder">
@@ -90,7 +91,11 @@
                     {{recurring_warning.body}}
                     </div>
                 </li>
-                {% block designation %}
+            </ol>
+          </div>
+          <div class="column2 large-6 medium-12 small-12">
+            <ol>
+              {% block designation %}
                 <li class="ctrlHolder">
                     <h3><label for="id_or-comments">Designation</label></h3>
                     <div>
@@ -104,22 +109,21 @@
                       </p>
                     </div>
                 </li>
-                {% endblock %}
+              {% endblock %}
+              {% with ct_form.honouring as field %}
+              {% include "form_field.inc.html" %}
+              {% endwith %}
             </ol>
+          </div>
         </fieldset>
         <h2>Contact Information</h2>
         <fieldset class="blockLabels">
+          <div class="large-6 medium-12 small-12 clear cf">
             <ol>
                 {% for field in ct_form %}
+                  {% if field.name != "honouring" and field.name != "matching_company" and field.name != "opt_in" and field.name != "anonymous" %}
                     <li class="ctrlHolder">
-                    {% if field.name == "matching_company" or field.name == "opt_in" %}
-                    {{field}} {{field.label_tag}}
-                    {% else %}{% if field.name == "anonymous" %}{% else %}
-                        {% if field.name == "address2" %}
-                        <label for="id_ct-address2" style="display:none;">{{ field.name }}</label>
-                        {% else %}
                         <h3>{{ field.label_tag }}</h3>
-                        {% endif %}
                         {% if field.errors %}
                             <div class="required warning">
                             <span class="error-message">
@@ -134,12 +138,29 @@
                             <p class="help">{{field.help_text}}</p>
                         {% endif %}
                         </div>
-                        {% if field.name == "postal_code" %}
-                        </li><li><h3>Matching Funds</h3></li>
+                        {% if field.name == "class_of" %}
+                        </li></ol></div>
+                        <div class="column2 large-6 medium-12 small-12">
+                        <ol><li class="ctrlHolder">
                         {% endif %}
-                    {% endif %}{% endif %}
                     </li>
+                  {% endif %}
                 {% endfor %}
+            </ol>
+          </div>
+          <div class="large-12 medium-12 small-12 clear cf">
+            <ol>
+                <li><h3>Matching Funds</h3></li>
+                <li class="ctrlHolder">
+                {% with ct_form.matching_company as field %}
+                {{field}} {{field.label_tag}}
+                {% endwith %}
+                </li>
+                <li class="ctrlHolder">
+                {% with ct_form.opt_in as field %}
+                {{field}} {{field.label_tag}}
+                {% endwith %}
+                </li>
                 <li>
                     <h3>Thrivent Choice</h3>
                     <p>
@@ -159,22 +180,60 @@
                     I would like my gift to remain anonymous,
                     and not be published on any donor list or
                     in the annual report.</label>
-
                 </li>
             </ol>
+          </div>
         </fieldset>
         <h2>Billing Information</h2>
         <fieldset class="blockLabels">
+          <div class="large-12 medium-12 small-12">
             {% if form_proc.errors and status %}
-                <div style="padding-left:4px;">
-                <p class="error">The transaction failed. Error: <strong>{{status}}</strong></p>
-                </div>
+            <div style="padding-left:4px;">
+              <p class="notice">
+                The transaction failed.
+                {% if status == "baddata" or status == "decline" %}
+                Error: <strong>{{status}}</strong>
+                {% endif %}
+              </p>
+            </div>
             {% endif %}
+
+            <div class="large-6 medium-12 small-12 clear cf">
             <ol>
-                {% include "form_field_credit_card.inc.html" %}
+            {% with form_proc.billing_name as field %}
+            {% include "form_field.inc.html" %}
+            {% endwith %}
+            {% with form_proc.card_number as field %}
+            {% include "form_field.inc.html" %}
+            {% endwith %}
+            <li class="ctrlHolder">
+              <h3>
+                <label for="id_expiration_month">Expiration Date</label>
+              </h3>
+              <div class="required">
+                {{form_proc.expiration_month}}
+                <label for="id_expiration_year" style="display:none;">
+                Expiration Year
+                </label>
+                &mdash;&nbsp;
+                {{form_proc.expiration_year}}
+              </div>
+            </li>
             </ol>
+            </div>
+            <div class="column2 large-6 medium-12 small-12">
+            <ol>
+            {% with form_proc.security_code as field %}
+            {% include "form_field.inc.html" %}
+            {% endwith %}
+            {% with form_proc.captcha as field %}
+            {% include "form_field.inc.html" %}
+            {% endwith %}
+            </ol>
+            </div>
+          </div>
         </fieldset>
-        {% include "form_submit.inc.html" %}
+      {% include "form_submit.inc.html" %}
     </form>
 </div>
 {% if campaign.about %}
