@@ -250,25 +250,25 @@ class Promotion(models.Model):
         editable=False, null=True, blank=True
     )
     date_created = models.DateTimeField(
-        "Date Created", auto_now_add=True
+        auto_now_add=True
     )
     title = models.CharField(max_length=255)
+    designation = models.CharField(
+        max_length=255, null=True, blank=True
+    )
     slug = models.SlugField(
-        "Slug", max_length=255, unique=True
+        max_length=255, unique=True
     )
     description = models.TextField(
-        "Description",
         help_text="This information will appear above the form.",
         null=True, blank=True
     )
     about = models.TextField(
-        "About",
         help_text = """
             This information will appear in the sidebar next to the form.
         """, editable=False, null=True, blank=True
     )
     thank_you = models.TextField(
-        "Thank you",
         help_text = """
             This information will be appear after the visitor
             successfully submits the form.

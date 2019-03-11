@@ -35,8 +35,8 @@ $(document).ready(function() {
   var table = $('#data-table').DataTable({
     'order': [[ 3, 'desc' ]],
     'lengthMenu': [
-      [25, 50, 100, 250, 500, 1000, 2000, -1],
-      [25, 50, 100, 250, 500, 1000, 2000, 'All']
+      [10, 25, 50, 100, 250, 500, 1000, 2000, -1],
+      [10, 25, 50, 100, 250, 500, 1000, 2000, 'All']
     ],
     dom: 'lfrBtip',
     buttons: [
@@ -183,7 +183,10 @@ $(document).ready(function() {
         <td>{{o.city|default:"&nbsp;"}}</td>
         <td>{{o.state|default:"&nbsp;"}}</td>
         <td>{{o.postal_code|default:"&nbsp;"}}</td>
-        <td>{{o.spouse|default:"&nbsp;"}}</td>
+        <td>
+            {{o.spouse|default:"&nbsp;"}}
+            {{o.spouse_class|default:"&nbsp;"}}
+        </td>
         <td>{{o.relation}}</td>
         <td>{{o.class_of}}</td>
         <td>

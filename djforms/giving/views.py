@@ -212,6 +212,7 @@ def giving_form(request, transaction, campaign=None):
                 )
             except:
                 pass
+
         or_form = str_to_class(
             'djforms.giving.forms', or_form_name
         )(prefix='or', initial=init, use_required_attribute=REQUIRED_ATTRIBUTE)
