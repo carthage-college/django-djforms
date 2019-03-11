@@ -1,1 +1,1 @@
-{% autoescape off %}{% spaceless %}{% for obj in donors %}{% ifchanged obj.last_name and ifchanged obj.first_name %}<div>{{obj.first_name|title|escapejs}} {{obj.last_name|title|escapejs}}</div>{% endifchanged %}{% endfor %}{% endspaceless %}{% endautoescape %}
+{% autoescape off %}{% spaceless %}{% for obj in donors %}{% ifchanged obj.last_name and ifchanged obj.first_name %}<div>{{obj.first_name|title}} {{obj.last_name|title}}</div>{% endifchanged %}{% endfor %}{% endspaceless %}{% endautoescape %}
