@@ -99,6 +99,40 @@
                 <li class="ctrlHolder">
                     <h3><label for="id_or-comments">Designation</label></h3>
                     <div>
+                        {% if or_form.comments.value == '' %} selected{% endif %}
+                    {% if campaign.slug == "athletics-challenge" %}
+                      <select name="or-comments">
+                        <option>----Choose a Sport----</option>
+                        <option value="UA04"{% if or_form.comments.value == 'UA04' %} selected{% endif %}>General Athletics</option>
+                        <option value="UA08"{% if or_form.comments.value == 'UA08' %} selected{% endif %}>Baseball</option>
+                        <option value="UA09"{% if or_form.comments.value == 'UA09' %} selected{% endif %}>Men's Basketball</option>
+                        <option value="UA10"{% if or_form.comments.value == 'UA10' %} selected{% endif %}>Women's Basketball</option>
+                        <option value="UA14"{% if or_form.comments.value == 'UA14' %} selected{% endif %}>Cheerleading</option>
+                        <option value="UA16"{% if or_form.comments.value == 'UA16' %} selected{% endif %}>Men's Cross Country</option>
+                        <option value="UA17"{% if or_form.comments.value == 'UA17' %} selected{% endif %}>Women's Cross Country</option>
+                        <option value="UA19"{% if or_form.comments.value == 'UA19' %} selected{% endif %}>Football</option>
+                        <option value="UA20"{% if or_form.comments.value == 'UA20' %} selected{% endif %}>Men's Golf</option>
+                        <option value="UA21"{% if or_form.comments.value == 'UA21' %} selected{% endif %}>Women's Golf</option>
+                        <option value="UA22"{% if or_form.comments.value == 'UA22' %} selected{% endif %}>Men's Lacrosse</option>
+                        <option value="UA23"{% if or_form.comments.value == 'UA23' %} selected{% endif %}>Women's Lacrosse</option>
+                        <option value="UA25"{% if or_form.comments.value == 'UA25' %} selected{% endif %}>Red Hots dance team</option>
+                        <option value="UA29"{% if or_form.comments.value == 'UA29' %} selected{% endif %}>Men's Soccer</option>
+                        <option value="UA30"{% if or_form.comments.value == 'UA30' %} selected{% endif %}>Women's Soccer</option>
+                        <option value="UA31"{% if or_form.comments.value == 'UA31' %} selected{% endif %}>Softball</option>
+                        <option value="UA32"{% if or_form.comments.value == 'UA32' %} selected{% endif %}>Men's Swimming</option>
+                        <option value="UA33"{% if or_form.comments.value == 'UA33' %} selected{% endif %}>Women's Swimming</option>
+                        <option value="UA34"{% if or_form.comments.value == 'UA34' %} selected{% endif %}>Men's Tennis</option>
+                        <option value="UA35"{% if or_form.comments.value == 'UA35' %} selected{% endif %}>Women's Tennis</option>
+                        <option value="UA36"{% if or_form.comments.value == 'UA36' %} selected{% endif %}>Men's Track</option>
+                        <option value="UA37"{% if or_form.comments.value == 'UA37' %} selected{% endif %}>Women's Track and Field</option>
+                        <option value="UA39"{% if or_form.comments.value == 'UA39' %} selected{% endif %}>Men's Volleyball</option>
+                        <option value="UA40"{% if or_form.comments.value == 'UA40' %} selected{% endif %}>Women's Volleyball</option>
+                        <option value="UA41"{% if or_form.comments.value == 'UA41' %} selected{% endif %}>Women's Water Polo</option>
+                      </select>
+                      <p class="help">
+                        Please choose an Athletics designation.
+                      </p>
+                    {% else %}
                       <input type="text" name="or-comments" id="id_or-comments"
                         value="{{or_form.comments.value|default:""}}">
                       <p class="help">
@@ -107,6 +141,7 @@
                         left blank, gifts will be directed to the
                         <a href="/give/carthage-fund/">Carthage Fund</a>.
                       </p>
+                    {% endif %}
                     </div>
                 </li>
               {% endblock %}
