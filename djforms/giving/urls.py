@@ -44,7 +44,7 @@ urlpatterns = [
         views.giving_success, name='giving_success_generic'
     ),
     url(
-        r'^(?P<transaction>[a-zA-Z0-9_-]+)/(?P<campaign>[a-zA-Z0-9_-]+)',
+        r'^(?P<transaction>[a-zA-Z0-9_-]+)/(?P<campaign>[a-zA-Z0-9_-]+)/',
         views.giving_form, name='giving_form_campaign'
     ),
     url(

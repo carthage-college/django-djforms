@@ -213,7 +213,7 @@ def giving_form(request, transaction, campaign=None):
             except:
                 pass
 
-        if campaign.designation:
+        if campaign and campaign.designation:
             init['comments'] = campaign.designation
 
         or_form = str_to_class(
@@ -294,12 +294,15 @@ def donors(request, slug=None):
         order__time_stamp__gte=start_date
     ).filter(order__status__in=['approved','manual'])
 
+
     if slug and slug != 'giving-day':
         donors = donors.filter(order__promotion__slug=slug)
 
+    spouses = donors.filter(spouse_class__isnull=False).exclude(spouse_class=' ')
+    count = donors.count() + spouses.count()
     ctext = {
-        'donors':donors, 'promo':promo, 'count':donors.count(),
-        'percent': percent
+        'donors':donors, 'promo':promo, 'count':count,
+        'percent': percent, 'spouses':spouses
     }
 
     if request.GET.get('ajax'):
@@ -310,17 +313,18 @@ def donors(request, slug=None):
     elif request.GET.get('latest'):
         try:
             latest = int(request.GET.get('latest'))
-            latest = request.GET.get('latest')
-            objects = donors.order_by('-order__time_stamp')[:latest]
+            ctext['donors'] = donors.order_by('-order__time_stamp')[:latest]
+            ctext['spouses'] = spouses.order_by('-order__time_stamp')[:latest]
             response = render(
-                request, 'giving/donors_latest.html', {'donors':objects},
+                request, 'giving/donors_latest.html', ctext,
                 content_type='text/plain; charset=utf-8'
             )
         except:
             raise Http404
-
     elif request.GET.get('relation'):
         donors = donors.filter(relation=request.GET.get('relation'))
+        spouses = donors.filter(spouse_class__isnull=False).exclude(spouse_class=' ')
+        count = donors.count() + spouses.count()
         results = [{"count": "{}".format(donors.count()),}]
         response = HttpResponse(
             json.dumps(results),

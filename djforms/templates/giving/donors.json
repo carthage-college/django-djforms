@@ -9,8 +9,8 @@
     {% for obj in donors %}
         {% ifchanged obj.last_name and ifchanged obj.first_name %}
         {
-            "last_name": "{{obj.last_name|title|escapejs}}",
-            "first_name": "{{obj.first_name|title|escapejs}}",
+            "last_name": "{{obj.last_name|title}}",
+            "first_name": "{{obj.first_name|title}}",
             "class_of": "{{obj.class_of}}",
             "relation": "({{obj.relation}})"
         }

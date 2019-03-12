@@ -25,11 +25,10 @@ class DonationContactAdmin(admin.ModelAdmin):
 
     list_display  = (
         'last_name','first_name','order_cc_name','created_at','email','phone',
-        'address1','address2','city','state','postal_code',
-        'spouse','relation','class_of','matching_company',
-        'order_promo', 'order_cycle','order_payments','order_start_date',
-        'order_transid','order_status','order_total',
-        'order_comments','opt_in','anonymous'
+        'address1','address2','city','state','postal_code','class_of','relation',
+        'spouse','spouse_class','matching_company','order_promo', 'order_cycle',
+        'order_payments','order_start_date','order_transid','order_status',
+        'order_total','order_comments','opt_in','anonymous'
     )
 
     def order_cc_name(self, obj):
