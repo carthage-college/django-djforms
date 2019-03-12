@@ -43,6 +43,16 @@ CLASS = [(x, x) for x in reversed(xrange(1926,YEAR + 4))]
 CLASS.insert(0, ('','-----'))
 
 
+class PhotoCaptionForm(forms.Form):
+    """
+    Add a caption to a photo form
+    """
+
+    caption = forms.CharField(
+        max_length=254, required=True
+    )
+
+
 class PaverContactForm(ContactForm):
     """
     Paver contact form

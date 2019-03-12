@@ -14,6 +14,7 @@ from djtools.fields import TODAY
 from djtools.utils.mail import send_mail
 from djtools.utils.convert import str_to_class
 
+from PIL import Image, ImageDraw, ImageFont
 from datetime import timedelta
 
 import os
@@ -21,6 +22,31 @@ import json
 
 YEAR = TODAY.year
 REQUIRED_ATTRIBUTE = settings.REQUIRED_ATTRIBUTE
+
+
+def photo_caption(request):
+    if request.POST:
+        form = PhotoCaptionForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            image = Image.open(settings.GIVING_DAY_CAPTION_FILE_ORIG)
+            font = ImageFont.truetype(settings.GIVING_DAY_FONT, size=45)
+            (x, y) = (100, 80)
+            message = cd['caption']
+            color = 'rgb(0, 0, 0)' # black
+            #color = 'rgb(255, 255, 255)' # white
+            draw = ImageDraw.Draw(image)
+            draw.text((x, y), message, fill=color, font=font)
+            image.save(settings.GIVING_DAY_CAPTION_FILE_NEW)
+            foto = True
+    else:
+        foto = False
+        form = PhotoCaptionForm()
+    return render(
+        request, 'giving/manager/photo_caption.html', {
+            'form':form,'foto':foto
+        }
+    )
 
 
 def giving_form(request, transaction, campaign=None):

@@ -27,6 +27,10 @@ urlpatterns = [
         views.manager, name='giving_manager_home'
     ),
     url(
+        r'^manager/photo/$',
+        views.photo_caption, name='photo_caption'
+    ),
+    url(
         r'^manager/(?P<slug>[a-zA-Z0-9_-]+)/$',
         views.manager, name='giving_manager_home_campaign'
     ),

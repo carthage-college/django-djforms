@@ -69,6 +69,8 @@ GIVING_DEFAULT_CAMPAIGN = 'giving-day'
 GIVING_DAY_START_DATE = datetime.strptime(
     'Jan 1 2017 6:00PM','%b %d %Y %I:%M%p'
 )
+GIVING_DAY_CAPTION_FILE = ''
+GIVING_DAY_FONT = ''
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
