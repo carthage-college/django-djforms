@@ -51,8 +51,6 @@ API_PEOPLE_URL=''
 AUTH_PROFILE_MODULE = 'core.UserProfile'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 SECRET_KEY = ''
-HONEYPOT_FIELD_NAME=''
-HONEYPOT_VALUE=''
 # Character Quest Window
 CHARACTER_QUEST_END_MONTH = 5
 CHARACTER_QUEST_END_DAY = 1
@@ -75,7 +73,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'honeypot.middleware.HoneypotMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 TEMPLATES = [
@@ -121,12 +118,9 @@ INSTALLED_APPS = (
     'bootstrapform',
     'django_countries',
     'captcha',
-    'honeypot',
     'imagekit',
-    #'oembed',
     'userprofile',
     'taggit',
-    #'taggit',
     # djforms stuff
     'djforms.admissions',
     'djforms.admissions.admitted',
@@ -157,7 +151,6 @@ INSTALLED_APPS = (
     'djforms.sustainability.green',
     'djforms.writingcurriculum',
     # other inhouse django apps
-    #'djtinue.enrichment',
     'djtools',
 )
 # django-countries settings
