@@ -6,7 +6,9 @@ from djforms.polisci.model_united_nations.models import Country
 from djforms.core.models import STATE_CHOICES, PAYMENT_CHOICES
 from djforms.processors.models import Order
 
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from djtools.fields.localflavor import USPhoneNumberField
+
+from localflavor.us.forms import USZipCodeField
 
 DELEGATIONS = (
     ('', '----'),
@@ -18,6 +20,7 @@ DELEGATIONS = (
 )
 
 COUNTRIES = Country.objects.filter(status=True).order_by("name")
+
 
 class AttenderForm(forms.ModelForm):
     """
@@ -64,6 +67,7 @@ class AttenderForm(forms.ModelForm):
             'delegation_1','delegation_2','delegation_3','delegation_4',
             'delegation_5'
         )
+
 
 class CountryForm(forms.Form):
     """
@@ -134,6 +138,7 @@ class CountryForm(forms.Form):
         l = [1,2,3,4,4,5,5,6,1]
         list(set([x for x in l if l.count(x) > 1]))
     '''
+
 
 class OrderForm(forms.ModelForm):
     """

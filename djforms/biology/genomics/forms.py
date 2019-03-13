@@ -3,7 +3,10 @@ from django import forms
 from djforms.core.models import STATE_CHOICES, BINARY_CHOICES
 from djforms.biology.genomics.models import PhageHunter
 
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from djtools.fields.localflavor import USPhoneNumberField
+
+from localflavor.us.forms import USZipCodeField
+
 
 class PhageHunterForm(forms.ModelForm):
     email = forms.EmailField()

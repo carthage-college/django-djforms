@@ -1,13 +1,13 @@
 from django import forms
 
-from localflavor.us.forms import USPhoneNumberField
-
 from djforms.core.models import BINARY_CHOICES
 
+from djtools.fields.localflavor import USPhoneNumberField
 
 HOUSING_CHOICES=[('', '---------- select ----------'),
                 ('Family stay', 'Family stay'),
                 ('Dormitory/Apt', 'Dormitory/Apt'),]
+
 
 class StudyAbroadForm(forms.Form):
     phone = USPhoneNumberField()

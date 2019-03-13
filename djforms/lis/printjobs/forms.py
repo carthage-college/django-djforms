@@ -1,8 +1,7 @@
 from django import forms
 
-from localflavor.us.forms import USPhoneNumberField
-
 from djforms.core.models import BINARY_CHOICES
+from djtools.fields.localflavor import USPhoneNumberField
 
 PAPER_CHOICES = [
     ('Bond','Bond'),
@@ -11,6 +10,7 @@ PAPER_CHOICES = [
 ]
 
 import datetime
+
 
 class PrintRequestForm(forms.Form):
     name = forms.CharField()

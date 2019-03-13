@@ -7,9 +7,8 @@ from djforms.prehealth.committee_letter.models import Applicant, Evaluation
 from djforms.prehealth.committee_letter.models import RANKING_CHOICES
 from djforms.prehealth.committee_letter.models import Recommendation
 
+from djtools.fields.localflavor import USPhoneNumberField
 from djtools.fields import BINARY_CHOICES
-
-from localflavor.us.forms import USPhoneNumberField
 
 PROGRAM_CHOICES = GenericChoice.objects.filter(
     tags__name__in=['Pre-Health Programs']

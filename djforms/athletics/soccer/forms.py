@@ -1,11 +1,14 @@
 from django import forms
-from djtools.fields import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
-from djtools.fields import STATE_CHOICES
 from djforms.processors.models import Contact
 from djforms.athletics.soccer.models import SoccerCampAttender, YEAR_CHOICES, REQ
 from djforms.athletics.soccer.models import SHIRT_SIZES, SESSIONS, AMOUNT_CHOICES
 
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from djtools.fields import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
+from djtools.fields import STATE_CHOICES
+from djtools.fields.localflavor import USPhoneNumberField
+
+from localflavor.us.forms import USZipCodeField
+
 
 class SoccerCampInsuranceCardForm(forms.Form):
 

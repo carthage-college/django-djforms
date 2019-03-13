@@ -2,9 +2,11 @@ from django import forms
 from django.forms import ModelForm
 
 from djforms.alumni.memory.models import Questionnaire
-from djtools.fields import YEARS1
 
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from djtools.fields import YEARS1
+from djtools.fields.localflavor import USPhoneNumberField
+
+from localflavor.us.forms import USZipCodeField
 
 CLASSYEARS  = list(YEARS1)
 CLASSYEARS.insert(0,("","--select--"))

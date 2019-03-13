@@ -2,12 +2,11 @@ from django import forms
 from django.conf import settings
 from django.utils.safestring import mark_safe
 
-from localflavor.us.forms import USPhoneNumberField
-
 from djforms.communications.printrequest.models import PrintRequest
 from djforms.communications.printrequest.models import FORMATS, CONSENT
 
 from djtools.fields import BINARY_CHOICES
+
 
 class PrintRequestForm(forms.ModelForm):
 

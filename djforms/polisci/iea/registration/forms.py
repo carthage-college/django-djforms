@@ -1,17 +1,16 @@
 from django import forms
 from django.utils.safestring import mark_safe
 
+from djforms.core.models import REQ
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
 from djforms.polisci.iea.registration.models import RegistrationContact
 from djforms.polisci.iea.registration.models import PAYMENT_CHOICES, REGGIES
 from djforms.polisci.iea.registration.models import SERVE_AS_CHOICES
-from djforms.core.models import REQ
 
 from djtools.fields import BINARY_CHOICES
 from djtools.fields import STATE_CHOICES
 
-from localflavor.us.forms import USPhoneNumberField
 from django_countries.widgets import CountrySelectWidget
 
 

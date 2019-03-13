@@ -5,8 +5,7 @@ from djforms.processors.forms import ContactForm, OrderForm
 from djforms.lis.conferences.mathematica.models import Registration
 from djforms.core.models import REQ, STATE_CHOICES
 
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
-
+from djtools.fields.localflavor import USPhoneNumberField
 
 FEE_CHOICES = (
     ("30","$30 for individual registration"),
@@ -19,6 +18,7 @@ FEE_CHOICES = (
         """
     ),
 )
+
 
 class RegistrationForm(ContactForm):
     """

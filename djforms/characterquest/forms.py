@@ -4,7 +4,10 @@ from djforms.characterquest.models import ApplicationProfile
 from djforms.core.models import UserProfile
 from djforms.core.models import GENDER_CHOICES, STATE_CHOICES, YEAR_CHOICES
 
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from djtools.fields.localflavor import USPhoneNumberField
+
+from localflavor.us.forms import USZipCodeField
+
 
 class ApplicationProfileForm(forms.ModelForm):
     address = forms.CharField(label="Permanent Address")
@@ -34,6 +37,7 @@ class ApplicationProfileForm(forms.ModelForm):
                    'creation_at','updated_at','country')
         fields = ['address','city','state','zip','phone','gender','dob',
                   'campus_address', 'campus_box','college_id','college_year']
+
 
 class ApplicationForm(forms.ModelForm):
 

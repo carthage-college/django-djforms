@@ -4,7 +4,9 @@ from djforms.core.models import STATE_CHOICES
 from djforms.core.models import BINARY_CHOICES
 from djforms.polisci.mun import COUNTRIES
 
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from djtools.fields.localflavor import USPhoneNumberField
+
+from localflavor.us.forms import USZipCodeField
 
 DELEGATIONS = (
     ('1', '1'),
@@ -13,6 +15,7 @@ DELEGATIONS = (
     ('4', '4'),
     ('5', '5'),
 )
+
 
 class AttenderForm(forms.Form):
     """

@@ -1,7 +1,9 @@
 from django import forms
 from djforms.core.models import STATE_CHOICES
 
-from localflavor.us.forms import USPhoneNumberField, USZipCodeField
+from djtools.fields.localflavor import USPhoneNumberField
+
+from localflavor.us.forms import USZipCodeField
 
 NOMINATED_FOR =  [
     (
@@ -13,6 +15,7 @@ NOMINATED_FOR =  [
         'Distinguished Alumni Service Award '
     ),
 ]
+
 
 class NomineeForm(forms.Form):
     name = forms.CharField(label="Name")
@@ -32,6 +35,7 @@ class NomineeForm(forms.Form):
     description = forms.CharField(
         label="Information Background on Nominee", widget=forms.Textarea
     )
+
 
 class NominatorForm(NomineeForm):
 
