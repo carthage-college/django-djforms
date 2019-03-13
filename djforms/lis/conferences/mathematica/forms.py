@@ -7,6 +7,8 @@ from djforms.core.models import REQ, STATE_CHOICES
 
 from djtools.fields.localflavor import USPhoneNumberField
 
+from localflavor.us.forms import USZipCodeField
+
 FEE_CHOICES = (
     ("30","$30 for individual registration"),
     ("40","$40 for individual registration  (after July 15)"),

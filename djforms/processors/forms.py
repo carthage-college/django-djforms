@@ -1,12 +1,13 @@
 from django import forms
-
 from djforms.core.models import STATE_CHOICES
+
 from models import Contact, Order
-from trust_commerce import PaymentProcessor
 
 from djtools.fields.localflavor import USPhoneNumberField
 from djtools.fields import TODAY
 
+from trust_commerce import PaymentProcessor
+from localflavor.us.forms import USZipCodeField
 from captcha.fields import ReCaptchaField
 
 EXP_MONTH = [(x, x) for x in xrange(1, 13)]
