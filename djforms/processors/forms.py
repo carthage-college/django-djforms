@@ -4,13 +4,13 @@ from djforms.core.models import STATE_CHOICES
 from models import Contact, Order
 from trust_commerce import PaymentProcessor
 
-from captcha.fields import ReCaptchaField
-from localflavor.us.forms import USZipCodeField
+from djtools.fields.localflavor import USPhoneNumberField
+from djtools.fields import TODAY
 
-from datetime import date
+from captcha.fields import ReCaptchaField
 
 EXP_MONTH = [(x, x) for x in xrange(1, 13)]
-EXP_YEAR = [(x, x) for x in xrange(date.today().year, date.today().year + 15)]
+EXP_YEAR = [(x, x) for x in xrange(TODAY.year, TODAY.year + 15)]
 REQ = {'class': 'required'}
 
 
