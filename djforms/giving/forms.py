@@ -49,7 +49,7 @@ class PhotoCaptionForm(forms.Form):
     """
 
     caption = forms.CharField(
-        max_length=254, required=True
+        max_length=35, required=True
     )
 
 
