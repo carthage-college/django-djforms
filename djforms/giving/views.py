@@ -19,6 +19,7 @@ from datetime import timedelta
 
 import os
 import json
+import time
 
 YEAR = TODAY.year
 REQUIRED_ATTRIBUTE = settings.REQUIRED_ATTRIBUTE
@@ -38,7 +39,7 @@ def photo_caption(request):
             draw = ImageDraw.Draw(image)
             draw.text((x, y), message, fill=color, font=font)
             image.save(settings.GIVING_DAY_CAPTION_FILE_NEW)
-            foto = True
+            foto = time.time()
     else:
         foto = False
         form = PhotoCaptionForm()
