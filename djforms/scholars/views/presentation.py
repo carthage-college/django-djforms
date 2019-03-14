@@ -242,7 +242,7 @@ def form(request, pid=None):
 )
 def manager(request):
     p = Presentation.objects.filter(date_updated__year=YEAR)
-    presentations = p.order_by('-date_created')
+    presentations = p.order_by('date_created')
     #presentations = Presentation.objects.all().order_by('-date_created')
 
     return render(
