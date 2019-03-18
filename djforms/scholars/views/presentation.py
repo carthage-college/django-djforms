@@ -45,6 +45,21 @@ def _update_presenters(presenter, presenters):
     presenter.save()
     return presenter
 
+
+@login_required
+def home(request):
+
+    presentations = Presentation.objects.filter(user=request.user)
+
+    context = {
+        'presentations':presentations,
+    }
+
+    return render(
+        request, 'scholars/presentation/home.html', context
+    )
+
+
 @login_required
 def form(request, pid=None):
     presenters = []

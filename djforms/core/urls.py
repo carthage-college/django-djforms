@@ -94,3 +94,4 @@ urlpatterns = [
     # writing across curriculum
     url(r'^writingcurriculum/', include('djforms.writingcurriculum.urls'))
 ]
+urlpatterns += url("admin/", include('loginas.urls')),

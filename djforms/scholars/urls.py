@@ -8,26 +8,21 @@ from djforms.scholars.views import imprimir
 urlpatterns = [
     # print
     url(
-        r'^presentation/print/',
-        imprimir.alpha,
-        name='presentation_print'
+        r'^presentation/print/', imprimir.alpha, name='presentation_print'
     ),
     url(
-        r'^presentation/alpha/',
-        imprimir.alpha,
+        r'^presentation/alpha/', imprimir.alpha,
         {'template':'scholars/print/alpha.html'},
         name='presentation_print_alpha'
     ),
     # archives
     url(
         r'^archives/(?P<ptype>[-\w]+)/(?P<medium>[-\w]+)/(?P<year>\d{4})/$',
-        presentation.archives,
-        name='presentation_archives'
+        presentation.archives, name='presentation_archives'
     ),
     url(
         r'^archives/(?P<ptype>[-\w]+)/(?P<medium>[-\w]+)/$',
-        presentation.archives,
-        name='presentation_archives_home'
+        presentation.archives, name='presentation_archives_home'
     ),
     # presentation crud
     url(
@@ -37,28 +32,27 @@ urlpatterns = [
     ),
     url(
         r'^presentation/manager/$',
-        presentation.manager,
-        name='presentation_manager'
+        presentation.manager, name='presentation_manager'
     ),
     url(
         r'^presentation/action/$',
-        presentation.action,
-        name='presentation_action'
+        presentation.action, name='presentation_action'
     ),
     url(
         r'^presentation/(?P<pid>\d+)/update/$',
-        presentation.form,
-        name='presentation_update'
+        presentation.form, name='presentation_update'
     ),
     url(
         r'^presentation/(?P<pid>\d+)/detail/$',
-        presentation.detail,
-        name='presentation_detail'
+        presentation.detail, name='presentation_detail'
     ),
     url(
         r'^presentation/$',
-        presentation.form,
-        name='presentation_form'
+        presentation.home, name='presentation_home'
+    ),
+    url(
+        r'^presentation/form/$',
+        presentation.form, name='presentation_form'
     ),
     # send email to all presentation leaders
     # 10 Apr 2014: currently not completed but needed for 2015
@@ -76,12 +70,10 @@ urlpatterns = [
     ),
     url(
         r'^presenters/email/all/$',
-        presentation.email_all_presenters,
-        name='email_all_presenters'
+        presentation.email_all_presenters, name='email_all_presenters'
     ),
     url(
         r'^presenters/email/(?P<pid>\d+)/(?P<action>[-\w]+)/$',
-        presentation.email_presenters,
-        name='email_presenters_form'
+        presentation.email_presenters, name='email_presenters_form'
     )
 ]
