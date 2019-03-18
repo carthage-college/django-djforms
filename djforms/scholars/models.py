@@ -7,6 +7,7 @@ from django.utils.safestring import mark_safe
 from djforms.core.models import Department
 from djforms.core.models import YEAR_CHOICES, BINARY_CHOICES
 from djtools.utils.mail import send_mail
+from djtools.fields import NOW
 
 from taggit.managers import TaggableManager
 
@@ -20,13 +21,14 @@ WORK_TYPES = (
     ('Course project','Course project'),
     ("Master's thesis","Master's thesis")
 )
-
 PRESENTER_TYPES = (
     ('','----select----'),
     ('Student','Student'),
     ('Faculty','Faculty'),
     ('Staff','Staff'),
 )
+YEAR = NOW.year
+
 
 class Person(object):
     """
@@ -221,7 +223,7 @@ class Presentation(models.Model):
     need_table = models.CharField(max_length=3, choices=BINARY_CHOICES)
     need_electricity = models.CharField(max_length=3, choices=BINARY_CHOICES)
     poster_file = models.FileField(
-        upload_to='files/scholars/posters/2017',
+        upload_to='files/scholars/posters/{}'.format(YEAR),
         max_length=768,
         help_text="Upload a poster file",
         null=True, blank=True
