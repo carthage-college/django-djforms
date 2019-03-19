@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+    Presentation Home &mdash;
+    Celebration of Scholars &mdash;
+    Carthage College
+{% endblock %}
+{% block group_name %}
+    <a href="/undergraduate-research/">Undergraduate Research</a>
+{% endblock %}
+{% block left_nav %}
+    {% include "scholars/left_nav.html" %}
+{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        Celebration of Scholars
+    </h1>
+{% endblock %}
+{% block content %}
+    <h2>Your Presentations</h2>
+    {% if not presentations %}
+    <p>
+    You do not have any presentations for this year.
+    </p>
+    {% else %}
+    <ul>
+        {% for p in presentations %}
+        <li><a href="{% url 'presentation_update' p.id %}">{{p.title}}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h3>
+        <a href="/forms/scholars/presentation/form/">Submit a Presentation</a>
+    </h3>
+{% endblock %}
+{% block sidebar %}
+    {% include "scholars/side_bar.html" %}
+{% endblock %}
