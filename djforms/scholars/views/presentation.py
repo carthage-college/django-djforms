@@ -49,7 +49,9 @@ def _update_presenters(presenter, presenters):
 @login_required
 def home(request):
 
-    presentations = Presentation.objects.filter(user=request.user)
+    presentations = Presentation.objects.filter(user=request.user).filter(
+        date_created__year=YEAR
+    )
 
     context = {
         'presentations':presentations,
