@@ -90,6 +90,10 @@ def form(request, pid=None):
         if not request.user.is_staff and not manager:
             expired = True
 
+    if expired:
+        # 404 after submission period has ended
+        raise Http404
+
     if pid:
         presentation = get_object_or_404(
             Presentation,id=pid,date_updated__year=YEAR
@@ -97,18 +101,6 @@ def form(request, pid=None):
         # check perms
         if presentation.user != request.user and not manager:
             return HttpResponseRedirect(reverse('auth_login'))
-    else:
-        if not expired:
-            try:
-                presentation = Presentation.objects.get(
-                    user=request.user,date_updated__year=YEAR
-                )
-                pid = presentation.id
-            except:
-                pass
-        else:
-            # 404 after submission period has ended
-            raise Http404
 
     if presentation:
         # create list for GET requests to populate presenters fields
