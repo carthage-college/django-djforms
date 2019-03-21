@@ -40,7 +40,6 @@ class CourseProposal(models.Model):
     user = models.ForeignKey(
         User, verbose_name="Created by",
         related_name="course_proposal_user",
-        editable=False
     )
     updated_by = models.ForeignKey(
         User, verbose_name="Updated by",
