@@ -1,9 +1,9 @@
-django==1.11.18
+django==1.11.20
 MySQL-python==1.2.5
 python-memcached==1.59
 python-ldap==3.1.0
 django-bootstrap-form==3.4
-django-countries==5.3.2
+django-countries==5.3.3
 django-recaptcha==2.0.2
 django-imagekit==4.0.2
 Pillow==5.4.1
