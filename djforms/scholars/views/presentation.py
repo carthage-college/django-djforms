@@ -250,9 +250,9 @@ def form(request, pid=None):
     login_url=login_url
 )
 def manager(request):
-    p = Presentation.objects.filter(date_created__year=YEAR)
-    presentations = p.order_by('date_created')
-    #presentations = Presentation.objects.all().order_by('-date_created')
+    presentations = Presentation.objects.filter(
+        date_created__year=YEAR
+    ).order_by('date_created')
 
     return render(
         request, 'scholars/presentation/manager.html',
