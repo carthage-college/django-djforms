@@ -83,16 +83,13 @@ class PrintRequest(models.Model):
     )
     project_purpose = models.TextField(
         "Briefly describe the purpose of your request",
-        max_length=128
     )
     target_audience = models.TextField(
         "Who is/are your target audience/audiences?",
         help_text = "For example: Alumni, prospective students, community.",
-        max_length=128
     )
     secondary_audience = models.TextField(
         "Are there secondary target audiences?",
-        max_length=128,
         blank=True
     )
     print_format = models.CharField(
@@ -115,7 +112,6 @@ class PrintRequest(models.Model):
         including special instructions -
         needed for each item you selected above.
         """,
-        max_length=128,
         null = True, blank = True
     )
     delivery_date = models.DateField(
