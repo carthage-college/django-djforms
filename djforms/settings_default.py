@@ -67,7 +67,13 @@ GIVING_DEFAULT_CAMPAIGN = 'giving-day'
 GIVING_DAY_START_DATE = datetime.strptime(
     'Jan 1 2017 6:00PM','%b %d %Y %I:%M%p'
 )
-GIVING_DAY_CAPTION_FILE = ''
+GIVING_DAY_CAPTION_FILE='photo_caption.jpg'
+GIVING_DAY_CAPTION_FILE_ORIG = '{}/{}/giving/{}'.format(
+    MEDIA_ROOT,UPLOADS_DIR,GIVING_DAY_CAPTION_FILE
+)
+GIVING_DAY_CAPTION_FILE_NEW = '{}/{}/giving/new_{}'.format(
+    MEDIA_ROOT,UPLOADS_DIR,GIVING_DAY_CAPTION_FILE
+)
 GIVING_DAY_FONT = ''
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

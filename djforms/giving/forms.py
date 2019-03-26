@@ -48,8 +48,14 @@ class PhotoCaptionForm(forms.Form):
     Add a caption to a photo form
     """
 
-    caption = forms.CharField(
-        max_length=35, required=True
+    caption1 = forms.CharField(
+        max_length=13, required=False
+    )
+    caption2 = forms.CharField(
+        max_length=13, required=False
+    )
+    caption3 = forms.CharField(
+        max_length=13, required=False
     )
 
 

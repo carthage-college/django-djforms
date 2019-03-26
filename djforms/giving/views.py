@@ -31,13 +31,19 @@ def photo_caption(request):
         if form.is_valid():
             cd = form.cleaned_data
             image = Image.open(settings.GIVING_DAY_CAPTION_FILE_ORIG)
-            font = ImageFont.truetype(settings.GIVING_DAY_FONT, size=45)
-            (x, y) = (100, 80)
-            message = cd['caption']
+            font = ImageFont.truetype(settings.GIVING_DAY_FONT, size=250)
+            caption1 = cd['caption1']
+            caption2 = cd['caption2']
+            caption3 = cd['caption3']
             color = 'rgb(0, 0, 0)' # black
             #color = 'rgb(255, 255, 255)' # white
             draw = ImageDraw.Draw(image)
-            draw.text((x, y), message, fill=color, font=font)
+            (x, y) = (680, 1700)
+            draw.text((x, y), caption1, fill=color, font=font)
+            (x, y) = (685, 2020)
+            draw.text((x, y), caption2, fill=color, font=font)
+            (x, y) = (700, 2300)
+            draw.text((x, y), caption3, fill=color, font=font)
             image.save(settings.GIVING_DAY_CAPTION_FILE_NEW)
             foto = time.time()
     else:
