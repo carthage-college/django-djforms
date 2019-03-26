@@ -35,7 +35,8 @@ def photo_caption(request):
             caption1 = cd['caption1']
             caption2 = cd['caption2']
             caption3 = cd['caption3']
-            color = 'rgb(0, 0, 0)' # black
+            color = 'rgb((122,35,47)' # carthage red
+            #color = 'rgb(0, 0, 0)' # black
             #color = 'rgb(255, 255, 255)' # white
             draw = ImageDraw.Draw(image)
             (x, y) = (680, 1700)
