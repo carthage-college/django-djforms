@@ -224,7 +224,6 @@ class Presentation(models.Model):
     need_electricity = models.CharField(max_length=3, choices=BINARY_CHOICES)
     poster_file = models.FileField(
         upload_to='files/scholars/posters/{}'.format(YEAR),
-        max_length=768,
         help_text="Upload a poster file",
         null=True, blank=True
     )
