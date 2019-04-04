@@ -413,7 +413,8 @@ def donors(request, slug=None):
         donors = donors.filter(order__promotion__slug=slug)
 
     spouses = donors.filter(spouse_class__isnull=False).exclude(spouse_class=' ')
-    count = donors.count() + spouses.count()
+    #count = donors.count() + spouses.count()
+    count = donors.count()
     ctext = {
         'donors':donors, 'promo':promo, 'count':count,
         'percent': percent, 'spouses':spouses
