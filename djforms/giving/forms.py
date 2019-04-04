@@ -184,7 +184,8 @@ class GivingDayDonationContactForm(DonationContactForm):
     class Meta:
         model = DonationContact
         fields = (
-            'first_name','last_name','relation','class_of','email','phone',
+            'first_name','last_name','relation','class_of',
+            'spouse','spouse_class','email','phone',
             'twitter','address1','city','state','postal_code','opt_in',
             'anonymous'
         )
