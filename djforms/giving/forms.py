@@ -328,7 +328,9 @@ class ManagerContactForm(DonationContactForm):
         self.fields.pop('state')
         self.fields.pop('postal_code')
         self.fields.pop('phone')
-        self.fields.pop('spouse')
+        self.fields.pop('city')
+        self.fields.pop('address1')
+        #self.fields.pop('spouse')
         self.fields.pop('opt_in')
         self.fields.pop('matching_company')
 
