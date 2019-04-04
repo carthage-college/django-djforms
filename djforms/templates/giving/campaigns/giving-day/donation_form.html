@@ -59,25 +59,7 @@
     {% get_lw_content as nav blurbs 2472 %}
     {{nav.body}}
 {% endblock %}
-{% block sidebar %}
-    <div id="sidebar-buttons">
-      <div id="sidebar-buttons">
-        <div class="cc-tab cc-tab-red-large">
-          <div class="content-wrap">
-            <div class="border"></div>
-            <p>
-              <a href="https://www.carthage.edu/forms/giving/donation/giving-day/">
-                Make a Gift</a>
-            </p>
-          </div>
-          <div class="arrow-wrap">
-            <div class="arrow"></div>
-            <div class="border"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-{% endblock %}
+{% block sidebar %}{% endblock %}
 {% block content_head %}
     <h1 id="page_title">
         {{campaign.title|default:"Your Giving Matters"}}

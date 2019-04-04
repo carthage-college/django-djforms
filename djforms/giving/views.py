@@ -25,26 +25,106 @@ YEAR = TODAY.year
 REQUIRED_ATTRIBUTE = settings.REQUIRED_ATTRIBUTE
 
 
+def meme(img, draw, msg, pos):
+    lines = []
+
+    color = 'rgb(122,35,47)' # carthage red
+    fontsize=250
+
+    font = ImageFont.truetype(settings.GIVING_DAY_FONT, size=fontsize)
+    w, h = draw.textsize(msg, font)
+
+    imgWidthWithPadding = img.width * 0.99
+
+    # 1. how many lines for the msg to fit ?
+    lineCount = 1
+    if(w > imgWidthWithPadding):
+        lineCount = int(round((w / imgWidthWithPadding) + 1))
+
+    if lineCount > 2:
+        while 1:
+            fontsize -= 2
+            font = ImageFont.truetype(settings.GIVING_DAY_FONT, size=fontsize)
+            w, h = draw.textsize(msg, font)
+            lineCount = int(round((w / imgWidthWithPadding) + 1))
+            if lineCount < 3 or fontsize < 10:
+                break
+
+    # 2. divide text in X lines
+    lastCut = 0
+    isLast = False
+    for i in range(0,lineCount):
+        if lastCut == 0:
+            cut = (len(msg) / lineCount) * i
+        else:
+            cut = lastCut
+
+        if i < lineCount-1:
+            nextCut = (len(msg) / lineCount) * (i+1)
+        else:
+            nextCut = len(msg)
+            isLast = True
+
+        # make sure we don't cut words in half
+        if nextCut == len(msg) or msg[nextCut] == " ":
+            pass
+        else:
+            while msg[nextCut] != " ":
+                nextCut += 1
+
+        line = msg[cut:nextCut].strip()
+
+        # is line still fitting ?
+        w, h = draw.textsize(line, font)
+        if not isLast and w > imgWidthWithPadding:
+            nextCut -= 1
+            while msg[nextCut] != " ":
+                nextCut -= 1
+
+        lastCut = nextCut
+        lines.append(msg[cut:nextCut].strip())
+
+    # 3. print each line centered
+    lastY = -h
+    if pos == "bottom":
+        lastY = img.height - h * (lineCount+1) - 10
+
+    for i in range(0,lineCount):
+        w, h = draw.textsize(lines[i], font)
+        textX = img.width/2 - w/2
+        textY = lastY + h
+        draw.text((textX-2, textY-2),lines[i], fill=color, font=font)
+        draw.text((textX+2, textY-2),lines[i], fill=color, font=font)
+        draw.text((textX+2, textY+2),lines[i], fill=color, font=font)
+        draw.text((textX-2, textY+2),lines[i], fill=color, font=font)
+        draw.text((textX, textY),lines[i], fill=color, font=font)
+        lastY = textY
+
+    return img
+
+
 def photo_caption(request):
     if request.POST:
         form = PhotoCaptionForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
             image = Image.open(settings.GIVING_DAY_CAPTION_FILE_ORIG)
-            font = ImageFont.truetype(settings.GIVING_DAY_FONT, size=250)
+            draw = ImageDraw.Draw(image)
+
+            color = 'rgb(122,35,47)' # carthage red
+            fontsize=250
+            font = ImageFont.truetype(settings.GIVING_DAY_FONT, size=fontsize)
+
             caption1 = cd['caption1']
             caption2 = cd['caption2']
             caption3 = cd['caption3']
-            color = 'rgb(122,35,47)' # carthage red
-            #color = 'rgb(0, 0, 0)' # black
-            #color = 'rgb(255, 255, 255)' # white
-            draw = ImageDraw.Draw(image)
             (x, y) = (680, 1700)
             draw.text((x, y), caption1, fill=color, font=font)
             (x, y) = (685, 2020)
             draw.text((x, y), caption2, fill=color, font=font)
             (x, y) = (700, 2300)
             draw.text((x, y), caption3, fill=color, font=font)
+            #image = meme(image, draw, caption1, 'top')
             image.save(settings.GIVING_DAY_CAPTION_FILE_NEW)
             foto = time.time()
     else:

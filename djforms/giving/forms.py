@@ -128,9 +128,6 @@ class DonationContactForm(ContactForm):
     city = forms.CharField(
         required=True, max_length=120
     )
-    city = forms.CharField(
-        required=True, max_length=120
-    )
     state = forms.ChoiceField(
         required=True, choices=STATE_CHOICES
     )
@@ -187,8 +184,8 @@ class GivingDayDonationContactForm(DonationContactForm):
     class Meta:
         model = DonationContact
         fields = (
-            'first_name','last_name','relation','class_of','email',
-            'address1','city','state','postal_code','opt_in',
+            'first_name','last_name','relation','class_of','email','phone',
+            'twitter','address1','city','state','postal_code','opt_in',
             'anonymous'
         )
 

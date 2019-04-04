@@ -46,6 +46,10 @@ class DonationContact(Contact):
             published on any donor list or in the annual report.
         """
     )
+    twitter = models.CharField(
+        "Twitter Handle",
+        max_length=128, null=True, blank=True
+    )
 
     def order_cc_name(self):
         try:
