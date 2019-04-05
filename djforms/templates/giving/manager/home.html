@@ -157,6 +157,7 @@ $(document).ready(function() {
       <th>Zip</th>
       <th>Spouse</th>
       <th>Relation to Carthage</th>
+      <th>In Honor Of</th>
       <th>Class of</th>
       <th>Campaign</th>
       <th>Transaction ID</th>
@@ -196,6 +197,7 @@ $(document).ready(function() {
             {{o.spouse_class|default:"&nbsp;"}}
         </td>
         <td>{{o.relation}}</td>
+        <td>{{o.honouring|default:"&nbsp;"}}</td>
         <td>{{o.class_of}}</td>
         <td>
           {% if o.order_promo %}
@@ -226,6 +228,7 @@ $(document).ready(function() {
       <th>Zip</th>
       <th>Spouse</th>
       <th>Relation to Carthage</th>
+      <th>In Honor Of</th>
       <th>Class of</th>
       <th>Campaign</th>
       <th>Transaction ID</th>
