@@ -47,16 +47,6 @@ class PresentationForm(forms.ModelForm):
             'abstract_text','need_table', 'need_electricity','poster_file'
         ]
 
-    def clean_poster_file(self):
-        if self.obj:
-            status = self.obj.status
-            if status and not self.cleaned_data.get('poster_file'):
-                raise forms.ValidationError("Please upload your poster file in PDF format.")
-            elif status and self.cleaned_data.get('poster_file'):
-                fyle = self.cleaned_data.get('poster_file')
-                if not fyle.name.endswith('.pdf'):
-                    raise forms.ValidationError("Please upload your poster file in PDF format.")
-        return self.cleaned_data['poster_file']
 
 class EmailPresentersForm(forms.Form):
     content = forms.CharField(widget=forms.Textarea, label="Email content")
