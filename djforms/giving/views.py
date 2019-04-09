@@ -537,6 +537,7 @@ def manager(request, slug=None):
 
     return render(
         request, 'giving/manager/home.html', {
-            'objects':donors, 'count':donors.count(), 'campaign':promo
+            'objects':donors, 'count':donors.count(), 'campaign':promo,
+            'slug':slug
         }
     )
