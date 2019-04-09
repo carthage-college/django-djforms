@@ -76,10 +76,16 @@ $(document).ready(function() {
 {% endblock %}
 {% block navbar-sidenav %}
 <ul class="navbar-nav navbar-sidenav">
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Donors List">
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="All Donors List">
     <a class="nav-link" href="{% url 'giving_manager_home' %}">
         <i class="fa fa-th-list" aria-hidden="true"></i>
-      <span class="nav-link-text">Donors List</span>
+      <span class="nav-link-text">All Donors List</span>
+    </a>
+  </li>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Giving Day List">
+    <a class="nav-link" href="{% url 'giving_manager_home_campaign' 'giving-day' %}">
+        <i class="fa fa-book" aria-hidden="true"></i>
+      <span class="nav-link-text">Giving Day List</span>
     </a>
   </li>
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Pavers">
