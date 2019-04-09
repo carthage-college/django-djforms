@@ -82,12 +82,6 @@ $(document).ready(function() {
       <span class="nav-link-text">Cash Donation</span>
     </a>
   </li>
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Pavers">
-    <a class="nav-link" href="{% url 'giving_manager_home_campaign' 'paver' %}">
-      <i class="fa fa-fw fa-cubes" aria-hidden="true"></i>
-      <span class="nav-link-text">Pavers</span>
-    </a>
-  </li>
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Cash Donation Form">
     <a class="nav-link" href="{% url 'giving_manager_cash' %}">
       <i class="fa fa-fw fa-money" aria-hidden="true"></i>
@@ -181,7 +175,7 @@ $(document).ready(function() {
         </td>
         <td>
           <a href="{% url 'admin:processors_order_change' o.order_oid %}">
-            {{o.created_at|date:'Y-m-d H:i:s'}}
+              {{o.created_at|date:'Y-m-d H:i:s'}}
           </a>
         </td>
         <td>{{o.email}}</td>
