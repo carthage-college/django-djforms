@@ -76,7 +76,7 @@ class DonationContact(Contact):
         try:
             oid = self.order.all()[0].id
         except:
-            oid = None
+            oid = 0
         return oid
 
     def order_transid(self):

@@ -532,11 +532,12 @@ def manager(request, slug=None):
             order__time_stamp__lte=end_date
         ).filter(order__status__in=['approved','manual'])
 
-        if slug != 'giving-day':
+        if slug and  slug != 'giving-day':
             donors = donors.filter(order__promotion__slug=slug)
 
     return render(
         request, 'giving/manager/home.html', {
-            'objects':donors, 'count':donors.count(), 'campaign':promo
+            'objects':donors, 'count':donors.count(), 'campaign':promo,
+            'slug':slug
         }
     )

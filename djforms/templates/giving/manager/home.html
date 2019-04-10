@@ -71,15 +71,21 @@ $(document).ready(function() {
   </ul>
 {% endblock navbar-top-links %}
 {% block navbar-header %}
-  <a href="{% url 'giving_manager_home_campaign' 'giving-day' %}" class="mr-sm-3 mr-lg-3"><i class="fa fa-home fa-2x green"></i></a>
-  <a class="navbar-brand" href="{% url 'giving_manager_home_campaign' 'giving-day' %}">Donations Manager</a>
+  <a href="{% url 'giving_manager_home' %}" class="mr-sm-3 mr-lg-3"><i class="fa fa-home fa-2x green"></i></a>
+  <a class="navbar-brand" href="{% url 'giving_manager_home' %}">Donations Manager</a>
 {% endblock %}
 {% block navbar-sidenav %}
 <ul class="navbar-nav navbar-sidenav">
-  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Donors List">
-    <a class="nav-link" href="{% url 'giving_manager_home_campaign' 'giving-day' %}">
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="All Donors List">
+    <a class="nav-link" href="{% url 'giving_manager_home' %}">
         <i class="fa fa-th-list" aria-hidden="true"></i>
-      <span class="nav-link-text">Cash Donation</span>
+      <span class="nav-link-text">All Donors List</span>
+    </a>
+  </li>
+  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Giving Day List">
+    <a class="nav-link" href="{% url 'giving_manager_home_campaign' 'giving-day' %}">
+        <i class="fa fa-book" aria-hidden="true"></i>
+      <span class="nav-link-text">Giving Day List</span>
     </a>
   </li>
   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Pavers">
@@ -171,18 +177,28 @@ $(document).ready(function() {
     {% for o in objects %}
       <tr>
         <td>
+          {% if slug == "paver" %}
+          <a href="{% url 'admin:giving_pavercontact_change' o.id %}">
+            {{o.last_name}}
+          </a>
+          {% else %}
           <a href="{% url 'admin:giving_donationcontact_change' o.id %}">
             {{o.last_name}}
           </a>
+          {% endif %}
         </td>
         <td>{{o.first_name}}</td>
         <td>
           {{o.order_cc_name}}
         </td>
         <td>
-          <a href="{% url 'admin:processors_order_change' o.order_oid %}">
+          {% if slug == "paver" %}
             {{o.created_at|date:'Y-m-d H:i:s'}}
+          {% else %}
+          <a href="{% url 'admin:processors_order_change' o.order_oid %}">
+              {{o.created_at|date:'Y-m-d H:i:s'}}
           </a>
+          {% endif %}
         </td>
         <td>{{o.email}}</td>
         <td>{{o.twitter}}</td>
