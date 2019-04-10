@@ -12,3 +12,4 @@ python-magic==0.4.15
 django-localflavor==2.1
 django-loginas==0.3.6
 django-formtools==2.1
+django-honeypot==0.7.0
