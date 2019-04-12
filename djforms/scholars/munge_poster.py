@@ -7,12 +7,6 @@ import uuid
 import argparse
 
 # env
-sys.path.append('/usr/lib/python2.7/dist-packages/')
-sys.path.append('/usr/lib/python2.7/')
-sys.path.append('/usr/local/lib/python2.7/dist-packages/')
-sys.path.append('/data2/django_current/')
-sys.path.append('/data2/django_projects/')
-sys.path.append('/data2/django_third/')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djforms.settings')
 
 # primt django
