@@ -9,7 +9,7 @@ YEAR = int(NOW.year)
 
 
 def alpha(request, template=None):
-    p = Presentation.objects.filter(date_updated__year=YEAR).filter(status=True)
+    p = Presentation.objects.filter(date_created__year=YEAR).filter(status=True)
     presentations = p.order_by('leader__last_name')
 
     if not template:
