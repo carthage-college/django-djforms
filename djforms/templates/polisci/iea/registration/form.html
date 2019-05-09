@@ -68,15 +68,16 @@ Conference on the Environment
               reg = $(this).attr('value').split('|');
               reg_fee = parseInt(reg[1]);
               if (reg[0] == 'Spouses/companions') {
+                if($('#id_abstract_0').is(':checked')) {
+                  reg_fee += 50;
+                }
                 $('#id_abstract_1').prop('checked', true);
                 $('#id_abstract_0').attr('disabled', true);
-                $('#id_kao_member_1').prop('checked', false);
-                $('#id_kao_member_0').prop('checked', false);
-                kao_flag = false;
-                if (late_fee == true) {
-                  console.log(reg_fee);
-                  reg_fee += 50;
-                  console.log(reg_fee);
+                if($('#id_kao_member_0').is(':checked')) {
+                  reg_fee -= 50;
+                  if($('#id_kao_member_0').is(':checked')) {
+                    reg_fee += 50;
+                  }
                 }
               } else {
                 $('#id_abstract_0').attr('disabled', false);
@@ -84,8 +85,6 @@ Conference on the Environment
               reg_fee = calc_reg(reg_fee, 0);
               $('#id_total').attr('value', reg_fee.toFixed(2));
             });
-
-
 
             $('input[name=kao_member]').on('change', function() {
               if (reg_fee > 0) {
@@ -117,8 +116,6 @@ Conference on the Environment
                 abstract_flag = false;
               }
             });
-
-
 
 
             $('#id_payment_method_0').click(function() {
