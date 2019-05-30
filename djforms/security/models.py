@@ -1,6 +1,7 @@
 from django.db import models
 from djforms.core.models import GenericContact, GenericChoice
 
+
 class ParkingTicketAppeal(GenericContact):
     college_id = models.CharField(
         "Carthage ID#", max_length=10
@@ -43,4 +44,3 @@ class ParkingTicketAppeal(GenericContact):
         "Comments",
         help_text="Please provide your comments in support of your appeal."
     )
-

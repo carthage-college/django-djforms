@@ -10,7 +10,7 @@ RESIDENCY_STATUS = GenericChoice.objects.filter(
 
 PERMIT_TYPE = GenericChoice.objects.filter(
     tags__name__in=['Permit Type']
-).filter(active=True).order_by('name')
+).filter(active=True).order_by('rank')
 
 
 class ParkingTicketAppealForm(forms.ModelForm):
