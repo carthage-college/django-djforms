@@ -15,6 +15,7 @@ class DonationContact(Contact):
         null=True, blank=True
     )
     spouse = models.CharField(
+        "Spouse full name",
         max_length=100,
         null=True, blank=True
     )
