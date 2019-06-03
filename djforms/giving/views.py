@@ -269,9 +269,7 @@ def giving_form(request, transaction, campaign=None):
                         spouse = ""
                 except:
                     spouse = ""
-                subject = SUBJECT.format(
-                    contact.first_name, spouse, contact.last_name
-                )
+                subject = SUBJECT.format(contact.first_name, spouse)
                 # build our email template path
                 template = 'giving/{}_email.html'.format(transaction)
                 if campaign:
