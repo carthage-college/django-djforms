@@ -261,17 +261,15 @@ def giving_form(request, transaction, campaign=None):
                 or_data.contact = contact
                 data = {'order':or_data,'years':years}
                 # subject of email
-                SUBJECT = u"Thank you, {}{} {}, for your donation to Carthage"
+                SUBJECT = u"Thank you, {} {}{} for your donation to Carthage"
                 try:
                     if contact.spouse:
-                        spouse = " and {}".format(contact.spouse)
-                        last_name = ""
+                        spouse = " and {},".format(contact.spouse)
                     else:
-                        spouse = ""
-                        last_name = contact.last_name
+                        spouse = ","
                 except:
                     spouse = ""
-                subject = SUBJECT.format(contact.first_name, spouse, last_name)
+                subject = SUBJECT.format(contact.first_name, contact.last_name, spouse)
                 # build our email template path
                 template = 'giving/{}_email.html'.format(transaction)
                 if campaign:
