@@ -24,6 +24,7 @@ SHIRT_SIZES = (
     ('Adult M', 'Adult M'),
     ('Adult L', 'Adult L'),
     ('Adult XL', 'Adult XL'),
+    ('Youth S', 'Youth S'),
     ('Youth M', 'Youth M'),
     ('Youth L', 'Youth L'),
     ('Youth XL', 'Youth XL'),
