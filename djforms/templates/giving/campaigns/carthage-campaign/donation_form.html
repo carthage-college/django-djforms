@@ -158,6 +158,9 @@
             {% endif %}
             <ol>
                 {% include "form_field_credit_card.inc.html" %}
+                {% with form_proc.captcha as field %}
+                {% include "form_field.inc.html" %}
+                {% endwith %}
             </ol>
         </fieldset>
         {% include "form_submit.inc.html" %}
