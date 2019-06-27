@@ -35,6 +35,7 @@
     #pledge-payments { color:#3ab0c8;display:none }
     .campaign-description {margin-bottom: 10px;}
     .forms-container .large-6 {float:none;display:inherit;}
+    .form span.error-message, .form .inlineLabels .error-message {color: #fff;}
     </style>
 {% endblock %}
 {% block page_header %}Give to Carthage{% endblock %}
@@ -158,9 +159,6 @@
             {% endif %}
             <ol>
                 {% include "form_field_credit_card.inc.html" %}
-                {% with form_proc.captcha as field %}
-                {% include "form_field.inc.html" %}
-                {% endwith %}
             </ol>
         </fieldset>
         {% include "form_submit.inc.html" %}

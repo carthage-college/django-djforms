@@ -98,11 +98,12 @@ class CreditCardForm(forms.Form):
         """,
         widget=forms.TextInput(attrs=REQ)
     )
+    captcha = ReCaptchaField()
+    '''
     captcha = ReCaptchaField(
         label = "",
         widget=ReCaptchaV3()
     )
-    '''
     captcha = ReCaptchaField(
         widget=ReCaptchaV2Checkbox(
             attrs={
