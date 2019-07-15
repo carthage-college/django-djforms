@@ -8,10 +8,11 @@ from djtools.fields import TODAY
 
 from trust_commerce import PaymentProcessor
 from localflavor.us.forms import USZipCodeField
-from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Checkbox
-from captcha.widgets import ReCaptchaV2Invisible
-from captcha.widgets import ReCaptchaV3
+from captcha.fields import CaptchaField
+#from captcha.fields import ReCaptchaField
+#from captcha.widgets import ReCaptchaV2Checkbox
+#from captcha.widgets import ReCaptchaV2Invisible
+#from captcha.widgets import ReCaptchaV3
 
 
 EXP_MONTH = [(x, x) for x in xrange(1, 13)]
@@ -98,8 +99,9 @@ class CreditCardForm(forms.Form):
         """,
         widget=forms.TextInput(attrs=REQ)
     )
-    captcha = ReCaptchaField()
+    captcha = CaptchaField()
     '''
+    captcha = ReCaptchaField()
     captcha = ReCaptchaField(
         label = "",
         widget=ReCaptchaV3()

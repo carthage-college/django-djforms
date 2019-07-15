@@ -3,7 +3,8 @@ from django import forms
 from djtools.fields import YEARS1, YEARS4, REQ_CSS
 from djforms.alumni.classnotes.models import Contact
 
-from captcha.fields import ReCaptchaField
+from captcha.fields import CaptchaField
+#from captcha.fields import ReCaptchaField
 
 import datetime
 
@@ -47,7 +48,7 @@ class ContactForm(forms.ModelForm):
         widget=forms.Select(choices=CATEGORIES, attrs=REQ),
         required=True
     )
-    captcha = ReCaptchaField()
+    captcha = CaptchaField()
 
     class Meta:
         model = Contact
