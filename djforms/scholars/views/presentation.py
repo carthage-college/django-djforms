@@ -69,11 +69,12 @@ def form(request, pid=None):
     # flag managers
     manager = request.user.has_perm('scholars.manage_presentation')
     # get people for select field
-    jason  = get_json('faculty')
+    jason = get_json('faculty')
     faculty = []
-    for j in jason:
-        faculty.append(j[j.keys()[0]])
-
+    for jay in jason:
+        faculty.append({
+            'id':jay['id'],'lastname':jay['lastname'],'firstname':jay['firstname']
+        })
     # define our submission window
     s_date = date(
         TODAY.year,
