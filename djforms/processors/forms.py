@@ -99,7 +99,7 @@ class CreditCardForm(forms.Form):
         """,
         widget=forms.TextInput(attrs=REQ)
     )
-    captcha = CaptchaField()
+    captcha = CaptchaField(label='Input the text you see in the image on the left')
     '''
     captcha = ReCaptchaField()
     captcha = ReCaptchaField(
