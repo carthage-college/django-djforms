@@ -396,6 +396,7 @@ STATE_CHOICES = (
     ('WV', 'West Virginia'),
     ('WI', 'Wisconsin'),
     ('WY', 'Wyoming'),
+    ('OT','Other'),
 )
 
 COUNTRIES = (
