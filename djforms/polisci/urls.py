@@ -20,7 +20,7 @@ urlpatterns = [
     ),
     url(
         r'^model-united-nations/registration/$',
-        login_required(mun.registration),
+        #login_required(mun.registration),
         name='model_united_nations_registration'
     ),
     # had to revert to old reg form

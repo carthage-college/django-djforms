@@ -69,15 +69,10 @@ class AttenderForm(forms.Form):
     )
     missle_crisis = forms.TypedChoiceField(
         label="""
-            Do you want to be entered into the random draw for participation
-            in the Historical Cuban Missile Crisis simulation?
+            Do you want to be entered into the random draw for participation in the United
+            States Senate: Border Crisis simulation?
         """,
-        choices=BINARY_CHOICES, widget=forms.RadioSelect,
-        help_text="""
-            If 'Yes', please state in the Questions/Comments text box above
-            whether you would like one or two students in the
-            Historical Cuban Missile Crisis simulation
-        """
+        choices=BINARY_CHOICES, widget=forms.RadioSelect
     )
 
 class CountryForm(forms.Form):
