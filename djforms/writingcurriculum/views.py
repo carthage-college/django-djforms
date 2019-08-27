@@ -147,8 +147,8 @@ def proposal_form(request, pid=None):
     year = TODAY.year + 1
     year_past = year - 1
     if TODAY.month > 3:
-        year += 1
         year_past = year
+        year += 1
 
     return render(
         request, 'writingcurriculum/form.html',{
