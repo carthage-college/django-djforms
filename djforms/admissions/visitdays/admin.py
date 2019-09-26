@@ -44,8 +44,10 @@ class VisitDayProfileAdmin(admin.ModelAdmin):
         'last_name','city','state','postal_code','gender',
         'date__date'
     )
-    list_max_show_all   = 500
-    list_per_page       = 500
+    #list_filter = ('date__date',)
+    date_hierarchy = 'date__date'
+    list_max_show_all   = 200
+    list_per_page       = 200
     actions             = [export_profiles,]
 
 
