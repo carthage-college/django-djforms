@@ -42,7 +42,7 @@ class VisitDayProfileAdmin(admin.ModelAdmin):
     )
     search_fields = (
         'last_name','city','state','postal_code','gender',
-        'date__date'
+        'date__date','date__event__title'
     )
     #list_filter = ('date__date',)
     date_hierarchy = 'date__date'
