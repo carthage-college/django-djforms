@@ -1,17 +1,62 @@
 from django.contrib import admin
+from django.http import HttpResponse
+
 from djforms.admissions.visitdays.models import VisitDayBaseProfile, VisitDayProfile, VisitDayEvent, VisitDay
+
+import csv
+
+
+def export_profiles(modeladmin, request, queryset):
+
+    response = HttpResponse("", content_type="text/csv; charset=utf-8")
+    response['Content-Disposition'] = 'attachment; filename=visit_day_profiles.csv'
+    writer = csv.writer(response)
+    writer.writerow(
+        [
+            'first name','last name','email','phone','city','state','zip',
+            'gender','date','guardian email','guardian type','event title'
+        ]
+    )
+    for c in queryset:
+        row = [
+            c.first_name.encode('utf-8'),c.last_name.encode('utf-8'),
+            c.email,c.phone,c.city.encode('utf-8'),
+            c.state.encode('utf-8'),c.postal_code,
+            c.gender,c.date,c.guardian_email,c.guardian_type,
+            c.event_title().encode('utf-8')
+        ]
+
+        writer.writerow(row)
+    return response
+export_profiles.short_description = """
+    Export the selected visit day profiles
+"""
+
 
 class VisitDayProfileAdmin(admin.ModelAdmin):
     model = VisitDayProfile
-    list_display  = ('first_name', 'last_name', 'email', 'phone', 'city', 'state','postal_code','gender')
-    search_fields = ('last_name', 'email', 'city', 'state','postal_code','gender')
+    list_display  = (
+        'first_name','last_name','email','phone','city','state',
+        'postal_code','gender','date','guardian_email',
+        'guardian_type','event_title'
+    )
+    search_fields = (
+        'last_name','city','state','postal_code','gender',
+        'date__date'
+    )
+    list_max_show_all   = 500
+    list_per_page       = 500
+    actions             = [export_profiles,]
+
 
 class VisitDayEventAdmin(admin.ModelAdmin):
     model = VisitDayEvent
-    list_display = ('date','time','event','max_attendees','cur_attendees','active')
+    list_display = (
+        'date','time','event','max_attendees','cur_attendees','active'
+    )
     ordering = ['-date',]
 
-admin.site.register(VisitDayBaseProfile, VisitDayProfileAdmin)
+
 admin.site.register(VisitDayProfile, VisitDayProfileAdmin)
 admin.site.register(VisitDayEvent, VisitDayEventAdmin)
 admin.site.register(VisitDay)

@@ -131,3 +131,7 @@ class VisitDayProfile(VisitDayBaseProfile):
     def __unicode__(self):
         return u'{} {}'.format(self.last_name, self.first_name)
 
+    def event_title(self):
+        return self.date.event.title
+
+
