@@ -356,7 +356,12 @@ def giving_form(request, transaction, campaign=None):
         request, template,
         {
             'ct_form': ct_form, 'or_form': or_form, 'form_proc': cc_form,
-            'status': status, 'campaign': campaign,'year':str(YEAR)
+            'status': status, 'campaign': campaign,'year':str(YEAR),
+            'desi': [
+                "Women 150 Scholarship Fund",
+                "Women 150 Aspire/Professional Development Fund",
+                "Women 150 Women's Athletics Fund"
+            ]
         }
     )
 

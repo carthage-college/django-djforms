@@ -173,6 +173,24 @@ class DonationContactForm(ContactForm):
         )
 
 
+class CarthageCampaignDonationContactForm(DonationContactForm):
+    """
+    Giving Day campaign form, extends Donation Contact form
+    """
+
+    def __init__(self, *args, **kwargs):
+        super(CarthageCampaignDonationContactForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = DonationContact
+        fields = (
+            'endowment','honouring','first_name','last_name',
+            'spouse','spouse_class','relation','class_of','email',
+            'phone','address1','city','state','postal_code',
+            'matching_company','opt_in','anonymous'
+        )
+
+
 class GivingDayDonationContactForm(DonationContactForm):
     """
     Giving Day campaign form, extends Donation Contact form

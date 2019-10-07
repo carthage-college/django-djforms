@@ -36,6 +36,7 @@
     .campaign-description {margin-bottom: 10px;}
     .forms-container .large-6 {float:none;display:inherit;}
     .form span.error-message, .form .inlineLabels .error-message {color: #fff;}
+    p.help {margin-bottom:0px;}
     </style>
 {% endblock %}
 {% block page_header %}Give to the 150 Years of Carthage Women Initiative{% endblock %}
@@ -89,25 +90,47 @@
                     </div>
                 </li>
                 <li class="ctrlHolder">
-                    <h3><label for="id_or-comments">Designation</label></h3>
-                    <div>
-                        <input type="text" name="or-comments"
-                            value="{{or_form.comments.value|default:""}}">
-                        <p class="help">
-                            Please indicate if you would like your gift to be
-                            directed to a specific area. If this space is
-                            left blank, gifts will be directed to the
-                            <a href="/give/carthage-fund/">Carthage Fund</a>.
-                        </p>
-                    </div>
+                  <h3><label for="id_or-comments">Designation</label></h3>
+                  <div>
+                    <p class="help">
+                      Please choose your gift designation from the drop-down
+                      menu.
+                    </p>
+                    <select name="or-comments" id="id_or-comments">
+                        {% for d in desi %}
+                        <option value="{{d}}"{% if d == or_form.comments.value %} selected{% endif %}>
+                        {{d}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <p class="help">
+                      If you wish to make a gift of $1,000 or more,
+                      please do so here and a gift officer will contact you
+                      about naming your gift. Gifts of $2,500/year or more may
+                      be further restricted.
+                    </p>
+                    <p class="help">
+                    Specific
+                    <a href="https://www.carthage.edu/campaign/ways-give/scholarships/)">
+                      endowed scholarship
+                    </a> and athletic team designations
+                    (optional)
+                    </p>
+                    <input type="text" name="ct-endowment" id="id_ct-endowment"
+                      value="{{ct_form.endowment.value|default:""}}">
+                  </div>
                 </li>
+                {% with ct_form.honouring as field %}
+                {% include "form_field.inc.html" %}
+                {% endwith %}
             </ol>
         </fieldset>
         <h2>Contact Information</h2>
         <fieldset class="blockLabels">
             <ol>
-                {% for field in ct_form %}
-                    <li class="ctrlHolder">
+              {% for field in ct_form %}
+                {% if field.name != "honouring" and field.name != "endowment" %}
+                  <li class="ctrlHolder">
                     {% if field.name == "matching_company" or field.name == "opt_in" %}
                     {{field}} {{field.label}}<br />
                     {% else %}
@@ -136,18 +159,19 @@
                             </h3>
                         {% endif %}
                     {% endif %}
-                    </li>
-                {% endfor %}
-                <li>
-                    <h3>Thrivent Choice</h3>
-                    <p>
-                        Thrivent members may allocate their Thrivent Choice
-                        dollars to Carthage. Please contact Thrivent or visit
-                        <a href="https://www.thrivent.com/making-a-difference/living-generously/thrivent-choice/"
-                            target="_blank">the website</a>
-                        for more information.
-                    </p>
-                </li>
+                  </li>
+                {% endif %}
+              {% endfor %}
+              <li>
+                <h3>Thrivent Choice</h3>
+                <p>
+                    Thrivent members may allocate their Thrivent Choice
+                    dollars to Carthage. Please contact Thrivent or visit
+                    <a href="https://www.thrivent.com/making-a-difference/living-generously/thrivent-choice/"
+                      target="_blank">the website</a>
+                    for more information.
+                </p>
+              </li>
             </ol>
         </fieldset>
         <h2>Billing Information</h2>

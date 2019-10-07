@@ -14,6 +14,11 @@ class DonationContact(Contact):
         max_length=254,
         null=True, blank=True
     )
+    endowment = models.CharField(
+        "Specific endowed scholarship and athletic team designations",
+        max_length=254,
+        null=True, blank=True
+    )
     spouse = models.CharField(
         "Spouse full name",
         max_length=100,

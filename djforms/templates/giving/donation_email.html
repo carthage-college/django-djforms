@@ -155,6 +155,10 @@
 <p>{{data.order.comments}}</p>
 {% endif %}
 {% endblock comments %}
+{% if data.order.contact.endowment %}
+<h3>Specific endowed scholarship and athletic team designations</h3>
+<p>{{data.order.contact.endowment}}</p>
+{% endif %}
 {% if data.order.contact.honouring %}
 <h3>In honor of</h3>
 <p>{{data.order.contact.honouring}}</p>
