@@ -1,5 +1,6 @@
 from django.contrib import admin
-from models import *
+from djforms.processors.models import *
+
 
 class OrderAdmin(admin.ModelAdmin):
     model = Order

@@ -10,7 +10,6 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from localflavor.us.models import USStateField
 from taggit.managers import TaggableManager
-from userprofile.models import BaseProfile
 
 from djtools.fields.helpers import upload_to_path
 from djtools.fields.validators import MimetypeValidator
@@ -77,9 +76,12 @@ if settings.DEBUG:
 else:
     REQ = {'class': 'required','required': 'required'}
 
-YEARS1 = [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +1))]
-YEARS3 = [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +3))]
-
+try:
+    YEARS1 = [(x, x) for x in reversed(range(1926,datetime.date.today().year +1))]
+    YEARS3 = [(x, x) for x in reversed(range(1926,datetime.date.today().year +3))]
+except:
+    YEARS1 = [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +1))]
+    YEARS3 = [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +3))]
 
 class GenericChoice(models.Model):
     """
@@ -128,10 +130,15 @@ class GenericContact(models.Model):
         return u'{}, {}'.format(self.last_name, self.first_name)
 
 
-class UserProfile(BaseProfile):
+class UserProfile(models.Model):
     """
     User profile model
     """
+    user = models.OneToOneField(
+        User, related_name='userprofile', unique=True,
+        on_delete=models.CASCADE
+    )
+    creation_date = models.DateTimeField(default=datetime.datetime.now)
     phone = models.CharField(
         max_length=12, verbose_name="Phone Number",
         help_text="Format: XXX-XXX-XXXX", null=True, blank=True
@@ -235,7 +242,6 @@ class Department(models.Model):
     def __unicode__(self):
         return '{} '.format(self.name)
 
-    @models.permalink
     def get_absolute_url(self):
         return ('department_detail', None, { 'slug':self.slug })
 
@@ -247,7 +253,7 @@ class Promotion(models.Model):
     user = models.ForeignKey(
         User, verbose_name="Created by",
         related_name="matching_campaign_user",
-        editable=False, null=True, blank=True
+        editable=False, null=True, blank=True, on_delete=models.CASCADE
     )
     date_created = models.DateTimeField(
         auto_now_add=True

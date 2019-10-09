@@ -1,5 +1,4 @@
 from django.db import models
-from django.core import urlresolvers
 from django.utils.safestring import mark_safe
 from django_countries.fields import CountryField
 
@@ -32,7 +31,8 @@ class Order(models.Model):
         max_length=4, null=True, blank=True
     )
     promotion = models.ForeignKey(
-        Promotion, null=True, blank=True
+        Promotion, null=True, blank=True,
+        on_delete=models.CASCADE
     )
     # entity responsible for transaction so business office can track funds
     operator = models.CharField(

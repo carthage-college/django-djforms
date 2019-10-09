@@ -1,12 +1,12 @@
 from django import forms
 from djforms.core.models import STATE_CHOICES
 
-from models import Contact, Order
+from djforms.processors.models import Contact, Order
+from djforms.processors.trust_commerce import PaymentProcessor
 
 from djtools.fields.localflavor import USPhoneNumberField
 from djtools.fields import TODAY
 
-from trust_commerce import PaymentProcessor
 from localflavor.us.forms import USZipCodeField
 from captcha.fields import CaptchaField
 #from captcha.fields import ReCaptchaField
