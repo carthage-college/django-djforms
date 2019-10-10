@@ -139,6 +139,10 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE
     )
     creation_date = models.DateTimeField(default=datetime.datetime.now)
+    country = models.CharField(max_length=2, null=True, blank=True)
+    latitude = models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
+    longitude = models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
     phone = models.CharField(
         max_length=12, verbose_name="Phone Number",
         help_text="Format: XXX-XXX-XXXX", null=True, blank=True
