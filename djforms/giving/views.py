@@ -393,7 +393,8 @@ def donors(request, slug=None):
 
     promo = None
     percent = 0
-    start_date = TODAY - timedelta(days=365)
+    #start_date = TODAY - timedelta(days=365)
+    start_date = TODAY - timedelta(days=300)
     template = 'giving/donors.html'
 
     if slug:
