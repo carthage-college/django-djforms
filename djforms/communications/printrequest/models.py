@@ -112,7 +112,7 @@ class PrintRequest(models.Model):
     )
     approval = models.BooleanField(mark_safe(
         '''
-        I am aware that all content appearing on campus must be
+        I am aware that all flyers and posters appearing on campus must be
         approved by the Division of Student Affairs before hanging.
         I agree to review the
         <a href="/policies/" target="_blank">Event Promotion Policy</a>
