@@ -8,6 +8,8 @@ from djforms.communications.printrequest.forms import PrintRequestForm
 
 from djtools.utils.mail import send_mail
 
+REQ_ATTR = settings.REQUIRED_ATTRIBUTE
+
 
 @login_required
 def print_request(request):
@@ -17,7 +19,9 @@ def print_request(request):
         TO_LIST = [settings.COMMUNICATIONS_PRINT_REQUEST_EMAIL]
 
     if request.method == 'POST':
-        form = PrintRequestForm(request.POST, request.FILES)
+        form = PrintRequestForm(
+            request.POST, request.FILES, label_suffix='', use_required_attribute=REQ_ATTR
+        )
         if form.is_valid():
             data = form.save(commit=False)
             data.user = request.user
@@ -41,7 +45,7 @@ def print_request(request):
                     {'data': data,}
                 )
     else:
-        form = PrintRequestForm()
+        form = PrintRequestForm(label_suffix='', use_required_attribute=REQ_ATTR)
 
     return render(
         request, 'communications/printrequest/form.html',

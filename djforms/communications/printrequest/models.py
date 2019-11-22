@@ -2,6 +2,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
 
 from djtools.fields.helpers import upload_to_path
 
@@ -65,13 +66,20 @@ class PrintRequest(models.Model):
         max_length=128
     )
     phone = models.CharField(
-        "Phone number",
+        "Department phone number",
         max_length=21
     )
     account = models.CharField(
         "Account number",
-        max_length=18,
-        null=True, blank=True
+        max_length=18, null=True, blank=True
+    )
+    sponsoring_department = models.CharField(
+        "Sponsoring Department/Office",
+        max_length=128, null=True, blank=True
+    )
+    contact_phone = models.CharField(
+        "Contact phone number",
+        max_length=21, null=True, blank=True,
     )
     estimate = models.BooleanField(
         "Do you require an estimate for this project before we begin?",
@@ -100,8 +108,17 @@ class PrintRequest(models.Model):
     print_format_other = models.CharField(
         'If "Other" please describe',
         max_length=255,
-        null = True, blank = True
+        null=True, blank=True
     )
+    approval = models.BooleanField(mark_safe(
+        '''
+        I am aware that all content appearing on campus must be
+        approved by the Division of Student Affairs before hanging.
+        I agree to review the
+        <a href="/policies/" target="_blank">Event Promotion Policy</a>
+        and adhere to those guidelines for this project.
+        '''
+    ))
     format_quantity = models.CharField(
         "What is the quantity for each format?",
         max_length=128
@@ -112,7 +129,7 @@ class PrintRequest(models.Model):
         including special instructions -
         needed for each item you selected above.
         """,
-        null = True, blank = True
+        null=True, blank=True
     )
     delivery_date = models.DateField(
         "Final requested delivery date of project",
@@ -188,6 +205,24 @@ class PrintRequest(models.Model):
         "",
         upload_to=upload_to_path,
         blank=True
+    )
+    fact_checking = models.BooleanField(
+        """
+        I am responsible for fact-checking the spelling of names and titles,
+        dates, times, locations, URLs, etc.
+        """
+    )
+    lead_time = models.BooleanField(
+        """
+        I will provide adequate lead-time for each project and submit final and
+        approved concepts, copy, and assets by the set deadlines.
+        """
+    )
+    deadlines = models.BooleanField(
+        """
+        I understand that missing deadlines or making changes that result in
+        more than two proofs will result in a delay of project completion date.
+        """
     )
 
     class Meta:

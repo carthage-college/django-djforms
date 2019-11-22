@@ -70,18 +70,22 @@ $(function() {
         id="profile" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="blockLabels">
-            <h2>Account Information</h2>
+            <legend>Account and Departments</legend>
             <ol>
                 {% for field in form.visible_fields %}
-                    {% if field.name == 'name' or field.name == 'department' or field.name == 'phone' or field.name == 'email' or field.name == 'account' %}
+                    {% if field.name == 'name' or field.name == 'department' or field.name == 'phone' or field.name == 'email' or field.name == 'account' or field.name == 'sponsoring_department' or field.name == 'contact_phone' %}
                         {% include "form_field.inc.html" %}
                     {% endif %}
                 {% endfor %}
             </ol>
+            <p class="help">
+            All materials posted on campus must include the sponsoring
+            department/office and contact number.
+            </p>
         </fieldset>
         <hr>
         <fieldset class="blockLabels">
-            <h2>Project Information</h2>
+            <legend>Project Information</legend>
             <ol>
                 {% for field in form.visible_fields %}
                     {% if field.name == 'estimate' or field.name == 'project_name' or field.name == 'project_purpose' or field.name == 'target_audience' or field.name == 'secondary_audience'%}
@@ -92,10 +96,10 @@ $(function() {
         </fieldset>
         <hr>
         <fieldset class="blockLabels">
-            <h2>Expediting Information</h2>
+            <legend>Project Details</legend>
             <ol>
                 {% for field in form.visible_fields %}
-                    {% if field.name == 'print_format' or field.name == 'print_format_other' or field.name == 'format_quantity' or field.name == 'special_instructions' or field.name == 'delivery_date' or field.name == 'consent' or field.name == "website_update" or field.name == 'is_mailing' %}
+                    {% if field.name == 'print_format' or field.name == 'print_format_other' or field.name == 'format_quantity' or field.name == 'special_instructions' or field.name == 'delivery_date' or field.name == 'consent' or field.name == "website_update" or field.name == 'is_mailing' or field.name == 'approval' %}
                         {% include "form_field.inc.html" %}
                         {% if field.name == "website_update" %}
                             {% with form.website_url as field %}
@@ -115,7 +119,7 @@ $(function() {
         </fieldset>
         <hr>
         <fieldset>
-            <h2>File Uploads</h2>
+            <legend>File Uploads</legend>
             <p>
                 You may upload up to four files. If you have more than four,
                 please send them to
@@ -125,18 +129,23 @@ $(function() {
             </p>
             <ol>
                 {% for field in form.visible_fields %}
-                    {% if field.name == 'attachments' or field.name == 'file_1' or field.name == 'file_2' or field.name == 'file_3' or field.name == 'file_4'%}
+                    {% if field.name == 'attachments' or field.name == 'file_1' or field.name == 'file_2' or field.name == 'file_3' or field.name == 'file_4' %}
                         {{ field.label }}
                         {{ field }}<br />
                     {% endif %}
                 {% endfor %}
             </ol>
         </fieldset>
-        I am responsible for fact-checking the spelling of names and titles,
-        dates, times, locations, URLs, etc. I will provide adequate lead-time
-        for each project and submit final and approved concepts, copy, and assets
-        by the set deadlines. I understand that missing deadlines or making
-        changes that result in more than two proofs will result in a delay of project completion date.
+        <fieldset class="blockLabels">
+            <legend>Agreement</legend>
+            <ol>
+                {% for field in form.visible_fields %}
+                    {% if field.name == 'fact_checking' or field.name == 'lead_time' or field.name == 'deadlines' %}
+                        {% include "form_field.inc.html" %}
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </fieldset>
         {% include "form_submit.inc.html" %}
     </form>
 </div>

@@ -15,8 +15,19 @@ class PrintRequestForm(forms.ModelForm):
         choices=FORMATS,
         help_text="Check all that apply"
     )
+    approval = forms.BooleanField(
+        label = mark_safe(
+        """
+        I am aware that all content appearing on campus must be
+        approved by the Division of Student Affairs before hanging.
+        I agree to review the
+        <a href="/policies/" target="_blank">Event Promotion Policy</a>
+        and adhere to those guidelines for this project.
+        """
+    ))
     consent = forms.TypedChoiceField(
-        label = mark_safe("""
+        label = mark_safe(
+        """
         If the Office of Communications coordinates
         your mailing with a mail house, we need your
         mailing list at least one week before the mail
@@ -28,8 +39,8 @@ class PrintRequestForm(forms.ModelForm):
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSexcu_M5TMphO4KpoKXNdchSzaeYWrjSHBoAKrL15M6YdtUGA/viewform">
         Advancement Office List Request Form
         </a>.
-        """),
-        choices=CONSENT, widget=forms.RadioSelect(),
+        """
+        ), choices=CONSENT, widget=forms.RadioSelect(),
     )
     is_mailing = forms.TypedChoiceField(
         label = "Is this project being mailed?",
@@ -79,6 +90,25 @@ class PrintRequestForm(forms.ModelForm):
             self._errors["print_format_other"] = self.error_class([error])
 
         return cleaned_data
+
+
+    def clean_fact_checking(self):
+        fact_checking = self.cleaned_data.get('fact_checking')
+        if not fact_checking:
+            raise forms.ValidationError('This field is required')
+        return fact_checking
+
+    def clean_lead_time(self):
+        lead_time = self.cleaned_data.get('lead_time')
+        if not lead_time:
+            raise forms.ValidationError('This field is required')
+        return lead_time
+
+    def clean_deadlines(self):
+        deadlines = self.cleaned_data.get('deadlines')
+        if not deadlines:
+            raise forms.ValidationError('This field is required')
+        return deadlines
 
     class Meta:
         model = PrintRequest
