@@ -4,8 +4,10 @@ Name........................ {{data.user.first_name}} {{data.user.last_name}}
 Groups...................... {% for group in data.user.groups.all %}{% if group.name == "Staff" or group.name == "Faculty" or group.name == "Students" %}{{ group.name}}{% if not forloop.last %}, {% endif %}{% endif %}{% endfor %}
 Email....................... {{data.user.email}}
 Department.................. {{data.department}}
-Account #................... {{data.account}}
 Phone....................... {{data.phone}}
+Account #................... {{data.account}}
+Sponsoring Dept/Office...... {{data.sponsoring_department}}
+Contact Phone............... {{data.contact_phone}}
 Require Estimate?........... {{data.estimate}}
 Delivery date............... {{data.delivery_date}}
 </pre>
