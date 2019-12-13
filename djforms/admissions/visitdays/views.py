@@ -10,6 +10,7 @@ from djtools.utils.mail import send_mail
 from djtools.utils.convert import str_to_class
 
 email = settings.ADMISSIONS_EMAIL
+REQ_ATTR = settings.REQUIRED_ATTRIBUTE
 
 
 def visit_day_form(request, event_type):
@@ -17,9 +18,13 @@ def visit_day_form(request, event_type):
     short = False
     if request.method=='POST':
         if visit_day.extended:
-            form = VisitDayForm(event_type,request.POST)
+            form = VisitDayForm(
+                event_type, request.POST, use_required_attribute=REQ_ATTR
+            )
         else:
-            form = VisitDayBaseForm(event_type,request.POST)
+            form = VisitDayBaseForm(
+                event_type, request.POST, use_required_attribute=REQ_ATTR
+            )
             short = True
 
         if form.is_valid():
@@ -65,9 +70,9 @@ def visit_day_form(request, event_type):
             )
     else:
         if visit_day.extended:
-            form = VisitDayForm(event_type)
+            form = VisitDayForm(event_type, use_required_attribute=REQ_ATTR)
         else:
-            form = VisitDayBaseForm(event_type)
+            form = VisitDayBaseForm(event_type, use_required_attribute=REQ_ATTR)
 
     return render(
         request,

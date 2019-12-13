@@ -44,6 +44,14 @@ class VisitDay(models.Model):
             Educational Background and Plans
         """
     )
+    date_alternate = models.BooleanField(
+        "Enable an alternate date option",
+        default=False,
+        help_text="""
+            Check this box if you want to allow users to
+            choose a alternate date for their visit.
+        """
+    )
 
     def __unicode__(self):
         return self.title
@@ -66,6 +74,10 @@ class VisitDayEvent(models.Model):
 
 class VisitDayBaseProfile(GenericContact):
     date = models.ForeignKey(VisitDayEvent)
+    date_alternate = models.ForeignKey(
+        VisitDayEvent, verbose_name = "Second choice date",
+        null=True, blank=True
+    )
     address = models.CharField(
         max_length=255, verbose_name = 'Address')
     city = models.CharField(

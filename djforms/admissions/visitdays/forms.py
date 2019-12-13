@@ -32,8 +32,9 @@ class VisitDayBaseForm(forms.ModelForm):
     class Meta:
         model = VisitDayBaseProfile
         fields = [
-            'date','number_attend','first_name','last_name','email',
-            'address','city','state','postal_code','phone','mobile','gender'
+            'date', 'date_alternate', 'number_attend', 'first_name', 'last_name',
+            'email', 'address', 'city', 'state', 'postal_code', 'phone',
+            'mobile', 'gender',
         ]
 
     def __init__(self,event_type,*args,**kwargs):
@@ -45,6 +46,7 @@ class VisitDayBaseForm(forms.ModelForm):
         for event in qs:
             choices.append((event.id,event))
         self.fields['date'].choices = choices
+        self.fields['date_alternate'].choices = choices
 
     def clean_number_attend(self):
         if self.cleaned_data.get('date'):
@@ -93,12 +95,12 @@ class VisitDayForm(forms.ModelForm):
     class Meta:
         model = VisitDayProfile
         fields = [
-            'date','number_attend','first_name','last_name',
-            'email','guardian_email','guardian_type','address','city','state',
-            'postal_code','phone','mobile','gender','high_school','hs_city',
-            'hs_state','hs_grad_year','entry_as','transfer',
-            'entry_year','entry_term','academic','xtracurricular',
-            'comments'
+            'date','date_alternate', 'number_attend', 'first_name', 'last_name',
+            'email', 'guardian_email', 'guardian_type', 'address', 'city',
+            'state', 'postal_code', 'phone', 'mobile', 'gender', 'high_school',
+            'hs_city', 'hs_state', 'hs_grad_year', 'entry_as', 'transfer',
+            'entry_year', 'entry_term', 'academic', 'xtracurricular',
+            'comments',
         ]
 
     def __init__(self,event_type,*args,**kwargs):
@@ -110,6 +112,7 @@ class VisitDayForm(forms.ModelForm):
         for event in qs:
             choices.append((event.id,event))
         self.fields['date'].choices = choices
+        self.fields['date_alternate'].choices = choices
         self.fields['date'].widget.attrs['class'] = 'validate[required]'
         self.fields['number_attend'].widget.attrs['class'] = 'validate[required]'
         self.fields['first_name'].widget.attrs['class'] = 'validate[required]'
@@ -129,6 +132,14 @@ class VisitDayForm(forms.ModelForm):
         self.fields['transfer'].widget.attrs['class'] = 'validate[funcCall[ValidateTransfer]]'
         self.fields['entry_year'].widget.attrs['class'] = 'validate[required,custom[year]]'
         self.fields['entry_term'].widget.attrs['class'] = 'validate[required]'
+
+    def clean_date_alternate(self):
+        cd = self.cleaned_data
+        if cd.get('date_alternate') == cd.get('date'):
+            raise forms.ValidationError("""
+                Your second choice date cannot be the same as your first choice.
+            """)
+        return self.cleaned_data['date_alternate']
 
     def clean_transfer(self):
         cd = self.cleaned_data

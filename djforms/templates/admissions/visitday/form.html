@@ -85,7 +85,13 @@ fbq('track', 'PageView');
                             </legend>
                             <ol>
                     {% endif %}
-                    {% include "form_field.inc.html" %}
+                    {% if field.name == "date_alternate" %}
+                    {% if visit_day.date_alternate %}
+                          {% include "form_field.inc.html" %}
+                        {% endif %}
+                    {% else %}
+                      {% include "form_field.inc.html" %}
+                    {% endif %}
                 {% endfor %}
             </ol>
         </fieldset>

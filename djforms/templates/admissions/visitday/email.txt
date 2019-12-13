@@ -1,5 +1,6 @@
 <pre style="font-size:1.1em;">
 Date........................ {{data.profile.date}}
+{% if data.profile.date_alternate %}2nd Date.................... {{data.profile.date_alternate}}{% endif %}
 Number Attending............ {{data.profile.number_attend}}
 First Name.................. {{data.profile.first_name}}
 Last Name................... {{data.profile.last_name}}
