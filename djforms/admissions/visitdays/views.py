@@ -10,7 +10,10 @@ from djtools.utils.mail import send_mail
 from djtools.utils.convert import str_to_class
 
 email = settings.ADMISSIONS_EMAIL
-REQ_ATTR = settings.REQUIRED_ATTRIBUTE
+if settings.DEBUG:
+    REQ_ATTR = False
+else:
+    REQ_ATTR = True
 
 
 def visit_day_form(request, event_type):
