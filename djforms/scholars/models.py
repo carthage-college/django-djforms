@@ -68,10 +68,8 @@ def get_people(yuri):
         jason = get_json(yuri)
         people = {}
         for j in jason:
-            p = Person(**j[j.keys()[0]])
-            p.id = j.keys()[0]
-            people[j.keys()[0]] = p
-
+            p = Person(**j)
+            people[p.id] = p
         cache.set('%s_api_objects' % yuri, people)
     return people
 
@@ -298,10 +296,16 @@ class Presentation(models.Model):
         return self.user.email
 
     def sponsor(self):
-        return self.leader.sponsor_email
+        if self.leader:
+            return self.leader.sponsor_email
+        else:
+            return None
 
     def sponsor_other(self):
-        return self.leader.sponsor_other
+        if self.leader:
+            return self.leader.sponsor_other
+        else:
+            return None
 
     def poster(self):
         p = False
