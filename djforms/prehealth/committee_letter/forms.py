@@ -39,7 +39,7 @@ class ApplicantForm(forms.ModelForm):
             'city','state','phone','programs_apply','first_generation',
             'graduation_date','major','minor','gpa_overall','gpa_bcpm',
             'mcat_dat_scores','mcat_dat_date','cv','personal_statements',
-            'transcripts','waiver'
+            'core_competencies','transcripts','waiver'
         )
         exclude = (
             'created_by','created_on','updated_by','updated_on'

@@ -106,6 +106,21 @@ class Applicant(models.Model):
               Please download the Personal Statements form</a>,
             complete the form, and upload it
             above to submit your personal statements and short essays.
+            Please make sure your document is a PDF and contains your name
+            and the date.
+        '''
+    )
+    core_competencies = models.FileField(
+        upload_to=upload_to_path,
+        max_length=768,
+        validators=[MimetypeValidator('application/pdf')],
+        help_text = '''
+            <a href="https://www.aamc.org/services/admissions-lifecycle/competencies-entering-medical-students" target="_blank">
+            View the list of the AAMC Core competencies</a>.
+            On a PDF document that you upload below, list the three core
+            competencies that you most excel in with a short paragraph
+            explaining why you chose each competency
+            (150 word maximum per competency).
         '''
     )
     transcripts = models.FileField(
@@ -123,14 +138,15 @@ class Applicant(models.Model):
     waiver = models.FileField(
         upload_to=upload_to_path,
         max_length=768,
+        validators=[MimetypeValidator('application/pdf')],
         help_text = '''
-            <a href="https://www.carthage.edu/live/files/3255" target="_blank">
-                Please download the waiver form</a>,
-            complete the form, and upload it above. While strongly advised,
-            requesting a committee letter through the Carthage Pre-Health
-            Advisory Committee is completely optional for medical school or
-            dental school applicants. However, in order to apply through
-            the committee, we need this waiver signed.
+            <a href="/live/files/3255" target="_blank">
+            Please download the waiver form</a>.
+            Fill it out, scan it, and upload it as
+            a PDF it below. While strongly advised, requesting a committee letter
+            through the Carthage Pre-Health Advisory Committee is completely optional
+            for medical school or dental school applicants. However, in order to apply
+            through the committee, we need this waiver signed (not typed).
         '''
     )
 
