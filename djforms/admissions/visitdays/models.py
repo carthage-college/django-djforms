@@ -73,10 +73,13 @@ class VisitDayEvent(models.Model):
 
 
 class VisitDayBaseProfile(GenericContact):
-    date = models.ForeignKey(VisitDayEvent)
+    date = models.ForeignKey(VisitDayEvent, related_name='visitday_date')
     date_alternate = models.ForeignKey(
-        VisitDayEvent, verbose_name = "Second choice date",
-        null=True, blank=True
+        VisitDayEvent,
+        related_name='visitday_altdate',
+        verbose_name="Second choice date",
+        null=True,
+        blank=True,
     )
     address = models.CharField(
         max_length=255, verbose_name = 'Address')
