@@ -103,12 +103,15 @@ def form(request, pid=None):
         if presentation.user != request.user and not manager:
             return HttpResponseRedirect(reverse('auth_login'))
 
+    # number of presenters
+    copies = 0
     if presentation:
         # create list for GET requests to populate presenters fields
+        #for copies, p in enumerate(presentation.presenters.all()):
         for copies, p in enumerate(presentation.presenters.all(), start=1):
             presenters.append(p)
         # add 1 since lists are zero based
-        copies += 1
+        #copies += 1
 
 
     if request.method=='POST':
@@ -230,8 +233,8 @@ def form(request, pid=None):
     else:
         form = PresentationForm(instance=presentation)
         if not pid:
-            presenters = ['']
             copies = 1
+            presenters = ['']
 
     context = {
         'presentation':presentation,'form':form,
