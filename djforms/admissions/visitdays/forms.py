@@ -1,7 +1,10 @@
 from django import forms
-from djforms.admissions.visitdays.models import (
-    GUARDIAN_CHOICES, VisitDayBaseProfile, VisitDayEvent, VisitDayProfile
-)
+from djforms.admissions.visitdays.models import GUARDIAN_CHOICES
+from djforms.admissions.visitdays.models import VisitDay
+from djforms.admissions.visitdays.models import VisitDayBaseProfile
+from djforms.admissions.visitdays.models import VisitDayEvent
+from djforms.admissions.visitdays.models import VisitDayProfile
+from djforms.core.models import GenericChoice
 from djforms.core.models import STATE_CHOICES
 
 from djtools.fields.localflavor import USPhoneNumberField
@@ -32,21 +35,40 @@ class VisitDayBaseForm(forms.ModelForm):
     class Meta:
         model = VisitDayBaseProfile
         fields = [
-            'date', 'date_alternate', 'number_attend', 'first_name', 'last_name',
-            'email', 'address', 'city', 'state', 'postal_code', 'phone',
-            'mobile', 'gender',
+            'date',
+            'date_alternate',
+            'time_primary',
+            'time_secondary',
+            'number_attend',
+            'meeting_format',
+            'first_name',
+            'last_name',
+            'email',
+            'address',
+            'city',
+            'state',
+            'postal_code',
+            'phone',
+            'mobile',
+            'gender',
         ]
 
-    def __init__(self,event_type,*args,**kwargs):
-        super(VisitDayBaseForm,self).__init__(*args,**kwargs)
+    def __init__(self, event_type, *args, **kwargs):
+        try:
+            self.visit_day = VisitDay.objects.get(slug=event_type)
+        except Exception:
+            self.visit_day = None
+        super(VisitDayBaseForm, self).__init__(*args, **kwargs)
         qs = VisitDayEvent.objects.exclude(active=False).filter(
-            date__gte=TODAY
+            date__gte=TODAY,
         ).filter(event__slug=event_type).order_by("date","id")
         choices = [('','---choose a date---')]
         for event in qs:
             choices.append((event.id,event))
         self.fields['date'].choices = choices
         self.fields['date_alternate'].choices = choices
+        if self.visit_day and self.visit_day.time_slots:
+            self.fields['time_primary'].widget.attrs['class'] = 'required'
 
     def clean_number_attend(self):
         if self.cleaned_data.get('date'):
@@ -72,22 +94,29 @@ class VisitDayForm(forms.ModelForm):
         label="",
         widget=forms.RadioSelect,
         choices=GUARDIAN_CHOICES,
-        required = False
+        required = False,
     )
     postal_code = USZipCodeField(
-        label="Zip Code", help_text="Format: 99999 or 99999-9999"
+        label="Zip Code",
+        help_text="Format: 99999 or 99999-9999",
     )
     phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
     mobile = USPhoneNumberField(
-        required=False, help_text="Format: XXX-XXX-XXXX"
+        required=False,
+        help_text="Format: XXX-XXX-XXXX",
     )
     number_attend = forms.CharField(
         label="Number Attending",
         widget=forms.Select(
             choices=[
-                ('','--'),('1','1'),('2','2'),('3','3'),('4','4'),('5','5')
+                ('','--'),
+                ('1','1'),
+                ('2','2'),
+                ('3','3'),
+                ('4','4'),
+                ('5','5'),
             ]
-        )
+        ),
     )
     hs_grad_year = forms.CharField(max_length=4)
     entry_year = forms.CharField(max_length=4)
@@ -95,19 +124,46 @@ class VisitDayForm(forms.ModelForm):
     class Meta:
         model = VisitDayProfile
         fields = [
-            'date','date_alternate', 'number_attend', 'first_name', 'last_name',
-            'email', 'guardian_email', 'guardian_type', 'address', 'city',
-            'state', 'postal_code', 'phone', 'mobile', 'gender', 'high_school',
-            'hs_city', 'hs_state', 'hs_grad_year', 'entry_as', 'transfer',
-            'entry_year', 'entry_term', 'academic', 'xtracurricular',
+            'date',
+            'date_alternate',
+            'time_primary',
+            'time_secondary',
+            'number_attend',
+            'meeting_format',
+            'first_name',
+            'last_name',
+            'email',
+            'guardian_email',
+            'guardian_type',
+            'address',
+            'city',
+            'state',
+            'postal_code',
+            'phone',
+            'mobile',
+            'gender',
+            'high_school',
+            'hs_city',
+            'hs_state',
+            'hs_grad_year',
+            'entry_as',
+            'transfer',
+            'entry_year',
+            'entry_term',
+            'academic',
+            'xtracurricular',
             'comments',
         ]
 
-    def __init__(self,event_type,*args,**kwargs):
-        super(VisitDayForm,self).__init__(*args,**kwargs)
+    def __init__(self, event_type, *args, **kwargs):
+        try:
+            self.visit_day = VisitDay.objects.get(slug=event_type)
+        except Exception:
+            self.visit_day = None
+        super(VisitDayForm, self).__init__(*args, **kwargs)
         qs = VisitDayEvent.objects.exclude(active=False).filter(
-            date__gt=TODAY
-        ).filter(event__slug=event_type).order_by("date", "id")
+            date__gt=TODAY,
+        ).filter(event__slug=event_type).order_by('date', 'id')
         choices = [('','---choose a date---')]
         for event in qs:
             choices.append((event.id,event))
@@ -132,6 +188,8 @@ class VisitDayForm(forms.ModelForm):
         self.fields['transfer'].widget.attrs['class'] = 'validate[funcCall[ValidateTransfer]]'
         self.fields['entry_year'].widget.attrs['class'] = 'validate[required,custom[year]]'
         self.fields['entry_term'].widget.attrs['class'] = 'validate[required]'
+        if self.visit_day and self.visit_day.time_slots:
+            self.fields['time_primary'].widget.attrs['class'] = 'required'
 
     def clean_date_alternate(self):
         cd = self.cleaned_data
@@ -150,3 +208,17 @@ class VisitDayForm(forms.ModelForm):
             """)
         return self.cleaned_data['transfer']
 
+    def clean_time_primary(self):
+        time = self.cleaned_data.get('time_primary')
+        if self.visit_day and self.visit_day.time_slots and not time:
+            raise forms.ValidationError("Please choose a time slot")
+        return time
+
+    def clean_time_secondary(self):
+        tp = self.cleaned_data.get('time_primary')
+        ts = self.cleaned_data.get('time_secondary')
+        if self.visit_day and self.visit_day.time_slots and ts and ts == tp:
+            raise forms.ValidationError("""
+                Second time choice should not be the same as the first
+            """)
+        return ts

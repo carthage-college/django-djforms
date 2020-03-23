@@ -86,12 +86,25 @@ fbq('track', 'PageView');
                             <ol>
                     {% endif %}
                     {% if field.name == "date_alternate" %}
-                    {% if visit_day.date_alternate %}
+                        {% if visit_day.date_alternate %}
+                          {% include "form_field.inc.html" %}
+                        {% endif %}
+                    {% else %}{% if field.name == "time_primary" %}
+                        {% if visit_day.time_slots %}
+                          {% include "form_field.inc.html" %}
+                        {% endif %}
+                    {% else %}{% if field.name == "time_secondary" %}
+                        {% if visit_day.time_slots %}
+                          {% include "form_field.inc.html" %}
+                        {% endif %}
+                    {% else %}{% if field.name == "meeting_format" %}
+                        {% if visit_day.meeting_format %}
                           {% include "form_field.inc.html" %}
                         {% endif %}
                     {% else %}
                       {% include "form_field.inc.html" %}
-                    {% endif %}
+                    {% endif %}{% endif %}{% endif %}{% endif %}
+
                 {% endfor %}
             </ol>
         </fieldset>

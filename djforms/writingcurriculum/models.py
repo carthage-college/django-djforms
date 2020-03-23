@@ -103,7 +103,6 @@ class CourseProposal(models.Model):
     criteria = models.ManyToManyField(
         CourseCriteria,
         related_name="course_proposal_criterion",
-        null=True, blank=True
     )
     syllabus = models.FileField(
         upload_to=upload_to_path,

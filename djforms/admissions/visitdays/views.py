@@ -31,7 +31,6 @@ def visit_day_form(request, event_type):
             short = True
 
         if form.is_valid():
-            BCC = settings.MANAGERS
             profile = form.save()
             event = VisitDayEvent.objects.get(pk=profile.date.id)
             event.cur_attendees = event.cur_attendees + profile.number_attend
@@ -42,30 +41,44 @@ def visit_day_form(request, event_type):
                     visit_day.title, profile.date
                 )
                 send_mail(
-                    request, [email,], subject, email,
-                    'admissions/visitday/email_event_full.html', None, BCC
+                    request,
+                    [email],
+                    subject,
+                    email,
+                    'admissions/visitday/email_event_full.html',
+                    None,
                 )
             event.save()
             # send HTML email to attendee
-            subject = "{} on {}".format(visit_day.title, profile.date)
+            subject = "{0} on {1}".format(visit_day.title, profile.date)
             data = {'profile':profile,'visit_day':visit_day,'short':short}
             send_mail(
-                request, [profile.email], subject, email,
-                'admissions/visitday/email.html', data, BCC
+                request,
+                [profile.email],
+                subject,
+                email,
+                'admissions/visitday/email.html',
+                data,
             )
             # send text mail to admissions folks
             if settings.DEBUG:
                 TO_LIST = [settings.SERVER_EMAIL]
             else:
-                TO_LIST = [email,]
+                TO_LIST = [email]
 
-            subject = u"{} on {} for {}, {}".format(
-                visit_day.title, profile.date, profile.last_name,
-                profile.first_name
+            subject = u"{0} on {1} for {2}, {3}".format(
+                visit_day.title,
+                profile.date,
+                profile.last_name,
+                profile.first_name,
             )
             send_mail(
-                request, TO_LIST, subject, email,
-                'admissions/visitday/email.txt', data, BCC
+                request,
+                TO_LIST,
+                subject,
+                email,
+                'admissions/visitday/email.txt',
+                data,
             )
 
             return HttpResponseRedirect(

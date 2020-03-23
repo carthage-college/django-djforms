@@ -30,6 +30,18 @@
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Second Choice Date</dt>
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.date_alternate}}</dd>
     {% endif %}
+    {% if data.profile.time_primary %}
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Time, First Choice</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.time_primary}}</dd>
+    {% endif %}
+    {% if data.profile.time_secondary %}
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Time, Second Choice</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.time_secondary}}</dd>
+    {% endif %}
+    {% if data.profile.meeting_format %}
+    <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Meeting Format</dt>
+    <dd style="margin:2px 0;padding:5px 0;">{{data.profile.meeting_format}}</dd>
+    {% endif %}
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Number Attending</dt>
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.number_attend}}</dd>
 </dl>
