@@ -138,51 +138,47 @@ def photo_caption(request):
 
 
 def giving_form(request, transaction, campaign=None):
-    """
-    multipurpose function to handle various types of donations
-    """
-
-    # recipients
+    """Multipurpose function to handle various types of donations."""
     if settings.DEBUG or not settings.TC_LIVE:
-        BCC = settings.MANAGERS
+        bcc = settings.MANAGERS
     else:
-        BCC = settings.GIVING_DONATIONS_BCC
+        bcc = settings.GIVING_DONATIONS_BCC
 
     status = None
     trans_cap = transaction.capitalize()
     # check for a campaign and obtain contact form
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
-        ct_form_name = '{}{}ContactForm'.format(
-            campaign.slug.replace('-',' ').title().replace(' ',''),
-            trans_cap
+        ct_form_name = '{0}{1}ContactForm'.format(
+            campaign.slug.replace('-', ' ').title().replace(' ', ''),
+            trans_cap,
         )
-        or_form_name = '{}{}OrderForm'.format(
-            campaign.slug.replace('-',' ').title().replace(' ',''),
-            trans_cap
+        or_form_name = '{0}{1}OrderForm'.format(
+            campaign.slug.replace('-', ' ').title().replace(' ', ''),
+            trans_cap,
         )
     else:
         campaign = ''
-        ct_form_name = trans_cap + 'ContactForm'
+        ct_form_name = '{0}ContactForm'.format(trans_cap)
         # order form
-        or_form_name = trans_cap + 'OrderForm'
+        or_form_name = '{0}OrderForm'.format(trans_cap)
 
     or_form = str_to_class(
-        'djforms.giving.forms', or_form_name
+        'djforms.giving.forms', or_form_name,
     )
     ct_form = str_to_class(
-        'djforms.giving.forms', ct_form_name
+        'djforms.giving.forms', ct_form_name,
     )
 
     # there might not be a custom campaign form
     # so we just use the default contact form
     if campaign and not ct_form:
-        ct_form_name = '{}{}ContactForm'.format(
+        ct_form_name = '{0}{1}ContactForm'.format(
             settings.GIVING_DEFAULT_CONTACT_FORM,
-            trans_cap
+            trans_cap,
         )
         ct_form = str_to_class(
-            'djforms.giving.forms', ct_form_name
+            'djforms.giving.forms', ct_form_name,
         )
     if campaign and not or_form:
         or_form_name = 'DonationOrderForm'
@@ -191,14 +187,16 @@ def giving_form(request, transaction, campaign=None):
     years = None
     if request.POST:
         ct_form = str_to_class(
-            'djforms.giving.forms', ct_form_name
+            'djforms.giving.forms', ct_form_name,
         )(request.POST, prefix='ct', use_required_attribute=REQUIRED_ATTRIBUTE)
         or_form = str_to_class(
-            'djforms.giving.forms', or_form_name
+            'djforms.giving.forms', or_form_name,
         )(request.POST, prefix='or', use_required_attribute=REQUIRED_ATTRIBUTE)
         cc_form = CreditCardForm(
-            or_form, ct_form, request.POST,
-            use_required_attribute=REQUIRED_ATTRIBUTE
+            or_form,
+            ct_form,
+            request.POST,
+            use_required_attribute=REQUIRED_ATTRIBUTE,
         )
 
         if ct_form.is_valid() and or_form.is_valid():
@@ -211,7 +209,7 @@ def giving_form(request, transaction, campaign=None):
             # deal with commemorative paver options
             class_of = contact.class_of
             # donation amount calculation for current students
-            if not campaign and class_of==str(YEAR):
+            if not campaign and class_of == str(YEAR):
                 if or_data.total == 250:
                     or_data.total = PAVER_TYPES[0][0]
                 elif or_data.total == 500:
@@ -219,8 +217,8 @@ def giving_form(request, transaction, campaign=None):
                 elif or_data.total == 1000:
                     or_data.total = PAVER_TYPES[4][0]
 
-            if transaction=='paver':
-                comments = u'{}\n{}\n{}\n{}\n{}\n{}\n{}\n'.format(
+            if transaction == 'paver':
+                comments = u'{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n'.format(
                     ct_form['inscription_1'].value(),
                     ct_form['inscription_2'].value(),
                     ct_form['inscription_3'].value(),
@@ -232,11 +230,8 @@ def giving_form(request, transaction, campaign=None):
                 or_data.comments = comments
             # deal with payments if they have chosen to pledge
             if transaction != 'paver' and request.POST.get('or-pledge') != '':
-                #or_data.payments = request.POST['or-payments']
                 or_data.payments = 0
                 or_data.auth = 'store'
-                #or_data.grand_total = or_data.total
-                #or_data.total = or_data.total / int(or_data.payments)
                 or_data.cycle = '1m'
             else:
                 or_data.payments = None
@@ -246,7 +241,7 @@ def giving_form(request, transaction, campaign=None):
             contact.order.add(or_data)
             email = contact.email
             cc_form = CreditCardForm(
-                or_data, contact, request.POST
+                or_data, contact, request.POST,
             )
             if cc_form.is_valid():
                 # save and update order
@@ -259,33 +254,36 @@ def giving_form(request, transaction, campaign=None):
                 or_data.save()
                 # sendmail
                 or_data.contact = contact
-                data = {'order':or_data,'years':years}
+                data = {'order': or_data, 'years': years}
                 # subject of email
                 SUBJECT = u"Thank you, {} {}{} for your donation to Carthage"
                 try:
                     if contact.spouse:
-                        spouse = " and {},".format(contact.spouse)
+                        spouse = ' and {0},'.format(contact.spouse)
                     else:
-                        spouse = ","
-                except:
-                    spouse = ""
-                subject = SUBJECT.format(contact.first_name, contact.last_name, spouse)
+                        spouse = ','
+                except Exception:
+                    spouse = ''
+                subject = SUBJECT.format(
+                    contact.first_name, contact.last_name, spouse,
+                )
                 # build our email template path
                 template = 'giving/{}_email.html'.format(transaction)
                 if campaign:
-                    temp = 'giving/campaigns/{}/{}_email.html'.format(
-                        campaign.slug, transaction
+                    temp = 'giving/campaigns/{0}/{1}_email.html'.format(
+                        campaign.slug, transaction,
                     )
-                    sendero = os.path.join(settings.ROOT_DIR,'templates',temp)
+                    sendero = os.path.join(
+                        settings.ROOT_DIR, 'templates', temp,
+                    )
                     if os.path.isfile(sendero):
                         template = temp
                     else:
-                        template = 'giving/campaigns/{}/{}_email.html'.format(
-                            settings.GIVING_DEFAULT_CAMPAIGN, transaction
+                        template = 'giving/campaigns/{0}/{1}_email.html'.format(
+                            settings.GIVING_DEFAULT_CAMPAIGN, transaction,
                         )
-
                 sent = send_mail(
-                    request, [email,], subject, email, template, data, BCC
+                    request, [email], subject, email, template, data, bcc,
                 )
                 or_data.send_mail = sent
                 or_data.save()
@@ -340,29 +338,37 @@ def giving_form(request, transaction, campaign=None):
         cc_form = CreditCardForm(use_required_attribute=REQUIRED_ATTRIBUTE)
 
     # build our template path
-    template = 'giving/{}_form.html'.format(transaction)
+    modal = ''
+    if request.GET.get('modal'):
+        modal = 'modal_'
+    template = 'giving/{0}_{1}form.html'.format(transaction, modal)
     if campaign:
-        temp = 'giving/campaigns/{}/{}_form.html'.format(
-            campaign.slug,transaction
+        temp = 'giving/campaigns/{0}/{1}_{2}form.html'.format(
+            campaign.slug, transaction, modal,
         )
         if os.path.isfile(os.path.join(settings.ROOT_DIR, 'templates', temp)):
             template = temp
         else:
-            template = 'giving/campaigns/{}/{}_form.html'.format(
-                settings.GIVING_DEFAULT_CAMPAIGN, transaction
+            template = 'giving/campaigns/{0}/{1}_{2}form.html'.format(
+                settings.GIVING_DEFAULT_CAMPAIGN, transaction, modal,
             )
 
     return render(
-        request, template,
+        request,
+        template,
         {
-            'ct_form': ct_form, 'or_form': or_form, 'form_proc': cc_form,
-            'status': status, 'campaign': campaign,'year':str(YEAR),
+            'ct_form': ct_form,
+            'or_form': or_form,
+            'form_proc': cc_form,
+            'status': status,
+            'campaign': campaign,
+            'year': str(YEAR),
             'desi': [
                 "Women 150 Scholarship Fund",
                 "Women 150 Aspire/Professional Development Fund",
-                "Women 150 Women's Athletics Fund"
-            ]
-        }
+                "Women 150 Women's Athletics Fund",
+            ],
+        },
     )
 
 
