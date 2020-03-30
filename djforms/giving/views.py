@@ -131,9 +131,9 @@ def photo_caption(request):
         foto = False
         form = PhotoCaptionForm()
     return render(
-        request, 'giving/manager/photo_caption.html', {
-            'form':form,'foto':foto
-        }
+        request,
+        'giving/manager/photo_caption.html',
+        {'form': form, 'foto': foto},
     )
 
 
@@ -146,6 +146,10 @@ def giving_form(request, transaction, campaign=None):
 
     status = None
     trans_cap = transaction.capitalize()
+    # might be a modal windows
+    modal = request.GET.get('modal')
+    if modal:
+        modal = 'modal_'
     # check for a campaign and obtain contact form
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
@@ -256,7 +260,7 @@ def giving_form(request, transaction, campaign=None):
                 or_data.contact = contact
                 data = {'order': or_data, 'years': years}
                 # subject of email
-                SUBJECT = u"Thank you, {} {}{} for your donation to Carthage"
+                subject = u"Thank you, {0} {1}{2} for your donation to Carthage"
                 try:
                     if contact.spouse:
                         spouse = ' and {0},'.format(contact.spouse)
@@ -264,11 +268,11 @@ def giving_form(request, transaction, campaign=None):
                         spouse = ','
                 except Exception:
                     spouse = ''
-                subject = SUBJECT.format(
+                subject = subject.format(
                     contact.first_name, contact.last_name, spouse,
                 )
                 # build our email template path
-                template = 'giving/{}_email.html'.format(transaction)
+                template = 'giving/{0}_email.html'.format(transaction)
                 if campaign:
                     temp = 'giving/campaigns/{0}/{1}_email.html'.format(
                         campaign.slug, transaction,
@@ -288,21 +292,26 @@ def giving_form(request, transaction, campaign=None):
                 or_data.send_mail = sent
                 or_data.save()
                 # redirect
+                if modal:
+                    modal = '?modal={0}'.format(modal)
                 if campaign:
-                    url = reverse(
-                        'giving_success_campaign',
-                        args=[transaction,campaign.slug]
+                    url = '{0}{1}'.format(
+                        reverse(
+                            'giving_success_campaign',
+                            args=[transaction, campaign.slug],
+                        ),
+                        modal,
                     )
                 else:
-                    url = reverse(
-                        'giving_success_generic',
-                        args=[transaction]
+                    url = '{0}{1}'.format(
+                        reverse('giving_success_generic', args=[transaction]),
+                        modal,
                     )
                 return HttpResponseRedirect(url)
             else:
-                r = cc_form.processor_response
-                if r:
-                    or_data.status = r.status
+                resp = cc_form.processor_response
+                if resp:
+                    or_data.status = resp.status
                 else:
                     or_data.status = 'Form Invalid'
                 or_data.cc_name = cc_form.name
@@ -327,20 +336,17 @@ def giving_form(request, transaction, campaign=None):
             init['comments'] = campaign.designation
 
         or_form = str_to_class(
-            'djforms.giving.forms', or_form_name
+            'djforms.giving.forms', or_form_name,
         )(prefix='or', initial=init, use_required_attribute=REQUIRED_ATTRIBUTE)
 
         # contact form
         ct_form = str_to_class(
-            'djforms.giving.forms', ct_form_name
+            'djforms.giving.forms', ct_form_name,
         )(prefix='ct', use_required_attribute=REQUIRED_ATTRIBUTE)
         # credit card
         cc_form = CreditCardForm(use_required_attribute=REQUIRED_ATTRIBUTE)
 
     # build our template path
-    modal = ''
-    if request.GET.get('modal'):
-        modal = 'modal_'
     template = 'giving/{0}_{1}form.html'.format(transaction, modal)
     if campaign:
         temp = 'giving/campaigns/{0}/{1}_{2}form.html'.format(
@@ -364,8 +370,8 @@ def giving_form(request, transaction, campaign=None):
             'campaign': campaign,
             'year': str(YEAR),
             'desi': [
-                "Women 150 Scholarship Fund",
-                "Women 150 Aspire/Professional Development Fund",
+                'Women 150 Scholarship Fund',
+                'Women 150 Aspire/Professional Development Fund',
                 "Women 150 Women's Athletics Fund",
             ],
         },
@@ -373,33 +379,35 @@ def giving_form(request, transaction, campaign=None):
 
 
 def giving_success(request, transaction, campaign=None):
-    # giving campaigns
+    """Dispaly succes page after submitting a donation for a campaign."""
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
+    # might be a modal windows
+    modal = request.GET.get('modal')
+    if modal:
+        modal = 'modal_'
 
     # build our template path
-    template = 'giving/{}_success.html'.format(transaction)
+    template = 'giving/{0}_{1}success.html'.format(transaction, modal)
     if campaign:
-        temp = 'giving/campaigns/{}/{}_success.html'.format(
-            campaign.slug, transaction
+        temp = 'giving/campaigns/{0}/{1}_{2}success.html'.format(
+            campaign.slug, transaction, modal,
         )
         if os.path.isfile(os.path.join(settings.ROOT_DIR, 'templates', temp)):
             template = temp
         else:
-            template = 'giving/campaigns/{}/{}_success.html'.format(
-                settings.GIVING_DEFAULT_CAMPAIGN, transaction
+            template = 'giving/campaigns/{0}/{1}_{2}success.html'.format(
+                settings.GIVING_DEFAULT_CAMPAIGN, transaction, modal,
             )
 
-    return render(
-        request, template, { 'campaign': campaign, }
-    )
+    return render(request, template, {'campaign': campaign})
 
 
 def donors(request, slug=None):
-
+    """Display the donors to a campaign or default donation."""
     promo = None
     percent = 0
-    #start_date = TODAY - timedelta(days=365)
+    # start_date = TODAY - timedelta(days=365)
     start_date = TODAY - timedelta(days=300)
     template = 'giving/donors.html'
 
@@ -503,14 +511,15 @@ def manager_cash(request):
             or_data.save()
             contact.order.add(or_data)
             # redirect
-            return HttpResponseRedirect( reverse( 'giving_manager_success') )
+            return HttpResponseRedirect(reverse('giving_manager_success'))
     else:
         ct_form = ManagerContactForm(prefix='ct')
         or_form = ManagerOrderForm(prefix='or')
 
     return render(
-        request, 'giving/manager/cash_form.html',
-        {'ct_form': ct_form, 'or_form':or_form,}
+        request,
+        'giving/manager/cash_form.html',
+        {'ct_form': ct_form, 'or_form': or_form},
     )
 
 
