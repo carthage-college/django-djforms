@@ -1,0 +1,293 @@
+{% extends "blank.html" %}
+{% load livewhale_api %}
+{% block title %}
+    {{campaign.title|default:"Giving to Carthage"}}
+    Form &mdash; Giving &mdash; Carthage College
+{% endblock %}
+{% block css %}
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+  rel="stylesheet" type="text/css">
+<link href="//www.carthage.edu/themes/korra/assets/css/master.css"
+  type="text/css" rel="stylesheet">
+<link href="//www.carthage.edu/themes/korra/assets/css/addons.css"
+  type="text/css" rel="stylesheet">
+<link href="//www.carthage.edu/themes/korra/assets/css/print.css"
+  type="text/css" rel="stylesheet">
+<link href="//www.carthage.edu/themes/shared/css/icons.css"
+  type="text/css" rel="stylesheet">
+<link href="//www.carthage.edu/themes/shared/css/forms.css"
+  rel="stylesheet" type="text/css">
+<link href="//www.carthage.edu/themes/shared/css/tables.css"
+  rel="stylesheet" type="text/css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  type="text/css" rel="stylesheet">
+{% endblock %}
+{% block extra_javascript %}
+    {% include "giving/donation_form.inc.js" %}
+{% endblock %}
+{% block extra_style %}
+    <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
+        rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;
+    padding:3px 0 3px 5px;width:99%;}
+    #id_security_code, #id_expiration_month,
+    #id_expiration_year {width:70px;}
+    #id_or-start_date, #id_ct-postal_code, #id_or-total, #pledge_total {width:100px;}
+    li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
+    .cost, #pledge_total_help { font-weight:bold; color:green; }
+    #pledge_total_help { margin-left:9px; }
+    #page-content-wrap #pledge-payments p { color:green;font-weight:bold;
+      margin-bottom:5px; }
+    .ui-widget button { float: right; }
+    #dialog-message{padding:8px;}
+    .ui-dialog-title{padding:4px;float:left;}
+    </style>
+{% endblock %}
+{% block group_name %}Giving{% endblock %}
+{% block content_head %}
+    <h1 id="page_title">
+        {{campaign.title|default:"Your Giving Matters"}}
+    </h1>
+{% endblock %}
+{% block content %}
+<div class="forms-container{% if campaign.about %}
+    large-8 medium-10 small-12"{% endif %}">
+    <div class="clear">
+        {% if campaign.description %}
+            {{campaign.description}}
+        {% endif %}
+    </div>
+    <p>
+        Fields marked with an asterisk
+        <img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />
+        are required.
+    </p>
+    {% if form_proc.errors or or_form.errors or ct_form.errors %}
+        <p class="error">
+            There were errors with the data submitted, see below.
+        </p>
+    {% endif %}
+    <form method="post" action="{{ request.get_full_path }}" class="form" id="profile">
+        {% csrf_token %}
+        {% for hidden in or_form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+        <h2>Donation Information</h2>
+        <fieldset class="blockLabels">
+          <div class="large-6 medium-12 small-12 clear cf">
+            <ol>
+                <li class="ctrlHolder">
+                    <h3><label for="id_or-total">Amount</label></h3>
+                    {% if or_form.total.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                            {{ or_form.total.errors|join:", "}}
+                      </span>
+                    {% else %}
+                    <div class="required">
+                    {% endif %}
+                      <input type="text" placeholder="$"
+                        name="or-total" id="id_or-total" class="required"
+                        value="{{or_form.total.value|default:""}}">
+                    </div>
+                </li>
+                <li class="ctrlHolder">
+                    <div class="fleft">
+                        <input type="checkbox" name="pledge" id="pledge">
+                    </div>
+                    <h3>
+                        <label for="pledge">
+                            Make my gift recurring
+                        </label>
+                    </h3>
+                    <div class="clear" id="pledge-payments">
+                    {% get_lw_content as recurring_warning blurbs 2294 %}
+                    {{recurring_warning.body}}
+                    </div>
+                </li>
+            </ol>
+          </div>
+          <div class="column2 large-6 medium-12 small-12">
+            <ol>
+              {% block designation %}
+                <li class="ctrlHolder">
+                    <h3><label for="id_or-comments">Designation</label></h3>
+                    <div>
+                    {% if campaign.slug == "athletics-challenge" %}
+                      <select name="or-comments">
+                        <option>----Select----</option>
+                        <option value="UA04"{% if or_form.comments.value == 'UA04' %} selected{% endif %}>General Athletics</option>
+                        <option value="UA08"{% if or_form.comments.value == 'UA08' %} selected{% endif %}>Baseball</option>
+                        <option value="UA09"{% if or_form.comments.value == 'UA09' %} selected{% endif %}>Men's Basketball</option>
+                        <option value="UA10"{% if or_form.comments.value == 'UA10' %} selected{% endif %}>Women's Basketball</option>
+                        <option value="UA14"{% if or_form.comments.value == 'UA14' %} selected{% endif %}>Cheerleading</option>
+                        <option value="UA16"{% if or_form.comments.value == 'UA16' %} selected{% endif %}>Men's Cross Country</option>
+                        <option value="UA17"{% if or_form.comments.value == 'UA17' %} selected{% endif %}>Women's Cross Country</option>
+                        <option value="UA19"{% if or_form.comments.value == 'UA19' %} selected{% endif %}>Football</option>
+                        <option value="UA20"{% if or_form.comments.value == 'UA20' %} selected{% endif %}>Men's Golf</option>
+                        <option value="UA21"{% if or_form.comments.value == 'UA21' %} selected{% endif %}>Women's Golf</option>
+                        <option value="UA22"{% if or_form.comments.value == 'UA22' %} selected{% endif %}>Men's Lacrosse</option>
+                        <option value="UA23"{% if or_form.comments.value == 'UA23' %} selected{% endif %}>Women's Lacrosse</option>
+                        <option value="UA25"{% if or_form.comments.value == 'UA25' %} selected{% endif %}>Red Hots dance team</option>
+                        <option value="UA29"{% if or_form.comments.value == 'UA29' %} selected{% endif %}>Men's Soccer</option>
+                        <option value="UA30"{% if or_form.comments.value == 'UA30' %} selected{% endif %}>Women's Soccer</option>
+                        <option value="UA31"{% if or_form.comments.value == 'UA31' %} selected{% endif %}>Softball</option>
+                        <option value="UA32"{% if or_form.comments.value == 'UA32' %} selected{% endif %}>Men's Swimming</option>
+                        <option value="UA33"{% if or_form.comments.value == 'UA33' %} selected{% endif %}>Women's Swimming</option>
+                        <option value="UA34"{% if or_form.comments.value == 'UA34' %} selected{% endif %}>Men's Tennis</option>
+                        <option value="UA35"{% if or_form.comments.value == 'UA35' %} selected{% endif %}>Women's Tennis</option>
+                        <option value="UA36"{% if or_form.comments.value == 'UA36' %} selected{% endif %}>Men's Track</option>
+                        <option value="UA37"{% if or_form.comments.value == 'UA37' %} selected{% endif %}>Women's Track and Field</option>
+                        <option value="UA39"{% if or_form.comments.value == 'UA39' %} selected{% endif %}>Men's Volleyball</option>
+                        <option value="UA40"{% if or_form.comments.value == 'UA40' %} selected{% endif %}>Women's Volleyball</option>
+                        <option value="UA41"{% if or_form.comments.value == 'UA41' %} selected{% endif %}>Women's Water Polo</option>
+                      </select>
+                      <p class="help">
+                        Please choose an Athletics designation.
+                      </p>
+                    {% else %}
+                      <input type="text" name="or-comments" id="id_or-comments"
+                        value="{{or_form.comments.value|default:""}}">
+                      <p class="help">
+                        Please indicate if you would like your gift to be
+                        directed to a specific area. If this space is
+                        left blank, gifts will be directed to the
+                        <a href="/give/carthage-fund/">Carthage Fund</a>.
+                      </p>
+                    {% endif %}
+                    </div>
+                </li>
+              {% endblock %}
+              {% with ct_form.honouring as field %}
+              {% include "form_field.inc.html" %}
+              {% endwith %}
+            </ol>
+          </div>
+        </fieldset>
+        <h2>Contact Information</h2>
+        <fieldset class="blockLabels">
+          <div class="large-6 medium-12 small-12 clear cf">
+            <ol>
+                {% for field in ct_form %}
+                  {% if field.name != "honouring" and field.name != "matching_company" and field.name != "opt_in" and field.name != "anonymous" %}
+                    <li class="ctrlHolder">
+                        <h3>{{ field.label_tag }}</h3>
+                        {% if field.errors %}
+                            <div class="required warning">
+                            <span class="error-message">
+                                {{ field.errors|join:", "}}
+                            </span>
+                        {% else %}
+                            <div{% if field.field.required %}
+                                class="required"{% endif %}>
+                        {% endif %}
+                        {{field}}
+                        {% if field.help_text %}
+                            <p class="help">{{field.help_text}}</p>
+                        {% endif %}
+                        </div>
+                        {% if field.name == "class_of" %}
+                        </li></ol></div>
+                        <div class="column2 large-6 medium-12 small-12">
+                        <ol><li class="ctrlHolder">
+                        {% endif %}
+                    </li>
+                  {% endif %}
+                {% endfor %}
+            </ol>
+          </div>
+          <div class="large-12 medium-12 small-12 clear cf">
+            <ol>
+                <li><h3>Matching Funds</h3></li>
+                <li class="ctrlHolder">
+                {% with ct_form.matching_company as field %}
+                {{field}} {{field.label_tag}}
+                {% endwith %}
+                </li>
+                <li class="ctrlHolder">
+                {% with ct_form.opt_in as field %}
+                {{field}} {{field.label_tag}}
+                {% endwith %}
+                </li>
+                <li>
+                    <h3>Thrivent Choice</h3>
+                    <p>
+                        Thrivent members may allocate their Thrivent Choice
+                        dollars to Carthage. Please contact Thrivent or visit
+                        <a href="https://www.thrivent.com/making-a-difference/living-generously/thrivent-choice/"
+                            target="_blank">the website</a>
+                        for more information.
+                    </p>
+                </li>
+                <li>
+                    <h3>Anonymous Giving</h3><br>
+                    <input type="checkbox" name="ct-anonymous"
+                        {% if ct_form.anonymous.value %}checked{% endif %}
+                        id="id_ct-anonymous">
+                    <label for="id_ct-anonymous">
+                    I would like my gift to remain anonymous,
+                    and not be published on any donor list or
+                    in the annual report.</label>
+                </li>
+            </ol>
+          </div>
+        </fieldset>
+        <h2>Billing Information</h2>
+        <fieldset class="blockLabels">
+          <div class="large-12 medium-12 small-12">
+            {% if form_proc.errors and status %}
+            <div style="padding-left:4px;">
+              <p class="notice">
+                The transaction failed.
+                {% if status == "baddata" or status == "decline" %}
+                Error: <strong>{{status}}</strong>
+                {% endif %}
+              </p>
+            </div>
+            {% endif %}
+
+            <div class="large-6 medium-12 small-12 clear cf">
+            <ol>
+            {% with form_proc.billing_name as field %}
+            {% include "form_field.inc.html" %}
+            {% endwith %}
+            {% with form_proc.card_number as field %}
+            {% include "form_field.inc.html" %}
+            {% endwith %}
+            <li class="ctrlHolder">
+              <h3>
+                <label for="id_expiration_month">Expiration Date</label>
+              </h3>
+              <div class="required">
+                {{form_proc.expiration_month}}
+                <label for="id_expiration_year" style="display:none;">
+                Expiration Year
+                </label>
+                &mdash;&nbsp;
+                {{form_proc.expiration_year}}
+              </div>
+            </li>
+            </ol>
+            </div>
+            <div class="column2 large-6 medium-12 small-12">
+            <ol>
+            {% with form_proc.security_code as field %}
+            {% include "form_field.inc.html" %}
+            {% endwith %}
+            {% with form_proc.captcha as field %}
+            {% include "form_field.inc.html" %}
+            {% endwith %}
+            </ol>
+            </div>
+          </div>
+        </fieldset>
+      {% include "form_submit.inc.html" %}
+    </form>
+</div>
+{% if campaign.about %}
+<div class="forms-sidebar large-4 medium-6 small-12">
+    {{campaign.about}}
+</div>
+{% endif %}
+{% endblock %}
