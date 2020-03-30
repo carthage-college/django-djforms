@@ -147,7 +147,7 @@ def giving_form(request, transaction, campaign=None):
     status = None
     trans_cap = transaction.capitalize()
     # might be a modal windows
-    modal = request.GET.get('modal')
+    modal = request.GET.get('modal', '')
     if modal:
         modal = 'modal_'
     # check for a campaign and obtain contact form
