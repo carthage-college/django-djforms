@@ -162,7 +162,7 @@ class VisitDayForm(forms.ModelForm):
             self.visit_day = None
         super(VisitDayForm, self).__init__(*args, **kwargs)
         qs = VisitDayEvent.objects.exclude(active=False).filter(
-            date__gt=TODAY,
+            date__gte=TODAY,
         ).filter(event__slug=event_type).order_by('date', 'id')
         choices = [('','---choose a date---')]
         for event in qs:
