@@ -383,7 +383,7 @@ def giving_success(request, transaction, campaign=None):
     if campaign:
         campaign = get_object_or_404(Promotion, slug=campaign)
     # might be a modal windows
-    modal = request.GET.get('modal')
+    modal = request.GET.get('modal', '')
     if modal:
         modal = 'modal_'
 
