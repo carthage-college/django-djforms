@@ -50,7 +50,7 @@ def visit_day_form(request, event_type):
                 )
             event.save()
             # send HTML email to attendee
-            subject = "{0} on {1}".format(visit_day.title, profile.date)
+            subject = u"{0} on {1}".format(visit_day.title, profile.date)
             data = {'profile':profile,'visit_day':visit_day,'short':short}
             send_mail(
                 request,
