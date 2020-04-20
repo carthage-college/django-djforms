@@ -51,9 +51,12 @@ def export_scholars(modeladmin, request, queryset):
         poster = "http://{}/assets/{}".format(
             settings.SERVER_URL,p.poster_file
         )
-        leader = "{}, {}".format(
-            p.leader.last_name, p.leader.first_name
-        )
+        try:
+            leader = u"{0}, {1}".format(
+                p.leader.last_name, p.leader.first_name,
+            )
+        except:
+            leader = ''
         presenters = ""
         for f in p.presenters.all():
             if not f.leader:
@@ -69,9 +72,13 @@ def export_scholars(modeladmin, request, queryset):
                 p.work_type, encoding='utf-8',
                 strings_only=False, errors='strict'
             )
+        sponsor_email = ''
+        if p.leader:
+            sponsor_email = p.leader.sponsor_email
+            sponsor_other = p.leader.sponsor_other
         writer.writerow([
-            title, p.reviewer, leader, p.user.email, p.leader.sponsor_email,
-            p.leader.sponsor_other, presenters[:-1], funding, work_type,
+            title, p.reviewer, leader, p.user.email, sponsor_email,
+            sponsor_other, presenters[:-1], funding, work_type,
             p.permission, p.shared, p.need_table, p.need_electricity,
             link,poster,p.date_created
         ])
