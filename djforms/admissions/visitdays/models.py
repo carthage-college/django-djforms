@@ -51,6 +51,8 @@ class VisitDay(models.Model):
     email_info = models.TextField(
         "Email Instructions",
         help_text="This information will be sent to the registrant.",
+        null=True,
+        blank=True,
     )
     slug = models.CharField(
         max_length=255, verbose_name='Slug', unique=True,
