@@ -3,29 +3,33 @@
 <head></head>
 <body>
 <h1>{{data.visit_day.title}}</h1>
+
 {{data.visit_day.description|safe}}
-{{data.visit_day.email_info|safe}}
-<!--
-<ul>
+
+{% if data.visit_day.email_info %}
+  {{data.visit_day.email_info|safe}}
+{% else %}
+  <!--
+  <ul>
     <li>
-        <a href="https://www.carthage.edu/about/directions/">
-            Directions to Carthage
-        </a>
+      <a href="https://www.carthage.edu/about/directions/">
+        Directions to Carthage
+      </a>
     </li>
     <li>
-        <a href="https://www.carthage.edu/about/campus-map/">
-            Carthage Campus Map
-        </a>
+      <a href="https://www.carthage.edu/about/campus-map/">
+        Carthage Campus Map
+      </a>
     </li>
     <li>
-        <a href="https://www.carthage.edu/admissions/visit/lodging/">
-            Lodging information
-        </a>
+      <a href="https://www.carthage.edu/admissions/visit/lodging/">
+        Lodging information
+      </a>
     </li>
-</ul>
--->
-<h2>Yes, I plan to attend on</h2>
-<dl style="margin-bottom:50px;">
+  </ul>
+  -->
+  <h2>Yes, I plan to attend on</h2>
+  <dl style="margin-bottom:50px;">
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Date</dt>
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.date}}</dd>
     {% if data.profile.date_alternate %}
@@ -46,9 +50,9 @@
     {% endif %}
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Number Attending</dt>
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.number_attend}}</dd>
-</dl>
-<h2>Personal Information</h2>
-<dl style="margin-bottom:50px;">
+  </dl>
+  <h2>Personal Information</h2>
+  <dl style="margin-bottom:50px;">
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">First Name</dt>
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.first_name}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Last Name</dt>
@@ -77,10 +81,10 @@
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.mobile|default:"&nbsp;"}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Gender</dt>
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.gender}}</dd>
-</dl>
-{% if not data.short %}
-<h2>Educational Background and Plans</h2>
-<dl style="margin-bottom:50px;">
+  </dl>
+  {% if not data.short %}
+  <h2>Educational Background and Plans</h2>
+  <dl style="margin-bottom:50px;">
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">High School</dt>
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.high_school}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">City</dt>
@@ -99,13 +103,14 @@
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.entry_year}}</dd>
     <dt style="background:#5f9be3;color:#fff;float:left;font-weight:bold;margin-right:10px;padding:5px;width:200px;">Entry Term</dt>
     <dd style="margin:2px 0;padding:5px 0;">{{data.profile.entry_term}}</dd>
-</dl>
-<h3>Academic Interests</h3>
-<p>{{data.profile.academic}}</p>
-<h3>Extracurricular Interests</h3>
-<p>{{data.profile.xtracurricular}}</p>
-<h3>Comments</h3>
-<p>{{data.profile.comments}}</p>
+  </dl>
+  <h3>Academic Interests</h3>
+  <p>{{data.profile.academic}}</p>
+  <h3>Extracurricular Interests</h3>
+  <p>{{data.profile.xtracurricular}}</p>
+  <h3>Comments</h3>
+  <p>{{data.profile.comments}}</p>
+  {% endif %}
 {% endif %}
 </body>
 </html>
