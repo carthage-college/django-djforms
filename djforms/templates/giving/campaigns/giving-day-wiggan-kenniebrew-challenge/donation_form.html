@@ -1,0 +1,25 @@
+{% extends "giving/donation_form.html" %}
+{% block content_head %}
+    <h1 id="page_title">
+        {{campaign.title}}
+    </h1>
+{% endblock %}
+{% block designation %}
+<li class="ctrlHolder">
+    <h3><label for="id_or-comments">Designation</label></h3>
+    <div>
+      <select name="or-comments">
+        <option>----Select----</option>
+        <option value="Experiential Learning Fund"{% if or_form.comments.value == 'Experiential Learning Fund' %} selected{% endif %}>
+        Experiential Learning Fund
+        </option>
+        <option value="Annual Scholarship"{% if or_form.comments.value == 'Annual Scholarship' %} selected{% endif %}>
+        Annual Scholarship
+        </option>
+      </select>
+      <p class="help">
+        Please choose a designation.
+      </p>
+    </div>
+</li>
+{% endblock %}
