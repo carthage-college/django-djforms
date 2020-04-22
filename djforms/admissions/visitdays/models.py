@@ -22,7 +22,7 @@ def limit_time():
     ids = [
         g.id for g in GenericChoice.objects.filter(
             tags__name__in=['Admissions Visit Time'],
-        ).order_by('ranking')
+        ).exclude(active=False).order_by('ranking')
     ]
     return {'id__in':ids}
 
@@ -31,7 +31,7 @@ def limit_format():
     ids = [
         g.id for g in GenericChoice.objects.filter(
             tags__name__in=['Admissions Contact Platform'],
-        ).order_by('ranking')
+        ).exclude(active=False).order_by('ranking')
     ]
     return {'id__in':ids}
 
