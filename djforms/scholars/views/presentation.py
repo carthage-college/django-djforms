@@ -21,7 +21,6 @@ YEAR = int(NOW.year)
 if int(NOW.month) > 9 and not settings.DEBUG:
     YEAR += 1
 
-BCC = settings.MANAGERS
 login_url = settings.LOGIN_URL
 
 import logging
@@ -222,9 +221,11 @@ def form(request, pid=None):
                     request.user.last_name
                 )
                 send_mail (
-                    request, [settings.SERVER_EMAIL], subject,
-                    request.user.email, 'scholars/presentation/email.html',
-                    data, BCC
+                    request,
+                    [settings.SERVER_EMAIL], subject,
+                    request.user.email,
+                    'scholars/presentation/email.html',
+                    data,
                 )
             return HttpResponseRedirect(reverse('presentation_form_done'))
         else:
@@ -284,18 +285,23 @@ def email_presenters(request,pid,action):
                     request, 'scholars/presenters/email_form.html', context
                 )
             elif 'execute' in request.POST:
-                FEMAIL = request.user.email
-                TO_LIST = [presentation.user.email,]
+                femail = request.user.email
+                to_list = [presentation.user.email,]
                 if presentation.leader.sponsor_email:
                     if settings.DEBUG:
-                        TO_LIST.append(settings.SERVER_EMAIL)
+                        to_list.append(settings.SERVER_EMAIL)
                     else:
-                        TO_LIST.append(presentation.leader.sponsor_email)
+                        to_list.append(presentation.leader.sponsor_email)
                 data = {'content':form_data['content']}
                 sub = "[Celebration of Scholars] Info about your presentation"
                 send_mail (
-                    request, TO_LIST, sub,
-                    FEMAIL, 'scholars/presenters/email_data.html', data, BCC
+                    request,
+                    to_list,
+                    sub,
+                    femail,
+                    'scholars/presenters/email_data.html',
+                    data,
+                    [settings.COS_EMAIL, settings.SERVER_EMAIL],
                 )
                 return HttpResponseRedirect(reverse('email_presenters_done'))
             else:
