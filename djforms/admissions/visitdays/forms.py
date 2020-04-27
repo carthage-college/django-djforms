@@ -13,23 +13,37 @@ from djtools.fields import TODAY
 from localflavor.us.forms import USZipCodeField
 
 
+MEETING_REQUEST = GenericChoice.objects.filter(
+    tags__name__in=['Meeting Requests']
+).filter(active=True).order_by('name')
+
+
 class VisitDayBaseForm(forms.ModelForm):
 
     email = forms.EmailField(label="Email")
     postal_code = USZipCodeField(label="Zip Code")
-    phone = USPhoneNumberField(
-        help_text="Format: XXX-XXX-XXXX"
-    )
+    phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
     mobile = USPhoneNumberField(
-        required=False, help_text="Format: XXX-XXX-XXXX"
+        required=False, help_text="Format: XXX-XXX-XXXX",
     )
     number_attend = forms.CharField(
         label="Number Attending",
         widget=forms.Select(
             choices=[
-                ('','--'),('1','1'),('2','2'),('3','3'),('4','4'),('5','5')
+                ('', '--'),
+                ('1', '1'),
+                ('2', '2'),
+                ('3', '3'),
+                ('4', '4'),
+                ('5', '5'),
             ]
-        )
+        ),
+    )
+    meeting_request = forms.ModelMultipleChoiceField(
+        label="Meeting Requests",
+        queryset=MEETING_REQUEST,
+        widget=forms.CheckboxSelectMultiple(),
+        required=False,
     )
 
     class Meta:
@@ -41,6 +55,7 @@ class VisitDayBaseForm(forms.ModelForm):
             'time_secondary',
             'number_attend',
             'meeting_format',
+            'meeting_request',
             'first_name',
             'last_name',
             'email',
@@ -85,6 +100,37 @@ class VisitDayBaseForm(forms.ModelForm):
                 """.format(less))
         return self.cleaned_data['number_attend']
 
+    def clean_date_alternate(self):
+        cd = self.cleaned_data
+        if cd.get('date_alternate') == cd.get('date'):
+            raise forms.ValidationError("""
+                Your second choice date cannot be the same as your first choice.
+            """)
+        return self.cleaned_data['date_alternate']
+
+    def clean_time_primary(self):
+        time = self.cleaned_data.get('time_primary')
+        if self.visit_day and self.visit_day.time_slots and not time:
+            raise forms.ValidationError("Please choose a time slot")
+        return time
+
+    def clean_time_secondary(self):
+        tp = self.cleaned_data.get('time_primary')
+        ts = self.cleaned_data.get('time_secondary')
+        if self.visit_day and self.visit_day.time_slots and ts and ts == tp:
+            raise forms.ValidationError("""
+                Second time choice should not be the same as the first
+            """)
+        return ts
+
+    def clean_meeting_request(self):
+        mr = self.cleaned_data['meeting_request']
+        if self.visit_day.meeting_request and mr.count() == 0:
+            raise forms.ValidationError("""
+                Please choose at least one meeting request.
+            """)
+        return mr
+
 
 class VisitDayForm(forms.ModelForm):
 
@@ -109,17 +155,23 @@ class VisitDayForm(forms.ModelForm):
         label="Number Attending",
         widget=forms.Select(
             choices=[
-                ('','--'),
-                ('1','1'),
-                ('2','2'),
-                ('3','3'),
-                ('4','4'),
-                ('5','5'),
+                ('', '--'),
+                ('1', '1'),
+                ('2', '2'),
+                ('3', '3'),
+                ('4', '4'),
+                ('5', '5'),
             ]
         ),
     )
     hs_grad_year = forms.CharField(max_length=4)
     entry_year = forms.CharField(max_length=4)
+    meeting_request = forms.ModelMultipleChoiceField(
+        label="Meeting Requests",
+        queryset=MEETING_REQUEST,
+        widget=forms.CheckboxSelectMultiple(),
+        required=False,
+    )
 
     class Meta:
         model = VisitDayProfile
@@ -130,6 +182,7 @@ class VisitDayForm(forms.ModelForm):
             'time_secondary',
             'number_attend',
             'meeting_format',
+            'meeting_request',
             'first_name',
             'last_name',
             'email',
@@ -222,3 +275,11 @@ class VisitDayForm(forms.ModelForm):
                 Second time choice should not be the same as the first
             """)
         return ts
+
+    def clean_meeting_request(self):
+        mr = self.cleaned_data['meeting_request']
+        if self.visit_day.meeting_request and mr.count() == 0:
+            raise forms.ValidationError("""
+                Please choose at least one meeting request.
+            """)
+        return mr

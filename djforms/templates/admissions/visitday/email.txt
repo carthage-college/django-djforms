@@ -5,6 +5,7 @@ Date........................ {{data.profile.date}}
 {% if data.profile.time_secondary %}Time, Second Choice......... {{data.profile.time_secondary}}{% endif %}
 Number Attending............ {{data.profile.number_attend}}
 {% if data.profile.meeting_format %}Meeting Format.............. {{data.profile.meeting_format}}{% endif %}
+{% if data.profile.meeting_request.all %}Meeting Requests............ {% for mr in data.profile.meeting_request.all %}{{mr}}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}
 First Name.................. {{data.profile.first_name}}
 Last Name................... {{data.profile.last_name}}
 Email....................... {{data.profile.email}}

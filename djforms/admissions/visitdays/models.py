@@ -38,6 +38,9 @@ def limit_format():
 
 class VisitDay(models.Model):
     title = models.CharField(max_length=255)
+    slug = models.CharField(
+        max_length=255, verbose_name='Slug', unique=True,
+    )
     description = models.TextField(
         "Description",
         help_text="This information will appear above the form.",
@@ -54,9 +57,6 @@ class VisitDay(models.Model):
         null=True,
         blank=True,
     )
-    slug = models.CharField(
-        max_length=255, verbose_name='Slug', unique=True,
-    )
     extended = models.BooleanField(
         "Extended Form",
         default=False,
@@ -69,24 +69,32 @@ class VisitDay(models.Model):
         "Enable an alternate date option",
         default=False,
         help_text="""
-            Check this box if you want to allow users to
-            choose a alternate date for their visit.
+            Check this box if you want to allow users to choose
+            a alternate date for their visit.
         """,
     )
     time_slots = models.BooleanField(
         "Enable time slots",
         default=False,
         help_text="""
-            Check this box if you want to allow users to
-            choose time slots for their visit.
+            Check this box if you want to allow users to choose
+            time slots for their visit.
         """,
     )
     meeting_format = models.BooleanField(
         "Enable meeting format",
         default=False,
         help_text="""
-            Check this box if you want to allow users to
-            choose a format for online meeting.
+            Check this box if you want to allow users to choose
+            a format for online meeting.
+        """,
+    )
+    meeting_request = models.BooleanField(
+        "Enable meeting requests",
+        default=False,
+        help_text="""
+            Check this box if you want to allow users to choose
+            meeting requests (e.g. coaches, faculty) for their appointment.
         """,
     )
 
@@ -159,6 +167,13 @@ class VisitDayBaseProfile(GenericContact):
         verbose_name="Meeting Format",
         related_name='visit_day_format',
         limit_choices_to=limit_format,
+        null=True,
+        blank=True,
+    )
+    meeting_request = models.ManyToManyField(
+        GenericChoice,
+        verbose_name="Meeting Requests",
+        related_name="visit_day_request",
         null=True,
         blank=True,
     )
