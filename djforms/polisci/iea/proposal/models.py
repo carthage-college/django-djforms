@@ -8,8 +8,8 @@ from djtools.fields.validators import MimetypeValidator
 from django_countries.fields import CountryField
 
 # comment out for migrations
-#FILE_VALIDATORS = [MimetypeValidator('application/pdf')]
-FILE_VALIDATORS = []
+FILE_VALIDATORS = [MimetypeValidator('application/pdf')]
+#FILE_VALIDATORS = []
 
 PAYMENT_CHOICES = (
     ('Credit Card', 'Credit Card'),

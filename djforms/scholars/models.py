@@ -16,7 +16,7 @@ from taggit.managers import TaggableManager
 import urllib, json
 
 FILE_VALIDATORS = [MimetypeValidator('application/pdf')]
-FILE_VALIDATORS = []
+#FILE_VALIDATORS = []
 
 WORK_TYPES = (
     #('','----select----'),
