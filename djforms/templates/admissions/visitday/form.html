@@ -101,10 +101,13 @@ fbq('track', 'PageView');
                         {% if visit_day.meeting_format %}
                           {% include "form_field.inc.html" %}
                         {% endif %}
+                    {% else %}{% if field.name == "meeting_request" %}
+                        {% if visit_day.meeting_request %}
+                          {% include "form_field.inc.html" %}
+                        {% endif %}
                     {% else %}
                       {% include "form_field.inc.html" %}
-                    {% endif %}{% endif %}{% endif %}{% endif %}
-
+                    {% endif %}{% endif %}{% endif %}{% endif %}{% endif %}
                 {% endfor %}
             </ol>
         </fieldset>
