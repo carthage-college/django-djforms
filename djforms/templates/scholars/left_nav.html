@@ -1,3 +1,4 @@
+{% load livewhale_api %}
 <nav id="secondary-navigation">
     <div class="lw_widget_navigation">
     <ul>
@@ -87,3 +88,5 @@
     </ul>
     </div>
 </nav>
+{% get_lw_content as nav blurbs 2954 %}
+{{nav.body}}
