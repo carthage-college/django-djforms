@@ -53,7 +53,7 @@
             There were errors with the data submitted, see below.
         </p>
     {% endif %}
-    <form method="post" action="." class="form" id="profile">
+    <form method="post" action="{{ request.get_full_path }}" class="form" id="profile">
         {% csrf_token %}
         {% for hidden in or_form.hidden_fields %}
         {{ hidden }}
