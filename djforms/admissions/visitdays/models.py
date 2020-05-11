@@ -65,6 +65,13 @@ class VisitDay(models.Model):
             Educational Background and Plans
         """,
     )
+    number_attend = models.BooleanField(
+        "Number Attending",
+        default=False,
+        help_text="""
+            Check this box if you want field with 'Number Attending'.
+        """,
+    )
     date_alternate = models.BooleanField(
         "Enable an alternate date option",
         default=False,
@@ -145,7 +152,11 @@ class VisitDayBaseProfile(GenericContact):
         blank=True,
     )
     gender = models.CharField(max_length=16, choices=GENDER_CHOICES)
-    number_attend = models.IntegerField(verbose_name = "Number Attending")
+    number_attend = models.IntegerField(
+        verbose_name="Number Attending",
+        null=True,
+        blank=True,
+    )
     time_primary = models.ForeignKey(
         GenericChoice,
         verbose_name="Time, First Choice",

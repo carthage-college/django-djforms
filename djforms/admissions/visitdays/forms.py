@@ -76,21 +76,25 @@ class VisitDayBaseForm(forms.ModelForm):
         super(VisitDayBaseForm, self).__init__(*args, **kwargs)
         qs = VisitDayEvent.objects.exclude(active=False).filter(
             date__gte=TODAY,
-        ).filter(event__slug=event_type).order_by("date","id")
-        choices = [('','---choose a date---')]
+        ).filter(event__slug=event_type).order_by('date', 'id')
+        choices = [('', '---choose a date---')]
         for event in qs:
-            choices.append((event.id,event))
+            choices.append((event.id, event))
         self.fields['date'].choices = choices
         self.fields['date_alternate'].choices = choices
         if self.visit_day and self.visit_day.time_slots:
             self.fields['time_primary'].widget.attrs['class'] = 'required'
 
     def clean_number_attend(self):
+        attend = int(self.cleaned_data.get('number_attend'))
+        if self.visit_day.number_attend and not attend:
+            raise forms.ValidationError("""
+                Please provide the number of attendees.
+            """)
         if self.cleaned_data.get('date'):
             event = VisitDayEvent.objects.get(
-                pk=self.cleaned_data.get('date').id
+                pk=self.cleaned_data.get('date').id,
             )
-            attend = int(self.cleaned_data.get('number_attend'))
             if (event.cur_attendees + attend) > event.max_attendees:
                 less = event.max_attendees - event.cur_attendees
                 raise forms.ValidationError("""
