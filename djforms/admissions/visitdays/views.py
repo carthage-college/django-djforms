@@ -32,23 +32,24 @@ def visit_day_form(request, event_type):
 
         if form.is_valid():
             profile = form.save()
-            event = VisitDayEvent.objects.get(pk=profile.date.id)
-            event.cur_attendees = event.cur_attendees + profile.number_attend
-            if event.cur_attendees == event.max_attendees:
-                event.active=False
-                # send admissions email to notify them that the event is full
-                subject = "[Event FULL] {} on {}".format(
-                    visit_day.title, profile.date
-                )
-                send_mail(
-                    request,
-                    [email],
-                    subject,
-                    email,
-                    'admissions/visitday/email_event_full.html',
-                    None,
-                )
-            event.save()
+            if visit_day.number_attend:
+                event = VisitDayEvent.objects.get(pk=profile.date.id)
+                event.cur_attendees = event.cur_attendees + int(profile.number_attend)
+                if event.cur_attendees == event.max_attendees:
+                    event.active=False
+                    # send admissions email to notify them that the event is full
+                    subject = "[Event FULL] {} on {}".format(
+                        visit_day.title, profile.date
+                    )
+                    send_mail(
+                        request,
+                        [email],
+                        subject,
+                        email,
+                        'admissions/visitday/email_event_full.html',
+                        None,
+                    )
+                event.save()
             # send HTML email to attendee
             subject = u"{0} on {1}".format(visit_day.title, profile.date)
             data = {'profile':profile,'visit_day':visit_day,'short':short}

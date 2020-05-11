@@ -26,8 +26,9 @@ class VisitDayBaseForm(forms.ModelForm):
     mobile = USPhoneNumberField(
         required=False, help_text="Format: XXX-XXX-XXXX",
     )
-    number_attend = forms.CharField(
+    number_attend = forms.IntegerField(
         label="Number Attending",
+        required=False,
         widget=forms.Select(
             choices=[
                 ('', '--'),
@@ -86,12 +87,12 @@ class VisitDayBaseForm(forms.ModelForm):
             self.fields['time_primary'].widget.attrs['class'] = 'required'
 
     def clean_number_attend(self):
-        attend = int(self.cleaned_data.get('number_attend'))
+        attend = self.cleaned_data.get('number_attend', 0)
         if self.visit_day.number_attend and not attend:
             raise forms.ValidationError("""
                 Please provide the number of attendees.
             """)
-        if self.cleaned_data.get('date'):
+        if self.visit_day.number_attend and self.cleaned_data.get('date'):
             event = VisitDayEvent.objects.get(
                 pk=self.cleaned_data.get('date').id,
             )
