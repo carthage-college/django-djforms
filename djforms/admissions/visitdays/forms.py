@@ -26,7 +26,7 @@ class VisitDayBaseForm(forms.ModelForm):
     mobile = USPhoneNumberField(
         required=False, help_text="Format: XXX-XXX-XXXX",
     )
-    number_attend = forms.IntegerField(
+    number_attend = forms.CharField(
         label="Number Attending",
         required=False,
         widget=forms.Select(
@@ -158,6 +158,7 @@ class VisitDayForm(forms.ModelForm):
     )
     number_attend = forms.CharField(
         label="Number Attending",
+        required=False,
         widget=forms.Select(
             choices=[
                 ('', '--'),
@@ -288,3 +289,22 @@ class VisitDayForm(forms.ModelForm):
                 Please choose at least one meeting request.
             """)
         return mr
+
+    def clean_number_attend(self):
+        attend = self.cleaned_data.get('number_attend', 0)
+        if self.visit_day.number_attend and not attend:
+            raise forms.ValidationError("""
+                Please provide the number of attendees.
+            """)
+        if self.visit_day.number_attend and self.cleaned_data.get('date'):
+            event = VisitDayEvent.objects.get(
+                pk=self.cleaned_data.get('date').id,
+            )
+            if (event.cur_attendees + attend) > event.max_attendees:
+                less = event.max_attendees - event.cur_attendees
+                raise forms.ValidationError("""
+                    Attendee limit reached: {} places remain.
+                    Please call us to arrange for more space,
+                    or reduce the number attending.
+                """.format(less))
+        return self.cleaned_data['number_attend']
