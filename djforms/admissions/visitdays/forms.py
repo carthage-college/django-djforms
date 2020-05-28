@@ -96,7 +96,7 @@ class VisitDayBaseForm(forms.ModelForm):
             event = VisitDayEvent.objects.get(
                 pk=self.cleaned_data.get('date').id,
             )
-            if (event.cur_attendees + attend) > event.max_attendees:
+            if (event.cur_attendees + int(attend)) > event.max_attendees:
                 less = event.max_attendees - event.cur_attendees
                 raise forms.ValidationError("""
                     Attendee limit reached: {} places remain.
@@ -300,7 +300,7 @@ class VisitDayForm(forms.ModelForm):
             event = VisitDayEvent.objects.get(
                 pk=self.cleaned_data.get('date').id,
             )
-            if (event.cur_attendees + attend) > event.max_attendees:
+            if (event.cur_attendees + int(attend)) > event.max_attendees:
                 less = event.max_attendees - event.cur_attendees
                 raise forms.ValidationError("""
                     Attendee limit reached: {} places remain.
