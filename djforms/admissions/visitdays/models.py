@@ -153,6 +153,7 @@ class VisitDayBaseProfile(GenericContact):
     )
     gender = models.CharField(max_length=16, choices=GENDER_CHOICES)
     number_attend = models.CharField(
+        max_length=2,
         verbose_name="Number Attending",
         null=True,
         blank=True,
