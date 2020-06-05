@@ -10,21 +10,35 @@ urlpatterns = [
         TemplateView.as_view(
             template_name='athletics/soccer/camp_registration_done.html'
         ),
-        name='soccer_camp_success'
+        name='soccer_camp_success',
     ),
     url(
         r'^soccer/camp/insurance-card/success/$',
         TemplateView.as_view(
             template_name='athletics/soccer/camp_insurance_card_done.html'
         ),
-        name='soccer_camp_insurance_card_success'
+        name='soccer_camp_insurance_card_success',
     ),
     url(
-        r'^soccer/camp/insurance-card/$', views.insurance_card,
-        name='soccer_camp_insurance_card'
+        r'^soccer/camp/balance/success/$',
+        TemplateView.as_view(
+            template_name='athletics/soccer/camp_balance_done.html'
+        ),
+        name='soccer_camp_success',
     ),
     url(
-        r'^soccer/camp/$', views.camp_registration,
-        name='soccer_camp_registration'
-    )
+        r'^soccer/camp/insurance-card/$',
+        views.insurance_card,
+        name='soccer_camp_insurance_card',
+    ),
+    url(
+        r'^soccer/camp/balance/$',
+        views.camp_balance,
+        name='soccer_camp_balance',
+    ),
+    url(
+        r'^soccer/camp/$',
+        views.camp_registration,
+        name='soccer_camp_registration',
+    ),
 ]

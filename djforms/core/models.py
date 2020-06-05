@@ -83,10 +83,10 @@ except:
     YEARS1 = [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +1))]
     YEARS3 = [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +3))]
 
+
 class GenericChoice(models.Model):
-    """
-    For making choices for select fields in forms
-    """
+    """For making choices for select fields in forms."""
+
     name = models.CharField(unique=True, max_length=255)
     value = models.CharField(max_length=255)
     ranking = models.IntegerField(
@@ -114,8 +114,9 @@ class GenericChoice(models.Model):
         ordering = ['ranking']
 
 
-#For making contacts for forms
 class GenericContact(models.Model):
+    """For making contacts for forms."""
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     first_name = models.CharField(max_length=128)
@@ -127,13 +128,12 @@ class GenericContact(models.Model):
         ordering = ['last_name']
 
     def __unicode__(self):
-        return u'{}, {}'.format(self.last_name, self.first_name)
+        return u'{0}, {1}'.format(self.last_name, self.first_name)
 
 
 class UserProfile(models.Model):
-    """
-    User profile model
-    """
+    """User profile model."""
+
     user = models.OneToOneField(
         User, related_name='userprofile', unique=True,
         on_delete=models.CASCADE
@@ -219,7 +219,8 @@ class Photo(models.Model):
 
 
 class Department(models.Model):
-    """ Department """
+    """Departmenti."""
+
     name = models.CharField(
         max_length=100, verbose_name = "Department Name"
     )
@@ -251,9 +252,8 @@ class Department(models.Model):
 
 
 class Promotion(models.Model):
-    """
-    Promotions and campaigns for ecommerce apps
-    """
+    """Promotions and campaigns for ecommerce apps."""
+
     user = models.ForeignKey(
         User, verbose_name="Created by",
         related_name="matching_campaign_user",

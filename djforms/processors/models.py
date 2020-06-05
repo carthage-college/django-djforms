@@ -181,4 +181,3 @@ class Contact(GenericContact):
         Order, blank=True,
         related_name='contact_orders'
     )
-

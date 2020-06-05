@@ -9,50 +9,93 @@ import csv
 
 
 def export_attenders(modeladmin, request, queryset):
-    """
-    Export soccer camp attenders to CSV
-    """
+    """Export soccer camp attenders to CSV."""
     field_names = [
-        'last_name','first_name','created_at','dob','age','football',
-        'gender','address1','city','state','postal_code','phone','email',
-        'order','parent_guard','roommate', 'dorm','years_attend','goalkeeper',
-        'shirt_size','session','amount','payment_method','reg_fee',
-        'medical_history','assumption_risk','insurance_card_links'
+        'last_name',
+        'first_name',
+        'created_at',
+        'dob',
+        'age',
+        'football',
+        'gender',
+        'address1',
+        'city',
+        'state',
+        'postal_code',
+        'phone',
+        'email',
+        'order',
+        'parent_guard',
+        'roommate',
+        'dorm',
+        'years_attend',
+        'goalkeeper',
+        'shirt_size',
+        'session',
+        'amount',
+        'payment_method',
+        'reg_fee',
+        'medical_history',
+        'assumption_risk',
+        'insurance_card_links',
     ]
 
     headers = [
-        'last_name','first_name','created_at','dob','age','football',
-        'gender','address1','city','state','postal_code','phone','email',
-        'order_total','order_transid','order_status','parent_guard',
-        'roommate', 'dorm','years_attend', 'goalkeeper',
-        'shirt_size','session','amount','payment_method','reg_fee',
-        'medical_history','assumption_risk','insurance_card_links'
+        'last_name',
+        'first_name',
+        'created_at',
+        'dob',
+        'age',
+        'football',
+        'gender',
+        'address1',
+        'city',
+        'state',
+        'postal_code',
+        'phone',
+        'email',
+        'order_total',
+        'order_transid',
+        'order_status',
+        'parent_guard',
+        'roommate',
+        'dorm',
+        'years_attend',
+        'goalkeeper',
+        'shirt_size',
+        'session',
+        'amount',
+        'payment_method',
+        'reg_fee',
+        'medical_history',
+        'assumption_risk',
+        'insurance_card_links',
     ]
 
-    response = HttpResponse("", content_type="text/csv; charset=utf-8")
-    filename = "soccer_soccercampattenders.csv"
-    response['Content-Disposition']='attachment; filename={}'.format(filename)
+    response = HttpResponse("", content_type='text/csv; charset=utf-8')
+    filename = 'soccer_soccercampattenders.csv'
+    response['Content-Disposition']='attachment; filename={0}'.format(filename)
     writer = csv.writer(response)
     writer.writerow(headers)
     for reg in queryset:
         fields = []
         for field in field_names:
-            if field == "order":
-                # somehow, a transaction comes through w/out these two
+            if field == 'order':
+                # if, somehow, a transaction comes through w/out these three
                 try:
                     transid = reg.order.all()[0].transid
                     status = reg.order.all()[0].status
                     total = reg.order.all()[0].total
                 except:
-                    transid=""
-                    status=""
-                    total=""
+                    transid=''
+                    status=''
+                    total=''
                 fields.append(transid)
                 fields.append(status)
                 fields.append(total)
             else:
                 fields.append(
-                    unicode(getattr(reg, field, None)).encode("utf-8", "ignore")
+                    unicode(getattr(reg, field, None)).encode('utf-8', 'ignore')
                 )
         writer.writerow(fields)
     return response
@@ -62,35 +105,56 @@ export_attenders.short_description = "Export Soccer Camp Attenders"
 
 class SoccerCampAttenderAdmin(admin.ModelAdmin):
     model = SoccerCampAttender
-    exclude       = ('country','second_name','previous_name','salutation')
+    exclude       = ('country', 'second_name', 'previous_name', 'salutation')
     raw_id_fields = ('order',)
     actions = [export_attenders]
 
     list_display  = (
-        'last_name','first_name','created_at','dob','age','football',
-        'gender','address1','city','state','postal_code','phone',
-        'email','order_transid','order_status','parent_guard','roommate',
-        'dorm','years_attend','goalkeeper','shirt_size','session','reg_fee',
-        'amount','order_total','payment_method',
-        'medical_history','assumption_risk','insurance_card_links'
+        'last_name',
+        'first_name',
+        'created_at',
+        'dob',
+        'age',
+        'football',
+        'gender',
+        'address1',
+        'city',
+        'state',
+        'postal_code',
+        'phone',
+        'email',
+        'order_transid',
+        'order_status',
+        'parent_guard',
+        'roommate',
+        'dorm',
+        'years_attend',
+        'goalkeeper',
+        'shirt_size',
+        'session',
+        'reg_fee',
+        'amount',
+        'order_total',
+        'payment_method',
+        'medical_history',
+        'assumption_risk',
+        'insurance_card_links',
     )
     ordering      = ('-created_at',)
-    search_fields = ('last_name','email','postal_code')
+    search_fields = ('last_name', 'email', 'postal_code')
 
     list_max_show_all   = 1000
     list_per_page       = 1000
-    list_editable = [
-        'medical_history','assumption_risk'
-    ]
+    list_editable = ['medical_history', 'assumption_risk']
 
     def insurance_card_links(self, instance):
         try:
             code = '''
-                <a href="{}" target="_blank">Front</a> |
-                <a href="{}" target="_blank">Back</a>
+                <a href="{0}" target="_blank">Front</a> |
+                <a href="{1}" target="_blank">Back</a>
             '''.format(
                 instance.insurance_card_front.url,
-                instance.insurance_card_back.url
+                instance.insurance_card_back.url,
             )
         except:
             code = None

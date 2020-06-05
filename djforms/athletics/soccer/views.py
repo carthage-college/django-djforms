@@ -4,13 +4,14 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
 from djforms.athletics.soccer import BCC, INSURANCE_TO_LIST, TO_LIST
-from djforms.processors.models import Contact, Order
+from djforms.processors.forms import OrderForm
+from djforms.processors.models import Order
 from djforms.processors.forms import TrustCommerceForm
+from djforms.athletics.soccer.forms import SoccerCampBalanceForm
 from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
 from djforms.athletics.soccer.forms import SoccerCampInsuranceCardForm
 
 from djtools.utils.mail import send_mail
-REQUIRED_ATTRIBUTE = False
 
 
 def camp_registration(request):
@@ -146,4 +147,80 @@ def insurance_card(request):
     return render(
         request, 'athletics/soccer/camp_insurance_card_form.html',
         {'form': form,}
+    )
+
+
+def camp_balance(request):
+    """Allow folks to pay your registration balance."""
+    if request.POST:
+        form_bal = SoccerCampBalanceForm(
+            request.POST, use_required_attribute=False,
+        )
+        form_ord = OrderForm(
+            request.POST, label_suffix='', use_required_attribute=False,
+        )
+        if form_bal.is_valid() and form_ord.is_valid:
+            data_ord = form_ord.cleaned_data
+            order = Order(
+                total=data_ord['total'],
+                auth='sale',
+                status='In Process',
+                operator='DJSoccerCamp',
+            )
+            contact = form_bal.save()
+            form_proc = TrustCommerceForm(
+                order,
+                contact,
+                request.POST,
+                use_required_attribute=False,
+            )
+            if form_proc.is_valid():
+                r = form_proc.processor_response
+                order.status = r.msg['status']
+                order.transid = r.msg['transid']
+                order.cc_name = form_proc.name
+                order.cc_4_digits = form_proc.card[-4:]
+                order.save()
+                contact.order.add(order)
+                order.reg = contact
+                sent = send_mail(
+                    request,
+                    TO_LIST,
+                    'Soccer camp balance payment',
+                    contact.email,
+                    'athletics/soccer/camp_balance_email.html',
+                    order,
+                    BCC,
+                )
+                return HttpResponseRedirect(reverse('soccer_camp_success'))
+
+            subject = u"[Soccer Camp Balance paid]: {0}, {1}".format(
+                contact.last_name, contact.first_name,
+            )
+            send_mail(
+                request,
+                INSURANCE_TO_LIST,
+                subject,
+                contact.email,
+                'athletics/soccer/camp_balance_email.html',
+                data,
+                BCC,
+            )
+            return HttpResponseRedirect(
+                reverse('soccer_camp_balance_success')
+            )
+        else:
+            form_proc = TrustCommerceForm(
+                None, request.POST, use_required_attribute=False,
+            )
+            form_proc.is_valid()
+    else:
+        form_bal = SoccerCampBalanceForm(use_required_attribute=False)
+        form_ord = OrderForm(use_required_attribute=False)
+        form_proc = TrustCommerceForm(use_required_attribute=False)
+
+    return render(
+        request,
+        'athletics/soccer/camp_balance.html',
+        {'form_bal': form_bal, 'form_proc': form_proc, 'form_ord': form_ord},
     )

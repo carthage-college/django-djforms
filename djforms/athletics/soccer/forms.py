@@ -1,40 +1,74 @@
-from django import forms
-from djforms.processors.models import Contact
-from djforms.athletics.soccer.models import SoccerCampAttender, YEAR_CHOICES, REQ
-from djforms.athletics.soccer.models import SHIRT_SIZES, SESSIONS, AMOUNT_CHOICES
+import datetime
 
-from djtools.fields import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
+from django import forms
+from django.conf import settings
+from djforms.processors.models import Contact
+from djforms.athletics.soccer.models import AMOUNT_CHOICES
+from djforms.athletics.soccer.models import REQ
+from djforms.athletics.soccer.models import SoccerCampAttender
+from djforms.athletics.soccer.models import SoccerCampBalance
+from djforms.athletics.soccer.models import SESSIONS
+from djforms.athletics.soccer.models import SHIRT_SIZES
+from djforms.athletics.soccer.models import YEAR_CHOICES
+
+from djtools.fields import BINARY_CHOICES
+from djtools.fields import GENDER_CHOICES
+from djtools.fields import PAYMENT_CHOICES
 from djtools.fields import STATE_CHOICES
+from djtools.fields import TODAY
 from djtools.fields.localflavor import USPhoneNumberField
 
 from localflavor.us.forms import USZipCodeField
 
 
+def get_registrations():
+    YEAR = int(TODAY.year)
+    MES = int(TODAY.month)
+    if MES < settings.SOCCER_CAMP_MONTH:
+        YEAR = YEAR - 1
+    start_date = datetime.date(YEAR, 8, settings.SOCCER_CAMP_DAY)
+    return SoccerCampAttender.objects.filter(created_at__gte=start_date).filter(
+        order__status='approved',
+    )
+
+
 class SoccerCampInsuranceCardForm(forms.Form):
+    """Upload of insurance card images."""
 
     first_name = forms.CharField(
         label="Camper's First Name",
-        max_length=128,widget=forms.TextInput(attrs=REQ)
+        max_length=128,
+        widget=forms.TextInput(attrs=REQ),
     )
     last_name = forms.CharField(
-        label="Camper's Last Name", max_length=128,
-        widget=forms.TextInput(attrs=REQ)
+        label="Camper's Last Name",
+        max_length=128,
+        widget=forms.TextInput(attrs=REQ),
     )
     email = forms.CharField(
-        max_length=75,widget=forms.TextInput(attrs=REQ)
+        max_length=75,
+        widget=forms.TextInput(attrs=REQ),
     )
-    insurance_card_front = forms.FileField(
-        max_length="256"
+    insurance_card_front = forms.FileField(max_length=256)
+    insurance_card_back = forms.FileField(max_length=256)
+
+
+class SoccerCampBalanceForm(forms.ModelForm):
+    """A form to collect registration data for the summer soccer camp."""
+
+    registration = forms.ModelChoiceField(
+        queryset=get_registrations(),
+        label="Camp Attender",
     )
-    insurance_card_back = forms.FileField(
-        max_length="256"
-    )
+
+    class Meta:
+        model = SoccerCampBalance
+        fields = ('first_name', 'last_name', 'email', 'registration')
 
 
 class SoccerCampRegistrationForm(forms.ModelForm):
-    """
-    A form to collect registration data for the summer soccer camp
-    """
+    """A form to collect registration data for the summer soccer camp."""
+
     # contact info
     first_name = forms.CharField(
         label="Camper's First Name",
@@ -141,8 +175,14 @@ class SoccerCampRegistrationForm(forms.ModelForm):
     class Meta:
         model = SoccerCampAttender
         exclude = (
-            'country','order','second_name','previous_name','salutation',
-            'medical_history','assumption_risk','insurance_card_front',
-            'insurance_card_back','address2'
+            'country',
+            'order',
+            'second_name',
+            'previous_name',
+            'salutation',
+            'medical_history',
+            'assumption_risk',
+            'insurance_card_front',
+            'insurance_card_back',
+            'address2',
         )
-
