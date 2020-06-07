@@ -1,0 +1,23 @@
+{% load humanize %}
+<dl style="margin-bottom:5px;">
+
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Camper First name</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.first_name}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:200px;">Camper Last name</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.last_name}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">Email</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.contact.email}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">Registration</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.reg.registration}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">Amount paid</dt>
+    <dd style="margin:2px 0; padding:5px 0;">${{data.total}}</dd>
+    {% if data.transid %}
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">Name on Card</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.cc_name}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">Card ending with:</dt>
+    <dd style="margin:2px 0; padding:5px 0;">x{{data.cc_4_digits}}</dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; margin-right:10px; padding:5px; width:200px;">Transaction ID</dt>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.transid}}</dd>
+    {% endif %}
+</dl>
+{% block athletics %}{% endblock %}

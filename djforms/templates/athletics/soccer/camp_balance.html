@@ -42,7 +42,7 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
           {% include "form_field.inc.html" %}
         {% endfor %}
         <li class="form-group ctrlHolder">
-          <h3><label for="id_total">Total:</label></h3>
+          <h3><label for="id_total">Balance to pay:</label></h3>
           {% if form_ord.total.errors %}
           <div class="required warning">
             <span class="error-message">{{ form_ord.total.errors|join:", "}}</span>
@@ -51,6 +51,11 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
           {% endif %}
             <input type="text" name="total" id="id_total" maxlength="100"
               value="{{form_ord.total.value|default_if_none:''}}" class="required">
+            <p class="help">
+            The balance due is displayed above in the field above, but if that
+            amount is incorrect or you are paying a different amount,
+            please provide the amount you will be paying at this time.
+            </p>
           </div>
         </li>
         </ol>

@@ -27,9 +27,16 @@ def get_registrations():
     if MES < settings.SOCCER_CAMP_MONTH:
         YEAR = YEAR - 1
     start_date = datetime.date(YEAR, 8, settings.SOCCER_CAMP_DAY)
-    return SoccerCampAttender.objects.filter(created_at__gte=start_date).filter(
+    # approved/deposit
+    approved = SoccerCampAttender.objects.filter(created_at__gte=start_date).filter(
         order__status='approved',
+    ).exclude(amount='Full amount')
+    # paylater full/deposit
+    paylater = SoccerCampAttender.objects.filter(created_at__gte=start_date).filter(
+        amount='Pay later',
     )
+    reggies = approved | paylater
+    return reggies.order_by('last_name')
 
 
 class SoccerCampInsuranceCardForm(forms.Form):
@@ -56,6 +63,18 @@ class SoccerCampInsuranceCardForm(forms.Form):
 class SoccerCampBalanceForm(forms.ModelForm):
     """A form to collect registration data for the summer soccer camp."""
 
+    first_name = forms.CharField(
+        label="Your first name",
+        required=True,
+    )
+    last_name = forms.CharField(
+        label="Your last name",
+        required=True,
+    )
+    email = forms.EmailField(
+        label="Your email",
+        required=True,
+    )
     registration = forms.ModelChoiceField(
         queryset=get_registrations(),
         label="Camp Attender",

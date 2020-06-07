@@ -24,7 +24,7 @@ urlpatterns = [
         TemplateView.as_view(
             template_name='athletics/soccer/camp_balance_done.html'
         ),
-        name='soccer_camp_success',
+        name='soccer_camp_balance_success',
     ),
     url(
         r'^soccer/camp/insurance-card/$',
