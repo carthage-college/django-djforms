@@ -116,11 +116,9 @@ def camp_registration(request):
         )
 
     return render(
-        request, 'athletics/soccer/camp_registration.html',
-        {
-            'form_reg': form_reg,'form_proc':form_proc,
-            'status':status,'msg':msg,
-        }
+        request, 'athletics/soccer/camp_registration.html', {
+            'form_reg': form_reg,'form_proc':form_proc, 'status':status,
+        },
     )
 
 
@@ -152,6 +150,8 @@ def insurance_card(request):
 
 def camp_balance(request):
     """Allow folks to pay your registration balance."""
+    status = None
+    msg = None
     if request.POST:
         form_bal = SoccerCampBalanceForm(
             request.POST, use_required_attribute=False,
@@ -199,6 +199,19 @@ def camp_balance(request):
                 return HttpResponseRedirect(
                     reverse('soccer_camp_balance_success')
                 )
+            else:
+                r = form_proc.processor_response
+                if r:
+                    order.status = r.status
+                else:
+                    order.status = 'Form Invalid'
+                order.cc_name = form_proc.name
+                if form_proc.card:
+                    order.cc_4_digits = form_proc.card[-4:]
+                order.save()
+                contact.order.add(order)
+                status = order.status
+                order.reg = contact
         else:
             form_proc = TrustCommerceForm(
                 None, request.POST, use_required_attribute=False,
@@ -211,6 +224,10 @@ def camp_balance(request):
 
     return render(
         request,
-        'athletics/soccer/camp_balance.html',
-        {'form_bal': form_bal, 'form_proc': form_proc, 'form_ord': form_ord},
+        'athletics/soccer/camp_balance.html', {
+            'form_bal': form_bal,
+            'form_proc': form_proc,
+            'form_ord': form_ord,
+            'status':status,
+        },
     )
