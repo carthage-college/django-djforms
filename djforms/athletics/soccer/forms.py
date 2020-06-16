@@ -3,6 +3,8 @@ import datetime
 from django import forms
 from django.conf import settings
 from djforms.processors.models import Contact
+from djforms.processors.forms import OrderForm
+from djforms.processors.models import Order
 from djforms.athletics.soccer.models import AMOUNT_CHOICES
 from djforms.athletics.soccer.models import REQ
 from djforms.athletics.soccer.models import SoccerCampAttender
@@ -83,6 +85,18 @@ class SoccerCampBalanceForm(forms.ModelForm):
     class Meta:
         model = SoccerCampBalance
         fields = ('first_name', 'last_name', 'email', 'registration')
+
+
+class SoccerCampOrderForm(OrderForm):
+    """Credit card proceessor order form."""
+
+    total = forms.CharField(label="Balance to pay")
+
+    class Meta:
+        model = Order
+        fields = (
+            'total', 'comments', 'avs', 'auth',
+        )
 
 
 class SoccerCampRegistrationForm(forms.ModelForm):

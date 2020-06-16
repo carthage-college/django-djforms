@@ -4,10 +4,10 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
 from djforms.athletics.soccer import BCC, INSURANCE_TO_LIST, TO_LIST
-from djforms.processors.forms import OrderForm
 from djforms.processors.models import Order
 from djforms.processors.forms import TrustCommerceForm
 from djforms.athletics.soccer.forms import SoccerCampBalanceForm
+from djforms.athletics.soccer.forms import SoccerCampOrderForm
 from djforms.athletics.soccer.forms import SoccerCampRegistrationForm
 from djforms.athletics.soccer.forms import SoccerCampInsuranceCardForm
 
@@ -156,7 +156,7 @@ def camp_balance(request):
         form_bal = SoccerCampBalanceForm(
             request.POST, use_required_attribute=False,
         )
-        form_ord = OrderForm(
+        form_ord = SoccerCampOrderForm(
             request.POST, label_suffix='', use_required_attribute=False,
         )
         if form_bal.is_valid() and form_ord.is_valid:
@@ -219,7 +219,7 @@ def camp_balance(request):
             form_proc.is_valid()
     else:
         form_bal = SoccerCampBalanceForm(use_required_attribute=False)
-        form_ord = OrderForm(use_required_attribute=False)
+        form_ord = SoccerCampOrderForm(use_required_attribute=False)
         form_proc = TrustCommerceForm(use_required_attribute=False)
 
     return render(

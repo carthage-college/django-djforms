@@ -20,4 +20,8 @@
     <dd style="margin:2px 0; padding:5px 0;">{{data.transid}}</dd>
     {% endif %}
 </dl>
+{% if data.comments %}
+<h3>Comments</h3>
+<p>{{data.comments}}</p>
+{% endif %}
 {% block athletics %}{% endblock %}
