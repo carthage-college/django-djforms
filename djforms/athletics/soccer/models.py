@@ -171,7 +171,7 @@ class SoccerCampAttender(Contact):
             balance = session
         else:
             balance = session - order.total
-        return u'{0}, {1}: Balance = {2}'.format(
+        return u'{0}, {1}'.format(
             self.last_name, self.first_name, balance,
         )
 

@@ -75,11 +75,13 @@ def camp_registration(request):
                     status = order.status
                     order.reg = contact
                     sent = send_mail(
-                        request, TO_LIST,
+                        request,
+                        TO_LIST,
                         '[{}] Soccer camp registration'.format(status),
                         contact.email,
                         'athletics/soccer/camp_registration_email.html',
-                        order, BCC
+                        order,
+                        BCC,
                     )
                     order.send_mail = sent
                     order.save()
@@ -172,6 +174,9 @@ def camp_balance(request):
                 request.POST,
                 use_required_attribute=False,
             )
+            subject = u"[Soccer Camp Balance paid]: {0}, {1}".format(
+                contact.last_name, contact.first_name,
+            )
             if form_proc.is_valid():
                 r = form_proc.processor_response
                 order.status = r.msg['status']
@@ -181,12 +186,9 @@ def camp_balance(request):
                 order.save()
                 contact.order.add(order)
                 order.reg = contact
-                subject = u"[Soccer Camp Balance paid]: {0}, {1}".format(
-                    contact.last_name, contact.first_name,
-                )
                 # send mail to user and athletics folks
+                to = {'user': [contact.email], 'athletics': INSURANCE_TO_LIST}
                 for dest in ['user', 'athletics']:
-                    to = {'user': TO_LIST, 'athletics': INSURANCE_TO_LIST}
                     send_mail(
                         request,
                         to[dest],
@@ -210,8 +212,16 @@ def camp_balance(request):
                     order.cc_4_digits = form_proc.card[-4:]
                 order.save()
                 contact.order.add(order)
-                status = order.status
                 order.reg = contact
+                send_mail(
+                    request,
+                    INSURANCE_TO_LIST,
+                    subject,
+                    contact.email,
+                    'athletics/soccer/camp_balance_athletics.html',
+                    order,
+                    BCC,
+                )
         else:
             form_proc = TrustCommerceForm(
                 None, request.POST, use_required_attribute=False,
