@@ -172,7 +172,12 @@ class SoccerCampAttender(Contact):
 class SoccerCampBalance(Contact):
     """A model to save payments for the balance owed for registration."""
 
-    registration = models.ForeignKey(SoccerCampAttender, null=True, blank=True)
+    registration = models.ForeignKey(
+        SoccerCampAttender,
+        related_name='balance',
+        null=True,
+        blank=True,
+    )
 
     def get_registration_url(self):
         """

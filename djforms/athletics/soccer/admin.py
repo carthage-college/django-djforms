@@ -149,6 +149,7 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         'reg_fee',
         'amount',
         'order_total',
+        'balance_paid',
         'payment_method',
         'medical_history',
         'assumption_risk',
@@ -215,6 +216,13 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
             tid = None
         return tid
     order_total.short_description = 'Amount Paid'
+
+    def balance_paid(self, obj):
+        transactions = 0
+        for b in obj.balance.filter(order__status='approved'):
+            transactions += b.order.first().total
+        return transactions
+    balance_paid.short_description = 'Balances Paid'
 
     def save_model(self, request, obj, form, change):
         if change:
