@@ -3,9 +3,23 @@ from django.contrib import admin
 from django.http import HttpResponse
 
 from djforms.athletics.soccer.models import SoccerCampAttender
+from djforms.athletics.soccer.models import SoccerCampBalance
 
 import datetime
 import csv
+
+
+def _get_registration(self, request):
+        """Only show registrations that were created after a certain date."""
+        TODAY = datetime.date.today()
+        YEAR = int(TODAY.year)
+        MES = int(TODAY.month)
+        #DAY = int(TODAY.day)
+        qs = super(SoccerCampBalanceAdmin, self).get_queryset(request)
+        if MES < settings.SOCCER_CAMP_MONTH:
+            YEAR = YEAR - 1
+        start_date = datetime.date(YEAR, 8, settings.SOCCER_CAMP_DAY)
+        return qs.filter(created_at__gte=start_date)
 
 
 def export_attenders(modeladmin, request, queryset):
@@ -208,4 +222,58 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         obj.save()
 
 
+class SoccerCampBalanceAdmin(admin.ModelAdmin):
+    model = SoccerCampBalance
+    raw_id_fields = ('order',)
+    list_display  = (
+        'last_name',
+        'first_name',
+        'email',
+        'registration',
+        'order_transid',
+        'order_status',
+        'order_total',
+        'created_at',
+    )
+    ordering = ('-created_at',)
+    raw_id_fields = ('registration', 'order')
+    search_fields = ('last_name', 'email')
+    list_max_show_all = 1000
+    list_per_page = 1000
+
+    def get_queryset(self, request):
+        return _get_registration(self, request)
+
+    def order_status(self, obj):
+        try:
+            stat = obj.order.all()[0].status
+        except:
+            stat = None
+        return stat
+    order_status.short_description = 'Transaction status'
+
+    def order_transid(self, obj):
+        try:
+            tid = obj.order.all()[0].transid
+        except:
+            tid = None
+        return tid
+    order_transid.short_description = 'Transaction ID'
+
+    def order_total(self, obj):
+        try:
+            tid = obj.order.all()[0].total
+        except:
+            tid = None
+        return tid
+    order_total.short_description = 'Amount Paid'
+
+    def render_change_form(self, request, context, *args, **kwargs):
+        reggies = _get_registration(self, request)
+        context['adminform'].form.fields['registration'].queryset = reggies
+        return super(SoccerCampBalanceAdmin, self).render_change_form(
+            request, context, *args, **kwargs
+        )
+
 admin.site.register(SoccerCampAttender, SoccerCampAttenderAdmin)
+admin.site.register(SoccerCampBalance, SoccerCampBalanceAdmin)

@@ -167,3 +167,20 @@ class SoccerCampAttender(Contact):
     def __unicode__(self):
         order = self.order.first()
         return u'{0}, {1}'.format(self.last_name, self.first_name)
+
+
+class SoccerCampBalance(Contact):
+    """A model to save payments for the balance owed for registration."""
+
+    registration = models.ForeignKey(SoccerCampAttender, null=True, blank=True)
+
+    def get_registration_url(self):
+        """
+        return "http://{}/forms/admin/classnotes/contact/{}/".format(
+            settings.SERVER_URL, self.id
+        )
+        """
+        return reverse(
+            'admin:soccer_soccercampattender_change',
+            args=(self.registration.id,),
+        )

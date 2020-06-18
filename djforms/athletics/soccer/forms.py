@@ -8,6 +8,7 @@ from djforms.processors.models import Order
 from djforms.athletics.soccer.models import AMOUNT_CHOICES
 from djforms.athletics.soccer.models import REQ
 from djforms.athletics.soccer.models import SoccerCampAttender
+from djforms.athletics.soccer.models import SoccerCampBalance
 from djforms.athletics.soccer.models import SESSIONS
 from djforms.athletics.soccer.models import SHIRT_SIZES
 from djforms.athletics.soccer.models import YEAR_CHOICES
@@ -41,39 +42,6 @@ class SoccerCampInsuranceCardForm(forms.Form):
     )
     insurance_card_front = forms.FileField(max_length=256)
     insurance_card_back = forms.FileField(max_length=256)
-
-
-class SoccerCampBalanceForm(forms.ModelForm):
-    """A form to collect registration data for the summer soccer camp."""
-
-    first_name = forms.CharField(
-        label="Your first name",
-        required=True,
-    )
-    last_name = forms.CharField(
-        label="Your last name",
-        required=True,
-    )
-    email = forms.EmailField(
-        label="Your email",
-        required=True,
-    )
-
-    class Meta:
-        model = Contact
-        fields = ('first_name', 'last_name', 'email')
-
-
-class SoccerCampBalanceOrderForm(OrderForm):
-    """Credit card proceessor order form."""
-
-    total = forms.CharField(label="Balance to pay")
-
-    class Meta:
-        model = Order
-        fields = (
-            'total', 'comments', 'avs', 'auth',
-        )
 
 
 class SoccerCampRegistrationForm(forms.ModelForm):
@@ -196,3 +164,36 @@ class SoccerCampRegistrationForm(forms.ModelForm):
             'insurance_card_back',
             'address2',
         )
+
+
+class SoccerCampBalanceOrderForm(OrderForm):
+    """Credit card proceessor order form."""
+
+    total = forms.CharField(label="Balance to pay")
+
+    class Meta:
+        model = Order
+        fields = (
+            'total', 'comments', 'avs', 'auth',
+        )
+
+
+class SoccerCampBalanceForm(forms.ModelForm):
+    """A form to collect registration data for the summer soccer camp."""
+
+    first_name = forms.CharField(
+        label="Your first name",
+        required=True,
+    )
+    last_name = forms.CharField(
+        label="Your last name",
+        required=True,
+    )
+    email = forms.EmailField(
+        label="Your email",
+        required=True,
+    )
+
+    class Meta:
+        model = SoccerCampBalance
+        fields = ('first_name', 'last_name', 'email')
