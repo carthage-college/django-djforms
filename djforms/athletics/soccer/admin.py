@@ -3,7 +3,6 @@ from django.contrib import admin
 from django.http import HttpResponse
 
 from djforms.athletics.soccer.models import SoccerCampAttender
-from djforms.athletics.soccer.models import SoccerCampBalance
 
 import datetime
 import csv
@@ -209,48 +208,4 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         obj.save()
 
 
-class SoccerCampBalanceAdmin(admin.ModelAdmin):
-    model = SoccerCampBalance
-    raw_id_fields = ('order',)
-    list_display  = (
-        'last_name',
-        'first_name',
-        'email',
-        'registration',
-        'order_transid',
-        'order_status',
-        'order_total',
-        'created_at',
-    )
-    ordering = ('-created_at',)
-    search_fields = ('last_name', 'email')
-    list_max_show_all = 1000
-    list_per_page = 1000
-
-    def order_status(self, obj):
-        try:
-            stat = obj.order.all()[0].status
-        except:
-            stat = None
-        return stat
-    order_status.short_description = 'Transaction status'
-
-    def order_transid(self, obj):
-        try:
-            tid = obj.order.all()[0].transid
-        except:
-            tid = None
-        return tid
-    order_transid.short_description = 'Transaction ID'
-
-    def order_total(self, obj):
-        try:
-            tid = obj.order.all()[0].total
-        except:
-            tid = None
-        return tid
-    order_total.short_description = 'Amount Paid'
-
-
 admin.site.register(SoccerCampAttender, SoccerCampAttenderAdmin)
-admin.site.register(SoccerCampBalance, SoccerCampBalanceAdmin)

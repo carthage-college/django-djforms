@@ -166,28 +166,4 @@ class SoccerCampAttender(Contact):
 
     def __unicode__(self):
         order = self.order.first()
-        session = int(self.session.split('|')[1])
-        if order.status == 'Pay later':
-            balance = session
-        else:
-            balance = session - order.total
-        return u'{0}, {1}'.format(
-            self.last_name, self.first_name, balance,
-        )
-
-
-class SoccerCampBalance(Contact):
-    """A model to save payments for the balance owed for registration."""
-
-    registration = models.ForeignKey(SoccerCampAttender)
-
-    def get_registration_url(self):
-        """
-        return "http://{}/forms/admin/classnotes/contact/{}/".format(
-            settings.SERVER_URL, self.id
-        )
-        """
-        return reverse(
-            'admin:soccer_soccercampattender_change',
-            args=(self.registration.id,),
-        )
+        return u'{0}, {1}'.format(self.last_name, self.first_name)

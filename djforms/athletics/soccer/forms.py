@@ -8,7 +8,6 @@ from djforms.processors.models import Order
 from djforms.athletics.soccer.models import AMOUNT_CHOICES
 from djforms.athletics.soccer.models import REQ
 from djforms.athletics.soccer.models import SoccerCampAttender
-from djforms.athletics.soccer.models import SoccerCampBalance
 from djforms.athletics.soccer.models import SESSIONS
 from djforms.athletics.soccer.models import SHIRT_SIZES
 from djforms.athletics.soccer.models import YEAR_CHOICES
@@ -21,24 +20,6 @@ from djtools.fields import TODAY
 from djtools.fields.localflavor import USPhoneNumberField
 
 from localflavor.us.forms import USZipCodeField
-
-
-def get_registrations():
-    YEAR = int(TODAY.year)
-    MES = int(TODAY.month)
-    if MES < settings.SOCCER_CAMP_MONTH:
-        YEAR = YEAR - 1
-    start_date = datetime.date(YEAR, 8, settings.SOCCER_CAMP_DAY)
-    # approved/deposit
-    approved = SoccerCampAttender.objects.filter(created_at__gte=start_date).filter(
-        order__status='approved',
-    ).exclude(amount='Full amount')
-    # paylater full/deposit
-    paylater = SoccerCampAttender.objects.filter(created_at__gte=start_date).filter(
-        amount='Pay later',
-    )
-    reggies = approved | paylater
-    return reggies.order_by('last_name')
 
 
 class SoccerCampInsuranceCardForm(forms.Form):
@@ -77,17 +58,13 @@ class SoccerCampBalanceForm(forms.ModelForm):
         label="Your email",
         required=True,
     )
-    registration = forms.ModelChoiceField(
-        queryset=get_registrations(),
-        label="Camp Attender",
-    )
 
     class Meta:
-        model = SoccerCampBalance
-        fields = ('first_name', 'last_name', 'email', 'registration')
+        model = Contact
+        fields = ('first_name', 'last_name', 'email')
 
 
-class SoccerCampOrderForm(OrderForm):
+class SoccerCampBalanceOrderForm(OrderForm):
     """Credit card proceessor order form."""
 
     total = forms.CharField(label="Balance to pay")
