@@ -69,6 +69,7 @@ def export_attenders(modeladmin, request, queryset):
         'phone',
         'email',
         'order_total',
+        'balance_paid',
         'order_transid',
         'order_status',
         'parent_guard',
@@ -100,13 +101,19 @@ def export_attenders(modeladmin, request, queryset):
                     transid = reg.order.all()[0].transid
                     status = reg.order.all()[0].status
                     total = reg.order.all()[0].total
+                    transactions = 0
+                    for b in reg.balance.filter(order__status='approved'):
+                        transactions += b.order.first().total
+                    balance_paid = transactions
                 except:
                     transid=''
                     status=''
                     total=''
+                    balance_paid=''
+                fields.append(total)
+                fields.append(balance_paid)
                 fields.append(transid)
                 fields.append(status)
-                fields.append(total)
             else:
                 fields.append(
                     unicode(getattr(reg, field, None)).encode('utf-8', 'ignore')
@@ -222,7 +229,7 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         for b in obj.balance.filter(order__status='approved'):
             transactions += b.order.first().total
         return transactions
-    balance_paid.short_description = 'Balances Paid'
+    balance_paid.short_description = 'Balance Paid'
 
     def save_model(self, request, obj, form, change):
         if change:
