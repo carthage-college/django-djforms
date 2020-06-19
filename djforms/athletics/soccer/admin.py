@@ -9,13 +9,13 @@ import datetime
 import csv
 
 
-def _get_registration(self, request):
+def _get_registration(data_model):
         """Only show registrations that were created after a certain date."""
         TODAY = datetime.date.today()
         YEAR = int(TODAY.year)
         MES = int(TODAY.month)
         #DAY = int(TODAY.day)
-        qs = super(SoccerCampBalanceAdmin, self).get_queryset(request)
+        qs = data_model.objects.all()
         if MES < settings.SOCCER_CAMP_MONTH:
             YEAR = YEAR - 1
         start_date = datetime.date(YEAR, 8, settings.SOCCER_CAMP_DAY)
@@ -190,15 +190,7 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         they wanted to delete old registrations to make the dashboard
         more manageable but we can't do that so we just hide them.
         """
-        TODAY = datetime.date.today()
-        YEAR = int(TODAY.year)
-        MES = int(TODAY.month)
-        #DAY = int(TODAY.day)
-        qs = super(SoccerCampAttenderAdmin, self).get_queryset(request)
-        if MES < settings.SOCCER_CAMP_MONTH:
-            YEAR = YEAR - 1
-        start_date = datetime.date(YEAR, 8, settings.SOCCER_CAMP_DAY)
-        return qs.filter(created_at__gte=start_date)
+        return _get_registration(SoccerCampAttender)
 
     def order_status(self, obj):
         try:
@@ -239,7 +231,6 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
 
 class SoccerCampBalanceAdmin(admin.ModelAdmin):
     model = SoccerCampBalance
-    raw_id_fields = ('order',)
     list_display  = (
         'last_name',
         'first_name',
@@ -251,13 +242,14 @@ class SoccerCampBalanceAdmin(admin.ModelAdmin):
         'created_at',
     )
     ordering = ('-created_at',)
-    raw_id_fields = ('registration', 'order')
+    raw_id_fields = ('order',)
+    #raw_id_fields = ('registration', 'order')
     search_fields = ('last_name', 'email')
     list_max_show_all = 1000
     list_per_page = 1000
 
     def get_queryset(self, request):
-        return _get_registration(self, request)
+        return _get_registration(SoccerCampBalance)
 
     def order_status(self, obj):
         try:
@@ -284,8 +276,10 @@ class SoccerCampBalanceAdmin(admin.ModelAdmin):
     order_total.short_description = 'Amount Paid'
 
     def render_change_form(self, request, context, *args, **kwargs):
-        reggies = _get_registration(self, request)
-        context['adminform'].form.fields['registration'].queryset = reggies
+        reg = _get_registration(SoccerCampAttender)
+        context['adminform'].form.fields['registration'].queryset = reg.filter(
+            order__status__in=['approved','Pay later'],
+        )
         return super(SoccerCampBalanceAdmin, self).render_change_form(
             request, context, *args, **kwargs
         )

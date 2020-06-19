@@ -166,7 +166,13 @@ class SoccerCampAttender(Contact):
 
     def __unicode__(self):
         order = self.order.first()
-        return u'{0}, {1}'.format(self.last_name, self.first_name)
+        session = int(self.session.split('|')[1])
+        total = int(order.total)
+        if self.football == 'Yes':
+            session += 30
+        return u'{0}: {1} - {2} = {3}'.format(
+            self.parent_guard, session, total, (session - total),
+        )
 
 
 class SoccerCampBalance(Contact):
