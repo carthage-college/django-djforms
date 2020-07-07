@@ -161,7 +161,7 @@ def camp_balance(request):
         form_ord = SoccerCampBalanceOrderForm(
             request.POST, label_suffix='', use_required_attribute=False,
         )
-        if form_bal.is_valid() and form_ord.is_valid:
+        if form_bal.is_valid() and form_ord.is_valid():
             order = form_ord.save(commit=False)
             order.auth='sale'
             order.status='In Process'
