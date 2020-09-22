@@ -53,9 +53,12 @@ def visit_day_form(request, event_type):
             # send HTML email to attendee
             subject = u"{0} on {1}".format(visit_day.title, profile.date)
             data = {'profile':profile,'visit_day':visit_day,'short':short}
+            to_list = [profile.email]
+            if profile.guardian_email:
+                to_list.append(profile.guardian_email)
             send_mail(
                 request,
-                [profile.email],
+                to_list,
                 subject,
                 email,
                 'admissions/visitday/email.html',

@@ -203,26 +203,26 @@ class VisitDayProfile(VisitDayBaseProfile):
         "High School", max_length=255
     )
     hs_city = models.CharField(
-        "High School City", max_length=128
+        "High School city", max_length=128
     )
-    hs_state = USStateField("High School State")
-    hs_grad_year = models.IntegerField("High School Graduation Year")
+    hs_state = USStateField("High School state")
+    hs_grad_year = models.IntegerField("High School graduation year")
     entry_as = models.CharField(
         "Entering as a", max_length=16, choices=ENTRY_CHOICES
     )
     transfer = models.CharField(
-        "If transfer, list University/College Attended and City/State",
+        "If transfer, list university/college attended and city/state",
         max_length=255, null=True, blank=True
     )
-    entry_year = models.IntegerField("Entry Year")
+    entry_year = models.IntegerField("Entry year")
     entry_term = models.CharField(
-        "Entry Term", max_length=32, choices=SEMESTER_CHOICES
+        "Entry term", max_length=32, choices=SEMESTER_CHOICES
     )
     academic = models.TextField(
-        "Academic Interests", null=True, blank=True
+        "Academic interests", null=True, blank=True
     )
     xtracurricular = models.TextField(
-        "Extracurricular Interests (clubs, fine arts, sports, etc.)",
+        "Extracurricular interests (clubs, fine arts, sports, etc.)",
         null=True, blank=True
     )
     comments = models.TextField(null=True, blank=True)

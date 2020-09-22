@@ -20,6 +20,8 @@ MEETING_REQUEST = GenericChoice.objects.filter(
 
 class VisitDayBaseForm(forms.ModelForm):
 
+    first_name = forms.CharField(label="Student first name")
+    last_name = forms.CharField(label="Student last name")
     email = forms.EmailField(label="Email")
     postal_code = USZipCodeField(label="Zip Code")
     phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
@@ -139,8 +141,10 @@ class VisitDayBaseForm(forms.ModelForm):
 
 class VisitDayForm(forms.ModelForm):
 
-    email = forms.EmailField(label="Student Email")
-    guardian_email = forms.EmailField(label="Parent Email", required=False)
+    first_name = forms.CharField(label="Student first name")
+    last_name = forms.CharField(label="Student last name")
+    email = forms.EmailField(label="Student email")
+    guardian_email = forms.EmailField(label="Parent email", required=False)
     guardian_type = forms.ChoiceField(
         label="",
         widget=forms.RadioSelect,
@@ -148,7 +152,7 @@ class VisitDayForm(forms.ModelForm):
         required = False,
     )
     postal_code = USZipCodeField(
-        label="Zip Code",
+        label="Zip code",
         help_text="Format: 99999 or 99999-9999",
     )
     phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
@@ -157,7 +161,7 @@ class VisitDayForm(forms.ModelForm):
         help_text="Format: XXX-XXX-XXXX",
     )
     number_attend = forms.CharField(
-        label="Number Attending",
+        label="Number attending",
         required=False,
         widget=forms.Select(
             choices=[
@@ -173,7 +177,7 @@ class VisitDayForm(forms.ModelForm):
     hs_grad_year = forms.CharField(max_length=4)
     entry_year = forms.CharField(max_length=4)
     meeting_request = forms.ModelMultipleChoiceField(
-        label="Meeting Requests",
+        label="Meeting requests",
         queryset=MEETING_REQUEST,
         widget=forms.CheckboxSelectMultiple(),
         required=False,
