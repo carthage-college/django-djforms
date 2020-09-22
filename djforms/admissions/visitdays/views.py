@@ -9,7 +9,7 @@ from djforms.admissions.visitdays.forms import *
 from djtools.utils.mail import send_mail
 from djtools.utils.convert import str_to_class
 
-email = settings.ADMISSIONS_EMAIL
+email = 'Carthage Admissions <{0}>'.format(settings.ADMISSIONS_EMAIL)
 if settings.DEBUG:
     REQ_ATTR = False
 else:
