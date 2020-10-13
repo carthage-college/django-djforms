@@ -1,24 +1,31 @@
-from django.conf import settings
-from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
+# -*- coding: utf-8 -*-
 
+"""Views for all requests."""
+
+import datetime
+
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.http import Http404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from djforms.core.forms import UserProfileForm
 from djforms.core.models import UserProfile
 from djforms.writingcurriculum.forms import ProposalForm
-from djforms.writingcurriculum.models import CourseCriteria, CourseProposal
-
+from djforms.writingcurriculum.models import CourseCriteria
+from djforms.writingcurriculum.models import CourseProposal
 from djtools.utils.mail import send_mail
-from djtools.fields import TODAY
 
 
 @login_required
 def proposal_form(request, pid=None):
     if settings.DEBUG:
-        TO_LIST = [settings.SERVER_EMAIL,]
+        to_list = [settings.SERVER_EMAIL]
     else:
-        TO_LIST = [settings.WAC_EMAIL]
+        to_list = settings.WAC_EMAIL_LIST
 
     copies=1
     proposal = None
@@ -31,11 +38,11 @@ def proposal_form(request, pid=None):
         criteria = []
         for copies, c in enumerate(proposal.criteria.all()):
             criteria.append({
-                'id':c.id,
-                'type_assignment':c.type_assignment,
-                'number_pages':c.number_pages,
-                'percent_grade':c.percent_grade,
-                'description':c.description
+                'id': c.id,
+                'type_assignment': c.type_assignment,
+                'number_pages': c.number_pages,
+                'percent_grade': c.percent_grade,
+                'description': c.description,
             })
         # add 1 because lists are 0 based
         copies = copies+1
@@ -48,10 +55,10 @@ def proposal_form(request, pid=None):
             p.save()
             profile = request.user.userprofile
         form = ProposalForm(
-            request.POST, request.FILES, prefix='wac', instance=proposal
+            request.POST, request.FILES, prefix='wac', instance=proposal,
         )
         profile_form = UserProfileForm(
-            request.POST, prefix='profile', instance=profile
+            request.POST, prefix='profile', instance=profile,
         )
         pids = request.POST.getlist('wac-id[]')
 
@@ -63,11 +70,11 @@ def proposal_form(request, pid=None):
         criteria = []
         for i in range (0,len(type_assignment)):
             criteria.append({
-                'id':pids[i],
-                'type_assignment':type_assignment[i],
-                'number_pages':number_pages[i],
-                'percent_grade':percent_grade[i],
-                'description':description[i]
+                'id': pids[i],
+                'type_assignment': type_assignment[i],
+                'number_pages': number_pages[i],
+                'percent_grade': percent_grade[i],
+                'description': description[i],
             })
         # delete the 'doop' element used for javascript copy
         del criteria[0]
@@ -117,7 +124,7 @@ def proposal_form(request, pid=None):
                             type_assignment=criteria[i]['type_assignment'],
                             number_pages=criteria[i]['number_pages'],
                             percent_grade=criteria[i]['percent_grade'],
-                            description=criteria[i]['description']
+                            description=criteria[i]['description'],
                         )
                         c.save()
                         proposal.criteria.add(c)
@@ -125,17 +132,21 @@ def proposal_form(request, pid=None):
             proposal.save()
 
             subject ="[WAC Proposal] {}: by {} {}".format(
-                proposal.course_title,request.user.first_name,
-                request.user.last_name
+                proposal.course_title,
+                request.user.first_name,
+                request.user.last_name,
             )
             send_mail(
-                request, TO_LIST, subject, request.user.email,
-                'writingcurriculum/email.html', {
-                    'proposal':proposal,'user':request.user,'criteria':criteria
-                }, settings.MANAGERS
+                request,
+                to_list,
+                subject,
+                request.user.email,
+                'writingcurriculum/email.html',
+                {'proposal': proposal, 'user': request.user, 'criteria': criteria},
+                settings.MANAGERS,
             )
 
-            return HttpResponseRedirect('/forms/writingcurriculum/success/')
+            return HttpResponseRedirect(reverse_lazy('proposal_success'))
     else:
         if not proposal:
             criteria = ['']
@@ -144,17 +155,23 @@ def proposal_form(request, pid=None):
         profile_form = UserProfileForm(prefix='profile')
 
     # academic year
-    year = TODAY.year + 1
+    today = datetime.date.today()
+    year = today.year + 1
     year_past = year - 1
-    if TODAY.month > 3:
+    if today.month > 3:
         year_past = year
         year += 1
 
     return render(
-        request, 'writingcurriculum/form.html',{
-            'form': form,'profile_form': profile_form,
-            'criteria': criteria, 'copies':copies,
-            'year':year,'year_past':year_past
+        request,
+        'writingcurriculum/form.html',
+        {
+            'form': form,
+            'profile_form': profile_form,
+            'criteria': criteria,
+            'copies': copies,
+            'year': year,
+            'year_past': year_past,
         }
     )
 

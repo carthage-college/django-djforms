@@ -317,7 +317,7 @@ LIS_PRINT_REQUEST_EMAIL = ''
 CHORAL_TRYOUTS_FROM = ''
 PREHEALTH_DO = ''
 PREHEALTH_MD = ''
-WAC_EMAIL = []
+WAC_EMAIL_LIST = ['sbrennan@carthage.edu', 'rcronovich@carthage.edu']
 SECURITY_PARKING_TICKET_APPEAL_EMAIL = ''
 # Authorize.net
 GATEWAY_API_LOGIN = ''
