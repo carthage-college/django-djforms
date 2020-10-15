@@ -1,12 +1,11 @@
 {% extends "base.html" %}
+{% load livewhale_api %}
 {% block title %}Success{% endblock %}
-{% block group_name %}Campus Security{% endblock %}
+{% block group_name %}Public Safety{% endblock %}
 {% block left_nav %}
     {% include "security/left_nav.html" %}
 {% endblock %}
 {% block content %}
-    <h2 class="page_title">Success</h2>
-    <p class="description" style="color: green">
-        Your parking violation appeal request has been sent.
-    </p>
+    {% get_lw_content as done blurbs 3043 %}
+    {{done.body}}
 {% endblock %}

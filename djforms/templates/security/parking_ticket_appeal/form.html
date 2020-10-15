@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load livewhale_api %}
 {% block title %}Parking Violation Appeal Request Form{% endblock %}
 {% block extra_style %}
 <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
@@ -20,7 +21,7 @@ $(function() {
 });
 </script>
 {% endblock %}
-{% block group_name %}Campus Security{% endblock %}
+{% block group_name %}Office of Public Safety{% endblock %}
 {% block left_nav %}
     {% include "security/left_nav.html" %}
 {% endblock %}
@@ -31,30 +32,8 @@ $(function() {
 {% endblock %}
 {% block content %}
 <div class="forms-container">
-    <h3>Before appealing your citation, bear in mind the following:</h3>
-    <ul>
-        <li>
-            When you became a student, or accepted a position with
-            Carthage College, you agreed to abide by the rules
-            and regulations of the College. The policies on motor vehicle
-            registration and use are a part of these regulations.
-        </li>
-        <li>
-            Permit holders are not guaranteed a space nearest classes,
-            residence halls or place of work.
-        </li>
-        <li>
-            If an emergency or other extenuating circumstance is being
-            used as an excuse, documented proof must be forwarded to the
-            Security Director as part of your appeal.
-        </li>
-        <li>
-            Not knowing the regulations is not a valid excuse.
-        </li>
-        <li>
-            Your past parking record will be a factor in the decision process.
-        </li>
-    </ul>
+    {% get_lw_content as intro blurbs 3042 %}
+    {{intro.body}}
     {% include "includes/required_text.html" %}
     {% include "includes/errors_text.html" %}
     <form method="post" action="." class="form">
