@@ -130,12 +130,12 @@ def proposal_form(request, pid=None):
                         proposal.criteria.add(c)
             # save the proposal object
             proposal.save()
-
-            subject ="[WAC Proposal] {}: by {} {}".format(
+            subject ="[WAC Proposal] {0}: by {1} {2}".format(
                 proposal.course_title,
                 request.user.first_name,
                 request.user.last_name,
             )
+            to_list.append(request.user.email)
             send_mail(
                 request,
                 to_list,
