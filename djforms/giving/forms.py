@@ -9,6 +9,9 @@ from djtools.fields import TODAY
 from djforms.core.models import BINARY_CHOICES
 
 YEAR = TODAY.year
+MILLENNIUM = 2000
+if TODAY.month < 9:
+    MILLENNIUM += 1
 PAYMENT = (
     ('', '--------'),
     ('12', '1 year'),
@@ -24,11 +27,11 @@ CYCLES = (
     ('12m', 'Yearly'),
 )
 PAVER_TYPES = (
-    (YEAR-2000+180.21,YEAR-2000+180.21),
+    (YEAR-MILLENNIUM+180.21,YEAR-MILLENNIUM+180.21),
     (250, 250),
-    (YEAR-2000+400.21,YEAR-2000+400.21),
+    (YEAR-MILLENNIUM+400.21,YEAR-MILLENNIUM+400.21),
     (500, 500),
-    (YEAR-2000+800.21,YEAR-2000+800.21),
+    (YEAR-MILLENNIUM+800.21,YEAR-MILLENNIUM+800.21),
     (1000, 1000)
 )
 RELATION_CHOICES = (
