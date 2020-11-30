@@ -23,8 +23,8 @@ CYCLES = (
     ('3m', 'Quarterly'),
     ('12m', 'Yearly'),
 )
-PAVER_TYPES = (200.21
-    (YEAR-2000+.21,YEAR-2000+.21),
+PAVER_TYPES = (
+    (YEAR-2000+180.21,YEAR-2000+180.21),
     (250, 250),
     (YEAR-2000+400.21,YEAR-2000+400.21),
     (500, 500),
