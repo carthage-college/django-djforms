@@ -6,7 +6,12 @@
 {% block extra_javascript %}
     <script type="text/javascript">
         $(function() {
-            var year = new Date().getFullYear();
+            var deet = new Date();
+            var year = deet.getFullYear();
+            var month = deet.getMonth();
+            if (month >= 9) {
+              year = year + 1;
+            }
             {% if ct_form.paver_type.value == "250" or not ct_form.paver_type.value %}
               $("#inscription_4").slideUp(200);
               $("#inscription_5").slideUp(200);
@@ -21,9 +26,9 @@
               }
             {% endif %}{% endif %}
             {% if ct_form.class_of.value == year %}
-            $('#personal_price').text("$" + (200 + (year-2000)));
-            $('#recognition_price').text("$" + (300 + (year-2000)));
-            $('#laudatory_price').text("$" + (700 + (year-2000)));
+            $('#personal_price').text("$200." + (year-2000));
+            $('#recognition_price').text("$400." + (year-2000));
+            $('#laudatory_price').text("$800." + (year-2000));
             {% endif %}
             $("input[name=ct-paver_type]:radio").change(function () {
                 if ($(this).attr("id") == "recognition_paver") {
@@ -57,9 +62,9 @@
             });
             $("#id_ct-class_of").change(function () {
                 if ($(this).val() == year) {
-                    $('#personal_price').text("$" + (200 + (year-2000)));
-                    $('#recognition_price').text("$" + (300 + (year-2000)));
-                    $('#laudatory_price').text("$" + (700 + (year-2000)));
+                    $('#personal_price').text("$200." + (year-2000));
+                    $('#recognition_price').text("$400." + (year-2000));
+                    $('#laudatory_price').text("$800." + (year-2000));
                 } else {
                     $('#personal_price').text("$250");
                     $('#recognition_price').text("$500");
