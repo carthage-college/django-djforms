@@ -21,7 +21,6 @@ import os
 import json
 import time
 
-YEAR = TODAY.year
 REQUIRED_ATTRIBUTE = settings.REQUIRED_ATTRIBUTE
 
 
@@ -144,6 +143,9 @@ def giving_form(request, transaction, campaign=None):
     else:
         bcc = settings.GIVING_DONATIONS_BCC
 
+    year = TODAY.year
+    if TODAY.month >= 9:
+        year += 1
     status = None
     trans_cap = transaction.capitalize()
     # might be a modal windows
@@ -213,7 +215,7 @@ def giving_form(request, transaction, campaign=None):
             # deal with commemorative paver options
             class_of = contact.class_of
             # donation amount calculation for current students
-            if not campaign and class_of == str(YEAR):
+            if not campaign and class_of == str(year):
                 if or_data.total == 250:
                     or_data.total = PAVER_TYPES[0][0]
                 elif or_data.total == 500:
@@ -368,7 +370,7 @@ def giving_form(request, transaction, campaign=None):
             'form_proc': cc_form,
             'status': status,
             'campaign': campaign,
-            'year': str(YEAR),
+            'year': str(year),
             'desi': [
                 'Women 150 Scholarship Fund',
                 'Women 150 Aspire/Professional Development Fund',
