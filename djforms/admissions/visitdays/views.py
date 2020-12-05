@@ -54,8 +54,9 @@ def visit_day_form(request, event_type):
             subject = u"{0} on {1}".format(visit_day.title, profile.date)
             data = {'profile':profile,'visit_day':visit_day,'short':short}
             to_list = [profile.email]
-            if profile.guardian_email:
-                to_list.append(profile.guardian_email)
+            gmail = getattr(profile, 'guardian_email', None)
+            if gmail:
+                to_list.append(gmail)
             send_mail(
                 request,
                 to_list,
