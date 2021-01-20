@@ -18,7 +18,9 @@ def _get_registration(data_model):
         qs = data_model.objects.all()
         if MES < settings.SOCCER_CAMP_MONTH:
             YEAR = YEAR - 1
-        start_date = datetime.date(YEAR, 8, settings.SOCCER_CAMP_DAY)
+        start_date = datetime.date(
+            YEAR, settings.SOCCER_CAMP_MONTH, settings.SOCCER_CAMP_DAY,
+        )
         return qs.filter(created_at__gte=start_date)
 
 
