@@ -51,6 +51,8 @@ def export_attenders(modeladmin, request, queryset):
         'reg_fee',
         'medical_history',
         'assumption_risk',
+        'covid_waiver',
+        'covid_declaration',
         'insurance_card_links',
     ]
 
@@ -84,6 +86,8 @@ def export_attenders(modeladmin, request, queryset):
         'reg_fee',
         'medical_history',
         'assumption_risk',
+        'covid_waiver',
+        'covid_declaration',
         'insurance_card_links',
     ]
 
@@ -160,6 +164,8 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         'payment_method',
         'medical_history',
         'assumption_risk',
+        'covid_waiver',
+        'covid_declaration',
         'insurance_card_links',
     )
     ordering      = ('-created_at',)
@@ -167,7 +173,12 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
 
     list_max_show_all   = 1000
     list_per_page       = 1000
-    list_editable = ['medical_history', 'assumption_risk']
+    list_editable = [
+        'covid_waiver',
+        'covid_declaration',
+        'medical_history',
+        'assumption_risk',
+    ]
 
     def insurance_card_links(self, instance):
         try:

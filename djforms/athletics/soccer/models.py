@@ -146,6 +146,8 @@ class SoccerCampAttender(Contact):
         help_text="NOTE: NO CREDIT CARDS ACCEPTED AT CHECK-INS",
     )
     # ancillary data
+    covid_waiver = models.BooleanField(default=False)
+    covid_declaration = models.BooleanField(default=False)
     medical_history = models.BooleanField(default=False)
     assumption_risk = models.BooleanField(default=False)
     insurance_card_front = models.FileField(
