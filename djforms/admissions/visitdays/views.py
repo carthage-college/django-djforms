@@ -51,7 +51,10 @@ def visit_day_form(request, event_type):
                     )
                 event.save()
             # send HTML email to attendee
-            subject = u"{0} on {1}".format(visit_day.title, profile.date)
+            if visit_day.date_alternate:
+                subject = visit_day.title
+            else:
+                subject = u"{0} on {1}".format(visit_day.title, profile.date)
             data = {'profile':profile,'visit_day':visit_day,'short':short}
             to_list = [profile.email]
             gmail = getattr(profile, 'guardian_email', None)
