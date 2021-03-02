@@ -68,9 +68,9 @@ urlpatterns = [
     # biology
     url(r'^biology/', include('djforms.biology.urls')),
     # catering
-    url(r'^catering/', include('djforms.catering.urls')),
+    #url(r'^catering/', include('djforms.catering.urls')),
     # CharacterQuest
-    url(r'^character-quest/', include('djforms.characterquest.urls')),
+    #url(r'^character-quest/', include('djforms.characterquest.urls')),
     # communications
     url(r'^communications/', include('djforms.communications.urls')),
     # giving
@@ -90,7 +90,7 @@ urlpatterns = [
     # for the security appeal form environment
     url(r'^security/', include('djforms.security.urls')),
     # sustainability
-    url(r'^sustainability/', include('djforms.sustainability.urls')),
+    #url(r'^sustainability/', include('djforms.sustainability.urls')),
     # writing across curriculum
     url(r'^writingcurriculum/', include('djforms.writingcurriculum.urls'))
 ]
