@@ -36,6 +36,7 @@ def _to_list(data):
             # D.O. and D.D.S programs
             if do not in to:
                 to.append(do)
+    to.append(settings.PREHEALTH_CC)
     return to
 
 
