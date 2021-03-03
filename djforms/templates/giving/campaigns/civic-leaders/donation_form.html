@@ -1,0 +1,26 @@
+{% extends "giving/donation_form.html" %}
+{% block content_head %}
+  <h1 id="page_title">{{campaign.title}}</h1>
+{% endblock %}
+{% block designation %}
+<li class="ctrlHolder">
+    <h3><label for="id_or-comments">Designation</label></h3>
+    <div>
+      <select name="or-comments">
+        <option>----Select----</option>
+        <option value="Yuri Maltsev Political Science Scholarship"{% if or_form.comments.value == 'Yuri Maltsev Political Science Scholarship' %} selected{% endif %}>
+          Yuri Maltsev Political Science Scholarship
+        </option>
+        <option value="Model UN"{% if or_form.comments.value == 'Model UN' %} selected{% endif %}>
+          Model UN
+        </option>
+        <option value="Mock Trial Team"{% if or_form.comments.value == 'Mock Trial Team' %} selected{% endif %}>
+          Mock Trial Team
+        </option>
+      </select>
+      <p class="help">
+        Please choose a designation.
+      </p>
+    </div>
+</li>
+{% endblock %}
