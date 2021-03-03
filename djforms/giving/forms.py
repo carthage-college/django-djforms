@@ -121,9 +121,7 @@ class PaverOrderForm(OrderForm):
 
 
 class DonationContactForm(ContactForm):
-    """
-    Donation Contact form, extends base ContactForm in processors app
-    """
+    """Donation Contact form, extends base ContactForm in processors app."""
 
     address1 = forms.CharField(
         required=True, label="Address", max_length=255

@@ -22,9 +22,9 @@ class DonationContactAdmin(admin.ModelAdmin):
     ]
     search_fields = ('last_name','phone','city','state','postal_code')
     #inlines = [OrderInline,]
-
+    list_editable = ['hidden']
     list_display  = (
-        'last_name','first_name','order_cc_name','created_at','email','phone',
+        'last_name','first_name','hidden','order_cc_name','created_at','email','phone',
         'address1','address2','city','state','postal_code','class_of','relation',
         'spouse','spouse_class','honouring','matching_company','order_promo',
         'order_cycle','order_payments','order_start_date','order_transid',

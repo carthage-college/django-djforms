@@ -408,11 +408,9 @@ def giving_success(request, transaction, campaign=None):
 def donors(request, slug=None):
     """Display the donors to a campaign or default donation."""
     # for problem with donors listing foiled by same last names of 3 folks:
-    # https://help.carthage.edu/rt/Ticket/Modify.html?id=79934
-
+    # https://help.carthage.edu/rt/Ticket/Display.html?id=79934
     promo = None
     percent = 0
-    # start_date = TODAY - timedelta(days=365)
     start_date = TODAY - timedelta(days=300)
     template = 'giving/donors.html'
 
@@ -428,25 +426,28 @@ def donors(request, slug=None):
             template = temp
 
     donors = DonationContact.objects.filter(anonymous=False).filter(
-        order__time_stamp__gte=start_date
-    ).filter(order__status__in=['approved','manual'])
-
+        order__time_stamp__gte=start_date,
+    ).filter(order__status__in=['approved', 'manual']).filter(hidden=False)
 
     if slug and slug != 'giving-day':
         donors = donors.filter(order__promotion__slug=slug)
 
     spouses = donors.filter(spouse_class__isnull=False).exclude(spouse_class=' ')
-    #count = donors.count() + spouses.count()
     count = donors.count()
     ctext = {
-        'donors':donors, 'promo':promo, 'count':count,
-        'percent': percent, 'spouses':spouses
+        'donors': donors,
+        'promo': promo,
+        'count': count,
+        'percent': percent,
+        'spouses':spouses,
     }
 
     if request.GET.get('ajax'):
         response = render(
-            request, 'giving/donors.json', ctext,
-            content_type='text/plain; charset=utf-8'
+            request,
+            'giving/donors.json',
+            ctext,
+            content_type='text/plain; charset=utf-8',
         )
     elif request.GET.get('latest'):
         try:
@@ -454,8 +455,10 @@ def donors(request, slug=None):
             ctext['donors'] = donors.order_by('-order__time_stamp')[:latest]
             ctext['spouses'] = spouses.order_by('-order__time_stamp')[:latest]
             response = render(
-                request, 'giving/donors_latest.html', ctext,
-                content_type='text/plain; charset=utf-8'
+                request,
+                'giving/donors_latest.html',
+                ctext,
+                content_type='text/plain; charset=utf-8',
             )
         except:
             raise Http404
@@ -466,12 +469,10 @@ def donors(request, slug=None):
         results = [{"count": "{}".format(donors.count()),}]
         response = HttpResponse(
             json.dumps(results),
-            content_type='application/json; charset=utf-8'
+            content_type='application/json; charset=utf-8',
         )
     else:
-        response = render(
-            request, template, ctext
-        )
+        response = render(request, template, ctext)
 
     return response
 

@@ -171,6 +171,7 @@ $(document).ready(function() {
       <th>Donation</th>
       <th>Designation</th>
       <th>Anonymous</th>
+      <th>Hidden</th>
     </tr>
     </thead>
     <tbody>
@@ -178,11 +179,11 @@ $(document).ready(function() {
       <tr>
         <td>
           {% if slug == "paver" %}
-          <a href="{% url 'admin:giving_pavercontact_change' o.id %}">
+          <a href="{% url 'admin:giving_pavercontact_change' o.id %}" target="_blank">
             {{o.last_name}}
           </a>
           {% else %}
-          <a href="{% url 'admin:giving_donationcontact_change' o.id %}">
+          <a href="{% url 'admin:giving_donationcontact_change' o.id %}" target="_blank">
             {{o.last_name}}
           </a>
           {% endif %}
@@ -195,7 +196,7 @@ $(document).ready(function() {
           {% if slug == "paver" %}
             {{o.created_at|date:'Y-m-d H:i:s'}}
           {% else %}
-          <a href="{% url 'admin:processors_order_change' o.order_oid %}">
+          <a href="{% url 'admin:processors_order_change' o.order_oid %}" target="_blank">
               {{o.created_at|date:'Y-m-d H:i:s'}}
           </a>
           {% endif %}
@@ -217,7 +218,7 @@ $(document).ready(function() {
         <td>{{o.class_of}}</td>
         <td>
           {% if o.order_promo %}
-          <a href="{% url 'giving_donors_campaign' o.order_promo.slug %}">
+          <a href="{% url 'giving_donors_campaign' o.order_promo.slug %}" target="_blank">
             {{o.order_promo|default:"&nbsp;"}}</a>
           {% else %}&nbsp;{% endif %}
         </td>
@@ -226,6 +227,7 @@ $(document).ready(function() {
         <td>{{o.order_total}}</td>
         <td>{{o.order_comments|truncatewords:5|default:"&nbsp;"}}</td>
         <td>{{o.anonymous|default:"&nbsp;"}}</td>
+        <td>{{o.hidden|default:"&nbsp;"}}</td>
       </tr>
     {% endfor %}
     </tbody>
@@ -252,6 +254,7 @@ $(document).ready(function() {
       <th>Donation</th>
       <th>Designation</th>
       <th>Anonymous</th>
+      <th>Hidden</th>
     </tfoot>
     </table>
     </div>
