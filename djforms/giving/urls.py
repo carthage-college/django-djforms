@@ -14,6 +14,7 @@ urlpatterns = [
         r'^donors', views.donors, name='giving_donors'
     ),
     # manager views
+    url(r'^manager/ajax/$', views.manager_ajax, name='manager_ajax'),
     url(
         r'^manager/cash/$',
         views.manager_cash, name='giving_manager_cash'
@@ -24,16 +25,16 @@ urlpatterns = [
         name='giving_manager_success'
     ),
     url(
-        r'^manager/$',
-        views.manager, name='giving_manager_home'
-    ),
-    url(
         r'^manager/photo/$',
         views.photo_caption, name='photo_caption'
     ),
     url(
         r'^manager/(?P<slug>[a-zA-Z0-9_-]+)/$',
         views.manager, name='giving_manager_home_campaign'
+    ),
+    url(
+        r'^manager/$',
+        views.manager, name='giving_manager_home'
     ),
     # ajax calls for campaign, mini-goal, crowd fund challenge, etc.
     url(

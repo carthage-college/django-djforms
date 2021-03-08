@@ -11,11 +11,8 @@ class DonationContactAdmin(admin.ModelAdmin):
     model = DonationContact
     exclude = ('second_name','previous_name','salutation')
     raw_id_fields = ('order',)
-    list_max_show_all   = 500
-    list_per_page       = 500
-    #list_max_show_all   = 2000
-    #list_per_page       = 2000
-
+    list_max_show_all   = 100
+    list_per_page       = 100
     ordering = [
         '-created_at','last_name','city','state','postal_code',
         'anonymous'

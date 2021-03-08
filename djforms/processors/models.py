@@ -31,8 +31,10 @@ class Order(models.Model):
         max_length=4, null=True, blank=True
     )
     promotion = models.ForeignKey(
-        Promotion, null=True, blank=True,
-        on_delete=models.CASCADE
+        Promotion,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
     )
     # entity responsible for transaction so business office can track funds
     operator = models.CharField(

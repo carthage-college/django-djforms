@@ -7,6 +7,31 @@ from djforms.processors.models import Contact
 class DonationContact(Contact):
     """Donation contact details for an order."""
 
+    COLUMNS = {
+        0: 'last_name',
+        1: 'first_name',
+        2: 'order_cc_name',
+        3: 'created_at',
+        4: 'email',
+        5: 'twitter',
+        6: 'phone',
+        7: 'address',
+        8: 'city',
+        9: 'state',
+        10: 'postal_code',
+        11: 'spouse',
+        12: 'relation',
+        13: 'honouring',
+        14: 'class_of',
+        15: 'order_promo',
+        16: 'order_transid',
+        17: 'order_status',
+        18: 'order_total',
+        19: 'order_comments',
+        20: 'anonymous',
+        21: 'hidden',
+    }
+
     honouring = models.CharField(
         "In Honor Of",
         max_length=254,
