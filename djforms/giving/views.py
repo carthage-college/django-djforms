@@ -417,11 +417,9 @@ def giving_success(request, transaction, campaign=None):
 
 def donors(request, slug=None):
     """Display the donors to a campaign or default donation."""
-    # for problem with donors listing foiled by same last names of 3 folks:
-    # https://help.carthage.edu/rt/Ticket/Display.html?id=79934
     promo = None
     percent = 0
-    start_date = date.today() - timedelta(days=300)
+    start_date = date.today() - timedelta(days=365)
     template = 'giving/donors.html'
 
     if slug:
@@ -437,7 +435,7 @@ def donors(request, slug=None):
 
     donors = DonationContact.objects.filter(anonymous=False).filter(
         created_at__gte=start_date,
-    ).filter(order__status__in=['approved', 'manual']).filter(hidden=False)
+    ).filter(order__status__in=['approved', 'Manual']).filter(hidden=False)
 
     if slug and slug != 'giving-day':
         donors = donors.filter(order__promotion__slug=slug)
