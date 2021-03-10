@@ -37,8 +37,7 @@ $(function(){
     },
     'columns': [
         {
-            'data': 'last_name',
-            'orderable': false
+            'data': 'last_name'
         },
         {
             'data': 'first_name',
@@ -52,8 +51,7 @@ $(function(){
         },
         {
             'data': 'created_at',
-            'searchable': false,
-            'orderable': false
+            'searchable': false
         },
         {
             'data': 'email',
@@ -61,9 +59,7 @@ $(function(){
             'orderable': false
         },
         {
-            'data': 'twitter',
-            'searchable': false,
-            'orderable': false
+            'data': 'twitter'
         },
         {
             'data': 'phone',
@@ -76,19 +72,14 @@ $(function(){
             'orderable': false
         },
         {
-            'data': 'city',
-            'searchable': false,
-            'orderable': false
+            'data': 'city'
         },
         {
             'data': 'state',
-            'searchable': false,
-            'orderable': false
+            'searchable': false
         },
         {
-            'data': 'postal_code',
-            'searchable': false,
-            'orderable': false
+            'data': 'postal_code'
         },
         {
             'data': 'spouse',
@@ -96,9 +87,7 @@ $(function(){
             'orderable': false
         },
         {
-            'data': 'relation',
-            'searchable': false,
-            'orderable': false
+            'data': 'relation'
         },
         {
             'data': 'honouring',
@@ -107,8 +96,8 @@ $(function(){
         },
         {
             'data': 'class_of',
-            'orderable': false,
-            'searchable': false
+            'searchable': false,
+            'orderable': false
         },
         {
             'data': 'order_promo',
@@ -137,13 +126,11 @@ $(function(){
         },
         {
             'data': 'anonymous',
-            'searchable': false,
-            'orderable': false
+            'searchable': false
         },
         {
             'data': 'hidden',
-            'searchable': false,
-            'orderable': false
+            'searchable': false
         }
     ]
   });

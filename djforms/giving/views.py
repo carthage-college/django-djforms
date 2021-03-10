@@ -20,12 +20,12 @@ from djforms.giving.models import DonationContact
 from djforms.giving.models import PaverContact
 from djforms.processors.forms import TrustCommerceForm as CreditCardForm
 
-from djtools.fields import TODAY
 from djtools.utils.mail import send_mail
 from djtools.utils.convert import str_to_class
 
 from PIL import Image, ImageDraw, ImageFont
 from datetime import timedelta
+from datetime import date
 
 import os
 import json
@@ -153,8 +153,8 @@ def giving_form(request, transaction, campaign=None):
     else:
         bcc = settings.GIVING_DONATIONS_BCC
 
-    year = TODAY.year
-    if TODAY.month >= 9:
+    year = date.today().year
+    if date.today().month >= 9:
         year += 1
     status = None
     trans_cap = transaction.capitalize()
@@ -421,7 +421,7 @@ def donors(request, slug=None):
     # https://help.carthage.edu/rt/Ticket/Display.html?id=79934
     promo = None
     percent = 0
-    start_date = TODAY - timedelta(days=300)
+    start_date = date.today() - timedelta(days=300)
     template = 'giving/donors.html'
 
     if slug:
@@ -436,7 +436,7 @@ def donors(request, slug=None):
             template = temp
 
     donors = DonationContact.objects.filter(anonymous=False).filter(
-        order__time_stamp__gte=start_date,
+        created_at__gte=start_date,
     ).filter(order__status__in=['approved', 'manual']).filter(hidden=False)
 
     if slug and slug != 'giving-day':
@@ -462,8 +462,8 @@ def donors(request, slug=None):
     elif request.GET.get('latest'):
         try:
             latest = int(request.GET.get('latest'))
-            ctext['donors'] = donors.order_by('-order__time_stamp')[:latest]
-            ctext['spouses'] = spouses.order_by('-order__time_stamp')[:latest]
+            ctext['donors'] = donors.order_by('-created_at')[:latest]
+            ctext['spouses'] = spouses.order_by('-created_at')[:latest]
             response = render(
                 request,
                 'giving/donors_latest.html',
@@ -563,21 +563,20 @@ def manager_ajax(request):
         dirx = post.get('order[0][dir]')
         col = columns.get(order)
         order_by = col if dirx == 'asc' else '-' + col
-    date_start = TODAY - timedelta(days=365)
-    date_end = TODAY + timedelta(days=1)
+    date_start = date.today() - timedelta(days=365)
+    #date_end = date.today() + timedelta(days=1)
+    date_end = date.today() - timedelta(days=300)
     group = request.POST.get('group', None)
 
     all_donations = DonationContact.objects.filter(
-            order__time_stamp__gte=date_start,
+            created_at__gte=date_start,
         ).filter(
-            order__time_stamp__lte=date_end,
-        ).filter(order__status__in=['approved','manual'])
+            created_at__lte=date_end,
+        )
     if search:
         donations = all_donations.filter(
-            order__time_stamp__range=(date_start, date_end)
-        ).filter(
-            Q(created_by__last_name__icontains=search)|
-            Q(created_by__first_name__icontains=search)
+            Q(last_name__icontains=search)|
+            Q(first_name__icontains=search)
         )
     else:
         donations = all_donations.order_by(order_by)
@@ -586,46 +585,51 @@ def manager_ajax(request):
     paginator = Paginator(donations, length)
     object_list = paginator.page(page).object_list
     data = []
-    for donation in object_list:
-        promo = donation.order_promo()
-        if promo:
-            promo = promo.title
-        spouse = ''
-        if donation.spouse:
-            spouse = '{0} {1}'.format(donation.spouse, donation.spouse_class or '')
-        address = '{0} {1}'.format(donation.address1, donation.address2 or '')
-        last_name = '<a href="{0}" target="_blank">{1}</a>'.format(
-            reverse('admin:giving_donationcontact_change', args=(donation.id,)),
-            donation.last_name,
-        )
-        created_at = '<a href="{0}" target="_blank">{1}</a>'.format(
-            reverse('admin:processors_order_change', args=(donation.order_oid(),)),
-            donation.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-        )
-        data.append({
-            'last_name': last_name,
-            'first_name': donation.first_name,
-            'order_cc_name': donation.order_cc_name(),
-            'created_at': created_at,
-            'email': donation.email,
-            'twitter': donation.twitter or '',
-            'phone': donation.phone or '',
-            'address': address,
-            'city': donation.city or '',
-            'state': donation.state or '',
-            'postal_code': donation.postal_code or '',
-            'spouse': spouse,
-            'relation': donation.relation or '',
-            'honouring': donation.honouring or '',
-            'class_of': donation.class_of or '',
-            'order_promo': promo or '',
-            'order_transid': donation.order_transid(),
-            'order_status': donation.order_status(),
-            'order_total': donation.order_total(),
-            'order_comments': donation.order_comments(),
-            'anonymous': donation.anonymous,
-            'hidden': donation.hidden,
-        })
+    for donor in object_list:
+        if donor.order_status() in {'approved', 'Manual'}:
+            promo = donor.order_promo()
+            if promo:
+                promo = promo.title
+            spouse = ''
+            if donor.spouse:
+                spouse = '{0} {1}'.format(donor.spouse, donor.spouse_class or '')
+            address = '{0} {1}'.format(donor.address1, donor.address2 or '')
+            last_name = '<a href="{0}" target="_blank">{1}</a>'.format(
+                reverse(
+                    'admin:giving_donationcontact_change', args=(donor.id,),
+                ),
+                donor.last_name,
+            )
+            created_at = '<a href="{0}" target="_blank">{1}</a>'.format(
+                reverse(
+                    'admin:processors_order_change', args=(donor.order_oid(),),
+                ),
+                donor.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+            )
+            data.append({
+                'last_name': last_name,
+                'first_name': donor.first_name,
+                'order_cc_name': donor.order_cc_name(),
+                'created_at': created_at,
+                'email': donor.email,
+                'twitter': donor.twitter or '',
+                'phone': donor.phone or '',
+                'address': address,
+                'city': donor.city or '',
+                'state': donor.state or '',
+                'postal_code': donor.postal_code or '',
+                'spouse': spouse,
+                'relation': donor.relation or '',
+                'honouring': donor.honouring or '',
+                'class_of': donor.class_of or '',
+                'order_promo': promo or '',
+                'order_transid': donor.order_transid(),
+                'order_status': donor.order_status(),
+                'order_total': donor.order_total(),
+                'order_comments': donor.order_comments(),
+                'anonymous': donor.anonymous,
+                'hidden': donor.hidden,
+            })
 
     return JsonResponse(
         {
@@ -643,8 +647,8 @@ def manager(request, slug=None):
     """Home view that displays all donors."""
     '''
     promo = None
-    start_date = TODAY - timedelta(days=365)
-    end_date = TODAY + timedelta(days=1)
+    start_date = date.today() - timedelta(days=365)
+    end_date = date.today() + timedelta(days=1)
     if slug == 'paver':
         donors = PaverContact.objects.filter(
             order__time_stamp__gte=start_date,
