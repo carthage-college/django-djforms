@@ -564,8 +564,7 @@ def manager_ajax(request):
         col = columns.get(order)
         order_by = col if dirx == 'asc' else '-' + col
     date_start = date.today() - timedelta(days=365)
-    #date_end = date.today() + timedelta(days=1)
-    date_end = date.today() - timedelta(days=300)
+    date_end = date.today() + timedelta(days=1)
     group = request.POST.get('group', None)
 
     all_donations = DonationContact.objects.filter(
@@ -645,38 +644,4 @@ def manager_ajax(request):
 @staff_member_required
 def manager(request, slug=None):
     """Home view that displays all donors."""
-    '''
-    promo = None
-    start_date = date.today() - timedelta(days=365)
-    end_date = date.today() + timedelta(days=1)
-    if slug == 'paver':
-        donors = PaverContact.objects.filter(
-            order__time_stamp__gte=start_date,
-        ).filter(order__status__in=['approved','manual'])
-    else:
-        if slug:
-            promo = get_object_or_404(Promotion, slug=slug)
-
-            if slug == 'giving-day':
-                start_date = settings.GIVING_DAY_START_DATE
-                end_date = settings.GIVING_DAY_END_DATE
-
-        donors = DonationContact.objects.filter(
-            order__time_stamp__gte=start_date
-        ).filter(
-            order__time_stamp__lte=end_date
-        ).filter(order__status__in=['approved','manual'])
-
-        if slug and  slug != 'giving-day':
-            donors = donors.filter(order__promotion__slug=slug)
-
-    '''
-    return render(
-        request,
-        'giving/manager/home.html', {
-            #'objects': donors,
-            #'count':donors.count(),
-            #'campaign':promo,
-            #'slug':slug,
-        }
-    )
+    return render(request, 'giving/manager/home.html', {})
