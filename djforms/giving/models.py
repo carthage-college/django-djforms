@@ -90,7 +90,7 @@ class DonationContact(Contact):
     def order_cc_name(self):
         """Return the name on the credit card."""
         try:
-            name = self.order.all()[0].cc_name
+            name = self.order.all().first().cc_name
         except:
             name = None
         return name
@@ -98,7 +98,7 @@ class DonationContact(Contact):
     def order_promo(self):
         """Return the promotion with which this transaction was associated."""
         try:
-            promo = self.order.all()[0].promotion
+            promo = self.order.all().first().promotion
         except:
             promo = None
         return promo
@@ -106,7 +106,7 @@ class DonationContact(Contact):
     def order_status(self):
         """Return the status of the order."""
         try:
-            stat = self.order.all()[0].status
+            stat = self.order.all().first().status.lower()
         except:
             stat = None
         return stat
@@ -114,7 +114,7 @@ class DonationContact(Contact):
     def order_oid(self):
         """Return the ID of the order."""
         try:
-            oid = self.order.all()[0].id
+            oid = self.order.all().first().id
         except:
             oid = 0
         return oid
@@ -122,7 +122,7 @@ class DonationContact(Contact):
     def order_transid(self):
         """Return the transaction ID from the credit card processor."""
         try:
-            tid = self.order.all()[0].transid
+            tid = self.order.all().first().transid
         except:
             tid = None
         return tid
@@ -130,7 +130,7 @@ class DonationContact(Contact):
     def order_total(self):
         """Return the order total."""
         try:
-            tid = self.order.all()[0].total
+            tid = self.order.all().first().total
         except:
             tid = None
         return tid
@@ -138,7 +138,7 @@ class DonationContact(Contact):
     def order_cycle(self):
         """Return the recurring payment cycle."""
         try:
-            cycle = self.order.all()[0].cycle
+            cycle = self.order.all().first().cycle
         except:
             cycle = None
         return cycle
@@ -146,7 +146,7 @@ class DonationContact(Contact):
     def order_payments(self):
         """Return the payments type."""
         try:
-            payments = self.order.all()[0].payments
+            payments = self.order.all().first().payments
         except:
             payments = None
         return payments
@@ -154,7 +154,7 @@ class DonationContact(Contact):
     def order_start_date(self):
         """Return the start date for recurring payments."""
         try:
-            sdate = self.order.all()[0].start_date
+            sdate = self.order.all().first().start_date
         except:
             sdate = None
         return sdate
@@ -162,7 +162,7 @@ class DonationContact(Contact):
     def order_comments(self):
         """Return the comments on a transaction."""
         try:
-            com = self.order.all()[0].comments
+            com = self.order.all().first().comments
         except:
             com = None
         return com
@@ -170,7 +170,7 @@ class DonationContact(Contact):
     def order_statement(self):
         """Return the statment."""
         try:
-            sta = self.order.all()[0].statement
+            sta = self.order.all().first().statement
         except:
             sta = None
         return sta
@@ -178,7 +178,7 @@ class DonationContact(Contact):
     def order_binary(self):
         """Return the binary value."""
         try:
-            bny = self.order.all()[0].binary
+            bny = self.order.all().first().binary
         except:
             bny = None
         return bny
@@ -203,7 +203,7 @@ class PaverContact(Contact):
     def order_cc_name(self):
         """Return the name on the credit card."""
         try:
-            name = self.order.all()[0].cc_name
+            name = self.order.all().first().cc_name
         except:
             name = None
         return name
@@ -211,7 +211,7 @@ class PaverContact(Contact):
     def order_promo(self):
         """Return the promotion with which this transaction was associated."""
         try:
-            promo = self.order.all()[0].promotion
+            promo = self.order.all().first().promotion
         except:
             promo = None
         return promo
@@ -219,7 +219,7 @@ class PaverContact(Contact):
     def order_status(self):
         """Return the status of the order."""
         try:
-            stat = self.order.all()[0].status
+            stat = self.order.all().first().status
         except:
             stat = None
         return stat
@@ -227,7 +227,7 @@ class PaverContact(Contact):
     def order_transid(self):
         """Return the transaction ID from the credit card processor."""
         try:
-            tid = self.order.all()[0].transid
+            tid = self.order.all().first().transid
         except:
             tid = None
         return tid
@@ -235,7 +235,7 @@ class PaverContact(Contact):
     def order_total(self):
         """Return the order total."""
         try:
-            tid = self.order.all()[0].total
+            tid = self.order.all().first().total
         except:
             tid = None
         return tid
@@ -243,7 +243,7 @@ class PaverContact(Contact):
     def order_cycle(self):
         """Return the recurring payment cycle."""
         try:
-            cycle = self.order.all()[0].cycle
+            cycle = self.order.all().first().cycle
         except:
             cycle = None
         return cycle
@@ -251,7 +251,7 @@ class PaverContact(Contact):
     def order_payments(self):
         """Return the payments type."""
         try:
-            payments = self.order.all()[0].payments
+            payments = self.order.all().first().payments
         except:
             payments = None
         return payments
@@ -259,7 +259,7 @@ class PaverContact(Contact):
     def order_start_date(self):
         """Return the start date for recurring payments."""
         try:
-            sdate = self.order.all()[0].start_date
+            sdate = self.order.all().first().start_date
         except:
             sdate = None
         return sdate
@@ -267,7 +267,7 @@ class PaverContact(Contact):
     def order_comments(self):
         """Return the comments on a transaction."""
         try:
-            com = self.order.all()[0].comments
+            com = self.order.all().first().comments
         except:
             com = None
         return com

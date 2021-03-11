@@ -62,7 +62,7 @@ def meme(img, draw, msg, pos):
     # 2. divide text in X lines
     lastCut = 0
     isLast = False
-    for i in range(0,lineCount):
+    for i in range(0, lineCount):
         if lastCut == 0:
             cut = (len(msg) / lineCount) * i
         else:
@@ -98,7 +98,7 @@ def meme(img, draw, msg, pos):
     if pos == "bottom":
         lastY = img.height - h * (lineCount+1) - 10
 
-    for i in range(0,lineCount):
+    for i in range(0, lineCount):
         w, h = draw.textsize(lines[i], font)
         textX = img.width/2 - w/2
         textY = lastY + h
@@ -419,35 +419,58 @@ def donors(request, slug=None):
     """Display the donors to a campaign or default donation."""
     promo = None
     percent = 0
-    start_date = date.today() - timedelta(days=365)
-    template = 'giving/donors.html'
+    date_start = date.today() - timedelta(days=365)
+    date_end = date.today() + timedelta(days=1)
 
+    template = 'giving/donors.html'
+    relation = request.GET.get('relation')
+    latest = request.GET.get('latest')
     if slug:
         promo = get_object_or_404(Promotion, slug=slug)
-        if slug == 'giving-day':
-            start_date = settings.GIVING_DAY_START_DATE
 
         percent = promo.percent()
         # template
-        temp = 'giving/campaigns/{}/donors.html'.format(promo.slug)
+        temp = 'giving/campaigns/{0}/donors.html'.format(promo.slug)
         if os.path.isfile(os.path.join(settings.ROOT_DIR, 'templates', temp)):
             template = temp
+        if slug == 'giving-day':
+            date_start = settings.GIVING_DAY_START_DATE
+            date_end = settings.GIVING_DAY_END_DATE
+            slug = None
 
-    donors = DonationContact.objects.filter(anonymous=False).filter(
-        created_at__gte=start_date,
-    ).filter(order__status__in=['approved', 'Manual']).filter(hidden=False)
+    donations = DonationContact.objects.filter(anonymous=False).filter(
+        #created_at__gte=date_start,
+        created_at__range=(date_start, date_end),
+    ).filter(hidden=False).order_by('-created_at').order_by('last_name')
 
-    if slug and slug != 'giving-day':
-        donors = donors.filter(order__promotion__slug=slug)
+    if relation:
+        donations = donations.filter(relation=relation)
 
-    spouses = donors.filter(spouse_class__isnull=False).exclude(spouse_class=' ')
-    count = donors.count()
+    donors = []
+    donors_promo = []
+    for donor in donations:
+        if donor.order_status() in {'approved', 'manual'}:
+            donor_dict = {
+                'last_name': donor.last_name,
+                'first_name': donor.first_name,
+                'class_of': donor.class_of,
+                'relation': donor.relation,
+            }
+            if slug and donor.order_promo() and donor.order_promo().slug==slug:
+                donors_promo.append(donor_dict)
+            else:
+                donors.append(donor_dict)
+    if slug:
+        donors = donors_promo
+
+    if latest:
+        donors = donors[:latest]
+
     ctext = {
         'donors': donors,
         'promo': promo,
-        'count': count,
+        'count': len(donors),
         'percent': percent,
-        'spouses':spouses,
     }
 
     if request.GET.get('ajax'):
@@ -457,24 +480,15 @@ def donors(request, slug=None):
             ctext,
             content_type='text/plain; charset=utf-8',
         )
-    elif request.GET.get('latest'):
-        try:
-            latest = int(request.GET.get('latest'))
-            ctext['donors'] = donors.order_by('-created_at')[:latest]
-            ctext['spouses'] = spouses.order_by('-created_at')[:latest]
-            response = render(
-                request,
-                'giving/donors_latest.html',
-                ctext,
-                content_type='text/plain; charset=utf-8',
-            )
-        except:
-            raise Http404
-    elif request.GET.get('relation'):
-        donors = donors.filter(relation=request.GET.get('relation'))
-        spouses = donors.filter(spouse_class__isnull=False).exclude(spouse_class=' ')
-        count = donors.count() + spouses.count()
-        results = [{"count": "{}".format(donors.count()),}]
+    elif latest:
+        response = render(
+            request,
+            'giving/donors_latest.html',
+            ctext,
+            content_type='text/plain; charset=utf-8',
+        )
+    elif relation:
+        results = [{"count": "{0}".format(ctext['count'])}]
         response = HttpResponse(
             json.dumps(results),
             content_type='application/json; charset=utf-8',
@@ -583,7 +597,7 @@ def manager_ajax(request):
     object_list = paginator.page(page).object_list
     data = []
     for donor in object_list:
-        if donor.order_status() in {'approved', 'Manual'}:
+        if donor.order_status() in {'approved', 'manual'}:
             promo = donor.order_promo()
             if promo:
                 promo = promo.title
