@@ -441,7 +441,13 @@ def donors(request, slug=None):
     donations = DonationContact.objects.filter(anonymous=False).filter(
         #created_at__gte=date_start,
         created_at__range=(date_start, date_end),
-    ).filter(hidden=False).order_by('-created_at').order_by('last_name')
+    ).filter(hidden=False)
+
+    if latest:
+        latest = int(latest)
+        donations = donations.order_by('-created_at')
+    else:
+        donations = donations.order_by('last_name')
 
     if relation:
         donations = donations.filter(relation=relation)
@@ -450,11 +456,13 @@ def donors(request, slug=None):
     donors_promo = []
     for donor in donations:
         if donor.order_status() in {'approved', 'manual'}:
+            spouse = donor.spouse
             donor_dict = {
                 'last_name': donor.last_name,
                 'first_name': donor.first_name,
                 'class_of': donor.class_of,
                 'relation': donor.relation,
+                'spouse': donor.spouse,
             }
             if slug and donor.order_promo() and donor.order_promo().slug==slug:
                 donors_promo.append(donor_dict)
