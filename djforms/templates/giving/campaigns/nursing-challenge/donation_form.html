@@ -9,7 +9,7 @@
     <h3><label for="id_or-comments">Designation</label></h3>
     <div>
       <select name="or-comments">
-        <option>----Select----</option>
+        <option value="">----Select----</option>
         <option value="Nursing Program"{% if or_form.comments.value == 'Nursing Program' %} selected{% endif %}>Nursing Program</option>
         <option value="Nursing Scholarship"{% if or_form.comments.value == 'Nursing Scholarship' %} selected{% endif %}>Nursing Scholarship</option>
       </select>

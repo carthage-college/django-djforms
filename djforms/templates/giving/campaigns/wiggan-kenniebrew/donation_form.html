@@ -9,12 +9,9 @@
     <h3><label for="id_or-comments">Designation</label></h3>
     <div>
       <select name="or-comments">
-        <option>----Select----</option>
+        <option value="">----Select----</option>
         <option value="Intercultural Center for Equity, Advocacy, and Engagement"{% if or_form.comments.value == 'Intercultural Center for Equity, Advocacy, and Engagement' %} selected{% endif %}>
           Intercultural Center for Equity, Advocacy, and Engagement
-        </option>
-        <option value="Intercultural and Anti-Racism Programs Fund"{% if or_form.comments.value == 'Intercultural and Anti-Racism Programs Fund' %} selected{% endif %}>
-          Intercultural and Anti-Racism Programs Fund
         </option>
         <option value="Wiggan-Kenniebrew Experiential Learning Fund"{% if or_form.comments.value == 'Wiggan-Kenniebrew Experiential Learning Fund' %} selected{% endif %}>
           Wiggan-Kenniebrew Experiential Learning Fund

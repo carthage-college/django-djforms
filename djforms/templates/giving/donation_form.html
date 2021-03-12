@@ -101,7 +101,7 @@
                     <div>
                     {% if campaign.slug == "athletics-challenge" %}
                       <select name="or-comments">
-                        <option>----Select----</option>
+                        <option value="">----Select----</option>
                         <option value="UA04"{% if or_form.comments.value == 'UA04' %} selected{% endif %}>General Athletics</option>
                         <option value="UA08"{% if or_form.comments.value == 'UA08' %} selected{% endif %}>Baseball</option>
                         <option value="UA09"{% if or_form.comments.value == 'UA09' %} selected{% endif %}>Men's Basketball</option>
