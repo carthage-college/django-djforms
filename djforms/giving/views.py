@@ -439,7 +439,6 @@ def donors(request, slug=None):
             slug = None
 
     donations = DonationContact.objects.filter(anonymous=False).filter(
-        #created_at__gte=date_start,
         created_at__range=(date_start, date_end),
     ).filter(hidden=False)
 
@@ -588,10 +587,10 @@ def manager_ajax(request):
     group = request.POST.get('group', None)
 
     all_donations = DonationContact.objects.filter(
-            created_at__gte=date_start,
-        ).filter(
-            created_at__lte=date_end,
-        )
+        created_at__gte=date_start,
+    ).filter(
+        created_at__lte=date_end,
+    )
     if search:
         donations = all_donations.filter(
             Q(last_name__icontains=search)|

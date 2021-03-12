@@ -79,7 +79,7 @@ class DonationContact(Contact):
             published on any donor list or in the annual report.
         """,
     )
-    hidden = models.BooleanField()
+    hidden = models.BooleanField(default=False)
     twitter = models.CharField(
         "Twitter Handle",
         max_length=128,
