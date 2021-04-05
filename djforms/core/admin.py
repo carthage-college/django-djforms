@@ -25,6 +25,7 @@ class PromotionAdmin(admin.ModelAdmin):
     raw_id_fields = ('user',)
     model = Promotion
     prepopulated_fields = {'slug': ('title',)}
+    list_display = ('title', 'date_created', 'slug', 'amount', 'donors')
 
 
 # core models
