@@ -10,6 +10,8 @@
     <div>
       <select name="or-comments">
         <option value="">----Select----</option>
+        <option value="75 Years of Black Excellence Scholarship"{% if or_form.comments.value == '75 Years of Black Excellence Scholarship' or not or_form.comments.value %} selected{% endif %}>
+          75 Years of Black Excellence Scholarship
         <option value="Wiggan-Kenniebrew Experiential Learning Fund"{% if or_form.comments.value == 'Wiggan-Kenniebrew Experiential Learning Fund' %} selected{% endif %}>
           Wiggan-Kenniebrew Experiential Learning Fund
         </option>
