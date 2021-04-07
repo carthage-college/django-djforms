@@ -4,6 +4,7 @@
   type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     $(function() {
+        $('#id_ct-spouse').attr('autocomplete', 'off');
         $('#pledge').change(function () {
             $('#pledge-payments').toggle(this.checked);
         }).change(); //ensure visible state matches initially
@@ -24,27 +25,5 @@
           $('form#profile input[type=submit]').prop('disabled', true);
           return true;
         });
-        /*
-        $("#id_or-total").on("change", function() {
-            var $total = $(this).val();
-            if ($total < 5) {
-                $message = "Please consider making a gift of at least $5 to offset processing fees.";
-            } else if ($total < 66) {
-                $message = "Last year, the average gift on Giving Day was $66.";
-            } else {
-                $message = "";
-            }
-            if ($message) {
-                var $dia =$('<div id="dialog-message">' + $message + '</div>')
-                $dia.dialog({
-                    modal: true,
-                    title: "Donation Tip",
-                    closeText: "",
-                    draggable: false,
-                    resizable: false
-                });
-            }
-        });
-        */
     });
 </script>
