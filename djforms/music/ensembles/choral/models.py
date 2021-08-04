@@ -48,8 +48,9 @@ class Candidate(models.Model):
 
     def first_name(self):
         return self.user.first_name
+
     def last_name(self):
         return self.user.last_name
+
     def email(self):
         return self.user.email
-
