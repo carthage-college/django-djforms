@@ -34,7 +34,7 @@ def candidate(request):
                     candidate.user.first_name,candidate.user.last_name
                 ), settings.CHORAL_TRYOUTS_FROM,
                 'music/ensembles/choral/email.html',
-                candidate, [settings.MANAGERS[0][1], settings.CHORAL_TRYOUTS_FROM]
+                candidate, [settings.MANAGERS[0][1]]
             )
             return HttpResponseRedirect(
                 reverse_lazy('choral_tryout_success')
