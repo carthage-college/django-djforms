@@ -14,8 +14,10 @@
 {% endblock %}
 {% block content %}
 <div class="forms-container">
-    {% get_lw_content as content blurbs 2078 %}
-    {{content.body}}
+    {% get_lw_content as content1 blurbs 2078 %}
+    {{content1.body}}
+    {% get_lw_content as content2 blurbs 3114 %}
+    {{content2.body}}
     {% include "includes/generic_form.html" %}
 </div>
 {% endblock %}

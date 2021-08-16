@@ -1,10 +1,6 @@
-<h2>Choral Auditions consist of:</h2>
-<ol>
-<li>Vocalizations</li>
-<li>Tonal Memory Exercises</li>
-<li>Sigh Reading</li>
-<li>Singing "My Country 'Tis of Thee" in different keys</li>
-</ol>
+{% load livewhale_api %}
+{% get_lw_content as content blurbs 3114 %}
+{{content.body|safe}}
 <h3>A prepared song is not required, but you are welcome to perform it.</h3>
 <pre style="font-size:1.5em;">
 First name.................. {{data.user.first_name}}
