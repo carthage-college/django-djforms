@@ -110,6 +110,7 @@ class PaverContactAdmin(DonationContactAdmin):
     ordering = (
         '-created_at','last_name','city','state','postal_code',
     )
+    list_editable = []
     list_display  = (
         'last_name','first_name','order_cc_name','created_at','email','phone',
         'address1','address2','city','state','postal_code',
