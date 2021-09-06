@@ -55,22 +55,12 @@ urlpatterns = [
     ),
     # admin
     url(r'^admin/', include(admin.site.urls)),
-    # override user creation
-    #(r'^admin/auth/user/add/', 'djauth.views.user_add'),
-    # admin/docs
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     # admissions
     url(r'^admissions/', include('djforms.admissions.urls')),
     # alumni
     url(r'^alumni/', include('djforms.alumni.urls')),
     # athletics
     url(r'^athletics/', include('djforms.athletics.urls')),
-    # biology
-    url(r'^biology/', include('djforms.biology.urls')),
-    # catering
-    #url(r'^catering/', include('djforms.catering.urls')),
-    # CharacterQuest
-    #url(r'^character-quest/', include('djforms.characterquest.urls')),
     # communications
     url(r'^communications/', include('djforms.communications.urls')),
     # giving
@@ -89,8 +79,6 @@ urlpatterns = [
     url(r'^scholars/', include('djforms.scholars.urls')),
     # for the security appeal form environment
     url(r'^security/', include('djforms.security.urls')),
-    # sustainability
-    #url(r'^sustainability/', include('djforms.sustainability.urls')),
     # writing across curriculum
     url(r'^writingcurriculum/', include('djforms.writingcurriculum.urls'))
 ]
