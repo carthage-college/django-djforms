@@ -1,4 +1,4 @@
-django==1.11.29
+django==2.2.24
 MySQL-python==1.2.5
 python-memcached==1.59
 python-ldap==3.1.0
