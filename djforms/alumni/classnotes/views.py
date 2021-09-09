@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 from djforms.alumni.classnotes.forms import ContactForm
 from djforms.alumni.classnotes.models import Contact

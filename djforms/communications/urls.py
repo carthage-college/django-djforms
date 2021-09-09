@@ -1,6 +1,7 @@
-from django.conf.urls import url
-from django.views.generic import TemplateView, RedirectView
+# -*- coding: utf-8 -*-
 
+from django.urls import path
+from django.views.generic import TemplateView
 from djforms.communications.metamorphosis.models import Questionnaire
 from djforms.communications.printrequest import views as printrequest
 from djforms.communications.metamorphosis import views as metamorphosis
@@ -8,41 +9,40 @@ from djforms.communications.metamorphosis import views as metamorphosis
 
 urlpatterns = [
     # print request form
-    url(
-        r'^print-request/success/$', TemplateView.as_view(
-            template_name='communications/printrequest/done.html'
-        ),
-        name='print_request_success'
+    path(
+        'print-request/success/',
+        TemplateView.as_view(template_name='communications/printrequest/done.html'),
+        name='print_request_success',
     ),
-    url(
-        r'^print-request/$',
+    path(
+        'print-request/',
         printrequest.print_request,
-        name='print_request'
+        name='print_request',
     ),
     # How has your student changed since their freshman year?
-    url(
-        r'^metamorphosis/success/$',
+    path(
+        'metamorphosis/success/',
         TemplateView.as_view(
-            template_name='communications/metamorphosis/done.html'
+            template_name='communications/metamorphosis/done.html',
         ),
-        name='metamorphosis_questionnaire_success'
+        name='metamorphosis_questionnaire_success',
     ),
-    url(
-        r'^metamorphosis/(?P<quid>\d+)/detail/$',
+    path(
+        'metamorphosis/<int:quid>/detail/',
         metamorphosis.questionnaire_detail,
-        name='metamorphosis_questionnaire_detail'
+        name='metamorphosis_questionnaire_detail',
     ),
-    url(
-        r'^metamorphosis/archives/$',
+    path(
+        'metamorphosis/archives/',
         TemplateView.as_view(
-            template_name='communications/metamorphosis/archives.html',
+            template_name='communications/metamorphosis/archives.html',,
         ),
         {'data':Questionnaire.objects.all()},
-        name='metamorphosis_questionnaire_archives'
+        name='metamorphosis_questionnaire_archives',
     ),
-    url(
-        r'^metamorphosis/(?P<who>[a-zA-Z0-9_-]+)/',
+    path(
+        'metamorphosis/<str:who>/',
         metamorphosis.questionnaire_form,
-        name='metamorphosis_questionnaire_form'
-    )
+        name='metamorphosis_questionnaire_form',
+    ),
 ]

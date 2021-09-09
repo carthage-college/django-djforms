@@ -3,7 +3,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 from django.core.paginator import Paginator
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models.query import Q
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect

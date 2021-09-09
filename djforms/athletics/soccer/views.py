@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 from djforms.athletics.soccer import BCC, INSURANCE_TO_LIST, TO_LIST

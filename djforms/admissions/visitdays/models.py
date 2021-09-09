@@ -118,7 +118,7 @@ class VisitDayEvent(models.Model):
     max_attendees = models.IntegerField()
     cur_attendees = models.IntegerField()
     active = models.BooleanField(default=True)
-    event = models.ForeignKey(VisitDay)
+    event = models.ForeignKey(VisitDay, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return "{0} ({1})".format(
@@ -127,11 +127,16 @@ class VisitDayEvent(models.Model):
 
 
 class VisitDayBaseProfile(GenericContact):
-    date = models.ForeignKey(VisitDayEvent, related_name='visitday_date')
+    date = models.ForeignKey(
+        VisitDayEvent,
+        related_name='visitday_date',
+        on_delete=models.CASCADE,
+    )
     date_alternate = models.ForeignKey(
         VisitDayEvent,
         related_name='visitday_altdate',
         verbose_name="Second choice date",
+        on_delete=models.CASCADE,
         null=True,
         blank=True,
     )
@@ -163,6 +168,7 @@ class VisitDayBaseProfile(GenericContact):
         verbose_name="Time, First Choice",
         related_name='visit_day_time_primary',
         limit_choices_to=limit_time,
+        on_delete=models.CASCADE,
         null=True,
         blank=True,
     )
@@ -171,6 +177,7 @@ class VisitDayBaseProfile(GenericContact):
         verbose_name="Time, Second Choice",
         related_name='visit_day_time_secondary',
         limit_choices_to=limit_time,
+        on_delete=models.CASCADE,
         null=True,
         blank=True,
     )
@@ -179,6 +186,7 @@ class VisitDayBaseProfile(GenericContact):
         verbose_name="Meeting Format",
         related_name='visit_day_format',
         limit_choices_to=limit_format,
+        on_delete=models.CASCADE,
         null=True,
         blank=True,
     )

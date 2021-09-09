@@ -1,11 +1,16 @@
+# -*- coding: utf-8 -*-
+
+"""URLs for all views."""
+
 from django.contrib import admin
-from django.conf.urls import include, url
 from django.contrib.auth import views as auth_views
-from django.views.generic import TemplateView, RedirectView
-
-from djforms.core.util import admin_list_export
-
+from django.urls import include
+from django.urls import path
+from django.urls import reverse_lazy
+from django.views.generic import RedirectView
+from django.views.generic import TemplateView
 from djauth.views import loggedout
+from djforms.core.util import admin_list_export
 
 admin.autodiscover()
 
@@ -15,72 +20,73 @@ handler500 = 'djtools.views.errors.server_error'
 
 urlpatterns = [
     # home
-    url(
-        r'^$', RedirectView.as_view(url='https://www.carthage.edu/bridge/')
-    ),
+    path('', RedirectView.as_view(url='https://www.carthage.edu/bridge/')),
     # simple 400 error view
-    url(
-        r'^denied/$',
-        TemplateView.as_view(
-            template_name='denied.html'
-        ), name='access_denied'
+    path(
+        'denied/',
+        TemplateView.as_view(template_name='denied.html'),
+        name='access_denied',
     ),
     # auth
-    url(
-        r'^accounts/login',
-        auth_views.login,
-        {'template_name': 'accounts/login.html'},
-        name='auth_login'
+    path(
+        'accounts/login/',
+        auth_views.LoginView.as_view(),
+        {'template_name': 'registration/login.html'},
+        name='auth_login',
     ),
-    url(
-        r'^accounts/logout/$',
-        auth_views.logout,
-        {'next_page': '/forms/accounts/loggedout/'},
-        name='auth_logout'
+    path(
+        'accounts/logout/',
+        auth_views.LogoutView.as_view(),
+        {'next_page': reverse_lazy('auth_loggedout')},
+        name='auth_logout',
     ),
-    url(
-        r'^accounts/loggedout',
+    path(
+        'accounts/loggedout/',
         loggedout,
-        {'template_name': 'accounts/logged_out.html'},
-        name='auth_loggedout'
+        {'template_name': 'registration/logged_out.html'},
+        name='auth_loggedout',
     ),
-    url(
-        r'^accounts/$', RedirectView.as_view(url='/forms/')
+    path('accounts/', RedirectView.as_view(url=reverse_lazy('auth_login'))),
+    path(
+        'denied/',
+        TemplateView.as_view(template_name='denied.html'),
+        name='access_denied',
     ),
     # CSV
-    url(
-        r'^admin/(?P<app_label>[\d\w]+)/(?P<model_name>[\d\w]+)/csv/',
+    path(
+        'admin/<str:app_label>/<str:model_name>/csv/',
         admin_list_export,
-        name='admin_list_export'
+        name='admin_list_export',
     ),
     # admin
-    url(r'^admin/', include(admin.site.urls)),
+    path('admin/', include('loginas.urls')),
+    path('admin/', admin.site.urls),
     # admissions
-    url(r'^admissions/', include('djforms.admissions.urls')),
+    path('admissions/', include('djforms.admissions.urls')),
     # alumni
-    url(r'^alumni/', include('djforms.alumni.urls')),
+    path('alumni/', include('djforms.alumni.urls')),
     # athletics
-    url(r'^athletics/', include('djforms.athletics.urls')),
+    path('athletics/', include('djforms.athletics.urls')),
     # communications
-    url(r'^communications/', include('djforms.communications.urls')),
+    path('communications/', include('djforms.communications.urls')),
     # giving
-    url(r'^giving/', include('djforms.giving.urls')),
+    path('giving/', include('djforms.giving.urls')),
     # LIS
-    url(r'^lis/', include('djforms.lis.urls')),
+    path('lis/', include('djforms.lis.urls')),
     # for the modern language form environment
-    url(r'^languages/', include('djforms.languages.urls')),
+    path('languages/', include('djforms.languages.urls')),
     # music
-    url(r'^music/', include('djforms.music.urls')),
+    path('music/', include('djforms.music.urls')),
     # polisci
-    url(r'^political-science/', include('djforms.polisci.urls')),
+    path('political-science/', include('djforms.polisci.urls')),
     # pre-health
-    url(r'^pre-health/', include('djforms.prehealth.urls')),
+    path('pre-health/', include('djforms.prehealth.urls')),
+    # celebration of scholars
+    path('scholars/', include('djforms.scholars.urls')),
     # for the security appeal form environment
-    url(r'^scholars/', include('djforms.scholars.urls')),
-    # for the security appeal form environment
-    url(r'^security/', include('djforms.security.urls')),
+    path('security/', include('djforms.security.urls')),
     # writing across curriculum
-    url(r'^writingcurriculum/', include('djforms.writingcurriculum.urls'))
+    path('writingcurriculum/', include('djforms.writingcurriculum.urls')),
+    # recaptcha
+    path('captcha/', include('captcha.urls')),
 ]
-urlpatterns += url('admin/', include('loginas.urls')),
-urlpatterns += url(r'^captcha/', include('captcha.urls')),

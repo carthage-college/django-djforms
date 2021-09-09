@@ -48,12 +48,14 @@ class PrintRequest(models.Model):
     user = models.ForeignKey(
         User, verbose_name="Created by",
         related_name="communications_print_request_user",
-        editable=False
+        on_delete=models.CASCADE,
+        editable=False,
     )
     updated_by = models.ForeignKey(
         User, verbose_name="Updated by",
         related_name="communications_print_request_updated_by",
-        editable=False
+        on_delete=models.CASCADE,
+        editable=False,
     )
     date_created = models.DateTimeField(
         "Date Created", auto_now_add=True

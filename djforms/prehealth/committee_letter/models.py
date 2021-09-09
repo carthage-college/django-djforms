@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 from djforms.core.models import GenericChoice
 
 from djtools.fields import BINARY_CHOICES
@@ -36,11 +36,13 @@ class Applicant(models.Model):
     # owners
     created_by = models.ForeignKey(
         User, verbose_name="Applicant",
-        related_name='prehealth_committee_letter_applicant_created_by'
+        related_name='prehealth_committee_letter_applicant_created_by',
+        on_delete=models.CASCADE,
     )
     updated_by = models.ForeignKey(
         User, verbose_name="Updated by",
-        related_name='prehealth_committee_letter_applicant_updated_by'
+        related_name='prehealth_committee_letter_applicant_updated_by',
+        on_delete=models.CASCADE,
     )
     # core
     programs_apply = models.ManyToManyField(
@@ -150,9 +152,11 @@ class Applicant(models.Model):
         '''
     )
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('prehealth_committee_letter_applicant_detail', [str(self.id)])
+        return reverse(
+            'prehealth_committee_letter_applicant_detail',
+            args=(str(self.id)),
+        )
 
     def first_name(self):
         return self.created_by.first_name
@@ -188,7 +192,8 @@ class Recommendation(models.Model):
 
     applicant = models.ForeignKey(
         Applicant, verbose_name="Applicant",
-        related_name="prehealth_committee_letter_recommendation_applicant"
+        related_name='prehealth_committee_letter_recommendation_applicant',
+        on_delete=models.CASCADE,
     )
     name = models.CharField(
         "Name of Recommender",
@@ -207,15 +212,18 @@ class Evaluation(models.Model):
 
     created_by = models.ForeignKey(
         User, verbose_name="Applicant",
-        related_name='prehealth_committee_letter_evaluation_created_by'
+        related_name='prehealth_committee_letter_evaluation_created_by',
+        on_delete=models.CASCADE,
     )
     updated_by = models.ForeignKey(
         User, verbose_name="Updated by",
-        related_name='prehealth_committee_letter_evaluation_updated_by'
+        related_name='prehealth_committee_letter_evaluation_updated_by',
+        on_delete=models.CASCADE,
     )
     applicant = models.ForeignKey(
         Applicant, verbose_name="Applicant",
-        related_name="prehealth_committee_letter_evaluation_applicant"
+        related_name='prehealth_committee_letter_evaluation_applicant',
+        on_delete=models.CASCADE,
     )
     knowledge = models.CharField(
         "Knowledge of Subject Matter",

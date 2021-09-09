@@ -1,4 +1,6 @@
-from django.conf.urls import url
+# -*- coding: utf-8 -*-
+
+from django.urls import path
 from django.views.generic import TemplateView
 
 from djforms.admissions.visitdays import views as visitdays
@@ -6,29 +8,25 @@ from djforms.admissions.admitted import views as admitted
 
 
 urlpatterns = [
-    url(
-        r'^visit/success/$',
+    path(
+        'visit/success/',
         TemplateView.as_view(template_name='admissions/visitday/success.html'),
-        name='visitday_success'
+        name='visitday_success',
     ),
-    url(
-        r'^visit/$',
+    path(
+        'visit/',
         TemplateView.as_view(template_name='admissions/visitday/home.html'),
-        name='visitday_home'
+        name='visitday_home',
     ),
-    url(
-        r'^visit/(?P<event_type>[a-zA-Z0-9_-]+)/$',
+    path(
+        'visit/<str:event_type>/',
         visitdays.visit_day_form,
-        name='visitday_form'
+        name='visitday_form',
     ),
-    url(
-        r'^admitted/success/$',
+    path(
+        'admitted/success/',
         TemplateView.as_view(template_name='admissions/admitted/success.html'),
-        name='admitted_success'
+        name='admitted_success',
     ),
-    url(
-        r'^admitted/$',
-        admitted.chance_of_form,
-        name='chance_of_form'
-    )
+    path('admitted/', admitted.chance_of_form, name='chance_of_form'),
 ]

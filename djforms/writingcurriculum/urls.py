@@ -1,32 +1,25 @@
 # -*- coding: utf-8 -*-
 
-"""URLs for all views."""
-
-from django.conf.urls import url
+from django.urls import path
 from django.views.generic import TemplateView
-
 from djforms.writingcurriculum import views
 
 
 urlpatterns = [
-    url(
-        r'^success/$',
+    path(
+        'success/',
         TemplateView.as_view(template_name='writingcurriculum/done.html'),
         name='proposal_success',
     ),
-    url(
-        r'^proposal/(?P<pid>\d+)/update/$',
+    path(
+        'proposal/<int:pid>/update/',
         views.proposal_form,
         name='proposal_update',
     ),
-    url(
-        r'^proposal/archives/$',
+    path(
+        'proposal/archives/',
         views.my_proposals,
         name='my_proposals',
     ),
-    url(
-        r'^$',
-        views.proposal_form,
-        name='proposal_form',
-    ),
+    path('', views.proposal_form, name='proposal_form'),
 ]

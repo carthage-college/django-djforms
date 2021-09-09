@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse
 
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required

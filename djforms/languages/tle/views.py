@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils.dates import MONTHS
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 from djforms.languages.tle.forms import *
 

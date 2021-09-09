@@ -2,7 +2,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.core.files.base import ContentFile
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 from djtools.utils.convert import str_to_class
 from djtools.utils.mail import send_mail

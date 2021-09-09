@@ -19,16 +19,12 @@ See requirements.txt
 TrustCommerce python library:
 https://vnvault.trustcommerce.com/downloads/tclink-4.2.0-python.tar.gz
 
-_Required but woefully out of date:_
+with your python venv sources:
 
-django-profile
-http://code.google.com/p/django-profile/
+cd /data1/source/tclink-4.2.0-python
+python setup.py install
 
-Here's a fork of the original on github:
-https://github.com/tualatrix/django-profile
-
-Archived and not updated since 2013:
-https://github.com/stephrdev/django-userprofiles
+the above directory has the patch applied. future 5.4.x might have it fixed.
 
 _Apps list for Migrations_
 

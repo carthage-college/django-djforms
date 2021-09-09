@@ -18,7 +18,9 @@ class TimeSlot(models.Model):
 
 class Candidate(models.Model):
     user = models.ForeignKey(
-        User, related_name="music_ensemble_choral_candidate"
+        User,
+        related_name='music_ensemble_choral_candidate',
+        on_delete=models.CASCADE,
     )
     # dates
     created_on = models.DateTimeField(
@@ -29,7 +31,9 @@ class Candidate(models.Model):
     )
     #core
     time_slot = models.ForeignKey(
-        TimeSlot, related_name='music_ensemble_choral_timeslot'
+        TimeSlot,
+        related_name='music_ensemble_choral_timeslot',
+        on_delete=models.CASCADE,
     )
     majors = models.CharField(
         max_length=255

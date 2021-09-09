@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.http import HttpResponse, HttpResponseRedirect
 
 from djforms.security.forms import ParkingTicketAppealForm

@@ -8,7 +8,8 @@ class ParkingTicketAppeal(GenericContact):
     )
     residency_status = models.ForeignKey(
         GenericChoice,
-        related_name="parking_ticket_appeal_residency_status"
+        related_name='parking_ticket_appeal_residency_status',
+        on_delete=models.CASCADE,
     )
     vehicle_make = models.CharField(
         "Vehicle Make", max_length=40
@@ -24,7 +25,8 @@ class ParkingTicketAppeal(GenericContact):
     )
     permit_type = models.ForeignKey(
         GenericChoice,
-        related_name="parking_ticket_appeal_permit_type"
+        related_name='parking_ticket_appeal_permit_type',
+        on_delete=models.CASCADE,
     )
     permit_number = models.CharField(
         "Permit Number", max_length=30

@@ -1,20 +1,22 @@
-from django.conf.urls import url
+# -*- coding: utf-8 -*-
+
+from django.urls import path
 from django.views.generic import TemplateView
 
 from djforms.security import views
 
 
 urlpatterns = [
-    url(
-        r'^success/$',
+    path(
+        'success/',
         TemplateView.as_view(
-            template_name='security/parking_ticket_appeal/done.html'
+            template_name='security/parking_ticket_appeal/done.html',
         ),
-        name='parking_ticket_appeal_success'
+        name='parking_ticket_appeal_success',
     ),
-    url(
-        r'^parking-appeal/$',
+    path(
+        'parking-appeal/',
         views.parking_ticket_appeal_form,
-        name='parking_ticket_appeal_form'
-    )
+        name='parking_ticket_appeal_form',
+    ),
 ]

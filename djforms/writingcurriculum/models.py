@@ -39,12 +39,14 @@ class CourseCriteria(models.Model):
 class CourseProposal(models.Model):
     user = models.ForeignKey(
         User, verbose_name="Created by",
-        related_name="course_proposal_user",
+        related_name='course_proposal_user',
+        on_delete=models.CASCADE,
     )
     updated_by = models.ForeignKey(
         User, verbose_name="Updated by",
-        related_name="course_proposal_updated_by",
-        editable=False
+        related_name='course_proposal_updated_by',
+        editable=False,
+        on_delete=models.CASCADE,
     )
     date_created = models.DateTimeField(
         "Date Created", auto_now_add=True
@@ -63,7 +65,8 @@ class CourseProposal(models.Model):
     )
     academic_term = models.ForeignKey(
         GenericChoice,
-        related_name="course_proposal_academic_term"
+        related_name='course_proposal_academic_term',
+        on_delete=models.CASCADE,
     )
     day_sps = models.CharField(
         verbose_name="Day or SPS",

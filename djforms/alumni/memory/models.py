@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from djforms.core.models import Photo, Promotion, GenericContact
 
@@ -92,7 +92,7 @@ class Questionnaire(GenericContact):
         blank=True
     )
     promotion = models.ForeignKey(
-        Promotion, null=True, blank=True
+        Promotion, null=True, blank=True, on_delete=models.CASCADE,
     )
 
     class Meta:

@@ -3,8 +3,8 @@ from django.db import models
 from django.conf import settings
 from django.core.cache import cache
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django.utils.safestring import mark_safe
-
 from djforms.core.models import Department
 from djforms.core.models import YEAR_CHOICES, BINARY_CHOICES
 from djtools.fields.validators import MimetypeValidator
@@ -124,7 +124,10 @@ class Presenter(models.Model):
         max_length=255, null=True, blank=True
     )
     department = models.ForeignKey(
-        Department, null=True, blank=True
+        Department,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
     )
     mugshot = models.ImageField(
         max_length=255, upload_to="files/scholars/mugshots",
@@ -166,11 +169,14 @@ class Presentation(models.Model):
     # meta
     user = models.ForeignKey(
         User, verbose_name="Created by",
-        related_name="presentation_created_by"
+        related_name='presentation_created_by',
+        on_delete=models.CASCADE,
     )
     updated_by = models.ForeignKey(
         User, verbose_name="Updated by",
-        related_name="presentation_updated_by", editable=False
+        related_name='presentation_updated_by',
+        editable=False,
+        on_delete=models.CASCADE,
     )
     date_created = models.DateTimeField(
         "Date Created", auto_now_add=True
@@ -192,7 +198,10 @@ class Presentation(models.Model):
     )
     leader = models.ForeignKey(
         Presenter, verbose_name="Presentation leader",
-        related_name="presentation_leader", null=True, blank=True
+        related_name='presentation_leader',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     presenters = models.ManyToManyField(
         Presenter, related_name="presentation_presenters", blank=True
@@ -266,13 +275,15 @@ class Presentation(models.Model):
     def tag_list(self):
         return u", ".join(o.name for o in self.tags.all())
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('presentation_detail', [str(self.id)])
+        return reverse(
+            'presentation_detail', args=(str(self.id))
+        )
 
-    @models.permalink
     def get_update_url(self):
-        return ('presentation_update', [str(self.id)])
+        return reverse(
+            'presentation_update', args=(str(self.id))
+        )
 
     def get_presenters(self):
         return self.presenters.order_by('-leader','last_name')

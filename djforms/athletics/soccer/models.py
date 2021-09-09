@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from djtools.fields import GENDER_CHOICES, BINARY_CHOICES, PAYMENT_CHOICES
 from djtools.fields import STATE_CHOICES
@@ -183,6 +183,7 @@ class SoccerCampBalance(Contact):
     registration = models.ForeignKey(
         SoccerCampAttender,
         related_name='balance',
+        on_delete=models.CASCADE,
         null=True,
         blank=True,
     )
