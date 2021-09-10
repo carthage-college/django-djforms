@@ -38,8 +38,9 @@ urlpatterns = [
         name='presentation_manager',
     ),
     path(
-        r'^presentation/action/$',
-        presentation.action, name='presentation_action'
+        'presentation/action/',
+        presentation.action,
+        name='presentation_action',
     ),
     path(
         'presentation/<int:pid>/update/',

@@ -62,10 +62,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.auth',
-    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
+    'django.contrib.messages',
     'django.contrib.sessions',
+    'django.contrib.sites',
     # third party projects
     'bootstrapform',
     'django_countries',

@@ -35,7 +35,7 @@ urlpatterns = [
     path(
         'metamorphosis/archives/',
         TemplateView.as_view(
-            template_name='communications/metamorphosis/archives.html',,
+            template_name='communications/metamorphosis/archives.html',
         ),
         {'data':Questionnaire.objects.all()},
         name='metamorphosis_questionnaire_archives',

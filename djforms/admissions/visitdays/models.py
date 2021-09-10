@@ -194,7 +194,6 @@ class VisitDayBaseProfile(GenericContact):
         GenericChoice,
         verbose_name="Meeting Requests",
         related_name="visit_day_request",
-        null=True,
         blank=True,
     )
 

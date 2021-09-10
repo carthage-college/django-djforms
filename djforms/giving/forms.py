@@ -1,10 +1,14 @@
+# -*- coding: utf-8 -*-
+
 from django import forms
 
-from djforms.core.models import Promotion, STATE_CHOICES
+from djforms.core.models import Promotion
+from djforms.core.models import STATE_CHOICES
 from djforms.processors.models import Order
-from djforms.processors.forms import ContactForm, OrderForm
-from djforms.giving.models import PaverContact, DonationContact
-
+from djforms.processors.forms import ContactForm
+from djforms.processors.forms import OrderForm
+from djforms.giving.models import DonationContact
+from djforms.giving.models import PaverContact
 from djtools.fields import TODAY
 from djforms.core.models import BINARY_CHOICES
 
@@ -32,7 +36,7 @@ PAVER_TYPES = (
     (YEAR-MILLENNIUM+400.21,YEAR-MILLENNIUM+400.21),
     (500, 500),
     (YEAR-MILLENNIUM+800.21,YEAR-MILLENNIUM+800.21),
-    (1000, 1000)
+    (1000, 1000),
 )
 RELATION_CHOICES = (
     ('', '--Select--'),
@@ -42,14 +46,12 @@ RELATION_CHOICES = (
     ('Parent', 'Parent'),
     ('Student', 'Student'),
 )
-CLASS = [(x, x) for x in reversed(xrange(1926,YEAR + 4))]
+CLASS = list(reversed(range(1926, YEAR + 4)))
 CLASS.insert(0, ('','-----'))
 
 
 class PhotoCaptionForm(forms.Form):
-    """
-    Add a caption to a photo form
-    """
+    """Add a caption to a photo form."""
 
     caption1 = forms.CharField(
         max_length=13, required=False

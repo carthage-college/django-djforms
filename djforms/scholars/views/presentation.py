@@ -341,7 +341,7 @@ def archives(request, ptype, medium, year=None):
             request, template, {'prez': p,'year':year,}
         )
     else:
-        raise Http404, 'Page not found'
+        raise Http404
 
 
 def detail(request, pid):
@@ -372,7 +372,7 @@ def action(request):
                 reverse('email_presenters_form', args=[pid,action])
             )
     else:
-        raise Http404, 'Page not found'
+        raise Http404
 
 
 def email_all_presenters(request):
