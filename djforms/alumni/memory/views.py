@@ -1,16 +1,20 @@
-from django.conf import settings
-from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render, get_object_or_404
-from django.core.files.base import ContentFile
-from django.urls import reverse_lazy
-
-from djtools.utils.convert import str_to_class
-from djtools.utils.mail import send_mail
-from djforms.alumni.memory.forms import *
-from djforms.alumni.memory.models import Questionnaire
-from djforms.core.models import Photo, Promotion
+# -*- coding: utf-8 -*-
 
 import datetime
+
+from django.conf import settings
+from django.core.files.base import ContentFile
+from django.http import HttpResponseRedirect
+from django.http import Http404
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from djforms.alumni.memory.forms import *
+from djforms.alumni.memory.models import Questionnaire
+from djforms.core.models import Photo
+from djforms.core.models import Promotion
+from djtools.utils.convert import str_to_class
+from djtools.utils.mail import send_mail
 
 
 def questionnaire_form(request, campaign=None):
@@ -19,7 +23,7 @@ def questionnaire_form(request, campaign=None):
         slug_list = campaign.slug.split('-')
         form_name = slug_list.pop(0).capitalize()
         for n in slug_list:
-            form_name += '{}'.format( n.capitalize() )
+            form_name += '{0}'.format( n.capitalize() )
     else:
         campaign = ''
         form_name = 'QuestionnaireForm'
@@ -31,7 +35,7 @@ def questionnaire_form(request, campaign=None):
     if request.method=='POST':
 
         form = str_to_class(
-            'djforms.alumni.memory.forms', form_name
+            'djforms.alumni.memory.forms', form_name,
         )(data=request.POST, files=request.FILES)
 
         if not form:
@@ -62,44 +66,35 @@ def questionnaire_form(request, campaign=None):
                 TO_LIST = settings.ALUMNI_MEMORY_EMAIL
             send_mail(
                 request, TO_LIST,
-                '[{}] {} {}'.format(
-                    category, memory.first_name, memory.last_name
+                '[{0}] {1} {2}'.format(
+                    category, memory.first_name, memory.last_name,
                 ), memory.email,
                 'alumni/memory/email.html',
-                memory, settings.MANAGERS
+                memory,
+                settings.MANAGERS,
             )
             return HttpResponseRedirect(
-                reverse_lazy('memory_questionnaire_success')
+                reverse_lazy('memory_questionnaire_success'),
             )
 
     return render(
-        request, 'alumni/memory/form.html',
-        {'form': form,'campaign':campaign}
+        request,
+        'alumni/memory/form.html',
+        {'form': form,'campaign':campaign},
     )
 
 
 def questionnaire_detail(request, quid):
-    """
-    Simple view to display the questionnaire detail
-    """
-
+    """Simple view to display the questionnaire detail."""
     mq = get_object_or_404(Questionnaire, id=quid)
 
     template_name = 'alumni/memory/detail.html'
 
-    return render(
-        request, template_name, {'data': mq,}
-    )
+    return render(request, template_name, {'data': mq})
 
 
 def questionnaire_archives(request):
-    """
-    Simple view to display all of the questionnaires
-    """
-
-    objects = Questionnaire.objects.all().order_by('promotion','-created_at')
+    """Simple view to display all of the questionnaires."""
+    objects = Questionnaire.objects.all().order_by('promotion', '-created_at')
     template_name = 'alumni/memory/archives.html'
-
-    return render(
-        request, template_name, {'objects': objects,}
-    )
+    return render(request, template_name, {'objects': objects})

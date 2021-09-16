@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.urls import path
+from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 
 from djforms.admissions.visitdays import views as visitdays
@@ -15,7 +16,7 @@ urlpatterns = [
     ),
     path(
         'visit/',
-        TemplateView.as_view(template_name='admissions/visitday/home.html'),
+        RedirectView.as_view(url='/admissions/visit/'),
         name='visitday_home',
     ),
     path(

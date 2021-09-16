@@ -120,8 +120,8 @@ class VisitDayEvent(models.Model):
     active = models.BooleanField(default=True)
     event = models.ForeignKey(VisitDay, on_delete=models.CASCADE)
 
-    def __unicode__(self):
-        return "{0} ({1})".format(
+    def __str__(self):
+        return '{0} ({1})'.format(
             str(self.date.strftime(DATEFORMAT)), self.time,
         )
 

@@ -31,8 +31,8 @@ def chance_of_form(request):
             else:
                 data.adjusted_gpa = (float(data.gpa) * 4) / float(data.gpa_scale)
             data.save()
-            subject = u"Carthage, will I be admitted? ({})".format(
-                data.first_name
+            subject = "Carthage, will I be admitted? ({0})".format(
+                data.first_name,
             )
             send_mail(
                 request, TO_LIST, subject, data.email,

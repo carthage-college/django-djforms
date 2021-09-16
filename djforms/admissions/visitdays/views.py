@@ -22,11 +22,11 @@ def visit_day_form(request, event_type):
     if request.method=='POST':
         if visit_day.extended:
             form = VisitDayForm(
-                event_type, request.POST, use_required_attribute=REQ_ATTR
+                event_type, request.POST, use_required_attribute=REQ_ATTR,
             )
         else:
             form = VisitDayBaseForm(
-                event_type, request.POST, use_required_attribute=REQ_ATTR
+                event_type, request.POST, use_required_attribute=REQ_ATTR,
             )
             short = True
 
@@ -38,8 +38,8 @@ def visit_day_form(request, event_type):
                 if event.cur_attendees == event.max_attendees:
                     event.active=False
                     # send admissions email to notify them that the event is full
-                    subject = "[Event FULL] {} on {}".format(
-                        visit_day.title, profile.date
+                    subject = "[Event FULL] {0} on {1}".format(
+                        visit_day.title, profile.date,
                     )
                     send_mail(
                         request,
@@ -54,8 +54,8 @@ def visit_day_form(request, event_type):
             if visit_day.date_alternate:
                 subject = visit_day.title
             else:
-                subject = u"{0} on {1}".format(visit_day.title, profile.date)
-            data = {'profile':profile,'visit_day':visit_day,'short':short}
+                subject = "{0} on {1}".format(visit_day.title, profile.date)
+            data = {'profile':profile, 'visit_day': visit_day, 'short':short}
             to_list = [profile.email]
             gmail = getattr(profile, 'guardian_email', None)
             if gmail:
@@ -74,7 +74,7 @@ def visit_day_form(request, event_type):
             else:
                 TO_LIST = [email]
 
-            subject = u"{0} on {1} for {2}, {3}".format(
+            subject = "{0} on {1} for {2}, {3}".format(
                 visit_day.title,
                 profile.date,
                 profile.last_name,
