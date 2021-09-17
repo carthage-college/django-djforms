@@ -1,32 +1,33 @@
+# -*- coding: utf-8 -*-
+
 from django import forms
 from django.conf import settings
 from django.utils.safestring import mark_safe
-
 from djforms.communications.printrequest.models import PrintRequest
-from djforms.communications.printrequest.models import FORMATS, CONSENT
-
+from djforms.communications.printrequest.models import CONSENT
+from djforms.communications.printrequest.models import FORMATS
 from djtools.fields import BINARY_CHOICES
 
 
 class PrintRequestForm(forms.ModelForm):
 
     print_format = forms.MultipleChoiceField(
-        label = "What is the format of your finished piece",
+        label="What is the format of your finished piece",
         choices=FORMATS,
-        help_text="Check all that apply"
+        help_text="Check all that apply",
     )
     approval = forms.BooleanField(
-        label = mark_safe(
+        label=mark_safe(
         """
         I am aware that all content appearing on campus must be
         approved by the Division of Student Affairs before hanging.
         I agree to review the
         <a href="/policies/" target="_blank">Event Promotion Policy</a>
         and adhere to those guidelines for this project.
-        """
+        """,
     ))
     consent = forms.TypedChoiceField(
-        label = mark_safe(
+        label=mark_safe(
         """
         If the Office of Communications coordinates
         your mailing with a mail house, we need your
@@ -40,54 +41,59 @@ class PrintRequestForm(forms.ModelForm):
         Advancement Office List Request Form
         </a>.
         """
-        ), choices=CONSENT, widget=forms.RadioSelect(),
+        ),
+        choices=CONSENT,
+        widget=forms.RadioSelect(),
     )
     is_mailing = forms.TypedChoiceField(
-        label = "Is this project being mailed?",
-        choices=BINARY_CHOICES, widget=forms.RadioSelect(),
+        label="Is this project being mailed?",
+        choices=BINARY_CHOICES,
+        widget=forms.RadioSelect(),
     )
     website_update = forms.TypedChoiceField(
-        label = """
+        label="""
             Is there a website that needs to be updated as part
             of this project?
         """,
-        choices=BINARY_CHOICES, widget=forms.RadioSelect(),
+        choices=BINARY_CHOICES,
+        widget=forms.RadioSelect(),
     )
     attachments = forms.TypedChoiceField(
-        label = "Are you submitting any files with this print request?",
-        choices=BINARY_CHOICES, widget=forms.RadioSelect(),
+        label="Are you submitting any files with this print request?",
+        choices=BINARY_CHOICES,
+        widget=forms.RadioSelect(),
     )
 
     def clean(self):
         cleaned_data = super(PrintRequestForm, self).clean()
-        is_mailing = cleaned_data.get("is_mailing")
-        who_mailing = cleaned_data.get("who_mailing")
-        how_mailing = cleaned_data.get("how_mailing")
-        speed_mailing = cleaned_data.get("speed_mailing")
-        website_update = cleaned_data.get("website_update")
-        website_url = cleaned_data.get("website_url")
+        is_mailing = cleaned_data.get('is_mailing')
+        who_mailing = cleaned_data.get('who_mailing')
+        how_mailing = cleaned_data.get('how_mailing')
+        speed_mailing = cleaned_data.get('speed_mailing')
+        website_update = cleaned_data.get('website_update')
+        website_url = cleaned_data.get('website_url')
 
-        if is_mailing == "Yes":
-            if who_mailing == "":
-                self._errors["who_mailing"] = self.error_class(["Required field."])
-            if how_mailing == "":
-                self._errors["how_mailing"] = self.error_class(["Required field."])
-            if speed_mailing == "":
-                self._errors["speed_mailing"] = self.error_class(["Required field."])
+        if is_mailing == 'Yes':
+            if who_mailing == '':
+                self._errors['who_mailing'] = self.error_class(['Required field.'])
+            if how_mailing == '':
+                self._errors['how_mailing'] = self.error_class(['Required field.'])
+            if speed_mailing == '':
+                self._errors['speed_mailing'] = self.error_class(['Required field.'])
 
-        if website_update == "Yes" and website_url == "":
-            self._errors["website_url"] = self.error_class(["Required field."])
+        if website_update == 'Yes' and website_url == '':
+            self._errors['website_url'] = self.error_class(['Required field.'])
 
-        print_format = cleaned_data.get("print_format")
-        print_format_other = cleaned_data.get("print_format_other")
+        print_format = cleaned_data.get('print_format')
+        print_format_other = cleaned_data.get('print_format_other')
 
-        if print_format and "Other" in print_format and print_format_other == "":
+        if print_format and 'Other' in print_format and print_format_other == '':
             error = '''
                 This field is required since you chose "Other"
                 in the previous field
             '''
 
-            self._errors["print_format_other"] = self.error_class([error])
+            self._errors['print_format_other'] = self.error_class([error])
 
         return cleaned_data
 
@@ -114,10 +120,9 @@ class PrintRequestForm(forms.ModelForm):
         model = PrintRequest
         widgets = {
             'phone': forms.TextInput(attrs={
-                'placeholder': 'eg. 123-456-7890', 'class': 'phoneUS'
+                'placeholder': 'eg. 123-456-7890', 'class': 'phoneUS',
             }),
         }
         exclude = (
-            'user','updated_by','date_created','date_updated'
+            'user', 'updated_by', 'date_created', 'date_updated',
         )
-

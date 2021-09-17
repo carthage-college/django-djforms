@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.conf import settings
 from django.urls import reverse
 from django.http import HttpResponseRedirect
@@ -13,6 +15,7 @@ REQ_ATTR = settings.REQUIRED_ATTRIBUTE
 
 @login_required
 def print_request(request):
+    BCC = [settings.MANAGERS[0][1]]
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL]
     else:
@@ -20,7 +23,10 @@ def print_request(request):
 
     if request.method == 'POST':
         form = PrintRequestForm(
-            request.POST, request.FILES, label_suffix='', use_required_attribute=REQ_ATTR
+            request.POST,
+            request.FILES,
+            label_suffix='',
+            use_required_attribute=REQ_ATTR,
         )
         if form.is_valid():
             data = form.save(commit=False)
@@ -29,27 +35,29 @@ def print_request(request):
             data.save()
             if not settings.DEBUG:
                 TO_LIST.append(data.user.email)
-                subject = u"[Print request] {}: {}".format(
-                    data.project_name, data.date_created
+                subject = '[Print request] {0}: {1}'.format(
+                    data.project_name, data.date_created,
                 ).encode('utf-8').strip()
                 send_mail(
-                    request, TO_LIST,
-                    subject, data.user.email,
-                    'communications/printrequest/email.html', data,
-                    settings.MANAGERS
+                    request,
+                    TO_LIST,
+                    subject,
+                    data.user.email,
+                    'communications/printrequest/email.html',
+                    data,
+                    BCC,
                 )
                 return HttpResponseRedirect(reverse('print_request_success'))
             else:
                 return render(
                     request, 'communications/printrequest/email.html',
-                    {'data': data,}
+                    {'data': data},
                 )
     else:
         form = PrintRequestForm(label_suffix='', use_required_attribute=REQ_ATTR)
 
     return render(
-        request, 'communications/printrequest/form.html',
-        {
-            'form': form,
-        }
+        request,
+        'communications/printrequest/form.html',
+        {'form': form},
     )

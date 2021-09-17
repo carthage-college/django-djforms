@@ -163,6 +163,8 @@ class SoccerCampRegistrationForm(forms.ModelForm):
             'insurance_card_front',
             'insurance_card_back',
             'address2',
+            'covid_waiver',
+            'covid_declaration',
         )
 
 
