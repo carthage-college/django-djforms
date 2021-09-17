@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import datetime
 
 from django import forms
@@ -12,14 +14,12 @@ from djforms.athletics.soccer.models import SoccerCampBalance
 from djforms.athletics.soccer.models import SESSIONS
 from djforms.athletics.soccer.models import SHIRT_SIZES
 from djforms.athletics.soccer.models import YEAR_CHOICES
-
 from djtools.fields import BINARY_CHOICES
 from djtools.fields import GENDER_CHOICES
 from djtools.fields import PAYMENT_CHOICES
 from djtools.fields import STATE_CHOICES
 from djtools.fields import TODAY
 from djtools.fields.localflavor import USPhoneNumberField
-
 from localflavor.us.forms import USZipCodeField
 
 

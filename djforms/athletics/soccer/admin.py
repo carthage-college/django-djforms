@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse
@@ -93,7 +95,7 @@ def export_attenders(modeladmin, request, queryset):
         'insurance_card_links',
     ]
 
-    response = HttpResponse("", content_type='text/csv; charset=utf-8')
+    response = HttpResponse('', content_type='text/csv; charset=utf-8')
     filename = 'soccer_soccercampattenders.csv'
     response['Content-Disposition']='attachment; filename={0}'.format(filename)
     writer = csv.writer(response)
@@ -108,14 +110,14 @@ def export_attenders(modeladmin, request, queryset):
                     status = reg.order.all()[0].status
                     total = reg.order.all()[0].total
                     transactions = 0
-                    for b in reg.balance.filter(order__status='approved'):
-                        transactions += b.order.first().total
+                    for bala in reg.balance.filter(order__status='approved'):
+                        transactions += bala.order.first().total
                     balance_paid = transactions
-                except:
-                    transid=''
-                    status=''
-                    total=''
-                    balance_paid=''
+                except Exception:
+                    transid = ''
+                    status = ''
+                    total = ''
+                    balance_paid = ''
                 fields.append(total)
                 fields.append(balance_paid)
                 fields.append(transid)
@@ -126,6 +128,7 @@ def export_attenders(modeladmin, request, queryset):
                 )
         writer.writerow(fields)
     return response
+
 
 export_attenders.short_description = "Export Soccer Camp Attenders"
 
@@ -170,11 +173,11 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
         'covid_declaration',
         'insurance_card_links',
     )
-    ordering      = ('-created_at',)
+    ordering = ('-created_at',)
     search_fields = ('last_name', 'email', 'postal_code')
 
-    list_max_show_all   = 1000
-    list_per_page       = 1000
+    list_max_show_all = 1000
+    list_per_page = 1000
     list_editable = [
         'covid_waiver',
         'covid_declaration',
@@ -231,8 +234,8 @@ class SoccerCampAttenderAdmin(admin.ModelAdmin):
 
     def balance_paid(self, obj):
         transactions = 0
-        for b in obj.balance.filter(order__status='approved'):
-            transactions += b.order.first().total
+        for bala in obj.balance.filter(order__status='approved'):
+            transactions += bala.order.first().total
         return transactions
     balance_paid.short_description = 'Balance Paid'
 
@@ -256,7 +259,6 @@ class SoccerCampBalanceAdmin(admin.ModelAdmin):
     )
     ordering = ('-created_at',)
     raw_id_fields = ('order',)
-    #raw_id_fields = ('registration', 'order')
     search_fields = ('last_name', 'email')
     list_max_show_all = 1000
     list_per_page = 1000
@@ -267,7 +269,7 @@ class SoccerCampBalanceAdmin(admin.ModelAdmin):
     def order_status(self, obj):
         try:
             stat = obj.order.all()[0].status
-        except:
+        except Exception:
             stat = None
         return stat
     order_status.short_description = 'Transaction status'

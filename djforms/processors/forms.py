@@ -9,8 +9,9 @@ from djtools.fields import TODAY
 from localflavor.us.forms import USZipCodeField
 from captcha.fields import CaptchaField
 
-EXP_MONTH = list(range(1, 13))
-EXP_YEAR = list(range(TODAY.year, TODAY.year + 15))
+
+EXP_MONTH = [(x, x) for x in range(1, 13)]
+EXP_YEAR = [(x, x) for x in range(TODAY.year, TODAY.year + 15)]
 REQ = {'class': 'required'}
 
 
@@ -25,7 +26,7 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        exclude = ('order','second_name','previous_name','salutation')
+        exclude = ('order', 'second_name', 'previous_name', 'salutation')
 
 
 class OrderForm(forms.ModelForm):
@@ -59,13 +60,13 @@ class CreditCardForm(forms.Form):
         max_length=2,
         widget=forms.Select(
             choices=EXP_MONTH, attrs={'class': 'required input-mini'},
-        )
+        ),
     )
     expiration_year = forms.CharField(
         max_length=4,
         widget=forms.Select(
             choices=EXP_YEAR, attrs={'class': 'required input-small'},
-        )
+        ),
     )
     security_code = forms.CharField(
         max_length=4,
