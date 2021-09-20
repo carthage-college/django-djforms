@@ -1,9 +1,16 @@
+# -*- coding: utf-8 -*-
+
+import os
+import json
+import time
+
+from datetime import timedelta
+from datetime import date
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 from django.core.paginator import Paginator
-from django.urls import reverse
 from django.db.models.query import Q
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -11,25 +18,18 @@ from django.http import Http404
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
-
 from djforms.giving.forms import *
 from djforms.core.models import Promotion
 from djforms.giving.models import DonationContact
 from djforms.giving.models import PaverContact
 from djforms.processors.forms import TrustCommerceForm as CreditCardForm
-
 from djtools.utils.mail import send_mail
 from djtools.utils.convert import str_to_class
-
 from PIL import Image, ImageDraw, ImageFont
-from datetime import timedelta
-from datetime import date
 
-import os
-import json
-import time
 
 REQUIRED_ATTRIBUTE = settings.REQUIRED_ATTRIBUTE
 
@@ -37,7 +37,7 @@ REQUIRED_ATTRIBUTE = settings.REQUIRED_ATTRIBUTE
 def meme(img, draw, msg, pos):
     lines = []
 
-    color = 'rgb(122,35,47)' # carthage red
+    color = 'rgb(122, 35, 47)' # carthage red
     fontsize=250
 
     font = ImageFont.truetype(settings.GIVING_DAY_FONT, size=fontsize)
@@ -69,16 +69,16 @@ def meme(img, draw, msg, pos):
             cut = lastCut
 
         if i < lineCount-1:
-            nextCut = (len(msg) / lineCount) * (i+1)
+            nextCut = (len(msg) / lineCount) * (i + 1)
         else:
             nextCut = len(msg)
             isLast = True
 
         # make sure we don't cut words in half
-        if nextCut == len(msg) or msg[nextCut] == " ":
+        if nextCut == len(msg) or msg[nextCut] == ' ':
             pass
         else:
-            while msg[nextCut] != " ":
+            while msg[nextCut] != ' ':
                 nextCut += 1
 
         line = msg[cut:nextCut].strip()
@@ -87,7 +87,7 @@ def meme(img, draw, msg, pos):
         w, h = draw.textsize(line, font)
         if not isLast and w > imgWidthWithPadding:
             nextCut -= 1
-            while msg[nextCut] != " ":
+            while msg[nextCut] != ' ':
                 nextCut -= 1
 
         lastCut = nextCut
@@ -95,17 +95,17 @@ def meme(img, draw, msg, pos):
 
     # 3. print each line centered
     lastY = -h
-    if pos == "bottom":
-        lastY = img.height - h * (lineCount+1) - 10
+    if pos == 'bottom':
+        lastY = img.height - h * (lineCount + 1) - 10
 
     for i in range(0, lineCount):
         w, h = draw.textsize(lines[i], font)
-        textX = img.width/2 - w/2
+        textX = img.width / 2 - w / 2
         textY = lastY + h
-        draw.text((textX-2, textY-2),lines[i], fill=color, font=font)
-        draw.text((textX+2, textY-2),lines[i], fill=color, font=font)
-        draw.text((textX+2, textY+2),lines[i], fill=color, font=font)
-        draw.text((textX-2, textY+2),lines[i], fill=color, font=font)
+        draw.text((textX - 2, textY - 2),lines[i], fill=color, font=font)
+        draw.text((textX + 2, textY - 2),lines[i], fill=color, font=font)
+        draw.text((textX + 2, textY + 2),lines[i], fill=color, font=font)
+        draw.text((textX - 2, textY + 2),lines[i], fill=color, font=font)
         draw.text((textX, textY),lines[i], fill=color, font=font)
         lastY = textY
 
@@ -120,8 +120,8 @@ def photo_caption(request):
             image = Image.open(settings.GIVING_DAY_CAPTION_FILE_ORIG)
             draw = ImageDraw.Draw(image)
 
-            color = 'rgb(122,35,47)' # carthage red
-            fontsize=250
+            color = 'rgb(122, 35, 47)' # carthage red
+            fontsize = 250
             font = ImageFont.truetype(settings.GIVING_DAY_FONT, size=fontsize)
 
             caption1 = cd['caption1']
@@ -179,12 +179,8 @@ def giving_form(request, transaction, campaign=None):
         # order form
         or_form_name = '{0}OrderForm'.format(trans_cap)
 
-    or_form = str_to_class(
-        'djforms.giving.forms', or_form_name,
-    )
-    ct_form = str_to_class(
-        'djforms.giving.forms', ct_form_name,
-    )
+    or_form = str_to_class('djforms.giving.forms', or_form_name)
+    ct_form = str_to_class('djforms.giving.forms', ct_form_name)
 
     # there might not be a custom campaign form
     # so we just use the default contact form
@@ -193,9 +189,7 @@ def giving_form(request, transaction, campaign=None):
             settings.GIVING_DEFAULT_CONTACT_FORM,
             trans_cap,
         )
-        ct_form = str_to_class(
-            'djforms.giving.forms', ct_form_name,
-        )
+        ct_form = str_to_class('djforms.giving.forms', ct_form_name)
     if campaign and not or_form:
         or_form_name = 'DonationOrderForm'
         or_form = DonationOrderForm()
@@ -219,7 +213,7 @@ def giving_form(request, transaction, campaign=None):
             contact = ct_form.save()
             or_data = or_form.save(commit=False)
             or_data.status = 'In Process'
-            or_data.operator = 'DJForms{}'.format(trans_cap)
+            or_data.operator = 'DJForms{0}'.format(trans_cap)
             or_data.avs = 0
             or_data.auth = 'sale'
             # deal with commemorative paver options
@@ -234,7 +228,7 @@ def giving_form(request, transaction, campaign=None):
                     or_data.total = PAVER_TYPES[4][0]
 
             if transaction == 'paver':
-                comments = u'{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n'.format(
+                comments = '{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n'.format(
                     ct_form['inscription_1'].value(),
                     ct_form['inscription_2'].value(),
                     ct_form['inscription_3'].value(),
@@ -256,9 +250,7 @@ def giving_form(request, transaction, campaign=None):
             or_data.save()
             contact.order.add(or_data)
             email = contact.email
-            cc_form = CreditCardForm(
-                or_data, contact, request.POST,
-            )
+            cc_form = CreditCardForm(or_data, contact, request.POST)
             if cc_form.is_valid():
                 # save and update order
                 r = cc_form.processor_response
@@ -272,7 +264,7 @@ def giving_form(request, transaction, campaign=None):
                 or_data.contact = contact
                 data = {'order': or_data, 'years': years}
                 # subject of email
-                subject = u"Thank you, {0} {1}{2} for your donation to Carthage"
+                subject = 'Thank you, {0} {1}{2} for your donation to Carthage'
                 try:
                     if contact.spouse:
                         spouse = ' and {0},'.format(contact.spouse)
@@ -280,9 +272,7 @@ def giving_form(request, transaction, campaign=None):
                         spouse = ','
                 except Exception:
                     spouse = ''
-                subject = subject.format(
-                    contact.first_name, contact.last_name, spouse,
-                )
+                subject = subject.format(contact.first_name, contact.last_name, spouse)
                 # build our email template path
                 template = 'giving/{0}_email.html'.format(transaction)
                 if campaign:
@@ -341,7 +331,7 @@ def giving_form(request, transaction, campaign=None):
                 init['total'] = '{0:.2f}'.format(
                     float(request.GET.get('amount'))
                 )
-            except:
+            except Exception:
                 pass
 
         if campaign and campaign.designation:
@@ -516,8 +506,9 @@ def promotion_ajax(request, slug):
     url = reverse('giving_form_campaign', args=['donation', slug])
 
     return render(
-        request, 'giving/promotion_ajax.html',
-        {'data':promo,'earl':url}
+        request,
+        'giving/promotion_ajax.html',
+        {'data': promo, 'earl': url},
     )
 
 

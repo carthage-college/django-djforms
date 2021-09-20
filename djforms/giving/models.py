@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.contrib.auth.models import User
-
 from djforms.processors.models import Contact
 
 
@@ -33,19 +34,19 @@ class DonationContact(Contact):
     }
 
     honouring = models.CharField(
-        "In Honor Of",
+        'In Honor Of',
         max_length=254,
         null=True,
         blank=True,
     )
     endowment = models.CharField(
-        "Specific endowed scholarship and athletic team designations",
+        'Specific endowed scholarship and athletic team designations',
         max_length=254,
         null=True,
         blank=True,
     )
     spouse = models.CharField(
-        "Spouse full name",
+        'Spouse full name',
         max_length=100,
         null=True,
         blank=True,
@@ -57,7 +58,7 @@ class DonationContact(Contact):
         blank=True,
     )
     relation = models.CharField(
-        "Relation to Carthage",
+        'Relation to Carthage',
         max_length=100,
         null=True,
         blank=True,
@@ -67,21 +68,21 @@ class DonationContact(Contact):
         verbose_name="I/we are employed by a matching gift company.",
     )
     opt_in = models.BooleanField(
-        verbose_name="""
+        verbose_name='''
             I would like more information about planned gifts such as
             charitable trusts, charitable gifts annuities, life insurance,
             or will inclusions.
-        """,
+        ''',
     )
     anonymous = models.BooleanField(
-        verbose_name="""
+        verbose_name='''
             I would like my gift to remain anonymous, and not be
             published on any donor list or in the annual report.
-        """,
+        ''',
     )
     hidden = models.BooleanField(default=False)
     twitter = models.CharField(
-        "Twitter Handle",
+        'Twitter Handle',
         max_length=128,
         null=True,
         blank=True,
@@ -91,7 +92,7 @@ class DonationContact(Contact):
         """Return the name on the credit card."""
         try:
             name = self.order.all().first().cc_name
-        except:
+        except Exception:
             name = None
         return name
 
@@ -99,7 +100,7 @@ class DonationContact(Contact):
         """Return the promotion with which this transaction was associated."""
         try:
             promo = self.order.all().first().promotion
-        except:
+        except Exception:
             promo = None
         return promo
 
@@ -107,7 +108,7 @@ class DonationContact(Contact):
         """Return the status of the order."""
         try:
             stat = self.order.all().first().status.lower()
-        except:
+        except Exception:
             stat = None
         return stat
 
@@ -115,7 +116,7 @@ class DonationContact(Contact):
         """Return the ID of the order."""
         try:
             oid = self.order.all().first().id
-        except:
+        except Exception:
             oid = 0
         return oid
 
@@ -123,7 +124,7 @@ class DonationContact(Contact):
         """Return the transaction ID from the credit card processor."""
         try:
             tid = self.order.all().first().transid
-        except:
+        except Exception:
             tid = None
         return tid
 
@@ -131,7 +132,7 @@ class DonationContact(Contact):
         """Return the order total."""
         try:
             tid = self.order.all().first().total
-        except:
+        except Exception:
             tid = None
         return tid
 
@@ -139,7 +140,7 @@ class DonationContact(Contact):
         """Return the recurring payment cycle."""
         try:
             cycle = self.order.all().first().cycle
-        except:
+        except Exception:
             cycle = None
         return cycle
 
@@ -147,7 +148,7 @@ class DonationContact(Contact):
         """Return the payments type."""
         try:
             payments = self.order.all().first().payments
-        except:
+        except Exception:
             payments = None
         return payments
 
@@ -155,7 +156,7 @@ class DonationContact(Contact):
         """Return the start date for recurring payments."""
         try:
             sdate = self.order.all().first().start_date
-        except:
+        except Exception:
             sdate = None
         return sdate
 
@@ -163,7 +164,7 @@ class DonationContact(Contact):
         """Return the comments on a transaction."""
         try:
             com = self.order.all().first().comments
-        except:
+        except Exception:
             com = None
         return com
 
@@ -171,7 +172,7 @@ class DonationContact(Contact):
         """Return the statment."""
         try:
             sta = self.order.all().first().statement
-        except:
+        except Exception:
             sta = None
         return sta
 
@@ -179,7 +180,7 @@ class DonationContact(Contact):
         """Return the binary value."""
         try:
             bny = self.order.all().first().binary
-        except:
+        except Exception:
             bny = None
         return bny
 
@@ -204,7 +205,7 @@ class PaverContact(Contact):
         """Return the name on the credit card."""
         try:
             name = self.order.all().first().cc_name
-        except:
+        except Exception:
             name = None
         return name
 
@@ -212,7 +213,7 @@ class PaverContact(Contact):
         """Return the promotion with which this transaction was associated."""
         try:
             promo = self.order.all().first().promotion
-        except:
+        except Exception:
             promo = None
         return promo
 
@@ -220,7 +221,7 @@ class PaverContact(Contact):
         """Return the status of the order."""
         try:
             stat = self.order.all().first().status
-        except:
+        except Exception:
             stat = None
         return stat
 
@@ -228,7 +229,7 @@ class PaverContact(Contact):
         """Return the transaction ID from the credit card processor."""
         try:
             tid = self.order.all().first().transid
-        except:
+        except Exception:
             tid = None
         return tid
 
@@ -236,7 +237,7 @@ class PaverContact(Contact):
         """Return the order total."""
         try:
             tid = self.order.all().first().total
-        except:
+        except Exception:
             tid = None
         return tid
 
@@ -244,7 +245,7 @@ class PaverContact(Contact):
         """Return the recurring payment cycle."""
         try:
             cycle = self.order.all().first().cycle
-        except:
+        except Exception:
             cycle = None
         return cycle
 
@@ -252,7 +253,7 @@ class PaverContact(Contact):
         """Return the payments type."""
         try:
             payments = self.order.all().first().payments
-        except:
+        except Exception:
             payments = None
         return payments
 
@@ -260,7 +261,7 @@ class PaverContact(Contact):
         """Return the start date for recurring payments."""
         try:
             sdate = self.order.all().first().start_date
-        except:
+        except Exception:
             sdate = None
         return sdate
 
@@ -268,6 +269,6 @@ class PaverContact(Contact):
         """Return the comments on a transaction."""
         try:
             com = self.order.all().first().comments
-        except:
+        except Exception:
             com = None
         return com

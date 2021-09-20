@@ -1,11 +1,14 @@
+# -*- coding: utf-8 -*-
+
 import csv
 
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse
+from django.http import HttpResponseForbidden
 from django.template.defaultfilters import slugify
 from django.apps import apps
 
 
-def export_as_csv_action(description="Export selected objects as CSV file",
+def export_as_csv_action(description='Export selected objects as CSV file',
                          fields=None, exclude=None, header=True):
     """
     This function returns an export csv action
@@ -27,18 +30,16 @@ def export_as_csv_action(description="Export selected objects as CSV file",
             excludeset = set(exclude)
             field_names = field_names - excludeset
 
-        response = HttpResponse("", content_type="text/csv; charset=utf-8")
-        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(
-            unicode(opts).replace('.', '_')
+        response = HttpResponse('', content_type='text/csv; charset=utf-8')
+        response['Content-Disposition'] = 'attachment; filename={0}.csv'.format(
+            opts.replace('.', '_'),
         )
 
         writer = csv.writer(response)
         if header:
             writer.writerow(field_names)
         for obj in queryset:
-            writer.writerow([
-                unicode(getattr(obj, field, None)).encode("utf-8", "ignore") for field in field_names
-            ])
+            writer.writerow([getattr(obj, field, None) for field in field_names])
         return response
     export_as_csv.short_description = description
     return export_as_csv
@@ -46,8 +47,10 @@ def export_as_csv_action(description="Export selected objects as CSV file",
 
 def export(qs, fields=None):
     model = qs.model
-    response = HttpResponse("", content_type="text/csv; charset=utf-8")
-    response['Content-Disposition'] = 'attachment; filename=%s.csv' % slugify(model.__name__)
+    response = HttpResponse('', content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename={0}.csv'.format(
+        slugify(model.__name__),
+    )
     writer = csv.writer(response)
     # Write headers to CSV file
     if fields:
@@ -82,6 +85,7 @@ def export(qs, fields=None):
     # Return CSV file to browser as download
     return response
 
+
 def admin_list_export(request, app_label, model_name, queryset=None, fields=None, list_display=True):
     if not request.user.is_staff:
         return HttpResponseForbidden()
@@ -90,22 +94,9 @@ def admin_list_export(request, app_label, model_name, queryset=None, fields=None
         queryset = model.objects.all()
         filters = dict()
         for key, value in request.GET.items():
-            #if key not in ('ot', 'o'):
             if key not in ('ot', 'o', 'p'):
                 filters[str(key)] = str(value)
         if len(filters):
             queryset = queryset.filter(**filters)
 
     return export(queryset, fields)
-    """
-    Create your own change_list.html for your admin view and put something like this in it:
-    {% block object-tools %}
-    <ul class="object-tools">
-        <li><a href="csv/{% for key, value in cl.params.items %}{% if forloop.first %}?{% else %}&{% endif %}{{ key }}={{ value }}{% endfor %}" class="addlink">Export to CSV</a></li>
-    {% if has_add_permission %}
-        <li><a href="add/{% if is_popup %}?_popup=1{% endif %}" class="addlink">{% blocktrans with cl.opts.verbose_name|escape as name %}Add {{ name }}{% endblocktrans %}</a></li>
-    {% endif %}
-    </ul>
-    {% endblock %}
-    """
-

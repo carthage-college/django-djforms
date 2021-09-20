@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+import datetime
+
 from django.db import models
 from django.db.models import Q
 from django.conf import settings
@@ -5,16 +9,14 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
+from djtools.fields.helpers import upload_to_path
+from djtools.fields.validators import MimetypeValidator
 
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from localflavor.us.models import USStateField
 from taggit.managers import TaggableManager
 
-from djtools.fields.helpers import upload_to_path
-from djtools.fields.validators import MimetypeValidator
-
-import datetime
 
 BINARY_CHOICES = (
     ('Yes', 'Yes'),
@@ -23,14 +25,14 @@ BINARY_CHOICES = (
 GENDER_CHOICES = (
     ('Male', 'Male'),
     ('Female', 'Female'),
-    ('Decline to state','Decline to state'),
+    ('Decline to state', 'Decline to state'),
 )
 MARITAL_CHOICES = (
-    ('Single','Single'),
-    ('Married','Married'),
-    ('Separated','Separated'),
-    ('Divorced','Divorced'),
-    ('Widowed','Widowed')
+    ('Single', 'Single'),
+    ('Married', 'Married'),
+    ('Separated', 'Separated'),
+    ('Divorced', 'Divorced'),
+    ('Widowed', 'Widowed'),
 )
 SEMESTER_CHOICES = (
     ('Fall', 'Fall'),
@@ -39,12 +41,12 @@ SEMESTER_CHOICES = (
     ('Summer', 'Summer'),
 )
 YEAR_CHOICES = (
-    ('','---------'),
-    ('1','Freshman'),
-    ('2','Sophmore'),
-    ('3','Junior'),
-    ('4','Senior'),
-    ('5','Graduate')
+    ('', '---------'),
+    ('1', 'Freshman'),
+    ('2', 'Sophmore'),
+    ('3', 'Junior'),
+    ('4', 'Senior'),
+    ('5', 'Graduate'),
 )
 PAYMENT_CHOICES = (
     ('Credit Card', 'Credit Card'),
@@ -53,35 +55,30 @@ PAYMENT_CHOICES = (
 )
 SHIRT_SIZES = (
     ('','---------'),
-    ("XS",  "Extra Small"),
-    ("S",   "Small"),
-    ("M",   "Medium"),
-    ("L",   "Large"),
-    ("XL",  "Extra Large"),
-    ("2X",  "2X Large"),
-    ("3X",  "3X Large")
+    ('XS',  'Extra Small'),
+    ('S',   'Small'),
+    ('M',   'Medium'),
+    ('L',   'Large'),
+    ('XL',  'Extra Large'),
+    ('2X',  '2X Large'),
+    ('3X',  '3X Large'),
 )
-
 SALUTATION_TITLES = (
-    ('','-------'),
-    ("Mrs.","Mrs."),
-    ("Ms.","Ms."),
-    ("Mr.","Mr."),
-    ("Master.","Master."),
-    ("Prof.","Prof."),
-    ("Dr.","Dr."),
+    ('', '-------'),
+    ('Mrs.', 'Mrs.'),
+    ('Ms.', 'Ms.'),
+    ('Mr.', 'Mr.'),
+    ('Master', 'Master'),
+    ('Prof.', 'Prof.'),
+    ('Dr.', 'Dr.'),
 )
 if settings.DEBUG:
     REQ = {'class': 'required'}
 else:
     REQ = {'class': 'required','required': 'required'}
 
-try:
-    YEARS1 = [(x, x) for x in reversed(range(1926,datetime.date.today().year +1))]
-    YEARS3 = [(x, x) for x in reversed(range(1926,datetime.date.today().year +3))]
-except:
-    YEARS1 = [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +1))]
-    YEARS3 = [(x, x) for x in reversed(xrange(1926,datetime.date.today().year +3))]
+YEARS1 = [(x, x) for x in reversed(range(1926,datetime.date.today().year +1))]
+YEARS3 = [(x, x) for x in reversed(range(1926,datetime.date.today().year +3))]
 
 
 class GenericChoice(models.Model):
@@ -90,17 +87,15 @@ class GenericChoice(models.Model):
     name = models.CharField(unique=True, max_length=255)
     value = models.CharField(max_length=255)
     ranking = models.IntegerField(
-        verbose_name="Ranking",
-        null=True, blank=True, default=0,
-        help_text="""
-          A number from 0 to 999 to determine this object's position in a list.
-        """
+        default=0,
+        null=True,
+        blank=True,
+        help_text='A number from 0 to 999 to rank the position in a list.',
     )
     active = models.BooleanField(
-        help_text="""
-            Do you want the field to be visable on your form?
-        """,
-        verbose_name='Is active?', default=True
+        help_text='Do you want the field to be visable on your form?',
+        verbose_name='Is active?',
+        default=True,
     )
     tags = TaggableManager()
 
@@ -108,7 +103,7 @@ class GenericChoice(models.Model):
         return self.name
 
     def tag_list(self):
-        return u", ".join(o.name for o in self.tags.all())
+        return ', '.join(o.name for o in self.tags.all())
 
     class Meta:
         ordering = ['ranking']
@@ -128,62 +123,50 @@ class GenericContact(models.Model):
         ordering = ['last_name']
 
     def __unicode__(self):
-        return u'{0}, {1}'.format(self.last_name, self.first_name)
+        return '{0}, {1}'.format(self.last_name, self.first_name)
 
 
 class UserProfile(models.Model):
     """User profile model."""
 
     user = models.OneToOneField(
-        User, related_name='userprofile', unique=True,
-        on_delete=models.CASCADE
+        User,
+        related_name='userprofile',
+        unique=True,
+        on_delete=models.CASCADE,
     )
     creation_date = models.DateTimeField(default=datetime.datetime.now)
     country = models.CharField(max_length=2, null=True, blank=True)
-    latitude = models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
-    longitude = models.DecimalField(max_digits=10, decimal_places=6, blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
     phone = models.CharField(
-        max_length=12, verbose_name="Phone Number",
-        help_text="Format: XXX-XXX-XXXX", null=True, blank=True
+        max_length=12,
+        help_text='Format: XXX-XXX-XXXX',
+        null=True,
+        blank=True,
     )
-    address = models.CharField(
-        max_length=255, verbose_name = "Address", null=True, blank=True
-    )
-    city = models.CharField(
-        max_length=128, verbose_name = "City", null=True, blank=True
-    )
-    state = USStateField(
-        null=True, blank=True,
-        default='WI'
-    )
-    zip = models.CharField(
-        max_length=10, verbose_name = "Zip code", null=True, blank=True
-    )
-    dob = models.DateField(
-        "Birthday", null=True, blank=True
-    )
+    address = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=128)
+    state = USStateField(null=True, blank=True, default='WI')
+    zip = models.CharField('Zip code', max_length=10, null=True, blank=True)
+    dob = models.DateField('Birthday', null=True, blank=True)
     gender = models.CharField(
-        max_length=16, choices=GENDER_CHOICES, null=True, blank=True
+        max_length=16, choices=GENDER_CHOICES, null=True, blank=True,
     )
-    campus_address = models.CharField(
-        "Campus Address", max_length=64, null=True, blank=True
-    )
-    campus_box = models.CharField(
-        "Campus Box #", max_length=4, null=True, blank=True
-    )
-    college_id = models.CharField(
-        "Carthage ID", max_length=7,null=True, blank=True
-    )
+    campus_address = models.CharField(max_length=64, null=True, blank=True)
+    campus_box = models.CharField(max_length=4, null=True, blank=True)
     college_year = models.CharField(
-        "Current Year at Carthage", max_length=1,
-        choices=YEAR_CHOICES, null=True, blank=True
+        'Current Year at Carthage',
+        max_length=1,
+        choices=YEAR_CHOICES,
+        null=True,
+        blank=True,
     )
 
-    def __unicode__(self):
-        return "{} {}'s profile with username: {}".format(
-            self.user.first_name, self.user.last_name, self.user.username
+    def __str__(self):
+        return "{0} {1}'s profile with username: {2}".format(
+            self.user.first_name, self.user.last_name, self.user.username,
         )
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -201,144 +184,120 @@ def save_user_profile(sender, instance, **kwargs):
 class Photo(models.Model):
     title = models.CharField(max_length=255)
     original = models.ImageField(
-        upload_to=upload_to_path, max_length=255,
+        upload_to=upload_to_path,
+        max_length=255,
         validators=[MimetypeValidator('image/jpeg')],
     )
     thumbnail = ImageSpecField(
         source='original',
         processors=[ResizeToFill(100, 134)],
         format='JPEG',
-        options={'quality': 80}
+        options={'quality': 80},
     )
-    caption = models.TextField(
-        'Caption', null=True, blank=True
-    )
+    caption = models.TextField(null=True, blank=True)
 
     def get_slug(self):
-        return "photos/"
+        return 'photos/'
 
 
 class Department(models.Model):
     """Departmenti."""
 
-    name = models.CharField(
-        max_length=100, verbose_name = "Department Name"
-    )
+    name = models.CharField('Department Name', max_length=100)
     slug = models.SlugField(unique=True)
-    number = models.CharField(
-        max_length=3, verbose_name = "Department Number"
-    )
-    contact_name = models.CharField(
-        max_length=100, verbose_name = "Department Contact"
-    )
-    contact_phone = models.CharField(
-        max_length=100, verbose_name = "Department Phone"
-    )
+    number = models.CharField(max_length=3, verbose_name = 'Department Number')
+    contact_name = models.CharField('Department Contact', max_length=100)
+    contact_phone = models.CharField('Department Phone', max_length=100)
     tags = TaggableManager()
 
     class Meta:
-        verbose_name_plural = "Departments"
+        verbose_name_plural = 'Departments'
         db_table = 'core_departments'
         ordering = ('name',)
 
     class Admin:
         prepopulated_fields = {'slug': ('name',)}
 
-    def __unicode__(self):
-        return '{} '.format(self.name)
-
-    def get_absolute_url(self):
-        return ('department_detail', None, { 'slug':self.slug })
+    def __str__(self):
+        return self.name
 
 
 class Promotion(models.Model):
     """Promotions and campaigns for ecommerce apps."""
 
     user = models.ForeignKey(
-        User, verbose_name="Created by",
-        related_name="matching_campaign_user",
-        editable=False, null=True, blank=True, on_delete=models.CASCADE
+        User,
+        verbose_name='Created by',
+        related_name='matching_campaign_user',
+        on_delete=models.CASCADE,
+        editable=False,
+        null=True,
+        blank=True,
     )
-    date_created = models.DateTimeField(
-        auto_now_add=True
-    )
+    date_created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
-    designation = models.CharField(
-        max_length=255, null=True, blank=True
-    )
-    slug = models.SlugField(
-        max_length=255, unique=True
-    )
+    designation = models.CharField(max_length=255, null=True, blank=True)
+    slug = models.SlugField(max_length=255, unique=True)
     description = models.TextField(
-        help_text="This information will appear above the form.",
-        null=True, blank=True
+        help_text='This information will appear above the form.',
+        null=True,
+        blank=True,
     )
     about = models.TextField(
-        help_text = """
-            This information will appear in the sidebar next to the form.
-        """, editable=False, null=True, blank=True
+        help_text='This information will appear in the sidebar next to the form.',
+        editable=False,
+        null=True,
+        blank=True,
     )
     thank_you = models.TextField(
-        help_text = """
+        help_text = '''
             This information will be appear after the visitor
             successfully submits the form.
-        """,
-        null=True, blank=True
+        ''',
+        null=True,
+        blank=True,
     )
     email_info = models.TextField(
-        "Email content",
-        help_text = """
+        'Email content',
+        help_text='''
             This information will be sent to the contact email address
             of the person filling out the form.
-        """,
-        null=True, blank=True
+        ''',
+        null=True,
+        blank=True,
     )
     amount = models.DecimalField(
-        decimal_places=2, max_digits=10,
-        null = True, blank = True
+        decimal_places=2,
+        max_digits=10,
+        null=True,
+        blank=True,
     )
-    donors = models.IntegerField(
-        null=True, blank=True
-    )
-    institutional = models.BooleanField(
-        default=False, editable=False
-    )
-    '''
-    ratio = models.CharField(
-        max_length=8,
-        null=True, blank=True
-    )
-    '''
+    donors = models.IntegerField(null=True, blank=True)
+    institutional = models.BooleanField(default=False, editable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def all(self):
-        objs = self.order_set.filter(Q(status="approved") | Q(status="manual"))
-        return objs
+        return self.order_set.filter(Q(status='approved') | Q(status='manual'))
 
     def count(self):
         return self.order_set.count()
 
     def amount_total(self):
         total = 0
-        for obj in self.all():
-            total += obj.total
-        '''
-        if self.ratio:
-            r = self.ratio.split(':')
-            total = int(r[0] * total) + int(r[1] * total)
-        '''
+        for promo in self.all():
+            total += promo.total
         return total
 
     def percent(self):
         if self.donors:
-            p = round(float(self.count())/float(self.donors) * 100,2)
+            pcent = round(float(self.count()) / float(self.donors) * 100, 2)
         elif self.amount:
-            p = round(int((self.amount_total() / self.amount) * 100),2)
+            pcent = round(int((self.amount_total() / self.amount) * 100), 2)
         else:
-            p = None
-        return p
+            pcent = None
+        return pcent
 
     def total(self):
         if self.donors:
@@ -349,7 +308,7 @@ class Promotion(models.Model):
 
 
 STATE_CHOICES = (
-    ('','State'),
+    ('', '---State---'),
     ('AL', 'Alabama'),
     ('AK', 'Alaska'),
     ('AS', 'American Samoa'),
@@ -411,253 +370,253 @@ STATE_CHOICES = (
 
 COUNTRIES = (
     ('','Country'),
-    ('AF', _(u'Afghanistan')),
-    ('AX', _(u'\xc5land Islands')),
-    ('AL', _(u'Albania')),
-    ('DZ', _(u'Algeria')),
-    ('AS', _(u'American Samoa')),
-    ('AD', _(u'Andorra')),
-    ('AO', _(u'Angola')),
-    ('AI', _(u'Anguilla')),
-    ('AQ', _(u'Antarctica')),
-    ('AG', _(u'Antigua and Barbuda')),
-    ('AR', _(u'Argentina')),
-    ('AM', _(u'Armenia')),
-    ('AW', _(u'Aruba')),
-    ('AU', _(u'Australia')),
-    ('AT', _(u'Austria')),
-    ('AZ', _(u'Azerbaijan')),
-    ('BS', _(u'Bahamas')),
-    ('BH', _(u'Bahrain')),
-    ('BD', _(u'Bangladesh')),
-    ('BB', _(u'Barbados')),
-    ('BY', _(u'Belarus')),
-    ('BE', _(u'Belgium')),
-    ('BZ', _(u'Belize')),
-    ('BJ', _(u'Benin')),
-    ('BM', _(u'Bermuda')),
-    ('BT', _(u'Bhutan')),
-    ('BO', _(u'Bolivia, Plurinational State of')),
-    ('BQ', _(u'Bonaire, Sint Eustatius and Saba')),
-    ('BA', _(u'Bosnia and Herzegovina')),
-    ('BW', _(u'Botswana')),
-    ('BV', _(u'Bouvet Island')),
-    ('BR', _(u'Brazil')),
-    ('IO', _(u'British Indian Ocean Territory')),
-    ('BN', _(u'Brunei Darussalam')),
-    ('BG', _(u'Bulgaria')),
-    ('BF', _(u'Burkina Faso')),
-    ('BI', _(u'Burundi')),
-    ('KH', _(u'Cambodia')),
-    ('CM', _(u'Cameroon')),
-    ('CA', _(u'Canada')),
-    ('CV', _(u'Cape Verde')),
-    ('KY', _(u'Cayman Islands')),
-    ('CF', _(u'Central African Republic')),
-    ('TD', _(u'Chad')),
-    ('CL', _(u'Chile')),
-    ('CN', _(u'China')),
-    ('CX', _(u'Christmas Island')),
-    ('CC', _(u'Cocos (Keeling) Islands')),
-    ('CO', _(u'Colombia')),
-    ('KM', _(u'Comoros')),
-    ('CG', _(u'Congo')),
-    ('CD', _(u'Congo, The Democratic Republic of the')),
-    ('CK', _(u'Cook Islands')),
-    ('CR', _(u'Costa Rica')),
+    ('AF', _('Afghanistan')),
+    ('AX', _('\xc5land Islands')),
+    ('AL', _('Albania')),
+    ('DZ', _('Algeria')),
+    ('AS', _('American Samoa')),
+    ('AD', _('Andorra')),
+    ('AO', _('Angola')),
+    ('AI', _('Anguilla')),
+    ('AQ', _('Antarctica')),
+    ('AG', _('Antigua and Barbuda')),
+    ('AR', _('Argentina')),
+    ('AM', _('Armenia')),
+    ('AW', _('Aruba')),
+    ('AU', _('Australia')),
+    ('AT', _('Austria')),
+    ('AZ', _('Azerbaijan')),
+    ('BS', _('Bahamas')),
+    ('BH', _('Bahrain')),
+    ('BD', _('Bangladesh')),
+    ('BB', _('Barbados')),
+    ('BY', _('Belarus')),
+    ('BE', _('Belgium')),
+    ('BZ', _('Belize')),
+    ('BJ', _('Benin')),
+    ('BM', _('Bermuda')),
+    ('BT', _('Bhutan')),
+    ('BO', _('Bolivia, Plurinational State of')),
+    ('BQ', _('Bonaire, Sint Eustatius and Saba')),
+    ('BA', _('Bosnia and Herzegovina')),
+    ('BW', _('Botswana')),
+    ('BV', _('Bouvet Island')),
+    ('BR', _('Brazil')),
+    ('IO', _('British Indian Ocean Territory')),
+    ('BN', _('Brunei Darussalam')),
+    ('BG', _('Bulgaria')),
+    ('BF', _('Burkina Faso')),
+    ('BI', _('Burundi')),
+    ('KH', _('Cambodia')),
+    ('CM', _('Cameroon')),
+    ('CA', _('Canada')),
+    ('CV', _('Cape Verde')),
+    ('KY', _('Cayman Islands')),
+    ('CF', _('Central African Republic')),
+    ('TD', _('Chad')),
+    ('CL', _('Chile')),
+    ('CN', _('China')),
+    ('CX', _('Christmas Island')),
+    ('CC', _('Cocos (Keeling) Islands')),
+    ('CO', _('Colombia')),
+    ('KM', _('Comoros')),
+    ('CG', _('Congo')),
+    ('CD', _('Congo, The Democratic Republic of the')),
+    ('CK', _('Cook Islands')),
+    ('CR', _('Costa Rica')),
     ('CI', _(u"C\xf4te D'ivoire")),
-    ('HR', _(u'Croatia')),
-    ('CU', _(u'Cuba')),
-    ('CW', _(u'Cura\xe7ao')),
-    ('CY', _(u'Cyprus')),
-    ('CZ', _(u'Czech Republic')),
-    ('DK', _(u'Denmark')),
-    ('DJ', _(u'Djibouti')),
-    ('DM', _(u'Dominica')),
-    ('DO', _(u'Dominican Republic')),
-    ('EC', _(u'Ecuador')),
-    ('EG', _(u'Egypt')),
-    ('SV', _(u'El Salvador')),
-    ('GQ', _(u'Equatorial Guinea')),
-    ('ER', _(u'Eritrea')),
-    ('EE', _(u'Estonia')),
-    ('ET', _(u'Ethiopia')),
-    ('FK', _(u'Falkland Islands (Malvinas)')),
-    ('FO', _(u'Faroe Islands')),
-    ('FJ', _(u'Fiji')),
-    ('FI', _(u'Finland')),
-    ('FR', _(u'France')),
-    ('GF', _(u'French Guiana')),
-    ('PF', _(u'French Polynesia')),
-    ('TF', _(u'French Southern Territories')),
-    ('GA', _(u'Gabon')),
-    ('GM', _(u'Gambia')),
-    ('GE', _(u'Georgia')),
-    ('DE', _(u'Germany')),
-    ('GH', _(u'Ghana')),
-    ('GI', _(u'Gibraltar')),
-    ('GR', _(u'Greece')),
-    ('GL', _(u'Greenland')),
-    ('GD', _(u'Grenada')),
-    ('GP', _(u'Guadeloupe')),
-    ('GU', _(u'Guam')),
-    ('GT', _(u'Guatemala')),
-    ('GG', _(u'Guernsey')),
-    ('GN', _(u'Guinea')),
-    ('GW', _(u'Guinea-bissau')),
-    ('GY', _(u'Guyana')),
-    ('HT', _(u'Haiti')),
-    ('HM', _(u'Heard Island and McDonald Islands')),
-    ('VA', _(u'Holy See (Vatican City State)')),
-    ('HN', _(u'Honduras')),
-    ('HK', _(u'Hong Kong')),
-    ('HU', _(u'Hungary')),
-    ('IS', _(u'Iceland')),
-    ('IN', _(u'India')),
-    ('ID', _(u'Indonesia')),
-    ('IR', _(u'Iran, Islamic Republic of')),
-    ('IQ', _(u'Iraq')),
-    ('IE', _(u'Ireland')),
-    ('IM', _(u'Isle of Man')),
-    ('IL', _(u'Israel')),
-    ('IT', _(u'Italy')),
-    ('JM', _(u'Jamaica')),
-    ('JP', _(u'Japan')),
-    ('JE', _(u'Jersey')),
-    ('JO', _(u'Jordan')),
-    ('KZ', _(u'Kazakhstan')),
-    ('KE', _(u'Kenya')),
-    ('KI', _(u'Kiribati')),
+    ('HR', _('Croatia')),
+    ('CU', _('Cuba')),
+    ('CW', _('Cura\xe7ao')),
+    ('CY', _('Cyprus')),
+    ('CZ', _('Czech Republic')),
+    ('DK', _('Denmark')),
+    ('DJ', _('Djibouti')),
+    ('DM', _('Dominica')),
+    ('DO', _('Dominican Republic')),
+    ('EC', _('Ecuador')),
+    ('EG', _('Egypt')),
+    ('SV', _('El Salvador')),
+    ('GQ', _('Equatorial Guinea')),
+    ('ER', _('Eritrea')),
+    ('EE', _('Estonia')),
+    ('ET', _('Ethiopia')),
+    ('FK', _('Falkland Islands (Malvinas)')),
+    ('FO', _('Faroe Islands')),
+    ('FJ', _('Fiji')),
+    ('FI', _('Finland')),
+    ('FR', _('France')),
+    ('GF', _('French Guiana')),
+    ('PF', _('French Polynesia')),
+    ('TF', _('French Southern Territories')),
+    ('GA', _('Gabon')),
+    ('GM', _('Gambia')),
+    ('GE', _('Georgia')),
+    ('DE', _('Germany')),
+    ('GH', _('Ghana')),
+    ('GI', _('Gibraltar')),
+    ('GR', _('Greece')),
+    ('GL', _('Greenland')),
+    ('GD', _('Grenada')),
+    ('GP', _('Guadeloupe')),
+    ('GU', _('Guam')),
+    ('GT', _('Guatemala')),
+    ('GG', _('Guernsey')),
+    ('GN', _('Guinea')),
+    ('GW', _('Guinea-bissau')),
+    ('GY', _('Guyana')),
+    ('HT', _('Haiti')),
+    ('HM', _('Heard Island and McDonald Islands')),
+    ('VA', _('Holy See (Vatican City State)')),
+    ('HN', _('Honduras')),
+    ('HK', _('Hong Kong')),
+    ('HU', _('Hungary')),
+    ('IS', _('Iceland')),
+    ('IN', _('India')),
+    ('ID', _('Indonesia')),
+    ('IR', _('Iran, Islamic Republic of')),
+    ('IQ', _('Iraq')),
+    ('IE', _('Ireland')),
+    ('IM', _('Isle of Man')),
+    ('IL', _('Israel')),
+    ('IT', _('Italy')),
+    ('JM', _('Jamaica')),
+    ('JP', _('Japan')),
+    ('JE', _('Jersey')),
+    ('JO', _('Jordan')),
+    ('KZ', _('Kazakhstan')),
+    ('KE', _('Kenya')),
+    ('KI', _('Kiribati')),
     ('KP', _(u"Korea, Democratic People's Republic of")),
-    ('KR', _(u'Korea, Republic of')),
-    ('KW', _(u'Kuwait')),
-    ('KG', _(u'Kyrgyzstan')),
+    ('KR', _('Korea, Republic of')),
+    ('KW', _('Kuwait')),
+    ('KG', _('Kyrgyzstan')),
     ('LA', _(u"Lao People's Democratic Republic")),
-    ('LV', _(u'Latvia')),
-    ('LB', _(u'Lebanon')),
-    ('LS', _(u'Lesotho')),
-    ('LR', _(u'Liberia')),
-    ('LY', _(u'Libya')),
-    ('LI', _(u'Liechtenstein')),
-    ('LT', _(u'Lithuania')),
-    ('LU', _(u'Luxembourg')),
-    ('MO', _(u'Macao')),
-    ('MK', _(u'Macedonia, The Former Yugoslav Republic of')),
-    ('MG', _(u'Madagascar')),
-    ('MW', _(u'Malawi')),
-    ('MY', _(u'Malaysia')),
-    ('MV', _(u'Maldives')),
-    ('ML', _(u'Mali')),
-    ('MT', _(u'Malta')),
-    ('MH', _(u'Marshall Islands')),
-    ('MQ', _(u'Martinique')),
-    ('MR', _(u'Mauritania')),
-    ('MU', _(u'Mauritius')),
-    ('YT', _(u'Mayotte')),
-    ('MX', _(u'Mexico')),
-    ('FM', _(u'Micronesia, Federated States of')),
-    ('MD', _(u'Moldova, Republic of')),
-    ('MC', _(u'Monaco')),
-    ('MN', _(u'Mongolia')),
-    ('ME', _(u'Montenegro')),
-    ('MS', _(u'Montserrat')),
-    ('MA', _(u'Morocco')),
-    ('MZ', _(u'Mozambique')),
-    ('MM', _(u'Myanmar')),
-    ('NA', _(u'Namibia')),
-    ('NR', _(u'Nauru')),
-    ('NP', _(u'Nepal')),
-    ('NL', _(u'Netherlands')),
-    ('NC', _(u'New Caledonia')),
-    ('NZ', _(u'New Zealand')),
-    ('NI', _(u'Nicaragua')),
-    ('NE', _(u'Niger')),
-    ('NG', _(u'Nigeria')),
-    ('NU', _(u'Niue')),
-    ('NF', _(u'Norfolk Island')),
-    ('MP', _(u'Northern Mariana Islands')),
-    ('NO', _(u'Norway')),
-    ('OM', _(u'Oman')),
-    ('PK', _(u'Pakistan')),
-    ('PW', _(u'Palau')),
-    ('PS', _(u'Palestinian Territory, Occupied')),
-    ('PA', _(u'Panama')),
-    ('PG', _(u'Papua New Guinea')),
-    ('PY', _(u'Paraguay')),
-    ('PE', _(u'Peru')),
-    ('PH', _(u'Philippines')),
-    ('PN', _(u'Pitcairn')),
-    ('PL', _(u'Poland')),
-    ('PT', _(u'Portugal')),
-    ('PR', _(u'Puerto Rico')),
-    ('QA', _(u'Qatar')),
-    ('RE', _(u'R\xe9union')),
-    ('RO', _(u'Romania')),
-    ('RU', _(u'Russian Federation')),
-    ('RW', _(u'Rwanda')),
-    ('BL', _(u'Saint Barth\xe9lemy')),
-    ('SH', _(u'Saint Helena, Ascension and Tristan Da Cunha')),
-    ('KN', _(u'Saint Kitts and Nevis')),
-    ('LC', _(u'Saint Lucia')),
-    ('MF', _(u'Saint Martin (French Part)')),
-    ('PM', _(u'Saint Pierre and Miquelon')),
-    ('VC', _(u'Saint Vincent and the Grenadines')),
-    ('WS', _(u'Samoa')),
-    ('SM', _(u'San Marino')),
-    ('ST', _(u'Sao Tome and Principe')),
-    ('SA', _(u'Saudi Arabia')),
-    ('SN', _(u'Senegal')),
-    ('RS', _(u'Serbia')),
-    ('SC', _(u'Seychelles')),
-    ('SL', _(u'Sierra Leone')),
-    ('SG', _(u'Singapore')),
-    ('SX', _(u'Sint Maarten (Dutch Part)')),
-    ('SK', _(u'Slovakia')),
-    ('SI', _(u'Slovenia')),
-    ('SB', _(u'Solomon Islands')),
-    ('SO', _(u'Somalia')),
-    ('ZA', _(u'South Africa')),
-    ('GS', _(u'South Georgia and the South Sandwich Islands')),
-    ('SS', _(u'South Sudan')),
-    ('ES', _(u'Spain')),
-    ('LK', _(u'Sri Lanka')),
-    ('SD', _(u'Sudan')),
-    ('SR', _(u'Suriname')),
-    ('SJ', _(u'Svalbard and Jan Mayen')),
-    ('SZ', _(u'Swaziland')),
-    ('SE', _(u'Sweden')),
-    ('CH', _(u'Switzerland')),
-    ('SY', _(u'Syrian Arab Republic')),
-    ('TW', _(u'Taiwan, Province of China')),
-    ('TJ', _(u'Tajikistan')),
-    ('TZ', _(u'Tanzania, United Republic of')),
-    ('TH', _(u'Thailand')),
-    ('TL', _(u'Timor-leste')),
-    ('TG', _(u'Togo')),
-    ('TK', _(u'Tokelau')),
-    ('TO', _(u'Tonga')),
-    ('TT', _(u'Trinidad and Tobago')),
-    ('TN', _(u'Tunisia')),
-    ('TR', _(u'Turkey')),
-    ('TM', _(u'Turkmenistan')),
-    ('TC', _(u'Turks and Caicos Islands')),
-    ('TV', _(u'Tuvalu')),
-    ('UG', _(u'Uganda')),
-    ('UA', _(u'Ukraine')),
-    ('AE', _(u'United Arab Emirates')),
-    ('GB', _(u'United Kingdom')),
-    ('US', _(u'United States')),
-    ('UM', _(u'United States Minor Outlying Islands')),
-    ('UY', _(u'Uruguay')),
-    ('UZ', _(u'Uzbekistan')),
-    ('VU', _(u'Vanuatu')),
-    ('VE', _(u'Venezuela, Bolivarian Republic of')),
-    ('VN', _(u'Viet Nam')),
-    ('VG', _(u'Virgin Islands, British')),
-    ('VI', _(u'Virgin Islands, U.S.')),
-    ('WF', _(u'Wallis and Futuna')),
-    ('EH', _(u'Western Sahara')),
-    ('YE', _(u'Yemen')),
-    ('ZM', _(u'Zambia')),
-    ('ZW', _(u'Zimbabwe')),
+    ('LV', _('Latvia')),
+    ('LB', _('Lebanon')),
+    ('LS', _('Lesotho')),
+    ('LR', _('Liberia')),
+    ('LY', _('Libya')),
+    ('LI', _('Liechtenstein')),
+    ('LT', _('Lithuania')),
+    ('LU', _('Luxembourg')),
+    ('MO', _('Macao')),
+    ('MK', _('Macedonia, The Former Yugoslav Republic of')),
+    ('MG', _('Madagascar')),
+    ('MW', _('Malawi')),
+    ('MY', _('Malaysia')),
+    ('MV', _('Maldives')),
+    ('ML', _('Mali')),
+    ('MT', _('Malta')),
+    ('MH', _('Marshall Islands')),
+    ('MQ', _('Martinique')),
+    ('MR', _('Mauritania')),
+    ('MU', _('Mauritius')),
+    ('YT', _('Mayotte')),
+    ('MX', _('Mexico')),
+    ('FM', _('Micronesia, Federated States of')),
+    ('MD', _('Moldova, Republic of')),
+    ('MC', _('Monaco')),
+    ('MN', _('Mongolia')),
+    ('ME', _('Montenegro')),
+    ('MS', _('Montserrat')),
+    ('MA', _('Morocco')),
+    ('MZ', _('Mozambique')),
+    ('MM', _('Myanmar')),
+    ('NA', _('Namibia')),
+    ('NR', _('Nauru')),
+    ('NP', _('Nepal')),
+    ('NL', _('Netherlands')),
+    ('NC', _('New Caledonia')),
+    ('NZ', _('New Zealand')),
+    ('NI', _('Nicaragua')),
+    ('NE', _('Niger')),
+    ('NG', _('Nigeria')),
+    ('NU', _('Niue')),
+    ('NF', _('Norfolk Island')),
+    ('MP', _('Northern Mariana Islands')),
+    ('NO', _('Norway')),
+    ('OM', _('Oman')),
+    ('PK', _('Pakistan')),
+    ('PW', _('Palau')),
+    ('PS', _('Palestinian Territory, Occupied')),
+    ('PA', _('Panama')),
+    ('PG', _('Papua New Guinea')),
+    ('PY', _('Paraguay')),
+    ('PE', _('Peru')),
+    ('PH', _('Philippines')),
+    ('PN', _('Pitcairn')),
+    ('PL', _('Poland')),
+    ('PT', _('Portugal')),
+    ('PR', _('Puerto Rico')),
+    ('QA', _('Qatar')),
+    ('RE', _('R\xe9union')),
+    ('RO', _('Romania')),
+    ('RU', _('Russian Federation')),
+    ('RW', _('Rwanda')),
+    ('BL', _('Saint Barth\xe9lemy')),
+    ('SH', _('Saint Helena, Ascension and Tristan Da Cunha')),
+    ('KN', _('Saint Kitts and Nevis')),
+    ('LC', _('Saint Lucia')),
+    ('MF', _('Saint Martin (French Part)')),
+    ('PM', _('Saint Pierre and Miquelon')),
+    ('VC', _('Saint Vincent and the Grenadines')),
+    ('WS', _('Samoa')),
+    ('SM', _('San Marino')),
+    ('ST', _('Sao Tome and Principe')),
+    ('SA', _('Saudi Arabia')),
+    ('SN', _('Senegal')),
+    ('RS', _('Serbia')),
+    ('SC', _('Seychelles')),
+    ('SL', _('Sierra Leone')),
+    ('SG', _('Singapore')),
+    ('SX', _('Sint Maarten (Dutch Part)')),
+    ('SK', _('Slovakia')),
+    ('SI', _('Slovenia')),
+    ('SB', _('Solomon Islands')),
+    ('SO', _('Somalia')),
+    ('ZA', _('South Africa')),
+    ('GS', _('South Georgia and the South Sandwich Islands')),
+    ('SS', _('South Sudan')),
+    ('ES', _('Spain')),
+    ('LK', _('Sri Lanka')),
+    ('SD', _('Sudan')),
+    ('SR', _('Suriname')),
+    ('SJ', _('Svalbard and Jan Mayen')),
+    ('SZ', _('Swaziland')),
+    ('SE', _('Sweden')),
+    ('CH', _('Switzerland')),
+    ('SY', _('Syrian Arab Republic')),
+    ('TW', _('Taiwan, Province of China')),
+    ('TJ', _('Tajikistan')),
+    ('TZ', _('Tanzania, United Republic of')),
+    ('TH', _('Thailand')),
+    ('TL', _('Timor-leste')),
+    ('TG', _('Togo')),
+    ('TK', _('Tokelau')),
+    ('TO', _('Tonga')),
+    ('TT', _('Trinidad and Tobago')),
+    ('TN', _('Tunisia')),
+    ('TR', _('Turkey')),
+    ('TM', _('Turkmenistan')),
+    ('TC', _('Turks and Caicos Islands')),
+    ('TV', _('Tuvalu')),
+    ('UG', _('Uganda')),
+    ('UA', _('Ukraine')),
+    ('AE', _('United Arab Emirates')),
+    ('GB', _('United Kingdom')),
+    ('US', _('United States')),
+    ('UM', _('United States Minor Outlying Islands')),
+    ('UY', _('Uruguay')),
+    ('UZ', _('Uzbekistan')),
+    ('VU', _('Vanuatu')),
+    ('VE', _('Venezuela, Bolivarian Republic of')),
+    ('VN', _('Viet Nam')),
+    ('VG', _('Virgin Islands, British')),
+    ('VI', _('Virgin Islands, U.S.')),
+    ('WF', _('Wallis and Futuna')),
+    ('EH', _('Western Sahara')),
+    ('YE', _('Yemen')),
+    ('ZM', _('Zambia')),
+    ('ZW', _('Zimbabwe')),
 )

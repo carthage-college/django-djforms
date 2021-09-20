@@ -1,37 +1,67 @@
-from django.contrib import admin
+# -*- coding: utf-8 -*-
 
-from djforms.giving.models import PaverContact, DonationContact
+from django.contrib import admin
+from djforms.giving.models import DonationContact
+from djforms.giving.models import PaverContact
 from djforms.processors.models import Order
+
 
 class OrderInline(admin.TabularInline):
     model = DonationContact.order.through
     extra = 3
 
+
 class DonationContactAdmin(admin.ModelAdmin):
     model = DonationContact
-    exclude = ('second_name','previous_name','salutation')
+    exclude = ('second_name', 'previous_name', 'salutation')
     raw_id_fields = ('order',)
-    list_max_show_all   = 100
-    list_per_page       = 100
+    list_max_show_all = 100
+    list_per_page = 100
     ordering = [
-        '-created_at','last_name','city','state','postal_code',
-        'anonymous'
+        '-created_at',
+        'last_name',
+        'city',
+        'state',
+        'postal_code',
+        'anonymous',
     ]
-    search_fields = ('last_name','phone','city','state','postal_code')
-    #inlines = [OrderInline,]
+    search_fields = ('last_name', 'phone', 'city', 'state', 'postal_code')
     list_editable = ['hidden']
     list_display  = (
-        'last_name','first_name','hidden','order_cc_name','created_at','email','phone',
-        'address1','address2','city','state','postal_code','class_of','relation',
-        'spouse','spouse_class','honouring','matching_company','order_promo',
-        'order_cycle','order_payments','order_start_date','order_transid',
-        'order_status','order_total','order_comments','opt_in','anonymous'
+        'last_name',
+        'first_name',
+        'hidden',
+        'order_cc_name',
+        'created_at',
+        'email',
+        'phone',
+        'address1',
+        'address2',
+        'city',
+        'state',
+        'postal_code',
+        'class_of',
+        'relation',
+        'spouse',
+        'spouse_class',
+        'honouring',
+        'matching_company',
+        'order_promo',
+        'order_cycle',
+        'order_payments',
+        'order_start_date',
+        'order_transid',
+        'order_status',
+        'order_total',
+        'order_comments',
+        'opt_in',
+        'anonymous',
     )
 
     def order_cc_name(self, obj):
         try:
             name = obj.order.all()[0].cc_name
-        except:
+        except Exception:
             name = None
         return name
     order_cc_name.short_description = 'CC Name'
@@ -39,7 +69,7 @@ class DonationContactAdmin(admin.ModelAdmin):
     def order_promo(self, obj):
         try:
             promo = obj.order.all()[0].promotion
-        except:
+        except Exception:
             promo = None
         return promo
     order_promo.short_description = 'Campaign'
@@ -47,7 +77,7 @@ class DonationContactAdmin(admin.ModelAdmin):
     def order_status(self, obj):
         try:
             stat = obj.order.all()[0].status
-        except:
+        except Exception:
             stat = None
         return stat
     order_status.short_description = 'Transaction status'
@@ -55,7 +85,7 @@ class DonationContactAdmin(admin.ModelAdmin):
     def order_transid(self, obj):
         try:
             tid = obj.order.all()[0].transid
-        except:
+        except Exception:
             tid = None
         return tid
     order_transid.short_description = 'Transaction ID'
@@ -63,7 +93,7 @@ class DonationContactAdmin(admin.ModelAdmin):
     def order_total(self, obj):
         try:
             tid = obj.order.all()[0].total
-        except:
+        except Exception:
             tid = None
         return tid
     order_total.short_description = 'Donation'
@@ -71,7 +101,7 @@ class DonationContactAdmin(admin.ModelAdmin):
     def order_cycle(self, obj):
         try:
             cycle = obj.order.all()[0].cycle
-        except:
+        except Exception:
             cycle = None
         return cycle
     order_cycle.short_description = 'Interval'
@@ -79,7 +109,7 @@ class DonationContactAdmin(admin.ModelAdmin):
     def order_payments(self, obj):
         try:
             payments = obj.order.all()[0].payments
-        except:
+        except Exception:
             payments = None
         return payments
     order_payments.short_description = 'Duration'
@@ -87,7 +117,7 @@ class DonationContactAdmin(admin.ModelAdmin):
     def order_start_date(self, obj):
         try:
             sdate = obj.order.all()[0].start_date
-        except:
+        except Exception:
             sdate = None
         return sdate
     order_start_date.short_description = 'Start Date'
@@ -95,7 +125,7 @@ class DonationContactAdmin(admin.ModelAdmin):
     def order_comments(self, obj):
         try:
             com = obj.order.all()[0].comments
-        except:
+        except Exception:
             com = None
         return com
     order_comments.short_description = 'Designation'
@@ -107,17 +137,30 @@ class DonationContactAdmin(admin.ModelAdmin):
 
 class PaverContactAdmin(DonationContactAdmin):
     exclude = ('second_name',)
-    ordering = (
-        '-created_at','last_name','city','state','postal_code',
-    )
+    ordering = ('-created_at', 'last_name', 'city', 'state', 'postal_code')
     list_editable = []
     list_display  = (
-        'last_name','first_name','order_cc_name','created_at','email','phone',
-        'address1','address2','city','state','postal_code',
-        'order_promo', 'order_cycle','order_payments','order_start_date',
-        'order_transid','order_status','order_total','order_comments'
+        'last_name',
+        'first_name',
+        'order_cc_name',
+        'created_at',
+        'email',
+        'phone',
+        'address1',
+        'address2',
+        'city',
+        'state',
+        'postal_code',
+        'order_promo',
+        'order_cycle',
+        'order_payments',
+        'order_start_date',
+        'order_transid',
+        'order_status',
+        'order_total',
+        'order_comments',
     )
-    pass
+
 
 admin.site.register(PaverContact, PaverContactAdmin)
 admin.site.register(DonationContact, DonationContactAdmin)

@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
+
 from django import forms
 from django.contrib import admin
-from django.utils.translation import ugettext, ugettext_lazy as _
-from djforms.core.models import *
-
+from djforms.core.models import Department
 from djforms.core.models import GenericChoice
+from djforms.core.models import Photo
+from djforms.core.models import Promotion
+from djforms.core.models import UserProfile
 
 
 class GenericChoiceAdmin(admin.ModelAdmin):
