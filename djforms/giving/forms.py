@@ -46,8 +46,8 @@ RELATION_CHOICES = (
     ('Parent', 'Parent'),
     ('Student', 'Student'),
 )
-CLASS = list(reversed(range(1926, YEAR + 4)))
-CLASS.insert(0, ('','-----'))
+CLASS = [(x, x) for x in reversed(range(1926, YEAR + 4))]
+CLASS.insert(0, ('', '-----'))
 
 
 class PhotoCaptionForm(forms.Form):
