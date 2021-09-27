@@ -3,7 +3,6 @@
 from django.urls import path
 from django.views.generic import RedirectView
 from django.views.generic import TemplateView
-from django.contrib.auth.decorators import login_required
 from djforms.polisci.mun import views as mun
 
 
@@ -33,5 +32,5 @@ urlpatterns = [
     #    'model_united_nations.views.registration',
     #    name='model_united_nations_registration'
     #),
-    path('', RedirectView.as_view(url='/political-science/')),
+    path('', RedirectView.as_view(url='/model-united-nations/')),
 ]

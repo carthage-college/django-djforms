@@ -1,4 +1,5 @@
-#) -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
+
 from django import forms
 from djforms.core.models import STATE_CHOICES
 from djforms.core.models import BINARY_CHOICES
@@ -18,62 +19,45 @@ DELEGATIONS = (
 
 
 class AttenderForm(forms.Form):
-    """
-    A form to collect registration data for the Model United Nations
-    """
-    school_name = forms.CharField(
-        max_length=100, label="School name"
-    )
+    """A form to collect registration data for the Model United Nations."""
+
+    school_name = forms.CharField(max_length=100, label="School name")
     first_name = forms.CharField(
         max_length=128, label="Faculty advisor first name"
     )
-    last_name = forms.CharField(
-        max_length=128
-    )
-    address1 = forms.CharField(
-        max_length=128,
-        label = "Address",
-        required=True
-    )
-    address2 = forms.CharField(
-        max_length=128,
-        label = "",
-        required=False
-    )
-    city = forms.CharField(
-        max_length=128,
-        required=True
-    )
+    last_name = forms.CharField(max_length=128)
+    address1 = forms.CharField(max_length=128, label = "Address", required=True)
+    address2 = forms.CharField(max_length=128, label = "", required=False)
+    city = forms.CharField(max_length=128, required=True)
     state = forms.CharField(
-        widget=forms.Select(choices=STATE_CHOICES), required=True
+        widget=forms.Select(choices=STATE_CHOICES), required=True,
     )
     postal_code = USZipCodeField(label="Zip Code")
     office = forms.CharField(max_length=100)
-    phone = USPhoneNumberField(
-        help_text="Format: XXX-XXX-XXXX"
-    )
+    phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
     email = forms.EmailField()
     number_of_del = forms.TypedChoiceField(
-        choices=DELEGATIONS, label="Number of delegations"
+        choices=DELEGATIONS, label="Number of delegations",
     )
-    number_of_stu = forms.CharField(
-        max_length=3, label="Number of students"
-    )
+    number_of_stu = forms.CharField(max_length=3, label="Number of students")
     comments = forms.CharField(
         label="Questions/Comments",
         help_text="""
             Feel free to list alternate countries in the space above
             (include your choice and delegation number)
         """,
-        widget=forms.Textarea, required=False
+        widget=forms.Textarea,
+        required=False,
     )
     missle_crisis = forms.TypedChoiceField(
         label="""
             Do you want to be entered into the random draw for participation in the United
             States Senate: Border Crisis simulation?
         """,
-        choices=BINARY_CHOICES, widget=forms.RadioSelect
+        choices=BINARY_CHOICES,
+        widget=forms.RadioSelect,
     )
+
 
 class CountryForm(forms.Form):
     # delegation 1
@@ -106,4 +90,3 @@ class CountryForm(forms.Form):
     d5c3  = forms.TypedChoiceField(choices=COUNTRIES, required=False)
     d5c4  = forms.TypedChoiceField(choices=COUNTRIES, required=False)
     d5c5  = forms.TypedChoiceField(choices=COUNTRIES, required=False)
-
