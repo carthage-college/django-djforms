@@ -1,88 +1,81 @@
 # -*- coding: utf-8 -*-
-from django.db import models
+
 from django.contrib.auth.models import User
+from django.db import models
 from django.urls import reverse
 from djforms.core.models import GenericChoice
-
 from djtools.fields import BINARY_CHOICES
 from djtools.fields.helpers import upload_to_path
-from djtools.fields.validators import MimetypeValidator
 from djtools.fields.validators import credit_gpa_validator
+from djtools.fields.validators import MimetypeValidator
+
 
 RANKING_CHOICES = (
-    ('Outstanding','Outstanding'),
-    ('Excellent','Excellent'),
-    ('Above Average','Above Average'),
-    ('Average','Average'),
-    ('Fair','Fair'),
-    ('Poor','Poor'),
-    ('No basis to evaluate','No basis to evaluate'),
+    ('Outstanding', 'Outstanding'),
+    ('Excellent', 'Excellent'),
+    ('Above Average', 'Above Average'),
+    ('Average', 'Average'),
+    ('Fair', 'Fair'),
+    ('Poor', 'Poor'),
+    ('No basis to evaluate', 'No basis to evaluate'),
 )
 
 
 class Applicant(models.Model):
-    '''
-    Data model for Carthage students requesting a committee letter
-    for applying to medical or dental school
-    '''
+    """Data model for students requesting a committee letter for grad school."""
 
-    # dates
-    created_on = models.DateTimeField(
-        "Date Created", auto_now_add=True
-    )
-    updated_on = models.DateTimeField(
-        "Date Updated", auto_now=True
-    )
-    # owners
+    created_on = models.DateTimeField("Date Created", auto_now_add=True)
+    updated_on = models.DateTimeField("Date Updated", auto_now=True)
     created_by = models.ForeignKey(
-        User, verbose_name="Applicant",
+        User,
+        verbose_name="Applicant",
         related_name='prehealth_committee_letter_applicant_created_by',
         on_delete=models.CASCADE,
     )
     updated_by = models.ForeignKey(
-        User, verbose_name="Updated by",
+        User,
+        verbose_name="Updated by",
         related_name='prehealth_committee_letter_applicant_updated_by',
         on_delete=models.CASCADE,
     )
-    # core
     programs_apply = models.ManyToManyField(
-        GenericChoice, verbose_name="For which programs are you applying?",
-        related_name='prehealth_committee_letter_applicant_programs'
+        GenericChoice,
+        verbose_name="For which programs are you applying?",
+        related_name='prehealth_committee_letter_applicant_programs',
     )
     first_generation = models.CharField(
         "Are you a first generation college student?",
         max_length=4,
         choices=BINARY_CHOICES,
     )
-    graduation_date = models.DateField(
-        "Expected Graduation Date"
-    )
-    major = models.CharField(
-        "Major(s)",
-        max_length=128
-    )
+    graduation_date = models.DateField("Expected Graduation Date")
+    major = models.CharField("Major(s)", max_length=128)
     minor = models.CharField(
         "Minor(s)",
-        null = True, blank = True,
-        max_length=128
+        max_length=128,
+        null=True,
+        blank=True,
     )
     gpa_overall = models.CharField(
-        "Overall GPA", max_length=4,
-        validators=[credit_gpa_validator]
+        "Overall GPA",
+        max_length=4,
+        validators=[credit_gpa_validator],
     )
     gpa_bcpm = models.CharField(
         "BCPM (Biology, Chemistry, Physics, Math) GPA",
         max_length=4,
-        validators=[credit_gpa_validator]
+        validators=[credit_gpa_validator],
     )
     mcat_dat_scores = models.CharField(
         "MCAT/DAT Scores (if taken)",
-        null = True, blank = True,
         max_length=128,
+        null=True,
+        blank=True,
     )
     mcat_dat_date = models.DateField(
         "When will you take the MCAT/DAT again? (if applicable)",
-        null = True, blank = True,
+        null=True,
+        blank=True,
     )
     cv = models.FileField(
         "Résumé",
@@ -98,7 +91,7 @@ class Applicant(models.Model):
             For health care experiences, you must include hours worked as
             well as length of time (mo/yr to mo/yr). Also include the name
             of your supervisor for any on-campus work.
-        '''
+        ''',
     )
     personal_statements = models.FileField(
         upload_to=upload_to_path,
@@ -110,7 +103,7 @@ class Applicant(models.Model):
             above to submit your personal statements and short essays.
             Please make sure your document is a PDF and contains your name
             and the date.
-        '''
+        ''',
     )
     core_competencies = models.FileField(
         upload_to=upload_to_path,
@@ -123,7 +116,7 @@ class Applicant(models.Model):
             competencies that you most excel in with a short paragraph
             explaining why you chose each competency
             (150 word maximum per competency).
-        '''
+        ''',
     )
     transcripts = models.FileField(
         upload_to=upload_to_path,
@@ -135,7 +128,7 @@ class Applicant(models.Model):
                 my.carthage.edu</a>
             and save it as a PDF and upload it above.
             The transcripts should include your grades for the fall semester.
-        '''
+        ''',
     )
     waiver = models.FileField(
         upload_to=upload_to_path,
@@ -149,79 +142,82 @@ class Applicant(models.Model):
             through the Carthage Pre-Health Advisory Committee is completely optional
             for medical school or dental school applicants. However, in order to apply
             through the committee, we need this waiver signed (not typed).
-        '''
+        ''',
     )
 
     def get_absolute_url(self):
+        """Return the URL for the detailed view."""
         return reverse(
             'prehealth_committee_letter_applicant_detail',
             args=(str(self.id)),
         )
 
     def first_name(self):
+        """Return the user's given name."""
         return self.created_by.first_name
 
     def last_name(self):
+        """Return the user's sur name."""
         return self.created_by.last_name
 
     def email(self):
+        """Return the user's email."""
         return self.created_by.email
 
     def city(self):
+        """Return the user's city."""
         return self.created_by.userprofile.city
 
     def state(self):
+        """Return the user's state."""
         return self.created_by.userprofile.state
 
     def phone(self):
+        """Return the user's phone."""
         return self.created_by.userprofile.phone
 
     def get_slug(self):
+        """Return the slug for file uploads."""
         return 'pre-health/committee-letter/'
 
-    def __unicode__(self):
-        return u'{}, {}'.format(
-            self.created_by.last_name, self.created_by.first_name
+    def __str__(self):
+        """Display the default value."""
+        return '{0}, {1}'.format(
+            self.created_by.last_name, self.created_by.first_name,
         )
 
 
 class Recommendation(models.Model):
-    '''
-    Letters of Recommendation
-    '''
+    """Date model for letters of recommendation."""
 
     applicant = models.ForeignKey(
-        Applicant, verbose_name="Applicant",
+        Applicant,
+        verbose_name="Applicant",
         related_name='prehealth_committee_letter_recommendation_applicant',
         on_delete=models.CASCADE,
     )
-    name = models.CharField(
-        "Name of Recommender",
-        max_length=128
-    )
-    email = models.CharField(
-        "Email of Recommender",
-        max_length=128
-    )
+    name = models.CharField("Name of Recommender", max_length=128)
+    email = models.CharField("Email of Recommender", max_length=128)
 
 
 class Evaluation(models.Model):
-    '''
-    Evanluation form
-    '''
+    """Date model for evaluation form."""
 
     created_by = models.ForeignKey(
-        User, verbose_name="Applicant",
+        User,
+        verbose_name="Applicant",
         related_name='prehealth_committee_letter_evaluation_created_by',
         on_delete=models.CASCADE,
     )
     updated_by = models.ForeignKey(
-        User, verbose_name="Updated by",
+        User,
+        verbose_name="Updated by",
         related_name='prehealth_committee_letter_evaluation_updated_by',
         on_delete=models.CASCADE,
     )
     applicant = models.ForeignKey(
-        Applicant, verbose_name="Applicant",
+        Applicant,
+        verbose_name="Applicant",
         related_name='prehealth_committee_letter_evaluation_applicant',
         on_delete=models.CASCADE,
     )
@@ -264,11 +260,9 @@ class Evaluation(models.Model):
         upload_to=upload_to_path,
         validators=[MimetypeValidator('application/pdf')],
         max_length=768,
-        help_text = '''
-            Upload your letter of recommendation in PDF format.
-        '''
+        help_text='Upload your letter of recommendation in PDF format.',
     )
 
     def get_slug(self):
+        """Return the slug for file uploads."""
         return 'pre-health/committee-letter/evaluation/'
-
