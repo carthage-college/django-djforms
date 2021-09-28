@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-from django import forms
 
-from djforms.lis.copyprint.models import CardRequest, STATUS
+from django import forms
+from djforms.lis.copyprint.models import CardRequest
+from djforms.lis.copyprint.models import STATUS
+
 
 class CardRequestForm(forms.ModelForm):
 

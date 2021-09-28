@@ -209,6 +209,6 @@ def applicant_form(request):
 @group_required('SuperStaff')
 def applicant_detail(request, aid):
     """Simple view to display the application detail."""
-    app = get_object_or_404(Applicant, id=aid)
+    app = get_object_or_404(Applicant, pk=aid)
     template_name = 'prehealth/committee_letter/detail.html'
     return render(request, template_name, {'data': app, 'detail': True})

@@ -28,7 +28,7 @@ class Country(models.Model):
     class Meta:
         verbose_name_plural = "Countries"
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 class Attender(Contact):

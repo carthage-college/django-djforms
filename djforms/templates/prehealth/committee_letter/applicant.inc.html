@@ -12,15 +12,15 @@
     <dt style="background:#efefef; color:#000; float:left; margin-right:10px; padding:5px; width:200px;">
         City
     </dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.created_by.get_profile.city}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.created_by.userprofile.city|default:'&nbsp;'}}</dd>
     <dt style="background:#efefef; color:#000; float:left; margin-right:10px; padding:5px; width:200px;">
         State
     </dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.created_by.get_profile.state}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.created_by.userprofile.state|default:'&nbsp;'}}</dd>
     <dt style="background:#efefef; color:#000; float:left; margin-right:10px; padding:5px; width:200px;">
         Phone
     </dt>
-    <dd style="margin:2px 0; padding:5px 0;">{{data.created_by.get_profile.phone}}</dd>
+    <dd style="margin:2px 0; padding:5px 0;">{{data.created_by.userprofile.phone|default:'&nbsp;'}}</dd>
     <dt style="background:#efefef; color:#000; float:left; margin-right:10px; padding:5px; width:200px;">
         Programs applying
     </dt>

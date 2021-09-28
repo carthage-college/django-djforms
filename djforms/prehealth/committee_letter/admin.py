@@ -2,6 +2,7 @@
 
 from django import forms
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 from djforms.prehealth.committee_letter.models import Applicant
 from djforms.prehealth.committee_letter.models import Recommendation
 from djforms.prehealth.committee_letter.forms import PROGRAM_CHOICES
@@ -70,7 +71,9 @@ class ApplicantAdmin(admin.ModelAdmin):
         """Display method for the CV file."""
         code = None
         if instance.cv:
-            code = '<a href="{0}" target="_blank">CV</a>'.format(instance.cv.url)
+            code = mark_safe('<a href="{0}" target="_blank">CV</a>'.format(
+                instance.cv.url,
+            ))
         return code
     cv_link.allow_tags = True
     cv_link.short_description = "CV"
@@ -79,9 +82,9 @@ class ApplicantAdmin(admin.ModelAdmin):
         """Display method to provide a link to the personal statement."""
         code = None
         if instance.personal_statements:
-            code = '<a href="{0}" target="_blank">Statements</a>'.format(
+            code =  mark_safe('<a href="{0}" target="_blank">Statements</a>'.format(
                 instance.personal_statements.url,
-            )
+            ))
         return code
     personal_statements_link.allow_tags = True
     personal_statements_link.short_description = "Personal Statements"
@@ -90,9 +93,9 @@ class ApplicantAdmin(admin.ModelAdmin):
         """Display method to provide a link to the transcript."""
         code = None
         if instance.transcripts:
-            code = '<a href="{0}" target="_blank">Transcripts</a>'.format(
+            code =  mark_safe('<a href="{0}" target="_blank">Transcripts</a>'.format(
                 instance.transcripts.url,
-            )
+            ))
         return code
     transcripts_link.allow_tags = True
     transcripts_link.short_description = "Transcripts"
@@ -101,9 +104,9 @@ class ApplicantAdmin(admin.ModelAdmin):
         """Display method to provide a link to the waiver."""
         code = None
         if instance.waiver:
-            code = '<a href="{0}" target="_blank">Waiver</a>'.format(
+            code =  mark_safe('<a href="{0}" target="_blank">Waiver</a>'.format(
                 instance.waiver.url,
-            )
+            ))
         return code
     waiver_link.allow_tags = True
     waiver_link.short_description = "Waiver"

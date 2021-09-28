@@ -137,8 +137,8 @@ class Presenter(models.Model):
         null=True, blank=True, default=0
     )
 
-    def __unicode__(self):
-        return u"%s %s" % (self.first_name, self.last_name)
+    def __str__(self):
+        return "{0} {1}".format(self.first_name, self.last_name)
 
     def save(self, *args, **kwargs):
         if self.sponsor:
@@ -249,7 +249,7 @@ class Presentation(models.Model):
         get_latest_by   = 'date_created'
         permissions     = ( ("manage_presentation", "manage presentation"), )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def save(self, *args, **kwargs):

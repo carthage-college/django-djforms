@@ -166,13 +166,13 @@ class SoccerCampAttender(Contact):
     class Meta:
         verbose_name_plural = 'Soccer Camp Attenders'
 
-    def __unicode__(self):
+    def __str__(self):
         order = self.order.first()
         session = int(self.session.split('|')[1])
         total = int(order.total)
         if self.football == 'Yes':
             session += 30
-        return u'{0}: {1} - {2} = {3}'.format(
+        return '{0}: {1} - {2} = {3}'.format(
             self.parent_guard, session, total, (session - total),
         )
 

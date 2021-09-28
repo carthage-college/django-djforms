@@ -99,7 +99,7 @@ class GenericChoice(models.Model):
     )
     tags = TaggableManager()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def tag_list(self):

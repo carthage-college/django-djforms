@@ -1,10 +1,14 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.contrib.auth.models import User
 
+
 STATUS = (
-    ("New","New"),
-    ("Replacement","Replacement"),
+    ("New", "New"),
+    ("Replacement", "Replacement"),
 )
+
 
 class CardRequest(models.Model):
 
@@ -67,8 +71,10 @@ class CardRequest(models.Model):
 
     def first_name(self):
         return self.user.first_name
+
     def last_name(self):
         return self.user.last_name
+
     def email(self):
         return self.user.email
 
@@ -77,9 +83,9 @@ class CardRequest(models.Model):
             (field.name, field.value_to_string(self)) for field in CardRequest._meta.fields
         ]
 
-    def __unicode__(self):
-        return u"{}, {} from {}".format(
+    def __str__(self):
+        return "{0}, {1} from {2}".format(
             self.user.last_name,
             self.user.first_name,
-            self.entity_name
+            self.entity_name,
         )

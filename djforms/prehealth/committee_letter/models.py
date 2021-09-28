@@ -149,7 +149,7 @@ class Applicant(models.Model):
         """Return the URL for the detailed view."""
         return reverse(
             'prehealth_committee_letter_applicant_detail',
-            args=(str(self.id)),
+            kwargs={'aid': self.id},
         )
 
     def first_name(self):
