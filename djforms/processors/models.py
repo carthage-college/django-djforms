@@ -97,6 +97,7 @@ class Order(models.Model):
         except Exception:
             return ''
 
+
 class Contact(GenericContact):
     """Contact details for an orderi."""
 
