@@ -17,7 +17,7 @@ from djtools.utils.mail import send_mail
 @login_required
 def candidate(request):
     """Choral tryout form."""
-    if request.method=='POST':
+    if request.method == 'POST':
         form = CandidateForm(request.POST)
         if form.is_valid():
             candidate = form.save(commit=False)
@@ -55,7 +55,7 @@ def candidate(request):
 @staff_member_required
 def manager(request):
     """Form to allow managers to submit the form for students."""
-    if request.method=='POST':
+    if request.method == 'POST':
         form = ManagerForm(request.POST)
         if form.is_valid():
             candidate = form.save(commit=False)

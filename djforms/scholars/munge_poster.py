@@ -1,16 +1,16 @@
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-#!/usr/bin/env
 
+import argparse
+import django
 import os
 import sys
 import uuid
-import argparse
 
 # env
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djforms.settings')
 
 # primt django
-import django
 django.setup()
 
 from django.conf import settings

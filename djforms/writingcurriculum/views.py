@@ -30,7 +30,7 @@ def proposal_form(request, pid=None):
     copies=1
     proposal = None
     if pid:
-        proposal = get_object_or_404(CourseProposal,id=pid)
+        proposal = get_object_or_404(CourseProposal, pk=pid)
         # check perms
         if proposal.user != request.user and not request.user.is_superuser:
             raise Http404
@@ -45,12 +45,12 @@ def proposal_form(request, pid=None):
                 'description': c.description,
             })
         # add 1 because lists are 0 based
-        copies = copies+1
+        copies += 1
 
-    if request.method=='POST':
+    if request.method == 'POST':
         try:
             profile = request.user.userprofile
-        except:
+        except Exception:
             p = UserProfile(user=request.user)
             p.save()
             profile = request.user.userprofile
@@ -87,7 +87,6 @@ def proposal_form(request, pid=None):
                 proposal.syllabus = request.FILES.get('wac-syllabus')
             proposal.save()
             profile_form.save()
-
             # CRUD
             # new list with original criteria objects
             criteria_orig = []
@@ -96,7 +95,7 @@ def proposal_form(request, pid=None):
             # flow control vars
             x = len(criteria_orig)
             y = len(criteria)
-            for i in range (0,max(x,y)):
+            for i in range (0, max(x, y)):
                 # if we have more exisiting criteria than new.
                 # else we have more new criteria than existing.
                 # update the current, delete any extras.
@@ -143,9 +142,8 @@ def proposal_form(request, pid=None):
                 request.user.email,
                 'writingcurriculum/email.html',
                 {'proposal': proposal, 'user': request.user, 'criteria': criteria},
-                settings.MANAGERS,
+                [settings.SERVER_EMAIL],
             )
-
             return HttpResponseRedirect(reverse_lazy('proposal_success'))
     else:
         if not proposal:
@@ -172,16 +170,18 @@ def proposal_form(request, pid=None):
             'copies': copies,
             'year': year,
             'year_past': year_past,
-        }
+        },
     )
 
 
 @login_required
 def my_proposals(request):
     objects = CourseProposal.objects.filter(
-        user=request.user).order_by('-date_created')
+        user=request.user,
+    ).order_by('-date_created')
 
     return render(
-        request, 'writingcurriculum/my_proposals.html',
-        {'objects': objects,}
+        request,
+        'writingcurriculum/my_proposals.html',
+        {'objects': objects},
     )

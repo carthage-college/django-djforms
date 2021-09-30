@@ -32,7 +32,7 @@ def questionnaire_form(request, campaign=None):
     if not form:
         raise Http404
 
-    if request.method=='POST':
+    if request.method == 'POST':
 
         form = str_to_class(
             'djforms.alumni.memory.forms', form_name,

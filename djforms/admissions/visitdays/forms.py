@@ -266,7 +266,7 @@ class VisitDayForm(forms.ModelForm):
 
     def clean_transfer(self):
         cd = self.cleaned_data
-        if cd.get('entry_as')=="Transfer" and not cd.get('transfer'):
+        if cd.get('entry_as') == 'Transfer' and not cd.get('transfer'):
             raise forms.ValidationError("""
                 Please include the school you attended
                 and the location (city & state).

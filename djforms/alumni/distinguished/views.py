@@ -11,7 +11,7 @@ import datetime
 
 
 def nomination_form(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         nominee_form = NomineeForm(request.POST,prefix='nominee')
         nominator_form = NominatorForm(request.POST,prefix='nominator')
         if nominee_form.is_valid() and nominator_form.is_valid():

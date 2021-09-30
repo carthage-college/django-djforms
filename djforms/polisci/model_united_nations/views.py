@@ -15,7 +15,7 @@ def registration(request):
     else:
         TO_LIST = settings.POLISCI_MUN_EMAIL_LIST
     BCC = settings.MANAGERS
-    if request.method=='POST':
+    if request.method == 'POST':
         form_cont = AttenderForm(request.POST, prefix='cont')
         form_pais = CountryForm(request.POST, prefix='pais')
         if form_cont.is_valid() and form_pais.is_valid():

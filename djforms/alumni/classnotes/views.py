@@ -18,7 +18,7 @@ def contact(request):
         TO_LIST = settings.ALUMNI_CLASSNOTES_EMAILS
     BCC = settings.MANAGERS
 
-    if request.method=='POST':
+    if request.method == 'POST':
         form = ContactForm(request.POST, request.FILES)
         if form.is_valid():
             contact = form.save()

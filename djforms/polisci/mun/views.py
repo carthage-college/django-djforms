@@ -16,7 +16,7 @@ def registration(request):
 
     BCC = settings.MANAGERS
 
-    if request.method=='POST':
+    if request.method == 'POST':
         form_cont = AttenderForm(request.POST, prefix='cont', label_suffix='')
         form_pais = CountryForm(request.POST, prefix='pais')
         if form_cont.is_valid() and form_pais.is_valid():

@@ -145,7 +145,7 @@ class UserProfile(models.Model):
         blank=True,
     )
     address = models.CharField(max_length=255, null=True, blank=True)
-    city = models.CharField(max_length=128)
+    city = models.CharField(max_length=128, null=True, blank=True)
     state = USStateField(null=True, blank=True, default='WI')
     zip = models.CharField('Zip code', max_length=10, null=True, blank=True)
     dob = models.DateField('Birthday', null=True, blank=True)

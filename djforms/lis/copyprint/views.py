@@ -12,7 +12,7 @@ from djtools.utils.mail import send_mail
 
 @login_required
 def index(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         form = CardRequestForm(request.POST)
         if form.is_valid():
             data = form.save(commit=False)

@@ -19,7 +19,7 @@ else:
 def visit_day_form(request, event_type):
     visit_day = get_object_or_404(VisitDay, slug=event_type)
     short = False
-    if request.method=='POST':
+    if request.method == 'POST':
         if visit_day.extended:
             form = VisitDayForm(
                 event_type, request.POST, use_required_attribute=REQ_ATTR,

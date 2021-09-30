@@ -12,7 +12,7 @@ urlpatterns = [
     path('presentation/print/', imprimir.alpha, name='presentation_print'),
     path(
         'presentation/alpha/', imprimir.alpha,
-        {'template':'scholars/print/alpha.html'},
+        {'template': 'scholars/print/alpha.html'},
         name='presentation_print_alpha',
     ),
     # archives
@@ -59,7 +59,7 @@ urlpatterns = [
         name='presentation_form',
     ),
     # send email to all presentation leaders
-    # 10 Apr 2014: currently not completed but needed for 2015
+    # 10 Apr 2014: currently not completed
     #path(
     #    r'^presenters/email/leaders/$',
     #    presentation.email_leaders, name="email_leaders"
@@ -67,9 +67,7 @@ urlpatterns = [
     # send email to a presentation's leader and sponsor
     path(
         'presenters/email/success/',
-        TemplateView.as_view(
-            template_name='scholars/presenters/email_done.html'
-        ),
+        TemplateView.as_view(template_name='scholars/presenters/email_done.html'),
         name='email_presenters_done',
     ),
     path(
