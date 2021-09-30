@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-import urllib
+import requests
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -57,15 +57,17 @@ def get_json(yuri):
     jason = cache.get('{0}_api_json'.format(yuri))
     if jason is None:
         # read the json data from URL
-        earl = "{0}/{1}/?api_key={2}".format(
+        earl = "{0}{1}/screen/?api_key={2}".format(
             settings.API_PEOPLE_URL, yuri, settings.API_KEY,
         )
-        response =  urllib.urlopen(earl)
-        data = response.read()
+        response =  requests.get(earl)
+         #jason_data = json.loads(response.text)
+        #data = response.read()
         # json doesn't like trailing commas, so...
-        data = data.replace(',]', ']')
-        jason = json.loads(data)
-        cache.set('%s_api_json' % yuri, jason)
+        #data = data.replace(',]', ']')
+        data = response.text
+        jason = json.loads(response.text)
+        cache.set('{0}_api_json'.format(yuri), jason)
     return jason
 
 

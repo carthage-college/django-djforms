@@ -1,20 +1,20 @@
-from django.shortcuts import render
+# -*- coding: utf-8 -*-
 
+import datetime
+import os
+
+from django.shortcuts import render
 from djforms.scholars.models import Presentation
 
-import datetime, os
 
 NOW  = datetime.datetime.now()
 YEAR = int(NOW.year)
 
 
 def alpha(request, template=None):
-    p = Presentation.objects.filter(date_created__year=YEAR).filter(status=True)
-    presentations = p.order_by('leader__last_name')
-
+    presentations = Presentation.objects.filter(
+        date_created__year=YEAR,
+    ).filter(status=True).order_by('leader__last_name')
     if not template:
         template = 'scholars/print/pdf.html'
-
-    return render(
-        request, template, {'presentations': presentations,}
-    )
+    return render(request, template, {'presentations': presentations})

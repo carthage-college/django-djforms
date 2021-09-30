@@ -1,21 +1,29 @@
+# -*- coding: utf-8 -*-
+
+import datetime
+import os
+
 from django.conf import settings
 from django.urls import reverse
-from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required, permission_required
-
-from djforms.scholars.views.forms import EmailPresentersForm, PresentationForm
+from django.http import HttpResponseRedirect
+from django.http import Http404
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import  permission_required
+from djforms.scholars.views.forms import EmailPresentersForm
+from djforms.scholars.views.forms import PresentationForm
 from djforms.scholars.views.forms import DEPTS
-from djforms.scholars.models import Presenter, Presentation, PRESENTER_TYPES
+from djforms.scholars.models import Presentation
+from djforms.scholars.models import Presenter
+from djforms.scholars.models import PRESENTER_TYPES
 from djforms.scholars.models import get_json
-from djforms.core.models import Department, YEAR_CHOICES
-
+from djforms.core.models import Department
+from djforms.core.models import YEAR_CHOICES
 from djtools.utils.mail import send_mail
-from djtools.fields import TODAY, NOW
+from djtools.fields import NOW
+from djtools.fields import TODAY
 
-from datetime import date
-
-import os
 
 YEAR = int(NOW.year)
 if int(NOW.month) > 9 and not settings.DEBUG:
@@ -28,41 +36,40 @@ logger = logging.getLogger(__name__)
 
 
 def _update_presenters(presenter, presenters):
-    presenter.first_name   = presenters.first_name
-    presenter.last_name    = presenters.last_name
-    presenter.prez_type    = presenters.prez_type
-    presenter.leader       = presenters.leader
+    """Private function to update presenters."""
+    presenter.first_name = presenters.first_name
+    presenter.last_name = presenters.last_name
+    presenter.prez_type = presenters.prez_type
+    presenter.leader = presenters.leader
     presenter.college_year = presenters.college_year
-    presenter.major        = presenters.major
-    presenter.hometown     = presenters.hometown
-    presenter.sponsor      = presenters.sponsor
-    presenter.sponsor_other= presenters.sponsor_other
+    presenter.major = presenters.major
+    presenter.hometown = presenters.hometown
+    presenter.sponsor = presenters.sponsor
+    presenter.sponsor_other = presenters.sponsor_other
     if presenters.mugshot:
-        presenter.mugshot  = presenters.mugshot
+        presenter.mugshot = presenters.mugshot
     if presenters.department:
-        presenter.department  = presenters.department
+        presenter.department = presenters.department
     presenter.save()
     return presenter
 
 
 @login_required
 def home(request):
-
+    """Home view."""
     presentations = Presentation.objects.filter(user=request.user).filter(
-        date_created__year=YEAR
+        date_created__year=YEAR,
     )
-
-    context = {
-        'presentations':presentations,
-    }
-
     return render(
-        request, 'scholars/presentation/home.html', context
+        request,
+        'scholars/presentation/home.html',
+        {'presentations':presentations},
     )
 
 
 @login_required
 def form(request, pid=None):
+    """Presentation form."""
     presenters = []
     presentation = None
     # flag managers
@@ -72,18 +79,20 @@ def form(request, pid=None):
     faculty = []
     for jay in jason:
         faculty.append({
-            'id':jay['id'],'lastname':jay['lastname'],'firstname':jay['firstname']
+            'id': jay['cid'],
+            'lastname': jay['lastname'],
+            'firstname': jay['firstname'],
         })
     # define our submission window
-    s_date = date(
+    s_date = datetime.date(
         TODAY.year,
         settings.COS_START_MONTH,
-        settings.COS_START_DAY
+        settings.COS_START_DAY,
     )
-    x_date = date(
+    x_date = datetime.date(
         TODAY.year,
         settings.COS_END_MONTH,
-        settings.COS_END_DAY
+        settings.COS_END_DAY,
     )
     expired = False
     if x_date < TODAY or s_date > TODAY:
@@ -96,7 +105,9 @@ def form(request, pid=None):
 
     if pid:
         presentation = get_object_or_404(
-            Presentation,id=pid,date_updated__year=YEAR
+            Presentation,
+            pk=pid,
+            date_updated__year=YEAR,
         )
         # check perms
         if presentation.user != request.user and not manager:
@@ -106,35 +117,28 @@ def form(request, pid=None):
     copies = 0
     if presentation:
         # create list for GET requests to populate presenters fields
-        #for copies, p in enumerate(presentation.presenters.all()):
-        for copies, p in enumerate(presentation.presenters.all(), start=1):
-            presenters.append(p)
-        # add 1 since lists are zero based
-        #copies += 1
-
+        for copies, prez in enumerate(presentation.presenters.all(), start=1):
+            presenters.append(prez)
 
     if request.method=='POST':
         form=PresentationForm(request.POST,request.FILES,instance=presentation)
-
-        first_name   = request.POST.getlist('first_name[]')
-        last_name    = request.POST.getlist('last_name[]')
-        prez_type    = request.POST.getlist('prez_type[]')
-        leader       = request.POST.getlist('leader[]')
+        first_name = request.POST.getlist('first_name[]')
+        last_name = request.POST.getlist('last_name[]')
+        prez_type = request.POST.getlist('prez_type[]')
+        leader = request.POST.getlist('leader[]')
         college_year = request.POST.getlist('college_year[]')
-        major        = request.POST.getlist('major[]')
-        hometown     = request.POST.getlist('hometown[]')
-        sponsor      = request.POST.getlist('sponsor[]')
-        sponsor_other= request.POST.getlist('sponsor_other[]')
-        department   = request.POST.getlist('department[]')
-        mugshoth     = request.POST.getlist('mugshoth[]')
-        mugshot      = request.FILES.getlist('mugshot[]')
-
+        major = request.POST.getlist('major[]')
+        hometown = request.POST.getlist('hometown[]')
+        sponsor = request.POST.getlist('sponsor[]')
+        sponsor_other = request.POST.getlist('sponsor_other[]')
+        department = request.POST.getlist('department[]')
+        mugshoth = request.POST.getlist('mugshoth[]')
+        mugshot = request.FILES.getlist('mugshot[]')
         # leader is a boolean field and the html returns '' when
         # the checkbox is not checked
         for idx, val in enumerate(leader):
             if val == '':
                 leader[idx] = False
-
         if pid:
             presenters = []
         # here we deal with the problem of file fields not including
@@ -145,7 +149,7 @@ def form(request, pid=None):
             if mugshoth[i] == 'True':
                 try:
                     mug = mugshot[len(mugshot)-h]
-                except:
+                except Exception:
                     mug = None
                     logger.debug('Celebration of Scholars mugshot error.')
                 h -= 1
@@ -157,12 +161,21 @@ def form(request, pid=None):
             if department[i]:
                 dept = Department.objects.get(name=department[i])
 
-            presenters.append(Presenter(
-                first_name=first_name[i],last_name=last_name[i],
-                prez_type=prez_type[i],leader=leader[i],
-                college_year=college_year[i],major=major[i],
-                hometown=hometown[i],sponsor=sponsor[i],
-                sponsor_other=sponsor_other[i],department=dept,mugshot=mug))
+            presenters.append(
+                Presenter(
+                    first_name=first_name[i],
+                    last_name=last_name[i],
+                    prez_type=prez_type[i],
+                    leader=leader[i],
+                    college_year=college_year[i],
+                    major=major[i],
+                    hometown=hometown[i],
+                    sponsor=sponsor[i],
+                    sponsor_other=sponsor_other[i],
+                    department=dept,
+                    mugshot=mug,
+                ),
+            )
 
         if form.is_valid():
             if presentation:
@@ -174,7 +187,6 @@ def form(request, pid=None):
             presentation.user = user
             presentation.updated_by = request.user
             presentation.save()
-
             # CRUD
             # new list with original presenter objects
             presenters_orig = []
@@ -183,7 +195,7 @@ def form(request, pid=None):
             # flow control vars
             x = len(presenters_orig)
             y = len(presenters)
-            for i in range (0,max(x,y)):
+            for i in range (0, max(x, y)):
                 # if we have more exisiting presenters than new.
                 # else we have more new presenters than existing.
                 # update the current, delete any extras.
@@ -212,17 +224,20 @@ def form(request, pid=None):
                     presentation.status = False
             presentation.save()
             if not manager:
-                data = {'presentation':presentation,'pid':pid,}
+                data = {'presentation': presentation, 'pid': pid}
                 status = ''
                 if pid:
                     status = ' (updated)'
-                subject = u"""[CoS Presentation] {}{}: by {} {}""".format(
-                    presentation.title,status,request.user.first_name,
-                    request.user.last_name
+                subject = '''[CoS Presentation] {0}{1}: by {2} {3}'''.format(
+                    presentation.title,
+                    status,
+                    request.user.first_name,
+                    request.user.last_name,
                 )
                 send_mail (
                     request,
-                    [settings.SERVER_EMAIL], subject,
+                    [settings.SERVER_EMAIL],
+                    subject,
                     request.user.email,
                     'scholars/presentation/email.html',
                     data,
@@ -230,69 +245,67 @@ def form(request, pid=None):
             return HttpResponseRedirect(reverse('presentation_form_done'))
         else:
             copies = len(presenters) + 1
-
     else:
         form = PresentationForm(instance=presentation)
         if not pid:
             copies = 1
             presenters = ['']
-
     context = {
-        'presentation':presentation,'form':form,
-        'presenters':presenters,'copies':copies,
-        'faculty':faculty,'cyears':YEAR_CHOICES,
-        'depts':DEPTS,'types':PRESENTER_TYPES,
-        'pid':pid,'manager':manager,'expired':expired
+        'presentation': presentation,
+        'form': form,
+        'presenters': presenters,
+        'copies': copies,
+        'faculty': faculty,
+        'cyears': YEAR_CHOICES,
+        'depts': DEPTS,
+        'types': PRESENTER_TYPES,
+        'pid': pid,
+        'manager': manager,
+        'expired': expired,
     }
-
-    return render(
-        request, 'scholars/presentation/form.html', context
-    )
+    return render(request, 'scholars/presentation/form.html', context)
 
 
-@permission_required(
-    'scholars.manage_presentation',
-    login_url=login_url
-)
+@permission_required('scholars.manage_presentation', login_url=login_url)
 def manager(request):
     presentations = Presentation.objects.filter(
-        date_created__year=YEAR
+        date_created__year=YEAR,
     ).order_by('date_created')
 
     return render(
-        request, 'scholars/presentation/manager.html',
-        {'presentations':presentations,}
+        request,
+        'scholars/presentation/manager.html',
+        {'presentations':presentations},
     )
 
 
-@permission_required(
-    'scholars.manage_presentation',
-    login_url=login_url
-)
+@permission_required('scholars.manage_presentation', login_url=login_url)
 def email_presenters(request,pid,action):
-    """
-    method to send an email to the presenters and faculty sponsor
-    """
+    """Send an email to the presenters and faculty sponsor."""
     form_data = None
-    presentation = get_object_or_404(Presentation,id=pid)
+    presentation = get_object_or_404(Presentation, pk=pid)
     if request.method=='POST':
         form = EmailPresentersForm(request.POST)
         if form.is_valid():
             form_data = form.cleaned_data
             if 'confirm' in request.POST:
-                context = {'form':form,'data':form_data,'p':presentation}
+                context = {'form': form, 'data': form_data, 'p': presentation}
                 return render(
-                    request, 'scholars/presenters/email_form.html', context
+                    request,
+                    'scholars/presenters/email_form.html',
+                    context,
                 )
             elif 'execute' in request.POST:
                 femail = request.user.email
-                to_list = [presentation.user.email,]
+                to_list = [presentation.user.email]
                 if presentation.leader.sponsor_email:
                     if settings.DEBUG:
-                        to_list.append(settings.SERVER_EMAIL)
+                        to_list = [settings.SERVER_EMAIL]
+                        bcc = None
                     else:
                         to_list.append(presentation.leader.sponsor_email)
-                data = {'content':form_data['content']}
+                        bcc = [settings.COS_EMAIL, settings.SERVER_EMAIL]
+                data = {'content': form_data['content']}
                 sub = "[Celebration of Scholars] Info about your presentation"
                 send_mail (
                     request,
@@ -301,12 +314,15 @@ def email_presenters(request,pid,action):
                     femail,
                     'scholars/presenters/email_data.html',
                     data,
-                    [settings.COS_EMAIL, settings.SERVER_EMAIL],
+                    bcc,
                 )
                 return HttpResponseRedirect(reverse('email_presenters_done'))
             else:
                 return HttpResponseRedirect(
-                    reverse('email_presenters_form', args=[pid,action])
+                    reverse(
+                        'email_presenters_form',
+                        {'pid': pid, 'action': action},
+                    ),
                 )
     else:
         form = EmailPresentersForm()
@@ -363,27 +379,23 @@ def action(request):
         presentation = get_object_or_404(Presentation,id=pid)
         if action == 'update':
             return HttpResponseRedirect(
-                reverse('presentation_update', args=[pid])
+                reverse('presentation_update', kwargs={'pid': self.id})
             )
         else:
             if not action:
                 action = 'update'
             return HttpResponseRedirect(
-                reverse('email_presenters_form', args=[pid,action])
+                reverse(
+                    'email_presenters_form',
+                    {'pid': pid, 'action': action},
+                ),
             )
     else:
         raise Http404
 
 
 def email_all_presenters(request):
-    """
-    Send an email to all presenters
-    """
+    """Send an email to all presenters."""
     template = 'scholars/presenters/email_all_presenters.html'
-
-    p = Presentation.objects.filter(date_updated__year=YEAR)
-
-    return render(
-        request, template, {'prez': p,}
-    )
-
+    presentation = Presentation.objects.filter(date_updated__year=YEAR)
+    return render(request, template, {'prez': presentation})

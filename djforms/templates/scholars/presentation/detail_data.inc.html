@@ -7,8 +7,7 @@
             <div class="person">
                 <p>
                     {% if o.mugshot %}
-                        <img class="mugshot" style="width:250px;"
-                            src="https://{{server_url}}{{media_url}}{{o.mugshot}}" />
+                        <img class="mugshot" style="width:250px;" src="{{media_url}}{{o.mugshot}}">
                     {% endif %}
                     <strong>Name</strong>:
                     {% if not user.is_anonymous and o.leader and o.user.email %}
@@ -43,8 +42,7 @@
             <div class="person">
                 <p>
                     {% if o.mugshot %}
-                        <img class="mugshot" style="width:250px;"
-                            src="https://{{server_url}}{{media_url}}{{o.mugshot}}" />
+                        <img class="mugshot" style="width:250px;" src="{{media_url}}{{o.mugshot}}">
                     {% endif %}
                     <strong>Name</strong>:
                     {% if not user.is_anonymous and o.leader and o.user.email %}
@@ -76,9 +74,9 @@
     </div>
     {% endif %}
     {% if p.abstract_file %}
-    <p class="abstract-file"><a href="http://{{server_url}}{{media_url}}{{p.abstract_file}}">Abstract file</a></p>
+    <p class="abstract-file"><a href="{{media_url}}{{p.abstract_file}}">Abstract file</a></p>
     {% endif %}
     {% if p.poster_file %}
-    <p class="poster-file"><a href="http://{{server_url}}{{media_url}}{{p.poster_file}}">Poster file</a></p>
+    <p class="poster-file"><a href="{{media_url}}{{p.poster_file}}">Poster file</a></p>
     {% endif %}
 </div>
