@@ -57,7 +57,7 @@ def get_json(yuri):
     jason = cache.get('{0}_api_json'.format(yuri))
     if jason is None:
         # read the json data from URL
-        earl = "{0}{1}/screen/?api_key={2}".format(
+        earl = "{0}{1}/api/json.txt?api_key={2}".format(
             settings.API_PEOPLE_URL, yuri, settings.API_KEY,
         )
         response =  requests.get(earl)
