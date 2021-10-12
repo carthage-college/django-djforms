@@ -12,6 +12,10 @@
 $(function() {
     //$("#visit_day_form").validationEngine()
     $("#id_date").focus();
+    $('#visit_day_form').submit(function (e) {
+        $('#id_submit').prop('disabled', true);
+        return true;
+    });
 });
 function ValidateTransfer(){
     if($("#id_entry_as").val() =="Transfer" &&  $("#id_transfer").val() == ""){
