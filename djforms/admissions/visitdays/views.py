@@ -10,6 +10,7 @@ from djtools.utils.mail import send_mail
 from djtools.utils.convert import str_to_class
 
 email = 'Carthage Admissions <{0}>'.format(settings.ADMISSIONS_EMAIL)
+bcc = [email]
 if settings.DEBUG:
     REQ_ATTR = False
 else:
@@ -48,6 +49,7 @@ def visit_day_form(request, event_type):
                         email,
                         'admissions/visitday/email_event_full.html',
                         None,
+                        bcc,
                     )
                 event.save()
             # send HTML email to attendee
@@ -67,6 +69,7 @@ def visit_day_form(request, event_type):
                 email,
                 'admissions/visitday/email.html',
                 data,
+                bcc,
             )
             # send text mail to admissions folks
             if settings.DEBUG:
@@ -87,6 +90,7 @@ def visit_day_form(request, event_type):
                 email,
                 'admissions/visitday/email.txt',
                 data,
+                bcc,
             )
 
             return HttpResponseRedirect(
