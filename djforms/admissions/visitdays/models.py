@@ -105,7 +105,7 @@ class VisitDay(models.Model):
         """,
     )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
 
@@ -197,8 +197,8 @@ class VisitDayBaseProfile(GenericContact):
         blank=True,
     )
 
-    def __unicode__(self):
-        return u'{0} {1}'.format(self.last_name, self.first_name)
+    def __str__(self):
+        return '{0} {1}'.format(self.last_name, self.first_name)
 
 
 class VisitDayProfile(VisitDayBaseProfile):
@@ -234,8 +234,8 @@ class VisitDayProfile(VisitDayBaseProfile):
     )
     comments = models.TextField(null=True, blank=True)
 
-    def __unicode__(self):
-        return u'{0} {1}'.format(self.last_name, self.first_name)
+    def __str__(self):
+        return '{0} {1}'.format(self.last_name, self.first_name)
 
     def event_title(self):
         return self.date.event.title
