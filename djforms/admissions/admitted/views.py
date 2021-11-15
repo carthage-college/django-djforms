@@ -21,7 +21,7 @@ def chance_of_form(request):
 
     prospect_status = None
     if request.GET.keys():
-        prospect_status = request.GET.keys()[0]
+        prospect_status = list(request.GET.keys())[0]
     if request.method=='POST':
         form = ChanceOfForm(request.POST)
         if form.is_valid():
