@@ -9,12 +9,14 @@ from djforms.admissions.visitdays.forms import *
 from djtools.utils.mail import send_mail
 from djtools.utils.convert import str_to_class
 
+
 email = 'Carthage Admissions <{0}>'.format(settings.ADMISSIONS_EMAIL)
-bcc = [email]
+bcc = settings.ADMISSIONS_BCC
+
 if settings.DEBUG:
-    REQ_ATTR = False
+    req_attr = False
 else:
-    REQ_ATTR = True
+    req_attr = True
 
 
 def visit_day_form(request, event_type):
@@ -23,11 +25,11 @@ def visit_day_form(request, event_type):
     if request.method == 'POST':
         if visit_day.extended:
             form = VisitDayForm(
-                event_type, request.POST, use_required_attribute=REQ_ATTR,
+                event_type, request.POST, use_required_attribute=req_attr,
             )
         else:
             form = VisitDayBaseForm(
-                event_type, request.POST, use_required_attribute=REQ_ATTR,
+                event_type, request.POST, use_required_attribute=req_attr,
             )
             short = True
 
@@ -98,9 +100,9 @@ def visit_day_form(request, event_type):
             )
     else:
         if visit_day.extended:
-            form = VisitDayForm(event_type, use_required_attribute=REQ_ATTR)
+            form = VisitDayForm(event_type, use_required_attribute=req_attr)
         else:
-            form = VisitDayBaseForm(event_type, use_required_attribute=REQ_ATTR)
+            form = VisitDayBaseForm(event_type, use_required_attribute=req_attr)
 
     return render(
         request,

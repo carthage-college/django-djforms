@@ -12,12 +12,9 @@ import datetime
 
 def chance_of_form(request):
     if settings.DEBUG:
-        TO_LIST = [settings.SERVER_EMAIL]
+        to_list = [settings.SERVER_EMAIL]
     else:
-        TO_LIST = settings.ADMISSIONS_ADMITTED_EMAIL_LIST
-    BCC = (
-        ('Confirmation', 'confirmation@carthage.edu'),
-    )
+        to_list = settings.ADMISSIONS_ADMITTED_EMAIL_LIST
 
     prospect_status = None
     if request.GET.keys():
@@ -35,8 +32,13 @@ def chance_of_form(request):
                 data.first_name,
             )
             send_mail(
-                request, TO_LIST, subject, data.email,
-                'admissions/admitted/email.html', data, BCC
+                request,
+                to_list,
+                subject,
+                data.email,
+                'admissions/admitted/email.html',
+                data,
+                bcc,
             )
             return HttpResponseRedirect(
                 reverse_lazy('admitted_success')
