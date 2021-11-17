@@ -38,7 +38,7 @@ def chance_of_form(request):
                 data.email,
                 'admissions/admitted/email.html',
                 data,
-                ADMISSIONS_BCC,
+                settings.ADMISSIONS_BCC,
             )
             return HttpResponseRedirect(
                 reverse_lazy('admitted_success')
