@@ -104,6 +104,14 @@ class VisitDay(models.Model):
             meeting requests (e.g. coaches, faculty) for their appointment.
         """,
     )
+    spanish_rep = models.BooleanField(
+        "Spanish speaking representative",
+        default=False,
+        help_text="""
+            Check this box if you want to allow users to choose
+            a Spanish speaking representative for their appointment.
+        """,
+    )
 
     def __str__(self):
         return self.title
@@ -195,6 +203,10 @@ class VisitDayBaseProfile(GenericContact):
         verbose_name="Meeting Requests",
         related_name="visit_day_request",
         blank=True,
+    )
+    spanish_rep = models.BooleanField(
+        "I would like to meet with a Spanish speaking admissions representative.",
+        default=False,
     )
 
     def __str__(self):

@@ -113,9 +113,13 @@ fbq('track', 'PageView');
                         {% if visit_day.number_attend %}
                           {% include "form_field.inc.html" %}
                         {% endif %}
+                    {% else %}{% if field.name == "spanish_rep" %}
+                        {% if visit_day.spanish_rep %}
+                          {% include "form_field.inc.html" %}
+                        {% endif %}
                     {% else %}
                       {% include "form_field.inc.html" %}
-                      {% endif %}{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}
+                    {% endif %}{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}
                 {% endfor %}
             </ol>
         </fieldset>
