@@ -7,7 +7,7 @@ django-simple-captcha==0.5.14
 Pillow==8.3.2
 mysqlclient==2.0.3
 python-memcached==1.59
-python-ldap==3.3.1
+python-ldap==3.4.0
 requests==2.26.0
 django-taggit==1.5.1
 python-magic==0.4.24
