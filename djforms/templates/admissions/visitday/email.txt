@@ -4,7 +4,7 @@ Date........................ {{data.profile.date}}
 {% if data.profile.time_primary %}Time, First Choice.......... {{data.profile.time_primary}}{% endif %}
 {% if data.profile.time_secondary %}Time, Second Choice......... {{data.profile.time_secondary}}{% endif %}
 {% if data.profile.number_attend %}Number Attending............ {{data.profile.number_attend}}{% endif %}
-{% if data.profile.number_attend %}Spanish Rep............ {{data.profile.spanish_rep}}{% endif %}
+{% if data.profile.spanish_rep %}Spanish Rep............ {{data.profile.spanish_rep}}{% endif %}
 {% if data.profile.meeting_format %}Meeting Format.............. {{data.profile.meeting_format}}{% endif %}
 {% if data.profile.meeting_request.all %}Meeting Requests............ {% for mr in data.profile.meeting_request.all %}{{mr}}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}
 First Name.................. {{data.profile.first_name}}
