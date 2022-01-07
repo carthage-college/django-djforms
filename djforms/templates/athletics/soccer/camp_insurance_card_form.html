@@ -5,18 +5,17 @@
     Carthage College
 {% endblock %}
 {% block extra_style %}
+{{block.super}}
 <style type="text/css" media="screen, projection">
 li.ctrlHolder div ul li {display:inline; padding-right:3px;}
 .forms-container, .forms-container label {font-weight:bold;}
 </style>
 {% endblock %}
-{% block banner %}{% endblock %}
-{% block topnav %}{% endblock %}
 {% block content %}
 <div id="first">
-    <div class="buffer forms-container" style="background-color:#fff;">
+  <div class="buffer forms-container" style="background-color:#fff;">
     <h2>Soccer Camp Insurance Card Form</h2>
-        {% include "includes/generic_form_multi.html" %}
-    </div>
+    {% include "includes/generic_form_multi.html" %}
+  </div>
 </div>
 {% endblock %}

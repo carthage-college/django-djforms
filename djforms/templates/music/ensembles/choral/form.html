@@ -1,23 +1,25 @@
 {% extends "base.html" %}
 {% load livewhale_api %}
 {% block title %}
-    Choral Ensemble Auditions &mdash; Music &mdash; Carthage College
+  Choral Ensemble Auditions &mdash; Music &mdash; Carthage College
 {% endblock %}
-{% block group_name %}Music{% endblock %}
+{% block breadcrumb %}
+  <li><a href="/academics/">Academics</a></li>
+  <li><a href="/academics/majors-minors/">Majors &amp; Minors</a></li>
+  <li><a href="/academics/majors-minors/music/" aria-current="page">Music</a></li>
+{% endblock breadcrumb %}
 {% block left_nav %}
-    {% include "music/left_nav.html" %}
+  {% include "music/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
-    <h1 id="page_title">
-        Choral Ensemble Auditions
-    </h1>
+  <h1>Choral Ensemble Auditions</h1>
 {% endblock %}
 {% block content %}
 <div class="forms-container">
-    {% get_lw_content as content1 blurbs 2078 %}
-    {{content1.body}}
-    {% get_lw_content as content2 blurbs 3114 %}
-    {{content2.body}}
-    {% include "includes/generic_form.html" %}
+  {% get_lw_content as content1 blurbs 2078 %}
+  {{content1.body|safe}}
+  {% get_lw_content as content2 blurbs 3114 %}
+  {{content2.body|safe}}
+  {% include "includes/generic_form.html" %}
 </div>
 {% endblock %}

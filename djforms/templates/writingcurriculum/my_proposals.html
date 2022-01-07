@@ -1,25 +1,16 @@
-{% extends "base.html" %}
+{% extends "writingcurriculum/form.html" %}
 {% block title %}
     My Proposals &mdash;
     Writing Intensive Course Proposal Form &mdash;
     Carthage College
 {% endblock %}
-{% block group_name %}WAC{% endblock %}
-{% block left_nav %}
-    {% include "writingcurriculum/left_nav.html" %}
-{% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        Writing Intensive Course Proposal
-    </h1>
-{% endblock %}
 {% block content %}
 <h2>My Proposals</h2>
 <ul>
 {% for obj in objects %}
-    <li>
-        <a href="{% url 'proposal_update' obj.id %}">{{obj.course_title}}</a>
-    </li>
+  <li>
+    <a href="{% url 'proposal_update' obj.id %}">{{obj.course_title}}</a>
+  </li>
 {% endfor %}
 </ul>
 {% endblock %}

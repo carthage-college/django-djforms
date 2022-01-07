@@ -3,14 +3,14 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 
-from djforms.admissions.admitted.forms import ChanceOfForm
+from djforms.admissions.admitted.forms import ChanceForm
 
 from djtools.utils.mail import send_mail
 
 import datetime
 
 
-def chance_of_form(request):
+def chance_form(request):
     if settings.DEBUG:
         to_list = [settings.SERVER_EMAIL]
     else:
@@ -20,7 +20,7 @@ def chance_of_form(request):
     if request.GET.keys():
         prospect_status = list(request.GET.keys())[0]
     if request.method=='POST':
-        form = ChanceOfForm(request.POST)
+        form = ChanceForm(request.POST)
         if form.is_valid():
             data = form.save()
             if data.gpa_scale == '100':
@@ -46,7 +46,7 @@ def chance_of_form(request):
         else:
             prospect_status = request.POST.get('prospect_status')
     else:
-        form = ChanceOfForm()
+        form = ChanceForm()
 
     return render(
         request, 'admissions/admitted/form.html',

@@ -1,9 +1,0 @@
-<ul>
-    <li><a href="/forms/catering/event/">Event Request Form</a></li>
-    {% if not user.is_anonymous %}
-        <li><a href="/forms/catering/event/archives/">Event Archives</a></li>
-        <li><a href="/forms/accounts/logout/?next={{request.path}}">Logout</a></li>
-    {% else %}
-        <li><a href="/forms/accounts/login/?next={{request.path}}">Login</a></li>
-    {% endif %}
-</ul>

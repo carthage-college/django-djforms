@@ -1,38 +1,46 @@
-{% extends "base.html" %}
+{% extends "admissions/base.html" %}
 {% block title %}
-    Will I be admitted to Carthage? &mdash; Admissions &mdash;
-    Carthage College
+  Will I be admitted to Carthage? &mdash; Admissions &mdash;
+  Carthage College
 {% endblock %}
-{% block group_name %}Admissions{% endblock %}
+{% block extra_style %}
+{{block.super}}
+<style type="text/css">
+.forms-sidebar {padding-left: 0;padding-top:16px;}
+</style>
+{% endblock %}
 {% block left_nav %}
-    {% include "admissions/left_nav.html" %}
+  {% include "admissions/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
-    <h1 id="page_title">
-        Will I be admitted to Carthage?
-    </h1>
+  <h1>Will I be admitted to Carthage?</h1>
 {% endblock %}
+{% block breadcrumb %}
+<li>
+  <a href="https://www.carthage.edu/admissions/">Admissions</a>
+</li>
+<li>
+  <a href="{% url 'chance_form' %}" aria-current="page">Admitted?</a>
+</li>
+{% endblock breadcrumb %}
 {% block content %}
 <div class="forms-container large-8 medium-10 small-12">
-    {% include "includes/required_text.html" %}
-    {% include "includes/errors_text.html" %}
-    <form method="post" action="." class="form" id="profile">
-        {% csrf_token %}
-        {% if prospect_status %}
-            <input type="hidden" name="prospect_status"
-                value="{{prospect_status}}" />
-        {% endif %}
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in form.visible_fields %}
-                    {% include "form_field.inc.html" %}
-                {% endfor %}
-            </ol>
-        </fieldset>
-        {% include "form_submit.inc.html" %}
-    </form>
+  {% include "includes/required_text.html" %}
+  {% include "includes/errors_text.html" %}
+  <form method="post" action="." class="form">
+    {% csrf_token %}
+    {% if prospect_status %}
+        <input type="hidden" name="prospect_status" value="{{prospect_status}}">
+    {% endif %}
+    <fieldset class="blockLabels">
+      <ol>
+        {% for field in form.visible_fields %}
+          {% include "form_field.inc.html" %}
+        {% endfor %}
+      </ol>
+    </fieldset>
+    {% include "form_submit.inc.html" %}
+  </form>
 </div>
-<div class="column2 large-4 medium-6 small-12">
-    {% include "admissions/side_bar.html" %}
-</div>
+{% include "admissions/side_bar.html" %}
 {% endblock %}

@@ -1,16 +1,13 @@
 <ul>
-    <li class="last-featured">
-        <a href="http://www.carthage.edu/writingcurriculum/">
-            Course Proposal Form
-        </a>
-    </li>
-    <li>
-        <a href="{% url 'my_proposals' %}">
-            My Proposals
-        </a>
-    </li>
+  <li>
+    <a href="/academics/carthage-curriculum/" class="fancy-link">Carthage Curriculum<span class="fancy-link__icon" aria-hidden="true">›</span></a>
+    <ul>
+      <li><a href="/academics/carthage-curriculum/catalog/">College Catalog</a></li>
+      <li><a href="/academics/carthage-curriculum/global-heritage/">Global Heritage</a></li>
+      <li><a href="/academics/carthage-curriculum/intellectual-foundations/">Intellectual Foundations</a></li>
+      <li><a href="/academics/carthage-curriculum/writing-across-the-curriculum/" aria-current="page">Writing Across the Curriculum</a></li>
+      <li><a href="http://www.carthage.edu/writingcurriculum/">Course Proposal Form</a></li>
+      <li><a href="{% url 'my_proposals' %}">My Proposals</a></li>
+    </ul>
+  </li>
 </ul>
-<hr>
-{% load livewhale_api %}
-{% get_lw_content as nav blurbs 2043 %}
-{{nav.body}}

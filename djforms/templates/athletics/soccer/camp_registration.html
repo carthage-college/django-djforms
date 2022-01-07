@@ -1,9 +1,7 @@
 {% extends "athletics/base.html" %}
 {% load livewhale_api %}
 {% block title %}
-Soccer Camp Registration Form &mdash;
-Athletics &mdash;
-Carthage College
+  Soccer Camp Registration Form &mdash; Athletics &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
     {{ block.super }}
@@ -63,6 +61,7 @@ Carthage College
     </script>
 {% endblock %}
 {% block extra_style %}
+{{ block.super }}
 <style type="text/css" media="screen, projection">
 #id_reg_fee {color:#800;font-weight:bold;}
 {% if form_reg.data.payment_method == "Credit Card" %}
@@ -80,61 +79,57 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
 .forms-container, .forms-container label {font-weight:bold;}
 </style>
 {% endblock %}
-{% block banner %}{% endblock %}
-{% block topnav %}{% endblock %}
 {% block content %}
-<div id="first">
-    <div class="buffer forms-container" style="background-color:#fff;">
-    <h2>Soccer Camp Registration Form</h2>
-    {% get_lw_content as how_to blurbs 2145 %}
-    {{how_to.body}}
-    {% include "includes/required_text.html" %}
-    {% if form_proc.errors or form_reg.errors %}
-        <p class="error">
-            There were errors with the data submitted, see below.
-        </p>
-    {% endif %}
-    <form method="post" action="." class="form" id="profile">{% csrf_token %}
-        {% for field in form_reg %}
-            {% if field.name == "first_name" %}
-                <fieldset class="blockLabels">
-                <legend>Contact Information</legend>
-                <ol>
-            {% endif %}
-            {% if field.name == "gender" %}
-                </ol>
-                </fieldset>
-                <fieldset class="blockLabels">
-                <legend>Personal Information</legend>
-                <ol>
-            {% endif %}
-            {% if field.name == "roommate" %}
-                </ol>
-                </fieldset>
-                <fieldset class="blockLabels">
-                <legend>Housing Information</legend>
-                <ol>
-            {% endif %}
-            {% if field.name == "session" %}
-                </ol>
-                </fieldset>
-                <fieldset class="blockLabels" id="session-info">
-                <legend>Session Information</legend>
-                <ol>
-            {% endif %}
-            {% if field.name == "reg_fee" %}
-                </ol>
-                </fieldset>
-                <fieldset class="blockLabels">
-                <legend>Method of Payment</legend>
-                <ol>
-            {% endif %}
-            {% include "form_field.inc.html" %}
-        {% endfor %}
-        </ol>
-        </fieldset>
-        <fieldset class="blockLabels" id="payment-details">
-            <legend>Credit Card Details</legend>
+<div class="forms-container" style="background-color:#fff;">
+  <h2>Soccer Camp Registration Form</h2>
+  {% get_lw_content as how_to blurbs 2145 %}
+  {{how_to.body|safe}}
+  {% include "includes/required_text.html" %}
+  {% if form_proc.errors or form_reg.errors %}
+    <p class="error">There were errors with the data submitted, see below.</p>
+  {% endif %}
+  <form method="post" action="." class="form">
+    {% csrf_token %}
+    {% for field in form_reg %}
+        {% if field.name == "first_name" %}
+            <fieldset class="blockLabels">
+            <legend>Contact Information</legend>
+            <ol>
+        {% endif %}
+        {% if field.name == "gender" %}
+            </ol>
+            </fieldset>
+            <fieldset class="blockLabels">
+            <legend>Personal Information</legend>
+            <ol>
+        {% endif %}
+        {% if field.name == "roommate" %}
+            </ol>
+            </fieldset>
+            <fieldset class="blockLabels">
+            <legend>Housing Information</legend>
+            <ol>
+        {% endif %}
+        {% if field.name == "session" %}
+            </ol>
+            </fieldset>
+            <fieldset class="blockLabels" id="session-info">
+            <legend>Session Information</legend>
+            <ol>
+        {% endif %}
+        {% if field.name == "reg_fee" %}
+            </ol>
+            </fieldset>
+            <fieldset class="blockLabels">
+            <legend>Method of Payment</legend>
+            <ol>
+        {% endif %}
+        {% include "form_field.inc.html" %}
+    {% endfor %}
+    </ol>
+    </fieldset>
+    <fieldset class="blockLabels" id="payment-details">
+      <legend>Credit Card Details</legend>
             {% if form_proc.errors and status %}
                 <div style="padding-left:4px;">
                     <p class="notice">
@@ -148,22 +143,21 @@ li.ctrlHolder div ul li {display:inline; padding-right:3px;}
             <ol>
             {% include "form_field_credit_card.inc.html" %}
             </ol>
-        </fieldset>
-        <fieldset class="blockLabels">
-            <legend>Payment Information</legend>
+    </fieldset>
+    <fieldset class="blockLabels">
+      <legend>Payment Information</legend>
             <ol>
                 <li class="btnHolder">
                     {% get_lw_content as payments blurbs 2146 %}
-                    {{payments.body}}
+                    {{payments.body|safe}}
                 </li>
             </ol>
-        </fieldset>
-        {% include "form_submit.inc.html" %}
-        <fieldset class="blockLabels">
-            <legend>Questions?</legend>
-            <strong>Call Steve Domin at (262) 551-5930</strong></p>
-        </fieldset>
-    </form>
-    </div>
+    </fieldset>
+    {% include "form_submit.inc.html" %}
+    <fieldset class="blockLabels">
+      <legend>Questions?</legend>
+      <strong>Call Steve Domin at (262) 551-5930</strong></p>
+    </fieldset>
+  </form>
 </div>
 {% endblock %}

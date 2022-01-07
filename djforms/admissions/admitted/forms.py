@@ -1,7 +1,7 @@
 from django import forms
 from djforms.admissions.admitted.models import *
 
-class ChanceOfForm(forms.ModelForm):
+class ChanceForm(forms.ModelForm):
     first_name      = forms.CharField()
     email           = forms.EmailField()
     confirm_email   = forms.EmailField()

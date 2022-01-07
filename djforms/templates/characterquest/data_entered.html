@@ -1,9 +1,0 @@
-{% extends "characterquest/application_form.html" %}
-{% load livewhale_api %}
-{% block title %}Success{% endblock %}
-{% block extra_javascript %}{% endblock %}
-{% block extra_style %}{% endblock %}
-{% block content %}
-    {% get_lw_content as success blurbs 1980 %}
-    {{success.body}}
-{% endblock %}

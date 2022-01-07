@@ -4,86 +4,88 @@
     Paver Form &mdash; Giving &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
-    <script type="text/javascript">
-        $(function() {
-            var deet = new Date();
-            var year = deet.getFullYear();
-            var month = deet.getMonth();
-            if (month >= 9) {
-              year = year + 1;
-            }
-            {% if ct_form.paver_type.value == "250" or not ct_form.paver_type.value %}
-              $("#inscription_4").slideUp(200);
-              $("#inscription_5").slideUp(200);
-              $("#inscription_6").slideUp(200);
-              $("#inscription_7").slideUp(200);
-            {% else %}{% if ct_form.paver_type.value == "500" %}
-              $("#inscription_6").slideUp(200);
-              $("#inscription_7").slideUp(200);
-            {% else %}
-              for (i = 1; i < 6; i++) {
-                $("#id_ct-inscription_" + i).attr('maxlength','19');
-              }
-            {% endif %}{% endif %}
-            {% if ct_form.class_of.value == year %}
+{{block.super}}
+<script type="text/javascript">
+$(function() {
+    var deet = new Date();
+    var year = deet.getFullYear();
+    var month = deet.getMonth();
+    if (month >= 9) {
+      year = year + 1;
+    }
+    {% if ct_form.paver_type.value == "250" or not ct_form.paver_type.value %}
+      $("#inscription_4").slideUp(200);
+      $("#inscription_5").slideUp(200);
+      $("#inscription_6").slideUp(200);
+      $("#inscription_7").slideUp(200);
+    {% else %}{% if ct_form.paver_type.value == "500" %}
+      $("#inscription_6").slideUp(200);
+      $("#inscription_7").slideUp(200);
+    {% else %}
+      for (i = 1; i < 6; i++) {
+        $("#id_ct-inscription_" + i).attr('maxlength','19');
+      }
+    {% endif %}{% endif %}
+    {% if ct_form.class_of.value == year %}
+    $('#personal_price').text("$200." + (year-2000));
+    $('#recognition_price').text("$400." + (year-2000));
+    $('#laudatory_price').text("$800." + (year-2000));
+    {% endif %}
+    $("input[name=ct-paver_type]:radio").change(function () {
+        if ($(this).attr("id") == "recognition_paver") {
+          $("#inscription_4").slideDown(200);
+          $("#inscription_5").slideDown(200);
+          $("#inscription_6").slideUp(200);
+          $("#inscription_7").slideUp(200);
+          $("#id_ct-inscription_6").val("");
+          $("#id_ct-inscription_7").val("");
+        } else if ($(this).attr("id") == "laudatory_paver") {
+          $("#inscription_4").slideDown(200);
+          $("#inscription_5").slideDown(200);
+          $("#inscription_6").slideDown(200);
+          $("#inscription_7").slideDown(200);
+          for (i = 1; i < 6; i++) {
+            $("#id_ct-inscription_" + i).attr('maxlength','19');
+          }
+        } else {
+          $("#id_ct-inscription_4").val("");
+          $("#id_ct-inscription_5").val("");
+          $("#id_ct-inscription_6").val("");
+          $("#id_ct-inscription_7").val("");
+          $("#inscription_4").slideUp(200);
+          $("#inscription_5").slideUp(200);
+          $("#inscription_6").slideUp(200);
+          $("#inscription_7").slideUp(200);
+          for (i = 1; i < 6; i++) {
+            $("#id_ct-inscription_" + i).attr('maxlength','15');
+          }
+        }
+    });
+    $("#id_ct-class_of").change(function () {
+        if ($(this).val() == year) {
             $('#personal_price').text("$200." + (year-2000));
             $('#recognition_price').text("$400." + (year-2000));
             $('#laudatory_price').text("$800." + (year-2000));
-            {% endif %}
-            $("input[name=ct-paver_type]:radio").change(function () {
-                if ($(this).attr("id") == "recognition_paver") {
-                  $("#inscription_4").slideDown(200);
-                  $("#inscription_5").slideDown(200);
-                  $("#inscription_6").slideUp(200);
-                  $("#inscription_7").slideUp(200);
-                  $("#id_ct-inscription_6").val("");
-                  $("#id_ct-inscription_7").val("");
-                } else if ($(this).attr("id") == "laudatory_paver") {
-                  $("#inscription_4").slideDown(200);
-                  $("#inscription_5").slideDown(200);
-                  $("#inscription_6").slideDown(200);
-                  $("#inscription_7").slideDown(200);
-                  for (i = 1; i < 6; i++) {
-                    $("#id_ct-inscription_" + i).attr('maxlength','19');
-                  }
-                } else {
-                  $("#id_ct-inscription_4").val("");
-                  $("#id_ct-inscription_5").val("");
-                  $("#id_ct-inscription_6").val("");
-                  $("#id_ct-inscription_7").val("");
-                  $("#inscription_4").slideUp(200);
-                  $("#inscription_5").slideUp(200);
-                  $("#inscription_6").slideUp(200);
-                  $("#inscription_7").slideUp(200);
-                  for (i = 1; i < 6; i++) {
-                    $("#id_ct-inscription_" + i).attr('maxlength','15');
-                  }
-                }
-            });
-            $("#id_ct-class_of").change(function () {
-                if ($(this).val() == year) {
-                    $('#personal_price').text("$200." + (year-2000));
-                    $('#recognition_price').text("$400." + (year-2000));
-                    $('#laudatory_price').text("$800." + (year-2000));
-                } else {
-                    $('#personal_price').text("$250");
-                    $('#recognition_price').text("$500");
-                    $('#laudatory_price').text("$1000");
-                }
-            });
-            // disable submit button after users clicks it
-            $('form#profile').bind('submit', function (e) {
-              $('#id_or-total').val($("input[name=ct-paver_type]:checked").val());
-              $('form#profile input[type=submit]').prop('disabled', true);
-                return true;
-            });
+        } else {
+            $('#personal_price').text("$250");
+            $('#recognition_price').text("$500");
+            $('#laudatory_price').text("$1000");
+        }
+    });
+    // disable submit button after users clicks it
+    $('form#paver').bind('submit', function (e) {
+      $('#id_or-total').val($("input[name=ct-paver_type]:checked").val());
+      $('form#paver input[type=submit]').prop('disabled', true);
+        return true;
+    });
 
-        });
-    </script>
+  });
+</script>
 {% endblock %}
 {% block extra_style %}
+    {{block.super}}
     <style type="text/css">
-    #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;
+    #paver h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;
     padding:3px 0 3px 5px;width:99%;}
     #id_cc-security_code, #id_cc-expiration_month,
     #id_cc-expiration_year {width:70px;}
@@ -92,19 +94,24 @@
     .cost { color:green !important; }
     </style>
 {% endblock %}
-{% block group_name %}Giving{% endblock %}
+{% block breadcrumb %}
+<li>
+  <a href="https://www.carthage.edu/giving/">Giving</a>
+</li>
+<li>
+  <a href="https://www.carthage.edu/directory/" aria-current="page">Pavers</a>
+</li>
+{% endblock breadcrumb %}
 {% block left_nav %}
     {% include "giving/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
-    <h1 id="page_title">
-        Mark your place in Carthage history
-    </h1>
+    <h1>Mark your place in Carthage history</h1>
 {% endblock %}
 {% block content %}
     <div class="content cf">
         {% get_lw_content as content blurbs 2046 %}
-        {{content.body}}
+        {{content.body|safe}}
     </div>
     <div class="forms-container large-8 medium-8 small-12">
     {% include "includes/required_text.html" %}
@@ -113,7 +120,7 @@
             There were errors with the data submitted, see below.
         </p>
     {% endif %}
-    <form method="post" action="." class="form" id="profile">
+    <form method="post" action="." class="form" id="paver">
         {% csrf_token %}
         {% for hidden in or_form.hidden_fields %}
         {{ hidden }}
@@ -129,7 +136,7 @@
                         </label>
                     </h3>
                     <div>{{ct_form.class_of}}</div>
-                    <p class="help">If applicable</p>
+                    <div class="help">If applicable</div>
                 </li>
                 <li class="ctrlHolder">
                     {% if ct_form.paver_type.errors %}
@@ -301,7 +308,7 @@
                         {% endif %}
                         {{field}}
                         {% if field.help_text %}
-                            <p class="help">{{field.help_text}}</p>
+                            <div class="help">{{field.help_text}}</div>
                         {% endif %}
                         </div>
                     </li>
@@ -320,7 +327,6 @@
                 {% include "form_field_credit_card.inc.html" %}
             </ol>
         </fieldset>
-        {% include "form_submit.inc.html" %}
+        <input id="id_submit" type="submit" value="Submit" class="button" />
     </form>
-    </div>
 {% endblock %}

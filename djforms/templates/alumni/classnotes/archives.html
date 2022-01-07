@@ -1,49 +1,15 @@
-{% extends "base.html" %}
+{% extends "alumni/classnotes/form.html" %}
 {% block title %}
-    Class Notes Archives &mdash; Alumni &mdash; Carthage College
-{% endblock %}
-{% block extra_style %}
-<link rel="stylesheet" href="//www.carthage.edu/static/vendor/jquery/plugins/magnific/popup.css"
-    type="text/css" />
-<style>
-.jqmClose{
-    background:#FFDD00; border:1px solid #FFDD00; color:#000; clear:right;
-    float:right; padding:0 5px; cursor:pointer; }
-.jqmClose:hover{ background:#FFF; }
-#jqmContent{
-    width:99%; height:99%; display: block; clear:both; margin:auto;
-    margin-top:10px; background:#111; border:1px dotted #444; }
-</style>
-{% endblock %}
-{% block extra_javascript %}
-<script src="//www.carthage.edu/static/vendor/jquery/plugins/magnific/popup.js"
-    type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">
-    $(function() {
-        $('a[rel=popupfoto]').magnificPopup({type:'image'});
-        $('.jqmodal').magnificPopup({
-            type: 'iframe',
-            iframe: {
-                patterns: {
-                    dashboard: {
-                        src: $(this).attr('href')
-                    }
-                }
-            }
-        });
-    });
-</script>
+  Class Notes Archives &mdash; Alumni &mdash; Carthage College
 {% endblock %}
 {% block group_name %}Alumni{% endblock %}
 {% block left_nav %}
     {% include "alumni/classnotes/side_bar.html" %}
-    <h4>&nbsp;</h4>
     {% include "alumni/left_nav.html" %}
 {% endblock %}
-{% block sidebar %}
-{% endblock %}
+{% block sidebar %}{% endblock %}
 {% block content_head %}
-<h1 id="page_title">
+<h1>
 Class Notes Archive &mdash;
 {% if year %}{{year}}'s{% endif %}{% if title %}{{title}}{% endif %}
 </h1>

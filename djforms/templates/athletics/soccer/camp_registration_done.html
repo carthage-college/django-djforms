@@ -1,17 +1,8 @@
-{% extends "base.html" %}
+{% extends "athletics/base.html" %}
 {% load livewhale_api %}
-{% block content_head %}
-<h1 id="page_title">
-    Carthage College Soccer Camp
-</h1>
-{% endblock %}
-{% block left_nav %}
-{% get_lw_content as nav blurbs 1920 %}
-{{nav.body}}
-{% endblock %}
 {% block content %}
-    <div style="background-color:#fff;">
-        {% get_lw_content as success blurbs 1919 %}
-        {{success.body}}
-    </div>
+<div style="background-color:#fff;">
+    {% get_lw_content as success blurbs 1919 %}
+    {{success.body|safe}}
+</div>
 {% endblock %}

@@ -1,22 +1,18 @@
 {% extends "admissions/visitday/form.html" %}
 {% load livewhale_api %}
 {% block title %}
-    Visit Day Success &mdash; Admissions &mdash;
-    Carthage College
+  Visit Day Success &mdash; Admissions &mdash; Carthage College
 {% endblock %}
 {% block content_head %}
-    <h1 id="page_title">
-        Thank You for Your Interest
-    </h1>
+ <h1>Thank You for Your Interest</h1>
 {% endblock %}
-{% block extra_javascript %}{% endblock %}
-{% block extra_style %}
+{% block extra_javascript %}
 {{block.super}}
 <script>
   fbq('track', 'CompleteRegistration');
 </script>
 {% endblock %}
 {% block content %}
-    {% get_lw_content as success blurbs 2143 %}
-    {{success.body}}
+  {% get_lw_content as success blurbs 2143 %}
+  {{success.body|safe}}
 {% endblock %}

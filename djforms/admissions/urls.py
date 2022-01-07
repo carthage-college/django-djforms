@@ -29,5 +29,5 @@ urlpatterns = [
         TemplateView.as_view(template_name='admissions/admitted/success.html'),
         name='admitted_success',
     ),
-    path('admitted/', admitted.chance_of_form, name='chance_of_form'),
+    path('admitted/', admitted.chance_form, name='chance_form'),
 ]

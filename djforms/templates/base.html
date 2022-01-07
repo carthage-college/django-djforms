@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block extra_style %}
+    <link href="//app.carthage.edu/themes/shared/css/icons.css"
+        type="text/css" rel="stylesheet">
+    <link href="//app.carthage.edu/themes/shared/css/forms.css"
+        rel="stylesheet" type="text/css">
+    <link href="//app.carthage.edu/themes/shared/css/tables.css"
+        rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        type="text/css" rel="stylesheet">
+{% endblock %}
+{% block left_nav %}
+    <ul>
+        {% if not user.is_anonymous %}
+            <li><a href="/forms/accounts/logout/?next={{request.path}}">Logout</a></li>
+        {% else %}
+            <li>
+                <a href="/forms/accounts/login/?next={{request.path}}">Login</a>
+            </li>
+        {% endif %}
+        {% if user.is_superuser %}
+            <li><a href="/forms/admin/">Administration</a></li>
+        {% endif %}
+    </ul>
+{% endblock %}

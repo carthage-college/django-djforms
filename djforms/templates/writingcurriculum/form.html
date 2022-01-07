@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load livewhale_api %}
 {% block title %}
-Writing Intensive Course Proposal Form &mdash;
-Carthage College
+  Writing Intensive Course Proposal Form &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
+{{block.super}}
     <script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
         type="text/javascript" charset="utf-8"></script>
     <script src="//www.carthage.edu/static/vendor/jquery/plugins/ptTimeSelect/src/jquery.ptTimeSelect.js"
@@ -64,6 +64,7 @@ Carthage College
     </script>
 {% endblock %}
 {% block extra_style %}
+  {{block.super}}
     <link href="//www.carthage.edu/static/vendor/jquery/plugins/fancybox/jquery.fancybox.css"
         rel="stylesheet" type="text/css" media="screen" />
     <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
@@ -73,9 +74,9 @@ Carthage College
     <style type="text/css">
     .criteria ul.bullets li{list-style:disc outside;margin-left:30px;}
     #doop_master {display: none;}
-    .criterion {width:250px;float:right; line-height:18px;margin-top:3px;}
+    .criterion {line-height:18px;margin-top:3px;}
     .ctrlcx {width:36px;float:right;}
-    #duplicates .wac-description {width:350px;height:150px;}
+    #duplicates .wac-description {width:325px;height:150px;}
     div.growlUI {
         background: url(/assets/img/ico/information.png) no-repeat 10px 10px;
         height:90px;
@@ -86,14 +87,16 @@ Carthage College
     }
     </style>
 {% endblock %}
-{% block group_name %}WAC{% endblock %}
 {% block left_nav %}
-    {% include "writingcurriculum/left_nav.html" %}
+  {% include "writingcurriculum/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
-    <h1 id="page_title">
-        Writing Intensive Course Proposal
-    </h1>
+  <h1>Writing Intensive Course Proposal</h1>
+{% endblock %}
+{% block breadcrumb %}
+  <li><a href="/academics/">Academics</a></li>
+  <li><a href="/academics/carthage-curriculum/">Carthage Curriculum</a></li>
+  <li><a href="/academics/carthage-curriculum/writing-across-the-curriculum/" aria-current="page">Writing Across the Curriculum</a></li>
 {% endblock %}
 {% block content %}
 <div class="forms-container">
@@ -107,7 +110,6 @@ Carthage College
         However, submitting a late proposal may not allow time for the negotiation
         that is sometimes necessary to secure approval.
     </p>
-    erros = {{profile_form.errors}}
     {% include "includes/errors_text.html" %}
     {% include "includes/required_text.html" %}
     <form method="post" action="." class="form"
