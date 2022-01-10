@@ -2,25 +2,27 @@
 {% load livewhale_api %}
 {% block title %}LIS Copy/Print Card Request Form{% endblock %}
 {% block extra_style %}
+{{block.super}}
 <style type="text/css" media="screen, projection">
 li.ctrlHolder div ul li {display:inline; padding-right:3px;}
 </style>
 {% endblock %}
-{% block group_name %}LIS{% endblock %}
 {% block left_nav %}
-    {% include "lis/left_nav.html" %}
+  {% include "lis/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
-<h1 id="page_title">
-    Copy/Print Card Request Form
-</h1>
+<h1>Copy/Print Card Request Form</h1>
+{% endblock %}
+{% block breadcrumb %}
+  <li><a href="/academics/library/">Library</a></li>
+  <li><a href="/academics/library/computer-technology-services/" aria-current="page">Computer &amp; Technology Services</a></li>
 {% endblock %}
 {% block content %}
-<div class="large-8 medium-7 small-12">
-{% get_lw_content as copy blurbs 2079 %}
-{{copy.body}}
+<div>
+  {% get_lw_content as copy blurbs 2079 %}
+  {{copy.body|safe}}
 </div>
-<div class="forms-container clear">
-    {% include "includes/generic_form_multi.html" %}
+<div class="forms-container">
+  {% include "includes/generic_form_multi.html" %}
 </div>
 {% endblock %}

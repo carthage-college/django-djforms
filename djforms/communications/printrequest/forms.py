@@ -14,6 +14,7 @@ class PrintRequestForm(forms.ModelForm):
     print_format = forms.MultipleChoiceField(
         label="What is the format of your finished piece",
         choices=FORMATS,
+        widget=forms.CheckboxSelectMultiple,
         help_text="Check all that apply",
     )
     approval = forms.BooleanField(

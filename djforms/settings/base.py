@@ -131,14 +131,14 @@ TEMPLATES = [
     },
 ]
 # caching
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
-        'TIMEOUT': 60*60*24,
-        'KEY_PREFIX': '{0}_'.format(PROJECT_APP),
-    }
-}
+#CACHES = {
+    #'default': {
+        #'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        #'LOCATION': '127.0.0.1:11211',
+        #'TIMEOUT': 60*60*24,
+        #'KEY_PREFIX': '{0}_'.format(PROJECT_APP),
+    #}
+#}
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 # LDAP Constants
 LDAP_SERVER = ''

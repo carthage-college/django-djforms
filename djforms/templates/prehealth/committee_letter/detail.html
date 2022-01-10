@@ -1,5 +1,6 @@
 {% extends "prehealth/committee_letter/done.html" %}
 {% block extra_style %}
+{{block.super}}
 <style>
 #djforms #page-content-wrap .content li {
     background: none;
@@ -7,8 +8,8 @@
 </style>
 {% endblock %}
 {% block content_head %}
-<h1 id="page_title">Committee Letter Submission</h1>
+  <h1>Committee Letter Submission</h1>
 {% endblock %}
 {% block content %}
-    {% include "prehealth/committee_letter/applicant.inc.html" %}
+  {% include "prehealth/committee_letter/applicant.inc.html" %}
 {% endblock %}

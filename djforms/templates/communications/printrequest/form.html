@@ -1,23 +1,17 @@
 {% extends "base.html" %}
-{% block title %}
-    Print Request Form
-{% endblock %}
+{% block title %}Print Request Form{% endblock %}
 {% block extra_style %}
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
-    rel="stylesheet">
-<link href="//www.carthage.edu/static/vendor/bootstrap-select/bootstrap-select.min.css"
-    rel="stylesheet" type="text/css" />
-<link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
-    rel="stylesheet" type="text/css" />
+{{block.super}}
+<link rel="stylesheet" type="text/css"
+  href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css">
 <style type="text/css">
-    .hidden { display:none; }
+  .hidden { display:none; }
 </style>
 {% endblock %}
 {% block extra_javascript %}
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+{{block.super}}
 <script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
-    type="text/javascript" charset="utf-8"></script>
-<script src="//www.carthage.edu/static/vendor/bootstrap-select/bootstrap-select.min.js"></script>
+  type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
 $(function() {
     // multiple select picker
@@ -47,18 +41,19 @@ $(function() {
 });
 </script>
 {% endblock %}
-{% block group_name %}Communications{% endblock %}
+{% block breadcrumb %}
+  <li><a href="/about/offices-services/marketing-communications-office/">Marketing &amp; Communications Office</a></li>
+  <li><a href="/about/offices-services/marketing-communications-office/request-our-services/" aria-current="page">Request Our Services</a></li>
+{% endblock %}
 {% block left_nav %}
-    {% include "communications/left_nav.html" %}
+  {% include "communications/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
-    <h1 id="page_title">
-        Print request form
-    </h1>
+  <h1>Print request form</h1>
 {% endblock %}
 {% block content %}
-<div class="forms-container large-8 medium-10 small-12">
-    {% include "includes/required_text.html" %}
+<div class="forms-container">
+  {% include "includes/required_text.html" %}
     {% if form.errors %}
         <p class="error">
             Please correct the error{{ form.errors|pluralize }} below.
@@ -66,9 +61,8 @@ $(function() {
             have files to upload, you will have to choose your files again.
         </p>
     {% endif %}
-    <form method="post" action="." class="form"
-        id="profile" enctype="multipart/form-data">
-        {% csrf_token %}
+    <form method="post" action="." class="form" enctype="multipart/form-data">
+      {% csrf_token %}
         <fieldset class="blockLabels">
             <legend>Account and Departments</legend>
             <ol>
@@ -148,8 +142,5 @@ $(function() {
         </fieldset>
         {% include "form_submit.inc.html" %}
     </form>
-</div>
-<div class="column2 large-4 medium-6 small-12">
-    {% include "communications/side_bar.html" %}
 </div>
 {% endblock %}

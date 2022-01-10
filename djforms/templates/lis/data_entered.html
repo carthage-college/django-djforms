@@ -1,14 +1,7 @@
-{% extends "base.html" %}
-{% block title %}LIS Requests{% endblock %}
-{% block group_name %}Library &amp; Information Services{% endblock %}
-{% block left_nav %}
-    {% include "lis/left_nav.html" %}
-{% endblock %}
+{% extends "lis/copyprint/form.html" %}
 {% block content_head %}
-    <h1 id="page_title">
-        Request Submitted
-    </h1>
+<h1>Request Submitted</h1>
 {% endblock %}
 {% block content %}
-<p>Your request has been submited. You will recieve a copy via email.</p>
+  <p>Your request has been submited. You will recieve a copy via email.</p>
 {% endblock %}

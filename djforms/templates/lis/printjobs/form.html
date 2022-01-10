@@ -2,65 +2,67 @@
 {% load livewhale_api %}
 {% block title %}Print Job Request{% endblock %}
 {% block extra_javascript %}
-    <script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
-        type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">
-        $(function() {
-            $("#id_date_needed").datepicker({
-                firstDay:1,appendText:"(format yyyy-mm-dd)",
-                changeFirstDay:false,dateFormat:"yy-mm-dd",
-                showOn:"both",
-                buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
-                buttonImageOnly:true
-            });
-            $('[id^=id_file]').change(function(){
-                $('#faux_' + $(this).attr("name")).val($(this).val());
-            });
-        });
-    </script>
+{{block.super}}
+<script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
+  type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+  $(function() {
+    $("#id_date_needed").datepicker({
+      firstDay:1,appendText:"(format yyyy-mm-dd)",
+      changeFirstDay:false,dateFormat:"yy-mm-dd",
+      showOn:"both",
+      buttonImage:"//www.carthage.edu/themes/shared/img/ico/calendar.gif",
+      buttonImageOnly:true
+    });
+    $('[id^=id_file]').change(function(){
+      $('#faux_' + $(this).attr("name")).val($(this).val());
+    });
+  });
+</script>
 {% endblock %}
 {% block extra_style %}
+{{block.super}}
 <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
-    rel="stylesheet" type="text/css" />
+  rel="stylesheet" type="text/css" />
 <style type="text/css" media="screen, projection">
-li.ctrlHolder div ul li {display:inline; padding-right:3px;}
+  li.ctrlHolder div ul li {display:inline; padding-right:3px;}
 </style>
 {% endblock %}
-{% block group_name %}Business Office{% endblock %}
 {% block left_nav %}
-    {% get_lw_content as nav blurbs 1829 %}
-    {{nav.body}}
+  {% include "lis/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
-    <h1 id="page_title">
-        Print Job Request
-    </h1>
+  <h1>Print Job Request</h1>
+{% endblock %}
+{% block breadcrumb %}
+  <li><a href="/academics/library/">Library</a></li>
+  <li><a href="/academics/library/computer-technology-services/" aria-current="page">Computer &amp; Technology Services</a></li>
 {% endblock %}
 {% block content %}
 <div class="forms-container">
-    {% include "includes/required_text.html" %}
-    {% include "includes/errors_text.html" %}
-    <form method="post" action="." class="form" enctype="multipart/form-data">
-        {% csrf_token %}
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in form.visible_fields %}
-                    {% if field.name == "file1" or field.name == "file2" or field.name == "file3" %}
-                    <li class="ctrlHolder">
-                    <h3>{{field.label}}</h3>
-                    <input type="text" class="file" name="file_info"
-                        id="faux_{{field.name}}" placeholder="File" />
-                    <div class="file_upload">
-                        {{field}}
-                    </div>
-                    </li>
-                    {% else %}
-                    {% include "form_field.inc.html" %}
-                    {% endif %}
-                {% endfor %}
-            </ol>
-        </fieldset>
-        {% include "form_submit.inc.html" %}
-    </form>
+  {% include "includes/required_text.html" %}
+  {% include "includes/errors_text.html" %}
+  <form method="post" action="." class="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="blockLabels">
+      <ol>
+        {% for field in form.visible_fields %}
+          {% if field.name == "file1" or field.name == "file2" or field.name == "file3" %}
+          <li class="ctrlHolder">
+          <h3>{{field.label}}</h3>
+          <input type="text" class="file" name="file_info"
+            id="faux_{{field.name}}" placeholder="File" />
+          <div class="file_upload">
+            {{field}}
+          </div>
+          </li>
+          {% else %}
+          {% include "form_field.inc.html" %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </fieldset>
+    {% include "form_submit.inc.html" %}
+  </form>
 </div>
 {% endblock %}
