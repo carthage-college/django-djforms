@@ -1,10 +1,11 @@
-{% extends "base.html" %}
+{% extends "scholars/presentation/home.html" %}
 {% block title %}
     Presentation Form &mdash;
     Celebration of Scholars &mdash;
     Carthage College
 {% endblock %}
 {% block extra_javascript %}
+  {{block.super}}
     <script src="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea-0.8.min.js"
         type="text/javascript" charset="utf-8"></script>
     <script src="https://malsup.github.io/min/jquery.blockUI.min.js"
@@ -59,7 +60,7 @@
                     $(this).parent().nextAll('.student:first').removeClass("shown");
                 }
             });
-            $( "#profile" ).submit(function( event ) {
+            $( "#presentation" ).submit(function( event ) {
                 var error = false;
                 $("div[id^='doop_']").each(function() {
                     var prez_type_obj = $(this).find('select[name="prez_type[]"]');
@@ -119,9 +120,10 @@
     </script>
 {% endblock %}
 {% block extra_style %}
-    <link href="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea.css"
-        rel="stylesheet" type="text/css" />
-    <style type="text/css">
+  {{block.super}}
+  <link href="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea.css"
+    rel="stylesheet" type="text/css">
+  <style type="text/css">
     div.jHtmlArea .ToolBar {width: 470px !important; }
     div.jHtmlArea .ToolBar ul li a.custom_disk_button
     {
@@ -137,7 +139,7 @@
     }
     #doopmaster {display: none;}
     div.growlUI {
-        background: url(/assets/img/ico/information.png) no-repeat 10px 10px;
+        background: url(https://app.carthage.edu/media/djforms/img/ico/information.png) no-repeat 10px 10px;
     }
     div.growlUI h1, div.growlUI h2 {
         font-size: 1.4em; color: white; padding: 5px 5px 5px 75px;
@@ -164,106 +166,97 @@
     .mtop {margin-top:9px;}
     .fleft{width:265px;}
     dl dt { background: none;padding:0;}
-    </style>
-{% endblock %}
-{% block group_name %}
-    <a href="/undergraduate-research/">Undergraduate Research</a>
-{% endblock %}
-{% block left_nav %}
-    {% include "scholars/left_nav.html" %}
+  </style>
 {% endblock %}
 {% block content %}
 <div class="forms-container">
-    {% if manager and presentation %}
-        {% include "scholars/presentation/action_form.inc.html" %}
-    {% endif %}
-    {# if manager #}
-    <h2>Presentation Form</h2>
-    {% include "includes/required_text.html" %}
-    {% include "includes/errors_text.html" %}
-    <form method="post" action="." class="form" id="profile"
-        enctype="multipart/form-data">
-        {% csrf_token %}
-        {% for hidden in form.hidden_fields %}
-        {{ hidden }}
-        {% endfor %}
-        <fieldset class="blockLabels">
-            <ol>
-                {% for field in form.visible_fields %}
-                    {% if field.name == "poster_file" %}
-                        {% if presentation.status %}
-                            {% include "form_field.inc.html" %}
-                        {% endif %}
-                    {% else %}
-                        {% include "form_field.inc.html" %}
-                    {% endif %}
-                {% endfor %}
-                {% if manager %}
-                <li class="ctrlHolder">
-                    <h3><label>Status</label></h3>
-                    <p class="help">
-                    <input type="checkbox" id="id_status" name="status"
-                        {% if presentation.status %} checked="checked"{% endif %} />
-                    Is this presentation complete?
-                    </p>
-                </li>
+  {% if manager and presentation %}
+    {% include "scholars/presentation/action_form.inc.html" %}
+  {% endif %}
+  <h2>Presentation Form</h2>
+  {% include "includes/required_text.html" %}
+  {% include "includes/errors_text.html" %}
+  <form method="post" action="." class="form" id="presentation" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
+    <fieldset class="blockLabels">
+      <ol>
+        {% for field in form.visible_fields %}
+            {% if field.name == "poster_file" %}
+                {% if presentation.status %}
+                    {% include "form_field.inc.html" %}
                 {% endif %}
-                <li class="ctrlHolder">
-                    <div id="doopmaster" class="presenter">
-                        <img class="destroy_school fright"
-                            src="/static/djforms/img/ico/silk/icons/delete.png"
-                            title="Remove Presenter" alt="Remove Presenter">
-                        {% include "scholars/presentation/presenters.inc.html" %}
-                    </div>
-                    <h3><label>Presenters</label></h3>
-                </li>
-                <li style="margin-top:10px;">
-                    <p>
-                        Click on the
-                        <img style="margin-bottom:-3px;" src="/static/djforms/img/ico/silk/icons/add.png">
-                        symbol to add more presenters. Click on the
-                        <img style="margin-bottom:-3px;" src="/static/djforms/img/ico/silk/icons/delete.png">
-                        icon to remove presenters.</p>
-                    <p>
-                        <strong>NOTE</strong>:
-                        Photos must be JPEG format and must be high
-                        resolution&mdash;at least 300 DPI.
-                    </p>
-                    <p style="float:left;">
-                        <strong class="help">All fields are required.</strong>
-                    </p>
-                    <div class="ctrlcx">
-                        <img id="clone" src="/static/djforms/img/ico/silk/icons/add.png">
-                    </div>
-                </li>
-                <li class="ctrlHolder" id="duplicates">
-                    {% for p in presenters %}
-                    <div id="doop_{{forloop.counter}}" class="presenter">
-                        {% if forloop.counter != 1 %}
-                        <img class="destroy_school fright"
-                            src="/static/djforms/img/ico/silk/icons/delete.png"
-                            title="Remove Presenter" alt="Remove Presenter">
-                        {% else %}
-                        <div style="height:15px;width:15px;float:right;">
-                            &nbsp;
-                        </div>
-                        {% endif %}
-                        {% include "scholars/presentation/presenters.inc.html" %}
-                    </div>
-                    {% endfor %}
-                </li>
-            </ol>
-        </fieldset>
-        {% include "form_submit.inc.html" %}
-    </form>
-    {# else #}
-    <!--
-    <h1>Submssion Process is Closed</h1>
-    <p>We are no longer accepting proposals.</p>
-    -->
-    {# endif #}
+            {% else %}
+                {% include "form_field.inc.html" %}
+            {% endif %}
+        {% endfor %}
+        {% if manager %}
+        <li class="ctrlHolder">
+            <h3><label>Status</label></h3>
+            <p class="help">
+            <input type="checkbox" id="id_status" name="status"
+                {% if presentation.status %} checked="checked"{% endif %} />
+            Is this presentation complete?
+            </p>
+        </li>
+        {% endif %}
+      </ol>
+    </fieldset>
+    <fieldset class="blockLabels">
+      <ol>
+        <li class="ctrlHolder">
+            <div id="doopmaster" class="presenter">
+                <img class="destroy_school fright"
+                    src="/static/djforms/img/ico/silk/icons/delete.png"
+                    title="Remove Presenter" alt="Remove Presenter">
+                {% include "scholars/presentation/presenters.inc.html" %}
+            </div>
+            <h3><label>Presenters</label></h3>
+        </li>
+        <li style="margin-top:10px;">
+            <div>
+                Click on the
+                <img style="margin-bottom:-3px;" src="/static/djforms/img/ico/silk/icons/add.png">
+                symbol to add more presenters. Click on the
+                <img style="margin-bottom:-3px;" src="/static/djforms/img/ico/silk/icons/delete.png">
+                icon to remove presenters.
+            </div>
+            <p>
+                <strong>NOTE</strong>:
+                Photos must be JPEG format and must be high
+                resolution&mdash;at least 300 DPI.
+            </p>
+            <p style="float:left;">
+                <strong class="help">All fields are required.</strong>
+            </p>
+            <div class="ctrlcx">
+                <img id="clone" src="/static/djforms/img/ico/silk/icons/add.png">
+            </div>
+        </li>
+        <li class="ctrlHolder" id="duplicates">
+            {% for p in presenters %}
+            <div id="doop_{{forloop.counter}}" class="presenter">
+                {% if forloop.counter != 1 %}
+                <img class="destroy_school fright"
+                    src="/static/djforms/img/ico/silk/icons/delete.png"
+                    title="Remove Presenter" alt="Remove Presenter">
+                {% else %}
+                <div style="height:15px;width:15px;float:right;">
+                    &nbsp;
+                </div>
+                {% endif %}
+                {% include "scholars/presentation/presenters.inc.html" %}
+            </div>
+            {% endfor %}
+        </li>
+      </ol>
+    </fieldset>
+    {% include "form_submit.inc.html" %}
+  </form>
 </div>
 {% endblock %}
 {% block sidebar %}
-    {% include "scholars/side_bar.html" %}
+  {% include "scholars/side_bar.html" %}
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "scholars/presentation/home.html" %}
 {% load get_prof %}
 {% block title %}
     Email Presenters Form &mdash;
@@ -6,6 +6,7 @@
     Carthage College
 {% endblock %}
 {% block extra_javascript %}
+{{block.super}}
     <script src="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea-0.8.min.js"
         type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
@@ -22,6 +23,7 @@
     </script>
 {% endblock %}
 {% block extra_style %}
+{{block.super}}
     <link href="//www.carthage.edu/static/vendor/jquery/plugins/jHtmlArea/jHtmlArea.css"
         rel="stylesheet" type="text/css" />
     <style type="text/css">
@@ -41,21 +43,12 @@
     #second p {line-height: 1.1;margin-bottom: .5em;}
     </style>
 {% endblock %}
-{% block group_name %}Undergraduate Research{% endblock %}
-{% block left_nav %}
-    {% include "scholars/left_nav.html" %}
-{% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        Celebration of Scholars
-    </h1>
-{% endblock %}
 {% block content %}
-    <h1>Email Presenters</h1>
+    <h3>Email Presenters</h3>
     <p>
         Compose an email to send to the leaders of the following presentation:
     </p>
-    <h2>{{p.title}}</h2>
+    <h5>{{p.title}}</h5>
     <p><u>Recipients</u></p>
     {% get_prof as prof p.leader.sponsor_email %}
     <div class="buffer-left">
@@ -104,8 +97,8 @@
         </form>
     {% else %}
         <form method="post" action="." class="form" id="profile">
-            {% csrf_token %}
-            <fieldset class="blockLabels">
+          {% csrf_token %}
+          <fieldset class="blockLabels">
             <ol>
                 <li class="ctrlHolder">
                     <div class="span-12">
@@ -119,15 +112,8 @@
                     </div>
                 </li>
             </ol>
-            </fieldset>
-            <fieldset class="btnHolder">
-              <ol>
-                <li>
-                  <label for="id_submit" style="display:none;">Submit</label>
-                  <input id="id_submit" name="confirm" value="Submit" class="button" type="submit">
-                </li>
-              </ol>
-            </fieldset>
+          </fieldset>
+          {% include "form_submit.inc.html" %}
         </form>
     {% endif %}
 {% endblock %}

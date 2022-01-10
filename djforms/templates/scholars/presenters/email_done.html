@@ -1,22 +1,5 @@
-{% extends "base.html" %}
-{% block title %}
-    Email Presenters &mdash;
-    Celebration of Scholars &mdash;
-    Carthage College
-{% endblock %}
-{% block group_name %}Undergraduate Research{% endblock %}
-{% block left_nav %}
-    {% include "scholars/left_nav.html" %}
-{% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        Celebration of Scholars
-    </h1>
-{% endblock %}
+{% extends "scholars/presenters/email_form.html" %}
 {% block content %}
-    <h1>Complete</h1>
-    <p>Your email has been sent out to the presentation leaders.</p>
-{% endblock %}
-{% block sidebar %}
-    {% include "scholars/side_bar.html" %}
+  <h3>Complete</h3>
+  <p>Your email has been sent out to the presentation leaders.</p>
 {% endblock %}

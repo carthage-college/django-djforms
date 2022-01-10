@@ -1,6 +1,7 @@
-{% extends "base.html" %}
+{% extends "scholars/presentation/home.html" %}
 {% block title %}Presenters Archives &mdash; Celebration of Scholars &mdash; Carthage College{% endblock %}
 {% block extra_style %}
+{{block.super}}
 <link href="//www.carthage.edu/static/vendor/jquery/plugins/tablesorter/style.css" type="text/css" rel="stylesheet" />
 <style>
 table.tablesorter { width: 100%; }
@@ -8,24 +9,16 @@ table.tablesorter tbody tr.odd td { background-color: #efefef; }
 </style>
 {% endblock %}
 {% block extra_javascript %}
+{{block.super}}
 <script src="//www.carthage.edu/static/vendor/jquery/plugins/tablesorter/jquery.tablesorter.min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-    $(function() {
-        $("#presentation_list_table").tablesorter({widgets: ['zebra'],headers:{3:{sorter:false}}});
-    });
+  $(function() {
+    $("#presentation_list_table").tablesorter({widgets: ['zebra'],headers:{3:{sorter:false}}});
+  });
 </script>
 {% endblock %}
-{% block group_name %}Undergraduate Research{% endblock %}
-{% block left_nav %}
-    {% include "scholars/left_nav.html" %}
-{% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        Celebration of Scholars
-    </h1>
-{% endblock %}
 {% block content %}
-    <h2>Celebration of Scholars {{year}}</h2>
+    <h3>{{year}}</h3>
     <table id="presentation_list_table" class="tablesorter">
         <thead>
         <tr>
@@ -48,5 +41,5 @@ table.tablesorter tbody tr.odd td { background-color: #efefef; }
     </table>
 {% endblock %}
 {% block sidebar %}
-    {% include "scholars/side_bar.html" %}
+  {% include "scholars/side_bar.html" %}
 {% endblock %}

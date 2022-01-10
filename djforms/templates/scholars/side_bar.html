@@ -1,5 +1,3 @@
 {% load livewhale_api %}
-<div class="forms-sidebar">
-    {% get_lw_content as sidebar blurbs 1949 %}
-    {{sidebar.body}}
-</div>
+{% get_lw_content as sidebar blurbs 1949 %}
+{{sidebar.body|safe}}

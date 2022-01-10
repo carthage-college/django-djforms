@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "scholars/presentation/home.html" %}
 {% block title %}
     {{p.title}} &mdash;
     Presentation Detail &mdash;
@@ -7,6 +7,7 @@
 {% endblock %}
 {% block extra_javascript %}
 <script type="text/javascript">
+{{block.super}}
 $(function() {
     $('#print h2').prepend('<a href="#print">Print</a>');
     $('#print h2 a').click(function() {
@@ -17,27 +18,14 @@ $(function() {
 </script>
 {% endblock %}
 {% block extra_style %}
-    <style type="text/css">
-        {% include "scholars/presentation/screen.css" %}
-    </style>
-{% endblock %}
-{% block group_name %}
-    <a href="/undergraduate-research/">Undergraduate Research</a>
-{% endblock %}
-{% block left_nav %}
-    {% include "scholars/left_nav.html" %}
-{% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        Celebration of Scholars
-    </h1>
+{{block.super}}
+<style type="text/css">
+  {% include "scholars/presentation/screen.css" %}
+</style>
 {% endblock %}
 {% block content %}
-    {% if manager %}
-        {% include "scholars/presentation/action_form.inc.html" %}
-    {% endif %}
-    {% include "scholars/presentation/detail_data.inc.html" %}
-{% endblock %}
-{% block sidebar %}
-    {% include "scholars/side_bar.html" %}
+  {% if manager %}
+    {% include "scholars/presentation/action_form.inc.html" %}
+  {% endif %}
+  {% include "scholars/presentation/detail_data.inc.html" %}
 {% endblock %}

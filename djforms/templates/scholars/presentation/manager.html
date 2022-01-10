@@ -1,42 +1,31 @@
-{% extends "base.html" %}
+{% extends "scholars/presentation/home.html" %}
 {% block title %}
-    Presentation Manager &mdash;
-    Celebration of Scholars &mdash;
-    Carthage College
+  Presentation Manager &mdash;
+  Celebration of Scholars &mdash;
+  Carthage College
 {% endblock %}
 {% block extra_style %}
+{{block.super}}
 <link href="//www.carthage.edu/static/vendor/jquery/plugins/tablesorter/style.css"
-    type="text/css" rel="stylesheet" />
+  type="text/css" rel="stylesheet" />
 <style>
-    table.tablesorter {
-        width: 100%;
-    }
+  table.tablesorter {width: 100%;}
 </style>
 {% endblock %}
 {% block extra_javascript %}
+{{block.super}}
 <script src="//www.carthage.edu/static/vendor/jquery/plugins/tablesorter/jquery.tablesorter.min.js"
-    type="text/javascript" charset="utf-8"></script>
+  type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-    $(function() {
-        $("#presentation_list_table").tablesorter(
-            {widgets: ['zebra']}
-        );
-    });
+  $(function() {
+    $("#presentation_list_table").tablesorter(
+      {widgets: ['zebra']}
+    );
+  });
 </script>
 {% endblock %}
-{% block group_name %}
-    <a href="/undergraduate-research/">Undergraduate Research</a>
-{% endblock %}
-{% block left_nav %}
-    {% include "scholars/left_nav.html" %}
-{% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        Celebration of Scholars
-    </h1>
-{% endblock %}
 {% block content %}
-    <form class="form" id="manager" action=".">
+  <form class="form" id="manager" action=".">
     <table id="presentation_list_table" class="tablesorter">
         <thead>
         <tr>
@@ -76,5 +65,5 @@
         {% endfor %}
         </tbody>
     </table>
-    </form>
+  </form>
 {% endblock %}

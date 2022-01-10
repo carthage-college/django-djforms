@@ -1,22 +1,11 @@
-{% extends "base.html" %}
+{% extends "scholars/presentation/home.html" %}
 {% block title %}
-    Presentation Form &mdash;
-    Celebration of Scholars &mdash;
-    Carthage College
-{% endblock %}
-{% block group_name %}
-    <a href="/undergraduate-research/">Undergraduate Research</a>
-{% endblock %}
-{% block left_nav %}
-    {% include "scholars/left_nav.html" %}
-{% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        Celebration of Scholars
-    </h1>
+  Presentation Form &mdash;
+  Celebration of Scholars &mdash;
+  Carthage College
 {% endblock %}
 {% block content %}
-    <h2>Success</h2>
+    <h3>Success</h3>
     <p>
         We have received your Celebration of Scholars presentation.
     </p>
@@ -25,7 +14,4 @@
         <a href="/forms/scholars/presentation/">the submissions home page</a>.
         If you are not logged in at the time, you will be asked to do so.
     </p>
-{% endblock %}
-{% block sidebar %}
-    {% include "scholars/side_bar.html" %}
 {% endblock %}
