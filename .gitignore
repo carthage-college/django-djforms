@@ -64,6 +64,7 @@ staging.py
 production.py
 migrations
 uwsgi_*.ini
+uwsgi.*.ini
 wsgi.py
 *.tsv
 
