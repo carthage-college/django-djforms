@@ -1,8 +1,8 @@
 {% load livewhale_api %}
-{% get_lw_content as nav blurbs 1506 %}
-{{nav.body|safe}}
-<p style="border-top:1px solid #e2d3d5;padding-top:5px;">
-  <a href="/give/reason/" target="_blank">
-    Share your reason for supporting Carthage
-  </a>
-</p>
+{% get_lw_content as nav blurbs 3275 %}
+<ul>
+  <li>
+    <a href="/giving/" class="lw_group_link fancy-link">Giving<span class="fancy-link__icon" aria-hidden="true">›</span></a>
+  </li>
+  {{nav.body|safe}}
+</ul>

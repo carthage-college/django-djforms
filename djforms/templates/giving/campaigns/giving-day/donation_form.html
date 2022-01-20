@@ -1,96 +1,29 @@
 {% extends "giving/donation_form.html" %}
 {% load livewhale_api %}
-{% block title %}
-    {{campaign.title|default:"Giving to Carthage"}}
-    Form &mdash; Giving &mdash; Carthage College
-{% endblock %}
-{% block extra_javascript %}
-    {% include "giving/donation_form.inc.js" %}
-{% endblock %}
 {% block extra_style %}
-    <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
-        rel="stylesheet" type="text/css" />
-    <style type="text/css">
-    #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;
-    padding:3px 0 3px 5px;width:99%;}
-    #id_security_code, #id_expiration_month,
-    #id_expiration_year {width:70px;}
-    #id_or-start_date, #id_ct-postal_code, #id_or-total, #pledge_total {width:100px;}
-    li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
-    .cost, #pledge_total_help { font-weight:bold; color:green; }
-    #pledge_total_help { margin-left:9px; }
-    #page-content-wrap #pledge-payments p { color:green;font-weight:bold;
-      margin-bottom:5px; }
-    .generic-subpage #page-content-wrap { margin-top: 0; }
-    .generic-subpage #secondary-navigation-wrap { padding: 25px 0 0 45px;}
-    .generic-subpage #page-content-wrap .generic-background {
-    background: #e9e8e5; position: absolute; top: 0;
-    height: 20px; width: 100%; z-index: 0;
-    }
-    .generic-subpage #page-sidebar { margin-top: 20px; }
-    .generic-subpage #header-background { opacity: 1 !important;}
-    #djforms.generic-subpage #main-content { padding-top: 20px; }
-    .generic-subpage #page-sidebar #sidebar-buttons { margin: 0 0 35px 0; }
-    .generic-subpage #page-content-wrap { margin-top: 0; }
-    .ui-widget button { float: right; }
-    #dialog-message{padding:8px;}
-    </style>
-{% endblock %}
-{% block hero %}
-<div id="page-hero-wrap">
-  <div class="lw_widget lw_widget_images">
-  <ul class="lw_widget_results lw_widget_results_images">
-    <li class="lw_item_1 lw_has_image">
-      <a href="https://www.carthage.edu/live/images/11690" class="lw_preview_image lw_disable_preview">
-        <img src="https://www.carthage.edu/live/images/11690" alt="A banner image for the Giving Day website." class="lw_image lw_image11690" width="1400" height="502" data-max-w="1400" data-max-h="502">
-      </a>
-    </li>
-  </ul>
-  </div>
-  <div id="page-title-wrap" class="site-width cf">
-    <h1 id="section_title" class="large-8 medium-7 small-12">
-         Giving Day
-    </h1>
-  </div>
-</div>
-{% endblock %}
-{% block group_name %}<a href="/giving-day/"> Giving Day</a>{% endblock %}
-{% block left_nav %}
-    {% get_lw_content as nav blurbs 2472 %}
-    {{nav.body}}
-{% endblock %}
-{% block sidebar %}{% endblock %}
-{% block content_head %}
-    <h1 id="page_title">
-        {{campaign.title|default:"Your Giving Matters"}}
-    </h1>
+  {{block.super}}
+  <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block content %}
-<div class="forms-container{% if campaign.about %}
-    large-8 medium-10 small-12"{% endif %}">
-    {# include "includes/security_metrics.html" #}
-    <div>
-        <br>
-        {% if campaign.description %}
-            {{campaign.description}}
-        {% endif %}
-    </div>
-    <br />
+<div class="forms-container">
+    {% if campaign.description %}
+      {{campaign.description|safe}}
+    {% endif %}
     <p>
-        If you prefer to make your gift by phone, call
-        <a href="tel:262-551-2300">262-551-2300</a>.
+      If you prefer to make your gift by phone, call
+      <a href="tel:262-551-2300">262-551-2300</a>.
     </p>
     <p>
-        Fields marked with an asterisk
-        <img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />
-        are required.
+      Fields marked with an asterisk
+      <img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />
+      are required.
     </p>
     {% if form_proc.errors or or_form.errors or ct_form.errors %}
-        <p class="error">
-            There were errors with the data submitted, see below.
-        </p>
+      <p class="error">
+        There were errors with the data submitted, see below.
+      </p>
     {% endif %}
-    <form method="post" action="." class="form" id="profile">
+    <form method="post" action="." class="form">
         {% csrf_token %}
         {% for hidden in or_form.hidden_fields %}
         {{ hidden }}

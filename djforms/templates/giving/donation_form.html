@@ -5,14 +5,14 @@
     Form &mdash; Giving &mdash; Carthage College
 {% endblock %}
 {% block extra_javascript %}
-    {% include "giving/donation_form.inc.js" %}
+  {{block.super}}
+  {% include "giving/donation_form.inc.js" %}
 {% endblock %}
 {% block extra_style %}
-    <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
-        rel="stylesheet" type="text/css" />
-    <style type="text/css">
-    #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;
-    padding:3px 0 3px 5px;width:99%;}
+  {{block.super}}
+  <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
+    rel="stylesheet" type="text/css" />
+  <style type="text/css">
     #id_security_code, #id_expiration_month,
     #id_expiration_year {width:70px;}
     #id_or-start_date, #id_ct-postal_code, #id_or-total, #pledge_total {width:100px;}
@@ -24,41 +24,44 @@
     .ui-widget button { float: right; }
     #dialog-message{padding:8px;}
     .ui-dialog-title{padding:4px;float:left;}
-    </style>
+  </style>
 {% endblock %}
 {% block group_name %}Giving{% endblock %}
 {% block left_nav %}
     {% include "giving/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
-    <h1 id="page_title">
-        {{campaign.title|default:"Your Giving Matters"}}
-    </h1>
+    <h1>{{campaign.title|default:"Your Giving Matters"}}</h1>
 {% endblock %}
+{% block breadcrumb %}
+<li>
+  <a href="https://www.carthage.edu/giving/">Giving</a>
+</li>
+<li>
+  <a href="https://www.carthage.edu/giving/give-today/" aria-current="page">Give Today</a>
+</li>
+{% endblock breadcrumb %}
 {% block content %}
-<div class="forms-container{% if campaign.about %}
-    large-8 medium-10 small-12"{% endif %}">
-    <div class="clear">
-        {% if campaign.description %}
-            {{campaign.description}}
-        {% endif %}
-    </div>
+<div class="forms-container">
+    {% if campaign.description %}
+        {{campaign.description|safe}}
+    {% endif %}
     <p>
-        Fields marked with an asterisk
-        <img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />
-        are required.
+      Fields marked with an asterisk
+      <img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />
+      are required.
     </p>
     {% if form_proc.errors or or_form.errors or ct_form.errors %}
-        <p class="error">
-            There were errors with the data submitted, see below.
-        </p>
+      <p class="error">
+        There were errors with the data submitted, see below.
+      </p>
     {% endif %}
-    <form method="post" action="{{ request.get_full_path }}" class="form" id="profile">
+    <form method="post" action="{{ request.get_full_path }}" class="form">
         {% csrf_token %}
         {% for hidden in or_form.hidden_fields %}
         {{ hidden }}
         {% endfor %}
-        <h2>Donation Information</h2>
+        <h3>Donation Information</h3>
         <fieldset class="blockLabels">
           <div class="large-6 medium-12 small-12 clear cf">
             <ol>
