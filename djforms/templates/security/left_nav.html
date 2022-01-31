@@ -1,3 +1,13 @@
 {% load livewhale_api %}
-{% get_lw_content as nav blurbs 1795 %}
-{{nav.body|safe}}
+{% get_lw_content as nav blurbs 3290 %}
+<ul>
+  <li>
+    <a href="https://www.carthage.edu/life-at-carthage/" class="lw_group_link fancy-link">Life at Carthage<span class="fancy-link__icon" aria-hidden="true">›</span></a>
+    <ul>
+      <li>
+        <a href="https://www.carthage.edu/life-at-carthage/health-wellness-safety/public-safety/" aria-current="page">Public Safety</a>
+        {{nav.body|safe}}
+      </li>
+    </ul>
+  </li>
+</ul>

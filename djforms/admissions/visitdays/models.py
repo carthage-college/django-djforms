@@ -4,8 +4,9 @@ from djforms.core.models import GENDER_CHOICES
 from djforms.core.models import GenericChoice
 from djforms.core.models import GenericContact
 from djforms.core.models import SEMESTER_CHOICES
-
 from localflavor.us.models import USStateField
+from localflavor.us.us_states import STATE_CHOICES
+
 
 ENTRY_CHOICES = [
     ('Freshman','Freshman'),
@@ -135,6 +136,10 @@ class VisitDayEvent(models.Model):
 
 
 class VisitDayBaseProfile(GenericContact):
+
+    CC_STATE_CHOICES = list(STATE_CHOICES)
+    CC_STATE_CHOICES.insert(666, ('', 'International Student'))
+
     date = models.ForeignKey(
         VisitDayEvent,
         related_name='visitday_date',
@@ -150,7 +155,7 @@ class VisitDayBaseProfile(GenericContact):
     )
     address = models.CharField(max_length=255, verbose_name="Address")
     city = models.CharField(max_length=128, verbose_name="City")
-    state = USStateField()
+    state = USStateField(choices=CC_STATE_CHOICES)
     postal_code = models.CharField(max_length=10, verbose_name="Zip Code")
     phone = models.CharField(
         max_length=12,

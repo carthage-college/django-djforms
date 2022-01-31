@@ -23,12 +23,16 @@ $(function() {
 });
 </script>
 {% endblock %}
-{% block breadcrumb %}{% endblock %}
 {% block left_nav %}
   {% include "security/left_nav.html" %}
 {% endblock %}
 {% block content_head %}
   <h1>Parking Violation Appeal Form</h1>
+{% endblock %}
+{% block breadcrumb %}
+    <li><a href="/life-at-carthage/">Life at Carthage</a></li>
+    <li><a href="/life-at-carthage/health-wellness-safety/">Health, Wellness, &amp; Safety</a></li>
+    <li><a href="/life-at-carthage/health-wellness-safety/public-safety/" aria-current="page">Public Safety</a></li>
 {% endblock %}
 {% block content %}
 <div class="forms-container">

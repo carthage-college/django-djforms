@@ -49,7 +49,10 @@ class ParkingTicketAppealForm(forms.ModelForm):
 class AnonymousReportForm(forms.Form):
     """Form that allows folks to submit a report anonymously."""
 
-    report = forms.CharField(widget=forms.Textarea)
+    report = forms.CharField(
+        label="Submit an Anonymous Report",
+        widget=forms.Textarea,
+    )
     captcha = CaptchaField()
 
     class Meta:

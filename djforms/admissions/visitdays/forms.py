@@ -1,3 +1,5 @@
+import datetime
+
 from django import forms
 from djforms.admissions.visitdays.models import GUARDIAN_CHOICES
 from djforms.admissions.visitdays.models import VisitDay
@@ -5,12 +7,10 @@ from djforms.admissions.visitdays.models import VisitDayBaseProfile
 from djforms.admissions.visitdays.models import VisitDayEvent
 from djforms.admissions.visitdays.models import VisitDayProfile
 from djforms.core.models import GenericChoice
-from djforms.core.models import STATE_CHOICES
-
 from djtools.fields.localflavor import USPhoneNumberField
-from djtools.fields import TODAY
-
+from localflavor.us.forms import USStateField
 from localflavor.us.forms import USZipCodeField
+from localflavor.us.us_states import STATE_CHOICES
 
 
 MEETING_REQUEST = GenericChoice.objects.filter(
@@ -20,9 +20,14 @@ MEETING_REQUEST = GenericChoice.objects.filter(
 
 class VisitDayBaseForm(forms.ModelForm):
 
+    CC_STATE_CHOICES = list(STATE_CHOICES)
+    CC_STATE_CHOICES.insert(0, ('666', 'International Student'))
+    CC_STATE_CHOICES.insert(0, ('', '---select state---'))
+
     first_name = forms.CharField(label="Student first name")
     last_name = forms.CharField(label="Student last name")
     email = forms.EmailField(label="Email")
+    state = USStateField(widget=forms.Select(choices=CC_STATE_CHOICES))
     postal_code = USZipCodeField(label="Zip Code")
     phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
     mobile = USPhoneNumberField(
@@ -80,7 +85,7 @@ class VisitDayBaseForm(forms.ModelForm):
             self.visit_day = None
         super(VisitDayBaseForm, self).__init__(*args, **kwargs)
         qs = VisitDayEvent.objects.exclude(active=False).filter(
-            date__gte=TODAY,
+            date__gte=datetime.date.today(),
         ).filter(event__slug=event_type).order_by('date', 'id')
         choices = [('', '---choose a date---')]
         for event in qs:
@@ -143,6 +148,10 @@ class VisitDayBaseForm(forms.ModelForm):
 
 class VisitDayForm(forms.ModelForm):
 
+    CC_STATE_CHOICES = list(STATE_CHOICES)
+    CC_STATE_CHOICES.insert(0, ('666', 'International Student'))
+    CC_STATE_CHOICES.insert(0, ('', '---select state---'))
+
     first_name = forms.CharField(label="Student first name")
     last_name = forms.CharField(label="Student last name")
     email = forms.EmailField(label="Student email")
@@ -153,6 +162,7 @@ class VisitDayForm(forms.ModelForm):
         choices=GUARDIAN_CHOICES,
         required = False,
     )
+    state = USStateField(widget=forms.Select(choices=CC_STATE_CHOICES))
     postal_code = USZipCodeField(
         label="Zip code",
         help_text="Format: 99999 or 99999-9999",
@@ -229,7 +239,7 @@ class VisitDayForm(forms.ModelForm):
             self.visit_day = None
         super(VisitDayForm, self).__init__(*args, **kwargs)
         qs = VisitDayEvent.objects.exclude(active=False).filter(
-            date__gte=TODAY,
+            date__gte=datetime.date.today(),
         ).filter(event__slug=event_type).order_by('date', 'id')
         choices = [('','---choose a date---')]
         for event in qs:
