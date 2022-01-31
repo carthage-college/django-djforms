@@ -8,7 +8,7 @@ from djforms.security import views
 
 urlpatterns = [
     path(
-        'success/',
+        'parking-appeal/success/',
         TemplateView.as_view(
             template_name='security/parking_ticket_appeal/done.html',
         ),
@@ -16,7 +16,19 @@ urlpatterns = [
     ),
     path(
         'parking-appeal/',
-        views.parking_ticket_appeal_form,
-        name='parking_ticket_appeal_form',
+        views.parking_ticket_appeal,
+        name='parking_ticket_appeal',
+    ),
+    path(
+        'anonymous-report/success/',
+        TemplateView.as_view(
+            template_name='security/anonymous_report/done.html',
+        ),
+        name='anonymous_report_success',
+    ),
+    path(
+        'anonymous-report/',
+        views.anonymous_report,
+        name='anonymous_report',
     ),
 ]

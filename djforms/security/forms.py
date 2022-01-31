@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from captcha.fields import CaptchaField
 from django import forms
 from djforms.security.models import ParkingTicketAppeal
 from djforms.core.models import GenericChoice
@@ -43,3 +44,15 @@ class ParkingTicketAppealForm(forms.ModelForm):
 
         model = ParkingTicketAppeal
         exclude = ('created_at','updated_at')
+
+
+class AnonymousReportForm(forms.Form):
+    """Form that allows folks to submit a report anonymously."""
+
+    report = forms.CharField(widget=forms.Textarea)
+    captcha = CaptchaField()
+
+    class Meta:
+        """Sub-class to set configurations about the parent class."""
+
+        fields = ('report', 'captcha')
