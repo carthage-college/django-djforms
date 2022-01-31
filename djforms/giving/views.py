@@ -14,7 +14,6 @@ from django.core.paginator import Paginator
 from django.db.models.query import Q
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from django.http import Http404
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
