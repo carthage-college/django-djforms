@@ -74,8 +74,7 @@ $(function() {
                         {% if form.first_name.errors %} error{% endif %}"
                         id="id_first_name" type="text" name="first_name"
                         placeholder="First name" maxlength="128"
-                        value="{{form.first_name.value|default_if_none:""}}"
-                        {% if not template_debug %}required {% endif %}>
+                        value="{{form.first_name.value|default_if_none:""}}">
                 </li>
                 </li>
                 <li>
@@ -96,8 +95,7 @@ $(function() {
                         {% if form.last_name.errors %} error{% endif %}"
                         id="id_last_name" type="text" name="last_name"
                         placeholder="Last name" maxlength="128"
-                        value="{{form.last_name.value|default_if_none:""}}"
-                        {% if not template_debug %}required {% endif %}>
+                        value="{{form.last_name.value|default_if_none:""}}">
                 </li>
                 <li>
                     <label for="id_previous_name" class="placeholder">
@@ -127,8 +125,7 @@ $(function() {
                         {% if form.email.errors %} error{% endif %}"
                         id="id_email" type="email" name="email"
                         placeholder="Email" maxlength="75"
-                        value="{{form.email.value|default_if_none:""}}"
-                        {% if not template_debug %}required {% endif %}>
+                        value="{{form.email.value|default_if_none:""}}">
                 </li>
                 <li>
                     <label for="id_classyear" style="display:none;">
@@ -175,8 +172,7 @@ $(function() {
                         {% if form.hometown.errors %} error{% endif%}"
                         id="id_hometown" type="text" name="hometown"
                         placeholder="Hometown" maxlength="128"
-                        value="{{form.hometown.value|default_if_none:""}}"
-                        {% if not template_debug %}required {% endif %}>
+                        value="{{form.hometown.value|default_if_none:""}}">
                     <div class="help">
                         City and state. Include country, if outside the US.
                     </div>
