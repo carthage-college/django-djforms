@@ -21,6 +21,8 @@ class Contact(GenericContact):
         "Previous name",
         max_length=128,
         help_text="e.g. Maiden name",
+        null=True,
+        blank=True,
     )
     salutation = models.CharField(
         max_length=16,
