@@ -19,7 +19,7 @@ def contact(request):
     BCC = settings.MANAGERS
 
     if request.method == 'POST':
-        form = ContactForm(request.POST, request.FILES)
+        form = ContactForm(request.POST, request.FILES, use_required_attribute=False)
         if form.is_valid():
             contact = form.save()
             email = settings.DEFAULT_FROM_EMAIL
@@ -39,7 +39,7 @@ def contact(request):
             )
             return HttpResponseRedirect(reverse_lazy('classnotes_success'))
     else:
-        form = ContactForm()
+        form = ContactForm(use_required_attribute=False)
     manager = request.user.has_perm('classnotes.change_contact')
 
     return render(
