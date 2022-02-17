@@ -9,6 +9,7 @@ mysqlclient==2.0.3
 python-memcached==1.59
 python-ldap==3.4.0
 requests==2.26.0
+django-summernote==0.8.20.0
 django-taggit==1.5.1
 python-magic==0.4.24
 django-localflavor==3.1

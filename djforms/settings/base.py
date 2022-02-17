@@ -41,6 +41,8 @@ MEDIA_ROOT = '{0}/assets/'.format(ROOT_DIR)
 STATIC_ROOT = '{0}/static/'.format(ROOT_DIR)
 STATIC_URL = '/static/{0}/'.format(PROJECT_APP)
 MEDIA_URL = '/media/{0}/'.format(PROJECT_APP)
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SUMMERNOTE_THEME = 'bs4'
 FILE_UPLOAD_PERMISSIONS = 0o644
 STATICFILES_DIRS = ()
 STATICFILES_FINDERS = (
@@ -70,6 +72,7 @@ INSTALLED_APPS = (
     # third party projects
     'bootstrapform',
     'django_countries',
+    'django_summernote',
     'captcha',
     'honeypot',
     'imagekit',

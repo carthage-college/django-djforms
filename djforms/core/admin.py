@@ -8,6 +8,8 @@ from djforms.core.models import Photo
 from djforms.core.models import Promotion
 from djforms.core.models import UserProfile
 
+from django_summernote.admin import SummernoteModelAdmin
+
 
 class GenericChoiceAdmin(admin.ModelAdmin):
     list_display = ('name', 'value', 'ranking', 'active','tag_list')
@@ -24,11 +26,12 @@ class PhotoAdmin(admin.ModelAdmin):
     pass
 
 
-class PromotionAdmin(admin.ModelAdmin):
+class PromotionAdmin(SummernoteModelAdmin):
     raw_id_fields = ('user',)
     model = Promotion
     prepopulated_fields = {'slug': ('title',)}
     list_display = ('title', 'date_created', 'slug', 'amount', 'donors')
+    summernote_fields = ('description', 'about', 'thank_you', 'email_info')
 
 
 # core models
