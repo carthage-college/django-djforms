@@ -33,6 +33,12 @@ class PromotionAdmin(SummernoteModelAdmin):
     list_display = ('title', 'date_created', 'slug', 'amount', 'donors')
     summernote_fields = ('description', 'about', 'thank_you', 'email_info')
 
+    def get_readonly_fields(self, request, obj=None):
+        if obj:
+            self.prepopulated_fields = {}
+            return self.readonly_fields + ('slug',)
+        return self.readonly_fields
+
 
 # core models
 admin.site.register(Department)
