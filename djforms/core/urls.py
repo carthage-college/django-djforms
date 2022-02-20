@@ -88,6 +88,8 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     # writing across curriculum
     path('writingcurriculum/', include('djforms.writingcurriculum.urls')),
+    # WSGC
+    path('wsgc/', include('djforms.wsgc.urls')),
     # recaptcha
     path('captcha/', include('captcha.urls')),
 ]

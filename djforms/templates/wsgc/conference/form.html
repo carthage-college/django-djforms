@@ -1,0 +1,285 @@
+{% extends "wsgc/base.html" %}
+{% load livewhale_api %}
+{% block title %}WSGC Conference{% endblock %}
+{% block extra_javascript %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(function() {
+            var total;
+            var reg_fee = {{form_ord.data.total|default:0}};
+            var discounts = {
+                Yes:-50, No:50
+            }
+            var abstract_flag = {% if form_ord.data.abstract == 'Yes' %}true{% else %}false{% endif %};
+            var kao_flag = {% if form_ord.data.kao_member == 'Yes' %}true{% else %}false{% endif %};
+            // late fee date
+            var late_fee = false;
+            var today = new Date();
+            var dueDate = new Date("2019-05-02");
+            if (dueDate < today) {
+              late_fee = true;
+            }
+            // set total field to readonly so we can update it accordingly
+            // NOTE: we don't need these two blocks
+            $('#id_total').attr('readonly', true);
+
+
+            function calc_reg(fee, val){
+                // only registration_fee would be 0
+                if (val == 0) {
+                  // late fee
+                  if (late_fee == true) {
+                   fee += 50;
+                  }
+                  if (kao_flag == true) {
+                    fee -= 50;
+                  }
+                  if (abstract_flag == true) {
+                    fee -= 50;
+                  }
+                } else {
+                  fee += val;
+                }
+                if (parseFloat(fee) <= 0) {
+                  $('#total').hide();
+                  $('#check-details').hide();
+                  $('#paymentMethod').hide();
+                  $('#id_payment_method_0').prop('checked', false);
+                  $('#id_payment_method_1').prop('checked', true);
+                  $('#creditcard-details').hide();
+                  alert("You do not owe anything for registration based on your KAO and abstract submission discounts. Click the submit button and you will have completed the registration.")
+
+                }else{
+                  $('#total').show();
+                  $('#paymentMethod').show();
+                  $('#id_payment_method_0').prop('checked', false);
+                  $('#id_payment_method_1').prop('checked', false);
+                }
+                return fee
+            }
+
+            // manage the registration price
+            $('input[name="registration_fee"]').click(function() {
+              reg = $(this).attr('value').split('|');
+              reg_fee = parseInt(reg[1]);
+              if (reg[0] == 'Spouses/companions') {
+                if($('#id_abstract_0').is(':checked')) {
+                  reg_fee += 50;
+                }
+                $('#id_abstract_1').prop('checked', true);
+                $('#id_abstract_0').attr('disabled', true);
+                if($('#id_kao_member_0').is(':checked')) {
+                  reg_fee -= 50;
+                  if($('#id_kao_member_0').is(':checked')) {
+                    reg_fee += 50;
+                  }
+                }
+              } else {
+                $('#id_abstract_0').attr('disabled', false);
+              }
+              reg_fee = calc_reg(reg_fee, 0);
+              $('#id_total').attr('value', reg_fee.toFixed(2));
+            });
+
+            $('input[name=kao_member]').on('change', function() {
+              if (reg_fee > 0) {
+                $kval = $('input[name=kao_member]:checked', '#profile').val();
+                if ( ($kval == 'No' && kao_flag == true) || ($kval == 'Yes' && kao_flag == false) ) {
+                  reg_fee = calc_reg(reg_fee, discounts[$(this).val()]);
+                }
+                $('#id_total').attr('value', reg_fee.toFixed(2));
+              }
+              if ($kval == 'Yes') {
+                kao_flag = true;
+              }else{
+                kao_flag = false;
+              }
+            });
+
+
+            $('input[name=abstract]').on('change', function() {
+              if (reg_fee > 0) {
+                $aval = $('input[name=abstract]:checked', '#profile').val();
+                if ( ($aval == 'No' && abstract_flag == true) || ($aval == 'Yes' && abstract_flag == false) ) {
+                  reg_fee = calc_reg(reg_fee, discounts[$(this).val()]);
+                }
+                $('#id_total').attr('value', reg_fee.toFixed(2));
+              }
+              if ($aval == 'Yes') {
+                abstract_flag = true;
+              }else{
+                abstract_flag = false;
+              }
+            });
+
+
+            $('#id_payment_method_0').click(function() {
+                $('#check-details').slideUp(200);
+                $('#creditcard-details').slideDown(200);
+            });
+            $('#id_payment_method_1').click(function() {
+                $('#creditcard-details').slideUp(200);
+                $('#check-details').slideDown(200);
+            });
+
+            // disable submit button after users clicks it
+            $('form#profile').bind('submit', function (e) {
+              $('form#profile input[type=submit]').prop('disabled', true);
+              return true;
+            });
+        });
+    </script>
+{% endblock %}
+{% block extra_style %}
+    <style type="text/css">
+    #id_postal_code, #id_total,
+    #id_expiration_month,#id_expiration_year {width:100px;}
+    #id_total {color:green;font-weight:bold;}
+    {% if form_con.data.payment_method == "Credit Card" %}
+      #check-details {display:none;}
+      #registration-fee-waived {display:none;}
+      #creditcard-details {display:inherit;}
+    {% else %}
+      {% if form_con.data.payment_method == "Check" %}
+        {% if form_con.data.kao_member == 'Yes' and form_con.data.abstract == 'Yes' and form_ord.data.total == '0' %}
+          #registration-fee-waived {display:inherit;}
+          #check-details {display:none;}
+          #paymentMethod {display:none;}
+        {% else %}
+          #check-details {display:inherit;}
+        {% endif %}
+        #creditcard-details {display:none;}
+      {% else %}
+        #check-details {display:none;}
+        #creditcard-details {display:none;}
+        #registration-fee-waived {display:none;}
+      {% endif %}
+    {% endif %}
+    #id_abstract li,#id_kao_member li,#id_payment_method li {display:inline;padding-right:3px;}
+    </style>
+{% endblock %}
+{% block left_nav %}{% endblock %}
+{% block content_head %}
+  <h1>WSGC Conference</h1>
+{% endblock %}
+{% block content %}
+{% if form_proc.errors or form_ord.errors or form_con.errors %}
+  <p class="error">
+    There were errors with the data submitted, see below.
+  </p>
+{% endif %}
+<form method="post" action="." class="form">
+    {% csrf_token %}
+    {% for hidden in form_ord.hidden_fields %}
+    {{ hidden }}
+    {% endfor %}
+    <fieldset class="blockLabels">
+      <h2>Contact Information</h2>
+      <ol>
+        {% for field in form_con.visible_fields %}
+          {% if field.name == "payment_method" %}
+            <li class="form-group ctrlHolder" id="registrationNotes">
+              <h5>Registration Fee Notes</h5>
+                {% get_lw_content as pay_check blurbs 2397 %}
+                {{pay_check.body}}
+            </li>
+            {% for field in form_ord.visible_fields %}
+              {% with dominatrix=field.name %}
+                {% include "form_field.inc.html" %}
+              {% endwith %}
+            {% endfor %}
+            {% with dominatrix="paymentMethod" %}
+              {% include "form_field.inc.html" %}
+            {% endwith %}
+          {% else %}
+            {% with dominatrix=field.name %}
+              {% include "form_field.inc.html" %}
+            {% endwith %}
+          {% endif %}
+        {% endfor %}
+      </ol>
+    </fieldset>
+    <fieldset class="blockLabels" id="creditcard-details">
+      <h2>Billing Information</h2>
+      {% if form_proc.errors %}
+        <div style="padding-left:4px;">
+          <p class="notice">
+            The transaction failed.
+            {% if status == "baddata" or status == "decline" %}
+              Error: <strong>{{status}}</strong>
+            {% endif %}
+          </p>
+        </div>
+      {% endif %}
+      <ol>
+        {% for field in form_proc %}
+            {% if field.name != "captcha" %}
+            {% if field.name == "expiration_month" %}
+            <li class="ctrlHolder">
+            <h3>
+              <label for="id_expiration_month">Expiration Date</label>
+            </h3>
+            <div class="required">{{field}}
+            {% else %}
+                {% if field.name == "expiration_year" %}
+                <label for="id_expiration_year" style="display:none;">
+                    Expiration Year
+                </label>
+                &mdash;&nbsp;{{field}}
+            </div>
+            </li>
+            {% else %}
+            <li class="ctrlHolder">
+            <h3>{{ field.label_tag }}</h3>
+            {% if field.errors %}
+                <div class="required warning">
+                <span class="error-message">
+                  {{ field.errors|join:", "}}
+                </span>
+            {% else %}
+                <div{% if field.field.required %} class="required"{% endif %}>
+            {% endif %}
+            {{field}}
+            {% if field.help_text %}
+                <p class="help">{{field.help_text}}</p>
+            {% endif %}
+            </div>
+            </li>
+            {% endif %}{% endif %}{% endif %}
+        {% endfor %}
+      </ol>
+    </fieldset>
+    <fieldset class="blockLabels" id="registration-fee-waived">
+      <ol>
+        <li class="btnHolder">
+            <strong>
+            <span class="help">NOTE:</span>
+            You do not owe anything for registration based on your
+            KAO membership and abstract submission discounts.
+            Click the submit button and you will have completed
+            the registration.
+            </strong>
+        </li>
+      </ol>
+    </fieldset>
+    <fieldset class="blockLabels" id="check-details">
+      <ol>
+        <li class="btnHolder">
+          {% get_lw_content as pay_check blurbs 2396 %}
+          {{pay_check.body}}
+        </li>
+      </ol>
+    </fieldset>
+    <fieldset class="blockLabels">
+        {% if form_proc.captcha.errors %}
+            <div class="required warning">
+            <span class="error-message">
+              {{ form_proc.captcha.errors|join:", "}}
+            </span>
+            </div>
+        {% endif %}
+        {{form_proc.captcha}}
+    </fieldset>
+    {% include "form_submit.inc.html" %}
+</form>
+{% endblock %}
