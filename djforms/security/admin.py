@@ -9,7 +9,7 @@ class ParkingTicketAppealAdmin(admin.ModelAdmin):
     list_display  = (
         'last_name',
         'first_name',
-        'college_id',
+        'cid',
         'email',
         'created_at',
         'residency_status',

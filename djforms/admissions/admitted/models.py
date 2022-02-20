@@ -66,6 +66,5 @@ class Candidate(models.Model):
         app_label = 'admissions'
         verbose_name_plural = "Will I be admitted?"
 
-    def __unicode__(self):
-        return u'%s <%s>' % (self.first_name, self.email)
-
+    def __str__(self):
+        return '{0} <{1}>'.format(self.first_name, self.email)

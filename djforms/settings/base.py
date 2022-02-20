@@ -59,6 +59,7 @@ DATABASES = {
         'PASSWORD': '',
     },
 }
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 INSTALLED_APPS = (
     # django apps
     'django.contrib.admin',

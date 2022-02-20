@@ -237,7 +237,7 @@ class Presentation(models.Model):
 
         ordering = ['date_created']
         get_latest_by = 'date_created'
-        permissions = (('manage_presentation', 'manage presentation'))
+        permissions = (('manage_presentation', 'manage presentation'),)
 
     def __str__(self):
         """Display the default value."""

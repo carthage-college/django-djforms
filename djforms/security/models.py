@@ -8,7 +8,7 @@ from djforms.core.models import GenericContact
 class ParkingTicketAppeal(GenericContact):
     """Data model class for the parking ticket appear form."""
 
-    college_id = models.CharField("Carthage ID#", max_length=10)
+    cid = models.CharField("Carthage ID#", max_length=10)
     residency_status = models.ForeignKey(
         GenericChoice,
         related_name='parking_ticket_appeal_residency_status',
