@@ -80,7 +80,7 @@ class Applicant(models.Model):
     cv = models.FileField(
         "Résumé",
         upload_to=upload_to_path,
-        validators=[MimetypeValidator('application/pdf')],
+        #validators=[MimetypeValidator('application/pdf')],
         max_length=768,
         help_text = '''
             Upload a 1-2 page résumé in PDF format.
@@ -108,7 +108,7 @@ class Applicant(models.Model):
     core_competencies = models.FileField(
         upload_to=upload_to_path,
         max_length=768,
-        validators=[MimetypeValidator('application/pdf')],
+        #validators=[MimetypeValidator('application/pdf')],
         help_text = '''
             <a href="https://www.aamc.org/services/admissions-lifecycle/competencies-entering-medical-students" target="_blank">
             View the list of the AAMC Core competencies</a>.
@@ -121,7 +121,7 @@ class Applicant(models.Model):
     transcripts = models.FileField(
         upload_to=upload_to_path,
         max_length=768,
-        validators=[MimetypeValidator('application/pdf')],
+        #validators=[MimetypeValidator('application/pdf')],
         help_text = '''
             Download your unofficial Carthage transcripts from
             <a href="https://my.carthage.edu/" target="_blank">
@@ -133,7 +133,7 @@ class Applicant(models.Model):
     waiver = models.FileField(
         upload_to=upload_to_path,
         max_length=768,
-        validators=[MimetypeValidator('application/pdf')],
+        #validators=[MimetypeValidator('application/pdf')],
         help_text = '''
             <a href="/live/files/3255" target="_blank">
             Please download the waiver form</a>.
@@ -258,7 +258,7 @@ class Evaluation(models.Model):
     )
     recommendation = models.FileField(
         upload_to=upload_to_path,
-        validators=[MimetypeValidator('application/pdf')],
+        #validators=[MimetypeValidator('application/pdf')],
         max_length=768,
         help_text='Upload your letter of recommendation in PDF format.',
     )

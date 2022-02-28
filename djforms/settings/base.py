@@ -98,6 +98,7 @@ INSTALLED_APPS = (
     'djforms.scholars',
     'djforms.security',
     'djforms.writingcurriculum',
+    'djforms.wsgc.conference',
     # other in-house django apps
     'djtools',
 )
@@ -360,6 +361,7 @@ TC_AVS = 'n'
 TC_AUTH_TYPE = 'sale'
 TC_CYCLE = '1m'
 TC_OPERATOR = 'DJForms'
+WSGC_OPERATOR = 'DJSpace'
 # simple captcha
 CAPTCHA_BACKGROUND_COLOR='#ffffff'
 CAPTCHA_FOREGROUND_COLOR='#000000'
