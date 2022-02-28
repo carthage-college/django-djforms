@@ -186,7 +186,7 @@ class Photo(models.Model):
     original = models.ImageField(
         upload_to=upload_to_path,
         max_length=255,
-        validators=[MimetypeValidator('image/jpeg')],
+        #validators=[MimetypeValidator('image/jpeg')],
     )
     thumbnail = ImageSpecField(
         source='original',

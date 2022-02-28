@@ -4,7 +4,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from djforms.wsgc.conference.forms import RegistrationContactForm
+from djforms.wsgc.conference.forms import RegistrationForm
 from djforms.wsgc.conference.forms import RegistrationOrderForm
 from djforms.processors.forms import TrustCommerceForm
 from djtools.utils.mail import send_mail
@@ -14,7 +14,7 @@ def form(request):
     """Registration form."""
     required_attribute = settings.REQUIRED_ATTRIBUTE
     if request.POST:
-        form_con = RegistrationContactForm(
+        form_con = RegistrationForm(
             request.POST,
             use_required_attribute=required_attribute,
         )
@@ -29,8 +29,8 @@ def form(request):
             order.operator = settings.WSGC_OPERATOR
             order.reg = contact
             order.contact = contact
-            reg = order.contact.registration_fee.split('|')
-            order.contact.registration_fee = '{0} (${1})'.format(reg[0],reg[1])
+            reg = order.contact.registration_type.split('|')
+            order.contact.registration_type = '{0} (${1})'.format(reg[0],reg[1])
             if contact.payment_method == 'Credit Card':
                 order.total = float(order.total) + (float(order.total) * .03)
                 form_proc = TrustCommerceForm(
@@ -94,7 +94,7 @@ def form(request):
             else:
                 form_proc = TrustCommerceForm(use_required_attribute=False)
     else:
-        form_con = RegistrationContactForm(
+        form_con = RegistrationForm(
             use_required_attribute=required_attribute,
         )
         form_ord = RegistrationOrderForm(

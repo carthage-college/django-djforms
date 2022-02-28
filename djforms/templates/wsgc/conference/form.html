@@ -11,7 +11,6 @@
                 Yes:-50, No:50
             }
             var abstract_flag = {% if form_ord.data.abstract == 'Yes' %}true{% else %}false{% endif %};
-            var kao_flag = {% if form_ord.data.kao_member == 'Yes' %}true{% else %}false{% endif %};
             // late fee date
             var late_fee = false;
             var today = new Date();
@@ -31,9 +30,6 @@
                   if (late_fee == true) {
                    fee += 50;
                   }
-                  if (kao_flag == true) {
-                    fee -= 50;
-                  }
                   if (abstract_flag == true) {
                     fee -= 50;
                   }
@@ -47,8 +43,6 @@
                   $('#id_payment_method_0').prop('checked', false);
                   $('#id_payment_method_1').prop('checked', true);
                   $('#creditcard-details').hide();
-                  alert("You do not owe anything for registration based on your KAO and abstract submission discounts. Click the submit button and you will have completed the registration.")
-
                 }else{
                   $('#total').show();
                   $('#paymentMethod').show();
@@ -68,35 +62,12 @@
                 }
                 $('#id_abstract_1').prop('checked', true);
                 $('#id_abstract_0').attr('disabled', true);
-                if($('#id_kao_member_0').is(':checked')) {
-                  reg_fee -= 50;
-                  if($('#id_kao_member_0').is(':checked')) {
-                    reg_fee += 50;
-                  }
-                }
               } else {
                 $('#id_abstract_0').attr('disabled', false);
               }
               reg_fee = calc_reg(reg_fee, 0);
               $('#id_total').attr('value', reg_fee.toFixed(2));
             });
-
-            $('input[name=kao_member]').on('change', function() {
-              if (reg_fee > 0) {
-                $kval = $('input[name=kao_member]:checked', '#profile').val();
-                if ( ($kval == 'No' && kao_flag == true) || ($kval == 'Yes' && kao_flag == false) ) {
-                  reg_fee = calc_reg(reg_fee, discounts[$(this).val()]);
-                }
-                $('#id_total').attr('value', reg_fee.toFixed(2));
-              }
-              if ($kval == 'Yes') {
-                kao_flag = true;
-              }else{
-                kao_flag = false;
-              }
-            });
-
-
             $('input[name=abstract]').on('change', function() {
               if (reg_fee > 0) {
                 $aval = $('input[name=abstract]:checked', '#profile').val();
@@ -141,21 +112,13 @@
       #creditcard-details {display:inherit;}
     {% else %}
       {% if form_con.data.payment_method == "Check" %}
-        {% if form_con.data.kao_member == 'Yes' and form_con.data.abstract == 'Yes' and form_ord.data.total == '0' %}
-          #registration-fee-waived {display:inherit;}
-          #check-details {display:none;}
-          #paymentMethod {display:none;}
-        {% else %}
-          #check-details {display:inherit;}
-        {% endif %}
         #creditcard-details {display:none;}
       {% else %}
         #check-details {display:none;}
         #creditcard-details {display:none;}
-        #registration-fee-waived {display:none;}
       {% endif %}
     {% endif %}
-    #id_abstract li,#id_kao_member li,#id_payment_method li {display:inline;padding-right:3px;}
+    #id_abstract li,#id_payment_method li {display:inline;padding-right:3px;}
     </style>
 {% endblock %}
 {% block left_nav %}{% endblock %}
@@ -253,9 +216,6 @@
       <ol>
         <li class="btnHolder">
             <strong>
-            <span class="help">NOTE:</span>
-            You do not owe anything for registration based on your
-            KAO membership and abstract submission discounts.
             Click the submit button and you will have completed
             the registration.
             </strong>

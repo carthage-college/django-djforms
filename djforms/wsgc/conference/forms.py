@@ -5,66 +5,54 @@ from django.utils.safestring import mark_safe
 from djforms.core.models import REQ
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
-from djforms.wsgc.conference.models import RegistrationContact
-from djforms.wsgc.conference.models import PAYMENT_CHOICES, REGGIES
-from djforms.wsgc.conference.models import REGGIES
+from djforms.wsgc.conference.models import Registration
+from djforms.wsgc.conference.models import MEAL_CHOICES
+from djforms.wsgc.conference.models import PAYMENT_CHOICES
+from djforms.wsgc.conference.models import REGISTRATION_TYPES
 from djtools.fields import BINARY_CHOICES
 from djtools.fields import STATE_CHOICES
-from django_countries.widgets import CountrySelectWidget
+from djtools.fields.localflavor import USPhoneNumberField
 
 
-class RegistrationContactForm(ContactForm):
+class RegistrationForm(ContactForm):
     """
     WSGC conference registration contact form, extends
     base ContactForm in processors app
     """
 
-    address1 = forms.CharField(max_length=255,widget=forms.TextInput(attrs=REQ))
-    city = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
+    #address1 = forms.CharField(max_length=255,widget=forms.TextInput(attrs=REQ))
+    #city = forms.CharField(max_length=128,widget=forms.TextInput(attrs=REQ))
     state = forms.CharField(
         help_text = 'Choose "Other" if outside the United States',
         widget=forms.Select(choices=STATE_CHOICES, attrs=REQ)
     )
-    phone = forms.CharField(widget=forms.TextInput(attrs=REQ))
-    registration_fee = forms.TypedChoiceField(
-        choices=REGGIES, widget=forms.RadioSelect(),
-        help_text="""
-            All fees are stated in US Dollars
-        """
-    )
-    wsgc_member = forms.TypedChoiceField(
-        label = "Do you have WSGC membership?",
-        choices=BINARY_CHOICES, widget=forms.RadioSelect(),
-        help_text = """
-            WSGC Members receive a $50 discount on the Registration Fee.
-        """
-    )
+    phone = USPhoneNumberField(help_text='Format: XXX-XXX-XXXX')
     payment_method = forms.TypedChoiceField(
         choices=PAYMENT_CHOICES,
         widget=forms.RadioSelect(),
     )
 
     class Meta:
-        model = RegistrationContact
+        model = Registration
         fields = (
+            'title',
             'first_name',
             'last_name',
+            'suffix',
+            'full_name',
             'institution',
-            'email',
             'address1',
             'address2',
             'city',
             'state',
             'postal_code',
-            'country',
+            'email',
             'phone',
-            'discipline',
-            'specialty',
-            'registration_fee',
-            'wsgc_member',
+            'registration_type',
+            'dietary_restrictions',
+            'change_policy',
             'payment_method',
         )
-        widgets = {'country': CountrySelectWidget}
 
 
 class RegistrationOrderForm(OrderForm):

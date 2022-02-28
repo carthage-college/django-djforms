@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from djforms.wsgc.conference.models import RegistrationContact
+from djforms.wsgc.conference.models import Registration
 
 
-class RegistrationContactAdmin(admin.ModelAdmin):
+class RegistrationAdmin(admin.ModelAdmin):
     """Conference registration admin model."""
 
-    model = RegistrationContact
+    model = Registration
     list_display = (
         'last_name',
         'first_name',
@@ -27,7 +27,7 @@ class RegistrationContactAdmin(admin.ModelAdmin):
     ordering = ('-created_at',)
     list_filter = ('state', 'city')
     search_fields = ('email', 'last_name', 'city', 'state', 'postal_code')
-    raw_id_fields = ("order",)
+    raw_id_fields = ('order',)
     list_max_show_all = 500
     list_per_page = 500
 
@@ -51,4 +51,4 @@ class RegistrationContactAdmin(admin.ModelAdmin):
     order_total.short_description = 'Amount Paid'
 
 
-admin.site.register(RegistrationContact, RegistrationContactAdmin)
+admin.site.register(Registration, RegistrationAdmin)
