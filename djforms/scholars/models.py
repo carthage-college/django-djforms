@@ -19,7 +19,6 @@ from taggit.managers import TaggableManager
 
 
 FILE_VALIDATORS = [MimetypeValidator('image/png')]
-FILE_VALIDATORS = []
 WORK_TYPES = (
     ('SURE', 'SURE'),
     ('Senior thesis', 'Senior thesis'),
