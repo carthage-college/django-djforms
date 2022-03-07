@@ -54,7 +54,6 @@ class PresentationForm(forms.ModelForm):
             'leader',
             'status',
             'work_type_other',
-            'tags',
         )
 
     def __init__(self,*args,**kwargs):

@@ -177,7 +177,6 @@ class Presentation(models.Model):
     )
     date_created = models.DateTimeField("Date Created", auto_now_add=True)
     date_updated = models.DateTimeField("Date Updated", auto_now=True)
-    tags = TaggableManager()
     ranking = models.IntegerField(null=True, blank=True, default=0)
     title = models.CharField("Presentation title", max_length=255)
     reviewer = models.CharField(max_length=128, null=True, blank=True)
@@ -268,10 +267,6 @@ class Presentation(models.Model):
         else:
             self.updated_by = self.user
         super(Presentation, self).save()
-
-    def tag_list(self):
-        """Display the tags for the presentation."""
-        return ', '.join(tag.name for tag in self.tags.all())
 
     def get_absolute_url(self):
         """Return the default URL."""
