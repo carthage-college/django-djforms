@@ -7,6 +7,6 @@
     </div>
     {% else %}
     {% get_lw_content as thank_you blurbs 2087 %}
-    {{thank_you.body}}
+    {{thank_you.body|safe}}
     {% endif %}
 {% endblock %}
