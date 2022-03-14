@@ -1,0 +1,27 @@
+{% extends "giving/donation_form.html" %}
+{% block content_head %}
+    <h1 id="page_title">
+        {{campaign.title}}
+    </h1>
+{% endblock %}
+{% block designation %}
+<li class="ctrlHolder">
+    <h3><label for="id_or-comments">Designation</label></h3>
+    <div>
+      <select name="or-comments">
+        <option value="">----Select----</option>
+        <option value="Wiggan-Kenniebrew Endowed Scholarship Fund"{% if or_form.comments.value == 'Wiggan-Kenniebrew Endowed Scholarship Fund' %} selected{% endif %}>
+          Wiggan-Kenniebrew Endowed Scholarship Fund
+        <option value="Wiggan-Kenniebrew Experiential Learning Fund"{% if or_form.comments.value == 'Wiggan-Kenniebrew Experiential Learning Fund' %} selected{% endif %}>
+          Wiggan-Kenniebrew Experiential Learning Fund
+        </option>
+        <option value="Center of Equity and Inclusion"{% if or_form.comments.value == 'Center of Equity and Inclusion' %} selected{% endif %}>
+          Center of Equity and Inclusion
+        </option>
+      </select>
+      <p class="help">
+        Please choose a designation.
+      </p>
+    </div>
+</li>
+{% endblock %}
