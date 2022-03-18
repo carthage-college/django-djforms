@@ -123,9 +123,7 @@ def export_attenders(modeladmin, request, queryset):
                 fields.append(transid)
                 fields.append(status)
             else:
-                fields.append(
-                    unicode(getattr(reg, field, None)).encode('utf-8', 'ignore')
-                )
+                fields.append(getattr(reg, field, None))
         writer.writerow(fields)
     return response
 

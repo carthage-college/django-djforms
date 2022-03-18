@@ -1,26 +1,18 @@
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"
-  type="text/javascript" charset="utf-8"></script>
-<script src="//www.carthage.edu/static/vendor/jquery/ui/datepicker/js/jquery-ui-1.10.4.custom.min.js"
-  type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
     $(function() {
         $('#id_ct-spouse').attr('autocomplete', 'off');
-        $('#pledge').change(function () {
-            $('#pledge-payments').toggle(this.checked);
-        }).change(); //ensure visible state matches initially
-        {% if or_form.pledge.value %}
-        $('#pledge').prop('checked', true);
-        $('#id_or-pledge').val(true);
-        $('#pledge-payments').show();
-        {% else %}
-        $('#pledge-payments').hide();
-        {% endif %}
+        var $designation = $('select[name="or-comments"]');
+        $designation.on('change', function (e){
+          if ($designation.val() == 'Other') {
+            $('#designation-other').slideDown(200);
+          }else{
+            $('#designation-other').slideUp(200);
+          }
+        });
         // disable submit button after user clicks it
         $('form#profile').bind('submit', function (e) {
-          if ( $('#pledge').prop('checked')) {
-            $('#id_or-pledge').val(true);
-          }else{
-            $('#id_or-pledge').val("");
+          if ($designation.val() == 'Other') {
+              $designation.val() = $('#id_or-comments-other').val();
           }
           $('form#profile input[type=submit]').prop('disabled', true);
           return true;

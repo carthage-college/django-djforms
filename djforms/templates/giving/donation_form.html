@@ -10,20 +10,16 @@
 {% endblock %}
 {% block extra_style %}
   {{block.super}}
-  <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
-    rel="stylesheet" type="text/css" />
   <style type="text/css">
     #id_security_code, #id_expiration_month,
     #id_expiration_year {width:70px;}
-    #id_or-start_date, #id_ct-postal_code, #id_or-total, #pledge_total {width:100px;}
+    #id_or-start_date, #id_ct-postal_code, #id_or-total {width:100px;}
     li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
-    .cost, #pledge_total_help { font-weight:bold; color:green; }
-    #pledge_total_help { margin-left:9px; }
-    #page-content-wrap #pledge-payments p { color:green;font-weight:bold;
-      margin-bottom:5px; }
+    .cost { font-weight:bold; color:green; }
     .ui-widget button { float: right; }
     #dialog-message{padding:8px;}
     .ui-dialog-title{padding:4px;float:left;}
+    main #matching-funds label {display: inline;}
   </style>
 {% endblock %}
 {% block group_name %}Giving{% endblock %}
@@ -78,20 +74,6 @@
                       <input type="text" placeholder="$"
                         name="or-total" id="id_or-total" class="required"
                         value="{{or_form.total.value|default:""}}">
-                    </div>
-                </li>
-                <li class="ctrlHolder">
-                    <div class="fleft">
-                        <input type="checkbox" name="pledge" id="pledge">
-                    </div>
-                    <h3>
-                        <label for="pledge">
-                            Make my gift recurring
-                        </label>
-                    </h3>
-                    <div class="clear" id="pledge-payments">
-                    {% get_lw_content as recurring_warning blurbs 2294 %}
-                    {{recurring_warning.body}}
                     </div>
                 </li>
             </ol>
@@ -186,20 +168,22 @@
             </ol>
           </div>
           <div class="large-12 medium-12 small-12 clear cf">
-            <ol>
-                <li><h3>Matching Funds</h3></li>
-                <li class="ctrlHolder">
+            <ul id="matching-funds" style="padding-top:12px;">
+                <li style="padding:0;">
+                    <h3><label>Matching Funds</label></h3>
+                </li>
+                <li style="padding:0;">
                 {% with ct_form.matching_company as field %}
                 {{field}} {{field.label_tag}}
                 {% endwith %}
                 </li>
-                <li class="ctrlHolder">
+                <li style="padding:0;">
                 {% with ct_form.opt_in as field %}
                 {{field}} {{field.label_tag}}
                 {% endwith %}
                 </li>
-                <li>
-                    <h3>Thrivent Choice</h3>
+                <li style="padding:0;">
+                    <h3><label>Thrivent Choice</label></h3>
                     <p>
                         Thrivent members may allocate their Thrivent Choice
                         dollars to Carthage. Please contact Thrivent or visit
@@ -208,8 +192,8 @@
                         for more information.
                     </p>
                 </li>
-                <li>
-                    <h3>Anonymous Giving</h3><br>
+                <li style="padding:0;">
+                    <h3 style="margin-bottom:16px;"><label>Anonymous Giving</label></h3>
                     <input type="checkbox" name="ct-anonymous"
                         {% if ct_form.anonymous.value %}checked{% endif %}
                         id="id_ct-anonymous">
@@ -218,7 +202,7 @@
                     and not be published on any donor list or
                     in the annual report.</label>
                 </li>
-            </ol>
+            </ul>
           </div>
         </fieldset>
         <h2>Billing Information</h2>
