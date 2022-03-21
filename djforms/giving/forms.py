@@ -244,12 +244,13 @@ class DonationOrderForm(OrderForm):
         ''',
         required=False,
     )
+    comments_other=forms.CharField(required=False)
     payments = forms.CharField(required=False, widget=forms.HiddenInput())
     pledge = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Order
-        fields = ('total', 'comments', 'avs', 'auth', 'payments')
+        fields = ('total', 'comments', 'comments_other', 'avs', 'auth', 'payments')
 
 
 class GivingTuesdayDonationOrderForm(DonationOrderForm):

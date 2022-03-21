@@ -207,7 +207,6 @@ def giving_form(request, transaction, campaign=None):
             request.POST,
             use_required_attribute=REQUIRED_ATTRIBUTE,
         )
-
         if ct_form.is_valid() and or_form.is_valid():
             contact = ct_form.save()
             or_data = or_form.save(commit=False)
@@ -237,6 +236,8 @@ def giving_form(request, transaction, campaign=None):
                     ct_form['inscription_7'].value(),
                 )
                 or_data.comments = comments
+            elif or_form['comments_other']:
+                or_data.comments = or_form['comments_other']
             # deal with payments if they have chosen to pledge
             if transaction != 'paver' and request.POST.get('or-pledge') != '':
                 or_data.payments = 0
@@ -320,7 +321,6 @@ def giving_form(request, transaction, campaign=None):
                     or_data.cc_4_digits = cc_form.card[-4:]
                 status = or_data.status
                 or_data.save()
-
     else:
         # order form
         init = {}
