@@ -5,7 +5,7 @@
 {% else %}
     {% autoescape off %}
       {% get_lw_content as donation_email blurbs 2457 %}
-      {{donation_email.body}}
+      {{donation_email.body|safe}}
     {% endautoescape %}
 {% endif %}
 <dl style="margin-bottom:30px;">

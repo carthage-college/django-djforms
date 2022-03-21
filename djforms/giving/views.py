@@ -237,7 +237,7 @@ def giving_form(request, transaction, campaign=None):
                 )
                 or_data.comments = comments
             elif or_form['comments_other']:
-                or_data.comments = or_form['comments_other']
+                or_data.comments = or_form['comments_other'].value()
             # deal with payments if they have chosen to pledge
             if transaction != 'paver' and request.POST.get('or-pledge') != '':
                 or_data.payments = 0
