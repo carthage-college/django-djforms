@@ -6,12 +6,7 @@
         {{campaign.thank_you}}
     {% else %}
     {% get_lw_content as thank_you blurbs 2087 %}
-    {{thank_you.body}}
+    {{thank_you.body|safe}}
     {% endif %}
-    <h3>
-      <a href="/campaign/reason/" target="_blank">
-        Share your reason for supporting Carthage
-      </a>
-    </h3>
 </div>
 {% endblock %}

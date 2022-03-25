@@ -333,9 +333,6 @@ def giving_form(request, transaction, campaign=None):
             except Exception:
                 pass
 
-        if campaign and campaign.designation:
-            init['comments'] = campaign.designation
-
         or_form = str_to_class(
             'djforms.giving.forms', or_form_name,
         )(prefix='or', initial=init, use_required_attribute=REQUIRED_ATTRIBUTE)
@@ -370,11 +367,6 @@ def giving_form(request, transaction, campaign=None):
             'status': status,
             'campaign': campaign,
             'year': str(year),
-            'desi': [
-                'Women 150 Scholarship Fund',
-                'Women 150 Aspire/Professional Development Fund',
-                "Women 150 Women's Athletics Fund",
-            ],
         },
     )
 

@@ -3,7 +3,7 @@
 {% block content %}
     {% if campaign.thank_you %}
     <div>
-        {{campaign.thank_you}}
+        {{campaign.thank_you|safe}}
     </div>
     {% else %}
     {% get_lw_content as thank_you blurbs 2087 %}

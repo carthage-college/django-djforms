@@ -57,22 +57,29 @@
                     </h3>
                     <div class="clear" id="pledge-payments">
                     {% get_lw_content as recurring_warning blurbs 2294 %}
-                    {{recurring_warning.body}}
+                    {{recurring_warning.body|safe}}
                     </div>
                 </li>
+                {% block designation %}
                 <li class="ctrlHolder">
                     <h3><label for="id_or-comments">Designation</label></h3>
-                    <div>
-                      <input type="text" name="or-comments" id="id_or-comments"
-                        value="{{or_form.comments.value|default:"Student Emergency Assistance Fund"}}">
-                      <p class="help">
-                        Please indicate if you would like your gift to be
-                        directed to a specific area. If this space is
-                        left blank, gifts will be directed to the
-                        <a href="/give/carthage-fund/">Carthage Fund</a>.
-                      </p>
+                    {% if or_form.comments.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                            {{ or_form.comments.errors|join:", "}}
+                      </span>
+                    {% else %}
+                    <div class="required">
+                    {% endif %}
+                    <input type="text" name="or-comments" id="id_or-comments">
+                        value="{{or_form.comments.value|default:''}}">
+                    <p class="help">
+                      Please indicate if you would like your gift to be
+                      directed to a specific area.
+                    </p>
                     </div>
                 </li>
+                {% endblock %}
             </ol>
         </fieldset>
         <h2>Contact Information</h2>

@@ -238,11 +238,8 @@ class DonationOrderForm(OrderForm):
         label='Designation',
         help_text='''
             Please indicate if you would like your gift to be directed to
-            a specific area. If this space is left blank, gifts will be
-            directed to the
-            <a href="/give/carthage-fund/">Carthage Fund</a>.
+            a specific area.
         ''',
-        required=False,
     )
     comments_other=forms.CharField(required=False)
     payments = forms.CharField(required=False, widget=forms.HiddenInput())
@@ -298,9 +295,7 @@ class PledgeOrderForm(OrderForm):
         label = "Designation",
         help_text = '''
             Please indicate if you would like your gift to be directed to
-            a specific area. If this space is left blank, gifts will be
-            directed to the
-            <a href="/give/carthage-fund/">Carthage Fund</a>.
+            a specific area.
         ''',
         required=False,
     )
