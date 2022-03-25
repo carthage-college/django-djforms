@@ -1,0 +1,43 @@
+{% extends "giving/donation_form.html" %}
+{% block content_head %}
+    <h1 id="page_title">
+        {{campaign.title}}
+    </h1>
+{% endblock %}
+{% block designation %}
+<li class="ctrlHolder">
+    <h3><label for="id_or-comments">Designation</label></h3>
+    <div>
+      <select name="or-comments">
+        <option value="">----Select----</option>
+        <option value="Modern Languages"{% if or_form.comments.value == 'Modern Languages' %} selected{% endif %}>
+          Modern Languages
+        </option>
+        <option value="Music Program"{% if or_form.comments.value == 'Music Program' %} selected{% endif %}>
+          Music Program
+        </option>
+        <option value="English Department"{% if or_form.comments.value == 'English Department' %} selected{% endif %}>
+          English Department
+        </option>
+        <option value="Theater"{% if or_form.comments.value == 'Theater' %} selected{% endif %}>
+          Theater
+        </option>
+        <option value="Other"{% if or_form.comments.value == 'Other' %} selected{% endif %}>
+          Other
+        </option>
+      </select>
+      <p class="help">
+        Please choose a designation.
+      </p>
+    </div>
+    <div id="designation-other" style="display:none;">
+      <h3><label for="id_or-comments_other">Other designation</label></h3>
+      <div>
+          <input type="text" name="or-comments_other" maxlength="254" id="id_or-comments_other" value="{{or_form.comments_other.value|default:''}}">
+      </div>
+      <p class="help">
+        If you have choosen "Other" for designation, please include the name of the scholarship fund.
+      </p>
+    </div>
+</li>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "giving/donation_form.html" %}
+{% block content_head %}
+    <h1 id="page_title">
+        {{campaign.title}}
+    </h1>
+{% endblock %}
+{% block designation %}
+<li class="ctrlHolder">
+    <h3><label for="id_or-comments">Designation</label></h3>
+    <div>
+      <select name="or-comments">
+        <option value="">----Select----</option>
+        <option value="Biology"{% if or_form.comments.value == 'Biology' %} selected{% endif %}>
+          Biology
+        </option>
+        <option value="Environmental Science"{% if or_form.comments.value == 'Environmental Science' %} selected{% endif %}>
+          Environmental Science
+        </option>
+        <option value="Psychology"{% if or_form.comments.value == 'Psychology' %} selected{% endif %}>
+          Psychology
+        </option>
+        <option value="Other"{% if or_form.comments.value == 'Other' %} selected{% endif %}>
+          Other
+        </option>
+      </select>
+      <p class="help">
+        Please choose a designation.
+      </p>
+    </div>
+    <div id="designation-other" style="display:none;">
+      <h3><label for="id_or-comments_other">Other designation</label></h3>
+      <div>
+          <input type="text" name="or-comments_other" maxlength="254" id="id_or-comments_other" value="{{or_form.comments_other.value|default:''}}">
+      </div>
+      <p class="help">
+        If you have choosen "Other" for designation, please include the name of the scholarship fund.
+      </p>
+    </div>
+</li>
+{% endblock %}
