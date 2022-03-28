@@ -7,7 +7,14 @@
 {% block designation %}
 <li class="ctrlHolder">
     <h3><label for="id_or-comments">Designation</label></h3>
-    <div>
+    {% if or_form.comments.errors %}
+    <div class="required warning">
+      <span class="error-message">
+        {{ or_form.comments.errors|join:", "}}
+      </span>
+    {% else %}
+    <div class="required">
+    {% endif %}
       <select name="or-comments">
         <option value="">----Select----</option>
         <option value="Biology"{% if or_form.comments.value == 'Biology' %} selected{% endif %}>

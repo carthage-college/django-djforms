@@ -7,7 +7,14 @@
 {% block designation %}
 <li class="ctrlHolder">
     <h3><label for="id_or-comments">Designation</label></h3>
-    <div>
+    {% if or_form.comments.errors %}
+    <div class="required warning">
+      <span class="error-message">
+        {{ or_form.comments.errors|join:", "}}
+      </span>
+    {% else %}
+    <div class="required">
+    {% endif %}
       <select name="or-comments">
         <option value="">----Select----</option>
             <option value="Nursing Program"{% if or_form.comments.value == 'Nursing Program' %} selected{% endif %}>
@@ -29,8 +36,15 @@
     </div>
     <div id="designation-other" style="display:none;">
       <h3><label for="id_or-comments_other">Other designation</label></h3>
-      <div>
-          <input type="text" name="or-comments_other" maxlength="254" id="id_or-comments_other" value="{{or_form.comments_other.value|default:''}}">
+      {% if or_form.comments_other.errors %}
+      <div class="required warning">
+        <span class="error-message">
+          {{ or_form.comments_other.errors|join:", "}}
+        </span>
+      {% else %}
+      <div class="required">
+      {% endif %}
+        <input type="text" name="or-comments_other" maxlength="254" id="id_or-comments_other" value="{{or_form.comments_other.value|default:''}}">
       </div>
       <p class="help">
         If you have choosen "Other" for designation, please include the name of the scholarship fund.

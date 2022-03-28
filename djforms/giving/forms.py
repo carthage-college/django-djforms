@@ -158,10 +158,10 @@ class DonationContactForm(ContactForm):
             'honouring',
             'first_name',
             'last_name',
+            'class_of',
+            'relation',
             'spouse',
             'spouse_class',
-            'relation',
-            'class_of',
             'email',
             'phone',
             'address1',
@@ -248,6 +248,17 @@ class DonationOrderForm(OrderForm):
     class Meta:
         model = Order
         fields = ('total', 'comments', 'comments_other', 'avs', 'auth', 'payments')
+
+    def clean(self):
+        """Check for a value if designation is 'other'."""
+        cd = self.cleaned_data
+        error = None
+        if cd.get('comments') == 'Other' and not cd.get('comments_other'):
+            self.add_error(
+                'comments_other',
+                'Please provide a designation for your donation',
+            )
+        return cd
 
 
 class GivingTuesdayDonationOrderForm(DonationOrderForm):

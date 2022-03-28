@@ -66,12 +66,12 @@
                     {% if or_form.comments.errors %}
                     <div class="required warning">
                       <span class="error-message">
-                            {{ or_form.comments.errors|join:", "}}
+                        {{ or_form.comments.errors|join:", "}}
                       </span>
                     {% else %}
                     <div class="required">
                     {% endif %}
-                    <input type="text" name="or-comments" id="id_or-comments">
+                    <input type="text" name="or-comments" id="id_or-comments"
                         value="{{or_form.comments.value|default:''}}">
                     <p class="help">
                       Please indicate if you would like your gift to be
