@@ -46,20 +46,6 @@
                             value="{{or_form.total.value|default:""}}">
                     </div>
                 </li>
-                <li class="ctrlHolder">
-                    <div class="fleft">
-                        <input type="checkbox" name="pledge" id="pledge">
-                    </div>
-                    <h3>
-                        <label for="pledge">
-                            Make my gift recurring
-                        </label>
-                    </h3>
-                    <div class="clear" id="pledge-payments">
-                    {% get_lw_content as recurring_warning blurbs 2294 %}
-                    {{recurring_warning.body|safe}}
-                    </div>
-                </li>
                 {% block designation %}
                 <li class="ctrlHolder">
                     <h3><label for="id_or-comments">Designation</label></h3>
