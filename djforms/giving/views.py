@@ -214,6 +214,9 @@ def giving_form(request, transaction, campaign=None):
             or_data.operator = 'DJForms{0}'.format(trans_cap)
             or_data.avs = 0
             or_data.auth = 'sale'
+            if request.POST.get('or-comments')  == 'Other':
+                or_data.comments = or_form['comments_other'].value()
+                #or_data.comments = request.POST.get('or-comments')
             # deal with commemorative paver options
             class_of = contact.class_of
             # donation amount calculation for current students
@@ -225,26 +228,7 @@ def giving_form(request, transaction, campaign=None):
                 elif or_data.total == 1000:
                     or_data.total = PAVER_TYPES[4][0]
 
-            if transaction == 'paver':
-                comments = '{0}\n{1}\n{2}\n{3}\n{4}\n{5}\n{6}\n'.format(
-                    ct_form['inscription_1'].value(),
-                    ct_form['inscription_2'].value(),
-                    ct_form['inscription_3'].value(),
-                    ct_form['inscription_4'].value(),
-                    ct_form['inscription_5'].value(),
-                    ct_form['inscription_6'].value(),
-                    ct_form['inscription_7'].value(),
-                )
-                or_data.comments = comments
-            elif or_form['comments_other']:
-                or_data.comments = or_form['comments_other'].value()
-            # deal with payments if they have chosen to pledge
-            if transaction != 'paver' and request.POST.get('or-pledge') != '':
-                or_data.payments = 0
-                or_data.auth = 'store'
-                or_data.cycle = '1m'
-            else:
-                or_data.payments = None
+            or_data.payments = None
             if campaign:
                 or_data.promotion = campaign
             or_data.save()
