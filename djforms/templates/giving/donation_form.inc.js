@@ -6,6 +6,7 @@
         $('#designation-other').slideUp(200);
         {% endif %}
         $('#id_ct-spouse').attr('autocomplete', 'off');
+        $('#id_ct-spouse').attr('autocomplete', 'chrome-off');
         var $designation = $('select[name="or-comments"]');
         $designation.on('change', function (e){
           if ($designation.val() == 'Other') {

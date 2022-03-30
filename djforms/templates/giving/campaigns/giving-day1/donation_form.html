@@ -17,14 +17,32 @@
     {% endif %}
       <select name="or-comments">
         <option value="">----Select----</option>
-            <option value="Nursing Program"{% if or_form.comments.value == 'Nursing Program' %} selected{% endif %}>
-          Nursing Program
+        <option value="Accounting and Finance"{% if or_form.comments.value == 'Accounting and Finance' %} selected{% endif %}>
+          Accounting and Finance
+        </option>
+        <option value="Allied Health Science and Athletic Training"{% if or_form.comments.value == 'Allied Health Science and Athletic Training' %} selected{% endif %}>
+          Allied Health Science and Athletic Training
         </option>
         <option value="Education Program"{% if or_form.comments.value == 'Education Program' %} selected{% endif %}>
           Education Program
         </option>
+        <option value="Exercise and Sport Science"{% if or_form.comments.value == 'Exercise and Sport Science' %} selected{% endif %}>
+          Exercise and Sport Science
+        </option>
+        <option value="Management and Marketing"{% if or_form.comments.value == 'Management and Marketing' %} selected{% endif %}>
+          Management and Marketing
+        </option>
+        <option value="Master of Science in Business"{% if or_form.comments.value == 'Master of Science in Business' %} selected{% endif %}>
+          Master of Science in Business
+        </option>
+        <option value="Nursing Program"{% if or_form.comments.value == 'Nursing Program' %} selected{% endif %}>
+          Nursing Program
+        </option>
         <option value="Marketing"{% if or_form.comments.value == 'Marketing' %} selected{% endif %}>
           Marketing
+        </option>
+        <option value="Social Work"{% if or_form.comments.value == 'Social Work' %} selected{% endif %}>
+          Social Work
         </option>
         <option value="Other"{% if or_form.comments.value == 'Other' %} selected{% endif %}>
           Other
