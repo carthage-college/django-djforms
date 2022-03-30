@@ -83,7 +83,7 @@
     }
     div.growlUI h1, div.growlUI h2 {
         font-size: 1.4em; color: white;
-        padding: 5px 5px 5px 75px; text-align: left
+        padding: 0 5px 0 75px; text-align: left
     }
     </style>
 {% endblock %}
@@ -117,7 +117,7 @@
         <fieldset class="blockLabels">
             <ol>
                 {% if not user.get_profile.phone %}
-                <li class="ctrlHolder">
+                <li>
                 <h3>{{profile_form.phone.label_tag}}</h3>
                 {% if profile_form.phone.errors %}
                 <div class="warning">
@@ -140,140 +140,151 @@
                 </li>
                 {% endif %}
                 {% for field in form %}
-                    {% include "form_field.inc.html" %}
-                    {% if field.name == "syllabus" %}
-                        <li class="ctrlHolder">
-                            <h3><label>Criteria</label></h3>
-                        </li>
-                        <li>
-                            To request a Writing Intensive designation, please
-                            complete the chart below. The information will
-                            allow the WAC Committee to determine whether your
-                            class meets the Writing Intensive Criteria. You
-                            will be contacted if clarification is needed.
-                        </li>
-                        <li>
-                            Click on the "plus" symbol to add another
-                            recommendation, and
-                            use the "minus" symbol to remove a recommendations.
-                            <div class="ctrlcx">
-                                <img id="clone" src="/static/djforms/img/ico/silk/icons/add.png">
-                                <img id="destroy" src="/static/djforms/img/ico/silk/icons/delete.png">
-                            </div>
-                        </li>
-                        <li class="ctrlHolder" id="duplicates">
-                            <ul id="doop_master">
-                                <li>
-                                    <input type="text" maxlength="255"
-                                        name="wac-type_assignment[]" />
-                                    <div class="criterion">
-                                        Writing Assignment Type
-                                        (Do not include in-class exams)
-                                    </div>
-                                </li>
-                                <li style="clear:both;">
-                                    <input type="text" maxlength="3"
-                                        name="wac-number_pages[]" />
-                                    <div class="criterion">
-                                        Number of Pages Required
-                                    </div>
-                                </li>
-                                <li style="clear:both;">
-                                    <input type="text" maxlength="3"
-                                        name="wac-percent_grade[]" />
-                                    <div class="criterion">
-                                        Percent of student's grade based on
-                                        this assignment
-                                    </div>
-                                </li>
-                                <li style="clear:both;">
-                                    <textarea name="wac-description[]"
-                                        class="wac-description"></textarea>
-                                    <div class="criterion">
-                                        Describe how you will help students
-                                        successfully complete the assignment,
-                                        and when during the semester this
-                                        assignment will be addressed.
-                                    </div>
-                                </li>
-                                <li>
-                                    <hr />
-                                    <input type="hidden" name="wac-id[]" />
-                                </li>
-                            </ul>
-                            {# for criterion_id, criterion in criteria.items #}
-                            {% for criterion in criteria %}
-                            <ul id="doop_{{forloop.counter}}">
-                                <li>
-                                    <input type="text" maxlength="255"
-                                        name="wac-type_assignment[]"
-                                        value="{{criterion.type_assignment}}">
-                                    {% if forloop.first %}
-                                    &nbsp;
-                                    [<a href="#" class="crita" tabindex="1">
-                                        Criterion A
-                                    </a>]
-                                    {% endif %}
-                                    <div class="criterion">
-                                        Writing Assignment Type
-                                        (Do not include in-class exams)
-                                    </div>
-                                </li>
-                                <li style="clear:both;">
-                                    <input type="text" maxlength="3"
-                                        name="wac-number_pages[]"
-                                        value="{{criterion.number_pages}}">
-                                    {% if forloop.first %}
-                                    &nbsp;
-                                    [<a href="#" class="critd" tabindex="1">
-                                        Criterion D
-                                    </a>]
-                                    {% endif %}
-                                    <div class="criterion">
-                                        Number of Pages Required
-                                    </div>
-                                </li>
-                                <li style="clear:both;">
-                                    <input type="text" maxlength="3"
-                                        name="wac-percent_grade[]"
-                                        value="{{criterion.percent_grade}}">
-                                    {% if forloop.first %}
-                                    &nbsp;
-                                    [<a href="#" class="critc" tabindex="1">
-                                        Criterion C
-                                    </a>]
-                                    {% endif %}
-                                    <div class="criterion">
-                                        Percent of student's grade based on
-                                        this assignment
-                                    </div>
-                                </li>
-                                <li style="clear:both;">
-                                    <textarea name="wac-description[]"
-                                        class="wac-description">
-                                        {{criterion.description}}</textarea>
-                                    {% if forloop.first %}
-                                    &nbsp;
-                                    [<a href="#" class="critb" tabindex="1">
-                                        Criterion B
-                                    </a>]
-                                    {% endif %}
-                                    <div class="criterion">
-                                        Describe how you will help students
-                                        successfully complete the assignment,
-                                        and when during the semester this
-                                        assignment will be addressed.
-                                    </div>
-                                </li>
-                                <li>
-                                    <hr />
-                                    <input type="hidden" name="wac-id[]"
-                                        value="{{criterion.id}}" />
-                                </li>
-                            </ul>
-                            {% endfor %}
-                        </li>
+                  <li class="form-group"{% if dominatrix %} id="{{dominatrix}}"{% endif %}>
+                    {% if field.label %}<h3>{{ field.label_tag }}</h3>{% endif %}
+                    {% if field.errors %}
+                    <div class="required warning">
+                      <span class="error">{{ field.errors|join:", "}}</span>
+                    {% else %}
+                    <div{% if field.field.required %} class="required"{% endif %}>
                     {% endif %}
+                    {% if field.help_text %}
+                      <p class="help">{{field.help_text|safe}}</p>
+                    {% endif %}
+                    {{field}}
+                    </div>
+                  </li>
+                  {% if field.name == "syllabus" %}
+                    <li><h3><label>Criteria</label></h3></li>
+                    <li>
+                        To request a Writing Intensive designation, please
+                        complete the chart below. The information will
+                        allow the WAC Committee to determine whether your
+                        class meets the Writing Intensive Criteria. You
+                        will be contacted if clarification is needed.
+                    </li>
+                    <li>
+                        Click on the "plus" symbol to add another
+                        recommendation, and
+                        use the "minus" symbol to remove a recommendations.
+                        <div class="ctrlcx">
+                            <img id="clone" src="/static/djforms/img/ico/silk/icons/add.png">
+                            <img id="destroy" src="/static/djforms/img/ico/silk/icons/delete.png">
+                        </div>
+                    </li>
+                    <li id="duplicates">
+                        <ul id="doop_master">
+                            <li>
+                                <input type="text" maxlength="255"
+                                    name="wac-type_assignment[]" />
+                                <div class="criterion">
+                                    Writing Assignment Type
+                                    (Do not include in-class exams)
+                                </div>
+                            </li>
+                            <li style="clear:both;">
+                                <input type="text" maxlength="3"
+                                    name="wac-number_pages[]" />
+                                <div class="criterion">
+                                    Number of Pages Required
+                                </div>
+                            </li>
+                            <li style="clear:both;">
+                                <input type="text" maxlength="3"
+                                    name="wac-percent_grade[]" />
+                                <div class="criterion">
+                                    Percent of student's grade based on
+                                    this assignment
+                                </div>
+                            </li>
+                            <li style="clear:both;">
+                                <textarea name="wac-description[]"
+                                    class="wac-description"></textarea>
+                                <div class="criterion">
+                                    Describe how you will help students
+                                    successfully complete the assignment,
+                                    and when during the semester this
+                                    assignment will be addressed.
+                                </div>
+                            </li>
+                            <li>
+                                <hr />
+                                <input type="hidden" name="wac-id[]" />
+                            </li>
+                        </ul>
+                        {# for criterion_id, criterion in criteria.items #}
+                        {% for criterion in criteria %}
+                        <ul id="doop_{{forloop.counter}}">
+                            <li>
+                                <input type="text" maxlength="255"
+                                    name="wac-type_assignment[]"
+                                    value="{{criterion.type_assignment}}">
+                                {% if forloop.first %}
+                                &nbsp;
+                                [<a href="#" class="crita" tabindex="1">
+                                    Criterion A
+                                </a>]
+                                {% endif %}
+                                <div class="criterion">
+                                    Writing Assignment Type
+                                    (Do not include in-class exams)
+                                </div>
+                            </li>
+                            <li style="clear:both;">
+                                <input type="text" maxlength="3"
+                                    name="wac-number_pages[]"
+                                    value="{{criterion.number_pages}}">
+                                {% if forloop.first %}
+                                &nbsp;
+                                [<a href="#" class="critd" tabindex="1">
+                                    Criterion D
+                                </a>]
+                                {% endif %}
+                                <div class="criterion">
+                                    Number of Pages Required
+                                </div>
+                            </li>
+                            <li style="clear:both;">
+                                <input type="text" maxlength="3"
+                                    name="wac-percent_grade[]"
+                                    value="{{criterion.percent_grade}}">
+                                {% if forloop.first %}
+                                &nbsp;
+                                [<a href="#" class="critc" tabindex="1">
+                                    Criterion C
+                                </a>]
+                                {% endif %}
+                                <div class="criterion">
+                                    Percent of student's grade based on
+                                    this assignment
+                                </div>
+                            </li>
+                            <li style="clear:both;">
+                                <textarea name="wac-description[]"
+                                    class="wac-description">
+                                    {{criterion.description}}</textarea>
+                                {% if forloop.first %}
+                                &nbsp;
+                                [<a href="#" class="critb" tabindex="1">
+                                    Criterion B
+                                </a>]
+                                {% endif %}
+                                <div class="criterion">
+                                    Describe how you will help students
+                                    successfully complete the assignment,
+                                    and when during the semester this
+                                    assignment will be addressed.
+                                </div>
+                            </li>
+                            <li>
+                                <hr />
+                                <input type="hidden" name="wac-id[]"
+                                    value="{{criterion.id}}" />
+                            </li>
+                        </ul>
+                        {% endfor %}
+                    </li>
+                  {% endif %}
                 {% endfor %}
             </ol>
         </fieldset>
