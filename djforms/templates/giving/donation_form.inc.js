@@ -16,8 +16,8 @@
           }
         });
         // disable submit button after user clicks it
-        $('form#profile').bind('submit', function (e) {
-          $('form#profile input[type=submit]').prop('disabled', true);
+        $('#donation_form').bind('submit', function (e) {
+          $('#donation_form input[type=submit]').prop('disabled', true);
           return true;
         });
     });
