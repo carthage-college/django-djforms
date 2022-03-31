@@ -7,7 +7,6 @@ from djforms.processors.trust_commerce import PaymentProcessor
 from djtools.fields.localflavor import USPhoneNumberField
 from djtools.fields import TODAY
 from localflavor.us.forms import USZipCodeField
-from captcha.fields import CaptchaField
 
 
 EXP_MONTH = [(x, x) for x in range(1, 13)]
@@ -73,7 +72,6 @@ class CreditCardForm(forms.Form):
         help_text="The 3 or 4 digit code on your credit card.",
         widget=forms.TextInput(attrs=REQ),
     )
-    captcha = CaptchaField(label='Input the text you see in the image on the left')
 
 
 class TrustCommerceForm(CreditCardForm):
