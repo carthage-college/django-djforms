@@ -237,8 +237,9 @@ class DonationOrderForm(OrderForm):
     comments=forms.CharField(
         label='Designation',
         help_text='''
-            Please indicate if you would like your gift to be directed to
-            a specific area.
+            Please indicate if you would like your gift to be directed to a specific area.
+            If you do not have a specific designation in mind,
+            please enter "n/a" and we'll use your gift where it's needed most!
         ''',
     )
     comments_other=forms.CharField(required=False)

@@ -58,11 +58,8 @@
                     <div class="required">
                     {% endif %}
                     <input type="text" name="or-comments" id="id_or-comments"
-                        value="{{or_form.comments.value|default:''}}">
-                    <p class="help">
-                      Please indicate if you would like your gift to be
-                      directed to a specific area.
-                    </p>
+                      value="{{or_form.comments.value|default:''}}">
+                    <p class="help">{{or_form.comments.help_text}}</p>
                     </div>
                 </li>
                 {% endblock %}
