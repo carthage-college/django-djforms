@@ -55,13 +55,13 @@ def export_scholars(modeladmin, request, queryset):
                     presenter.last_name, presenter.first_name,
                 )
             title = smart_str(
-                presenter.title,
+                presentation.title,
                 encoding='utf-8',
                 strings_only=False,
                 errors='strict',
             )
             funding = smart_str(
-                presenter.funding,
+                presentation.funding,
                 encoding='utf-8',
                 strings_only=False,
                 errors='strict',
