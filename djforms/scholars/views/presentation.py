@@ -321,7 +321,7 @@ def email_presenters(request,pid,action):
                 return HttpResponseRedirect(
                     reverse(
                         'email_presenters_form',
-                        {'pid': pid, 'action': action},
+                        kwargs={'pid': pid, 'action': action},
                     ),
                 )
     else:
@@ -387,7 +387,7 @@ def action(request):
             return HttpResponseRedirect(
                 reverse(
                     'email_presenters_form',
-                    {'pid': pid, 'action': action},
+                    kwargs={'pid': pid, 'action': action},
                 ),
             )
     else:

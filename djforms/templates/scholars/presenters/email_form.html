@@ -88,11 +88,9 @@
         </div>
         <p>
             <br />
-            <input type="button" name="update" value="Edit"
-                class="button fleft" onclick="javascript:history.go(-1)" />
+            <input type="button" name="update" value="Edit" class="button float-left" onclick="javascript:history.go(-1)">
             &nbsp;
-            <input type="submit" name="execute" value="Execute"
-                class="button fright" />
+            <input id="id_submit" type="submit" name="execute" value="execute" class="button float-right">
         </p>
         </form>
     {% else %}
@@ -113,7 +111,14 @@
                 </li>
             </ol>
           </fieldset>
-          {% include "form_submit.inc.html" %}
+          <fieldset class="btnHolder">
+            <ol>
+              <li>
+                <label for="id_submit" style="display:none;">Submit</label>
+                <input id="id_submit" name="confirm" value="Submit" class="button" type="submit">
+              </li>
+            </ol>
+          </fieldset>
         </form>
     {% endif %}
 {% endblock %}
