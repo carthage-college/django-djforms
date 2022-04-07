@@ -305,6 +305,8 @@ def email_presenters(request,pid,action):
                     else:
                         to_list.append(presentation.leader.sponsor_email)
                         bcc = [settings.COS_EMAIL, settings.SERVER_EMAIL]
+                else:
+                    bcc = [request.user.email]
                 data = {'content': form_data['content']}
                 sub = "[Celebration of Scholars] Info about your presentation"
                 send_mail (
