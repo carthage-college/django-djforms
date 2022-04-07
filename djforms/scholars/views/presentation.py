@@ -379,7 +379,7 @@ def action(request):
         presentation = get_object_or_404(Presentation,id=pid)
         if action == 'update':
             return HttpResponseRedirect(
-                reverse('presentation_update', kwargs={'pid': self.id})
+                reverse('presentation_update', kwargs={'pid': pid})
             )
         else:
             if not action:
