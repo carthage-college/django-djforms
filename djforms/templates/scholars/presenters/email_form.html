@@ -76,7 +76,7 @@
         </p>
         </div>
         <div class="buffer" style="background-color:#efefef;">
-        {{data.content}}
+        {{data.content|safe}}
         </div>
         <form method="post" action="." class="form"
             id="profile"{% block extra_form_tag %}{% endblock%}>
