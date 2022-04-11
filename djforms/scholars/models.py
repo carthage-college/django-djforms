@@ -134,13 +134,14 @@ class Presenter(models.Model):
     def save(self, *args, **kwargs):
         """Override the save() method to update some things first."""
         if self.sponsor:
+            sid = int(self.sponsor)
             faculty = get_people("faculty")
             try:
                 self.sponsor_name = '{0} {1}'.format(
-                    faculty[self.sponsor].firstname,
-                    faculty[self.sponsor].lastname,
+                    faculty[sid].firstname,
+                    faculty[sid].lastname,
                 )
-                self.sponsor_email = faculty[self.sponsor].email
+                self.sponsor_email = faculty[sid].email
             except Exception:
                 self.sponsor_name = settings.COS_DEFAULT_NAME
                 self.sponsor_email = settings.COS_DEFAULT_EMAIL
