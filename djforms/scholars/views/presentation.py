@@ -79,7 +79,7 @@ def form(request, pid=None):
     faculty = []
     for jay in jason:
         faculty.append({
-            'id': jay['cid'],
+            'id': str(jay['cid']),
             'lastname': jay['lastname'],
             'firstname': jay['firstname'],
         })
