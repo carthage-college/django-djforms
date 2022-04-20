@@ -6,6 +6,7 @@ import requests
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.cache import cache
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -13,12 +14,17 @@ from djforms.core.models import BINARY_CHOICES
 from djforms.core.models import Department
 from djforms.core.models import YEAR_CHOICES
 from djtools.fields import NOW
-from djtools.fields.validators import MimetypeValidator
 from djtools.utils.mail import send_mail
 from taggit.managers import TaggableManager
 
 
-FILE_VALIDATORS = [MimetypeValidator('image/png')]
+ALLOWED_EXTENSIONS = (
+    'pdf', 'PDF', 'png', 'PNG', 'jpg', 'JPG', 'jpeg', 'JPEG', 'heic', 'HEIC',
+)
+FILE_VALIDATORS = [
+    FileExtensionValidator(allowed_extensions=ALLOWED_EXTENSIONS),
+]
+
 WORK_TYPES = (
     ('SURE', 'SURE'),
     ('Senior thesis', 'Senior thesis'),
