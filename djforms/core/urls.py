@@ -89,7 +89,7 @@ urlpatterns = [
     # writing across curriculum
     path('writingcurriculum/', include('djforms.writingcurriculum.urls')),
     # WSGC
-    path('wsgc/', include('djforms.wsgc.urls')),
+    path('wsgc/', include('djforms.spacegrant.urls')),
     # recaptcha
     path('captcha/', include('captcha.urls')),
 ]

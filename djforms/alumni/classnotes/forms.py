@@ -61,10 +61,7 @@ class ContactForm(forms.ModelForm):
             'pubtext',
             'alumnicomments',
         )
-
-    def __init__(self,*args,**kwargs):
-        super(ContactForm,self).__init__(*args,**kwargs)
-        self.fields.keyOrder = [
+        fields = (
             'salutation',
             'first_name',
             'second_name',
@@ -81,4 +78,4 @@ class ContactForm(forms.ModelForm):
             'category',
             'picture',
             'caption',
-        ]
+        )

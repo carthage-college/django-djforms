@@ -4,8 +4,8 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from djforms.wsgc.conference.forms import RegistrationForm
-from djforms.wsgc.conference.forms import RegistrationOrderForm
+from djforms.spacegrant.conference.forms import RegistrationForm
+from djforms.spacegrant.conference.forms import RegistrationOrderForm
 from djforms.processors.forms import TrustCommerceForm
 from djtools.utils.mail import send_mail
 
@@ -48,13 +48,13 @@ def form(request):
                         TO_LIST,
                         "[WSGC] Conference Registration",
                         contact.email,
-                        'wsgc/conference/email.html',
+                        'spacegrant/conference/email.html',
                         order,
                         BCC,
                     )
                     order.send_mail = sent
                     order.save()
-                    return HttpResponseRedirect(reverse('wsgc_conference_success'))
+                    return HttpResponseRedirect(reverse('spacegrant_conference_success'))
                 else:
                     r = form_proc.processor_response
                     if r:
@@ -78,13 +78,13 @@ def form(request):
                     TO_LIST,
                     "[WSGC] Conference Registration",
                     contact.email,
-                    'wsgc/conference/email.html',
+                    'spacegrant/conference/email.html',
                     order,
                     BCC,
                 )
                 order.send_mail = sent
                 order.save()
-                return HttpResponseRedirect(reverse('wsgc_conference_success'))
+                return HttpResponseRedirect(reverse('spacegrant_conference_success'))
         else:
             if request.POST.get('payment_method') == 'Credit Card':
                 form_proc = TrustCommerceForm(
@@ -105,7 +105,7 @@ def form(request):
 
     return render(
         request,
-        'wsgc/conference/form.html',
+        'spacegrant/conference/form.html',
         {
             'form_con': form_con,
             'form_ord': form_ord,

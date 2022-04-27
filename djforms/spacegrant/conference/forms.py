@@ -5,10 +5,10 @@ from django.utils.safestring import mark_safe
 from djforms.core.models import REQ
 from djforms.processors.models import Order
 from djforms.processors.forms import ContactForm, OrderForm
-from djforms.wsgc.conference.models import Registration
-from djforms.wsgc.conference.models import MEAL_CHOICES
-from djforms.wsgc.conference.models import PAYMENT_CHOICES
-from djforms.wsgc.conference.models import REGISTRATION_TYPES
+from djforms.spacegrant.conference.models import Registration
+from djforms.spacegrant.conference.models import MEAL_CHOICES
+from djforms.spacegrant.conference.models import PAYMENT_CHOICES
+from djforms.spacegrant.conference.models import REGISTRATION_TYPES
 from djtools.fields import BINARY_CHOICES
 from djtools.fields import STATE_CHOICES
 from djtools.fields.localflavor import USPhoneNumberField

@@ -98,7 +98,7 @@ INSTALLED_APPS = (
     'djforms.scholars',
     'djforms.security',
     'djforms.writingcurriculum',
-    'djforms.wsgc.conference',
+    'djforms.spacegrant.conference',
     # other in-house django apps
     'djtools',
 )

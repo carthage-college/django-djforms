@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
-from djforms.wsgc.conference.models import Registration
+from djforms.spacegrant.conference.models import Registration
 
 
 class RegistrationAdmin(admin.ModelAdmin):

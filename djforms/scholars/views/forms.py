@@ -43,6 +43,17 @@ class PresentationForm(forms.ModelForm):
         """Sub-class for settings configurations about the parent class."""
 
         model = Presentation
+        fields = (
+            'title',
+            'funding',
+            'work_type',
+            'permission',
+            'shared',
+            'abstract_text',
+            'need_table',
+            'need_electricity',
+            'poster_file',
+        )
         exclude = (
             'user',
             'reviewer',
@@ -55,25 +66,6 @@ class PresentationForm(forms.ModelForm):
             'status',
             'work_type_other',
         )
-
-    def __init__(self,*args,**kwargs):
-        """Initialization method."""
-        super(PresentationForm,self).__init__(*args,**kwargs)
-        try:
-            self.obj = Presentation.objects.get(pk=self.instance.pk)
-        except Exception:
-            self.obj = None
-        self.fields.keyOrder = [
-            'title',
-            'funding',
-            'work_type',
-            'permission',
-            'shared',
-            'abstract_text',
-            'need_table',
-            'need_electricity',
-            'poster_file',
-        ]
 
 
 class EmailPresentersForm(forms.Form):
