@@ -59,7 +59,7 @@ def home(request):
     """Home view."""
     presentations = Presentation.objects.filter(user=request.user).filter(
         date_created__year=YEAR,
-    )
+    ).order_by('title')
     return render(
         request,
         'scholars/presentation/home.html',
@@ -352,7 +352,7 @@ def archives(request, ptype, medium, year=None):
         if ptype == 'presentation':
             p = Presentation.objects.filter(
                 date_updated__year=year).filter(status=True)
-            p.filter(status=True).order_by('user__last_name')
+            p.filter(status=True).order_by('title')
         else:
             prez = Presenter.objects.filter(date_updated__year=year)
             p = prez.order_by('last_name')

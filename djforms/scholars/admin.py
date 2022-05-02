@@ -44,7 +44,7 @@ def export_scholars(modeladmin, request, queryset):
         try:
             leader = '{0}, {1}'.format(
                 presentation.leader.last_name,
-                presentation.resentationleader.first_name,
+                presentation.leader.first_name,
             )
         except Exception:
             leader = ''
