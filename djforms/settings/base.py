@@ -299,7 +299,7 @@ COUNTRIES_FIRST = {
 COUNTRIES_FLAG_URL = '/static/forms/img/flags/{code}.gif'
 # Celebration of Scholars Window
 COS_END_MONTH = 5
-COS_END_DAY = 1
+COS_END_DAY = 15
 COS_START_MONTH = 2
 COS_START_DAY = 2
 COS_EMAIL = ''
