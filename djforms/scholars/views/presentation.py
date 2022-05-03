@@ -338,28 +338,23 @@ def email_presenters(request,pid,action):
 
 
 def archives(request, ptype, medium, year=None):
-    """
-    Year based archives, defaults to current year
-    """
+    """Year based archives, defaults to current year."""
     if year:
         year = int(year)
     else:
         year = YEAR
 
-    template = 'scholars/{}/archives_{}.html'.format(ptype, medium)
-
+    template = 'scholars/{0}/archives_{1}.html'.format(ptype, medium)
     if os.path.isfile(os.path.join(settings.ROOT_DIR, 'templates', template)):
         if ptype == 'presentation':
-            p = Presentation.objects.filter(
-                date_updated__year=year).filter(status=True)
-            p.filter(status=True).order_by('title')
+            prez = Presentation.objects.filter(
+                date_updated__year=year,
+            ).filter(status=True).order_by('title')
         else:
-            prez = Presenter.objects.filter(date_updated__year=year)
-            p = prez.order_by('last_name')
-
-        return render(
-            request, template, {'prez': p,'year':year,}
-        )
+            prez = Presenter.objects.filter(
+                date_updated__year=year,
+            ).order_by('last_name')
+        return render(request, template, {'prez': prez, 'year': year})
     else:
         raise Http404
 

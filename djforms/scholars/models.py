@@ -241,7 +241,7 @@ class Presentation(models.Model):
     class Meta:
         """Sub-class for settings configurations about the parent class."""
 
-        ordering = ['date_created']
+        #ordering = ['date_created']
         get_latest_by = 'date_created'
         permissions = (('manage_presentation', 'manage presentation'),)
 
