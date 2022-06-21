@@ -64,9 +64,9 @@ def visit_day_form(request, event_type):
             gmail1 = getattr(profile, 'guardian_email1', None)
             gmail2 = getattr(profile, 'guardian_email2', None)
             if gmail1:
-                to_list.append(gmail)
+                to_list.append(gmail1)
             if gmail2:
-                to_list.append(gmai2)
+                to_list.append(gmail2)
             send_mail(
                 request,
                 to_list,
@@ -81,10 +81,6 @@ def visit_day_form(request, event_type):
                 txt_list = [settings.SERVER_EMAIL]
             else:
                 txt_list = [email]
-            if gmail1:
-                txt_list.append(gmail1)
-            if gmail2:
-                txt_list.append(gmail2)
             subject = "{0} on {1} for {2}, {3}".format(
                 visit_day.title,
                 profile.date,
