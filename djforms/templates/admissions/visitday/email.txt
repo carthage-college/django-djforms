@@ -17,10 +17,8 @@ Zip......................... {{data.profile.postal_code}}
 Phone....................... {{data.profile.phone}}
 Mobile...................... {{data.profile.mobile}}
 Gender...................... {{data.profile.gender}}
-{% if not data.short %}Parent Email 1.............. {{data.profile.guardian_email1}}
-Parent Type 1............... {{data.profile.guardian_type1}}
-Parent Email 2.............. {{data.profile.guardian_email2}}
-Parent Type 2............... {{data.profile.guardian_type2}}
+{% if not data.short %}Parent Email 1.............. {{data.profile.guardian_email1}}{% if data.profile.guardian_type1 %} ({{data.profile.guardian_type1){% endif %}
+Parent Email 2.............. {{data.profile.guardian_email2}} {% if data.profile.guardian_type1 %} ({{data.profile.guardian_type2}}){% endif %}
 High School................. {{data.profile.high_school}}
 City........................ {{data.profile.hs_city}}
 State....................... {{data.profile.hs_state}}

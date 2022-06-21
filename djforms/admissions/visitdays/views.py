@@ -61,9 +61,12 @@ def visit_day_form(request, event_type):
                 subject = "{0} on {1}".format(visit_day.title, profile.date)
             data = {'profile':profile, 'visit_day': visit_day, 'short':short}
             to_list = [profile.email]
-            gmail = getattr(profile, 'guardian_email', None)
-            if gmail:
+            gmail1 = getattr(profile, 'guardian_email1', None)
+            gmail2 = getattr(profile, 'guardian_email2', None)
+            if gmail1:
                 to_list.append(gmail)
+            if gmail2:
+                to_list.append(gmai2)
             send_mail(
                 request,
                 to_list,
@@ -75,10 +78,13 @@ def visit_day_form(request, event_type):
             )
             # send text mail to admissions folks
             if settings.DEBUG:
-                TO_LIST = [settings.SERVER_EMAIL]
+                txt_list = [settings.SERVER_EMAIL]
             else:
-                TO_LIST = [email]
-
+                txt_list = [email]
+            if gmail1:
+                txt_list.append(gmail1)
+            if gmail2:
+                txt_list.append(gmail2)
             subject = "{0} on {1} for {2}, {3}".format(
                 visit_day.title,
                 profile.date,
@@ -87,7 +93,7 @@ def visit_day_form(request, event_type):
             )
             send_mail(
                 request,
-                TO_LIST,
+                txt_list,
                 subject,
                 email,
                 'admissions/visitday/email.txt',
