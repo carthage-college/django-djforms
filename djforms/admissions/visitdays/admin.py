@@ -48,8 +48,10 @@ def export_profiles(modeladmin, request, queryset):
             c.postal_code,
             c.gender,
             c.date,
-            c.guardian_email,
-            c.guardian_type,
+            c.guardian_email1,
+            c.guardian_type1,
+            c.guardian_email2,
+            c.guardian_type2,
             c.event_title().encode('utf-8'),
         ]
 
@@ -72,8 +74,10 @@ class VisitDayProfileAdmin(admin.ModelAdmin):
         'postal_code',
         'gender',
         'date',
-        'guardian_email',
-        'guardian_type',
+        'guardian_email1',
+        'guardian_type1',
+        'guardian_email2',
+        'guardian_type2',
         'event_title',
     )
     search_fields = (

@@ -155,8 +155,15 @@ class VisitDayForm(forms.ModelForm):
     first_name = forms.CharField(label="Student first name")
     last_name = forms.CharField(label="Student last name")
     email = forms.EmailField(label="Student email")
-    guardian_email = forms.EmailField(label="Parent email", required=False)
-    guardian_type = forms.ChoiceField(
+    guardian_email1 = forms.EmailField(label="Parent email 1", required=False)
+    guardian_type1 = forms.ChoiceField(
+        label="",
+        widget=forms.RadioSelect,
+        choices=GUARDIAN_CHOICES,
+        required = False,
+    )
+    guardian_email2 = forms.EmailField(label="Parent email 2", required=False)
+    guardian_type2 = forms.ChoiceField(
         label="",
         widget=forms.RadioSelect,
         choices=GUARDIAN_CHOICES,
@@ -210,8 +217,10 @@ class VisitDayForm(forms.ModelForm):
             'first_name',
             'last_name',
             'email',
-            'guardian_email',
-            'guardian_type',
+            'guardian_email1',
+            'guardian_type1',
+            'guardian_email2',
+            'guardian_type2',
             'address',
             'city',
             'state',
