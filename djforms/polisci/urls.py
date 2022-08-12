@@ -21,16 +21,16 @@ urlpatterns = [
     ),
     # had to revert to old reg form
     #path(
-    #    'model-united-nations/success/',
-    #    TemplateView.as_view(
-    #        template_name='polisci/model_united_nations/done.html',
-    #    ),
-    #    name='model_united_nations_success',
+        #'model-united-nations/success/',
+        #TemplateView.as_view(
+            #template_name='polisci/model_united_nations/done.html',
+        #),
+        #name='model_united_nations_success',
     #),
     #path(
-    #    'model-united-nations/registration/$',
-    #    'model_united_nations.views.registration',
-    #    name='model_united_nations_registration'
+        #'model-united-nations/registration/',
+        #'model_united_nations.views.registration',
+        #name='model_united_nations_registration'
     #),
-    path('', RedirectView.as_view(url='/model-united-nations/')),
+    #path('', RedirectView.as_view(url='/model-united-nations/')),
 ]
