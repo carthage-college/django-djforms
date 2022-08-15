@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "polisci/base.html" %}
 {% load livewhale_api %}
 {% block title %}
     Registration &mdash;
@@ -7,6 +7,7 @@
     Carthage College
 {% endblock %}
 {% block extra_style %}
+{{block.super}}
 <style>
 .form .delegation select {
     width: 130px;
@@ -18,14 +19,10 @@
 </style>
 {% endblock %}
 {% block group_name %}Model United Nations{% endblock %}
-{% block left_nav %}
-    {% include "polisci/model_united_nations/left_nav.html" %}
-{% endblock %}
 {% block content_head %}
-    <h1 id="page_title">
-        Registration Form
-    </h1>
+<h1>Registration Form</h1>
 {% endblock %}
+{% block page_sidebar %}{% endblock %}
 {% block content %}
 <div class="forms-container">
     {% include "includes/required_text.html" %}
@@ -39,60 +36,56 @@
                     {% if field.name == "number_of_stu" %}
                     <li class="ctrlHolder delegation">
                         {% get_lw_content as ga_mem blurbs 1788 %}
-                        {{ga_mem.body}}
+                        {{ga_mem.body|safe}}
                         <div id="delegation1" class="fleft">
                         <h4 style="text-align:center;">Delegation 1</h4>
                         <ol>
-                        <li>{{form_pais.d1c1}}</li>
-                        <li>{{form_pais.d1c2}}</li>
-                        <li>{{form_pais.d1c3}}</li>
-                        <li>{{form_pais.d1c4}}</li>
-                        <li>{{form_pais.d1c5}}</li>
+                        <li>{{form_pais.d1c1|safe}}</li>
+                        <li>{{form_pais.d1c2|safe}}</li>
+                        <li>{{form_pais.d1c3|safe}}</li>
+                        <li>{{form_pais.d1c4|safe}}</li>
+                        <li>{{form_pais.d1c5|safe}}</li>
                         </ol>
                         </div>
                         <div id="delegation2" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 2</h4>
                         <ol>
-                        <li>{{form_pais.d2c1}}</li>
-                        <li>{{form_pais.d2c2}}</li>
-                        <li>{{form_pais.d2c3}}</li>
-                        <li>{{form_pais.d2c4}}</li>
-                        <li>{{form_pais.d2c5}}</li>
+                        <li>{{form_pais.d2c1|safe}}</li>
+                        <li>{{form_pais.d2c2|safe}}</li>
+                        <li>{{form_pais.d2c3|safe}}</li>
+                        <li>{{form_pais.d2c4|safe}}</li>
+                        <li>{{form_pais.d2c5|safe}}</li>
                         </ol>
                         </div>
                         <div id="delegation3" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 3</h4>
                         <ol>
-                        <li>{{form_pais.d3c1}}</li>
-                        <li>{{form_pais.d3c2}}</li>
-                        <li>{{form_pais.d3c3}}</li>
-                        <li>{{form_pais.d3c4}}</li>
-                        <li>{{form_pais.d3c5}}</li>
+                        <li>{{form_pais.d3c1|safe}}</li>
+                        <li>{{form_pais.d3c2|safe}}</li>
+                        <li>{{form_pais.d3c3|safe}}</li>
+                        <li>{{form_pais.d3c4|safe}}</li>
+                        <li>{{form_pais.d3c5|safe}}</li>
                         </ol>
                         </div>
                         <div id="delegation4" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 4</h4>
                         <ol>
-                        <li>{{form_pais.d4c1}}</li>
-                        <li>{{form_pais.d4c2}}</li>
-                        <li>{{form_pais.d4c3}}</li>
-                        <li>{{form_pais.d4c4}}</li>
-                        <li>{{form_pais.d4c5}}</li>
+                        <li>{{form_pais.d4c1|safe}}</li>
+                        <li>{{form_pais.d4c2|safe}}</li>
+                        <li>{{form_pais.d4c3|safe}}</li>
+                        <li>{{form_pais.d4c4|safe}}</li>
+                        <li>{{form_pais.d4c5|safe}}</li>
                         </ol>
                         </div>
                         <div id="delegation5" class="fleft" style="margin-left:5px;">
                         <h4 style="text-align:center;">Delegation 5</h4>
                         <ol>
-                        <li>{{form_pais.d5c1}}</li>
-                        <li>{{form_pais.d5c2}}</li>
-                        <li>{{form_pais.d5c3}}</li>
-                        <li>{{form_pais.d5c4}}</li>
-                        <li>{{form_pais.d5c5}}</li>
+                        <li>{{form_pais.d5c1|safe}}</li>
+                        <li>{{form_pais.d5c2|safe}}</li>
+                        <li>{{form_pais.d5c3|safe}}</li>
+                        <li>{{form_pais.d5c4|safe}}</li>
+                        <li>{{form_pais.d5c5|safe}}</li>
                         </ol>
-                        </div>
-                        <div class="cf">
-                        {% get_lw_content as mun_note blurbs 1787 %}
-                        {{mun_note.body}}
                         </div>
                     </li>
                     {% endif %}
@@ -103,22 +96,16 @@
             <ol>
                 <li>
                     {% get_lw_content as ga_fees blurbs 1789 %}
-                    {{ga_fees.body}}
+                    {{ga_fees.body|safe}}
                 </li>
             </ol>
         </fieldset>
         {% include "form_submit.inc.html" %}
         <fieldset class="blockLabels">
             <ol>
-                <li class="btnHolder">
-                    <p>If you have further questions please contact:</p>
-                    <blockquote>
-                        <p><strong>Dr. Jeffrey L. Roberg<br>
-                                   Carthage College<br>
-                                   2001 Alford Park Drive<br>
-                                   Kenosha, WI 53140</strong></p>
-                        <p>Email: <a href="mailto:jroberg@carthage.edu">jroberg@carthage.edu</a></p>
-                    </blockquote>
+                <li>
+                    {% get_lw_content as contact blurbs 1787 %}
+                    {{contact.body|safe}}
                 </li>
             </ol>
         </fieldset>

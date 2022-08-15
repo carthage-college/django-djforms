@@ -33,7 +33,6 @@ class AttenderForm(forms.Form):
         widget=forms.Select(choices=STATE_CHOICES), required=True,
     )
     postal_code = USZipCodeField(label="Zip Code")
-    office = forms.CharField(max_length=100)
     phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
     email = forms.EmailField()
     number_of_del = forms.TypedChoiceField(
@@ -51,8 +50,8 @@ class AttenderForm(forms.Form):
     )
     missle_crisis = forms.TypedChoiceField(
         label="""
-            Do you want to be entered into the random draw for participation in the United
-            States Senate: Border Crisis simulation?
+            Do you want to be entered into the random draw for participation in the
+            Historical Security Council?
         """,
         choices=BINARY_CHOICES,
         widget=forms.RadioSelect,

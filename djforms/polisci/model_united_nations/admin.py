@@ -8,7 +8,7 @@ class AttenderAdmin(admin.ModelAdmin):
     raw_id_fields = ('order',)
 
     list_display  = (
-        'last_name','first_name','school_name','office','created_at',
+        'last_name','first_name','school_name','created_at',
         'address1','address2','city','state','postal_code','phone',
         'email','number_of_del','number_of_stu',
         'delegation_1','delegation_2','delegation_3',

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "polisci/base.html" %}
 {% load livewhale_api %}
 {% block title %}
     Registration &mdash;
@@ -7,6 +7,7 @@
     Carthage College
 {% endblock %}
 {% block extra_javascript %}
+{{block.super}}
     <script type="text/javascript">
         $(function() {
             $('#id_cont-number_of_del').on('change', function(){
@@ -29,6 +30,7 @@
     </script>
 {% endblock %}
 {% block extra_style %}
+{{block.super}}
 <style>
 .form .delegation select {
     width: 130px;
@@ -61,7 +63,7 @@
                     {% if field.name == "number_of_stu" %}
                     <li class="ctrlHolder buffer-top">
                         {% get_lw_content as ga_mem blurbs 1788 %}
-                        {{ga_mem.body}}
+                        {{ga_mem.body|safe}}
                         {% if form_pais.errors %}
                             <p class="error">
                                 You have choosen the same country in more
@@ -70,27 +72,27 @@
                         {% endif %}
                         <div id="delegation_1" class="fleft delegation">
                         <h4 style="text-align:center;">Delegation 1</h4>
-                        {{form_pais.delegation_1}}
+                        {{form_pais.delegation_1|safe}}
                         </div>
                         <div id="delegation_2" class="fleft delegation">
                         <h4 style="text-align:center;">Delegation 2</h4>
-                        {{form_pais.delegation_2}}
+                        {{form_pais.delegation_2|safe}}
                         </div>
                         <div id="delegation_3" class="fleft delegation">
                         <h4 style="text-align:center;">Delegation 3</h4>
-                        {{form_pais.delegation_3}}
+                        {{form_pais.delegation_3|safe}}
                         </div>
                         <div id="delegation_4" class="fleft delegation">
                         <h4 style="text-align:center;">Delegation 4</h4>
-                        {{form_pais.delegation_4}}
+                        {{form_pais.delegation_4|safe}}
                         </div>
                         <div id="delegation_5" class="fleft delegation">
                         <h4 style="text-align:center;">Delegation 5</h4>
-                        {{form_pais.delegation_5}}
+                        {{form_pais.delegation_5|safe}}
                         </div>
                         <div class="cf">
                         {% get_lw_content as mun_note blurbs 1787 %}
-                        {{mun_note.body}}
+                        {{mun_note.body|safe}}
                         </div>
                     </li>
                     {% endif %}
@@ -101,7 +103,7 @@
             <ol>
                 <li>
                     {% get_lw_content as ga_fees blurbs 1789 %}
-                    {{ga_fees.body}}
+                    {{ga_fees.body|safe}}
                 </li>
             </ol>
         </fieldset>

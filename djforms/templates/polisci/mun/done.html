@@ -1,10 +1,6 @@
-{% extends "polisci/model_united_nations/form.html" %}
+{% extends "polisci/mun/form.html" %}
 {% load livewhale_api %}
-{% block title %}
-    Registration &mdash; Model United Nations &mdash; Political Science &mdash;
-    Carthage College
-{% endblock %}
 {% block content %}
 {% get_lw_content as done blurbs 1794 %}
-{{done.body}}
+{{done.body|safe}}
 {% endblock %}

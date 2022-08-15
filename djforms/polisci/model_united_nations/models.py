@@ -39,7 +39,6 @@ class Attender(Contact):
         "School name",
         max_length=100
     )
-    office = models.CharField(max_length=100)
     number_of_del = models.IntegerField(
         "Number of delegations",
         max_length=2
