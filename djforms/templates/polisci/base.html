@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block extra_body %} id="landing-page"{% endblock %}
+{% block body_class %}landing-page-academics{% endblock %}
+{% block breadcrumb %}
+  <li><a href="/academics/">Academics</a></li>
+  <li><a href="/academics/majors-minors/">Majors &amp; Minors</a></li>
+  <li><a href="/academics/majors-minors/political-science/" aria-current="page">Political Science</a></li>
+{% endblock breadcrumb %}
+{% block main_content_article %} page-content--no-sidebar{% endblock %}

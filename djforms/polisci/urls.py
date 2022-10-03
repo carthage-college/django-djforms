@@ -15,6 +15,13 @@ urlpatterns = [
         name='model_united_nations_success',
     ),
     path(
+        'model-united-nations/closed/',
+        TemplateView.as_view(
+            template_name='polisci/mun/limbo.html',
+        ),
+        name='mun_limbo',
+    ),
+    path(
         'model-united-nations/registration/',
         mun.registration,
         name='model_united_nations_registration',

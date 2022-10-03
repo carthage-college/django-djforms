@@ -10,6 +10,10 @@ from djtools.utils.mail import send_mail
 
 
 def registration(request):
+    """Model United Nations registration."""
+    if settings.POLISCI_LIMBO:
+        return HttpResponseRedirect(reverse_lazy('mun_limbo'))
+
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL]
     else:
