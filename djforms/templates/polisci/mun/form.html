@@ -24,7 +24,8 @@
 {% endblock %}
 {% block page_sidebar %}{% endblock %}
 {% block content %}
-<div class="forms-container">
+<div class="d-flex justify-content-center">
+  <div class="forms-container">
     {% include "includes/required_text.html" %}
     {% include "includes/errors_text.html" %}
     <form method="post" action="." class="form">
@@ -110,5 +111,6 @@
             </ol>
         </fieldset>
     </form>
+  </div>
 </div>
 {% endblock %}
