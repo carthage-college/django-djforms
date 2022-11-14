@@ -6,6 +6,7 @@ from django.urls import reverse
 from djforms.core.models import BINARY_CHOICES
 from djforms.core.models import GenericChoice
 from djtools.fields.helpers import upload_to_path
+from djtools.templatetags.livewhale_api import get_api_data
 
 
 DAY_SPS_CHOICES = (
@@ -107,43 +108,17 @@ class CourseProposal(models.Model):
     syllabus = models.FileField(
         upload_to=upload_to_path,
         max_length=255,
-        help_text="""
-            If you have a syllabus developed and available in an
-            acceptable file format (.doc, .rtf, .pdf), the committee
-            would appreciate being able to examine it as well. Use
-            the Browse button to find the file on your computer. The
-            file (one file, please) will be uploaded when you hit
-            Submit below.
-        """,
+        help_text=get_api_data(3571)['body'],
         null=True,
         blank=True,
     )
     learning_outcomes = models.TextField(
         "Three Learning Outcomes",
-        help_text='''
-            Please provide three student learning outcomes for writing.
-            These outcomes should address the question: how will taking
-            this class improve student writing? These outcomes can be
-            course/discipline specific. For example, "after completing
-            this course, students will be able to define key concepts
-            in the field of chemistry in writing" is a clear writing
-            outcome. Other examples might include, "after completing
-            this course, students will be able to write an analytical
-            essay with a clear thesis, and provide adequate support for
-            that thesis," or, "after completing this course, students
-            will be able to cite in APA style."
-        ''',
+        help_text=get_api_data(3565)['body'],
     )
     assessment_methods = models.TextField(
         "Assessment Methods",
-        help_text='''
-            We assume that your student learning outcomes will be
-            assessed through writing assignments. However, if this is
-            NOT the case, please describe above how you will assess
-            student progress on the learning outcomes you have identified
-            (if you leave this field empty, we will assume you are
-            assessing through your writing assignments).
-        ''',
+        help_text=get_api_data(3566)['body'],
         null=True,
         blank=True,
     )

@@ -157,11 +157,8 @@
                   {% if field.name == "syllabus" %}
                     <li><h3><label>Criteria</label></h3></li>
                     <li>
-                        To request a Writing Intensive designation, please
-                        complete the chart below. The information will
-                        allow the WAC Committee to determine whether your
-                        class meets the Writing Intensive Criteria. You
-                        will be contacted if clarification is needed.
+                        {% get_lw_content as designation blurbs 3562 %}
+                        {{designation.body|safe}}
                     </li>
                     <li>
                         Click on the "plus" symbol to add another
@@ -222,7 +219,7 @@
                                 {% if forloop.first %}
                                 &nbsp;
                                 [<a href="#" class="crita" tabindex="1">
-                                    Criterion A
+                                    Criterion 1
                                 </a>]
                                 {% endif %}
                                 <div class="criterion">
@@ -237,7 +234,7 @@
                                 {% if forloop.first %}
                                 &nbsp;
                                 [<a href="#" class="critd" tabindex="1">
-                                    Criterion D
+                                    Criterion 2
                                 </a>]
                                 {% endif %}
                                 <div class="criterion">
@@ -251,7 +248,7 @@
                                 {% if forloop.first %}
                                 &nbsp;
                                 [<a href="#" class="critc" tabindex="1">
-                                    Criterion C
+                                    Criterion 3
                                 </a>]
                                 {% endif %}
                                 <div class="criterion">
@@ -266,15 +263,11 @@
                                 {% if forloop.first %}
                                 &nbsp;
                                 [<a href="#" class="critb" tabindex="1">
-                                    Criterion B
+                                    Criterion 4
                                 </a>]
                                 {% endif %}
-                                <div class="criterion">
-                                    Describe how you will help students
-                                    successfully complete the assignment,
-                                    and when during the semester this
-                                    assignment will be addressed.
-                                </div>
+                                {% get_lw_content as success blurbs 3564 %}
+                                {{success.body|safe}}
                             </li>
                             <li>
                                 <hr />
@@ -289,149 +282,27 @@
             </ol>
         </fieldset>
         <fieldset class="blockLabels">
-            <ol>
-                <li>
-                    This information will allow the WAC Committee to determine
-                    whether your class meets the Writing Intensive Criteria.
-                    You will be contacted if consultation is needed.
-                </li>
-                <li>
-                    Your proposal is not complete until you hit
-                    Submit button below.
-                </li>
-            </ol>
+            {% get_lw_content as closing blurbs 3563 %}
+            {{closing.body|safe}}
         </fieldset>
         {% include "form_submit.inc.html" %}
     </form>
     <div style="display:none;">
     <div id="crita_help" class="criteria" title="Criterion A">
-        <p>
-            <strong>
-            The course must use writing to promote the learning of course
-            materials. Instructors assign formal and informal writing, both
-            in class and out, to increase students' understanding of course
-            material as well as improve writing skills.
-            </strong>
-        </p>
-        <p>
-            The Carthage Writing Across the Curriculum Committee is looking for
-            classes that use writing as a vehicle for learning, classes that
-            require students to express, reformulate, or apply the concepts of
-            an academic discipline. The emphasis on writing is not intended
-            primarily to give students additional practice in basic composition
-            skills but to encourage students to think more clearly and express
-            their thoughts more precisely. The WAC Committee certifies as
-            Writing Intensive courses that take a two-pronged approach to
-            learning, with the students addressing the subject matter via
-            written assignments and the professor attempting to improve the
-            quality of students' performance by giving feedback and requiring
-            revision.
-        </p>
-        <p>
-            The success of a Writing Intensive course depends far more on the
-            professor's professional commitment to this style of teaching than
-            it does on adherence to any particular formula. Because of the
-            importance of this commitment, the WAC Committee prefers to certify
-            courses that are voluntarily proposed by faculty participants,
-            rather than courses that are selected for Writing Intensive status
-            by departments and then assigned to instructors.
-        </p>
+      {% get_lw_content as criteriaa blurbs 3567 %}
+      {{criteriaa.body|safe}}
     </div>
     <div id="critb_help" class="criteria" title="Criterion B">
-        <p>
-            <strong>
-            The course provides interaction between the instructor and
-            students while students do assigned writing; in effect, the
-            instructor acts as an expert and the student as an apprentice in
-            a community of writers. Types of interaction will vary. For
-            example, a professor who requires the completion of one long essay
-            may review sections of the essay, write comments on drafts, and be
-            available for conferences. The professor who requires several
-            short papers may demonstrate techniques for drafting and revising
-            in the classroom, give students guidance on the composition of
-            papers, and consult with students after the completion of their
-            papers. Because such interaction takes time, and the effects are
-            cumulative, writing should be distributed throughout the term.
-            </strong>
-        </p>
-        <p>
-            Each course should include multiple assignments that are complex
-            enough to require substantive revision for most students.  Students
-            should submit a draft or other preliminary writing, consider
-            responses from the professor (and, whenever possible, from other
-            students), revise, and finally edit. The final versions of these
-            assignments and significant drafts should total at least 16 pages.
-            Writing Intensive courses usually include some assignments so
-            demanding that only a few students will do a completely
-            satisfactory job in a single draft. The first draft or preliminary
-            writing then becomes a testing ground for the student's ideas and
-            reasoning, and the professor's or peers' responses to the writing
-            are an integral part of the instruction in the course. Clearly,
-            the sort of revision the Committee has in mind involves rethinking
-            and rewriting, not merely the correcting of
-            grammatical and stylistic errors.
-        </p>
-        <p>
-            Writing for the course should be distributed through the semester
-            rather than concentrated at the end. If writing is being used as a
-            mode of instruction, then it is clearly not appropriate to have
-            written assignments concentrated at the end of the semester. Some
-            of the best Writing Intensive courses tend to contain a series of
-            short papers distributed through the semester rather than one or
-            two major projects. Other successful courses use only two papers
-            but take these papers through a multistage revision process.
-        </p>
+      {% get_lw_content as criteriab blurbs 3568 %}
+      {{criteriab.body|safe}}
     </div>
     <div id="critc_help" class="criteria" title="Criterion C">
-        <p>
-            <strong>
-                Writing contributes significantly to each student's course
-                grade. Writing assignments must make up at least 30% of each
-                student's course grade.
-            </strong>
-        </p>
-        <p>
-            Written assignments should be a major component of the
-            course grade.
-        </p>
-        <p>
-            In many Writing Intensive courses, papers account for 70% or more
-            of the semester grade. Papers must count at least 30% of the
-            course grade.
-        </p>
+      {% get_lw_content as criteriac blurbs 3569 %}
+      {{criteriac.body|safe}}
     </div>
     <div id="critd_help" class="criteria" title="Criterion D">
-        <p>
-            <strong>
-            The course requires students to do a substantial amount of
-            writing&mdash; minimum of 4,000 words or about 16 pages. This may
-            include informal writing. Depending on the course content, students
-            may write analytic essays, critical reviews, journals, lab reports,
-            research reports or reaction papers, etc; drafts of papers may
-            count toward the 16-page total if they:
-                <ul class="bullets">
-                    <li>
-                        receive serious feedback from the professor
-                        (or peer feedback guided by the professor) and
-                    </li>
-                    <li>are subject to significant revision.</li>
-                </ul>
-            </strong>
-        </p>
-        <p>
-            Writing for the entire course should total at least 16 pages.  This
-            writing may take many forms and includes the drafts or preliminary
-            writing and final versions of the assignments. (See guidelines
-            after Criterion B.)
-        </p>
-        <p>
-            In allowing preliminary drafts to count toward the 16-page total,
-            the Committee assumes that revision of these drafts will mean
-            substantial rewriting for most students. When the professor's
-            expectation is that the final draft will be merely a "cleaned-up"
-            version of the preliminary draft, we ask that the pages in the
-            preliminary draft not be counted as part of the 16-page total.
-        </p>
+      {% get_lw_content as criteriad blurbs 3570 %}
+      {{criteriad.body|safe}}
     </div>
     </div>
 </div>
