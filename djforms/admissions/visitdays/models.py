@@ -4,8 +4,7 @@ from djforms.core.models import GENDER_CHOICES
 from djforms.core.models import GenericChoice
 from djforms.core.models import GenericContact
 from djforms.core.models import SEMESTER_CHOICES
-from localflavor.us.models import USStateField
-from localflavor.us.us_states import STATE_CHOICES
+from djtools.fields import STATE_CHOICES
 
 
 ENTRY_CHOICES = [
@@ -137,9 +136,6 @@ class VisitDayEvent(models.Model):
 
 class VisitDayBaseProfile(GenericContact):
 
-    CC_STATE_CHOICES = list(STATE_CHOICES)
-    CC_STATE_CHOICES.insert(666, ('', 'International Student'))
-
     date = models.ForeignKey(
         VisitDayEvent,
         related_name='visitday_date',
@@ -155,17 +151,15 @@ class VisitDayBaseProfile(GenericContact):
     )
     address = models.CharField(max_length=255, verbose_name="Address")
     city = models.CharField(max_length=128, verbose_name="City")
-    state = USStateField(choices=CC_STATE_CHOICES)
+    state = models.CharField("State", max_length=2, choices=STATE_CHOICES)
     postal_code = models.CharField(max_length=10, verbose_name="Zip Code")
     phone = models.CharField(
         max_length=12,
         verbose_name="Phone Number",
-        help_text="Format: XXX-XXX-XXXX",
     )
     mobile = models.CharField(
         max_length=12,
         verbose_name="Mobile Phone",
-        help_text="Format: XXX-XXX-XXXX",
         null=True,
         blank=True,
     )
@@ -233,7 +227,7 @@ class VisitDayProfile(VisitDayBaseProfile):
     hs_city = models.CharField(
         "High School city", max_length=128
     )
-    hs_state = USStateField("High School state")
+    hs_state = models.CharField("High School State", max_length=2, choices=STATE_CHOICES)
     hs_grad_year = models.IntegerField("High School graduation year")
     entry_as = models.CharField(
         "Entering as a", max_length=16, choices=ENTRY_CHOICES

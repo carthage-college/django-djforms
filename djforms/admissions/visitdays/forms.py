@@ -7,10 +7,7 @@ from djforms.admissions.visitdays.models import VisitDayBaseProfile
 from djforms.admissions.visitdays.models import VisitDayEvent
 from djforms.admissions.visitdays.models import VisitDayProfile
 from djforms.core.models import GenericChoice
-from djtools.fields.localflavor import USPhoneNumberField
-from localflavor.us.forms import USStateField
-from localflavor.us.forms import USZipCodeField
-from localflavor.us.us_states import STATE_CHOICES
+from djtools.fields import STATE_CHOICES
 
 
 MEETING_REQUEST = GenericChoice.objects.filter(
@@ -20,19 +17,10 @@ MEETING_REQUEST = GenericChoice.objects.filter(
 
 class VisitDayBaseForm(forms.ModelForm):
 
-    CC_STATE_CHOICES = list(STATE_CHOICES)
-    CC_STATE_CHOICES.insert(0, ('666', 'International Student'))
-    CC_STATE_CHOICES.insert(0, ('', '---select state---'))
-
     first_name = forms.CharField(label="Student first name")
     last_name = forms.CharField(label="Student last name")
     email = forms.EmailField(label="Email")
-    state = USStateField(widget=forms.Select(choices=CC_STATE_CHOICES))
-    postal_code = USZipCodeField(label="Zip Code")
-    phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
-    mobile = USPhoneNumberField(
-        required=False, help_text="Format: XXX-XXX-XXXX",
-    )
+    state = forms.CharField(widget=forms.Select(choices=STATE_CHOICES))
     number_attend = forms.CharField(
         label="Number Attending",
         required=False,
@@ -148,10 +136,6 @@ class VisitDayBaseForm(forms.ModelForm):
 
 class VisitDayForm(forms.ModelForm):
 
-    CC_STATE_CHOICES = list(STATE_CHOICES)
-    CC_STATE_CHOICES.insert(0, ('666', 'International Student'))
-    CC_STATE_CHOICES.insert(0, ('', '---select state---'))
-
     first_name = forms.CharField(label="Student first name")
     last_name = forms.CharField(label="Student last name")
     email = forms.EmailField(label="Student email")
@@ -169,16 +153,7 @@ class VisitDayForm(forms.ModelForm):
         choices=GUARDIAN_CHOICES,
         required = False,
     )
-    state = USStateField(widget=forms.Select(choices=CC_STATE_CHOICES))
-    postal_code = USZipCodeField(
-        label="Zip code",
-        help_text="Format: 99999 or 99999-9999",
-    )
-    phone = USPhoneNumberField(help_text="Format: XXX-XXX-XXXX")
-    mobile = USPhoneNumberField(
-        required=False,
-        help_text="Format: XXX-XXX-XXXX",
-    )
+    state = forms.CharField(widget=forms.Select(choices=STATE_CHOICES))
     number_attend = forms.CharField(
         label="Number attending",
         required=False,
