@@ -1,4 +1,4 @@
-django==3.2.16
+django==3.2.18
 django-bootstrap-form>=3.4
 django-countries>=7.2.1
 django-recaptcha>=2.0.6
