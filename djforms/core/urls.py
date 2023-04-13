@@ -65,8 +65,6 @@ urlpatterns = [
     path('admissions/', include('djforms.admissions.urls')),
     # alumni
     path('alumni/', include('djforms.alumni.urls')),
-    # athletics
-    path('athletics/', include('djforms.athletics.urls')),
     # communications
     path('communications/', include('djforms.communications.urls')),
     # giving
