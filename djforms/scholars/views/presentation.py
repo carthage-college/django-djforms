@@ -79,9 +79,9 @@ def form(request, pid=None):
     faculty = []
     for jay in jason:
         faculty.append({
-            'id': str(jay['cid']),
-            'lastname': jay['lastname'],
-            'firstname': jay['firstname'],
+            'id': str(jay['id']),
+            'lastname': jay['last_name'],
+            'firstname': jay['first_name'],
         })
     # define our submission window
     s_date = datetime.date(

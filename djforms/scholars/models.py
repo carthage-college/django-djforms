@@ -85,7 +85,7 @@ def get_people(yuri):
         people = {}
         for jay in jason:
             person = Person(**jay)
-            people[person.cid] = person
+            people[person.id] = person
         cache.set('{0}_api_objects'.format(yuri), people)
     return people
 
