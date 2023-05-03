@@ -8,6 +8,7 @@
     display:block; float:left;margin-right:7px;margin-bottom:7px;
     width:250px !important;
 }
+.sponsor {font-size: 1em;}
 .work-type, .requirements, .funding, .abstract {margin-bottom:10px;}
 .work-type p, .requirements span, .funding span, .abstract span {
     font-size:1.2em;

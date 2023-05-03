@@ -149,8 +149,8 @@ class Presenter(models.Model):
                 )
                 self.sponsor_email = faculty[sid].email
             except Exception:
-                self.sponsor_name = settings.COS_DEFAULT_NAME
-                self.sponsor_email = settings.COS_DEFAULT_EMAIL
+                self.sponsor_name = None
+                self.sponsor_email = None
         super(Presenter, self).save()
 
     def year(self):
@@ -286,6 +286,14 @@ class Presentation(models.Model):
     def get_presenters(self):
         """Obtain all presenters for this presentation."""
         return self.presenters.order_by('-leader', 'last_name')
+
+    def get_sponsor(self):
+        """Obtain all presenters for this presentation."""
+        user = None
+        for prez in self.presenters.all():
+            if prez.sponsor:
+                user = User.objects.get(pk=prez.sponsor)
+        return user
 
     def get_presenters_print(self):
         """Obtain all presenters for print."""
