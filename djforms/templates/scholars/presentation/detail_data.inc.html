@@ -4,9 +4,6 @@
     {% for o in p.get_presenters %}
         {% if o.prez_type == "Student" %}
             {% get_prof as prof o.sponsor_email %}
-            {% if not prof %}
-              {% get_prof as prof p.get_sponsor.email %}
-            {% endif %}
             <div class="person">
                 <p>
                     {% if o.mugshot %}
@@ -27,10 +24,13 @@
                     {% if prof %}
                       <a href="{{prof.url}}">{{prof.firstname}} {{prof.lastname}}</a>
                     {% else %}
-                      {% if p.get_sponsor.email %}
-                        <a href="mailto:{{p.get_sponsor.email}}" class="sponsor">
+                      {% get_prof as prof p.get_sponsor.sponsor %}
+                      {% if prof %}
+                        <a href="mailto:{{prof.email}}" class="sponsor">
                         {{p.get_sponsor.first_name}}
                         {{p.get_sponsor.last_name}}</a>
+                      {% else %}
+                        {{p.get_sponsor.sponsor}}
                       {% endif %}
                     {% endif %}
                     <br />

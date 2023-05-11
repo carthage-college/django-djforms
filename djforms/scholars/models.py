@@ -292,7 +292,10 @@ class Presentation(models.Model):
         user = None
         for prez in self.presenters.all():
             if prez.sponsor:
-                user = User.objects.get(pk=prez.sponsor)
+                try:
+                    user = User.objects.get(pk=prez.sponsor)
+                except Exception:
+                    user = prez.sponsor
         return user
 
     def get_presenters_print(self):
