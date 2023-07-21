@@ -9,12 +9,16 @@ class CandidateAdmin(admin.ModelAdmin):
     """Admin model for the choral tryout candidate."""
 
     model = Candidate
-    ordering = ('user__last_name', 'created_on', 'grad_year')
+    ordering = ('-created_on', 'user__last_name')
     list_display = (
-        'first_name', 'last_name', 'email', 'majors', 'grad_year', 'time_slot',
+        'first_name', 'last_name', 'email', 'time_slot', 'majors', 'grad_year', 'created_on',
     )
     raw_id_fields = ['user']
     search_fields = ('user__last_name', 'user__first_name', 'user__email')
+    list_filter = ('created_on',)
+    date_hierarchy = 'created_on'
+    list_max_show_all   = 200
+    list_per_page       = 200
 
 
 class TimeSlotAdmin(admin.ModelAdmin):

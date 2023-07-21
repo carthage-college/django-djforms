@@ -55,6 +55,7 @@ class Candidate(models.Model):
         """Subclass for defining setings about the parent class."""
 
         db_table = 'music_ensembles_choral_candidate'
+        ordering = ['-created_on']
 
     def first_name(self):
         """Display the user's given name."""
