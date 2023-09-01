@@ -48,14 +48,14 @@ class AttenderForm(forms.Form):
         widget=forms.Textarea,
         required=False,
     )
-    missle_crisis = forms.TypedChoiceField(
-        label="""
-            Do you want to be entered into the random draw for participation in the
-            Historical Security Council?
-        """,
-        choices=BINARY_CHOICES,
-        widget=forms.RadioSelect,
-    )
+    #missle_crisis = forms.TypedChoiceField(
+    #    label="""
+    #        Do you want to be entered into the random draw for participation in the
+    #        Historical Security Council?
+    #    """,
+    #    choices=BINARY_CHOICES,
+    #    widget=forms.RadioSelect,
+    #)
 
 
 class CountryForm(forms.Form):
