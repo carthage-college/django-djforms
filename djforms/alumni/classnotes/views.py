@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import datetime
-
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -54,7 +52,7 @@ def archives(request, year=None):
     if year:
         year = int(year)
     else:
-        year = 2010
+        year = 2020
 
     ns = Contact.objects.exclude(pubstatus=False).exclude(
         category='Death Announcement',
