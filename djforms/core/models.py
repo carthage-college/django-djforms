@@ -8,7 +8,7 @@ from django.conf import settings
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from djtools.fields.helpers import upload_to_path
 from djtools.fields.validators import MimetypeValidator
 
