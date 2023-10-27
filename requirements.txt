@@ -2,6 +2,7 @@ django==4.2.5
 django-bootstrap-form
 django-countries
 django-formtools
+django-honeypot
 django-imagekit
 django-localflavor
 django-loginas

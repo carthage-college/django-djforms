@@ -75,6 +75,7 @@ INSTALLED_APPS = (
     'django_countries',
     'django_summernote',
     'captcha',
+    'honeypot',
     'imagekit',
     'loginas',
     'taggit',
