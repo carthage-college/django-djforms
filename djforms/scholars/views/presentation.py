@@ -99,7 +99,7 @@ def form(request, pid=None):
         if not request.user.is_staff and not manager:
             expired = True
 
-    if expired:
+    if not pid and expired:
         # 404 after submission period has ended
         raise Http404
 
@@ -107,7 +107,7 @@ def form(request, pid=None):
         presentation = get_object_or_404(
             Presentation,
             pk=pid,
-            date_updated__year=YEAR,
+            #date_updated__year=YEAR,
         )
         # check perms
         if presentation.user != request.user and not manager:
