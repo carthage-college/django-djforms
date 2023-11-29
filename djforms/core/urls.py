@@ -68,7 +68,7 @@ urlpatterns = [
     # communications
     path('communications/', include('djforms.communications.urls')),
     # giving
-    path('giving/', include('djforms.giving.urls')),
+    #path('giving/', include('djforms.giving.urls')),
     # LIS
     path('lis/', include('djforms.lis.urls')),
     # for the modern language form environment
