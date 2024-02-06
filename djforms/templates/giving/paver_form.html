@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+{% load livewhale_api %}
+{% block title %}
+    Paver Form &mdash; Giving &mdash; Carthage College
+{% endblock %}
+{% block extra_javascript %}
+{{block.super}}
+<script type="text/javascript">
+$(function() {
+    var deet = new Date();
+    var year = deet.getFullYear();
+    var month = deet.getMonth();
+    if (month >= 9) {
+      year = year + 1;
+    }
+    {% if ct_form.paver_type.value == "250" or not ct_form.paver_type.value %}
+      $("#inscription_4").slideUp(200);
+      $("#inscription_5").slideUp(200);
+      $("#inscription_6").slideUp(200);
+      $("#inscription_7").slideUp(200);
+    {% else %}{% if ct_form.paver_type.value == "500" %}
+      $("#inscription_6").slideUp(200);
+      $("#inscription_7").slideUp(200);
+    {% else %}
+      for (i = 1; i < 6; i++) {
+        $("#id_ct-inscription_" + i).attr('maxlength','19');
+      }
+    {% endif %}{% endif %}
+    {% if ct_form.class_of.value == year %}
+    $('#personal_price').text("$200." + (year-2000));
+    $('#recognition_price').text("$400." + (year-2000));
+    $('#laudatory_price').text("$800." + (year-2000));
+    {% endif %}
+    $("input[name=ct-paver_type]:radio").change(function () {
+        if ($(this).attr("id") == "recognition_paver") {
+          $("#inscription_4").slideDown(200);
+          $("#inscription_5").slideDown(200);
+          $("#inscription_6").slideUp(200);
+          $("#inscription_7").slideUp(200);
+          $("#id_ct-inscription_6").val("");
+          $("#id_ct-inscription_7").val("");
+        } else if ($(this).attr("id") == "laudatory_paver") {
+          $("#inscription_4").slideDown(200);
+          $("#inscription_5").slideDown(200);
+          $("#inscription_6").slideDown(200);
+          $("#inscription_7").slideDown(200);
+          for (i = 1; i < 6; i++) {
+            $("#id_ct-inscription_" + i).attr('maxlength','19');
+          }
+        } else {
+          $("#id_ct-inscription_4").val("");
+          $("#id_ct-inscription_5").val("");
+          $("#id_ct-inscription_6").val("");
+          $("#id_ct-inscription_7").val("");
+          $("#inscription_4").slideUp(200);
+          $("#inscription_5").slideUp(200);
+          $("#inscription_6").slideUp(200);
+          $("#inscription_7").slideUp(200);
+          for (i = 1; i < 6; i++) {
+            $("#id_ct-inscription_" + i).attr('maxlength','15');
+          }
+        }
+    });
+    $("#id_ct-class_of").change(function () {
+        if ($(this).val() == year) {
+            $('#personal_price').text("$200." + (year-2000));
+            $('#recognition_price').text("$400." + (year-2000));
+            $('#laudatory_price').text("$800." + (year-2000));
+        } else {
+            $('#personal_price').text("$250");
+            $('#recognition_price').text("$500");
+            $('#laudatory_price').text("$1000");
+        }
+    });
+    // disable submit button after users clicks it
+    $('form#paver').bind('submit', function (e) {
+      $('#id_or-total').val($("input[name=ct-paver_type]:checked").val());
+      $('form#paver input[type=submit]').prop('disabled', true);
+        return true;
+    });
+
+  });
+</script>
+{% endblock %}
+{% block extra_style %}
+  {{block.super}}
+  <style type="text/css">
+    #paver h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#cacaca;
+    padding:3px 0 3px 5px;width:99%;}
+    #id_cc-security_code, #id_cc-expiration_month,
+    #id_cc-expiration_year {width:70px;}
+    #id_or-start_date, #id_ct-postal_code, {width:100px;}
+    li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
+    .cost { color:green !important; }
+  </style>
+{% endblock %}
+{% block breadcrumb %}
+<li>
+  <a href="https://www.carthage.edu/giving/">Giving</a>
+</li>
+<li>
+  <a href="https://www.carthage.edu/directory/" aria-current="page">Pavers</a>
+</li>
+{% endblock breadcrumb %}
+{% block left_nav %}
+    {% include "giving/left_nav.html" %}
+{% endblock %}
+{% block content_head %}
+    <h1>Mark your place in Carthage history</h1>
+{% endblock %}
+{% block content %}
+    <div class="content cf">
+        {% get_lw_content as content blurbs 2046 %}
+        {{content.body|safe}}
+    </div>
+    <div class="forms-container large-8 medium-8 small-12">
+    {% include "includes/required_text.html" %}
+    {% if form_proc.errors or or_form.errors or ct_form.errors %}
+        <p class="error">
+            There were errors with the data submitted, see below.
+        </p>
+    {% endif %}
+    <form method="post" action="." class="form" id="paver">
+        {% csrf_token %}
+        {% for hidden in or_form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+        {% block details %}
+        <fieldset class="blockLabels">
+            <legend>Paver Details</legend>
+            <ol>
+                <li class="ctrlHolder">
+                    <h3>
+                        <label for="id_class_of">
+                            Class
+                        </label>
+                    </h3>
+                    <div>{{ct_form.class_of}}</div>
+                    <div class="help">If applicable</div>
+                </li>
+                <li class="ctrlHolder">
+                    {% if ct_form.paver_type.errors %}
+                        <div class="required warning">
+                            <span class="error-message">
+                                {{ ct_form.paver_type.errors|join:", "}}
+                            </span>
+                        </div>
+                    {% endif %}
+                    <input type="radio" id="personal_paver" name="ct-paver_type" value="250"{% if ct_form.paver_type.value == "250" %} checked="checked"{% endif %}>
+                    <label for="personal_paver">
+                        <strong>
+                            <em>Personal Paver</em>&mdash;
+                            <span id="personal_price" class="cost">$250</span>
+                        </strong>
+                        (4" x 8" - 3 lines)
+                        15 characters and spaces per line
+                    </label>
+                </li>
+                <li class="ctrlHolder">
+                    <input type="radio" id="recognition_paver" name="ct-paver_type" value="500"{% if ct_form.paver_type.value == "500" %} checked="checked"{% endif %}>
+                    <label for="recognition_paver">
+                        <strong>
+                            <em>Recognition Paver</em>&mdash;
+                            <span id="recognition_price" class="cost">$500</span>
+                        </strong>
+                        (8" x 8" - 5 lines)
+                        15 characters and spaces per line
+                    </label>
+                </li>
+                <li class="ctrlHolder">
+                    <input type="radio" id="laudatory_paver" name="ct-paver_type" value="1000"{% if ct_form.paver_type.value == "1000" %} checked="checked"{% endif %}>
+                    <label for="laudatory_paver">
+                        <strong>
+                            <em>Laudatory Paver</em>&mdash;
+                            <span id="laudatory_price" class="cost">
+                                $1000
+                            </span>
+                        </strong>
+                        (12" x 12" - 7 lines)
+                        19 characters and spaces per line
+                    </label>
+                </li>
+                <li class="ctrlHolder" id="inscription_1">
+                    {% if ct_form.inscription_1.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_1.errors|join:", "}}
+                      </span>
+                    {% else %}
+                    <div>
+                    {% endif %}
+                      <input type="text" name="ct-inscription_1"
+                        placeholder="Line 1"
+                        value="{{ct_form.inscription_1.value|default:""}}"
+                        maxlength="15" id="id_ct-inscription_1">
+                    </div>
+                </li>
+                <li class="ctrlHolder" id="inscription_2">
+                    {% if ct_form.inscription_2.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_2.errors|join:", "}}
+                      </span>
+                    {% else %}
+                    <div>
+                    {% endif %}
+                      <input type="text" name="ct-inscription_2"
+                        placeholder="Line 2"
+                        value="{{ct_form.inscription_2.value|default:""}}"
+                        maxlength="15" id="id_ct-inscription_2">
+                    </div>
+                </li>
+                <li class="ctrlHolder" id="inscription_3">
+                    {% if ct_form.inscription_3.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_3.errors|join:", "}}
+                      </span>
+                    {% else %}
+                    <div>
+                    {% endif %}
+                      <input type="text" name="ct-inscription_3"
+                        placeholder="Line 3"
+                        value="{{ct_form.inscription_3.value|default:""}}"
+                        maxlength="15" id="id_ct-inscription_3">
+                    </div>
+                </li>
+                <li class="ctrlHolder" id="inscription_4">
+                    {% if ct_form.inscription_4.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_4.errors|join:", "}}
+                      </span>
+                    {% else %}
+                    <div>
+                    {% endif %}
+                      <input type="text" name="ct-inscription_4"
+                        placeholder="Line 4"
+                        value="{{ct_form.inscription_4.value|default:""}}"
+                        maxlength="15" id="id_ct-inscription_4">
+                    </div>
+                </li>
+                <li class="ctrlHolder" id="inscription_5">
+                    {% if ct_form.inscription_5.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_5.errors|join:", "}}
+                      </span>
+                    {% else %}
+                    <div>
+                    {% endif %}
+                      <input type="text" name="ct-inscription_5"
+                        placeholder="Line 5"
+                        value="{{ct_form.inscription_5.value|default:""}}"
+                        maxlength="15" id="id_ct-inscription_5">
+                    </div>
+                </li>
+                <li class="ctrlHolder" id="inscription_6">
+                    {% if ct_form.inscription_6.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_6.errors|join:", "}}
+                      </span>
+                    {% else %}
+                    <div>
+                    {% endif %}
+                      <input type="text" name="ct-inscription_6"
+                        placeholder="Line 6"
+                        value="{{ct_form.inscription_6.value|default:""}}"
+                        maxlength="19" id="id_ct-inscription_6">
+                    </div>
+                </li>
+                <li class="ctrlHolder" id="inscription_7">
+                    {% if ct_form.inscription_7.errors %}
+                    <div class="required warning">
+                      <span class="error-message">
+                        {{ ct_form.inscription_7.errors|join:", "}}
+                      </span>
+                    {% else %}
+                    <div>
+                    {% endif %}
+                      <input type="text" name="ct-inscription_7"
+                        placeholder="Line 7"
+                        value="{{ct_form.inscription_7.value|default:""}}"
+                        maxlength="19" id="id_ct-inscription_7">
+                    </div>
+                </li>
+            </ol>
+        </fieldset>
+        {% endblock %}
+        <fieldset class="blockLabels">
+            <legend>Contact Information</legend>
+            <ol>
+                {% for field in ct_form %}
+                    {% if field.name != "class_of" and field.name != "paver_type" and field.name != "inscription_1" and field.name != "inscription_2" and field.name != "inscription_3" and field.name != "inscription_4" and field.name != "inscription_5" and field.name != "inscription_6" and field.name != "inscription_7" %}
+                    <li class="ctrlHolder">
+                        {% if field.name != "address2" %}
+                        <h3>{{ field.label_tag }}</h3>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="required warning">
+                            <span class="error-message">
+                                {{ field.errors|join:", "}}
+                            </span>
+                        {% else %}
+                            <div{% if field.field.required %}
+                                class="required"{% endif %}>
+                        {% endif %}
+                        {{field}}
+                        {% if field.help_text %}
+                            <div class="help">{{field.help_text}}</div>
+                        {% endif %}
+                        </div>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <legend>Billing Information</legend>
+            {% if form_proc.errors and status %}
+                <div style="padding-left:4px;">
+                <p class="error">The transaction failed. Error: <strong>{{status}}</strong></p>
+                </div>
+            {% endif %}
+            <ol>
+                {% include "form_field_credit_card.inc.html" %}
+            </ol>
+        </fieldset>
+        <input id="id_submit" type="submit" value="Submit" class="button" />
+    </form>
+{% endblock %}

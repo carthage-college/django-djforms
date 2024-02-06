@@ -1,0 +1,130 @@
+<h1>{{data.order.promotion.title|default:"Thank you for your gift to Carthage"}}</h1>
+{% if data.order.promotion.email_info %}
+    <p>{{data.order.promotion.email_info}}</p>
+{% else %}
+    {% autoescape off %}
+      {% get_lw_content as donation_email blurbs 2457 %}
+      {{donation_email.body}}
+    {% endautoescape %}
+{% endif %}
+<h3>Subscription Donation Information</h3>
+<dl style="margin-bottom:30px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">
+        Donation
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        ${{data.order.total}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">
+        Time interval
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {% if data.order.cycle == "1m" %}
+            Monthly
+        {% endif %}
+        {% if data.order.cycle == "3m" %}
+        Quarterly{% endif %}
+        {% if data.order.cycle == "12m" %}
+            Yearly
+        {% endif %}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Payments</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.payments}} over {{data.years|default:"1"}} years.
+    </dd>
+    {% if data.order.start_date %}
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Start date</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.start_date}}
+    </dd>
+    {% endif %}
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">
+        Name on Card
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.cc_name}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">
+        Card ending with:
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        x{{data.order.cc_4_digits}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">
+        Transaction ID
+    </dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.transid}}
+    </dd>
+</dl>
+<hr />
+<h3>Contact Information</h3>
+<dl style="margin-bottom:30px;">
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">First name</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.contact.first_name}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Last name</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.contact.last_name}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Email</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.contact.email}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Address</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.contact.address1}}
+        {% if data.order.contact.address2 %},
+            {{data.order.contact.address2}}
+        {% endif %}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">City</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.contact.city|default:"&nbsp;"}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">State</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.contact.state|default:"&nbsp;"}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Zip</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.contact.postal_code|default:"&nbsp;"}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Phone</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.contact.phone|default:"&nbsp;"}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Spouse</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.contact.spouse|default:"&nbsp;"}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Relation to Carthage</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.contact.relation}}
+    </dd>
+    <dt style="background:#5f9be3; color:#fff; float:left; font-weight:bold; margin-right:10px; padding:5px; width:220px;">Class</dt>
+    <dd style="margin:2px 0; padding:5px 0;">
+        {{data.order.contact.class_of|default:"&nbsp;"}}
+    </dd>
+</dl>
+{% if data.order.comments %}
+<h3>Designation</h3>
+<p>{{data.order.comments}}</p>
+{% endif %}
+{% if data.order.contact.matching_company %}
+<h3>Matching Funds</h3>
+<ul>
+    <li>I/we are employed by a matching gift company.</li>
+</ul>
+{% endif %}
+{% if data.order.contact.opt_in %}
+<h3>More Information</h3>
+<ul>
+    <li>
+        I would like more information about planned gifts
+        such as charitable trusts, charitable gifts annuities,
+        life insurance, or will inclusions.
+    </li>
+</ul>
+{% endif %}

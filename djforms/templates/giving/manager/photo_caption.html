@@ -1,0 +1,45 @@
+{% extends "giving/manager/home.html" %}
+{% block extra_javascript %}
+<script>
+$(document).ready(function() {
+  $("body").toggleClass("sidenav-toggled");
+});
+</script>
+{% endblock %}
+{% block title %}
+    Photo Caption &mdash; Giving Manager &mdash; Carthage College
+{% endblock %}
+{% block breadcrumb %}
+      <h1>Photo Caption Generator</h1>
+{% endblock %}
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+    <div id="messages" class="{{ message.tags }}">
+      <strong>{{ message|safe }}</strong>
+    </div>
+  {% endfor %}
+{% endif %}
+<div class="row">
+  <div class="forms-container col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
+    {% include "includes/required_text.html" %}
+    {% include "includes/errors_text.html" %}
+    <form method="post" action=".">
+        {% csrf_token %}
+        <fieldset>
+        {% for field in form.visible_fields %}
+          {% include "djbootmin/form_field.inc.html" %}
+        {% endfor %}
+        </fieldset>
+        <fieldset class="mb-5">
+        <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+        </fieldset>
+    </form>
+    {% if foto %}
+    <img width="800" src="/static/forms/assets/files/giving/new_photo_caption.jpg?nocache={{foto}}">
+    {% else %}
+    <img width="800" src="/static/forms/assets/files/giving/photo_caption.jpg">
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

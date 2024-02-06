@@ -1,0 +1,12 @@
+{% extends "giving/donation_modal_form.html" %}
+{% load livewhale_api %}
+{% block content %}
+    {% if campaign.thank_you %}
+    <div>
+        {{campaign.thank_you|safe}}
+    </div>
+    {% else %}
+    {% get_lw_content as thank_you blurbs 2087 %}
+    {{thank_you.body|safe}}
+    {% endif %}
+{% endblock %}

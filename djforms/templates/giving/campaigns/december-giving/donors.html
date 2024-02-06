@@ -1,0 +1,45 @@
+{% extends "giving/campaigns/december-giving/donation_form.html" %}
+{% load livewhale_api %}
+{% load humanize %}
+{% block content_head %}
+    <h1 id="page_title">
+        Who's Given
+    </h1>
+{% endblock %}
+{% block content %}
+{% get_lw_content as intro blurbs 2684 %}
+{{intro.body}}
+<!--
+<h2>
+  {{count|intcomma}} Giving Day Donations
+</h2>
+-->
+<ul>
+{% for obj in donors %}
+    {% ifchanged obj.last_name and ifchanged obj.first_name %}
+        {% ifchanged obj.last_name|lower|slice:":1" %}
+            </ul>
+            <h3 style="margin-bottom: 2px;">
+                {{obj.last_name|slice:":1" }}
+            </h3>
+            <hr>
+            <ul>
+        {% endifchanged %}
+        <li>
+            {{obj.last_name|title}}, {{obj.first_name|title}}
+            {% if obj.class_of %}
+            {{obj.class_of}}
+            {% endif %}
+            ({{obj.relation}})
+            {% if obj.order_binary == 'Yes' %}
+              <p>
+                <strong>In honor of:</strong> {{obj.order_statement}}
+              {% if obj.order_comments %}
+              <br>{{obj.order_comments}}
+              {% endif %}
+            {% endif %}
+        </li>
+    {% endifchanged %}
+{% endfor %}
+</ul>
+{% endblock %}

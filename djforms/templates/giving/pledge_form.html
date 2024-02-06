@@ -1,0 +1,140 @@
+{% extends "giving/donation_form.html" %}
+{% block extra_javascript %}
+    {{block.super}}
+    <script type="text/javascript">
+        $(function() {
+            $("#pledge_total").after('<span id="pledge_total_help"></span>');
+            $("[id^='id_or-']").on('change', function() {
+                amount = 0;
+                // remove $ and comma
+                $("#id_or-total").val().replace(/,/g,'');
+                total = $("#id_or-total").val().replace(/\$/g,'');
+                str = $("#id_or-cycle").val();
+                cycle = str.substring(0, str.length - 1);
+
+                payments = $("#id_or-payments").val();
+
+                if ( payments && total ) {
+                    amount = (total * payments) / cycle;
+                }
+
+                $("#pledge_total").val( "$" + amount );
+                c = $("#id_or-cycle").find(":selected").text();
+                help = "That is: $" + total + " " + c + " over " + payments/12 + " year(s).";
+                $("#pledge_total_help").html( help );
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+<div class="forms-container{% if campaign.about %}
+    large-8 medium-10 small-12"{% endif %}">
+    {# include "includes/security_metrics.html" #}
+    <div class="content clear">
+        {% if campaign.description %}
+            {{campaign.description}}
+        {% endif %}
+    </div>
+    <p style="font-weight:bold;color:#800;clear:both;">
+    Would you rather make a one-time gift?
+    {% if not campaign.description %}
+        <a href="{% url 'giving_form_generic' 'donation' %}">
+            Use the donation form
+        </a>.
+    {% else %}
+        <a href="{% url 'giving_form_campaign' 'donation' campaign.slug %}">
+            Use the donation form
+        </a>.
+    {% endif %}
+    </p>
+    {% if form_proc.errors or or_form.errors or ct_form.errors %}
+        <p class="error">
+            There were errors with the data submitted, see below.
+        </p>
+    {% endif %}
+    <p>
+        Fields marked with an asterisk
+        <img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />
+        are required.
+    </p>
+    <form method="post" action="." class="form" id="profile">
+        {% csrf_token %}
+        {% for hidden in or_form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+        <fieldset class="blockLabels">
+            <ol>
+            <h2>Pledge Information</h2>
+                {% for field in or_form.visible_fields %}
+                    {% include "form_field.inc.html" %}
+                    {% if field.name == "payments" %}
+                        <li class="form-group ctrlHolder">
+                            <h3 style="margin-top:9px;">
+                                <label style="color:green;">Total gift</label>
+                            </h3>
+                            <input type="text" id="pledge_total" disabled />
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <h2>Contact Information</h2>
+            <ol>
+                {% for field in ct_form %}
+                    <li class="ctrlHolder">
+                    {% if field.name == "matching_company" or field.name == "opt_in" %}
+                    {{field}} {{field.label}}<br />
+                    {% else %}
+                        {% include "form_field.inc.html" %}
+                        {% if field.name == "postal_code" %}
+                        <h3 style="margin-top:9px;">Matching Funds</h3>
+                        {% endif %}
+                    {% endif %}
+                    </li>
+                {% endfor %}
+                <li>
+                    <h4>Thrivent Choice</h4>
+                    <p>
+                        Thrivent members may allocate their Thrivent Choice
+                        dollars to Carthage. Please contact Thrivent or visit
+                        <a href="https://www.thrivent.com/thriventchoice/program/dollars_details/index.html"
+                            target="_blank">the website</a>
+                        for more information.
+                    </p>
+                </li>
+            </ol>
+        </fieldset>
+        <h2>Billing Information</h2>
+        <fieldset class="blockLabels">
+            {% if form_proc.errors and status %}
+                <div style="padding-left:4px;">
+                <p class="error">The transaction failed. Error: <strong>{{status}}</strong></p>
+                </div>
+            {% endif %}
+            <ol>
+                {% include "form_field_credit_card.inc.html" %}
+            </ol>
+        </fieldset>
+        <fieldset class="blockLabels">
+            <ol>
+                <li class="ctrlHolder">
+                    <input type="checkbox" name="ct-anonymous"
+                        {% if ct_form.anonymous.value %}checked{% endif %}
+                        id="id_ct-anonymous">
+                    I would like my gift to remain anonymous,
+                    and not be published on any donor list or
+                    in the annual report.
+                </li>
+            </ol>
+        </fieldset>
+        {% include "form_submit.inc.html" %}
+    </form>
+</div>
+{% if campaign.about %}
+<div class="forms-sidebar large-4 medium-6 small-12">
+    {{campaign.about}}
+</div>
+{% endif %}
+{% endblock %}

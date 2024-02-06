@@ -1,0 +1,191 @@
+{% extends "djjune/base.html" %}
+{% load livewhale_api %}
+{% block title %}
+    {{campaign.title|default:"Giving to Carthage"}}
+    Form &mdash; Giving &mdash;
+{% endblock %}
+{% block extra_javascript %}
+    {% include "giving/donation_form.inc.js" %}
+    <script type="text/javascript">
+    $(function() {
+        $(".required > input").addClass("required");
+        $(".required > select").addClass("required");
+        $(".required > textarea").addClass("required");
+        $(".warning > input").addClass("error");
+        $(".warning > select").addClass("error");
+        $(".warning > textarea").addClass("error");
+        $(".required > ul").parent().parent().find('h3').addClass("required");
+    });
+    </script>
+{% endblock %}
+{% block extra_style %}
+    <link href="//www.carthage.edu/static/vendor/jquery/ui/datepicker/css/smoothness/jquery-ui-1.10.4.custom.min.css"
+        rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    #profile h2 {margin:7px 0 7px 0;font-size:1.6em;background-color:#303030;
+    padding:3px 0 3px 5px;width:300px;}
+    #subpage-content h3 { line-height: 20px; }
+    #id_cc-security_code, #id_cc-expiration_month,
+    #id_cc-expiration_year {width:70px;}
+    #id_or-start_date, #id_ct-postal_code, #id_or-total, #pledge_total {width:100px;}
+    li.ctrlHolder div ul li {display: inherit; padding-right:3px;}
+    #subpage-content #profile ol li { list-style-type:none; margin-left:0;}
+    .cost, #pledge_total_help { font-weight:bold; color:green; }
+    #pledge_total_help { margin-left:9px; }
+    #pledge-payments { color:#3ab0c8;display:none }
+    .campaign-description {margin-bottom: 10px;}
+    .forms-container .large-6 {float:none;display:inherit;}
+    .form span.error-message, .form .inlineLabels .error-message {color: #fff;}
+    p.help {margin-bottom:0px;}
+    </style>
+{% endblock %}
+{% block page_header %}Give to the 150 Years of Carthage Women Initiative{% endblock %}
+{% block subpage-nav %}{% endblock %}
+{% block content %}
+<div class="forms-container">
+<div class="large-6 medium-12 small-12" style="margin:auto;">
+    <div class="campaign-description clear">
+        {% if campaign.description %}
+            {{campaign.description}}
+        {% endif %}
+    </div>
+    <p>
+        Fields marked with an asterisk
+        <img src="/static/forms/img/icons/red_asterisk.png" alt="asterisk" />
+        are required.
+    </p>
+    {% if form_proc.errors or or_form.errors or ct_form.errors %}
+        <p class="error">
+            There were errors with the data submitted, see below.
+        </p>
+    {% endif %}
+    <form method="post" action="." class="form" id="profile">
+        {% csrf_token %}
+        {% for hidden in or_form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+        <h2>Donation Information</h2>
+        <fieldset class="blockLabels">
+            <ol>
+                <li class="ctrlHolder">
+                    <h3><label for="id_or-total">Amount</label></h3>
+                    <div class="required">
+                        <input type="text" placeholder="$"
+                            name="or-total" id="id_or-total" class="required"
+                            value="{{or_form.total.value|default:""}}">
+                    </div>
+                </li>
+                <li class="ctrlHolder">
+                    <div class="fleft">
+                        <input type="checkbox" name="pledge" id="pledge">
+                    </div>
+                    <h3>
+                        <label for="pledge">
+                            Make my gift recurring
+                        </label>
+                    </h3>
+                    <div class="clear" id="pledge-payments">
+                    {% get_lw_content as recurring_warning blurbs 2294 %}
+                    {{recurring_warning.body}}
+                    </div>
+                </li>
+                <li class="ctrlHolder">
+                  <h3><label for="id_or-comments">Designation</label></h3>
+                  <div>
+                    <p class="help">
+                      Please choose your gift designation from the drop-down
+                      menu.
+                    </p>
+                    <select name="or-comments" id="id_or-comments">
+                        {% for d in desi %}
+                        <option value="{{d}}"{% if d == or_form.comments.value %} selected{% endif %}>
+                        {{d}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <p class="help">
+                      If you wish to make a gift of $1,000 or more,
+                      please do so here and a gift officer will contact you
+                      about naming your gift. Gifts of $2,500/year or more may
+                      be further restricted.
+                    </p>
+                    <p class="help">
+                    Specific
+                    <a href="https://www.carthage.edu/campaign/ways-give/scholarships/">
+                      endowed scholarship</a> and athletic team designations
+                    (optional)
+                    </p>
+                    <input type="text" name="ct-endowment" id="id_ct-endowment"
+                      value="{{ct_form.endowment.value|default:""}}">
+                  </div>
+                </li>
+                {% with ct_form.honouring as field %}
+                {% include "form_field.inc.html" %}
+                {% endwith %}
+            </ol>
+        </fieldset>
+        <h2>Contact Information</h2>
+        <fieldset class="blockLabels">
+            <ol>
+              {% for field in ct_form %}
+                {% if field.name != "honouring" and field.name != "endowment" %}
+                  <li class="ctrlHolder">
+                    {% if field.name == "matching_company" or field.name == "opt_in" %}
+                    {{field}} {{field.label}}<br />
+                    {% else %}
+                        {% if field.name != "address2" %}
+                        <h3>{{ field.label_tag }}</h3>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="required warning">
+                            <span class="error-message">
+                                {{ field.errors|join:", "}}
+                            </span>
+                        {% else %}
+                            <div{% if field.field.required %}
+                                class="required"{% endif %}>
+                        {% endif %}
+                        {{field}}
+                        {% if field.help_text %}
+                            <p class="help">{{field.help_text}}</p>
+                        {% endif %}
+                        </div>
+                        {% if field.name == "postal_code" %}
+                        </li>
+                        <li>
+                            <h3>
+                            Matching Funds
+                            </h3>
+                        {% endif %}
+                    {% endif %}
+                  </li>
+                {% endif %}
+              {% endfor %}
+              <li>
+                <h3>Thrivent Choice</h3>
+                <p>
+                    Thrivent members may allocate their Thrivent Choice
+                    dollars to Carthage. Please contact Thrivent or visit
+                    <a href="https://www.thrivent.com/making-a-difference/living-generously/thrivent-choice/"
+                      target="_blank">the website</a>
+                    for more information.
+                </p>
+              </li>
+            </ol>
+        </fieldset>
+        <h2>Billing Information</h2>
+        <fieldset class="blockLabels">
+            {% if form_proc.errors and status %}
+                <div style="padding-left:4px;">
+                <p class="error">The transaction failed. Error: <strong>{{status}}</strong></p>
+                </div>
+            {% endif %}
+            <ol>
+                {% include "form_field_credit_card.inc.html" %}
+            </ol>
+        </fieldset>
+        {% include "form_submit.inc.html" %}
+    </form>
+</div>
+</div>
+{% endblock %}

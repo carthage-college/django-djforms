@@ -1,0 +1,74 @@
+{% extends "giving/donation_form.html" %}
+{% block content_head %}
+    <h1 id="page_title">
+        {{campaign.title}}
+    </h1>
+{% endblock %}
+{% block designation %}
+<li class="ctrlHolder">
+    <h3><label for="id_or-comments">Designation</label></h3>
+    {% if or_form.comments.errors %}
+    <div class="required warning">
+      <span class="error-message">
+        {{ or_form.comments.errors|join:", "}}
+      </span>
+    {% else %}
+    <div class="required">
+    {% endif %}
+      <select name="or-comments">
+        <option value="">----Select----</option>
+        <option value="African Studies"{% if or_form.comments.value == 'African Studies' %} selected{% endif %}>
+          African Studies
+        </option>
+        <option value="Art"{% if or_form.comments.value == 'Art' %} selected{% endif %}>
+          Art
+        </option>
+        <option value="Asian Studies"{% if or_form.comments.value == 'Asian Studies' %} selected{% endif %}>
+          Asian Studies
+        </option>
+        <option value="Communication and Digital Media"{% if or_form.comments.value == 'Communication and Digital Media' %} selected{% endif %}>
+          Communication and Digital Media
+        </option>
+        <option value="English Department"{% if or_form.comments.value == 'English Department' %} selected{% endif %}>
+          English Department
+        </option>
+        <option value="History"{% if or_form.comments.value == 'History' %} selected{% endif %}>
+          History
+        </option>
+        <option value="Modern Languages"{% if or_form.comments.value == 'Modern Languages' %} selected{% endif %}>
+          Modern Languages
+        </option>
+        <option value="Music Program"{% if or_form.comments.value == 'Music Program' %} selected{% endif %}>
+          Music Program
+        </option>
+        <option value="Photography, Film, and New Media"{% if or_form.comments.value == 'Photography, Film, and New Media' %} selected{% endif %}>
+          Photography, Film, and New Media
+        </option>
+        <option value="Religion"{% if or_form.comments.value == 'Religion' %} selected{% endif %}>
+          Religion
+        </option>
+        <option value="Theatre"{% if or_form.comments.value == 'Theatre' %} selected{% endif %}>
+          Theatre
+        </option>
+        <option value="Women and Gender Studies"{% if or_form.comments.value == 'Women and Gender Studies' %} selected{% endif %}>
+          Women's and Gender Studies
+        </option>
+        <option value="Other"{% if or_form.comments.value == 'Other' %} selected{% endif %}>
+          Other
+        </option>
+      </select>
+      <p class="help">
+        Please choose a designation.
+      </p>
+    </div>
+    <div id="designation-other" style="display:none;">
+      <h3><label for="id_or-comments_other">Other designation</label></h3>
+      <div>
+          <input type="text" name="or-comments_other" maxlength="254" id="id_or-comments_other" value="{{or_form.comments_other.value|default:''}}">
+      </div>
+      <p class="help">
+        If you have choosen "Other" for designation, please include the name of the scholarship fund.
+      </p>
+    </div>
+</li>
+{% endblock %}
