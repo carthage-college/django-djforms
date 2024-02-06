@@ -92,7 +92,6 @@ INSTALLED_APPS = (
     'djforms.lis.copyprint',
     'djforms.languages',
     'djforms.music.ensembles.choral',
-    'djforms.prehealth.committee_letter',
     'djforms.processors',
     'djforms.scholars',
     'djforms.security',
@@ -339,9 +338,6 @@ STUDY_ABROAD_EMAIL = ''
 ALUMNI_CLASSNOTES_EMAILS = []
 LIS_PRINT_REQUEST_EMAIL = ''
 CHORAL_TRYOUTS_FROM = ''
-PREHEALTH_CC = ''
-PREHEALTH_DO = ''
-PREHEALTH_MD = ''
 WAC_EMAIL_LIST = []
 SECURITY_PARKING_TICKET_APPEAL_EMAIL = ''
 SECURITY_REPORT_EMAIL = ''

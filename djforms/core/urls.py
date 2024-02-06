@@ -77,8 +77,6 @@ urlpatterns = [
     path('music/', include('djforms.music.urls')),
     # polisci
     path('political-science/', include('djforms.polisci.urls')),
-    # pre-health
-    #path('pre-health/', include('djforms.prehealth.urls')),
     # celebration of scholars
     path('scholars/', include('djforms.scholars.urls')),
     # for the security appeal form environment
