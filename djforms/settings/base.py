@@ -87,7 +87,6 @@ INSTALLED_APPS = (
     'djforms.alumni.memory',
     'djforms.communications.printrequest',
     'djforms.core',
-    'djforms.giving',
     'djforms.lis',
     'djforms.lis.copyprint',
     'djforms.languages',
@@ -302,19 +301,6 @@ COS_START_MONTH = 2
 COS_START_DAY = 2
 COS_EMAIL = ''
 COS_FACULTY = [{}]
-# giving constants
-GIVING_DEFAULT_CONTACT_FORM = ''
-GIVING_DEFAULT_CAMPAIGN = 'default'
-GIVING_DAY_START_DATE = ''
-GIVING_DAY_END_DATE = ''
-GIVING_DAY_CAPTION_FILE = ''
-GIVING_DAY_CAPTION_FILE_ORIG = '{0}/{1}/giving/{2}'.format(
-    MEDIA_ROOT, UPLOADS_DIR, GIVING_DAY_CAPTION_FILE,
-)
-GIVING_DAY_CAPTION_FILE_NEW = '{0}/{1}/giving/new_{2}'.format(
-    MEDIA_ROOT, UPLOADS_DIR, GIVING_DAY_CAPTION_FILE,
-)
-GIVING_DAY_FONT = '/d2/www/static/forms/fonts/PermanentMarker.ttf'
 # email addresses
 SOCCER_CAMP_TO_LIST = []
 INSURANCE_TO_LIST = []
@@ -323,7 +309,6 @@ COS_DEFAULT_NAME = ''
 COS_DEFAULT_EMAIL = ''
 ALUMNI_OFFICE_EMAIL = ''
 ALUMNI_MEMORY_EMAIL = []
-GIVING_DONATIONS_BCC = []
 HONORARY_DEGREE_NOMINATION_EMAIL = ''
 COMMUNICATIONS_METAMORPHOSIS_TO_LIST = []
 COMMUNICATIONS_PRINT_REQUEST_EMAIL = ''
