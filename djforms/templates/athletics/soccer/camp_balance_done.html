@@ -1,8 +1,0 @@
-{% extends "athletics/soccer/camp_registration_done.html" %}
-{% load livewhale_api %}
-{% block content %}
-    <div style="background-color:#fff;">
-        {% get_lw_content as success blurbs 2976 %}
-        {{success.body}}
-    </div>
-{% endblock %}
