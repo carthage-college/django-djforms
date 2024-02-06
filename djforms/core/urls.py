@@ -61,8 +61,6 @@ urlpatterns = [
     # admin
     path('admin/', include('loginas.urls')),
     path('admin/', admin.site.urls),
-    # admissions
-    path('admissions/', include('djforms.admissions.urls')),
     # alumni
     path('alumni/', include('djforms.alumni.urls')),
     # communications

@@ -80,9 +80,6 @@ INSTALLED_APPS = (
     'loginas',
     'taggit',
     # djforms stuff
-    'djforms.admissions',
-    'djforms.admissions.admitted',
-    'djforms.admissions.visitdays',
     'djforms.alumni.classnotes',
     'djforms.alumni.memory',
     'djforms.communications.printrequest',
@@ -313,9 +310,6 @@ ALUMNI_MEMORY_EMAIL = []
 HONORARY_DEGREE_NOMINATION_EMAIL = ''
 COMMUNICATIONS_METAMORPHOSIS_TO_LIST = []
 COMMUNICATIONS_PRINT_REQUEST_EMAIL = ''
-ADMISSIONS_ADMITTED_EMAIL_LIST = []
-ADMISSIONS_EMAIL = ''
-ADMISSIONS_BCC = []
 POLISCI_MODEL_UN_TO_LIST = []
 POLISCI_LIMBO = False
 # TLE applications
