@@ -51,12 +51,18 @@ class ContactAdmin(admin.ModelAdmin):
                 if settings.DEBUG:
                     TO_LIST = [settings.SERVER_EMAIL]
                 else:
-                    TO_LIST = ["tapplegarth@carthage.edu",]
+                    TO_LIST = settings.ALUMNI_CLASSNOTES_EMAILS
                 email = settings.DEFAULT_FROM_EMAIL
                 subject = "[Alumni Class Notes] Alumni Office has approved this note"
                 send_mail(
-                    request, TO_LIST, subject, email,
-                    "alumni/classnotes/email.html",obj,settings.MANAGERS)
+                    request,
+                    TO_LIST,
+                    subject,
+                    email,
+                    "alumni/classnotes/email.html",
+                    obj,
+                    bcc=[settings.MANAGERS[0],[1]],
+                )
 
     def set_carthiginian_status(self, request, queryset):
         """

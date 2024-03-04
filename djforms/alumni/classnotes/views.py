@@ -14,7 +14,7 @@ def contact(request):
         TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = settings.ALUMNI_CLASSNOTES_EMAILS
-    BCC = settings.MANAGERS
+    BCC = [settings.MANAGERS[0][1],]
 
     if request.method == 'POST':
         form = ContactForm(request.POST, request.FILES, use_required_attribute=False)
