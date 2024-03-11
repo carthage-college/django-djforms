@@ -61,7 +61,7 @@ class ContactAdmin(admin.ModelAdmin):
                     email,
                     "alumni/classnotes/email.html",
                     obj,
-                    bcc=[settings.MANAGERS[0],[1]],
+                    bcc=[settings.MANAGERS[0][1]],
                 )
 
     def set_carthiginian_status(self, request, queryset):
