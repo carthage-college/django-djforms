@@ -23,8 +23,7 @@ def index(request):
             if settings.DEBUG:
                 TO_LIST = [settings.SERVER_EMAIL]
             else:
-                TO_LIST = [settings.SERVER_EMAIL]
-                #TO_LIST = [settings.LIS_PRINT_REQUEST_EMAIL, data['email']]
+                TO_LIST = [settings.LIS_PRINT_REQUEST_EMAIL, data['email']]
 
             subject = '[Print Request]: {0} from the {1} Department'.format(
                 data['name'], data['department'],
