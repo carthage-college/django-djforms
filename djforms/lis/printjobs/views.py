@@ -25,10 +25,11 @@ def index(request):
             )
             while count <= 3:
                 phile = 'file{0}'.format(count)
-                upload = data[phile]
-                filename = fs.save(upload.name, upload)
-                data[phile] = fs.url(filename)
-                count += 1
+                if data[phile]:
+                    upload = data[phile]
+                    filename = fs.save(upload.name, upload)
+                    data[phile] = fs.url(filename)
+                    count += 1
             # saves the file to `media` folder
             data['date'] = datetime.date.today()
             BCC = [settings.MANAGERS[0][1],]
