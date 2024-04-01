@@ -9,7 +9,11 @@
     </dt>
     <dd style="margin:2px 0;padding:5px 0;">
       {% if name in 'file1, file2, file3' %}
-        <a href="https://{{server_url}}{{media_url}}{{value}}">view/download</a>
+        {% if value %}
+          <a href="https://{{server_url}}{{media_url}}{{value}}">view/download</a>
+        {% else %}
+          &nbsp;
+        {% endif %}
       {% else %}
         {{value}}
       {% endif %}

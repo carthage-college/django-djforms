@@ -18,6 +18,7 @@ def index(request):
         form = PrintRequestForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
+            # save the files to `media` folder
             count = 1
             fs = FileSystemStorage(
                 location='assets/files/lis/printjobs/',
@@ -29,8 +30,7 @@ def index(request):
                     upload = data[phile]
                     filename = fs.save(upload.name, upload)
                     data[phile] = fs.url(filename)
-                    count += 1
-            # saves the file to `media` folder
+                count += 1
             data['date'] = datetime.date.today()
             BCC = [settings.MANAGERS[0][1],]
             if settings.DEBUG:
