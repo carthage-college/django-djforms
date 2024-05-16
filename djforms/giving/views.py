@@ -273,7 +273,14 @@ def giving_form(request, transaction, campaign=None):
                             settings.GIVING_DEFAULT_CAMPAIGN, transaction,
                         )
                 sent = send_mail(
-                    request, [email], subject, email, template, data, bcc,
+                    request,
+                    [email],
+                    subject,
+                    email,
+                    template,
+                    data,
+                    reply_to=[email,],
+                    bcc=bcc,
                 )
                 or_data.send_mail = sent
                 or_data.save()

@@ -28,11 +28,16 @@ def index(request):
             subject = 'Copy Print Card Request: {}, {} from {}'.format(
                 data.user.last_name, data.user.first_name, data.entity_name
             )
+            frum = data.user.email
             send_mail(
-                request, TO_LIST,
-                subject, data.user.email,
-                'lis/copyprint/email.html', data,
-                settings.MANAGERS
+                request,
+                TO_LIST,
+                subject,
+                frum,
+                'lis/copyprint/email.html',
+                data,
+                reply_to=[frum,],
+                bcc=[settings.MANAGERS[0][1],],
             )
             return HttpResponseRedirect(
                 reverse_lazy('lis_success')

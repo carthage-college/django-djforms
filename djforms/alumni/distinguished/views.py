@@ -26,11 +26,16 @@ def nomination_form(request):
             subject = 'Distinguished Alumni Award Nomination: {}'.format(
                 data['nominee']['name']
             )
+            frum = data['nominator']['email']
             send_mail(
-                request, TO_LIST,
-                subject, data['nominator']['email'],
-                'alumni/distinguished/email.html', data,
-                settings.MANAGERS
+                request,
+                TO_LIST,
+                subject,
+                frum,
+                'alumni/distinguished/email.html',
+                data,
+                reply_to=[frum,],
+                bcc=[settings.MANAGERS[0][1],],
             )
             return HttpResponseRedirect(
                 reverse_lazy('distinguished_nomination_success')

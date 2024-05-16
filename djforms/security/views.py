@@ -15,20 +15,24 @@ def anonymous_report(request):
         TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = [settings.SECURITY_REPORT_EMAIL]
+    bcc = [settings.SERVER_EMAIL,]
     if request.method == 'POST':
         form = AnonymousReportForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             subject = "Anonymous Report"
+            frum = TO_LIST[0]
             send_mail(
                 request,
                 TO_LIST,
                 subject,
-                TO_LIST[0],
+                frum,
                 'security/anonymous_report/email.html',
                 data,
-                [settings.SERVER_EMAIL],
+                reply_to=[frum,],
+                bcc=bcc,
             )
+
             return HttpResponseRedirect(
                 reverse_lazy('anonymous_report_success'),
             )
@@ -55,14 +59,16 @@ def parking_ticket_appeal(request):
             data = form.cleaned_data
             form.save()
             subject = "Parking Violation Appeal Request"
+            frum = data['email']
             send_mail(
                 request,
                 TO_LIST,
                 subject,
-                data['email'],
+                frum,
                 'security/parking_ticket_appeal/email.html',
                 data,
-                [settings.SERVER_EMAIL],
+                reply_to=[frum,],
+                bcc=bcc,
             )
             return HttpResponseRedirect(
                 reverse_lazy('parking_ticket_appeal_success'),

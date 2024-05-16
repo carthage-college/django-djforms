@@ -14,7 +14,6 @@ def contact(request):
         TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = settings.ALUMNI_CLASSNOTES_EMAILS
-    BCC = [settings.MANAGERS[0][1],]
 
     if request.method == 'POST':
         form = ContactForm(request.POST, request.FILES, use_required_attribute=False)
@@ -26,14 +25,16 @@ def contact(request):
             subject = "[Alumni Class Notes] {0} {1}".format(
                 contact.first_name, contact.last_name,
             )
+            frum = email
             send_mail(
                 request,
                 TO_LIST,
                 subject,
-                email,
+                frum,
                 'alumni/classnotes/email.html',
                 contact,
-                BCC,
+                reply_to=[frum,],
+                bcc=[settings.MANAGERS[0][1],],
             )
             return HttpResponseRedirect(reverse_lazy('classnotes_success'))
     else:

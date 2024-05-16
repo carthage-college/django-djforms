@@ -18,7 +18,6 @@ def registration(request):
         TO_LIST = [settings.SERVER_EMAIL]
     else:
         TO_LIST = settings.POLISCI_MUN_EMAIL_LIST
-    BCC = settings.MANAGERS
     if request.method == 'POST':
         form_cont = AttenderForm(request.POST, prefix='cont')
         form_pais = CountryForm(request.POST, prefix='pais')
@@ -35,9 +34,16 @@ def registration(request):
             subject = "[Model United Nations Registration] {} {} of {}".format(
                 contact.first_name, contact.last_name, contact.school_name
             )
+            frum = contact.email
             send_mail(
-                request, TO_LIST, subject, contact.email,
-                'polisci/model_united_nations/email.html', data, BCC
+                request,
+                TO_LIST,
+                subject,
+                frum,
+                'polisci/model_united_nations/email.html',
+                data,
+                reply_to=[frum,],
+                bcc=[settings.MANAGERS[0][1],],
             )
             return HttpResponseRedirect(
                 reverse_lazy('model_united_nations_success')

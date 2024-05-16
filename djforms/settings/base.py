@@ -75,6 +75,8 @@ INSTALLED_APPS = (
     'django_countries',
     'django_summernote',
     'captcha',
+    # gmail api for send mail
+    'gmailapi_backend',
     'honeypot',
     'imagekit',
     'loginas',
@@ -177,16 +179,17 @@ SESSION_COOKIE_SECURE = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = True
-# SMTP settings
-EMAIL_HOST = ''
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_FAIL_SILENTLY = True
+# gmail API settings
+EMAIL_FROM = ''
+GMAIL_USER = ''
+EMAIL_BACKEND = 'gmailapi_backend.service.GmailApiBackend'
+GMAIL_SCOPES = ['https://www.googleapis.com/auth/gmail.send']
+GMAIL_SERVICE_ACCOUNT_JSON = ''
+GOOGLE_SERVICE_ACCOUNT = ''
+# system emails
 DEFAULT_FROM_EMAIL = ''
 SERVER_EMAIL = ''
-SERVER_MAIL = ''
+SERVER_MAIL=''
 # logging
 LOG_FILEPATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/',

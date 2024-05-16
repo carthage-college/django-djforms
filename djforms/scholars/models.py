@@ -259,7 +259,6 @@ class Presentation(models.Model):
                     TO_LIST = [settings.SERVER_EMAIL]
                 else:
                     TO_LIST = [self.user.email,]
-                BCC = [settings.MANAGERS[0][1],]
                 email = settings.DEFAULT_FROM_EMAIL
                 subject = '[Celebration of Scholars] Presentation has been approved'
                 send_mail(
@@ -269,7 +268,8 @@ class Presentation(models.Model):
                     email,
                     'scholars/presentation/approved_mail.html',
                     self,
-                    BCC,
+                    reply_to=[email,],
+                    bcc=[settings.MANAGERS[0][1],],
                 )
         else:
             self.updated_by = self.user

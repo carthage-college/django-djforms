@@ -2,6 +2,7 @@ django==4.2.11
 django-bootstrap-form
 django-countries
 django-formtools
+django-gmailapi-json-backend
 django-honeypot
 django-imagekit
 django-localflavor

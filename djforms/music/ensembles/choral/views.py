@@ -30,16 +30,19 @@ def candidate(request):
                 TO_LIST = [settings.SERVER_EMAIL]
             else:
                 TO_LIST = [candidate.user.email]
+            frum = settings.CHORAL_TRYOUTS_FROM
             send_mail(
-                request, TO_LIST,
+                request,
+                TO_LIST,
                 '[Choral Tryout Reservation] {0} {1}'.format(
                     candidate.user.first_name,
                     candidate.user.last_name
                 ),
-                settings.CHORAL_TRYOUTS_FROM,
+                frum,
                 'music/ensembles/choral/email.html',
                 candidate,
-                [settings.MANAGERS[0][1]],
+                reply_to=[frum,],
+                bcc=[settings.MANAGERS[0][1]],
             )
             return HttpResponseRedirect(reverse_lazy('choral_tryout_success'))
     else:

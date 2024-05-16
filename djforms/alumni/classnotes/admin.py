@@ -54,13 +54,15 @@ class ContactAdmin(admin.ModelAdmin):
                     TO_LIST = settings.ALUMNI_CLASSNOTES_EMAILS
                 email = settings.DEFAULT_FROM_EMAIL
                 subject = "[Alumni Class Notes] Alumni Office has approved this note"
+                frum = email
                 send_mail(
                     request,
                     TO_LIST,
                     subject,
-                    email,
+                    frum,
                     "alumni/classnotes/email.html",
                     obj,
+                    reply_to=[frum,],
                     bcc=[settings.MANAGERS[0][1]],
                 )
 

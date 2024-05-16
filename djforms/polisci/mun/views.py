@@ -17,8 +17,6 @@ def registration(request):
     else:
         TO_LIST = settings.POLISCI_MODEL_UN_TO_LIST
 
-    BCC = settings.MANAGERS
-
     if request.method == 'POST':
         form_cont = AttenderForm(request.POST, prefix='cont', label_suffix='')
         form_pais = CountryForm(request.POST, prefix='pais')
@@ -29,9 +27,16 @@ def registration(request):
                 contact['first_name'], contact['last_name'],
                 contact['school_name']
             )
+            frum = contact['email']
             send_mail(
-                request, TO_LIST, subject, contact['email'],
-                'polisci/mun/email.html', data, BCC
+                request,
+                TO_LIST,
+                subject,
+                frum,
+                'polisci/mun/email.html',
+                data,
+                reply_to=[frum,],
+                bcc=[settings.MANAGERS[0][1],],
             )
             return HttpResponseRedirect(
                 reverse_lazy('model_united_nations_success')

@@ -64,14 +64,18 @@ def questionnaire_form(request, campaign=None):
                 TO_LIST = [settings.SERVER_EMAIL,]
             else:
                 TO_LIST = settings.ALUMNI_MEMORY_EMAIL
+            frum = memory.email
             send_mail(
-                request, TO_LIST,
+                request,
+                TO_LIST,
                 '[{0}] {1} {2}'.format(
                     category, memory.first_name, memory.last_name,
-                ), memory.email,
+                ),
+                frum,
                 'alumni/memory/email.html',
                 memory,
-                settings.MANAGERS,
+                reply_to=[frum,],
+                bcc=[settings.MANAGERS[0][1],],
             )
             return HttpResponseRedirect(
                 reverse_lazy('memory_questionnaire_success'),

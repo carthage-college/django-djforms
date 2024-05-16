@@ -234,13 +234,16 @@ def form(request, pid=None):
                     request.user.first_name,
                     request.user.last_name,
                 )
+                frum = request.user.email
                 send_mail (
                     request,
                     [settings.SERVER_EMAIL],
                     subject,
-                    request.user.email,
+                    frum,
                     'scholars/presentation/email.html',
                     data,
+                    reply_to=[frum,],
+                    bcc=[settings.MANAGERS[0][1],],
                 )
             return HttpResponseRedirect(reverse('presentation_form_done'))
         else:
@@ -300,15 +303,15 @@ def email_presenters(request,pid,action):
                 to_list = [presentation.user.email]
                 if presentation.leader.sponsor_email:
                     if settings.DEBUG:
-                        to_list = [settings.SERVER_EMAIL]
+                        to_list = [settings.SERVER_EMAIL,]
                         bcc = None
                     else:
                         to_list.append(presentation.leader.sponsor_email)
                         bcc = [settings.COS_EMAIL, settings.SERVER_EMAIL]
                 else:
-                    bcc = [request.user.email]
+                    bcc = [request.user.email,]
                     if settings.DEBUG:
-                        bcc = [settings.SERVER_EMAIL]
+                        bcc = [settings.SERVER_EMAIL,]
                 data = {'content': form_data['content']}
                 sub = "[Celebration of Scholars] Info about your presentation"
                 send_mail (
@@ -318,7 +321,8 @@ def email_presenters(request,pid,action):
                     femail,
                     'scholars/presenters/email_data.html',
                     data,
-                    bcc,
+                    reply_to=[femail,],
+                    bcc=bcc,
                 )
                 return HttpResponseRedirect(reverse('email_presenters_done'))
             else:

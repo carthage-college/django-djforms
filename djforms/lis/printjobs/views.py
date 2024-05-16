@@ -32,7 +32,6 @@ def index(request):
                     data[phile] = fs.url(filename)
                 count += 1
             data['date'] = datetime.date.today()
-            BCC = [settings.MANAGERS[0][1],]
             if settings.DEBUG:
                 TO_LIST = [settings.SERVER_EMAIL]
             else:
@@ -41,15 +40,16 @@ def index(request):
             subject = '[Print Request]: {0} from the {1} Department'.format(
                 data['name'], data['department'],
             )
+            frum = data['email']
             send_mail(
                 request,
                 TO_LIST,
                 subject,
-                data['email'],
+                frum,
                 'lis/printjobs/email.html',
                 data,
-                BCC,
-                attach=False,
+                reply_to = [frum,],
+                bcc = [settings.MANAGERS[0][1],],
             )
             return HttpResponseRedirect(reverse_lazy('lis_success'))
     else:

@@ -135,14 +135,16 @@ def proposal_form(request, pid=None):
                 request.user.last_name,
             )
             to_list.append(request.user.email)
+            frum = request.user.email
             send_mail(
                 request,
                 to_list,
                 subject,
-                request.user.email,
+                frum,
                 'writingcurriculum/email.html',
                 {'proposal': proposal, 'user': request.user, 'criteria': criteria},
-                [settings.SERVER_EMAIL],
+                reply_to=[frum,],
+                bcc=[settings.SERVER_EMAIL,],
             )
             return HttpResponseRedirect(reverse_lazy('proposal_success'))
     else:

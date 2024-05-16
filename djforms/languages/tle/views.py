@@ -73,14 +73,16 @@ def application_form(request, stype):
                 stype.capitalize(), cd['first_name'], cd['last_name'],
             )
 
+            frum = cd['email']
             send_mail(
                 request,
                 TO_LIST,
                 subject,
-                cd['email'],
+                frum,
                 'languages/tle/email.html',
                 cd,
-                settings.MANAGERS,
+                reply_to=frum,
+                bcc=[settings.MANAGERS[0][1],],
             )
             return HttpResponseRedirect(reverse_lazy('tle_success'))
         elif stype == 'masters':

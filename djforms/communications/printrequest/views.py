@@ -15,7 +15,6 @@ REQ_ATTR = settings.REQUIRED_ATTRIBUTE
 
 @login_required
 def print_request(request):
-    BCC = [settings.MANAGERS[0][1]]
     if settings.DEBUG:
         TO_LIST = [settings.SERVER_EMAIL]
     else:
@@ -38,14 +37,16 @@ def print_request(request):
                 subject = '[Print request] {0}: {1}'.format(
                     data.project_name, data.date_created,
                 ).encode('utf-8').strip()
+                frum = data.user.email
                 send_mail(
                     request,
                     TO_LIST,
                     subject,
-                    data.user.email,
+                    frum,
                     'communications/printrequest/email.html',
                     data,
-                    BCC,
+                    reply_to=[frum,],
+                    bcc = [settings.MANAGERS[0][1],],
                 )
                 return HttpResponseRedirect(reverse('print_request_success'))
             else:
