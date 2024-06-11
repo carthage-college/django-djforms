@@ -81,7 +81,7 @@ def application_form(request, stype):
                 frum,
                 'languages/tle/email.html',
                 cd,
-                reply_to=frum,
+                reply_to=[frum,],
                 bcc=[settings.MANAGERS[0][1],],
             )
             return HttpResponseRedirect(reverse_lazy('tle_success'))
