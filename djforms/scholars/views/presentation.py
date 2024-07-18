@@ -21,10 +21,10 @@ from djforms.scholars.models import get_json
 from djforms.core.models import Department
 from djforms.core.models import YEAR_CHOICES
 from djtools.utils.mail import send_mail
-from djtools.fields import NOW
-from djtools.fields import TODAY
 
 
+NOW  = datetime.datetime.now()
+TODAY = datetime.date.today()
 YEAR = int(NOW.year)
 if int(NOW.month) > 9 and not settings.DEBUG:
     YEAR += 1
