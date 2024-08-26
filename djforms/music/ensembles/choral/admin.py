@@ -11,7 +11,14 @@ class CandidateAdmin(admin.ModelAdmin):
     model = Candidate
     ordering = ('-created_on', 'user__last_name')
     list_display = (
-        'first_name', 'last_name', 'email', 'time_slot', 'majors', 'grad_year', 'created_on',
+        'first_name',
+        'last_name',
+        'email',
+        'time_slot',
+        'majors',
+        'grad_year',
+        'created_on',
+        'experience',
     )
     raw_id_fields = ['user']
     search_fields = ('user__last_name', 'user__first_name', 'user__email')
