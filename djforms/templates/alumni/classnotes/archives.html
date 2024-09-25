@@ -83,7 +83,7 @@ Class Notes Archive &mdash;
         {% if n.hometown %}{{n.hometown}},&nbsp;{% endif %}
         {{n.classnote}}&nbsp;<br />
         <em style="color:#6e6e6e;">
-            Submitted: {{n.created_at|date:"F j, Y"}}
+          Submitted: {{n.created_at|date:"F j, Y"}} &mdash; Category: {{n.category}}
         </em>
         {% if manager %}
         &nbsp;
