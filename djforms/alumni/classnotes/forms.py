@@ -18,9 +18,11 @@ SPOUSEYEARS.insert(0, ('', "Spouse's class"))
 REQ=REQ_CSS
 CATEGORIES = (
     ('', '-------------'),
-    ('Marriage Announcement', 'Marriage Announcement'),
     ('Birth/Adoption Announcement', 'Birth/Adoption Announcement'),
+    ('Career Update', 'Career Update'),
     ('Death Announcement', 'Death Announcement'),
+    ('Marriage Announcement', 'Marriage Announcement'),
+    ('Personal Achievement', 'Personal Achievement'),
     ('Other News', 'Other News'),
 )
 
