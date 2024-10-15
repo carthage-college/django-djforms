@@ -86,7 +86,6 @@ INSTALLED_APPS = (
     'djforms.alumni.memory',
     'djforms.communications.printrequest',
     'djforms.core',
-    'djforms.giving',
     'djforms.lis',
     'djforms.lis.copyprint',
     'djforms.languages',
