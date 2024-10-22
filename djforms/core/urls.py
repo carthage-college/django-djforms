@@ -63,8 +63,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # alumni
     path('alumni/', include('djforms.alumni.urls')),
-    # communications
-    path('communications/', include('djforms.communications.urls')),
     # LIS
     path('lis/', include('djforms.lis.urls')),
     # for the modern language form environment

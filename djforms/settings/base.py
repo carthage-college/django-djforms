@@ -83,7 +83,6 @@ INSTALLED_APPS = (
     'taggit',
     # djforms stuff
     'djforms.alumni.classnotes',
-    'djforms.communications.printrequest',
     'djforms.core',
     'djforms.lis',
     'djforms.lis.copyprint',
@@ -93,7 +92,6 @@ INSTALLED_APPS = (
     'djforms.scholars',
     'djforms.security',
     'djforms.writingcurriculum',
-    'djforms.spacegrant.conference',
     # other in-house django apps
     'djtools',
 )
@@ -308,8 +306,6 @@ COS_DEFAULT_NAME = ''
 COS_DEFAULT_EMAIL = ''
 ALUMNI_OFFICE_EMAIL = ''
 HONORARY_DEGREE_NOMINATION_EMAIL = ''
-COMMUNICATIONS_METAMORPHOSIS_TO_LIST = []
-COMMUNICATIONS_PRINT_REQUEST_EMAIL = ''
 POLISCI_MODEL_UN_TO_LIST = []
 POLISCI_LIMBO = False
 # TLE applications
@@ -337,7 +333,6 @@ TC_AVS = 'n'
 TC_AUTH_TYPE = 'sale'
 TC_CYCLE = '1m'
 TC_OPERATOR = 'DJForms'
-WSGC_OPERATOR = 'DJSpace'
 # simple captcha
 CAPTCHA_BACKGROUND_COLOR='#ffffff'
 CAPTCHA_FOREGROUND_COLOR='#000000'
