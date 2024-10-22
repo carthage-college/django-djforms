@@ -83,7 +83,6 @@ INSTALLED_APPS = (
     'taggit',
     # djforms stuff
     'djforms.alumni.classnotes',
-    'djforms.alumni.memory',
     'djforms.communications.printrequest',
     'djforms.core',
     'djforms.lis',
@@ -308,7 +307,6 @@ COPYPRINT_CARD_REQUEST_EMAIL = ''
 COS_DEFAULT_NAME = ''
 COS_DEFAULT_EMAIL = ''
 ALUMNI_OFFICE_EMAIL = ''
-ALUMNI_MEMORY_EMAIL = []
 HONORARY_DEGREE_NOMINATION_EMAIL = ''
 COMMUNICATIONS_METAMORPHOSIS_TO_LIST = []
 COMMUNICATIONS_PRINT_REQUEST_EMAIL = ''

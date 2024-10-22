@@ -5,7 +5,6 @@ from django.views.generic import TemplateView
 
 from djforms.alumni.classnotes import views as classnotes
 from djforms.alumni.distinguished import views as distinguished
-from djforms.alumni.memory import views as memory
 
 
 urlpatterns = [
@@ -54,31 +53,5 @@ urlpatterns = [
         'distinguished/nomination/',
         distinguished.nomination_form,
         name='distinguished_nomination_form',
-    ),
-    # fond memories
-    path(
-        'memory/success/',
-        TemplateView.as_view(template_name='alumni/memory/done.html'),
-        name='memory_questionnaire_success',
-    ),
-    path(
-        'memory/archives/',
-        memory.questionnaire_archives,
-        name='memory_questionnaire_archives',
-    ),
-    path(
-        'memory/<int:quid>/detail/',
-        memory.questionnaire_detail,
-        name='memory_questionnaire_detail',
-    ),
-    path(
-        'memory/<str:campaign>/',
-        memory.questionnaire_form,
-        name='memory_questionnaire_promo_form',
-    ),
-    path(
-        'memory/',
-        memory.questionnaire_form,
-        name='memory_questionnaire_form',
     ),
 ]
