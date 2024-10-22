@@ -4,7 +4,6 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from djforms.alumni.classnotes import views as classnotes
-from djforms.alumni.distinguished import views as distinguished
 
 
 urlpatterns = [
@@ -42,16 +41,5 @@ urlpatterns = [
         'classnotes/',
         classnotes.contact,
         name='classnotes_form',
-    ),
-    # distinguised alumni nomination
-    path(
-        'distinguished/nomination/success/',
-        TemplateView.as_view(template_name='alumni/data_entered.html'),
-        name='distinguished_nomination_success',
-    ),
-    path(
-        'distinguished/nomination/',
-        distinguished.nomination_form,
-        name='distinguished_nomination_form',
     ),
 ]
