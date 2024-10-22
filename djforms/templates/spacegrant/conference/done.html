@@ -1,6 +1,0 @@
-{% extends "spacegrant/conference/form.html" %}
-{% load livewhale_api %}
-{% block content %}
-    {% get_lw_content as success blurbs 2400 %}
-    {{success.body}}
-{% endblock %}
