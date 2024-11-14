@@ -2,10 +2,10 @@
 
 import csv
 
+from django.apps import apps
 from django.http import HttpResponse
 from django.http import HttpResponseForbidden
 from django.template.defaultfilters import slugify
-from django.apps import apps
 
 
 def export_as_csv_action(description='Export selected objects as CSV file',

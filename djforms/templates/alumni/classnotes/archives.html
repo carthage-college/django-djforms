@@ -2,10 +2,53 @@
 {% block title %}
   Class Notes Archives &mdash; Alumni &mdash; Carthage College
 {% endblock %}
+{% block javascript_idfive %}{% endblock %}
+{% block extra_javascript %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script>
+$(function() {
+  var d = new Date();
+  $('.rotate-photo').click(function(e){
+    e.preventDefault();
+    var $dis = $(this);
+    console.log( $dis.attr('data-foto-thumb'));
+    var $html = $dis.html();
+    $dis.html('<i class="fas fa-spinner fa-spin" aria-hidden="true"></i>');
+    var $cid = $dis.attr('data-contact');
+    var $thumb = $('#picture_' + $cid);
+    $.ajax({
+      type: "POST",
+      url: "{% url 'rotate_photo' %}",
+      data: {"cid":$cid},
+      success: function(data) {
+        $dis.html($html);
+        if (data == "Success") {
+          $thumb.attr('src', $dis.data('foto-thumb') + "?" + d.getTime());
+          alert('Photo Rotated. Shift-reload to see the results');
+        } else {
+          alert('Photo Rotation Failed');
+        }
+      }
+    });
+  });
+  $(document).on('click','.edit-contact', function (e) {
+    var $dis = $(this);
+    $earl = $dis.data('contact-admin-earl');
+    $('#contactModal').find('iframe').attr('src', $earl);
+  });
+  $(document).on('click','.popup-foto', function (e) {
+    var $dis = $(this);
+    $earl = $dis.data('foto-earl');
+    $img = '<img src="' + $earl + '?' + d.getTime() + '" width="100%" height= "100%">';
+    $('#fotoModal').find('.modal-body').html($img);
+  });
+});
+</script>
+{% endblock %}
 {% block group_name %}Alumni{% endblock %}
 {% block left_nav %}
-    {% include "alumni/classnotes/side_bar.html" %}
-    {% include "alumni/left_nav.html" %}
+  {% include "alumni/classnotes/side_bar.html" %}
+  {% include "alumni/left_nav.html" %}
 {% endblock %}
 {% block sidebar %}{% endblock %}
 {% block content_head %}
@@ -16,83 +59,112 @@ Class Notes Archive &mdash;
 {% endblock %}
 {% block content %}
 {% spaceless %}
-    <p>
-        <a href="{% url 'classnotes_form' %}">
-            Click here to submit your class note
-        </a>
-    </p>
-    <p>
-    {% for n in notes %}
-        {% ifchanged n.classyear %}
-            {% if not forloop.first %}&nbsp;|&nbsp;{% endif %}
-            <strong>
-                <a href="#{{ n.classyear }}">
-                {% if n.classyear == "1847" %}
-                Friends of the college
-                {% else %}
-                {{ n.classyear }}
-                {% endif %}
-                </a>
-            </strong>
-        {% endifchanged %}
-    {% endfor %}
-    </p>
-    <hr />
-    {% for n in notes %}
-        {% ifchanged %}
-            <h2 style="color:#880;">
-                <a name="{{ n.classyear }}" class="anchor">
-                {% if n.classyear == "1847" %}
-                Friends of the college
-                {% else %}
-                {{ n.classyear }}
-                {% endif %}
-                </a>
-            </h2>
-        {% endifchanged %}
-        {% if n.picture %}
-        <div style="200px;float:right;padding-left:7px;padding-bottom:7px;">
-        <a rel="popupfoto" href="{{n.picture.url}}" class="popupfoto">
-            <img src="{{n.thumbnail.url}}" alt="{{ n.caption }}" />
-        </a>
-        {% if n.caption %}
-        <div style="margin-top:2px;font-size:.8em;color:#6e6e6e;width:200px;">
-            {{n.caption}}
-        </div>
+<p>
+  <a href="{% url 'classnotes_form' %}">
+    Click here to submit your class note
+  </a>
+</p>
+<p>
+{% for n in notes %}
+  {% ifchanged n.classyear %}
+    {% if not forloop.first %}&nbsp;|&nbsp;{% endif %}
+    <strong>
+      <a href="#{{ n.classyear }}">
+        {% if n.classyear == "1847" %}
+        Friends of the college
+        {% else %}
+        {{ n.classyear }}
         {% endif %}
-        </div>
-        {% endif %}
-        <p>
-        <strong>{% if n.name %}{{n.name}}{% else %}{{n.first_name}}
-        {% if n.second_name %}{{n.second_name}}{% endif %}
-        {% if n.previous_name %}({{n.previous_name}}){% endif %}
-        {{n.last_name}}
-        {% if n.suffix %}, {{n.suffix|default:""}}{% endif %}
-        {% endif %}
-        {% if n.spousename %}
-            &amp; {{n.spousename}}
-            {% if n.spousepreviousname %}
-                ({{n.spousepreviousname}})
-            {% endif %}
-            {% if n.spouseyear %}
-                {{n.spouseyear}}
-            {% endif %}
-        {% endif %}
-        </strong>
-        &mdash;
-        {% if n.hometown %}{{n.hometown}},&nbsp;{% endif %}
-        {{n.classnote}}&nbsp;<br />
-        <em style="color:#6e6e6e;">
-          Submitted: {{n.created_at|date:"F j, Y"}} &mdash; Category: {{n.category}}
-        </em>
-        {% if manager %}
-        &nbsp;
-        <a class="jqmodal" title="edit this note" href="{{n.get_edit_url}}">
-            <i class="fa fa-pencil"></i>
-        </a>
-        {% endif %}
-        </p>
-        <div class="clear"></div>
-    {% endfor %}
+      </a>
+    </strong>
+  {% endifchanged %}
+{% endfor %}
+</p>
+<hr />
+{% for n in notes %}
+  {% ifchanged %}
+    <h2 style="color:#880;">
+      <a name="{{ n.classyear }}" class="anchor">
+      {% if n.classyear == "1847" %}
+      Friends of the college
+      {% else %}
+      {{ n.classyear }}
+      {% endif %}
+      </a>
+    </h2>
+  {% endifchanged %}
+  {% if n.picture %}
+  <div style="200px;float:right;padding-left:7px;padding-bottom:7px;">
+  <a href="#" data-foto-earl="{{n.picture.url}}" data-bs-toggle="modal" data-bs-target="#fotoModal" class="popup-foto">
+    <img src="{{n.thumbnail.url}}" alt="{{ n.caption }}" id="picture_{{n.id}}" />
+  </a>
+  {% if n.caption %}
+  <div style="margin-top:2px;font-size:.8em;color:#6e6e6e;width:200px;">
+    {{n.caption}}
+  </div>
+  {% endif %}
+  {% if manager %}
+    <div class="clearfix">
+    <a href="#" data-contact="{{n.id}}" data-foto-thumb="{{n.thumbnail.url}}" class="rotate-photo">
+      <i class="fas fa-redo" aria-hidden="true"
+        title="Rotate photo: Shift reload after"></i></a>
+    </div>
+  {% endif %}
+  </div>
+  {% endif %}
+  <p>
+    <strong>{% if n.name %}{{n.name}}{% else %}{{n.first_name}}
+    {% if n.second_name %}{{n.second_name}}{% endif %}
+    {% if n.previous_name %}({{n.previous_name}}){% endif %}
+    {{n.last_name}}
+    {% if n.suffix %}, {{n.suffix|default:""}}{% endif %}
+    {% endif %}
+    {% if n.spousename %}
+      &amp; {{n.spousename}}
+      {% if n.spousepreviousname %}
+        ({{n.spousepreviousname}})
+      {% endif %}
+      {% if n.spouseyear %}
+        {{n.spouseyear}}
+      {% endif %}
+    {% endif %}
+    </strong>
+    &mdash;
+    {% if n.hometown %}{{n.hometown}},&nbsp;{% endif %}
+    {{n.classnote}}&nbsp;<br />
+    <em style="color:#6e6e6e;">
+      Submitted: {{n.created_at|date:"F j, Y"}} &mdash; Category: {{n.category}}
+    </em>
+    {% if manager %}
+    &nbsp;
+    <button type="button" class="btn btn-light edit-contact" data-contact-admin-earl="{{n.get_edit_url}}" data-bs-toggle="modal" data-bs-target="#contactModal">
+      <i class="fas fa-edit" aria-hidden="true"></i>
+    </button>
+    {% endif %}
+  </p>
+  <div class="clear"></div>
+{% endfor %}
+<div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-body">
+        <iframe width="100%" height="100%" src=""></iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="fotoModal" tabindex="-2" role="dialog" aria-labelledby="fotoModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">&nbsp;</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endspaceless %}
 {% endblock %}

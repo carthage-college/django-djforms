@@ -42,4 +42,6 @@ urlpatterns = [
         classnotes.contact,
         name='classnotes_form',
     ),
+    # ajax post method to rotate an image 90 degress clockwise
+    path('rotate-photo/', classnotes.rotate_photo, name='rotate_photo'),
 ]

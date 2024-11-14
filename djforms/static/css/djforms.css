@@ -1,14 +1,8 @@
-dl {margin-bottom:50px;}
-dl dt {
-background:#5f9be3;
-color:#fff;
-float:left;
-font-weight:bold;
-margin-right:10px;
-padding:5px;
-width:340px;
+#page-body > .modal {opacity: inherit !important; visibility: inherit !important;}
+.modal-backdrop {position: inherit;}
+#contactModal .modal-dialog {
+  height: 90%; /* = 90% of the .modal-backdrop block = %90 of the screen */
 }
-dl dd {
-margin:2px 0;
-padding:5px 0;
+#contactModal .modal-content {
+  height: 100%; /* = 100% of the .modal-dialog block */
 }
