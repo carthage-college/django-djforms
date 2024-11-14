@@ -24,9 +24,9 @@ $(function() {
         $dis.html($html);
         if (data == "Success") {
           $thumb.attr('src', $dis.data('foto-thumb') + "?" + d.getTime());
-          alert('Photo Rotated. Shift-reload to see the results');
+          alert('Photo Rotated succesfully.');
         } else {
-          alert('Photo Rotation Failed');
+          alert('Photo Rotation Failed.');
         }
       }
     });
