@@ -12,7 +12,7 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
 
-IMG_EXTENSIONS = [FileExtensionValidator(allowed_extensions=['jpg']),]
+IMG_EXTENSIONS = [FileExtensionValidator(allowed_extensions=['jpg', 'jpeg']),]
 
 
 class Contact(GenericContact):
