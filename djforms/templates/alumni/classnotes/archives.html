@@ -1,21 +1,53 @@
 {% extends "alumni/classnotes/form.html" %}
+{% load cropping %}
+{% load thumbnail %}
+{% block metatags %}
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='0'>
+<meta http-equiv='pragma' content='no-cache'>
+{% endblock %}
 {% block title %}
   Class Notes Archives &mdash; Alumni &mdash; Carthage College
 {% endblock %}
 {% block javascript_idfive %}{% endblock %}
 {% block extra_javascript %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript" src="//app.carthage.edu/static/vendor/js/spin.min.js"></script>
 <script>
+/* spinner */
+var opts = {
+    lines: 13, // The number of lines to draw
+    length: 20, // The length of each line
+    width: 10, // The line thickness
+    radius: 30, // The radius of the inner circle
+    corners: 1, // Corner roundness (0..1)
+    rotate: 0, // The rotation offset
+    direction: 1, // 1: clockwise, -1: counterclockwise
+    color: '#000', // #rgb or #rrggbb or array of colors
+    speed: 1, // Rounds per second
+    trail: 60, // Afterglow percentage
+    shadow: false, // Whether to render a shadow
+    hwaccel: false, // Whether to use hardware acceleration
+    className: 'search-results', // The CSS class to assign to spinner
+    zIndex: 2e9, // The z-index (defaults to 2000000000)
+    top: '50px', // Top position relative to parent in px
+    left: 'auto' // Left position relative to parent in px
+};
+var target = document.getElementById("page-body");
+var spinner = new Spinner(opts).spin(target);
+spinner.stop(target);
+
 $(function() {
   var d = new Date();
   $('.rotate-photo').click(function(e){
     e.preventDefault();
     var $dis = $(this);
-    console.log( $dis.attr('data-foto-thumb'));
     var $html = $dis.html();
     $dis.html('<i class="fas fa-spinner fa-spin" aria-hidden="true"></i>');
     var $cid = $dis.attr('data-contact');
     var $thumb = $('#picture_' + $cid);
+    var $foto_earl = $dis.data('foto-earl');
+    spinner.spin(target);
     $.ajax({
       type: "POST",
       url: "{% url 'rotate_photo' %}",
@@ -23,8 +55,12 @@ $(function() {
       success: function(data) {
         $dis.html($html);
         if (data == "Success") {
-          $thumb.attr('src', $dis.data('foto-thumb') + "?" + d.getTime());
-          alert('Photo Rotated succesfully.');
+          //$thumb.attr('src', $dis.data('foto-thumb') + "?" + d.getTime());
+          $thumb.attr('src', $dis.data('foto-thumb') + '?' + d.getTime());
+          $img = '<img src="' + $foto_earl + '?' + d.getTime() + '" width="100%" height= "100%">';
+          $('#contactModal').find('.modal-body').html($img);
+          window.location.reload(true);
+          //alert('Photo Rotated succesfully.');
         } else {
           alert('Photo Rotation Failed.');
         }
@@ -95,8 +131,8 @@ Class Notes Archive &mdash;
   {% endifchanged %}
   {% if n.picture %}
   <div style="200px;float:right;padding-left:7px;padding-bottom:7px;">
-  <a href="#" data-foto-earl="{{n.picture.url}}" data-bs-toggle="modal" data-bs-target="#fotoModal" class="popup-foto">
-    <img src="{{n.thumbnail.url}}" alt="{{ n.caption }}" id="picture_{{n.id}}" />
+  <a href="#" data-foto-earl="{% cropped_thumbnail n "cropping" max_size="800x600" %}" data-bs-toggle="modal" data-bs-target="#fotoModal" class="popup-foto">
+    <img src="{% thumbnail n.picture 200x200 box=n.cropping crop detail %}?{% now "U" %}" alt="{{ n.caption }}" id="picture_{{n.id}}" />
   </a>
   {% if n.caption %}
   <div style="margin-top:2px;font-size:.8em;color:#6e6e6e;width:200px;">
@@ -105,7 +141,7 @@ Class Notes Archive &mdash;
   {% endif %}
   {% if manager %}
     <div class="clearfix">
-    <a href="#" data-contact="{{n.id}}" data-foto-thumb="{{n.thumbnail.url}}" class="rotate-photo">
+    <a href="#" data-contact="{{n.id}}" data-foto-earl="{% cropped_thumbnail n "cropping" max_size="800x600" %}" data-foto-thumb="{% thumbnail n.picture 200x200 box=n.cropping crop detail %}" class="rotate-photo">
       <i class="fas fa-redo" aria-hidden="true"
         title="Rotate photo: Shift reload after"></i></a>
     </div>

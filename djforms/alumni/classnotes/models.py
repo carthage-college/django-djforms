@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 from djforms.core.models import GenericContact
 from djtools.fields.helpers import upload_to_path
+from image_cropping import ImageRatioField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+
+
+IMG_EXTENSIONS = [FileExtensionValidator(allowed_extensions=['jpg']),]
 
 
 class Contact(GenericContact):
@@ -94,10 +100,13 @@ class Contact(GenericContact):
         "Photo",
         max_length=255,
         upload_to=upload_to_path,
+        validators=IMG_EXTENSIONS,
         help_text="75 dpi and .jpg only",
         null=True,
         blank=True,
     )
+    # size is "width x height"
+    cropping = ImageRatioField('picture', '800x600', allow_fullsize=True, free_crop=True)
     thumbnail = ImageSpecField(
         source='picture',
         processors=[ResizeToFill(200, 170)],
@@ -132,9 +141,9 @@ class Contact(GenericContact):
 
     def admin_image(self):
         if self.picture:
-            return '<a href="{}{}">Photo</a>'.format(
+            return mark_safe('<a href="{}{}">Photo</a>'.format(
                 settings.MEDIA_URL, self.picture,
-            )
+            ))
         else:
             return None
     admin_image.allow_tags = True

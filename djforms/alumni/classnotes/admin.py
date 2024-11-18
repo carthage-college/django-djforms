@@ -5,8 +5,8 @@ from django import forms
 from django.contrib import admin
 from djforms.alumni.classnotes.models import Contact
 from djforms.alumni.classnotes.forms import CLASSYEARS, SPOUSEYEARS, CATEGORIES
-
 from djtools.utils.mail import send_mail
+from image_cropping import ImageCroppingMixin
 
 
 class ContactAdminForm(forms.ModelForm):
@@ -20,7 +20,7 @@ class ContactAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
-class ContactAdmin(admin.ModelAdmin):
+class ContactAdmin(ImageCroppingMixin, admin.ModelAdmin):
     form            = ContactAdminForm
     ordering        = ('-created_at', 'last_name','classyear','alumnistatus','pubstatus','carthaginianstatus','category')
     list_display    = ('last_name','first_name','classyear','created_at','alumnistatus','pubstatus','carthaginianstatus','category','admin_image')
@@ -35,7 +35,7 @@ class ContactAdmin(admin.ModelAdmin):
             'fields': ('spousename', 'spousepreviousname', 'spouseyear')
         }),
         ('Note', {
-            'fields': ('classnote', 'picture', 'caption', 'alumnicomments')
+            'fields': ('classnote', 'picture', 'cropping', 'caption', 'alumnicomments')
         }),
         ('Publication Information', {
             'fields': ('category','alumnistatus', 'pubstatus', 'pubstatusdate', 'carthaginianstatus')

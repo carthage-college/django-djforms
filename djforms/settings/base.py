@@ -3,6 +3,8 @@
 """Django settings for project."""
 
 import os
+from easy_thumbnails.conf import Settings as thumbnail_settings
+
 
 # Debug
 DEBUG = False
@@ -75,6 +77,8 @@ INSTALLED_APPS = (
     'django_countries',
     'django_summernote',
     'captcha',
+    'easy_thumbnails',
+    'image_cropping',
     # gmail api for send mail
     'gmailapi_backend',
     'honeypot',
@@ -188,6 +192,9 @@ SERVER_EMAIL = ''
 SERVER_MAIL=''
 # app settings
 ROTATE_PHOTO = -90
+THUMBNAIL_PROCESSORS = (
+    'image_cropping.thumbnail_processors.crop_corners',
+) + thumbnail_settings.THUMBNAIL_PROCESSORS
 # logging
 LOG_FILEPATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'logs/',
