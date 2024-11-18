@@ -7,12 +7,13 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from djforms.core.models import GenericContact
 from djtools.fields.helpers import upload_to_path
+from djtools.fields.validators import MimetypeValidator
 from image_cropping import ImageRatioField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
 
-IMG_EXTENSIONS = [FileExtensionValidator(allowed_extensions=['jpg', 'jpeg']),]
+PHOTO_VALIDATORS = [MimetypeValidator('image/jpeg')]
 
 
 class Contact(GenericContact):
@@ -100,7 +101,7 @@ class Contact(GenericContact):
         "Photo",
         max_length=255,
         upload_to=upload_to_path,
-        validators=IMG_EXTENSIONS,
+        validators=PHOTO_VALIDATORS,
         help_text="75 dpi and .jpg only",
         null=True,
         blank=True,
