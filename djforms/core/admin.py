@@ -2,12 +2,12 @@
 
 from django import forms
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from djforms.core.models import Department
 from djforms.core.models import GenericChoice
 from djforms.core.models import Photo
 from djforms.core.models import Promotion
 from djforms.core.models import UserProfile
-
 from django_summernote.admin import SummernoteModelAdmin
 
 
@@ -40,6 +40,8 @@ class PromotionAdmin(SummernoteModelAdmin):
         return self.readonly_fields
 
 
+# django models
+UserAdmin.list_display += ('id', 'last_login', 'date_joined')
 # core models
 admin.site.register(Department)
 admin.site.register(GenericChoice, GenericChoiceAdmin)

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load livewhale_api %}
+{% block title %}Marketing & Communications Office{% endblock %}
+{% block extra_style %}
+{{block.super}}
+<style type="text/css" media="screen, projection">
+li.ctrlHolder div ul li {display:inline; padding-right:3px;}
+</style>
+{% endblock %}
+{% block left_nav %}
+        <ul>
+            <li>
+
+              <a href="https://www.carthage.edu/about/offices-services/" class="fancy-link">Offices &amp; Services<span class="fancy-link__icon" aria-hidden="true">›</span></a>
+
+                <ul>
+                    <li>
+                       <a href="https://www.carthage.edu/about/offices-services/marketing-communications-office/" class="lw_group_link" aria-current="page">Marketing &amp; Communications Office</a>
+
+                        <ul><li><a href="https://www.carthage.edu/about/offices-services/marketing-communications-office/request-our-services/">Request Our Services</a></li><li><a href="https://www.carthage.edu/about/offices-services/marketing-communications-office/project-timelines/">Project Timelines</a></li><li><a href="https://www.carthage.edu/about/offices-services/marketing-communications-office/request-our-services/create-your-own-materials/">Create Your Own Materials</a></li><li><a href="https://www.carthage.edu/about/offices-services/marketing-communications-office/resources-policies/">Resources and Policies</a></li><li><a href="https://www.carthage.edu/about/offices-services/marketing-communications-office/staff/">Meet Our Staff</a></li><li><a href="https://www.carthage.edu/about/offices-services/marketing-communications-office/awards-recognition/">Awards &amp; Recognition</a></li><li><a href="https://www.carthage.edu/about/offices-services/marketing-communications-office/be-carthage-famous/">Be Carthage Famous</a></li></ul>
+
+                    </li>
+                </ul>
+
+            </li>
+        </ul>
+{% endblock %}
+{% block content_head %}
+<h1>Marketing & Communications Office</h1>
+{% endblock %}
+{% block breadcrumb %}
+    <li><a href="https://www.carthage.edu/about/">About Carthage</a></li>
+    <li><a href="https://www.carthage.edu/about/offices-services/">Offices &amp; Services</a></li>
+    <li><a href="https://www.carthage.edu/about/offices-services/marketing-communications-office/" aria-current="page">Marketing &amp; Communications Office</a></li>
+{% endblock %}
+{% block content %}
+<div>
+  <h3>Instructions<h3>
+  <p>Content text.</p>
+  <p><a href="#">Download</a>.</p>
+</div>
+{% endblock %}
