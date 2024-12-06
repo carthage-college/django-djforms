@@ -65,8 +65,6 @@ urlpatterns = [
     path('alumni/', include('djforms.alumni.urls')),
     # LIS
     path('lis/', include('djforms.lis.urls')),
-    # for the modern language form environment
-    path('languages/', include('djforms.languages.urls')),
     # music
     path('music/', include('djforms.music.urls')),
     # polisci

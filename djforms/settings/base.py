@@ -90,7 +90,6 @@ INSTALLED_APPS = (
     'djforms.core',
     'djforms.lis',
     'djforms.lis.copyprint',
-    'djforms.languages',
     'djforms.music.ensembles.choral',
     'djforms.processors',
     'djforms.scholars',
@@ -317,9 +316,6 @@ ALUMNI_OFFICE_EMAIL = ''
 HONORARY_DEGREE_NOMINATION_EMAIL = ''
 POLISCI_MODEL_UN_TO_LIST = []
 POLISCI_LIMBO = False
-# TLE applications
-MODERN_LANGUAGES_TLE_APPLICATIONS = []
-STUDY_ABROAD_EMAIL = ''
 ALUMNI_CLASSNOTES_EMAILS = []
 LIS_PRINT_REQUEST_EMAIL = ''
 CHORAL_TRYOUTS_FROM = ''
