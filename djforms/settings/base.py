@@ -89,7 +89,6 @@ INSTALLED_APPS = (
     'djforms.alumni.classnotes',
     'djforms.core',
     'djforms.music.ensembles.choral',
-    'djforms.processors',
     'djforms.scholars',
     'djforms.writingcurriculum',
     # other in-house django apps

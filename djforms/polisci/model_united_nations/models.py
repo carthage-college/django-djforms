@@ -1,5 +1,4 @@
 from django.db import models
-from djforms.processors.models import Contact
 
 def disengage_country(sender, instance, **kwargs):
     if instance.delegation_1:

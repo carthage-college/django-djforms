@@ -4,7 +4,6 @@ from django import forms
 from djforms.polisci.model_united_nations.models import Attender
 from djforms.polisci.model_united_nations.models import Country
 from djforms.core.models import STATE_CHOICES, PAYMENT_CHOICES
-from djforms.processors.models import Order
 
 from djtools.fields.localflavor import USPhoneNumberField
 
