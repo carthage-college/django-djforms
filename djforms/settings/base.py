@@ -88,8 +88,6 @@ INSTALLED_APPS = (
     # djforms stuff
     'djforms.alumni.classnotes',
     'djforms.core',
-    'djforms.lis',
-    'djforms.lis.copyprint',
     'djforms.music.ensembles.choral',
     'djforms.processors',
     'djforms.scholars',
@@ -309,15 +307,12 @@ COS_FACULTY = [{}]
 # email addresses
 SOCCER_CAMP_TO_LIST = []
 INSURANCE_TO_LIST = []
-COPYPRINT_CARD_REQUEST_EMAIL = ''
 COS_DEFAULT_NAME = ''
 COS_DEFAULT_EMAIL = ''
 ALUMNI_OFFICE_EMAIL = ''
-HONORARY_DEGREE_NOMINATION_EMAIL = ''
 POLISCI_MODEL_UN_TO_LIST = []
 POLISCI_LIMBO = False
 ALUMNI_CLASSNOTES_EMAILS = []
-LIS_PRINT_REQUEST_EMAIL = ''
 CHORAL_TRYOUTS_FROM = ''
 WAC_EMAIL_LIST = []
 SECURITY_PARKING_TICKET_APPEAL_EMAIL = ''

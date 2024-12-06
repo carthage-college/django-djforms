@@ -63,8 +63,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # alumni
     path('alumni/', include('djforms.alumni.urls')),
-    # LIS
-    path('lis/', include('djforms.lis.urls')),
     # music
     path('music/', include('djforms.music.urls')),
     # polisci

@@ -1,8 +1,0 @@
-{% load livewhale_api %}
-{% get_lw_content as nav blurbs 3210 %}
-<ul>
-  <li>
-    <a href="/academics/library/" class="lw_group_link fancy-link">Library<span class="fancy-link__icon" aria-hidden="true">›</span></a>
-    {{nav.body|safe}}
-  </li>
-</ul>
