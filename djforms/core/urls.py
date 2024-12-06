@@ -69,8 +69,7 @@ urlpatterns = [
     path('political-science/', include('djforms.polisci.urls')),
     # celebration of scholars
     path('scholars/', include('djforms.scholars.urls')),
-    # for the security appeal form environment
-    path('security/', include('djforms.security.urls')),
+    # summernote wysiwyg
     path('summernote/', include('django_summernote.urls')),
     # writing across curriculum
     path('writingcurriculum/', include('djforms.writingcurriculum.urls')),

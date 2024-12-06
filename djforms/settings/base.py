@@ -91,7 +91,6 @@ INSTALLED_APPS = (
     'djforms.music.ensembles.choral',
     'djforms.processors',
     'djforms.scholars',
-    'djforms.security',
     'djforms.writingcurriculum',
     # other in-house django apps
     'djtools',
@@ -315,8 +314,6 @@ POLISCI_LIMBO = False
 ALUMNI_CLASSNOTES_EMAILS = []
 CHORAL_TRYOUTS_FROM = ''
 WAC_EMAIL_LIST = []
-SECURITY_PARKING_TICKET_APPEAL_EMAIL = ''
-SECURITY_REPORT_EMAIL = ''
 # Authorize.net
 GATEWAY_API_LOGIN = ''
 GATEWAY_TRANS_KEY = ''
