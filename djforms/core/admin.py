@@ -42,6 +42,7 @@ class PromotionAdmin(SummernoteModelAdmin):
 
 # django models
 UserAdmin.list_display += ('id', 'last_login', 'date_joined')
+UserAdmin.list_per_page = 500
 # core models
 admin.site.register(Department)
 admin.site.register(GenericChoice, GenericChoiceAdmin)
