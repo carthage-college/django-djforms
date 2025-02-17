@@ -231,7 +231,7 @@ class Presentation(models.Model):
         "Abstract",
         help_text="Copy and paste your abstract text or start typing.",
     )
-    presentation_type = models.CharField(max_length=3, choices=PRESENTATION_CHOICES)
+    presentation_type = models.CharField(max_length=32, choices=PRESENTATION_CHOICES)
     need_table = models.CharField(max_length=3, choices=BINARY_CHOICES)
     need_electricity = models.CharField(max_length=3, choices=BINARY_CHOICES)
     poster_file = models.FileField(
