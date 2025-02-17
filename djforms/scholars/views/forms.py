@@ -3,6 +3,7 @@
 from django import forms
 from django.forms import ModelForm
 from djforms.scholars.models import Presentation
+from djforms.scholars.models import PRESENTATION_CHOICES
 from djforms.core.models import BINARY_CHOICES
 from djforms.core.models import Department
 
@@ -28,6 +29,11 @@ class PresentationForm(forms.ModelForm):
             Note: Faculty and staff presenters should choose 'yes'.
         """,
     )
+    presentation_type = forms.ChoiceField(
+        label="What type of presentation would you prefer to give?",
+        choices=PRESENTATION_CHOICES,
+        widget=forms.RadioSelect(),
+    )
     need_table = forms.ChoiceField(
         label="Do you need a table for display purposes?",
         choices=BINARY_CHOICES,
@@ -50,6 +56,7 @@ class PresentationForm(forms.ModelForm):
             'permission',
             'shared',
             'abstract_text',
+            'presentation_type',
             'need_table',
             'need_electricity',
             'poster_file',

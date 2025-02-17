@@ -38,6 +38,10 @@ PRESENTER_TYPES = (
     ('Faculty', 'Faculty'),
     ('Staff', 'Staff'),
 )
+PRESENTATION_CHOICES = (
+    ('Poster Presentation', "Poster Presentation"),
+    ('Oral Presentation', "Oral Presentation"),
+)
 YEAR = NOW.year
 
 
@@ -227,6 +231,7 @@ class Presentation(models.Model):
         "Abstract",
         help_text="Copy and paste your abstract text or start typing.",
     )
+    presentation_type = models.CharField(max_length=3, choices=PRESENTATION_CHOICES)
     need_table = models.CharField(max_length=3, choices=BINARY_CHOICES)
     need_electricity = models.CharField(max_length=3, choices=BINARY_CHOICES)
     poster_file = models.FileField(
@@ -349,6 +354,6 @@ class Presentation(models.Model):
         return poster
     poster.allow_tags = True
 
-    def presentation_type(self):
+    def presentation_work(self):
         """Return the presentation type."""
         return WORK_TYPES[self.work_type][1]
