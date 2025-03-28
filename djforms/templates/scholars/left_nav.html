@@ -19,6 +19,9 @@
       </a>
       <ul class="lw_subnav">
         <li>
+          <a href="{% url 'presentation_archives' 'presentation' 'screen' '2025' %}">2025</a>
+        </li>
+        <li>
           <a href="{% url 'presentation_archives' 'presentation' 'screen' '2024' %}">2024</a>
         </li>
         <li>
@@ -69,5 +72,3 @@
     {% endif %}
   </ul>
 </nav>
-{% get_lw_content as nav blurbs 2954 %}
-{{nav.body}}
