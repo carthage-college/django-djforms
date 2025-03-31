@@ -25,6 +25,9 @@ USE_TZ = False
 DEFAULT_CHARSET = 'utf-8'
 FILE_CHARSET = 'utf-8'
 SERVER_URL = ''
+DIRECTORY_API_URL = 'https://{0}/{1}'.format(SERVER_URL, 'directory/api/')
+# REST API AUTHENTICATION TOKEN
+REST_FRAMEWORK_TOKEN = ''
 API_URL = '{0}/{1}'.format(SERVER_URL, 'api')
 API_KEY = ''
 API_PEOPLE_URL = ''

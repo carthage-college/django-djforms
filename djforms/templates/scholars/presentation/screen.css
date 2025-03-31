@@ -3,7 +3,7 @@
     font-weight:bold;font-size:1.4em; border-bottom:1px solid #000;clear:both;
     padding-top:10px;
 }
-.person {display: block;font-size: 10pt;margin-bottom:10pt;}
+.person {display: block;;margin-bottom:10pt;}
 .mugshot {
     display:block; float:left;margin-right:7px;margin-bottom:7px;
     width:250px !important;

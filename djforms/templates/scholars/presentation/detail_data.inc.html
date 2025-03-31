@@ -1,9 +1,9 @@
-{% load get_prof %}
+{% load get_api_profile %}
 <div class="presentation">
     <p class="title">{{p.title}}</p>
     {% for o in p.get_presenters %}
         {% if o.prez_type == "Student" %}
-            {% get_prof as prof o.sponsor_email %}
+            {% get_api_profile as prof profile o.sponsor %}
             <div class="person">
                 <p>
                     {% if o.mugshot %}
@@ -20,20 +20,7 @@
                     <br />
                     <strong>Major</strong>: {{o.major}}<br />
                     <strong>Hometown</strong>: {{o.hometown}}<br />
-                    <strong>Faculty Sponsor</strong>: {{o.sponsor_email}}
-                    {% if prof %}
-                      <a href="{{prof.url}}">{{prof.firstname}} {{prof.lastname}}</a>
-                    {% else %}
-                      {% get_prof as prof p.get_sponsor.sponsor %}
-                      {% if prof %}
-                        <a href="mailto:{{prof.email}}" class="sponsor">
-                        {{p.get_sponsor.first_name}}
-                        {{p.get_sponsor.last_name}}</a>
-                      {% else %}
-                        {{p.get_sponsor.sponsor}}
-                      {% endif %}
-                    {% endif %}
-                    <br />
+                    <strong>Faculty Sponsor</strong>: {{prof.first_name}} {{prof.last_name}} <br />
                     <strong>Other Sponsors</strong>: {{o.sponsor_other|default:'&nbsp;'}}<br />
                     <strong>Type of research: </strong>{{p.work_type}}<br />
                     {% if p.funding %}
