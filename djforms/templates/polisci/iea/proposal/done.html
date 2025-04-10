@@ -1,6 +1,0 @@
-{% extends "polisci/iea/proposal/form.html" %}
-{% load livewhale_api %}
-{% block content %}
-    {% get_lw_content as success blurbs 2661 %}
-    {{success.body}}
-{% endblock %}
