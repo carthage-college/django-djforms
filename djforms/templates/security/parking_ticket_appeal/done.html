@@ -1,7 +1,0 @@
-{% extends "security/parking_ticket_appeal/form.html" %}
-{% load livewhale_api %}
-{% block title %}Success{% endblock %}
-{% block content %}
-  {% get_lw_content as done blurbs 3043 %}
-  {{done.body|safe}}
-{% endblock %}
