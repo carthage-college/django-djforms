@@ -20,7 +20,7 @@
       <li><a href="{% url 'classnotes_archives' %}">Class Notes Archive</a></li>
       <li><a href="{% url 'classnotes_obits' %}">In Memoriam</a></li>
       {% if manager %}
-      <li><a href="/forms/admin/classnotes/contact/">Manage class notes</a></li>
+      <li><a href="/forms/rocinante/classnotes/contact/">Manage class notes</a></li>
       {% else %}{% if user.is_anonymous %}
       <li><a href="/forms/accounts/login/?next=/forms/alumni/classnotes/archives/">Manage class notes</a></li>
       {% endif %}{% endif %}

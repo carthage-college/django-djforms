@@ -8,7 +8,7 @@
     </li>
     {% endif %}
     {% if user.is_superuser %}
-    <li><a href="/forms/admin/scholars/presentation/">Administration</a></li>
+    <li><a href="/forms/rocinante/scholars/presentation/">Administration</a></li>
     {% endif %}
     {% if not perms.scholars.manage_presentation %}
     <li><a href="{% url 'presentation_home' %}">My Presentation</a></li>
