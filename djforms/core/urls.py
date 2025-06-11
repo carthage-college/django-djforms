@@ -54,13 +54,13 @@ urlpatterns = [
     ),
     # CSV
     path(
-        'admin/<str:app_label>/<str:model_name>/csv/',
+        'rocinante/<str:app_label>/<str:model_name>/csv/',
         admin_list_export,
         name='admin_list_export',
     ),
     # admin
-    path('admin/', include('loginas.urls')),
-    path('admin/', admin.site.urls),
+    path('rocinante/', include('loginas.urls')),
+    path('rocinante/', admin.site.urls),
     # alumni
     path('alumni/', include('djforms.alumni.urls')),
     # music
